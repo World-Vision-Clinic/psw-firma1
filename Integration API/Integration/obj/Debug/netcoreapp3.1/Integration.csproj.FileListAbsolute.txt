@@ -1,9 +1,0 @@
-I:\psw-firma1\Integration API\Integration\bin\Debug\netcoreapp3.1\Integration.deps.json
-I:\psw-firma1\Integration API\Integration\bin\Debug\netcoreapp3.1\Integration.dll
-I:\psw-firma1\Integration API\Integration\bin\Debug\netcoreapp3.1\Integration.pdb
-I:\psw-firma1\Integration API\Integration\obj\Debug\netcoreapp3.1\Integration.GeneratedMSBuildEditorConfig.editorconfig
-I:\psw-firma1\Integration API\Integration\obj\Debug\netcoreapp3.1\Integration.AssemblyInfoInputs.cache
-I:\psw-firma1\Integration API\Integration\obj\Debug\netcoreapp3.1\Integration.AssemblyInfo.cs
-I:\psw-firma1\Integration API\Integration\obj\Debug\netcoreapp3.1\Integration.csproj.CoreCompileInputs.cache
-I:\psw-firma1\Integration API\Integration\obj\Debug\netcoreapp3.1\Integration.dll
-I:\psw-firma1\Integration API\Integration\obj\Debug\netcoreapp3.1\Integration.pdb
