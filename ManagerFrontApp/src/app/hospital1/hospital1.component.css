@@ -1,0 +1,17 @@
+.room{
+    stroke: black;
+    stroke-width: 2px;
+    fill: cadetblue;
+}
+
+.staircase{
+    fill:cornsilk;
+    stroke:black;
+    stroke-width: 3px;
+}
+
+.doors{
+    stroke:black;
+    stroke-width: 2px;
+    fill:burlywood;
+}
