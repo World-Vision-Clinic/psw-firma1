@@ -1,0 +1,18 @@
+<svg width="1200" height="700"> 
+    <g>
+    <text x="620" y="40" class="text" >Hospital buildings and facilities map</text>
+    <rect x="350" y="60" width="800" height="600" class="yard"/>   
+
+    <rect x="770" y="110" width="350" height="230" class="building" (dblclick)="enterHospital()"/>
+    <text x="870" y="180" class="text">HOSPITAL 1</text>
+
+    <rect x="400" y="440" width="420" height="200" class="building" />
+    <text x="500" y="520" class="text">HOSPITAL 2</text>
+
+    <rect x="390" y="120" width="300" height="200" class="parking" />
+    <text x="480" y="220" class="text">PARKING</text>
+
+    <rect x="840" y="440" width="280" height="150" class="park" />
+    <text x="870" y="520" class="text">PARK</text>
+    </g>  
+</svg>
