@@ -7,10 +7,14 @@
 
 .building{
     fill:chocolate ;
+    stroke:black;
+    stroke-width: 4px;
 }
 
 .parking{
     fill:rgb(16, 172, 224);
+    stroke: rgb(15, 43, 165);
+    stroke-width: 4px;
 }
 
 .text{
@@ -21,4 +25,6 @@
 
 .park{
     fill:green;
+    stroke: rgb(18, 68, 18);
+    stroke-width: 4px;
 }
