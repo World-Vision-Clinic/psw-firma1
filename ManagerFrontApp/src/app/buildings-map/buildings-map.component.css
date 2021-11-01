@@ -1,0 +1,20 @@
+.yard{
+    fill: gray;
+    margin: 7%;
+}
+
+.building{
+    fill:red;
+}
+
+.parking{
+    fill:rgb(16, 172, 224);
+}
+
+.text{
+    font-size: 18px;
+}
+
+.park{
+    fill:green;
+}
