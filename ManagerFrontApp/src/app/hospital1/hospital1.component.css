@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto+Condensed&display=swap');
+
+
 .room{
     stroke: black;
     stroke-width: 2px;
@@ -14,4 +17,10 @@
     stroke:black;
     stroke-width: 2px;
     fill:burlywood;
+}
+
+.text{
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
 }

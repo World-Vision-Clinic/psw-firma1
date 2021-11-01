@@ -32,5 +32,19 @@
     <rect x="1078" y="485" width="6" height="30" class="doors"/> 
     <rect x="1078" y="555" width="6" height="30" class="doors"/> 
 
+    <text x="360" y="250" class="text">OPERATIONS ROOM 1</text>
+    <text x="400" y="380" class="text">ENTRANCE</text>
+    <text x="360" y="520" class="text">OPERATIONS ROOM 2</text>
+    <text x="550" y="200" class="text">ORDINATION 1</text>
+    <text x="710" y="200" class="text">ORDINATION 2</text>
+    <text x="890" y="200" class="text">ROOM 1</text>
+    <text x="1070" y="200" class="text">ROOM 2</text>
+    <text x="1090" y="320" class="text">ORDINATION 3</text>
+    <text x="1110" y="420" class="text">LIFT</text>
+    <text x="1110" y="505" class="text">TOILET</text>
+    <text x="1110" y="575" class="text">TOILET</text>
+    <text x="535" y="550" class="text">ROOM 3</text>
+    <text x="670" y="550" class="text">ROOM 4</text>
+    <text x="830" y="550" class="text">ROOM 5</text>
     </g>
 </svg>
