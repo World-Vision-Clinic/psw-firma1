@@ -5,5 +5,9 @@
     <RootNamespace>Integration_API</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="HospitalLibrary" Version="1.0.1" />
+  </ItemGroup>
+
 
 </Project>
