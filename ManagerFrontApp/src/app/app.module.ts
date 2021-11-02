@@ -6,17 +6,23 @@ import { AppComponent } from './app.component';
 import { BuildingsMapComponent } from './buildings-map/buildings-map.component';
 import { Hospital1Component } from './hospital1/hospital1.component';
 import { FrontPageComponent } from './front-page/front-page.component';
+import { PharmacyRegistrationComponent } from './pharmacy-registration/pharmacy-registration.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     BuildingsMapComponent,
     Hospital1Component,
-    FrontPageComponent
+    FrontPageComponent,
+    PharmacyRegistrationComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
