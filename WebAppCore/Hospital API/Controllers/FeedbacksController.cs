@@ -13,9 +13,9 @@ namespace Hospital_API.Controllers
     [Route("FeedbacksController")]
     public class FeedbacksController : Controller
     {
-        private readonly MyWebApiContext _context;
+        private readonly HospitalContext _context;
 
-        public FeedbacksController(MyWebApiContext context)
+        public FeedbacksController(HospitalContext context)
         {
             _context = context;
         }

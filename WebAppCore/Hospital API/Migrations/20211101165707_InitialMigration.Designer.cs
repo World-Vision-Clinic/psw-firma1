@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Hospital_API.Migrations
 {
-    [DbContext(typeof(MyWebApiContext))]
+    [DbContext(typeof(HospitalContext))]
     [Migration("20211101165707_InitialMigration")]
     partial class InitialMigration
     {

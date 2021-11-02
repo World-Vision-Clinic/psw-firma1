@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hospital_API.Models
 {
-    public class MyWebApiContext : DbContext
+    public class HospitalContext : DbContext
     {
-        public MyWebApiContext(DbContextOptions<MyWebApiContext> options) : base(options)
+        public HospitalContext(DbContextOptions<HospitalContext> options) : base(options)
         {
 
         }

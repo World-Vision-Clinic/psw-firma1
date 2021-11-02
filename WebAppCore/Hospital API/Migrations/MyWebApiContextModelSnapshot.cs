@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Hospital_API.Migrations
 {
-    [DbContext(typeof(MyWebApiContext))]
+    [DbContext(typeof(HospitalContext))]
     partial class MyWebApiContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
