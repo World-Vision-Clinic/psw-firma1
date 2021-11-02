@@ -12,5 +12,7 @@ namespace Hospital_API.Models
         public int Id { get; set; }
         public string Content { get; set; }
         public bool isPublic { get; set; }
+
+        public bool isAnonymous { get; set; }
     }
 }
