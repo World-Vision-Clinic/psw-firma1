@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Integration.Pharmacy.Model
 {
-    class Pharmacy
+    public class Pharmacy
     {
         public string Id { get; set; }
         public string Name { get; set; }

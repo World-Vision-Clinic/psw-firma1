@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Integration.Pharmacy.Model
 {
-    enum ProtocolType
+    public enum ProtocolType
     {
         HTTP,
         GRPC
