@@ -8,6 +8,7 @@ import { Hospital1Component } from './hospital1/hospital1.component';
 import { FrontPageComponent } from './front-page/front-page.component';
 import { PharmacyRegistrationComponent } from './pharmacy-registration/pharmacy-registration.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ManagerObjectionsComponent } from './manager-objections/manager-objections.component';
 
 
 
@@ -17,7 +18,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BuildingsMapComponent,
     Hospital1Component,
     FrontPageComponent,
-    PharmacyRegistrationComponent
+    PharmacyRegistrationComponent,
+    ManagerObjectionsComponent
   ],
   imports: [
     BrowserModule,
