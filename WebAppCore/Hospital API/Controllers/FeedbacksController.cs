@@ -10,7 +10,7 @@ using Hospital_API.Models;
 namespace Hospital_API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("FeedbacksController")]
     public class FeedbacksController : Controller
     {
         private readonly MyWebApiContext _context;
@@ -21,12 +21,14 @@ namespace Hospital_API.Controllers
         }
 
         // GET: Feedbacks
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Feedbacks.ToListAsync());
         }
 
         // GET: Feedbacks/Details/5
+        [HttpGet("Details/{id}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,6 +47,7 @@ namespace Hospital_API.Controllers
         }
 
         // GET: Feedbacks/Create
+        [HttpGet("Create")]
         public IActionResult Create()
         {
             return View();
@@ -53,9 +56,9 @@ namespace Hospital_API.Controllers
         // POST: Feedbacks/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("Create")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Content,isPublic")] Feedback feedback)
+        public async Task<IActionResult> Create([FromForm] Feedback feedback)
         {
             if (ModelState.IsValid)
             {
@@ -67,6 +70,7 @@ namespace Hospital_API.Controllers
         }
 
         // GET: Feedbacks/Edit/5
+        [HttpGet("Edit/{id}")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -85,9 +89,9 @@ namespace Hospital_API.Controllers
         // POST: Feedbacks/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("Edit/{id}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Content,isPublic")] Feedback feedback)
+        public async Task<IActionResult> Edit(int id, [FromForm] Feedback feedback)
         {
             if (id != feedback.Id)
             {
@@ -118,6 +122,7 @@ namespace Hospital_API.Controllers
         }
 
         // GET: Feedbacks/Delete/5
+        [HttpGet("Delete/{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -136,7 +141,7 @@ namespace Hospital_API.Controllers
         }
 
         // POST: Feedbacks/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost("Delete/{id}"), ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
