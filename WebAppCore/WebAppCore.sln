@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integration API", "Integrat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integration", "Integration\Integration.csproj", "{283A9CAE-4FD4-4E1A-B27A-BBE23DB33E8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hospital API", "Hospital API\Hospital API.csproj", "{AA7B1CA1-4AFE-4FF9-8A75-C11F6DEE2A1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hospital API", "Hospital API\Hospital API.csproj", "{AA7B1CA1-4AFE-4FF9-8A75-C11F6DEE2A1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hospital", "Hospital\Hospital.csproj", "{B907521C-0885-45BE-9EA9-A2BAE7CFAE6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hospital", "Hospital\Hospital.csproj", "{B907521C-0885-45BE-9EA9-A2BAE7CFAE6B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
