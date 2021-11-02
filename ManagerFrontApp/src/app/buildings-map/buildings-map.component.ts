@@ -3,7 +3,7 @@ import { Router, NavigationStart } from '@angular/router';
 
 @Component({
   selector: 'app-buildings-map',
-  templateUrl: './buildings-map.component.svg',
+  templateUrl: './buildings-map.component.html',
   styleUrls: ['./buildings-map.component.css']
 })
 export class BuildingsMapComponent implements OnInit {
