@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Hospital_API.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hospital_API
 {
@@ -24,7 +26,9 @@ namespace Hospital_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
             services.AddControllers();
+            services.AddEntityFrameworkNpgsql().AddDbContext<HospitalContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("MyWebApiConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
