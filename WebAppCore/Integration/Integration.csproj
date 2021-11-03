@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pharmacy\Service\" />
     <Folder Include="Pharmacy\Repository\" />
   </ItemGroup>
 

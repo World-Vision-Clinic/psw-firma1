@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Integration.Pharmacy.Model
 {
-    public class Pharmacy
+    public class PharmacyProfile
     {
-        public string Id { get; set; }
         public string Name { get; set; }
         public string Key { get; set; }
+        [Key]
         public string Localhost { get; set; }
         public ProtocolType Protocol { set; get; }
 
-        public Pharmacy(string id, string name, string key, string localhost, ProtocolType protocol)
+        public PharmacyProfile(string name, string key, string localhost, ProtocolType protocol)
         {
-            Id = id;
             Name = name;
             Key = key;
             Localhost = localhost;
             Protocol = protocol;
         }
 
-        public Pharmacy() { }
+        public PharmacyProfile() { }
     }
 }

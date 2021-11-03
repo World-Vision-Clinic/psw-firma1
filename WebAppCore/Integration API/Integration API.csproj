@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Mapper\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Integration\Integration.csproj" />
   </ItemGroup>
 

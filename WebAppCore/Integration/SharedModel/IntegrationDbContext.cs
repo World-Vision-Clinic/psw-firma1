@@ -9,9 +9,9 @@ namespace Integration.SharedModel
     public class IntegrationDbContext : DbContext
     {
 
-        public DbSet<Objection> Object { get; set; }
-        public DbSet<Reply> Reply { get; set; }
-        public DbSet<Pharmacy.Model.Pharmacy> Pharmacy { get; set; }
+        public DbSet<Objection> Objections { get; set; }
+        public DbSet<Reply> Replies { get; set; }
+        public DbSet<PharmacyProfile> Pharmacies { get; set; }
         public IntegrationDbContext()
         {
 

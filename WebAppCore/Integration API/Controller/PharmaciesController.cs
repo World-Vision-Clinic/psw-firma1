@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Integration.Pharmacy.Service;
+using Integration_API.Mapper;
 
 namespace Integration_API.Controller
 {
@@ -12,6 +14,9 @@ namespace Integration_API.Controller
     [ApiController]
     public class PharmaciesController : ControllerBase
     {
+
+        PharmaciesService pharmaciesService = new PharmaciesService();
+
         [HttpPost("registerPharmacy")]
         public IActionResult Add(PharmacyDto dto)
         {
@@ -20,11 +25,11 @@ namespace Integration_API.Controller
                 return BadRequest();
             }
 
-            //long id = Program.Products.Count > 0 ? Program.Products.Max(product => product.Id) + 1 : 1;
-            //Product product = ProductAdapter.ProductDtoToProduct(dto);
-            //product.Id = id;
-            //Program.Products.Add(product);
-            Console.WriteLine(dto.Name);
+            if (!pharmaciesService.AddNewPharmacy(PharmacyMapper.PharmacyDtoToPharmacy(dto)))
+            {
+                return BadRequest();
+            }
+            
             return Ok();
         }
 
