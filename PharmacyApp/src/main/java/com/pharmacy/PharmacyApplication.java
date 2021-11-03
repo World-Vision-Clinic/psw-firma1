@@ -25,7 +25,7 @@ public class PharmacyApplication implements CommandLineRunner {
 		int rows = jdbcTemplate.update(sql);
 	    if (rows > 0) {
 	        System.out.println("A new row has been inserted.");
-	    }	*/
+	    }*/	
 	}
 
 }
