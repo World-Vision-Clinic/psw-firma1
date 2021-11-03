@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Hospital_API.Models;
+using System.Diagnostics;
+using System.Net.Http;
+using System.Net;
 
 namespace Hospital_API
 {
@@ -77,7 +80,7 @@ namespace Hospital_API
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Feedback>> PostFeedback(Feedback feedback)
+        public async Task<ActionResult<Feedback>> PostFeedback([FromBody]Feedback feedback)
         {
             _context.Feedbacks.Add(feedback);
             await _context.SaveChangesAsync();
@@ -99,6 +102,12 @@ namespace Hospital_API
             await _context.SaveChangesAsync();
 
             return feedback;
+        }
+
+        [HttpOptions]
+        public HttpResponseMessage Options()
+        {
+            return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }
 
         private bool FeedbackExists(int id)
