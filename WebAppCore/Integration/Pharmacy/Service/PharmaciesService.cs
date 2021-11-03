@@ -11,9 +11,10 @@ namespace Integration.Pharmacy.Service
     {
         IntegrationDbContext context = new IntegrationDbContext();
 
-        public bool AddNewPharmacy(PharmacyProfile newPharmacy)
+        public bool AddNewPharmacy(PharmacyProfile newPharmacy, out string generatedKey)
         {
-            newPharmacy.Key = Generator.GenerateApiKey();
+            generatedKey = Generator.GenerateApiKey();
+            newPharmacy.Key = generatedKey;
             PharmacyProfile foundedPharmacy = context.Pharmacies.SingleOrDefault(pharmacy => pharmacy.Localhost == newPharmacy.Localhost);
             if(foundedPharmacy != null)
             {
