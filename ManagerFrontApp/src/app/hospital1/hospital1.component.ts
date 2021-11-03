@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,6 +9,33 @@ import { Component, OnInit } from '@angular/core';
 export class Hospital1Component implements OnInit {
 
   constructor() { }
+  btntext="Edit"
+  roomName:string ='';
+  doctorUsing:string='';
+  purpose:string='';
+  
+  enableEdit(){
+    
+    if(this.btntext==='Edit'){
+      this.btntext="Quit edit"
+      let a = document.getElementsByTagName('input');
+      for(let i=0; i<a.length; i++){
+        a[i].disabled=false;
+     }
+    } else {
+      this.btntext="Edit"
+      let a = document.getElementsByTagName('input');
+      for(let i=0; i<a.length; i++){
+        a[i].disabled=true;
+      }
+    }
+    
+  }
+
+  showInfo(roomName:string){
+    this.roomName=roomName;
+
+  }
 
   ngOnInit(): void {
   }
