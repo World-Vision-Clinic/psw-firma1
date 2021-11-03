@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto+Condensed&display=swap');
+
+.yard{
+    fill: gray;
+    margin: 7%;
+}
+
+.building{
+    fill:chocolate ;
+    stroke:black;
+    stroke-width: 4px;
+}
+
+.parking{
+    fill:rgb(16, 172, 224);
+    stroke: rgb(15, 43, 165);
+    stroke-width: 4px;
+}
+
+.text{
+    font-family: 'Montserrat', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 18px;
+}
+
+.park{
+    fill:green;
+    stroke: rgb(18, 68, 18);
+    stroke-width: 4px;
+}
