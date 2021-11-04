@@ -80,7 +80,7 @@ namespace Hospital_API
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Feedback>> PostFeedback([FromBody]Feedback feedback)
+        public async Task<ActionResult<Feedback>> PostFeedback([FromBody] Feedback feedback)
         {
             _context.Feedbacks.Add(feedback);
             await _context.SaveChangesAsync();
