@@ -1,81 +1,87 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto+Condensed&display=swap');
-*{
-    box-sizing: border-box;
-    border: 0;
-    padding: 0;
-    font-size: 15px;
-    font-family: 'Montserrat', sans-serif;
-    font-family: 'Roboto Condensed', sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto+Condensed&display=swap");
+* {
+  box-sizing: border-box;
+  border: 0;
+  padding: 0;
+  font-size: 15px;
+  font-family: "Montserrat", sans-serif;
+  font-family: "Roboto Condensed", sans-serif;
 }
 
-.title{
-    text-align: center;
+.title {
+  text-align: center;
 }
 
-.page-nav{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
+.page-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
 }
 
-.room{
-    stroke: black;
-    stroke-width: 2px;
-    fill: cadetblue;
+.room {
+  stroke: black;
+  stroke-width: 2px;
+  fill: cadetblue;
 }
 
-.staircase{
-    fill:cornsilk;
-    stroke:black;
-    stroke-width: 3px;
+.room:hover {
+  cursor: pointer;
 }
 
-.doors{
-    stroke:black;
-    stroke-width: 2px;
-    fill:burlywood;
+.staircase {
+  fill: cornsilk;
+  stroke: black;
+  stroke-width: 3px;
 }
 
-.text{
-    font-size: 15px;
-    font-family: 'Montserrat', sans-serif;
-    font-family: 'Roboto Condensed', sans-serif;
+.doors {
+  stroke: black;
+  stroke-width: 2px;
+  fill: burlywood;
 }
 
-.info-box{
-    width: 370px;
-    height: 400px;
-    border: 2px solid black;
-    margin: 4px;
-    padding: 5px;
+.text {
+  font-size: 15px;
+  font-family: "Montserrat", sans-serif;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.info-box {
+  width: 370px;
+  height: 400px;
+  border: 2px solid black;
+  margin: 4px;
+  padding: 5px;
 }
 
 .form-field {
-    width: 100%;
-    border: 0;
-    border-bottom: 2px solid gray;
-    outline: 0;
-    font-size: 1.3rem;
-    padding: 7px 0;
-    background: transparent;
-    transition: border-color 0.2s;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid gray;
+  outline: 0;
+  font-size: 1.3rem;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
 }
 
-.rightbtn{
-    float: right;
-    margin-right: 30px;
+.rightbtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
-.btn{
-    color: white;
-    background-color: rgb(60, 137, 139);
-    border-radius: 3px;
-    width: 80px;
-    height: 24px;
-    font-size: 18px;
-    transition: 0.7s;
+.btn {
+  color: white;
+  background-color: rgb(60, 137, 139);
+  border-radius: 3px;
+  width: 80px;
+  height: 24px;
+  font-size: 18px;
+  transition: 0.7s;
+  margin: 0 2px;
 }
-.btn:hover{
-    background-color: rgb(89, 203, 207);
+.btn:hover {
+  background-color: rgb(89, 203, 207);
 }

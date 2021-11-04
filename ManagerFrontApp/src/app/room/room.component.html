@@ -1,0 +1,19 @@
+<svg width="950" height="700">
+  <g>
+    <rect
+      [attr.x]="room?.x"
+      [attr.y]="room?.y"
+      [attr.width]="room?.width"
+      [attr.height]="room?.height"
+      class="room"
+    />
+    <text x="110" y="250" class="text">{{ room?.name }}</text>
+    <rect
+      [attr.x]="room?.doorX"
+      [attr.y]="room?.doorY"
+      [attr.width]="6"
+      [attr.height]="35"
+      class="doors"
+    />
+  </g>
+</svg>

@@ -6,17 +6,22 @@ import { AppComponent } from './app.component';
 import { BuildingsMapComponent } from './buildings-map/buildings-map.component';
 import { Hospital1Component } from './hospital1/hospital1.component';
 import { FrontPageComponent } from './front-page/front-page.component';
+import { RoomComponent } from './room/room.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     BuildingsMapComponent,
     Hospital1Component,
-    FrontPageComponent
+    FrontPageComponent,
+    RoomComponent,
+
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
