@@ -37,3 +37,9 @@
     stroke: cornsilk;
     stroke-width: 6px;
 }
+
+.doors {
+    stroke: black;
+    stroke-width: 2px;
+    fill: rgb(82, 80, 78);
+  }
