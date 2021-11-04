@@ -82,10 +82,13 @@ namespace Hospital_API
         [HttpPost]
         public async Task<ActionResult<Feedback>> PostFeedback([FromBody] Feedback feedback)
         {
-            _context.Feedbacks.Add(feedback);
+            Feedback newFeedback = feedback;
+            newFeedback.Id = newFeedback.GetHashCode();
+
+            _context.Feedbacks.Add(newFeedback);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetFeedback", new { id = feedback.Id }, feedback);
+            return CreatedAtAction("GetFeedback", new { id = newFeedback.Id }, newFeedback);
         }
 
         // DELETE: api/Feedbacks/5

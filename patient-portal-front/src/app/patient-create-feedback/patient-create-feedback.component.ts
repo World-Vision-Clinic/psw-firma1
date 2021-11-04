@@ -24,7 +24,7 @@ export class PatientCreateFeedbackComponent implements OnInit {
   }
 
   createFeedback() {
-    let feedback = new Feedback(19,this.content,this.isPublic,this.isAnonymous);
+    let feedback = new Feedback(0,this.content,this.isPublic,this.isAnonymous);
     this._patientCreateFeedbackService.addFeedback(feedback).subscribe();
   }
 }
