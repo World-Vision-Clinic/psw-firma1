@@ -14,7 +14,7 @@
 
 .page-nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: centers;
   align-items: center;
   padding: 15px 20px;
 }
@@ -22,7 +22,7 @@
 .room {
   stroke: black;
   stroke-width: 2px;
-  fill: cadetblue;
+  fill: rgba(169, 151, 185, 0.911);
 }
 
 .room:hover {
@@ -30,7 +30,7 @@
 }
 
 .staircase {
-  fill: cornsilk;
+  fill: rgb(204, 200, 187);
   stroke: black;
   stroke-width: 3px;
 }
@@ -38,7 +38,7 @@
 .doors {
   stroke: black;
   stroke-width: 2px;
-  fill: burlywood;
+  fill: rgb(82, 80, 78);
 }
 
 .text {
