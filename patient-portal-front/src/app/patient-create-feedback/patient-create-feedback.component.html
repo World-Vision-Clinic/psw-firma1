@@ -1,0 +1,8 @@
+<input id="content" type="textarea" [(ngModel)]="content"><br>
+<label>Public</label>
+<input id="isPublic" type="checkbox" [(ngModel)]="isPublic"><br>
+<label>Anonymous</label>
+<input id="isAnonymous" type="checkbox" [(ngModel)]="isAnonymous"><br>
+<button (click)="createFeedback()">
+  Leave Feedback
+</button>
