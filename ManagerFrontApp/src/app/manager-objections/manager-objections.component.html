@@ -6,9 +6,15 @@
                 class="m-1 btn btn-light btn-outline-primary" Button>Create objection</button>
             </li>
             <li class="nav-item">
-                <button routerLink="employee"
+                <button [routerLink]="['/manager-objections', {
+                    outlets:{
+                        'showObjRepl' : ['overview-objections-replies']
+                    }
+                }]"
                 class="m-1 btn btn-light btn-outline-primary" Button>Overview of objections and replies</button>
             </li>
         </ul>
     </nav>
 <div>
+
+<router-outlet name="showObjRepl"></router-outlet>
