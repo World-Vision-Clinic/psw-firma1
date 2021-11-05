@@ -21,3 +21,24 @@
 
   }
 
+ 
+.footer_container {
+    width: 100%;
+    background-color: #b3cfee;
+    text-align: center;
+    
+}
+
+ .About, .ForPatients{
+  display:inline-block;
+  position:relative;
+  width:calc(100% / 3);
+}
+
+.row{
+  text-align: center;
+}
+
+
+
+
