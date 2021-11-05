@@ -22,5 +22,10 @@ namespace Integration.Pharmacy.Repository
             dbContext.Pharmacies.Add(pharmacy);
             dbContext.SaveChanges();
         }
+
+        public List<PharmacyProfile> GetAll()
+        {
+            return dbContext.Pharmacies.ToList();
+        }
     }
 }

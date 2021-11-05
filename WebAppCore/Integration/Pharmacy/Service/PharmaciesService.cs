@@ -26,9 +26,14 @@ namespace Integration.Pharmacy.Service
             return true;
         }
 
-        public PharmacyProfile Get(String id)
+        public PharmacyProfile Get(string id)
         {
             return pharamaciesRepository.Get(id);
+        }
+
+        public List<PharmacyProfile> GetAll()
+        {
+            return pharamaciesRepository.GetAll();
         }
     }
 }
