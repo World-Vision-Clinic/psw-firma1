@@ -1,0 +1,8 @@
+<div *ngFor="let dataItem of ObjectionList" class="list-group">
+    <li  class="list-group-item list-group-item-action flex-column align-items-start">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">To: {{dataItem.PharmacyName}}</h5>
+      </div>
+      <p class="mb-1" style="text-align: center;">{{dataItem.Content}}</p>
+    </li>
+  </div>
