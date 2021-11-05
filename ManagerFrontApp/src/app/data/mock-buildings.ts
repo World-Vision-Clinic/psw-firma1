@@ -2,7 +2,25 @@ import { Building } from "./building";
 
 export let BUILDINGS: Building[] = [
     {
-        name: 'Hospital 1',
+        name: 'Hospital I',
+        mapPosition: {
+            x: 30,
+            y: 20, 
+            width: 520,
+            height: 180,
+            doors: [
+                {
+                    x: 545,
+                    y: 130,
+                    isVertical: true
+                },
+                {
+                    x: 260,
+                    y: 195,
+                    isVertical: false
+                }
+            ]
+        },
         floors: [
             {
                 level: 'Ground floor',
@@ -441,5 +459,26 @@ export let BUILDINGS: Building[] = [
                 ]
             }
         ]
+    },{
+        name: 'Hospital II',
+        mapPosition: {
+            x: 30,
+            y: 440, 
+            width: 520,
+            height: 180,
+            doors: [
+                {
+                    x: 545,
+                    y: 500,
+                    isVertical: true
+                },
+                {
+                    x: 260,
+                    y: 435,
+                    isVertical: false
+                }
+            ]
+        },
+        floors: []
     }
 ]

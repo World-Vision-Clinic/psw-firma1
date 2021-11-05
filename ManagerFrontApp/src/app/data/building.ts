@@ -4,7 +4,8 @@ export interface Building{
     name: string,
     info?: string,
     floors: Floor[],
-    area?: Area
+    area?: Area,
+    mapPosition: MapPosition
 }
 
 
@@ -13,4 +14,18 @@ export interface Area{
     y: number,
     width: number,
     height: number
+}
+
+export interface MapPosition{
+    x: number,
+    y: number,
+    height: number,
+    width: number,
+    doors?: OutsideDoor[]
+}
+
+export interface OutsideDoor{
+    x: number,
+    y: number,
+    isVertical: boolean
 }
