@@ -83,7 +83,7 @@ namespace Hospital_API
         public async Task<ActionResult<Feedback>> PostFeedback([FromBody] Feedback feedback)
         {
             Feedback newFeedback = feedback;
-            newFeedback.Id = newFeedback.GetHashCode();
+            //newFeedback.Id = newFeedback.GetHashCode();
 
             _context.Feedbacks.Add(newFeedback);
             await _context.SaveChangesAsync();
