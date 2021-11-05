@@ -121,3 +121,14 @@
   stroke-width: 2px;
   fill: #d3d3d3;
 }
+
+.building-info {
+  position: absolute;
+}
+
+.info-body {
+  display: flex;
+}
+.info-module {
+  margin: 0 10px;
+}

@@ -1,45 +1,44 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto+Condensed&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto+Condensed&display=swap");
 
-.yard{
-    fill: rgba(224, 223, 223, 0.911);
-    margin: 7%;
+.yard {
+  fill: rgba(224, 223, 223, 0.911);
+  margin: 7%;
 }
 
-.building{
-    fill:cadetblue ;
-    
+.building {
+  fill: cadetblue;
+  cursor: pointer;
 }
 
-.parking{
-    fill:rgb(128, 128, 128);
-    stroke: rgb(70, 70, 70);
-    stroke-width: 8px;
+.parking {
+  fill: rgb(128, 128, 128);
+  stroke: rgb(70, 70, 70);
+  stroke-width: 8px;
 }
 
-.text{
-    font-family: 'Montserrat', sans-serif;
-    font-family: 'Roboto Condensed', sans-serif;
-    font-size: 36px;
-    font-weight: bold;
+.text {
+  font-family: "Montserrat", sans-serif;
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 36px;
+  font-weight: bold;
 }
 
-.park{
-    fill:rgb(69, 165, 101);
+.park {
+  fill: rgb(69, 165, 101);
 }
 
-.parkline{
-    fill:rgba(224, 223, 223, 0.911);
+.parkline {
+  fill: rgba(224, 223, 223, 0.911);
 }
 
-
-.parkingarea{
-    fill:cornsilk;
-    stroke: cornsilk;
-    stroke-width: 6px;
+.parkingarea {
+  fill: cornsilk;
+  stroke: cornsilk;
+  stroke-width: 6px;
 }
 
 .doors {
-    stroke: black;
-    stroke-width: 2px;
-    fill: rgb(82, 80, 78);
-  }
+  stroke: black;
+  stroke-width: 2px;
+  fill: rgb(82, 80, 78);
+}

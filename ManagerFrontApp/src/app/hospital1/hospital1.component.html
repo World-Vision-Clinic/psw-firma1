@@ -16,7 +16,48 @@
     </button>
     <button (click)="takeOut()" class="floor-button">🚪 Exit</button>
   </div>
-  <div style="margin: 0 10px">
+  <div style="margin: 0 10px; position: relative">
+    <div class="building-info">
+      <div style="text-align: center">
+        <h3 style="align-self: flex-start">Building info:</h3>
+      </div>
+      <div class="info-body">
+        <div class="info-module">
+          <label for="">Building name:</label><br />
+          <input
+            type="text"
+            class="form-field"
+            [(ngModel)]="selectedBuilding.name"
+            name="input"
+            [attr.disabled]="buildingFormDisabled ? '' : null"
+          />
+        </div>
+        <label for="">Info:</label><br />
+        <input
+          type="text"
+          class="form-field"
+          [(ngModel)]="selectedBuilding.info"
+          name="input"
+          [attr.disabled]="buildingFormDisabled ? '' : null"
+        />
+        <div class="info-module" style="align-self: flex-end">
+          <button
+            class="btn"
+            (click)="buildingFormDisabled = false"
+            *ngIf="buildingFormDisabled"
+          >
+            Edit
+          </button>
+          <button
+            class="btn"
+            (click)="buildingFormDisabled = true"
+            *ngIf="!buildingFormDisabled"
+          >
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
     <svg width="850" height="700">
       <rect x="0" y="150" width="841" height="451" class="floor" />
       <g *ngFor="let room of selectedFloor.rooms">

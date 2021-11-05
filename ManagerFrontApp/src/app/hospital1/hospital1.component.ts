@@ -17,6 +17,7 @@ export class Hospital1Component implements OnInit {
   selectedFloor = this.selectedBuilding.floors[0]
   constructor(private router: Router) { }
   btntext="Edit"
+  buildingFormDisabled = true
   roomName:string ='';
   doctorUsing:string='';
   purpose:string='';
@@ -59,6 +60,7 @@ export class Hospital1Component implements OnInit {
 	  const middleX =  room.y + room.height / 2 + lineHeight / 2
 	  return middleX
   }
+
 
   close = () => {
     this.formDisabled = true;

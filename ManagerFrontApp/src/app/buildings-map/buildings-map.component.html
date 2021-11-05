@@ -14,7 +14,12 @@
           class="building"
           (dblclick)="enterHospital()"
         >
-          <title>Double click - open building</title>
+          <title>
+            Building
+            review&#013;--------------------------------&#013;&#013;Name:
+            {{ building.name }}&#013;Info: {{ building.info }}&#013;Floors:
+            {{ building.floors.length }}
+          </title>
         </rect>
         <text
           [attr.x]="calculateTextX(building)"

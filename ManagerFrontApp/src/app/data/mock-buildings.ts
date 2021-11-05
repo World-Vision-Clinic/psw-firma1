@@ -3,6 +3,7 @@ import { Building } from "./building";
 export let BUILDINGS: Building[] = [
     {
         name: 'Hospital I',
+        info: 'Gynecology',
         mapPosition: {
             x: 30,
             y: 20, 
