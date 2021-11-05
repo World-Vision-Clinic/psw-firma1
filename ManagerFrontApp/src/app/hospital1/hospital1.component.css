@@ -69,7 +69,7 @@
 .rightbtn {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .btn {
@@ -84,4 +84,37 @@
 }
 .btn:hover {
   background-color: rgb(89, 203, 207);
+}
+
+.selected-floor-button {
+  background-color: red;
+}
+.floor-button {
+  display: block;
+  padding: 5px 10px;
+  border-radius: 7px;
+  outline: none;
+  border: none;
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.floor-selection {
+  display: flex;
+  flex-direction: column;
+}
+
+.floor-number {
+  font-weight: bold;
+  float: left;
+  margin-right: 10px;
+}
+.selected-floor {
+  background-color: rgba(169, 151, 185, 0.911);
+}
+
+.floor {
+  stroke: black;
+  stroke-width: 2px;
+  fill: #d3d3d3;
 }

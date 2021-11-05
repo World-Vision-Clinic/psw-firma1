@@ -1,5 +1,8 @@
 import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Floor } from '../data/floor';
+import { BUILDINGS } from '../data/mock-buildings';
 import { ROOMS } from '../data/mock-rooms';
 import { emptyRoom, Room } from '../data/room';
 @Component({
@@ -8,9 +11,11 @@ import { emptyRoom, Room } from '../data/room';
   styleUrls: ['./hospital1.component.css']
 })
 export class Hospital1Component implements OnInit {
-
-	rooms = ROOMS
-  constructor() { }
+  building = BUILDINGS;
+	rooms = ROOMS;
+  selectedBuilding = this.building[0];
+  selectedFloor = this.selectedBuilding.floors[0]
+  constructor(private router: Router) { }
   btntext="Edit"
   roomName:string ='';
   doctorUsing:string='';
@@ -26,6 +31,14 @@ export class Hospital1Component implements OnInit {
   cancel(){
 	this.formDisabled = true;
   }
+  selectFloor = (floor: Floor) => {
+    console.log(floor);
+    this.selectedFloor = floor;
+  }
+
+  takeOut = () =>{
+    this.router.navigate(['/buildings'])
+  }
 
   save(){
 	  const index = this.rooms.findIndex(e => e.roomId === this.selectedRoom?.roomId);
@@ -39,7 +52,7 @@ export class Hospital1Component implements OnInit {
   calculateTextX(room:Room){
 	  const textWidth = room.name.length * 7.5
 	  const middleX = room.x + room.width / 2 - textWidth/2
-	  return middleX
+	  return middleX - 100
   }
   calculateTextY(room:Room){
 	  const lineHeight = 10
@@ -47,6 +60,11 @@ export class Hospital1Component implements OnInit {
 	  return middleX
   }
 
+  close = () => {
+    this.formDisabled = true;
+	  this.roomIsSelected = false;
+	  this.selectedRoom = emptyRoom()
+  }
   showInfo(roomName:string){
 	this.roomName=roomName;
 

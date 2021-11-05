@@ -2,17 +2,26 @@
   <h1>ROOMS MAP</h1>
 </div>
 <div class="page-nav">
-  <div>
-    <input type="radio" name="floor" />
-    <label for="">Ground Floor</label> <br />
-    <input type="radio" name="floor" />
-    <label for="">First Floor</label>
+  <div class="floor-selection">
+    <label for="">Floors:</label>
+    <button
+      *ngFor="let floor of selectedBuilding.floors; index as i"
+      (click)="selectFloor(floor)"
+      class="floor-button"
+      [ngClass]="{
+        'selected-floor': floor.level === selectedFloor.level
+      }"
+    >
+      <span class="floor-number">{{ i }}</span> {{ floor.level }}
+    </button>
+    <button (click)="takeOut()" class="floor-button">Exit</button>
   </div>
-  <div>
-    <svg width="950" height="700">
-      <g *ngFor="let room of rooms">
+  <div style="margin: 0 10px">
+    <svg width="850" height="700">
+      <rect x="0" y="150" width="841" height="451" class="floor" />
+      <g *ngFor="let room of selectedFloor.rooms">
         <rect
-          [attr.x]="room.x"
+          [attr.x]="room.x - 100"
           [attr.y]="room.y"
           [attr.width]="room.width"
           [attr.height]="room.height"
@@ -28,15 +37,17 @@
         </text>
         <rect
           *ngIf="room.doorExists"
-          [attr.x]="room.doorX"
+          [attr.x]="room.doorX - 100"
           [attr.y]="room.doorY"
           [attr.width]="room?.vertical ? 6 : 35"
           [attr.height]="!room?.vertical ? 6 : 35"
           class="doors"
         />
       </g>
-      <g>
-        <text x="150" y="380" class="text">ENTRANCE</text>
+      <g *ngFor="let label of selectedFloor.labels">
+        <text [attr.x]="label.x" [attr.y]="label.y" class="text">
+          {{ label.text }}
+        </text>
       </g>
     </svg>
   </div>
@@ -71,6 +82,7 @@
     <br />
     <br />
     <div class="rightbtn">
+      <button class="btn" (click)="close()" *ngIf="formDisabled">Close</button>
       <button class="btn" (click)="enableEdit()" *ngIf="formDisabled">
         Edit
       </button>
