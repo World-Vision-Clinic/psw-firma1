@@ -13,5 +13,10 @@ namespace Integration.Pharmacy.Service
         {
             repository.Save(newReply);
         }
+
+        public List<Reply> GetObjectionReplies(string objectionId)
+        {
+            return repository.GetObjectionReplies(objectionId);
+        }
     }
 }

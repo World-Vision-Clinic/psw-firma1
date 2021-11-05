@@ -67,5 +67,20 @@ namespace Integration_API.Controller
             System.Diagnostics.Debug.WriteLine(dto.Content);
             return Ok();
         }
+
+        [HttpGet("GetObjectionReplies")]
+        public IActionResult GetObjectionReplies(string objectionId = "")
+        {
+            List<Reply> replies = new List<Reply>();
+            List<String> result = null;
+            replies = repliesService.GetObjectionReplies(objectionId);
+            System.Diagnostics.Debug.WriteLine(objectionId);
+            if(replies != null)
+            {
+                result = new List<String>();
+                foreach(Reply repl in replies){ result.Add(ReplyMapper.ReplyToContent(repl));}
+            }
+            return Ok(result);
+        }
     }
 }

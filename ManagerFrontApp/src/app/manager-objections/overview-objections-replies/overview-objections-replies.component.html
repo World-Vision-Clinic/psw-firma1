@@ -1,8 +1,12 @@
-<div *ngFor="let dataItem of ObjectionList" class="list-group">
+<div *ngFor="let dataItem of ObjectionList; let i = index" class="list-group">
     <li  class="list-group-item list-group-item-action flex-column align-items-start">
       <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-1">To: {{dataItem.PharmacyName}}</h5>
       </div>
       <p class="mb-1" style="text-align: center;">{{dataItem.Content}}</p>
+      <button *ngIf="replies[i]" (click)="showResponse(i)" type="button" class="btn btn-primary" style="margin-left: 90%;">Responses</button>
+      <div class="list-group" *ngIf="responseDiv[i]">
+        <a href="#" class="list-group-item list-group-item-action">{{RepliesForObjectionList[i]}}</a>
+      </div>
     </li>
   </div>
