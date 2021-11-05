@@ -24,8 +24,10 @@ public class RepliesService {
 	public boolean addReply(ReplyDto dto) {
 		boolean result;
         try {
+        	HttpHeaders header = new HttpHeaders();
+        	header.set("ApiKey", "bjJ8hZuV6alsuvzVH8ylL6lfK5tZtBhUK81JDGCUszY");
             ResponseEntity<?> response = restTemplate.exchange(API_URL + "/replies/add",
-                    HttpMethod.POST, new HttpEntity<>(dto, new HttpHeaders()), ResponseEntity.class);
+                    HttpMethod.POST, new HttpEntity<>(dto, header), ResponseEntity.class);
             result = response.getStatusCodeValue() == 200;
         } catch (Exception e) {
             e.printStackTrace();
