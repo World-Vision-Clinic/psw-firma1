@@ -41,8 +41,8 @@ export class Hospital1Component implements OnInit {
   }
 
   save(){
-	  const index = this.rooms.findIndex(e => e.roomId === this.selectedRoom?.roomId);
-	  this.rooms[index] = this.selectedRoom;
+	  const index = this.selectedFloor.rooms.findIndex(e => e.roomId === this.selectedRoom?.roomId);
+	  this.selectedFloor.rooms[index] = this.selectedRoom;
 	  this.formDisabled = true;
 	  this.roomIsSelected = false;
 	  this.selectedRoom = emptyRoom()
@@ -66,13 +66,13 @@ export class Hospital1Component implements OnInit {
 	  this.selectedRoom = emptyRoom()
   }
   showInfo(roomName:string){
-	this.roomName=roomName;
-
+	  this.roomName=roomName;
   }
+
   selectRoom(room:Room){
-	this.selectedRoom = {...room};
-	this.roomIsSelected = true;
-	this.formDisabled = true;
+    this.selectedRoom = {...room};
+    this.roomIsSelected = true;
+    this.formDisabled = true;
   }
 
 
