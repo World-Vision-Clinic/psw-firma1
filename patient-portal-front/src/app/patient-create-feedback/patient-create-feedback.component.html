@@ -1,8 +1,52 @@
-<input id="content" type="textarea" [(ngModel)]="content"><br>
-<label>Public</label>
-<input id="isPublic" type="checkbox" [(ngModel)]="isPublic"><br>
-<label>Anonymous</label>
-<input id="isAnonymous" type="checkbox" [(ngModel)]="isAnonymous"><br>
-<button (click)="createFeedback()">
-  Leave Feedback
-</button>
+<div class="container-fluid">
+  <div class="row mt-3">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+
+        <!--Header-->
+        <div class="header gradient-custom">
+          <div class="row d-flex justify-content-center">
+            <h3 class="text-white mb-0 py-5 font-weight-bold">Let us know about your experience</h3>
+          </div>
+        </div>
+    
+        <div class="card-body mx-4">
+    
+          <div class="md-form">
+            <i class="fas fa-pencil-alt prefix grey-text"></i>
+            <textarea id="content" class="md-textarea form-control" rows="5" [(ngModel)]="content"></textarea>
+          </div>
+    
+    
+          <!--Grid row-->
+          <div class="row d-flex align-items-center mb-3 mt-4">
+            <div class="col-md-4">
+              <span class="switch">
+                <input type="checkbox" class="switch" id="isPublic" [(ngModel)]="isPublic">
+                <label for="isPublic">Public</label>
+              </span>
+            </div>
+            <div class="col-md-4">
+              <span class="switch">
+                <input type="checkbox" class="switch" id="isAnonymous" [(ngModel)]="isAnonymous">
+                <label for="isAnonymous">Anonymous</label>
+              </span>
+            </div>
+            <div class="col-md-4">
+              <div class="text-center">
+                <button type="button" class="btn btn-blue btn-rounded" (click)="createFeedback()">Send</button>
+              </div>
+            </div>
+    
+          </div>
+          <!--Grid row-->
+        </div>
+    
+      </div>
+    </div>
+    <div class="col-md-4">
+    </div>
+  </div>
+</div>

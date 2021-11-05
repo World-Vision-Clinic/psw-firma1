@@ -8,14 +8,12 @@ import { PatientCreateFeedbackService } from '../patient-create-feedback.service
   styleUrls: ['./patient-create-feedback.component.css']
 })
 export class PatientCreateFeedbackComponent implements OnInit {
-  id: number;
   content: string;
   isPublic: boolean;
   isAnonymous: boolean;
 
-  constructor(private _patientCreateFeedbackService: PatientCreateFeedbackService) { 
-    this.id = 0;
-    this.content = "abc";
+  constructor(private _patientCreateFeedbackService: PatientCreateFeedbackService) {
+    this.content = "";
     this.isPublic = false;
     this.isAnonymous = false;
   }
