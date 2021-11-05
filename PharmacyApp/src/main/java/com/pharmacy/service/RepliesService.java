@@ -5,6 +5,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,7 +22,7 @@ public class RepliesService {
         this.restTemplate = new RestTemplate();
     }
 
-	public boolean addReply(ReplyDto dto) {
+	public boolean sendReply(ReplyDto dto) {
 		boolean result;
         try {
         	HttpHeaders header = new HttpHeaders();
