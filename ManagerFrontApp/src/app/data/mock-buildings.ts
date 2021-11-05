@@ -24,7 +24,7 @@ export let BUILDINGS: Building[] = [
                         doorX: 148,
                         doorY: 285,
                         vertical: true,
-                        class:"room",
+                        class:"room room-cadetblue",
                         doorExists: true
                     },
                     {
@@ -39,7 +39,7 @@ export let BUILDINGS: Building[] = [
                         doorX: 220,
                         doorY: 248,
                         vertical: false,
-                        class:"room",
+                        class:"room room-cadetblue",
                         doorExists: true
                     },
                     {
@@ -54,7 +54,7 @@ export let BUILDINGS: Building[] = [
                         doorX: 370,
                         doorY: 248,
                         vertical: false,
-                        class:"room",
+                        class:"room room-cadetblue",
                         doorExists: true
                     },
                     {
@@ -69,7 +69,7 @@ export let BUILDINGS: Building[] = [
                         doorX: 520,
                         doorY: 248,
                         vertical: false,
-                        class:"room",
+                        class:"room room-cadetblue",
                         doorExists: true
                     },
                     {
@@ -84,7 +84,7 @@ export let BUILDINGS: Building[] = [
                         doorX: 680,
                         doorY: 248,
                         vertical: false,
-                        class:"room",
+                        class:"room room-cadetblue",
                         doorExists: true
                     },
                     {
@@ -99,7 +99,7 @@ export let BUILDINGS: Building[] = [
                         doorX: 728,
                         doorY: 290,
                         vertical: true,
-                        class:"room",
+                        class:"room room-cadetblue",
                         doorExists: true
                     },
                     {
@@ -129,7 +129,7 @@ export let BUILDINGS: Building[] = [
                         doorX: 728,
                         doorY: 485,
                         vertical: true,
-                        class:"room",
+                        class:"room room-cadetblue",
                         doorExists: true
                     },
                     {
@@ -144,7 +144,7 @@ export let BUILDINGS: Building[] = [
                         doorX: 728,
                         doorY: 555,
                         vertical: true,
-                        class:"room",
+                        class:"room room-cadetblue",
                         doorExists: true
                     },
                     {
@@ -159,7 +159,7 @@ export let BUILDINGS: Building[] = [
                         doorX:148,
                         doorY:419,
                         vertical: true,
-                        class:"room",
+                        class:"room room-cadetblue",
                         doorExists: true
                     },
                     {
@@ -174,7 +174,7 @@ export let BUILDINGS: Building[] = [
                         doorX: 200,
                         doorY: 498,
                         vertical: false,
-                        class:"room",
+                        class:"room room-cadetblue",
                         doorExists: true
                     },
                     {
@@ -189,7 +189,7 @@ export let BUILDINGS: Building[] = [
                         doorX: 315,
                         doorY: 498,
                         vertical: false,
-                        class:"room",
+                        class:"room room-cadetblue",
                         doorExists: true
                     },
                     {
@@ -204,7 +204,7 @@ export let BUILDINGS: Building[] = [
                         doorX: 475,
                         doorY: 498,
                         vertical: false,
-                        class:"room",
+                        class:"room room-cadetblue",
                         doorExists: true
                     },
                 ]
@@ -407,36 +407,36 @@ export let BUILDINGS: Building[] = [
                         class:"room",
                         doorExists: true
                     },
-                    {
-                        roomId: 14,
-                        name: "",
-                        doctor: "",
-                        purpose: "",
-                        x: 0,
-                        y: 252,
-                        width: 4,
-                        height: 46,
-                        doorX: 728,
-                        doorY: 290,
-                        vertical: true,
-                        class:"staircase",
-                        doorExists: false
-                    },
-                    {
-                        roomId: 15,
-                        name: "",
-                        doctor: "",
-                        purpose: "",
-                        x: 573,
-                        y: 595,
-                        width: 155,
-                        height: 4,
-                        doorX: 728,
-                        doorY: 290,
-                        vertical: true,
-                        class:"staircase",
-                        doorExists: false
-                    },
+                    // {
+                    //     roomId: 14,
+                    //     name: "",
+                    //     doctor: "",
+                    //     purpose: "",
+                    //     x: 0,
+                    //     y: 252,
+                    //     width: 4,
+                    //     height: 46,
+                    //     doorX: 728,
+                    //     doorY: 290,
+                    //     vertical: true,
+                    //     class:"staircase",
+                    //     doorExists: false
+                    // },
+                    // {
+                    //     roomId: 15,
+                    //     name: "",
+                    //     doctor: "",
+                    //     purpose: "",
+                    //     x: 573,
+                    //     y: 595,
+                    //     width: 155,
+                    //     height: 4,
+                    //     doorX: 728,
+                    //     doorY: 290,
+                    //     vertical: true,
+                    //     class:"staircase",
+                    //     doorExists: false
+                    // },
                  
                 ]
             }

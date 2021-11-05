@@ -25,6 +25,10 @@
   fill: rgba(169, 151, 185, 0.911);
 }
 
+.room-cadetblue {
+  fill: cadetblue;
+}
+
 .room:hover {
   cursor: pointer;
 }
