@@ -52,7 +52,7 @@ export class Hospital1Component implements OnInit {
   calculateTextX(room:Room){
 	  const textWidth = room.name.length * 7.5
 	  const middleX = room.x + room.width / 2 - textWidth/2
-	  return middleX - 100
+	  return middleX
   }
   calculateTextY(room:Room){
 	  const lineHeight = 10

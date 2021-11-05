@@ -21,7 +21,7 @@
       <rect x="0" y="150" width="841" height="451" class="floor" />
       <g *ngFor="let room of selectedFloor.rooms">
         <rect
-          [attr.x]="room.x - 100"
+          [attr.x]="room.x"
           [attr.y]="room.y"
           [attr.width]="room.width"
           [attr.height]="room.height"
@@ -37,7 +37,7 @@
         </text>
         <rect
           *ngIf="room.doorExists"
-          [attr.x]="room.doorX - 100"
+          [attr.x]="room.doorX"
           [attr.y]="room.doorY"
           [attr.width]="room?.vertical ? 6 : 35"
           [attr.height]="!room?.vertical ? 6 : 35"
