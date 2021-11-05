@@ -6,13 +6,12 @@ namespace Integration.Pharmacy.Model
 {
     public class Reply
     {
-        public string Id { get; set; }
+        public int Id { get; set; } 
         public string ObjectionId { get; set; }
         public string Content { get; set; }
 
-        public Reply(string id, string objectionId, string content)
+        public Reply(string objectionId, string content)
         {
-            Id = id;
             ObjectionId = objectionId;
             Content = content;
         }
