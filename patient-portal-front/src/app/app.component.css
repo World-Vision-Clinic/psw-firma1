@@ -1,0 +1,23 @@
+  .menu-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    color: white;
+}
+.menu-container span {
+    margin-right: 20px;
+}
+.menu-container a {
+    margin: 0 25px;
+    color: white;
+    text-decoration: none;
+}
+
+.mat-toolbar {
+    background: #b3cfee;
+    color: rgb(253, 249, 249);
+
+  }
+
