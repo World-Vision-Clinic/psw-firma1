@@ -12,7 +12,7 @@ export let BUILDINGS: Building[] = [
             doors: [
                 {
                     x: 545,
-                    y: 130,
+                    y: 80,
                     isVertical: true
                 },
                 {
@@ -464,18 +464,18 @@ export let BUILDINGS: Building[] = [
         name: 'Hospital II',
         mapPosition: {
             x: 30,
-            y: 440, 
+            y: 460, 
             width: 520,
             height: 180,
             doors: [
                 {
                     x: 545,
-                    y: 500,
+                    y: 505,
                     isVertical: true
                 },
                 {
                     x: 260,
-                    y: 435,
+                    y: 455,
                     isVertical: false
                 }
             ]

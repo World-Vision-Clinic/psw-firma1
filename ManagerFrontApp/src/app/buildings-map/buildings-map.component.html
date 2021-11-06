@@ -1,8 +1,8 @@
 <div style="text-align: center">
   <h3 style="rgb(70, 70, 70)" class="text">
-    World Vision Clinic facilities map
+    World Vision Clinic map
   </h3>
-  <svg width="1000" height="660">
+  <svg width="980" height="660">
     <g>
       <rect x="0" y="0" width="1000" height="660" class="yard" />
       <g *ngFor="let building of buildings">
@@ -15,9 +15,7 @@
           (dblclick)="enterHospital()"
         >
           <title>
-            Building
-            review&#013;--------------------------------&#013;&#013;Name:
-            {{ building.name }}&#013;Info: {{ building.info }}&#013;Floors:
+            Building review&#013;*********************&#013;Name: {{ building.name }}&#013;Info: {{ building.info }}&#013;Floors:
             {{ building.floors.length }}
           </title>
         </rect>
@@ -33,8 +31,8 @@
           *ngFor="let door of building.mapPosition.doors; index as i"
           [attr.x]="door.x"
           [attr.y]="door.y"
-          [attr.width]="door.isVertical ? 8 : 60"
-          [attr.height]="!door.isVertical ? 8 : 60"
+          [attr.width]="door.isVertical ? 6 : 80"
+          [attr.height]="!door.isVertical ? 6 : 80"
           class="doors"
         >
           <title>Entrance {{ i + 1 }} - {{ building.name }}</title>
@@ -42,18 +40,18 @@
       </g>
 
       <rect
-        x="170"
+        x="165"
         y="255"
         rx="20"
         ry="20"
         width="260"
-        height="130"
+        height="140"
         class="park"
       >
         <title>Park</title>
       </rect>
-      <rect x="170" y="310" width="260" height="20" class="parkline" />
-      <rect x="290" y="255" width="20" height="140" class="parkline" />
+      <rect x="165" y="315" width="260" height="20" class="parkline" />
+      <rect x="285" y="255" width="20" height="140" class="parkline" />
 
       <rect x="650" y="60" width="280" height="515" class="parking">
         <title>Parking lots for patients and doctors</title>

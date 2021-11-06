@@ -2,6 +2,7 @@
 
 .yard {
   fill: rgba(224, 223, 223, 0.911);
+  
   margin: 7%;
 }
 
@@ -11,7 +12,7 @@
 }
 
 .parking {
-  fill: rgb(128, 128, 128);
+  fill: rgb(160, 159, 159);
   stroke: rgb(70, 70, 70);
   stroke-width: 8px;
 }
@@ -24,7 +25,7 @@
 }
 
 .park {
-  fill: rgb(69, 165, 101);
+  fill: rgb(78, 165, 107);
 }
 
 .parkline {

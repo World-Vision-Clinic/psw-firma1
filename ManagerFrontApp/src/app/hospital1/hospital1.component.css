@@ -22,7 +22,7 @@
 .room {
   stroke: black;
   stroke-width: 2px;
-  fill: rgba(169, 151, 185, 0.911);
+  fill: cornsilk;
 }
 
 .room-cadetblue {
@@ -34,7 +34,7 @@
 }
 
 .staircase {
-  fill: rgb(204, 200, 187);
+  fill: rgb(160, 159, 159);
   stroke: black;
   stroke-width: 3px;
 }
@@ -53,7 +53,7 @@
 
 .info-box {
   width: 370px;
-  height: 400px;
+  height: 360px;
   border: 2px solid black;
   padding: 5px;
 }
@@ -76,8 +76,8 @@
 }
 
 .btn {
-  color: white;
-  background-color: rgb(60, 137, 139);
+  color: black;
+  background-color:rgb(160, 159, 159);
   border-radius: 3px;
   width: 80px;
   height: 24px;
@@ -85,13 +85,7 @@
   transition: 0.7s;
   margin: 0 2px;
 }
-.btn:hover {
-  background-color: rgb(89, 203, 207);
-}
 
-.selected-floor-button {
-  background-color: red;
-}
 .floor-button {
   display: block;
   padding: 5px 10px;
@@ -113,13 +107,13 @@
   margin-right: 10px;
 }
 .selected-floor {
-  background-color: rgba(169, 151, 185, 0.911);
+  background-color: rgb(160, 159, 159);
 }
 
 .floor {
   stroke: black;
   stroke-width: 2px;
-  fill: #d3d3d3;
+  fill: rgba(224, 223, 223, 0.911);
 }
 
 .building-info {
