@@ -1,18 +1,38 @@
-<h2>Hospital Feedback</h2>
-<span *ngIf="errorMsg; then printError else printFeedback"></span>
-<ng-template #printError>{{errorMsg}}</ng-template>
-<ng-template #printFeedback>
-    <table>
-      <tr>
-        <th>Id</th>
-        <th>Content</th>
-        <th>Anonymous</th>
-      </tr>
-      <tr *ngFor="let feedback of feedbacks; index as i">
-        <td>{{feedback.id}}</td>
-        <td>{{feedback.content}}</td>
-        <td>{{feedback.isAnonymous}}</td>
-        <td *ngIf="!feedback.isPublic" (click)="publishFeedback(i)"><button>Publish</button></td>
-      </tr>
-    </table>
-</ng-template>
+<style>
+.grad {
+    /*background-image: linear-gradient(45deg, turquoise, white);*/
+    background: linear-gradient(to top right, #33ccff 0%, #66ffcc 100%);
+    padding-top: 20;
+    /*background-color: turquoise;*/
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+</style>
+
+<div style="width: 50%; margin: auto;">
+    <h2 style="text-align: center; color:black">Hospital Feedback</h2>
+    <span *ngIf="errorMsg; then printError else printFeedback"></span>
+    <ng-template #printError>{{errorMsg}}</ng-template>
+    <ng-template #printFeedback>
+        <div >
+            <table class="table table-bordered rounded" style="background-color: white;">
+                <tr class="bg-primary" style="color: white;">
+                    <th class="col-md-3">Id</th>
+                    <th>Content</th>
+                    <th class="col-md-1">Anonymous</th>
+                    <th class="col-md-1"></th>
+                </tr>
+                <tr *ngFor="let feedback of feedbacks; index as i">
+                    <td class="col-md-3">{{feedback.id}}</td>
+                    <td>{{feedback.content}}</td>
+                    <td *ngIf="!feedback.isAnonymous" class="col-md-1"><img src="../assets/checkmark.svg"></td>
+                    <td *ngIf="feedback.isAnonymous" class="col-md-1"><img src="../assets/cross.svg"></td>
+                    <td *ngIf="!feedback.isPublic" class="col-md-1" (click)="publishFeedback(i)"><button>Publish</button></td>
+                </tr>
+            </table>
+        </div>
+    </ng-template>
+</div>
