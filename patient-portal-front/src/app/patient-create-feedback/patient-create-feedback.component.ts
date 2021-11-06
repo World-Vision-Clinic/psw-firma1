@@ -9,6 +9,7 @@ import {
   transition,
   trigger
 } from '@angular/animations';
+import { Router } from '@angular/router';
 
 const DEFAULT_DURATION = 300;
 
@@ -40,8 +41,9 @@ export class PatientCreateFeedbackComponent implements OnInit {
   isPublic: boolean;
   isAnonymous: boolean;
   feedbackSent: boolean = false;
+  errorMsg: string = "";
 
-  constructor(private _patientCreateFeedbackService: PatientCreateFeedbackService) {
+  constructor(private router: Router, private _patientCreateFeedbackService: PatientCreateFeedbackService) {
     this.content = "";
     this.isPublic = true;
     this.isAnonymous = false;
@@ -54,8 +56,11 @@ export class PatientCreateFeedbackComponent implements OnInit {
     if(this.contentIsValid())
     {
       let feedback = new Feedback(this.content,this.isPublic,this.isAnonymous);
-      this._patientCreateFeedbackService.addFeedback(feedback).subscribe();
       this.feedbackSent = true;
+      this._patientCreateFeedbackService.addFeedback(feedback).subscribe(
+        success => setTimeout(() => {
+          this.router.navigate(['view-feedback']);
+      }, 2000));
     }
   }
 

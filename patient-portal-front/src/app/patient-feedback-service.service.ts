@@ -13,6 +13,6 @@ export class PatientFeedbackServiceService {
 
 
   getFeedback() : Observable<IFeedback[]>{
-    return this.http.get<IFeedback[]>("/api/Feedbacks/publishd")
+    return this.http.get<IFeedback[]>("/api/Feedbacks/published")
   }
 }
