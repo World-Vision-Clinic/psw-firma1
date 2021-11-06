@@ -7,17 +7,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.pharmacy.model.Medicine;
+import com.pharmacy.repository.ICredentialRepository;
 import com.pharmacy.repository.IMedicineRepository;
 
 @Service
-public class MedicineService {
-
+public class CredentialService {
+	
 	@Autowired
-    private IMedicineRepository medicineRepository;
+    private ICredentialRepository credentialRepository;
 
-	public ResponseEntity<List<Medicine>> getAllMedications() {
-		return ResponseEntity.ok(medicineRepository.findAll());
-	}
 	
-	
+
 }

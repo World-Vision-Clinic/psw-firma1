@@ -17,5 +17,14 @@ namespace Integration_API.Mapper
             dto.PharmacyName = pharmacyName;
             return dto;
         }
+        
+        public static Objection ObjectionDtoToObjection(ObjectionDto dto, String generatedId)
+        {
+            Objection newObjection = new Objection();
+            newObjection.Content = dto.Content;
+            newObjection.PharmacyId = dto.PharmacyName;
+            newObjection.Id = generatedId;
+            return newObjection;
+        }
     }
 }

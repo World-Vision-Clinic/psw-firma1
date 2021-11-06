@@ -17,5 +17,11 @@ namespace Integration.Pharmacy.Repository
             dbContext.Objections.ToList().ForEach(objection => objections.Add(objection));
             return objections;
         }
+
+        public void saveEntity(Objection newObjection)
+        {
+            dbContext.Objections.Add(newObjection);
+            dbContext.SaveChanges();
+        }
     }
 }
