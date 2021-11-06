@@ -43,7 +43,7 @@ export class PatientCreateFeedbackComponent implements OnInit {
 
   constructor(private _patientCreateFeedbackService: PatientCreateFeedbackService) {
     this.content = "";
-    this.isPublic = false;
+    this.isPublic = true;
     this.isAnonymous = false;
   }
 
