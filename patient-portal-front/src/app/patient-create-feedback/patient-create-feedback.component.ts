@@ -9,6 +9,7 @@ import {
   transition,
   trigger
 } from '@angular/animations';
+import { Router } from '@angular/router';
 
 const DEFAULT_DURATION = 300;
 
@@ -36,26 +37,26 @@ const DEFAULT_DURATION = 300;
   ]
 })
 export class PatientCreateFeedbackComponent implements OnInit {
-  content: string;
-  isPublic: boolean;
-  isAnonymous: boolean;
+  content: string = "";
+  isPublic: boolean = false;
+  isAnonymous: boolean = false;
+  UserName: string = "Default User";
   feedbackSent: boolean = false;
+  errorMsg: string = "";
 
-  constructor(private _patientCreateFeedbackService: PatientCreateFeedbackService) {
-    this.content = "";
-    this.isPublic = false;
-    this.isAnonymous = false;
-  }
+  constructor(private router: Router, private _patientCreateFeedbackService: PatientCreateFeedbackService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   createFeedback() {
     if(this.contentIsValid())
     {
-      let feedback = new Feedback(this.content,this.isPublic,this.isAnonymous);
-      this._patientCreateFeedbackService.addFeedback(feedback).subscribe();
+      let feedback = new Feedback(this.content,this.isPublic,this.isAnonymous, this.UserName);
       this.feedbackSent = true;
+      this._patientCreateFeedbackService.addFeedback(feedback).subscribe(
+        success => setTimeout(() => {
+          this.router.navigate(['view-feedback']);
+      }, 800));
     }
   }
 
