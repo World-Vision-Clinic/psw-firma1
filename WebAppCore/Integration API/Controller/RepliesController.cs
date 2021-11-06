@@ -37,7 +37,7 @@ namespace Integration_API.Controller
                 }
             }
 
-            if (foundedPharmacy == null)
+            if (foundedPharmacy.Localhost.Equals(""))
             {
                 return BadRequest("Api Key is not valid!");
             }
