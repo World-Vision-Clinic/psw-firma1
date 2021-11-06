@@ -5,7 +5,7 @@
       </div>
       <p class="mb-1" style="text-align: center;">{{dataItem.Content}}</p>
       <button *ngIf="replies[i]" (click)="showResponse(i)" type="button" class="btn btn-primary" style="margin-left: 90%;">Responses</button>
-      <div class="list-group" *ngIf="responseDiv[i]">
+      <div class="list-group" *ngIf="responseDiv[i]" style="margin-top: 1%;">
         <a href="#" class="list-group-item list-group-item-action">{{RepliesForObjectionList[i]}}</a>
       </div>
     </li>
