@@ -16,5 +16,10 @@ namespace Integration_API.Mapper
             reply.ObjectionId = dto.ObjectionId;
             return reply;
         }
+
+        public static String ReplyToContent(Reply reply)
+        {
+            return reply.Content;
+        }
     }
 }
