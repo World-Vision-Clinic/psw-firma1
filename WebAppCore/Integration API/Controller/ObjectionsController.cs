@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Integration.Pharmacy.Service;
 using Integration_API.Mapper;
+using Integration;
 
 namespace Integration_API.Controller
 {
@@ -27,6 +28,23 @@ namespace Integration_API.Controller
             objections.ForEach(objection => result.Add(ObjectionMapper.ObjectionToObjectionDto(objection,pharmaciesService.Get(objection.PharmacyId).Name)));
             return Ok(result);
         }
+
+        [HttpPost]
+        public IActionResult Add(ObjectionDto dto)
+        {
+            Objection newObjection = ObjectionMapper.ObjectionDtoToObjection(dto, Generator.GenerateObjectionId());
+            if(!objectionsService.sendObjection(newObjection))
+            {
+                return BadRequest("Error[Sending objection to pharmacy]");
+            }
+
+
+            objectionsService.saveEntity(newObjection);
+            return Ok();
+        }
+
+
+
 
     }
 }

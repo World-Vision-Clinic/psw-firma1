@@ -19,6 +19,13 @@ namespace Integration_API.Dto
             PharmacyName = pharmacyName;
         }
 
+        public ObjectionDto(string content, string pharmacyName)
+        {
+            Id = " ";
+            Content = content;
+            PharmacyName = pharmacyName;
+        }
+
         public ObjectionDto() { }
     }
 }
