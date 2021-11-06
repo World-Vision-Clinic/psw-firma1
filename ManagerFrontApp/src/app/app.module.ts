@@ -10,7 +10,8 @@ import { PharmacyRegistrationComponent } from './pharmacy-registration/pharmacy-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ManagerObjectionsComponent } from './manager-objections/manager-objections.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule } from '@angular/common/http';
+import { ManagerFeedbackViewComponent } from './manager-feedback-view/manager-feedback-view.component'; 
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
     Hospital1Component,
     FrontPageComponent,
     PharmacyRegistrationComponent,
-    ManagerObjectionsComponent
+    ManagerObjectionsComponent,
+    ManagerFeedbackViewComponent
   ],
   imports: [
     BrowserModule,

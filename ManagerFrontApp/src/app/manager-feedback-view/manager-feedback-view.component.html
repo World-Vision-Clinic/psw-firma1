@@ -1,0 +1,18 @@
+<h2>Hospital Feedback</h2>
+<span *ngIf="errorMsg; then printError else printFeedback"></span>
+<ng-template #printError>{{errorMsg}}</ng-template>
+<ng-template #printFeedback>
+    <table>
+      <tr>
+        <th>Id</th>
+        <th>Content</th>
+        <th>Anonymous</th>
+      </tr>
+      <tr *ngFor="let feedback of feedbacks; index as i">
+        <td>{{feedback.id}}</td>
+        <td>{{feedback.content}}</td>
+        <td>{{feedback.isAnonymous}}</td>
+        <td *ngIf="!feedback.isPublic" (click)="publishFeedback(i)"><button>Publish</button></td>
+      </tr>
+    </table>
+</ng-template>
