@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class PatientCreateFeedbackService {
-  private _url: string = "http://localhost:39901/api/Feedbacks";
+  private _url: string = "api/Feedbacks";
   httpOptions = {
     headers: new HttpHeaders().set('Content-Type', 'application/json')
   };
