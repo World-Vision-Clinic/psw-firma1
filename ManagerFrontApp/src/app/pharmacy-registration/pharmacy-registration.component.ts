@@ -24,9 +24,8 @@ export class PharmacyRegistrationComponent implements OnInit {
                Localhost:this.localhost}
                const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify(val);
-    console.log(body)
-    return this.http.post('http://localhost:43818/pharmacies/registerPharmacy', body,{'headers':headers}).subscribe();
-    //return this.http.post('http://localhost:43818/pharmacies/registerPharmacy',val);
+    alert("Request sent... Please wait...");
+    return this.http.post('http://localhost:43818/pharmacies/registerPharmacy', body,{'headers':headers}).subscribe(res => alert("Successful registration"));
   }
 
 }

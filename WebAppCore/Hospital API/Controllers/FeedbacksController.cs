@@ -30,6 +30,12 @@ namespace Hospital_API
             return await _context.Feedbacks.ToListAsync();
         }
 
+        [HttpGet("published")]
+        public async Task<ActionResult<IEnumerable<Feedback>>> GetFeedbacksPublished()
+        {
+            return await _context.Feedbacks.Where(f => f.isPublic == true).ToListAsync();
+        }
+
         // GET: api/Feedbacks/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Feedback>> GetFeedback(int id)

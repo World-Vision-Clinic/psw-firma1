@@ -18,14 +18,14 @@ public class PharmacyApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		String sql = "INSERT INTO medications (id, name) VALUES (1, 'Ospamox'); "
+		/*String sql = "INSERT INTO medications (id, name) VALUES (1, 'Ospamox'); "
 				+ "INSERT INTO medications (id, name) VALUES (2, 'Brufen');  "
 				+ "INSERT INTO medications (id, name) VALUES (3, 'Aspirin'); ";
 	
 		int rows = jdbcTemplate.update(sql);
 	    if (rows > 0) {
 	        System.out.println("A new row has been inserted.");
-	    }	
+	    }*/	
 	}
 
 }

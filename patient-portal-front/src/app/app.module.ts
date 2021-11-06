@@ -8,11 +8,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PatientCreateFeedbackComponent } from './patient-create-feedback/patient-create-feedback.component';
 import { PatientCreateFeedbackService } from './patient-create-feedback.service';
+import { PatientFeedbackServiceService } from './patient-feedback-service.service';
+import { PatientFeedbackViewComponent } from './patient-feedback-view/patient-feedback-view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PatientCreateFeedbackComponent
+    PatientCreateFeedbackComponent,
+    PatientFeedbackViewComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +24,10 @@ import { PatientCreateFeedbackService } from './patient-create-feedback.service'
     AppRoutingModule,
     BrowserAnimationsModule
   ],
-  providers: [PatientCreateFeedbackService],
+  providers: [
+    PatientCreateFeedbackService,
+    PatientFeedbackServiceService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
