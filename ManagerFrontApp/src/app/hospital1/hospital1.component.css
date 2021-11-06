@@ -1,26 +1,128 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto+Condensed&display=swap');
-
-
-.room{
-    stroke: black;
-    stroke-width: 2px;
-    fill: cadetblue;
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto+Condensed&display=swap");
+* {
+  box-sizing: border-box;
+  border: 0;
+  padding: 0;
+  font-size: 15px;
+  font-family: "Montserrat", sans-serif;
+  font-family: "Roboto Condensed", sans-serif;
 }
 
-.staircase{
-    fill:cornsilk;
-    stroke:black;
-    stroke-width: 3px;
+.title {
+  text-align: center;
 }
 
-.doors{
-    stroke:black;
-    stroke-width: 2px;
-    fill:burlywood;
+.page-nav {
+  display: flex;
+  justify-content: centers;
+  align-items: center;
+  padding: 15px 20px;
 }
 
-.text{
-    font-size: 15px;
-    font-family: 'Montserrat', sans-serif;
-    font-family: 'Roboto Condensed', sans-serif;
+.room {
+  stroke: black;
+  stroke-width: 2px;
+  fill: cornsilk;
+}
+
+.room-cadetblue {
+  fill: cadetblue;
+}
+
+.room:hover {
+  cursor: pointer;
+}
+
+.staircase {
+  fill: rgb(160, 159, 159);
+  stroke: black;
+  stroke-width: 3px;
+}
+
+.doors {
+  stroke: black;
+  stroke-width: 2px;
+  fill: rgb(82, 80, 78);
+}
+
+.text {
+  font-size: 15px;
+  font-family: "Montserrat", sans-serif;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.info-box {
+  width: 370px;
+  height: 360px;
+  border: 2px solid black;
+  padding: 5px;
+}
+
+.form-field {
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid gray;
+  outline: 0;
+  font-size: 1.3rem;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+.rightbtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.btn {
+  color: black;
+  background-color:rgb(160, 159, 159);
+  border-radius: 3px;
+  width: 80px;
+  height: 24px;
+  font-size: 18px;
+  transition: 0.7s;
+  margin: 0 2px;
+}
+
+.floor-button {
+  display: block;
+  padding: 5px 10px;
+  border-radius: 7px;
+  outline: none;
+  border: none;
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.floor-selection {
+  display: flex;
+  flex-direction: column;
+}
+
+.floor-number {
+  font-weight: bold;
+  float: left;
+  margin-right: 10px;
+}
+.selected-floor {
+  background-color: rgb(160, 159, 159);
+}
+
+.floor {
+  stroke: black;
+  stroke-width: 2px;
+  fill: rgba(224, 223, 223, 0.911);
+}
+
+.building-info {
+  position: absolute;
+}
+
+.info-body {
+  display: flex;
+}
+.info-module {
+  margin: 0 10px;
 }

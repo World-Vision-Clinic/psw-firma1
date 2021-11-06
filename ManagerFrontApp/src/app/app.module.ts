@@ -6,10 +6,11 @@ import { AppComponent } from './app.component';
 import { BuildingsMapComponent } from './buildings-map/buildings-map.component';
 import { Hospital1Component } from './hospital1/hospital1.component';
 import { FrontPageComponent } from './front-page/front-page.component';
+import { RoomComponent } from './room/room.component';
+import { FormsModule } from '@angular/forms';
 import { PharmacyRegistrationComponent } from './pharmacy-registration/pharmacy-registration.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ManagerObjectionsComponent } from './manager-objections/manager-objections.component';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { OverviewObjectionsRepliesComponent } from './manager-objections/overview-objections-replies/overview-objections-replies.component'; 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -21,6 +22,7 @@ import { ObjectionFormPageComponent } from './manager-objections/objection-form-
     BuildingsMapComponent,
     Hospital1Component,
     FrontPageComponent,
+    RoomComponent,
     PharmacyRegistrationComponent,
     ManagerObjectionsComponent,
     OverviewObjectionsRepliesComponent,
@@ -29,6 +31,7 @@ import { ObjectionFormPageComponent } from './manager-objections/objection-form-
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
