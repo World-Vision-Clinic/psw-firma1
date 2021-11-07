@@ -7,14 +7,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.pharmacy.model.Medicine;
-import com.pharmacy.repository.ICredentialRepository;
-import com.pharmacy.repository.IMedicineRepository;
+import com.pharmacy.repository.CredentialRepository;
+import com.pharmacy.repository.MedicineRepository;
 
 @Service
 public class CredentialService {
 	
 	@Autowired
-    private ICredentialRepository credentialRepository;
+    private CredentialRepository credentialRepository;
 
 	
 

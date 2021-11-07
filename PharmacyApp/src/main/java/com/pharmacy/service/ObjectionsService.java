@@ -13,9 +13,9 @@ import org.springframework.web.client.RestTemplate;
 import com.pharmacy.dto.ObjectionDto;
 import com.pharmacy.model.Medicine;
 import com.pharmacy.model.Objection;
-import com.pharmacy.repository.IMedicineRepository;
-import com.pharmacy.repository.IObjectionRepository;
+import com.pharmacy.repository.MedicineRepository;
 import com.pharmacy.repository.ObjectionRepository;
+import com.pharmacy.repository.ObjectionRepositoryImpl;
 
 @Service
 public class ObjectionsService {
@@ -28,7 +28,7 @@ public class ObjectionsService {
         this.restTemplate = new RestTemplate();
     }
 	
-	private ObjectionRepository objectionRepository = new ObjectionRepository();
+	private ObjectionRepositoryImpl objectionRepository = new ObjectionRepositoryImpl();
 
 
 	public void saveObjection(Objection newObjection) {

@@ -7,13 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.pharmacy.model.Medicine;
-import com.pharmacy.repository.IMedicineRepository;
+import com.pharmacy.repository.MedicineRepository;
 
 @Service
 public class MedicineService {
 
 	@Autowired
-    private IMedicineRepository medicineRepository;
+    private MedicineRepository medicineRepository;
 
 	public ResponseEntity<List<Medicine>> getAllMedications() {
 		return ResponseEntity.ok(medicineRepository.findAll());
