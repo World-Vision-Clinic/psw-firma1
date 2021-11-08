@@ -1,156 +1,208 @@
- *{
+*{
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
-  }
-
- #header{
-     height: 100vh;
-     background-position: center;
-     background-size: cover;
+    font-family: 'Roboto', sans-serif;
  }
 
- .container-homepage{
-    margin-left: 100px;
-    margin-right: 100px;
- }
+ /* GENERAL STYLES */
 
- .logo{
-     margin-top: 50px;
-     margin-left: 100px;
-     width: 120px;
- }
-
- .header-text{
-     max-width: 350px;
-     margin-top: 75px;
-     margin-left: 100px;
+.photo_stretch {
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin: auto;
+    margin-top: 20px;
 }
 
- h1{
-     font-size: 34px;
- }
-
- p{
-    font-size: 15px;
-    line-height: 18px;
-    color: #777;
-}
-
- .common-btn{
-     padding: 18px, 40px;
-     background: transparent;
-     outline: none;
-     border: 3px solid #b3cfee;
-     font-weight: bold;
-     cursor: pointer;
-     height: 50px;
-     width: 135px;
- }
-
- .header-text button{
-     margin-top: 10px;
-     margin-bottom: 60px;
- }
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #4facfe;
   
- #sideNav{
-    width: 300px;
-    height: 100vh;
-    position: fixed;
-    right: -300px;
-    top: 0;
-    background: #b3cfee;
-    z-index: 2;
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(79, 172, 254, 1), #08d);
+  
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(79, 172, 254, 1), #08d)
   }
 
-nav ul li{
-      list-style: none;
-      margin: 50px 20px;
-}
-nav ul li a{
-    text-decoration: none;
-    color: #fff;
+  /* HEADER */
+
+.website_name_label {
+    text-align: center;
+    font-size: 40px;
     font-weight: bold;
+    margin-top: 75px;
+    margin-bottom: 10px;
+    padding-bottom: 40px;
+    border-bottom: 2px solid rgba(119, 119, 119, 0.884);
+    display: inline-block;
+    vertical-align: top;
 }
 
-#menuBtn{
-    width: 50px;
-    position: fixed;
-    right: 65px;
-    top: 35px;
-    z-index: 2;
-    cursor: pointer;
+/* NAVIGATION MENU */
+
+.navMenu {
+    align-content: right;
+    padding-left:20px !important;
+    padding-right:20px !important;
+    padding-top:15px !important;
+    padding-bottom:10px !important;
+    text-align: center;
+    width: 100%;
 }
 
-#aboout{
-    padding: 100px  0;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+.navMenu a {
+   color: black;
+   text-decoration: none;
+   font-size: 1.2em;
+   text-transform: uppercase;
+   font-weight: bolder;
+   display: inline-block;
+   margin-left: 20px;
+   margin-right: 20px;
+   -webkit-transition: all 0.2s ease-in-out;
+   transition: all 0.2s ease-in-out;
 }
 
-.about-left-col{
-    flex-basis: 50%;
+.navMenu a:hover {
+    color: #4facfe;
 }
 
-.about-right-col{
-    flex-basis: 50%;
-    text-align: right;
+.navMenu a:nth-child(1):hover ~ .dot {
+    -webkit-transform: translateX(30px);
+    transform: translateX(30px);
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    opacity: 1;
 }
 
-.about-text{
-    max-width: 500px;
-    margin-right: 100px;
+.navMenu a:nth-child(2):hover ~ .dot {
+    -webkit-transform: translateX(110px);
+    transform: translateX(110px);
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    opacity: 1;
+}
+
+.navMenu a:nth-child(3):hover ~ .dot {
+    -webkit-transform: translateX(200px);
+    transform: translateX(200px);
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    opacity: 1;
+}
+
+.navMenu a:nth-child(4):hover ~ .dot {
+    -webkit-transform: translateX(285px);
+    transform: translateX(285px);
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    opacity: 1;
+}
+
+/* BANNER */
+
+.frontpage_gray_banner {
+    background: whitesmoke;    
+    height: 400px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.frontpage_gray_banner_label {
+    padding-bottom: 50px;
+    text-align: center;
+    font-size: 52px;
+    display: inline-block;
+    vertical-align: center;
+}
+
+/* OPTIONS CARD */
+
+.left_frontpage_picture {
+    max-width: 100%;
+    max-height: 100%;
     display: inline-block;
 }
 
-#services{
-    padding-top: 50px;
-    padding-bottom: 50px;
+.front_page_right_card {
+    height: 184px;
 }
 
-.service-row{
-    width: 80%;
-    margin: auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-wrap: wrap;
+.light_blue_card {
+    background: rgb(19, 103, 168);
 }
 
-.service-col{
-    flex-basis: 25%;
-    text-align: center;
+.dark_blue_card {
+    background: rgb(6, 92, 158);
 }
 
-.service-col img{
-    width: 175px;
+.deep_dark_blue_card {
+    background: rgb(4, 82, 150);
 }
 
-.service-col h4{
-    margin-bottom: 15px;
-    font-size: 20px;
-    font-weight: 400;
+.frontpage_card_picture_small {
+    max-width: 70%;
+    max-height: 70%;
 }
 
-.sign-up-row{
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+.frontpage_options_card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 50px;
 }
 
-.sign-up-left-col, .sign-up-right-col{
-    flex-basis: 50%;
+/* NEWS */
+
+.frontpage_news_background {
+    background: whitesmoke;  
+    margin-top: 35px;  
+    padding-top: 40px;
+    padding-bottom: 40px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.frontpage_news_item_picture {
+    width: 100%;
+    height: 200px;
+}
+
+.news_card {
+    height: 500px;
+    margin-left: 20px;
+    margin-right: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* FEEDBACK */
+
+.frontpage_feedback_section {
+    background: rgb(19, 103, 168);
+    padding-top: 80px;
+    padding-bottom: 60px;
+}
+
+/* SIGN UP */
+
+.sign-up-panel {
+    padding-top: 100px;
+    padding-bottom: 100px;
+    background: whitesmoke;
+  
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to border-bottom, rgb(245, 245, 245), rgb(255, 255, 255));
+  
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to border-bottom, rgb(245, 245, 245), rgb(255, 255, 255))
 }
 
 .sign-up-left-col h1{
-    margin-left: 250px;
+    margin-left: 25px;
+    font-weight: bolder;
 }
 
 form{
     max-width: 350px;
-    margin: 30px 0;
-    margin-left: 250px;
+    margin: 30px;
+    margin-left: 25px;
 }
 
 form input{
@@ -160,7 +212,7 @@ form input{
     outline: none;
     box-shadow: none;
     box-sizing: border-box;
-    border: 3px solid #b3cfee;
+    border: 3px solid rgb(19, 103, 168);
 }
 
 .btn-box{
@@ -174,9 +226,32 @@ form input{
     padding: 18px 0;
 }
 
-#footer{
-    padding: 50px 0 30px;
+
+.btn-rounded {
+    border-radius: 20px;
 }
+
+.btn-blue {
+    background: rgb(19, 103, 168);;
+    color: white;
+    width: 300px;
+    margin-top: 10px;
+    padding: 10px 0px 10px 0px !important;
+    cursor: pointer;
+}
+
+/* FOOTER */
+
+.footer {
+    align-content: right;
+    padding-left:20px !important;
+    padding-right:20px !important;
+    padding-top:15px !important;
+    padding-bottom:10px !important;
+    text-align: center;
+    background: whitesmoke;
+}
+
 hr{
     width:100%;
     border: 0;
@@ -190,30 +265,21 @@ hr{
     flex-wrap: wrap;
 }
 
-.footer-left-col{
-    flex-basis: 50%;
-    margin-top: 60px;
-}
-
-.footer-right-col{
-    flex-basis: 35%;
-}
-
 .footer-links{
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 }
 
-.link-title h4{
-    color:#b3cfee;
+.link_title {
+    color: rgb(19, 103, 168);;
+    font-weight: bolder;
+    font-size: 24px;
     margin-bottom: 20px;
-    font-weight: bold;    
 }
 
-.link-title small{
-    font-size: 13px;
-    color: #777;
+.link_subtitle {
+    font-weight: bold;
 }
 
 .footer-info{
@@ -223,6 +289,3 @@ hr{
     flex-wrap: wrap;
 }
 
-.footer-logo img{
-    width: 100px;
-}

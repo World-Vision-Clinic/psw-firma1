@@ -7,7 +7,7 @@ import { Router, NavigationStart } from '@angular/router';
   styleUrls: ['./homepage.component.css']
 })
 export class HomePageComponent implements OnInit {
-
+  menuIsOpen: boolean=true;
   constructor(private router: Router){}
 
   
