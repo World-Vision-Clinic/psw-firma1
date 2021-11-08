@@ -1,38 +1,72 @@
-<style>
-.grad {
-    /*background-image: linear-gradient(45deg, turquoise, white);*/
-    background: linear-gradient(to top right, #33ccff 0%, #66ffcc 100%);
-    padding-top: 20;
-    /*background-color: turquoise;*/
-}
-
-table {
-  border-collapse: separate;
-  border-spacing: 0;
-}
-</style>
-
-<div style="width: 50%; margin: auto;">
-    <h2 style="text-align: center; color:black">Hospital Feedback</h2>
-    <span *ngIf="errorMsg; then printError else printFeedback"></span>
-    <ng-template #printError>{{errorMsg}}</ng-template>
-    <ng-template #printFeedback>
-        <div >
-            <table class="table table-bordered rounded" style="background-color: white;">
-                <tr class="bg-primary" style="color: white;">
-                    <th class="col-md-3">Id</th>
-                    <th>Content</th>
-                    <th class="col-md-1">Anonymous</th>
-                    <th class="col-md-1"></th>
-                </tr>
-                <tr *ngFor="let feedback of feedbacks; index as i">
-                    <td class="col-md-3">{{feedback.id}}</td>
-                    <td>{{feedback.content}}</td>
-                    <td *ngIf="!feedback.isAnonymous" class="col-md-1"><img src="../assets/checkmark.svg"></td>
-                    <td *ngIf="feedback.isAnonymous" class="col-md-1"><img src="../assets/cross.svg"></td>
-                    <td *ngIf="!feedback.isPublic" class="col-md-1" (click)="publishFeedback(i)"><button>Publish</button></td>
-                </tr>
-            </table>
+<span *ngIf="errorMsg; then printError else printFeedback"></span>
+<ng-template #printError>
+    <div class="container-fluid">
+        <div class="row mt-3">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="header gradient-red">
+                        <div class="row d-flex">
+                          <p class="text-white font-weight-bold header-text">
+                              Error
+                          </p>
+                        </div>
+                    </div>
+                
+                    <div class="card-body mx-4">
+                        <div class="md-form">
+                          <p id="error_content">{{errorMsg}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+            </div>
         </div>
-    </ng-template>
-</div>
+    </div>
+</ng-template>
+<ng-template #printFeedback>
+    <div class="container-fluid">
+        <div class="row mt-3">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <div class="card" *ngFor = "let f of feedbacks; index as i">
+                    <div class="header gradient-blue">
+                        <div class="row d-flex">
+                            <div class="col-md-6">
+                                <p *ngIf="!f.isAnonymous" class="text-white font-weight-bold header-text">User</p>
+                                <p *ngIf="f.isAnonymous" class="text-white font-weight-bold header-text">Anonymous</p>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card-body mx-4">
+                        <div class="col-md-12">
+                            <div class="row d-flex">
+                              <div class="md-form">
+                              <p id="content" rows="5" disabled="true">{{f.content}}</p>
+                              </div>
+                            </div>
+                            <div class="row d-flex">
+                              <div class="col-md-9">
+                              </div>
+                              <div class="col-md-3">
+                                <div *ngIf="!f.isPublic">
+                                    <button class="btn-rounded btn-blue" (click)="publishFeedback(i)">Publish</button>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+
