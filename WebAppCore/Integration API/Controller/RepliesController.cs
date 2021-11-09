@@ -27,7 +27,7 @@ namespace Integration_API.Controller
                 return BadRequest("Api Key was not provided");
             }
 
-            PharmacyProfile foundedPharmacy = new PharmacyProfile();
+            PharmacyProfile foundedPharmacy = null;
             foreach (PharmacyProfile pharmacy in pharmaciesService.GetAll())
             {
                 if (extractedApiKey.Equals(pharmacy.Key))
@@ -37,7 +37,7 @@ namespace Integration_API.Controller
                 }
             }
 
-            if (foundedPharmacy.Localhost.Equals(""))
+            if (foundedPharmacy == null)
             {
                 return BadRequest("Api Key is not valid!");
             }
