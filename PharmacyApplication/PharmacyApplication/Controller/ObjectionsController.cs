@@ -17,7 +17,7 @@ namespace PharmacyAPI.Controller
     public class ObjectionsController : ControllerBase
     {
         ObjectionService service = new ObjectionService(new ObjectionsRepository());
-        HospitalProfilesService hospitalService = new HospitalProfilesService(new HospitalProfilesRepository());
+        HospitalsService hospitalService = new HospitalsService(new HospitalsRepository());
 
         [HttpPost("add")]
         public IActionResult Add(ObjectionDto dto)
@@ -27,7 +27,7 @@ namespace PharmacyAPI.Controller
                 return BadRequest("Api Key was not provided");
             }
 
-            HospitalProfile hospital = hospitalService.GetHospitalProfileByApiKey(extractedApiKey);
+            Hospital hospital = hospitalService.GetHospitalByApiKey(extractedApiKey);
             if (hospital == null)
             {
                 return BadRequest("Api Key is not valid!");

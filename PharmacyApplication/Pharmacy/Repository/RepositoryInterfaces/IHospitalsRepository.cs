@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Pharmacy.Repository.RepositoryInterfaces
 {
-    public interface IHospitalProfilesRepository
+    public interface IHospitalsRepository
     {
-        public List<HospitalProfile> GetAll();
-        public void Save(HospitalProfile hospitalProfile);
+        public List<Hospital> GetAll();
+        public void Save(Hospital hospitalProfile);
     }
 }

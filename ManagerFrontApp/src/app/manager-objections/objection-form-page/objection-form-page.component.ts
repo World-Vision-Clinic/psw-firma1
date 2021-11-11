@@ -41,8 +41,8 @@ export class ObjectionFormPageComponent implements OnInit {
   sendObjection()
   {
       var val = {
-        content:this.objectionContent,
-        PharmacyName:this.SelectedPharmacy.Localhost
+        Content:this.objectionContent,
+        PharmacyLocalhost:this.SelectedPharmacy.Localhost
       }
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(val);

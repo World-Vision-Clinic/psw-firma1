@@ -12,7 +12,7 @@ namespace PharmacyAPI.Mapper
         public static Objection ObjectionDtoToObjection(ObjectionDto dto)
         {
             Objection objection = new Objection();
-            objection.IdEncoded = dto.IdEncoded;
+            objection.IdEncoded = dto.Id;
             objection.Content = dto.Content;
             return objection;
         }

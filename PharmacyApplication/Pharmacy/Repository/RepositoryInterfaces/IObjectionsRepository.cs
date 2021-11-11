@@ -9,6 +9,6 @@ namespace Pharmacy.Repository.RepositoryInterfaces
     {
         public List<Objection> GetAll();
         public void Save(Objection objection);
-        Objection GetById(string id);
+        Objection GetByIdEncoded(string id);
     }
 }

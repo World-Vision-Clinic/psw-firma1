@@ -30,7 +30,7 @@ namespace PharmacyAPI.Controller
             }
 
             Objection objection = objectionsService.GetObjectionById(dto.ObjectionId);
-            Credential credential = credentialsService.GetCredentialByHospitalLocalhost(objection.HospitalId);
+            Credential credential = credentialsService.GetByHospitalLocalhost(objection.HospitalId);
 
             var client = new RestSharp.RestClient(credential.HospitalLocalhost);
             var request = new RestRequest("/replies/add");

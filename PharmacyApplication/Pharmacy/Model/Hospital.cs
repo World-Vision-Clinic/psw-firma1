@@ -4,16 +4,16 @@ using System.Text;
 
 namespace Pharmacy.Model
 {
-    public class HospitalProfile
+    public class Hospital
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Key { get; set; }
         public string Localhost { get; set; }
 
-        public HospitalProfile() { }
+        public Hospital() { }
 
-        public HospitalProfile(int id, string name, string key, string localhost)
+        public Hospital(int id, string name, string key, string localhost)
         {
             Id = id;
             Name = name;

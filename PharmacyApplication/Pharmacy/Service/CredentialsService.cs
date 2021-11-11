@@ -28,9 +28,9 @@ namespace Pharmacy.Service
             return true;
         }
 
-        public Credential GetCredentialByHospitalLocalhost(string hospitalLocalhost)
+        public Credential GetByHospitalLocalhost(string hospitalLocalhost)
         {
-            return repository.GetByHospitalLocalhost();
+            return repository.GetByHospitalLocalhost(hospitalLocalhost);
         }
     }
 }

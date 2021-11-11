@@ -8,7 +8,7 @@ namespace Integration.SharedModel
 {
     public class IntegrationDbContext : DbContext
     {
-
+        public DbSet<Credential> Credentials { get; set; }
         public DbSet<Objection> Objections { get; set; }
         public DbSet<Reply> Replies { get; set; }
         public DbSet<PharmacyProfile> Pharmacies { get; set; }

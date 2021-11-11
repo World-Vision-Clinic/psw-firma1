@@ -1,15 +1,16 @@
-﻿using Pharmacy.Model;
-using Pharmacy.Repository.RepositoryInterfaces;
+﻿using Integration.Pharmacy.Model;
+using Integration.Pharmacy.Repository.RepositoryInterfaces;
+using Integration.SharedModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Pharmacy.Repository
+namespace Integration.Pharmacy.Repository
 {
     public class CredentialsRepository : ICredentialsRepository
     {
-        private PharmacyDbContext dbContext = new PharmacyDbContext();
+        private IntegrationDbContext dbContext = new IntegrationDbContext();
         public List<Credential> GetAll()
         {
             List<Credential> credentials = new List<Credential>();
@@ -17,13 +18,13 @@ namespace Pharmacy.Repository
             return credentials;
         }
 
-        public Credential GetByHospitalLocalhost(string hospitalLocalhost)
+        public Credential GetByPharmacyLocalhost(string pharmacyLocalhost)
         {
             List<Credential> credentials = new List<Credential>();
             dbContext.Credentials.ToList().ForEach(credential => credentials.Add(credential));
             foreach (Credential credential in credentials)
             {
-                if (credential.HospitalLocalhost.Equals(hospitalLocalhost))
+                if (credential.PharmacyLocalhost.Equals(pharmacyLocalhost))
                 {
                     return credential;
                 }
@@ -36,7 +37,5 @@ namespace Pharmacy.Repository
             dbContext.Credentials.Add(credential);
             dbContext.SaveChanges();
         }
-
-
     }
 }

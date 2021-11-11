@@ -2,20 +2,25 @@
 using Pharmacy.Repository.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Pharmacy.Repository
 {
     public class RepliesRepository : IRepliesRepository
     {
+        private PharmacyDbContext dbContext = new PharmacyDbContext();
         public List<Reply> GetAll()
         {
-            throw new NotImplementedException();
+            List<Reply> replies = new List<Reply>();
+            dbContext.Replies.ToList().ForEach(reply => replies.Add(reply));
+            return replies;
         }
 
         public void Save(Reply reply)
         {
-            throw new NotImplementedException();
+            dbContext.Replies.Add(reply);
+            dbContext.SaveChanges();
         }
     }
 }

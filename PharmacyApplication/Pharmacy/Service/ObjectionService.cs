@@ -30,7 +30,7 @@ namespace Pharmacy.Service
 
         public Objection GetObjectionById(string id)
         {
-            return repository.GetById(id);
+            return repository.GetByIdEncoded(id);
         }
     }
 }

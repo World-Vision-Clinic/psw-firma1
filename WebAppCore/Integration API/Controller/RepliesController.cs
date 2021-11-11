@@ -73,7 +73,7 @@ namespace Integration_API.Controller
         {
             List<Reply> replies = new List<Reply>();
             List<String> result = null;
-            replies = repliesService.GetObjectionReplies(objectionId);
+            replies = repliesService.GetObjectionReplies(objectionId.ToString());
             System.Diagnostics.Debug.WriteLine(objectionId);
             if(replies != null)
             {

@@ -1,23 +1,23 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Integration.Pharmacy.Model;
+using Integration.Pharmacy.Repository;
+using Integration.Pharmacy.Service;
+using Integration_API.Dto;
+using Integration_API.Mapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Pharmacy.Model;
-using Pharmacy.Repository;
-using Pharmacy.Repository.RepositoryInterfaces;
-using Pharmacy.Service;
-using PharmacyAPI.Dto;
-using PharmacyAPI.Mapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PharmacyAPI.Controller
+namespace Integration_API.Controller
 {
     [Route("[controller]")]
     [ApiController]
     public class CredentialsController : ControllerBase
     {
         CredentialsService service = new CredentialsService(new CredentialsRepository());
+
         [HttpPost]
         public IActionResult Add(CredentialDto dto)
         {
