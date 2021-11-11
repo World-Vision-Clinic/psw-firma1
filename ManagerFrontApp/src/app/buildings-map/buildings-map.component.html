@@ -1,1 +1,78 @@
-<p>buildings-map works!</p>
+<div style="text-align: center">
+  <h3 style="rgb(70, 70, 70)" class="text">
+    World Vision Clinic map
+  </h3>
+  <svg width="980" height="660">
+    <g>
+      <rect x="0" y="0" width="1000" height="660" class="yard" />
+      <g *ngFor="let building of buildings">
+        <rect
+          [attr.x]="building.mapPosition.x"
+          [attr.y]="building.mapPosition.y"
+          width="520"
+          height="180"
+          class="building"
+          (dblclick)="enterHospital()"
+        >
+          <title>
+            Building review&#013;*********************&#013;Name: {{ building.name }}&#013;Info: {{ building.info }}&#013;Floors:
+            {{ building.floors.length }}
+          </title>
+        </rect>
+        <text
+          [attr.x]="calculateTextX(building)"
+          [attr.y]="calculateTextY(building)"
+          class="text"
+          style="fill: cornsilk; font-size: 50px; text-transform: uppercase"
+        >
+          {{ building.name }}
+        </text>
+        <rect
+          *ngFor="let door of building.mapPosition.doors; index as i"
+          [attr.x]="door.x"
+          [attr.y]="door.y"
+          [attr.width]="door.isVertical ? 6 : 80"
+          [attr.height]="!door.isVertical ? 6 : 80"
+          class="doors"
+        >
+          <title>Entrance {{ i + 1 }} - {{ building.name }}</title>
+        </rect>
+      </g>
+
+      <rect
+        x="165"
+        y="255"
+        rx="20"
+        ry="20"
+        width="260"
+        height="140"
+        class="park"
+      >
+        <title>Park</title>
+      </rect>
+      <rect x="165" y="315" width="260" height="20" class="parkline" />
+      <rect x="285" y="255" width="20" height="140" class="parkline" />
+
+      <rect x="650" y="60" width="280" height="515" class="parking">
+        <title>Parking lots for patients and doctors</title>
+      </rect>
+      <g *ngFor="let parking of parkings">
+        <rect
+          [attr.x]="parking.x"
+          [attr.y]="parking.y"
+          width="110"
+          height="50"
+          class="parkingarea"
+        />
+        <text
+          [attr.x]="parking.x + 45"
+          [attr.y]="parking.y + 40"
+          class="text"
+          style="fill: rgb(128, 128, 128)"
+        >
+          P
+        </text>
+      </g>
+    </g>
+  </svg>
+</div>

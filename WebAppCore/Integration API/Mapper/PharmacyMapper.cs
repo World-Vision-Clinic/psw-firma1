@@ -17,5 +17,13 @@ namespace Integration_API.Mapper
             pharmacy.Protocol = ProtocolType.HTTP;
             return pharmacy;
         }
+
+        public static PharmacyDto PharmacyToPharmacyDto(PharmacyProfile pharmacy)
+        {
+            PharmacyDto dto = new PharmacyDto();
+            dto.Name = pharmacy.Name;
+            dto.Localhost = pharmacy.Localhost;
+            return dto;
+        }
     }
 }

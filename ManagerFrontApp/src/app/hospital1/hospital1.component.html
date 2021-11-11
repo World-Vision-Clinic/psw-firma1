@@ -1,1 +1,136 @@
-<p>hospital1 works!</p>
+<div class="title">
+  <h1> ROOMS MAP</h1>
+</div>
+<div class="page-nav">
+  <div class="floor-selection">
+    <label for="">Floors:</label>
+    <button
+      *ngFor="let floor of selectedBuilding.floors; index as i"
+      (click)="selectFloor(floor)"
+      class="floor-button"
+      [ngClass]="{
+        'selected-floor': floor.level === selectedFloor.level
+      }"
+    >
+      <span class="floor-number">{{ i }}</span> {{ floor.level }}
+    </button>
+    <button (click)="takeOut()" class="floor-button">🚪 Exit</button>
+  </div>
+  <div style="margin: 0 10px; position: relative">
+    <div class="building-info">
+      <div style="text-align: center">
+        <h3 style="align-self: flex-start; font-size: 17px;">Building info:</h3>
+      </div>
+      <div class="info-body">
+        <div class="info-module">
+          <label for="">Building name:</label><br />
+          <input
+            type="text"
+            class="form-field"
+            [(ngModel)]="selectedBuilding.name"
+            name="input"
+            [attr.disabled]="buildingFormDisabled ? '' : null"
+          />
+        </div>
+        <label for="">Info:</label><br />
+        <input
+          type="text"
+          class="form-field"
+          [(ngModel)]="selectedBuilding.info"
+          name="input"
+          [attr.disabled]="buildingFormDisabled ? '' : null"
+        />
+        <div class="info-module" style="align-self: flex-end">
+          <button
+            class="btn"
+            (click)="buildingFormDisabled = false"
+            *ngIf="buildingFormDisabled"
+          >
+            Edit
+          </button>
+          <button
+            class="btn"
+            (click)="buildingFormDisabled = true"
+            *ngIf="!buildingFormDisabled"
+          >
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+    <svg width="850" height="700">
+      <rect x="0" y="150" width="841" height="451" class="floor" />
+      <g *ngFor="let room of selectedFloor.rooms">
+        <rect
+          [attr.x]="room.x"
+          [attr.y]="room.y"
+          [attr.width]="room.width"
+          [attr.height]="room.height"
+          [attr.class]="room.class"
+          (click)="selectRoom(room)"
+        />
+        <text
+          [attr.x]="calculateTextX(room)"
+          [attr.y]="calculateTextY(room)"
+          class="text"
+        >
+          {{ room.name }}
+        </text>
+        <rect
+          *ngIf="room.doorExists"
+          [attr.x]="room.doorX"
+          [attr.y]="room.doorY"
+          [attr.width]="room?.vertical ? 6 : 35"
+          [attr.height]="!room?.vertical ? 6 : 35"
+          class="doors"
+        />
+      </g>
+      <g *ngFor="let label of selectedFloor.labels">
+        <text [attr.x]="label.x" [attr.y]="label.y" class="text">
+          {{ label.text }}
+        </text>
+      </g>
+    </svg>
+  </div>
+  <div class="info-box" *ngIf="!!roomIsSelected">
+    <div class="title"><h3>Room info:</h3></div>
+    <label for="">Room name:</label><br />
+    <input
+      type="text"
+      class="form-field"
+      [(ngModel)]="selectedRoom.name"
+      name="input"
+      [attr.disabled]="formDisabled ? '' : null"
+    />
+    <br />
+    <label for="">Doctor using it:</label><br />
+    <input
+      type="text"
+      class="form-field"
+      [(ngModel)]="selectedRoom.doctor"
+      name="input"
+      [attr.disabled]="formDisabled ? '' : null"
+    />
+    <br />
+    <label for="">Purpose:</label><br />
+    <input
+      type="text"
+      class="form-field"
+      [(ngModel)]="selectedRoom.purpose"
+      name="input"
+      [attr.disabled]="formDisabled ? '' : null"
+    />
+    <br />
+    <br />
+    <div class="rightbtn">
+      <button class="btn" (click)="close()" *ngIf="formDisabled">Close</button>
+      <button class="btn" (click)="enableEdit()" *ngIf="formDisabled">
+        Edit
+      </button>
+      <button class="btn" (click)="cancel()" *ngIf="!formDisabled">
+        Cancel
+      </button>
+      <button class="btn" (click)="save()" *ngIf="!formDisabled">Save</button>
+    </div>
+  </div>
+</div>

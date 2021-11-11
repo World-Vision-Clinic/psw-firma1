@@ -12,10 +12,22 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { PatientCreateFeedbackComponent } from './patient-create-feedback/patient-create-feedback.component';
+import { PatientCreateFeedbackService } from './patient-create-feedback.service';
+import { PatientFeedbackServiceService } from './patient-feedback-service.service';
+import { PatientFeedbackViewComponent } from './patient-feedback-view/patient-feedback-view.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PatientCreateFeedbackComponent,
+    PatientFeedbackViewComponent
   ],
   imports: [
     BrowserModule,
@@ -25,8 +37,16 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatIconModule,
     CommonModule
+
+    FormsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    PatientCreateFeedbackService,
+    PatientFeedbackServiceService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

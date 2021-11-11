@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Integration.Pharmacy.Service;
 using Integration_API.Mapper;
 using RestSharp;
+using Integration.Pharmacy;
+using Integration.Pharmacy.Model;
 
 namespace Integration_API.Controller
 {
@@ -49,6 +51,16 @@ namespace Integration_API.Controller
             IRestResponse response = client.Post(request);  // POST /credential  {"Name": "World Vision Clinic", "HospitalLocalhost": "http://localhost:43818", "ApiKey": "wqhegyqwegqyw21543"}
             System.Diagnostics.Debug.WriteLine(response.StatusCode);
             return Ok(response);
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            List<PharmacyProfile> pharmacies = new List<PharmacyProfile>();
+            List<PharmacyDto> result = new List<PharmacyDto>();
+            pharmacies = pharmaciesService.GetAll();
+            pharmacies.ForEach(pharmacy => result.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy)));
+            return Ok(result);
         }
 
     }
