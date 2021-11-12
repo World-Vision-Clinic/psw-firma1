@@ -35,22 +35,22 @@ namespace Integration_API.Controller
             }
 
             var client = new RestSharp.RestClient(dto.Localhost);
-            var request = new RestRequest("/credential");
-
-            CredentialDto credential = new CredentialDto("World Vision Clinic", "http://localhost:43818", generatedKey);
+            var request = new RestRequest("/credentials");
 
             request.AddHeader("Content-Type", "application/json");
             request.AddJsonBody(
             new
             {
-                   hospitalName = credential.HospitalName,
-                   hospitalLocalhost = credential.HospitalLocalhost,
-                   apiKey = credential.ApiKey
+                   HospitalName = "World Vision Clinic",
+                   HospitalLocalhost = "http://localhost:43818",
+                   ApiKey = generatedKey
             });
 
             IRestResponse response = client.Post(request);  // POST /credential  {"Name": "World Vision Clinic", "HospitalLocalhost": "http://localhost:43818", "ApiKey": "wqhegyqwegqyw21543"}
             System.Diagnostics.Debug.WriteLine(response.StatusCode);
-            return Ok(response);
+            if(response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                return BadRequest();
+            return Ok();
         }
 
         [HttpGet]

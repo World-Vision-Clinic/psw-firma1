@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Integration
+namespace Pharmacy
 {
     public class Class1
     {

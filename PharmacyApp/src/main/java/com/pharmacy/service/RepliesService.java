@@ -5,7 +5,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,21 +12,20 @@ import com.pharmacy.dto.ReplyDto;
 
 @Service
 public class RepliesService {
-
-	private static final String API_URL = "http://localhost:43818/";
-    private final RestTemplate restTemplate;
+	
+	private final RestTemplate restTemplate;
 
     @Autowired
     public RepliesService() {
         this.restTemplate = new RestTemplate();
     }
-
-	public boolean sendReply(ReplyDto dto) {
+	
+	public boolean sendReply(ReplyDto dto, String apiKey, String hospitalLocalhost) {
 		boolean result;
         try {
         	HttpHeaders header = new HttpHeaders();
-        	header.set("ApiKey", "bjJ8hZuV6alsuvzVH8ylL6lfK5tZtBhUK81JDGCUszY");
-            ResponseEntity<?> response = restTemplate.exchange(API_URL + "/replies/add",
+        	header.set("ApiKey", apiKey);
+            ResponseEntity<?> response = restTemplate.exchange(hospitalLocalhost + "/replies/add",
                     HttpMethod.POST, new HttpEntity<>(dto, header), ResponseEntity.class);
             result = response.getStatusCodeValue() == 200;
         } catch (Exception e) {
@@ -36,4 +34,6 @@ public class RepliesService {
         }
         return result;
 	}
+
+    
 }

@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Integration.Pharmacy.Service;
 using Integration_API.Mapper;
 using Integration;
+using RestSharp;
+using Integration.Pharmacy.Repository;
 
 namespace Integration_API.Controller
 {
@@ -18,6 +20,7 @@ namespace Integration_API.Controller
     {
         private ObjectionsService objectionsService = new ObjectionsService();
         private PharmaciesService pharmaciesService = new PharmaciesService();
+        private CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
 
         [HttpGet]       
         public IActionResult Get()
@@ -32,12 +35,27 @@ namespace Integration_API.Controller
         [HttpPost]
         public IActionResult Add(ObjectionDto dto)
         {
+            Credential credential = credentialsService.GetByPharmacyLocalhost(dto.PharmacyLocalhost);
             Objection newObjection = ObjectionMapper.ObjectionDtoToObjection(dto, Generator.GenerateObjectionId());
-            if(!objectionsService.sendObjection(newObjection))
-            {
-                return BadRequest("Error[Sending objection to pharmacy]");
-            }
 
+            var client = new RestSharp.RestClient(credential.PharmacyLocalhost);
+            var request = new RestRequest("/objections/add");
+
+            request.AddHeader("Content-Type", "application/json");
+            
+            request.AddJsonBody(
+            new
+            {
+                Content = newObjection.Content,
+                Id = newObjection.Id
+            });
+            request.AddHeader("ApiKey", credential.ApiKey);
+
+            IRestResponse response = client.Post(request);
+            if(response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                return BadRequest();
+            }
 
             objectionsService.saveEntity(newObjection);
             return Ok();

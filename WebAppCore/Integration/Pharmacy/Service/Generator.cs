@@ -28,13 +28,18 @@ namespace Integration.Pharmacy.Service
         }
         public static string GenerateObjectionId()
         {
+            IntegrationDbContext context = new IntegrationDbContext();
+            Reply foundedReply = null;
             string objectionId = "";
+            do
+            {
+                var key = new byte[32];
+                using (var generator = RandomNumberGenerator.Create())
+                    generator.GetBytes(key);
+                objectionId = Convert.ToBase64String(key);
+                foundedReply = context.Replies.SingleOrDefault(reply => reply.ObjectionId == objectionId);
 
-            var id = new byte[32];
-            using (var generator = RandomNumberGenerator.Create())
-                generator.GetBytes(id);
-            objectionId = Convert.ToBase64String(id);
-
+            } while (foundedReply != null  || objectionId.Contains("+"));
 
             return objectionId;
         }
