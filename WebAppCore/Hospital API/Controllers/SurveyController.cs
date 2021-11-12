@@ -9,19 +9,18 @@ namespace Hospital_API
     public class SurveyController : ControllerBase
     {
         private readonly HospitalContext _context;
+        private SurveyService surveyService;
 
         public SurveyController(HospitalContext context)
         {
             _context = context;
+            surveyService = new SurveyService(context);
         }
 
         [HttpPost]
         public async Task<ActionResult<Survey>> PostSurvey([FromBody] Survey survey)
         {
-            Survey newSurvey = survey;
-
-            _context.Surveys.Add(newSurvey);
-            await _context.SaveChangesAsync();
+            Survey newSurvey = surveyService.AddSurvey(survey);
 
             return CreatedAtAction("GetFeedback", new { id = newSurvey.Id }, newSurvey);
         }
