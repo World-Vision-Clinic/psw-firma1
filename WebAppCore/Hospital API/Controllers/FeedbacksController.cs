@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Hospital_API.Models;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Net;
+using Hospital_API.Models;
+using Hospital.Models;
+using Hospital.Service;
+using Hospital.Repository;
 
 namespace Hospital_API
 {
@@ -16,31 +16,32 @@ namespace Hospital_API
     [ApiController]
     public class FeedbacksController : ControllerBase
     {
-        private readonly HospitalContext _context;
+        //private readonly HospitalContext _context;
+        private readonly FeedbackService _feedbackService;
 
-        public FeedbacksController(HospitalContext context)
+        public FeedbacksController()
         {
-            _context = context;
+            _feedbackService = new FeedbackService(new FeedbackRepository(new Hospital.Models.HospitalContext()));
         }
 
         // GET: api/Feedbacks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Feedback>>> GetFeedbacks()
+        public  ActionResult<IEnumerable<Feedback>> GetFeedbacks()
         {
-            return await _context.Feedbacks.ToListAsync();
+            return _feedbackService.GetAll();
         }
 
         [HttpGet("published")]
-        public async Task<ActionResult<IEnumerable<Feedback>>> GetFeedbacksPublished()
+        public ActionResult<IEnumerable<Feedback>> GetFeedbacksPublished()
         {
-            return await _context.Feedbacks.Where(f => f.isPublic == true).ToListAsync();
+            return _feedbackService.GetPublished();
         }
 
         // GET: api/Feedbacks/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Feedback>> GetFeedback(int id)
+        public ActionResult<Feedback> GetFeedback(int id)
         {
-            var feedback = await _context.Feedbacks.FindAsync(id);
+            var feedback = _feedbackService.FindById(id);
 
             if (feedback == null)
             {
@@ -54,18 +55,18 @@ namespace Hospital_API
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutFeedback(int id, Feedback feedback)
+        public IActionResult PutFeedback(int id, Feedback feedback)
         {
             if (id != feedback.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(feedback).State = EntityState.Modified;
+            _feedbackService.Modify(feedback);
 
             try
             {
-                await _context.SaveChangesAsync();
+                _feedbackService.SaveSync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -86,29 +87,27 @@ namespace Hospital_API
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Feedback>> PostFeedback([FromBody] Feedback feedback)
+        public  ActionResult<Feedback> PostFeedback([FromBody] Feedback feedback)
         {
             Feedback newFeedback = feedback;
             //newFeedback.Id = newFeedback.GetHashCode();
 
-            _context.Feedbacks.Add(newFeedback);
-            await _context.SaveChangesAsync();
+            _feedbackService.AddFeedback(newFeedback);
 
             return CreatedAtAction("GetFeedback", new { id = newFeedback.Id }, newFeedback);
         }
 
         // DELETE: api/Feedbacks/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Feedback>> DeleteFeedback(int id)
+        public ActionResult<Feedback> DeleteFeedback(int id)
         {
-            var feedback = await _context.Feedbacks.FindAsync(id);
+            var feedback = _feedbackService.FindById(id);
             if (feedback == null)
             {
                 return NotFound();
             }
 
-            _context.Feedbacks.Remove(feedback);
-            await _context.SaveChangesAsync();
+            _feedbackService.Delete(feedback);
 
             return feedback;
         }
@@ -121,7 +120,7 @@ namespace Hospital_API
 
         private bool FeedbackExists(int id)
         {
-            return _context.Feedbacks.Any(e => e.Id == id);
+            return _feedbackService.FeedbackExists(id);
         }
     }
 }
