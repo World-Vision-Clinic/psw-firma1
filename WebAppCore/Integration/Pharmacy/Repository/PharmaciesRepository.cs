@@ -1,4 +1,5 @@
 ﻿using Integration.Pharmacy.Model;
+using Integration.Pharmacy.Repository.RepositoryInterfaces;
 using Integration.SharedModel;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace Integration.Pharmacy.Repository
 {
-    class PharmaciesRepository
+    class PharmaciesRepository : IPharmaciesRepository
     {
         private IntegrationDbContext dbContext = new IntegrationDbContext();
 
@@ -27,5 +28,16 @@ namespace Integration.Pharmacy.Repository
         {
             return dbContext.Pharmacies.ToList();
         }
+
+        public void Delete(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PharmacyProfile GetByID(string id)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
