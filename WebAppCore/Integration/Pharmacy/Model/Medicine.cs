@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace Hospital
+namespace Integration
 {
     public class Medicine
     {

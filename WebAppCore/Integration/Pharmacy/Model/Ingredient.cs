@@ -5,10 +5,11 @@
 
 using System;
 
-namespace Hospital
+namespace Integration
 {
     public class Ingredient
     {
+        public int Id { get; set; }
         private string name;
 
         public string Name

@@ -1,10 +1,11 @@
 
 using System;
 
-namespace Hospital
+namespace Integration
 {
     public class Examination
     {
+        public int Id { get; set; }
         public String diagnosis;
         public String anamnesis;
         public DateTime dateOfExamination;

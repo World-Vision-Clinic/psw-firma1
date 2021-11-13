@@ -1,4 +1,4 @@
-﻿using Hospital.Repositories.Interfaces;
+﻿using Integration.Repositories.Interfaces;
 using Integration.Pharmacy.Model;
 using System;
 using System.Collections.Generic;

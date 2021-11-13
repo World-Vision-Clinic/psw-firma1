@@ -1,6 +1,6 @@
-﻿using Hospital.Model;
-using Hospital.Repositories;
-using Hospital.Repositories.Interfaces;
+﻿using Integration.Model;
+using Integration.Repositories;
+using Integration.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Hospital.Services
+namespace Integration.Services
 {
     public class MedicineService
     {

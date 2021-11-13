@@ -3,10 +3,10 @@
 // Created: Tuesday, March 23, 2021 7:21:46 PM
 // Purpose: Definition of Class Therapy
 
-using Hospital.Model;
+using Integration.Model;
 using System;
 
-namespace Hospital
+namespace Integration
 {
     public class Therapy
     {

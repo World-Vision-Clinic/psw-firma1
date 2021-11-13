@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Text;
 
-namespace Hospital
+namespace Integration
 {
     public class Appointment
     {

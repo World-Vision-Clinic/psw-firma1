@@ -1,5 +1,5 @@
-﻿using Hospital;
-using Hospital.Repositories.Interfaces;
+﻿using Integration;
+using Integration.Repositories.Interfaces;
 using Integration.SharedModel;
 using System;
 using System.Collections.Generic;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hospital.Repositories.Interfaces
+namespace Integration.Repositories.Interfaces
 {
     public interface IGenericRepository<T>
         where T : class

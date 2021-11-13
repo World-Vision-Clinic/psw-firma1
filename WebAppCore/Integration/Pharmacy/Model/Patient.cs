@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace Hospital
+namespace Integration
 {
     public class Patient
     {
+        public int Id { get; set; }
         private bool isGuest = false;
         private bool isBlocked = false;
         public string FirstName { get; set; }
