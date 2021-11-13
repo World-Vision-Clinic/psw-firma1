@@ -19,6 +19,8 @@ namespace Integration_API.Controller
     {
 
         PharmaciesService pharmaciesService = new PharmaciesService();
+        public const string HOSPITAL_NAME = "World Vision Clinic";
+        public const string HOSPITAL_URL = "http://localhost:43818";
 
         [HttpPost("registerPharmacy")]
         public IActionResult Add(PharmacyDto dto)
@@ -41,8 +43,8 @@ namespace Integration_API.Controller
             request.AddJsonBody(
             new
             {
-                   HospitalName = "World Vision Clinic",
-                   HospitalLocalhost = "http://localhost:43818",
+                   HospitalName = HOSPITAL_NAME,
+                   HospitalLocalhost = HOSPITAL_URL,
                    ApiKey = generatedKey
             });
 

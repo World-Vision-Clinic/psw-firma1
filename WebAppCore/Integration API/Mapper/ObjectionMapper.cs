@@ -14,7 +14,8 @@ namespace Integration_API.Mapper
             ObjectionDto dto = new ObjectionDto();
             dto.Id = objection.Id;
             dto.Content = objection.Content;
-            dto.PharmacyLocalhost = pharmacyName;
+            dto.PharmacyLocalhost = objection.PharmacyId;
+            dto.PharmacyName = pharmacyName;
             return dto;
         }
         
