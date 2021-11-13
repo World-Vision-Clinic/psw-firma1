@@ -3,4 +3,6 @@ export interface IFeedback{
     Content : string,
     isPublic : boolean,
     isAnonymous : boolean
+    Date : Date,
+    UserName : string
 }

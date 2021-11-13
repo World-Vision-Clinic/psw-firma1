@@ -20,4 +20,10 @@ export class ManagerFeedbackService {
     feedback.isPublic = true;
     return this.http.put<IFeedback>("/api/Feedbacks/"+feedback.id, feedback); //TODO Errorcheck
   }
+
+  unpublishFeedback(feedback) : Observable<IFeedback>{
+    console.log("Here");
+    feedback.isPublic = false;
+    return this.http.put<IFeedback>("/api/Feedbacks/"+feedback.id, feedback); //TODO Errorcheck
+  }
 }

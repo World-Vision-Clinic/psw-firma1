@@ -56,6 +56,9 @@
                                 <div *ngIf="!f.isPublic">
                                     <button class="btn-rounded btn-blue" (click)="publishFeedback(i)">Publish</button>
                                 </div>
+                                <div *ngIf="f.isPublic">
+                                    <button class="btn-rounded btn-blue" (click)="unpublishFeedback(i)">Unpublish</button>
+                                </div>
                               </div>
                             </div>
                         </div>

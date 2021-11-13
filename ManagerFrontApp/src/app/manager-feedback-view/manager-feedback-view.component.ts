@@ -24,4 +24,10 @@ export class ManagerFeedbackViewComponent implements OnInit {
     this.managerService.publishFeedback(feedback).subscribe();
   }
 
+  unpublishFeedback(i) {
+    console.log(i);
+    let feedback = this.feedbacks[i];
+    this.managerService.unpublishFeedback(feedback).subscribe();
+  }
+
 }
