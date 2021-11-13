@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Integration.Pharmacy.Service
 {
-    class Generator
+    public class Generator
     {
         public static string GenerateApiKey()
         {
@@ -26,5 +26,23 @@ namespace Integration.Pharmacy.Service
 
             return apiKey;
         }
+        public static string GenerateObjectionId()
+        {
+            IntegrationDbContext context = new IntegrationDbContext();
+            Reply foundedReply = null;
+            string objectionId = "";
+            do
+            {
+                var key = new byte[32];
+                using (var generator = RandomNumberGenerator.Create())
+                    generator.GetBytes(key);
+                objectionId = Convert.ToBase64String(key);
+                foundedReply = context.Replies.SingleOrDefault(reply => reply.ObjectionId == objectionId);
+
+            } while (foundedReply != null  || objectionId.Contains("+"));
+
+            return objectionId;
+        }
+
     }
 }

@@ -1,8 +1,47 @@
-<input id="content" type="textarea" [(ngModel)]="content"><br>
-<label>Public</label>
-<input id="isPublic" type="checkbox" [(ngModel)]="isPublic"><br>
-<label>Anonymous</label>
-<input id="isAnonymous" type="checkbox" [(ngModel)]="isAnonymous"><br>
-<button (click)="createFeedback()">
-  Leave Feedback
-</button>
+<div class="container-fluid">
+  <div class="row mt-3">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+
+        <!--Header-->
+        <div class="header" [@colorState]="!feedbackSent" [@borderRoundingState]="!feedbackSent">
+          <div class="row d-flex justify-content-center">
+            <h3 class="text-white mb-0 py-5 font-weight-bold" *ngIf="!feedbackSent">Let us know about your experience</h3>
+            <h3 class="text-white mb-0 py-5 font-weight-bold" *ngIf="feedbackSent">Thank you for your feedback!</h3>
+          </div>
+        </div>
+    
+        <div class="card-body mx-4 collapsible" [@collapse]="feedbackSent">
+    
+          <div class="md-form">
+            <textarea id="content" class="md-textarea form-control" rows="5" [(ngModel)]="content"></textarea>
+            <small id="passwordHelp" class="text-danger" *ngIf="!contentIsValid()">
+              Field must not be empty.
+            </small>
+          </div>
+    
+          <div class="row d-flex align-items-center mb-3 mt-4">
+            <div class="col-md-4">
+              <span class="switch">
+                <input type="checkbox" class="switch" id="isAnonymous" [(ngModel)]="isAnonymous">
+                <label for="isAnonymous">Anonymous</label>
+              </span>
+            </div>
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+              <div class="text-center">
+                <button type="button" class="btn btn-blue btn-rounded" (click)="createFeedback()" [disabled]="!contentIsValid()">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+      </div>
+    </div>
+    <div class="col-md-4">
+    </div>
+  </div>
+</div>

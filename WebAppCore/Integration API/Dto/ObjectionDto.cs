@@ -10,10 +10,15 @@ namespace Integration_API.Dto
         public string Id { get; set; }
         public string Content { get; set; }
 
-        public ObjectionDto(string id, string content)
+        public string PharmacyName { get; set; }
+        public string PharmacyLocalhost { get; set; }
+
+        public ObjectionDto(string content, string pharmacyName, string pharmacyLocalhost)
         {
-            Id = id;
+            Id = " ";
             Content = content;
+            PharmacyName = pharmacyName;
+            PharmacyLocalhost = pharmacyLocalhost;
         }
 
         public ObjectionDto() { }

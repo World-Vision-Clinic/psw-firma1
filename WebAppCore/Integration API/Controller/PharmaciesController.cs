@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Integration.Pharmacy.Service;
 using Integration_API.Mapper;
 using RestSharp;
+using Integration.Pharmacy;
+using Integration.Pharmacy.Model;
 
 namespace Integration_API.Controller
 {
@@ -17,6 +19,8 @@ namespace Integration_API.Controller
     {
 
         PharmaciesService pharmaciesService = new PharmaciesService();
+        public const string HOSPITAL_NAME = "World Vision Clinic";
+        public const string HOSPITAL_URL = "http://localhost:43818";
 
         [HttpPost("registerPharmacy")]
         public IActionResult Add(PharmacyDto dto)
@@ -33,22 +37,32 @@ namespace Integration_API.Controller
             }
 
             var client = new RestSharp.RestClient(dto.Localhost);
-            var request = new RestRequest("/credential");
-
-            CredentialDto credential = new CredentialDto("World Vision Clinic", "http://localhost:43818", generatedKey);
+            var request = new RestRequest("/credentials");
 
             request.AddHeader("Content-Type", "application/json");
             request.AddJsonBody(
             new
             {
-                   hospitalName = credential.HospitalName,
-                   hospitalLocalhost = credential.HospitalLocalhost,
-                   apiKey = credential.ApiKey
+                   HospitalName = HOSPITAL_NAME,
+                   HospitalLocalhost = HOSPITAL_URL,
+                   ApiKey = generatedKey
             });
 
             IRestResponse response = client.Post(request);  // POST /credential  {"Name": "World Vision Clinic", "HospitalLocalhost": "http://localhost:43818", "ApiKey": "wqhegyqwegqyw21543"}
             System.Diagnostics.Debug.WriteLine(response.StatusCode);
-            return Ok(response);
+            if(response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                return BadRequest();
+            return Ok();
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            List<PharmacyProfile> pharmacies = new List<PharmacyProfile>();
+            List<PharmacyDto> result = new List<PharmacyDto>();
+            pharmacies = pharmaciesService.GetAll();
+            pharmacies.ForEach(pharmacy => result.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy)));
+            return Ok(result);
         }
 
     }
