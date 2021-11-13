@@ -12,6 +12,8 @@ namespace Integration.SharedModel
         public DbSet<Objection> Objections { get; set; }
         public DbSet<Reply> Replies { get; set; }
         public DbSet<PharmacyProfile> Pharmacies { get; set; }
+        public DbSet<Medicine> Medicines { get; set; }
+        public DbSet<MedicalRecord> MedicalRecords { get; set; }
         public IntegrationDbContext()
         {
 

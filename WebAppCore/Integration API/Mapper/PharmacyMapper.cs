@@ -15,6 +15,8 @@ namespace Integration_API.Mapper
             pharmacy.Name = dto.Name;
             pharmacy.Localhost = dto.Localhost;
             pharmacy.Protocol = ProtocolType.HTTP;
+            pharmacy.Address = dto.Address;
+            pharmacy.City = dto.City;
             return pharmacy;
         }
 
@@ -23,6 +25,8 @@ namespace Integration_API.Mapper
             PharmacyDto dto = new PharmacyDto();
             dto.Name = pharmacy.Name;
             dto.Localhost = pharmacy.Localhost;
+            dto.Address = pharmacy.Address;
+            dto.City = pharmacy.City;
             return dto;
         }
     }

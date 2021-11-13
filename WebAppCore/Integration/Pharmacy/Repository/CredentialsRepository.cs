@@ -11,11 +11,22 @@ namespace Integration.Pharmacy.Repository
     public class CredentialsRepository : ICredentialsRepository
     {
         private IntegrationDbContext dbContext = new IntegrationDbContext();
+
+        public void Delete(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Credential> GetAll()
         {
             List<Credential> credentials = new List<Credential>();
             dbContext.Credentials.ToList().ForEach(credential => credentials.Add(credential));
             return credentials;
+        }
+
+        public Credential GetByID(string id)
+        {
+            throw new NotImplementedException();
         }
 
         public Credential GetByPharmacyLocalhost(string pharmacyLocalhost)
@@ -37,5 +48,6 @@ namespace Integration.Pharmacy.Repository
             dbContext.Credentials.Add(credential);
             dbContext.SaveChanges();
         }
+
     }
 }

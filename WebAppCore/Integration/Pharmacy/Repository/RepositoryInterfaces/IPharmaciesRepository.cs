@@ -6,8 +6,7 @@ using System.Text;
 
 namespace Integration.Pharmacy.Repository.RepositoryInterfaces
 {
-    public interface ICredentialsRepository : IGenericRepository<Credential>
+   public interface IPharmaciesRepository : IGenericRepository<PharmacyProfile>
     {
-        Credential GetByPharmacyLocalhost(string pharmacyLocalhost);
     }
 }
