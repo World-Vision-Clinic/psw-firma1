@@ -5,6 +5,7 @@ import { Hospital1Component } from './hospital1/hospital1.component';
 import { FrontPageComponent } from './front-page/front-page.component';
 import { PharmacyRegistrationComponent } from './pharmacy-registration/pharmacy-registration.component';
 import { ManagerObjectionsComponent } from './manager-objections/manager-objections.component';
+import { ManagerFeedbackViewComponent } from './manager-feedback-view/manager-feedback-view.component';
 import { OverviewObjectionsRepliesComponent } from './manager-objections/overview-objections-replies/overview-objections-replies.component';
 import { ObjectionFormPageComponent } from './manager-objections/objection-form-page/objection-form-page.component';
 
@@ -16,7 +17,8 @@ const routes: Routes = [
   {path:"manager-objections", component: ManagerObjectionsComponent, children: [
   {path: "overview-objections-replies", outlet: "showObjRepl", component:OverviewObjectionsRepliesComponent},
   {path: "create-objection", outlet: "showObjRepl", component:ObjectionFormPageComponent}
-  ]}
+  ]},
+  {path:"manager-feedback", component: ManagerFeedbackViewComponent}
   ];
 
 @NgModule({

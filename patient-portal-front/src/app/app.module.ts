@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,6 +17,11 @@ import { PatientCreateFeedbackComponent } from './patient-create-feedback/patien
 import { PatientCreateFeedbackService } from './patient-create-feedback.service';
 import { PatientFeedbackServiceService } from './patient-feedback-service.service';
 import { PatientFeedbackViewComponent } from './patient-feedback-view/patient-feedback-view.component';
+
+import { PatientFeedbackServiceService } from './patient-feedback-service.service';
+import { PatientFeedbackViewComponent } from './patient-feedback-view/patient-feedback-view.component';
+import { PatientCreateFeedbackComponent } from './patient-create-feedback/patient-create-feedback.component';
+import { PatientCreateFeedbackService } from './patient-create-feedback.service';
 
 @NgModule({
   declarations: [

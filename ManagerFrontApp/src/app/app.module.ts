@@ -15,6 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { OverviewObjectionsRepliesComponent } from './manager-objections/overview-objections-replies/overview-objections-replies.component'; 
 import { ReactiveFormsModule } from '@angular/forms';
 import { ObjectionFormPageComponent } from './manager-objections/objection-form-page/objection-form-page.component';
+import { ManagerFeedbackViewComponent } from './manager-feedback-view/manager-feedback-view.component'; 
+
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { ObjectionFormPageComponent } from './manager-objections/objection-form-
     PharmacyRegistrationComponent,
     ManagerObjectionsComponent,
     OverviewObjectionsRepliesComponent,
-    ObjectionFormPageComponent
+    ObjectionFormPageComponent,
+    ManagerFeedbackViewComponent
   ],
   imports: [
     BrowserModule,
