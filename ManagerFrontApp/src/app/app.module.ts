@@ -28,7 +28,7 @@ import { ManagerFeedbackViewComponent } from './manager-feedback-view/manager-fe
     PharmacyRegistrationComponent,
     ManagerObjectionsComponent,
     OverviewObjectionsRepliesComponent,
-    ObjectionFormPageComponent
+    ObjectionFormPageComponent,
     ManagerFeedbackViewComponent
   ],
   imports: [

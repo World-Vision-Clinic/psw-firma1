@@ -17,8 +17,8 @@ const routes: Routes = [
   {path:"manager-objections", component: ManagerObjectionsComponent, children: [
   {path: "overview-objections-replies", outlet: "showObjRepl", component:OverviewObjectionsRepliesComponent},
   {path: "create-objection", outlet: "showObjRepl", component:ObjectionFormPageComponent}
+  ]},
   {path:"manager-feedback", component: ManagerFeedbackViewComponent}
-  ]}
   ];
 
 @NgModule({
