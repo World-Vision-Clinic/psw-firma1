@@ -92,7 +92,9 @@
       </g>
     </svg>
   </div>
-  <div class="info-box" *ngIf="!!roomIsSelected">
+
+  <div class="info-box" *ngIf="!!roomIsSelected" >
+    <div *ngIf="!equipmentBox">
     <div class="title"><h3>Room info:</h3></div>
     <label for="">Room name:</label><br />
     <input
@@ -124,13 +126,32 @@
     <br />
     <div class="rightbtn">
       <button class="btn" (click)="close()" *ngIf="formDisabled">Close</button>
-      <button class="btn" (click)="enableEdit()" *ngIf="formDisabled">
+      <div *ngIf="formDisabled"> 
+      <button class="btn" (click)="equipment()">Equipment</button>
+      <button class="btn" (click)="enableEdit()" >
         Edit
       </button>
+    </div>
       <button class="btn" (click)="cancel()" *ngIf="!formDisabled">
         Cancel
       </button>
       <button class="btn" (click)="save()" *ngIf="!formDisabled">Save</button>
     </div>
   </div>
+  <div *ngIf="!!equipmentBox">
+    <table class="equipment-table">
+    <thead>
+      <tr><th>   Name</th><th>Type</th><th>Amount</th></tr>
+    </thead>
+    <tbody >
+      <tr *ngFor="let item of selectedRoom.equipment">
+        <td>{{item.name}}</td><td>{{item.type}}</td><td>{{item.amount}}</td>
+      </tr>     
+    </tbody>
+    </table>
+    <div class="rightbtn">
+      <button class="btn" (click)="closeEquip()">Close</button>
+    </div>
+  </div>
+</div>
 </div>
