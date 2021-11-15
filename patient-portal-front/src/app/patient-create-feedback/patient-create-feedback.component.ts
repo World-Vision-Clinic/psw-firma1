@@ -38,7 +38,7 @@ const DEFAULT_DURATION = 300;
 })
 export class PatientCreateFeedbackComponent implements OnInit {
   content: string = "";
-  isPublic: boolean = true;
+  isPublic: boolean = false;
   isAnonymous: boolean = false;
   UserName: string = "Default User";
   feedbackSent: boolean = false;
