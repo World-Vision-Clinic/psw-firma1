@@ -15,5 +15,8 @@ namespace Hospital_API.Models
         }
 
         public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<Survey> Surveys { get; set; }
+        public DbSet<SurveySection> SurveySections { get; set; }
+        public DbSet<SurveyQuestion> SurveyQuestions { get; set; }
     }
 }
