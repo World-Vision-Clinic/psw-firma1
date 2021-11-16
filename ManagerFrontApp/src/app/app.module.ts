@@ -10,12 +10,12 @@ import { RoomComponent } from './room/room.component';
 import { FormsModule } from '@angular/forms';
 import { PharmacyRegistrationComponent } from './pharmacy-registration/pharmacy-registration.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ManagerObjectionsComponent } from './manager-objections/manager-objections.component';
+import { ManagerIntegrationFrontAppComponent } from './manager-integration-front-app/manager-integration-front-app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { OverviewObjectionsRepliesComponent } from './manager-objections/overview-objections-replies/overview-objections-replies.component'; 
+import { OverviewObjectionsRepliesComponent } from './manager-integration-front-app/overview-objections-replies/overview-objections-replies.component'; 
 import { ReactiveFormsModule } from '@angular/forms';
-import { ObjectionFormPageComponent } from './manager-objections/objection-form-page/objection-form-page.component';
-import { ManagerFeedbackViewComponent } from './manager-feedback-view/manager-feedback-view.component'; 
+import { ObjectionFormPageComponent } from './manager-integration-front-app/objection-form-page/objection-form-page.component';
+import { ManagerFeedbackViewComponent } from './manager-feedback-view/manager-feedback-view.component';
 
 
 @NgModule({
@@ -26,10 +26,11 @@ import { ManagerFeedbackViewComponent } from './manager-feedback-view/manager-fe
     FrontPageComponent,
     RoomComponent,
     PharmacyRegistrationComponent,
-    ManagerObjectionsComponent,
+    ManagerIntegrationFrontAppComponent,
     OverviewObjectionsRepliesComponent,
     ObjectionFormPageComponent,
-    ManagerFeedbackViewComponent
+    ManagerFeedbackViewComponent,
+    ManagerIntegrationFrontAppComponent
   ],
   imports: [
     BrowserModule,
