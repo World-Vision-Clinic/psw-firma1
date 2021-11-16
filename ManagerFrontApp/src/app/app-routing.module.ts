@@ -14,7 +14,7 @@ const routes: Routes = [
   {path:"buildings", component: BuildingsMapComponent},
   {path:"hospital1", component: Hospital1Component},
   {path:"pharmacy-registration", component: PharmacyRegistrationComponent},
-  {path:"manager-objections", component: ManagerIntegrationFrontAppComponent, children: [
+  {path:"manager-front-app", component: ManagerIntegrationFrontAppComponent, children: [
   {path: "overview-objections-replies", outlet: "showObjRepl", component:OverviewObjectionsRepliesComponent},
   {path: "create-objection", outlet: "showObjRepl", component:ObjectionFormPageComponent}
   ]},
