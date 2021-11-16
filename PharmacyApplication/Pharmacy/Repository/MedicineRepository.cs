@@ -28,5 +28,24 @@ namespace Pharmacy.Repository
             }
             return medicine;
         }
+
+        public void AddMedicine(Medicine medinice)
+        {
+            dbContext.Medicines.Add(medinice);
+            dbContext.SaveChanges();
+        }
+
+        public void DeleteMedicine(long medicineId)
+        {
+            Medicine medicine = dbContext.Medicines.ToList().FirstOrDefault(medicine => medicine.MedicineId == medicineId);
+            dbContext.Medicines.Remove(medicine);
+            dbContext.SaveChanges();
+        }
+
+        public void UpdateMedicine(Medicine medicine)
+        {
+            dbContext.Medicines.Update(medicine);
+            dbContext.SaveChanges();
+        }
     }
 }

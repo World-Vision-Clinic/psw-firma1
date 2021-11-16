@@ -24,5 +24,20 @@ namespace Pharmacy.Service
         {
             return repository.GetById(medicineId);
         }
+
+        public void AddMedicine(Medicine medinice)
+        {
+            repository.AddMedicine(medinice);
+        }
+
+        public void DeleteMedicine(long medicineId)
+        {
+            repository.DeleteMedicine(medicineId);
+        }
+
+        public void UpdateMedicine(Medicine medicine)
+        {
+            repository.UpdateMedicine(medicine);
+        }
     }
 }
