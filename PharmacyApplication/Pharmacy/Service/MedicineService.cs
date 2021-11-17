@@ -39,5 +39,10 @@ namespace Pharmacy.Service
         {
             repository.UpdateMedicine(medicine);
         }
+
+        public bool ProcureMedicine(long medicineId, int quantity)
+        {
+            return repository.ProcureMedicine(medicineId, quantity);
+        }
     }
 }
