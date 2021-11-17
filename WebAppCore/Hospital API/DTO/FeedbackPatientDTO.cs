@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace Hspital_API.Dto
 {
-    public class FeedBackPatientDTO
+    public class FeedbackPatientDTO
     {
         public DateTime Date { get; set; }
         public string UserName { get; set; }
         public string Content { get; set; }
 
-        public FeedBackPatientDTO(DateTime date, string username, string content)
+        public FeedbackPatientDTO(DateTime date, string username, string content)
         {
             Date = date;
             UserName = username;
             Content = content;
         }
 
-        public FeedBackPatientDTO() { }
+        public FeedbackPatientDTO() { }
     }
 }

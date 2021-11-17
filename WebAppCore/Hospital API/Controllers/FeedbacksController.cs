@@ -9,6 +9,8 @@ using Hospital_API.Models;
 using Hospital.Models;
 using Hospital.Service;
 using Hospital.Repository;
+using Hspital_API.Dto;
+using Hspital_API.Mapper;
 
 namespace Hospital_API
 {
@@ -35,9 +37,13 @@ namespace Hospital_API
         }
 
         [HttpGet("published")]
-        public ActionResult<IEnumerable<Feedback>> GetFeedbacksPublished()
+        public ActionResult<IEnumerable<FeedbackPatientDTO>> GetFeedbacksPublished()
         {
-            return _feedbackService.GetPublished();
+            List<FeedbackPatientDTO> dtoList = new List<FeedbackPatientDTO>();
+            foreach (Feedback feedbakc in _feedbackService.GetPublished()) {
+                dtoList.Add(FeedbackMapper.FeedbackToFeedbackPatientDTO(feedbakc));
+            }
+            return dtoList;
         }
 
         // GET: api/Feedbacks/5
