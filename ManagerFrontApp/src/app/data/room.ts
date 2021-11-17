@@ -1,7 +1,10 @@
+import { Equipment } from "./equipment"
+
 export interface Room {
     roomId?: number,
     name: string,
     purpose: string,
+    equipment?: Equipment[],
     doctor: string,
     x: number,
     y: number,

@@ -24,7 +24,9 @@ export class Hospital1Component implements OnInit {
   selectedRoom:Room = emptyRoom();
   roomIsSelected = false;
 	formDisabled: boolean = true;
-	
+	equipmentBox: boolean = false;
+
+
   enableEdit(){
 	this.formDisabled = false;
   }
@@ -75,6 +77,14 @@ export class Hospital1Component implements OnInit {
     this.selectedRoom = {...room};
     this.roomIsSelected = true;
     this.formDisabled = true;
+  }
+
+  equipment(){
+    this.equipmentBox=true;
+  }
+
+  closeEquip(){
+    this.equipmentBox=false;
   }
 
 
