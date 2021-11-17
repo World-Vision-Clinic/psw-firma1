@@ -1,29 +1,43 @@
 using Hospital.Models;
-using Hospital_API.Models;
+using Hospital.Repository;
+using Hospital.Service;
 using Microsoft.AspNetCore.Mvc;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 
 namespace Hospital_API
-{/*
+{
+    [Route("api/[controller]")]
+    [ApiController]
     public class SurveyController : ControllerBase
     {
-        private readonly HospitalContext _context;
         private SurveyService surveyService;
 
-        public SurveyController(HospitalContext context)
+        public SurveyController()
         {
-            _context = context;
-            surveyService = new SurveyService(context);
+            surveyService = new SurveyService(new SurveyRepository(new HospitalContext()));
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<Survey> GetSurvey(int id)
+        {
+            var survey = surveyService.FindById(id);
+
+            if (survey == null)
+            {
+                return NotFound();
+            }
+
+            return survey;
         }
 
         [HttpPost]
-        public async Task<ActionResult<Survey>> PostSurvey([FromBody] Survey survey)
+        public ActionResult<Survey> PostSurvey([FromBody] Survey survey)
         {
-            Survey newSurvey = surveyService.AddSurvey(survey);
+            Survey newSurvey = survey;
 
-            return CreatedAtAction("GetFeedback", new { id = newSurvey.Id }, newSurvey);
+            surveyService.AddSurvey(newSurvey);
+
+            return CreatedAtAction("GetSurvey", new { id = newSurvey.Id }, newSurvey);
         }
 
-    }*/
+    }
 }
