@@ -5,6 +5,7 @@ on:
     branches:
     - master
     - develop
+    - feat/implement-packaging
   pull_request:
     branches:
     - master
