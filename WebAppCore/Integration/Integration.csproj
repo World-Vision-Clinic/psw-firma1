@@ -4,6 +4,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PackageId>NuGet.IntegrationLibrary</PackageId>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/World-Vision-Clinic/psw-firma1</RepositoryUrl>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="HospitalLibrary" Version="1.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
