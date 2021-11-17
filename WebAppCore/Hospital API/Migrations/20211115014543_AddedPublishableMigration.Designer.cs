@@ -3,15 +3,17 @@ using System;
 using Hospital_API.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Hospital_API.Migrations
 {
     [DbContext(typeof(HospitalContext))]
-    partial class MyWebApiContextModelSnapshot : ModelSnapshot
+    [Migration("20211115014543_AddedPublishableMigration")]
+    partial class AddedPublishableMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,9 +41,6 @@ namespace Hospital_API.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<bool>("isPublic")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("isPublishable")
                         .HasColumnType("boolean");
 
                     b.HasKey("Id");

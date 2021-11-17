@@ -167,4 +167,50 @@
   color: #000;
   border-bottom: solid 1px rgba(0, 0, 0, 0.1);
   word-wrap: break-word;
+
+.search-box-rooms {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  background: cadetblue;
+  height: 40px;
+  border-radius: 40px;
+  padding: 8px;
+}
+
+.search-box-rooms:hover > .search-txt-rooms{
+  width: 220px;
+  padding: 0 6px;
+}
+
+.search-box-rooms:hover > .search-btn-rooms{
+ background: white;
+ color: cadetblue;
+}
+
+.search-btn-rooms {
+  color: white;
+  float: right;
+  width: 25px;
+  height: 25px;
+  text-decoration: none;
+  border-radius: 50%;
+  background: cadetblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.4s;
+}
+
+.search-txt-rooms {
+  border:none;
+  background: none;
+  outline: none;
+  float: left;
+  padding: 0;
+  color: white;
+  font-size: 16px;
+  transition: 0.4s;
+  width: 0px;
+  line-height: 25px;
 }

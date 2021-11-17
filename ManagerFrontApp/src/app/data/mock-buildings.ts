@@ -11,13 +11,13 @@ export let BUILDINGS: Building[] = [
             height: 180,
             doors: [
                 {
-                    x: 545,
+                    x: 548,
                     y: 80,
                     isVertical: true
                 },
                 {
                     x: 260,
-                    y: 195,
+                    y: 198,
                     isVertical: false
                 }
             ]
@@ -507,13 +507,13 @@ export let BUILDINGS: Building[] = [
             height: 180,
             doors: [
                 {
-                    x: 545,
+                    x: 548,
                     y: 505,
                     isVertical: true
                 },
                 {
                     x: 260,
-                    y: 455,
+                    y: 458,
                     isVertical: false
                 }
             ]
