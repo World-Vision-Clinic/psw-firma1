@@ -43,3 +43,50 @@
   stroke-width: 2px;
   fill: rgb(82, 80, 78);
 }
+
+.search-box {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  background: cadetblue;
+  height: 40px;
+  border-radius: 40px;
+  padding: 8px;
+}
+
+.search-box:hover > .search-txt{
+  width: 220px;
+  padding: 0 6px;
+}
+
+.search-box:hover > .search-btn{
+ background: white;
+ color: cadetblue;
+}
+
+.search-btn {
+  color: white;
+  float: right;
+  width: 25px;
+  height: 25px;
+  text-decoration: none;
+  border-radius: 50%;
+  background: cadetblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.4s;
+}
+
+.search-txt {
+  border:none;
+  background: none;
+  outline: none;
+  float: left;
+  padding: 0;
+  color: white;
+  font-size: 16px;
+  transition: 0.4s;
+  width: 0px;
+  line-height: 25px;
+}
