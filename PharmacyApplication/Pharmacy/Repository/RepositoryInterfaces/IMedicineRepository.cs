@@ -9,8 +9,8 @@ namespace Pharmacy.Repository.RepositoryInterfaces
     {
         public List<Medicine> GetAll();
         Medicine GetById(long medicineId);
-        public void AddMedicine(Medicine medinice);
-        public void DeleteMedicine(long medicineId);
-        public void UpdateMedicine(Medicine medicine);
+        public bool AddMedicine(Medicine medinice);
+        public bool DeleteMedicine(long medicineId);
+        public bool UpdateMedicine(Medicine medicine);
     }
 }
