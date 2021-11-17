@@ -91,7 +91,6 @@ namespace Pharmacy.Service
             
             foreach(Medicine m in medicines)
             {
-                if (m.Weigth == null) continue;
                 if (m.Weigth == weight) return m;
             }
 

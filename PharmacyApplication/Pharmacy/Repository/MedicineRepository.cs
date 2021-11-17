@@ -71,7 +71,7 @@ namespace Pharmacy.Repository
             medicine.Weigth = editedMedicine.Weigth;
             medicine.MainPrecautions = editedMedicine.MainPrecautions;
             medicine.PotentialDangers = editedMedicine.PotentialDangers;
-            medicine.Substance = editedMedicine.Substance;
+            medicine.Substances = editedMedicine.Substances;
             medicine.Quantity = editedMedicine.Quantity;
 
             dbContext.Medicines.Update(medicine);
