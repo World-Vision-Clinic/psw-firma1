@@ -29,23 +29,54 @@ namespace Pharmacy.Repository
             return medicine;
         }
 
-        public void AddMedicine(Medicine medinice)
+        public bool AddMedicine(Medicine newMedicine)
         {
-            dbContext.Medicines.Add(medinice);
+            Medicine medicine = dbContext.Medicines.ToList().FirstOrDefault(medicine => medicine.MedicineId == newMedicine.MedicineId);
+            if(medicine != null)
+            {
+                return false;
+            }
+
+            dbContext.Medicines.Add(newMedicine);
             dbContext.SaveChanges();
+            return true;
         }
 
-        public void DeleteMedicine(long medicineId)
+        public bool DeleteMedicine(long medicineId)
         {
             Medicine medicine = dbContext.Medicines.ToList().FirstOrDefault(medicine => medicine.MedicineId == medicineId);
+            if(medicine == null)
+            {
+                return false;
+            }
             dbContext.Medicines.Remove(medicine);
             dbContext.SaveChanges();
+            return true;
         }
 
-        public void UpdateMedicine(Medicine medicine)
+        public bool UpdateMedicine(Medicine editedMedicine)
         {
+            Medicine medicine = dbContext.Medicines.ToList().FirstOrDefault(medicine => medicine.MedicineId == editedMedicine.MedicineId);
+            if (medicine == null)
+            {
+                return false;
+            }
+
+            medicine.MedicineId = editedMedicine.MedicineId;
+            medicine.MedicineName = editedMedicine.MedicineName;
+            medicine.Manufacturer = editedMedicine.Manufacturer;
+            medicine.SideEffects = editedMedicine.SideEffects;
+            medicine.Usage = editedMedicine.Usage;
+            medicine.SubstituteMedicines = editedMedicine.SubstituteMedicines;
+            medicine.Weigth = editedMedicine.Weigth;
+            medicine.MainPrecautions = editedMedicine.MainPrecautions;
+            medicine.PotentialDangers = editedMedicine.PotentialDangers;
+            medicine.Substances = editedMedicine.Substances;
+            medicine.Quantity = editedMedicine.Quantity;
+
             dbContext.Medicines.Update(medicine);
             dbContext.SaveChanges();
+            return true;
         }
 
 

@@ -13,6 +13,7 @@ namespace Pharmacy.Repository
         public DbSet<Objection> Objections { get; set; }
         public DbSet<Reply> Replies { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
+        public DbSet<Substance> Substances { get; set; }
         public DbSet<SubstituteMedicine> SubstituteMedicines { get; set; }
 
         public PharmacyDbContext() { }
@@ -31,6 +32,9 @@ namespace Pharmacy.Repository
                 .HasOne(pt => pt.Medicine)
                 .WithMany(t => t.SubstituteMedicines)
                 .HasForeignKey(pt => pt.MedicineId);
+
+            modelbuilder.Entity<Substance>()
+                .HasKey(s => new { s.SubstanceId, s.MedicineId });
 
         }
 

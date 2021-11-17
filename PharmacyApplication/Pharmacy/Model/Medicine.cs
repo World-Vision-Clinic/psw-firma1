@@ -15,12 +15,12 @@ namespace Pharmacy.Model
         public double Weigth { get; set; }
         public string MainPrecautions { get; set; }
         public string PotentialDangers { get; set; }
-        public string Substance { get; set; }
+        public virtual List<Substance> Substances { get; set; }
         public int Quantity { get; set; }
 
         public Medicine() { }
 
-        public Medicine(long id, string medicineName, string manufacturer, string sideEffects, string usage, List<SubstituteMedicine> substituteMedicines, double weigth, string mainPrecautions, string potentialDangers, string substance, int quantity)
+        public Medicine(long id, string medicineName, string manufacturer, string sideEffects, string usage, List<SubstituteMedicine> substituteMedicines, double weigth, string mainPrecautions, string potentialDangers, List<Substance> substances, int quantity)
         {
             MedicineId = id;
             MedicineName = medicineName;
@@ -31,7 +31,7 @@ namespace Pharmacy.Model
             Weigth = weigth;
             MainPrecautions = mainPrecautions;
             PotentialDangers = potentialDangers;
-            Substance = substance;
+            Substances = substances;
             Quantity = quantity;
         }
     }
