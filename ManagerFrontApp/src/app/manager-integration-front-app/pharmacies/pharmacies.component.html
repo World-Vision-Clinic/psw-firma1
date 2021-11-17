@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="row searchFilter" >
+       <div class="col-sm-12" >
+        <div class="input-group" >
+         <input id="table_filter" name="searchFilter" [(ngModel)]="searchFilter" (input)="searchPharmacies()" placeholder="Enter city or adress to search pharmacies..." type="text" class="form-control" aria-label="Text input with segmented button dropdown" >
+        </div>
+       </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row searchFilter" >
+       <div class="col-sm-12" >
+        <div class="input-group" >
+         <input id="table_filter" name="medicineName" [(ngModel)]="medicineName" placeholder="Enter medicine name..." type="text" class="form-control">
+         <input id="table_filter" name="medicineGrams" [(ngModel)]="medicineGrams" placeholder="Enter grams(mg)..." type="number" class="form-control">
+         <input id="table_filter" name="numOfBoxes" [(ngModel)]="numOfBoxes" placeholder="Enter number of boxes..." type="number" class="form-control">
+         <button id="searchBtn" type="button" class="btn btn-secondary btn-search" (click)="searchPharmaciesForMedicals()"><span class="glyphicon glyphicon-search" >&nbsp;</span> <span class="label-icon" >Search</span></button>
+        </div>
+       </div>
+    </div>
+</div>
+<div class="page-content page-container" id="page-content"  *ngFor="let data of PharmaciesList">
+    <div class="padding">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="list list-row block">
+                    <div class="list-item" data-id="19">
+                        <div><a href="#" data-abc="true"><span class="w-48 avatar gd-info">{{data.Name.charAt(0)}}</span></a></div>
+                        <div class="flex"> <a href="#" class="item-author text-color" data-abc="true">{{data.Name}}</a>
+                            <div class="item-except text-muted text-sm h-1x">{{data.Address}}, {{data.City}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

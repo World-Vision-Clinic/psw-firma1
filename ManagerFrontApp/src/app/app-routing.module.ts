@@ -8,6 +8,7 @@ import { ManagerIntegrationFrontAppComponent } from './manager-integration-front
 import { ManagerFeedbackViewComponent } from './manager-feedback-view/manager-feedback-view.component';
 import { OverviewObjectionsRepliesComponent } from './manager-integration-front-app/overview-objections-replies/overview-objections-replies.component';
 import { ObjectionFormPageComponent } from './manager-integration-front-app/objection-form-page/objection-form-page.component';
+import { PharmaciesComponent } from './manager-integration-front-app/pharmacies/pharmacies.component';
 
 const routes: Routes = [
   {path: "", component: FrontPageComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path:"pharmacy-registration", component: PharmacyRegistrationComponent},
   {path:"manager-front-app", component: ManagerIntegrationFrontAppComponent, children: [
   {path: "overview-objections-replies", outlet: "showObjRepl", component:OverviewObjectionsRepliesComponent},
+  {path: "overview-pharmacies", outlet: "showObjRepl", component:PharmaciesComponent},
   {path: "create-objection", outlet: "showObjRepl", component:ObjectionFormPageComponent}
   ]},
   {path:"manager-feedback", component: ManagerFeedbackViewComponent}

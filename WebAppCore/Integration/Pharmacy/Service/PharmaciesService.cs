@@ -35,5 +35,11 @@ namespace Integration.Pharmacy.Service
         {
             return pharamaciesRepository.GetAll();
         }
+
+        public List<PharmacyProfile> GetFiltered(string searchFilter)
+        {
+            return pharamaciesRepository.GetFiltered(searchFilter);
+        }
+
     }
 }
