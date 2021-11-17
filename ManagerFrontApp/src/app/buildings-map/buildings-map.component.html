@@ -1,10 +1,11 @@
 <div style="text-align: center">
-  <h3 style="rgb(70, 70, 70)" class="text">
-    World Vision Clinic map
-  </h3>
+  <h1></h1>
+  <h2 style="color: rgb(70, 70, 70)" class="text">
+    World Vision Clinic Map
+  </h2>
   <svg width="980" height="660">
     <g>
-      <rect x="0" y="0" width="1000" height="660" class="yard" />
+      <rect x="0" y="0" width="960" height="660" class="yard" />
       <g *ngFor="let building of buildings">
         <rect
           [attr.x]="building.mapPosition.x"
@@ -31,31 +32,24 @@
           *ngFor="let door of building.mapPosition.doors; index as i"
           [attr.x]="door.x"
           [attr.y]="door.y"
-          [attr.width]="door.isVertical ? 6 : 80"
-          [attr.height]="!door.isVertical ? 6 : 80"
+          [attr.width]="door.isVertical ? 4 : 80"
+          [attr.height]="!door.isVertical ? 4 : 80"
           class="doors"
         >
           <title>Entrance {{ i + 1 }} - {{ building.name }}</title>
         </rect>
       </g>
 
-      <rect
-        x="165"
-        y="255"
-        rx="20"
-        ry="20"
-        width="260"
-        height="140"
-        class="park"
-      >
+      <rect x="165" y="255" rx="20" ry="20" width="260" height="140" class="park">
         <title>Park</title>
       </rect>
-      <rect x="165" y="315" width="260" height="20" class="parkline" />
-      <rect x="285" y="255" width="20" height="140" class="parkline" />
+      <rect x="165" y="315" width="260" height="15" class="parkline" />
+      <rect x="285" y="255" width="15" height="140" class="parkline" />
 
       <rect x="650" y="60" width="280" height="515" class="parking">
         <title>Parking lots for patients and doctors</title>
       </rect>
+
       <g *ngFor="let parking of parkings">
         <rect
           [attr.x]="parking.x"
@@ -75,4 +69,12 @@
       </g>
     </g>
   </svg>
+
+  <div class="search-box" >
+    <input class="search-txt" type="text" name="" placeholder="Search for building" >
+    <a class="search-btn" href="#">
+      <i class="fas fa-search"></i>
+    </a>
+  </div>
+
 </div>

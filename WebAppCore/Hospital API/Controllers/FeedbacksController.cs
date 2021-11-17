@@ -99,7 +99,6 @@ namespace Hospital_API
         public  ActionResult<Feedback> PostFeedback([FromBody] Feedback feedback)
         {
             Feedback newFeedback = feedback;
-            //newFeedback.Id = newFeedback.GetHashCode();
 
             _feedbackService.AddFeedback(newFeedback);
 

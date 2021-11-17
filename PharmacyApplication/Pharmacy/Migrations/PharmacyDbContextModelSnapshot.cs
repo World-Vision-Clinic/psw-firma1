@@ -39,7 +39,7 @@ namespace Pharmacy.Migrations
                     b.ToTable("Credentials");
                 });
 
-            modelBuilder.Entity("Pharmacy.Model.HospitalProfile", b =>
+            modelBuilder.Entity("Pharmacy.Model.Hospital", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -58,6 +58,42 @@ namespace Pharmacy.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Hospitals");
+                });
+
+            modelBuilder.Entity("Pharmacy.Model.Medicine", b =>
+                {
+                    b.Property<long>("MedicineId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("MainPrecautions")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Manufacturer")
+                        .HasColumnType("text");
+
+                    b.Property<string>("MedicineName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PotentialDangers")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SideEffects")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Usage")
+                        .HasColumnType("text");
+
+                    b.Property<double>("Weigth")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("MedicineId");
+
+                    b.ToTable("Medicines");
                 });
 
             modelBuilder.Entity("Pharmacy.Model.Objection", b =>
@@ -97,6 +133,66 @@ namespace Pharmacy.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Replies");
+                });
+
+            modelBuilder.Entity("Pharmacy.Model.Substance", b =>
+                {
+                    b.Property<long>("SubstanceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MedicineId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("SubstanceId", "MedicineId");
+
+                    b.HasIndex("MedicineId");
+
+                    b.ToTable("Substances");
+                });
+
+            modelBuilder.Entity("Pharmacy.Model.SubstituteMedicine", b =>
+                {
+                    b.Property<long>("MedicineId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SubstituteId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("MedicineId", "SubstituteId");
+
+                    b.HasIndex("SubstituteId");
+
+                    b.ToTable("SubstituteMedicines");
+                });
+
+            modelBuilder.Entity("Pharmacy.Model.Substance", b =>
+                {
+                    b.HasOne("Pharmacy.Model.Medicine", "Medicine")
+                        .WithMany("Substances")
+                        .HasForeignKey("MedicineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Pharmacy.Model.SubstituteMedicine", b =>
+                {
+                    b.HasOne("Pharmacy.Model.Medicine", "Medicine")
+                        .WithMany("SubstituteMedicines")
+                        .HasForeignKey("MedicineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Pharmacy.Model.Medicine", "Substitute")
+                        .WithMany()
+                        .HasForeignKey("SubstituteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
