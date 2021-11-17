@@ -55,5 +55,17 @@ namespace Pharmacy.Service
             return medicines;
 
         }
+
+        public List<Medicine> ConvertIdsToMedicines(List<long> ids)
+        {
+            List<Medicine> medicines = new List<Medicine>();
+
+            foreach(long l in ids)
+            {
+                medicines.Add(GetById(l));
+            }
+
+            return medicines;
+        }
     }
 }
