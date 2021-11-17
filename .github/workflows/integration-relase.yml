@@ -20,7 +20,7 @@ jobs:
     - name: Clean
       run: dotnet clean ${{ env.PROJECT-DLL }} && dotnet nuget locals all --clear
     - name: Restore dependencies
-      run: dotnet restore ${{ env.PROJECT-DLL }}
+      run: nuget restore ${{ env.PROJECT-DLL }}
     - name: Build
       run: dotnet build ${{ env.PROJECT-DLL }} --configuration Release /p:Version=${VERSION}
     - name: Test
