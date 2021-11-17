@@ -8,18 +8,24 @@ namespace Hospital.Models
     {
         private SurveySection section;
         private int id;
+        private DateTime creationDate;
 
         public SurveySection Section
         {
             get { return section; }
-            set { section = value; }
-            
+            set { section = value; }            
         }
 
         public int Id
         {
             get { return id; }
             set { id = value; }
+        }
+
+        public DateTime CreationDate
+        {
+            get { return creationDate; }
+            set { creationDate = value; }
         }
     }
 }

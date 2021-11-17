@@ -7,7 +7,7 @@ namespace Hospital.Models
     public class SurveyQuestion
     {
         private int id;
-        private int answer;
+        private int answer; //ocena koju cemo dati kao odgovor na pitanje
 
         public int Id
         {

@@ -10,6 +10,9 @@ namespace Hospital.Models
     {
         public DbSet<Feedback> Feedbacks{ get; set; }
         public DbSet<Patient> Patients { get; set; }
+        public DbSet<Survey> Surveys { get; set; }
+        public DbSet<SurveySection> SurveySections { get; set; }
+        public DbSet<SurveyQuestion> SurveyQuestions { get; set; }
 
         public HospitalContext()
         {
