@@ -9,6 +9,7 @@ namespace Hospital.Models
     public class HospitalContext : DbContext
     {
         public DbSet<Feedback> Feedbacks{ get; set; }
+        public DbSet<Patient> Patients { get; set; }
 
         public HospitalContext()
         {

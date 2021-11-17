@@ -3,7 +3,7 @@ using Hospital_API.Models;
 
 public class SurveyService 
 {
-    private HospitalContext _context;
+    /*private HospitalContext _context;
 
     public SurveyService(HospitalContext context) 
     {
@@ -15,5 +15,5 @@ public class SurveyService
         _context.SaveChanges();
 
         return survey;
-    }
+    }*/
 }

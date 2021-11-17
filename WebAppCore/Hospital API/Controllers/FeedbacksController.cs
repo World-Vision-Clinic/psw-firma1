@@ -18,16 +18,19 @@ namespace Hospital_API
     {
         //private readonly HospitalContext _context;
         private readonly FeedbackService _feedbackService;
+        private readonly PatientService _patientService;
 
         public FeedbacksController()
         {
             _feedbackService = new FeedbackService(new FeedbackRepository(new Hospital.Models.HospitalContext()));
+            _patientService = new PatientService(new PatientRepository(new Hospital.Models.HospitalContext()));
         }
 
         // GET: api/Feedbacks
         [HttpGet]
         public  ActionResult<IEnumerable<Feedback>> GetFeedbacks()
         {
+            //_patientService.AddPatient();
             return _feedbackService.GetAll();
         }
 
