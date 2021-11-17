@@ -40,13 +40,30 @@ namespace Pharmacy.Service
             repository.UpdateMedicine(medicine);
         }
 
-        public List<Medicine> GetByName(string name)
-        {
+        public List<Medicine> GetByName(string name) //Does not have to be full name
+        { 
             List<Medicine> medicines = new List<Medicine>();
 
             foreach (Medicine m in repository.GetAll())
             {
                 if (m.MedicineName.ToLower().Contains(name.ToLower()))
+                {
+                    medicines.Add(m);
+                }
+            }
+
+            return medicines;
+
+        }
+
+        public List<Medicine> GetByFullName(string name) //Has to be full name (there are medicines with same name but diferent weight)
+        {
+
+            List<Medicine> medicines = new List<Medicine>();
+
+            foreach (Medicine m in repository.GetAll())
+            {
+                if (m.MedicineName.ToLower().Trim().Equals(name.ToLower()))
                 {
                     medicines.Add(m);
                 }
@@ -67,5 +84,32 @@ namespace Pharmacy.Service
 
             return medicines;
         }
+
+        public Medicine GetByNameAndWeight(string name, double weight)
+        {
+            List<Medicine> medicines = GetByFullName(name);
+            
+            foreach(Medicine m in medicines)
+            {
+                if (m.Weigth == null) continue;
+                if (m.Weigth == weight) return m;
+            }
+
+            return null;
+        }
+
+        public Boolean CheckQuantity(string name, double weight, int quantity)
+        {
+            Medicine medicine = GetByNameAndWeight(name, weight);
+            
+            if(medicine!= null && medicine.Quantity >= quantity)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+       
     }
 }
