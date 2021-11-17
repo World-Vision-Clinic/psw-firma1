@@ -7,7 +7,7 @@
   <PropertyGroup>
     <PackageId>NuGet.HospitalLibrary</PackageId>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/TeodoraMaruna/World-Vision-Clinic/psw-firma1</RepositoryUrl>
+    <RepositoryUrl>https://github.com/World-Vision-Clinic/psw-firma1</RepositoryUrl>
   </PropertyGroup>	
 
   <ItemGroup>
