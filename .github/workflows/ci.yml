@@ -5,7 +5,7 @@ on:
     branches:
     - master
     - develop
-    - feat/implement-packaging
+    - feat/implement-packaging  # TODO: izbrisati 
   pull_request:
     branches:
     - master
