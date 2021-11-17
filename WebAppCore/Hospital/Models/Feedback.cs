@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Hospital_API.Models
+namespace Hospital.Models
 {
     public class Feedback
     {
@@ -14,7 +14,7 @@ namespace Hospital_API.Models
         public bool isPublic { get; set; }
         public bool isAnonymous { get; set; }
         public DateTime Date { get; set; }
-        public String UserName { get; set; }
+        public string UserName { get; set; }
 
         public Feedback()
         {

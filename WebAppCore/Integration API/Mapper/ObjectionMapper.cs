@@ -14,7 +14,7 @@ namespace Integration_API.Mapper
             ObjectionDto dto = new ObjectionDto();
             dto.Id = objection.Id;
             dto.Content = objection.Content;
-            dto.PharmacyName = pharmacyName;
+            dto.PharmacyLocalhost = pharmacyName;
             return dto;
         }
         
@@ -22,7 +22,7 @@ namespace Integration_API.Mapper
         {
             Objection newObjection = new Objection();
             newObjection.Content = dto.Content;
-            newObjection.PharmacyId = dto.PharmacyName;
+            newObjection.PharmacyId = dto.PharmacyLocalhost;
             newObjection.Id = generatedId;
             return newObjection;
         }

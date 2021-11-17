@@ -7,8 +7,8 @@ namespace Integration_API.Dto
 {
     public class CredentialDto
     {
-        public string HospitalName { get; set; }
-        public string HospitalLocalhost { get; set; }
+        public string PharmacyName { get; set; }
+        public string PharmacyLocalhost { get; set; }
         public string ApiKey { get; set; }
 
         public CredentialDto() { }
@@ -18,10 +18,10 @@ namespace Integration_API.Dto
             this.ApiKey = apiKey;
         }
 
-        public CredentialDto(string hospitalName, string hospitalLocalhost, string apiKey)
+        public CredentialDto(string pharmacyName, string pharmacyLocalhost, string apiKey)
         {
-            HospitalName = hospitalName;
-            HospitalLocalhost = hospitalLocalhost;
+            PharmacyName = pharmacyName;
+            PharmacyLocalhost = pharmacyLocalhost;
             ApiKey = apiKey;
         }
     }

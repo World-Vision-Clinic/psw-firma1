@@ -18,6 +18,27 @@ namespace Integration.Migrations
                 .HasAnnotation("ProductVersion", "3.1.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            modelBuilder.Entity("Integration.Pharmacy.Model.Credential", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("ApiKey")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PharmacyLocalhost")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PharmacyName")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Credentials");
+                });
+
             modelBuilder.Entity("Integration.Pharmacy.Model.Objection", b =>
                 {
                     b.Property<string>("Id")

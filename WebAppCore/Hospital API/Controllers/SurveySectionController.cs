@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace Hospital_API
-{
+{/*
     public class SurveySectionController : ControllerBase
     {
         private readonly HospitalContext _context;
@@ -27,4 +27,5 @@ namespace Hospital_API
         }
 
     }
+    */
 }

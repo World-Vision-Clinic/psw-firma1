@@ -10,12 +10,14 @@ import { PatientCreateFeedbackComponent } from './patient-create-feedback/patien
 import { PatientCreateFeedbackService } from './patient-create-feedback.service';
 import { PatientFeedbackServiceService } from './patient-feedback-service.service';
 import { PatientFeedbackViewComponent } from './patient-feedback-view/patient-feedback-view.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PatientCreateFeedbackComponent,
-    PatientFeedbackViewComponent
+    PatientFeedbackViewComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

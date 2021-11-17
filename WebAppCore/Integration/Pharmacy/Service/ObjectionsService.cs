@@ -20,34 +20,5 @@ namespace Integration.Pharmacy.Service
         {
             objectionsRepository.saveEntity(newObjection);
         }
-
-        public bool sendObjection(Objection objection)
-        {
-            var client = new RestSharp.RestClient(objection.PharmacyId);
-            var request = new RestRequest("/objections/add");
-
-            
-
-            request.AddHeader("Content-Type", "application/json");
-            request.AddJsonBody(
-            new
-            {
-                content = objection.Content,
-                idEncoded = objection.Id
-            });
-            request.AddHeader("ApiKey", "ABCD1234EFGH");
-
-            IRestResponse response = client.Post(request);  
-            System.Diagnostics.Debug.WriteLine(response.StatusCode);
-
-            if(response.StatusCode==System.Net.HttpStatusCode.OK)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
     }
 }

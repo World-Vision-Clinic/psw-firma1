@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace Hospital_API
-{
+{/*
     public class SurveyController : ControllerBase
     {
         private readonly HospitalContext _context;
@@ -25,5 +25,5 @@ namespace Hospital_API
             return CreatedAtAction("GetFeedback", new { id = newSurvey.Id }, newSurvey);
         }
 
-    }
+    }*/
 }
