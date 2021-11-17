@@ -40,6 +40,11 @@ namespace Pharmacy.Service
             return repository.UpdateMedicine(medicine);
         }
 
+        public bool ProcureMedicine(long medicineId, int quantity)
+        {
+            return repository.ProcureMedicine(medicineId, quantity);
+        }
+      
         public List<Medicine> GetByName(string name) //Does not have to be full name
         { 
             List<Medicine> medicines = new List<Medicine>();
@@ -109,6 +114,6 @@ namespace Pharmacy.Service
             return false;
         }
 
-       
+
     }
 }
