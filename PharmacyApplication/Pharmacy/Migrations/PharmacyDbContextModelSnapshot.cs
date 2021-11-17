@@ -85,9 +85,6 @@ namespace Pharmacy.Migrations
                     b.Property<string>("SideEffects")
                         .HasColumnType("text");
 
-                    b.Property<string>("Substance")
-                        .HasColumnType("text");
-
                     b.Property<string>("Usage")
                         .HasColumnType("text");
 
@@ -138,6 +135,27 @@ namespace Pharmacy.Migrations
                     b.ToTable("Replies");
                 });
 
+            modelBuilder.Entity("Pharmacy.Model.Substance", b =>
+                {
+                    b.Property<long>("SubstanceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MedicineId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("SubstanceId", "MedicineId");
+
+                    b.HasIndex("MedicineId");
+
+                    b.ToTable("Substances");
+                });
+
             modelBuilder.Entity("Pharmacy.Model.SubstituteMedicine", b =>
                 {
                     b.Property<long>("MedicineId")
@@ -151,6 +169,15 @@ namespace Pharmacy.Migrations
                     b.HasIndex("SubstituteId");
 
                     b.ToTable("SubstituteMedicines");
+                });
+
+            modelBuilder.Entity("Pharmacy.Model.Substance", b =>
+                {
+                    b.HasOne("Pharmacy.Model.Medicine", "Medicine")
+                        .WithMany("Substances")
+                        .HasForeignKey("MedicineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Pharmacy.Model.SubstituteMedicine", b =>
