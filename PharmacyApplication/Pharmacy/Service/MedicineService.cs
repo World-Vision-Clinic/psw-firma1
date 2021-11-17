@@ -39,5 +39,21 @@ namespace Pharmacy.Service
         {
             repository.UpdateMedicine(medicine);
         }
+
+        public List<Medicine> GetByName(string name)
+        {
+            List<Medicine> medicines = new List<Medicine>();
+
+            foreach (Medicine m in repository.GetAll())
+            {
+                if (m.MedicineName.ToLower().Contains(name.ToLower()))
+                {
+                    medicines.Add(m);
+                }
+            }
+
+            return medicines;
+
+        }
     }
 }
