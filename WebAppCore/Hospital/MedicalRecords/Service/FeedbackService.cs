@@ -1,10 +1,11 @@
-﻿using Hospital.Repository;
+﻿using Hospital.MedicalRecords.Model;
+using Hospital.MedicalRecords.Repository;
 using Hospital.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Hospital.Service
+namespace Hospital.MedicalRecords.Service
 {
     public class FeedbackService
     {

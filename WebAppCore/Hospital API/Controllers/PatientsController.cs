@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Hospital.Models;
-using Hospital.Service;
-using Hospital.Repository;
+using Hospital.MedicalRecords.Service;
+using Hospital.MedicalRecords.Repository;
 
 namespace Hospital_API.Controllers
 {
@@ -20,7 +20,7 @@ namespace Hospital_API.Controllers
 
         public PatientsController()
         {
-            _patientService = new PatientService(new PatientRepository(new Hospital.Models.HospitalContext()));
+            _patientService = new PatientService(new PatientRepository(new Hospital.SharedModel.HospitalContext()));
         }
 
         // GET: api/Patients/activate?token=

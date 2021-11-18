@@ -1,5 +1,4 @@
-﻿using Hospital.Repository;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Security.Cryptography;
@@ -7,8 +6,10 @@ using Hospital.Models;
 using System.Net.Mail;
 using System.Net;
 using System.Threading;
+using Hospital.MedicalRecords.Repository;
+using Hospital.MedicalRecords.Model;
 
-namespace Hospital.Service
+namespace Hospital.MedicalRecords.Service
 {
     public class PatientService
     {

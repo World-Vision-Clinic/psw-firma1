@@ -1,10 +1,11 @@
-﻿using Hospital.Models;
+﻿using Hospital;
+using Hospital.MedicalRecords.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Hospital.Models
+namespace Hospital.SharedModel
 {
     public class HospitalContext : DbContext
     {
