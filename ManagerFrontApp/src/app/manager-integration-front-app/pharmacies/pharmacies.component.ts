@@ -20,10 +20,11 @@ export class PharmaciesComponent implements OnInit {
     this.getPharmacies();
   }
 
-  searchPharmaciesForMedicals(){
-    alert(this.medicineName);
-    alert(this.medicineGrams);
-    alert(this.numOfBoxes);
+  searchPharmaciesForMedicals(){ 
+    return this.http.get<any>('http://localhost:43818/medicines/check?name=' + this.medicineName
+    + "&dosage=" + this.medicineGrams + "&quantity=" + this.numOfBoxes).subscribe(data=>{
+      this.PharmaciesList=data;
+    });
   }
 
   searchPharmacies(){
