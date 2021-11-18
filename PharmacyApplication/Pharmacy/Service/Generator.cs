@@ -27,5 +27,23 @@ namespace Pharmacy.Service
 
             return apiKey;
         }
+
+        public static string GenerateNewsId()
+        {
+            PharmacyDbContext dbContext = new PharmacyDbContext();
+            News foundedNews = null;
+            string newsId = "";
+            do
+            {
+                var key = new byte[32];
+                using (var generator = RandomNumberGenerator.Create())
+                    generator.GetBytes(key);
+                newsId = Convert.ToBase64String(key);
+                foundedNews = dbContext.News.SingleOrDefault(news => news.IdEncoded == newsId);
+
+            } while (foundedNews != null);
+
+            return newsId;
+        }
     }
 }

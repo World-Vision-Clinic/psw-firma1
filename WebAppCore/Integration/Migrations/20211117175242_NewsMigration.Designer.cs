@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using Integration.SharedModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Integration.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211117175242_NewsMigration")]
+    partial class NewsMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -200,9 +202,6 @@ namespace Integration.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("IdEncoded")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PharmacyName")
                         .HasColumnType("text");
 
                     b.Property<bool>("Posted")
