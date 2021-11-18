@@ -37,9 +37,7 @@
                         <div class="row d-flex">
                             <div class="col-md-6">
                                 <p class="text-white font-weight-bold header-text">
-                                  <span class="header-text" *ngIf="f.isAnonymous; then thenBlock else elseBlock"></span>
-                                  <ng-template #thenBlock>Anonymous</ng-template>
-                                  <ng-template #elseBlock>{{f.userName}}</ng-template>
+                                    {{f.userName}}
                                 </p>
                             </div>
                             <div class="col-md-6">

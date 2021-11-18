@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Hospital.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hospital_API.Models
@@ -14,5 +15,8 @@ namespace Hospital_API.Models
         }
 
         public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<Survey> Surveys { get; set; }
+        public DbSet<SurveySection> SurveySections { get; set; }
+        public DbSet<SurveyQuestion> SurveyQuestions { get; set; }
     }
 }
