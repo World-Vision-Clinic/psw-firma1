@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Hospital.Service;
 using Hospital.Repository;
+using Hospital.Models;
 
 namespace TestPatientPortal.Patient
 {

@@ -8,6 +8,8 @@ export class Patient {
     bloodType: string = "";
     doctorName: string = "";
 
+    dateOfBirth: Date = new Date();
+
     gender: number = 1;
     height: number = 190;
     weight: number = 90;

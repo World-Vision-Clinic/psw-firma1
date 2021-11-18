@@ -45,5 +45,29 @@ namespace TestPatientPortal.Patient
                 Assert.AreNotEqual(HttpStatusCode.OK, response.StatusCode);
             }
         }
+
+        [Test]
+        public async Task Test_id_not_found()
+        {
+            using (var client = new ClientProvider().Client)
+            {
+
+                var response = await client.GetAsync("api/Patients/0");
+
+                Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+            }
+        }
+
+        [Test]
+        public async Task Test_id_found()
+        {
+            using (var client = new ClientProvider().Client)
+            {
+
+                var response = await client.GetAsync("api/Patients/1");
+
+                Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            }
+        }
     }
 }
