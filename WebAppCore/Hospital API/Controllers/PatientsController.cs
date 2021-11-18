@@ -23,6 +23,20 @@ namespace Hospital_API.Controllers
             _patientService = new PatientService(new PatientRepository(new Hospital.Models.HospitalContext()));
         }
 
+        // GET: api/Feedbacks/5
+        [HttpGet("{id}")]
+        public ActionResult<Patient> GetPatient(int id)
+        {
+            var patient = _patientService.FindById(id);
+
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            return patient;
+        }
+
         // GET: api/Patients/activate?token=
         [HttpGet("activate")]
         public IActionResult ActivatePatient([FromQuery]string token)

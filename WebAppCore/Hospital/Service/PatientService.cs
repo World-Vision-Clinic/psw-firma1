@@ -58,6 +58,11 @@ namespace Hospital.Service
             return _repo.FindByToken(token);
         }
 
+        public Patient FindById(int id)
+        {
+            return _repo.FindById(id);
+        }
+
         public void SendEmail(Patient patient) {
             var smtpClient = new SmtpClient("smtp.gmail.com")
             {

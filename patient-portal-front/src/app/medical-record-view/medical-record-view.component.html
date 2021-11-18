@@ -2,7 +2,7 @@
   <div class="col-md-3">
       <div class="card">
         <div class="header basic-info-header">
-          <h2 class="text-black" style="font-weight: bolder; font-size: 26px;">Pera Perić</h2>
+          <h2 class="text-black" style="font-weight: bolder; font-size: 26px;">{{patient.userName}}</h2>
           <div class="row d-flex" style="margin-left: inherit;"><h4 class="text-black" style="font-weight: bolder">17.8.1976</h4><h4 class="text-black" style="font-style: italic;">(DOB)</h4></div>
         </div>
       
@@ -12,15 +12,7 @@
                 <p style="font-weight: bolder; text-align: left;">Gender:</p>
               </div>
               <div class="col-sm-6">
-                <p style="font-weight: bolder; text-align: right;">Male</p>
-              </div>
-            </div>
-            <div class="row d-flex">
-              <div class="col-sm-6">
-                <p style="font-weight: bolder; text-align: left;">Marriage Status:</p>
-              </div>
-              <div class="col-sm-6">
-                <p style="font-weight: bolder; text-align: right;">Married</p>
+                <p style="font-weight: bolder; text-align: right;">{{getPatientGender()}}</p>
               </div>
             </div>
             <div class="row d-flex">
@@ -28,7 +20,7 @@
                 <p style="font-weight: bolder; text-align: left;">Residence:</p>
               </div>
               <div class="col-sm-6">
-                <p style="font-weight: bolder; text-align: right;">Address 59</p>
+                <p style="font-weight: bolder; text-align: right;">{{patient.residence}}</p>
               </div>
             </div>
             <div class="row d-flex">
@@ -36,7 +28,7 @@
                 <p style="font-weight: bolder; text-align: left;">Contact Phone:</p>
               </div>
               <div class="col-sm-6">
-                <p style="font-weight: bolder; text-align: right;">063/111-111</p>
+                <p style="font-weight: bolder; text-align: right;">{{patient.contactPhone}}</p>
               </div>
             </div>
             <div class="row d-flex">
@@ -44,7 +36,7 @@
                 <p style="font-weight: bolder; text-align: left;">Email:</p>
               </div>
               <div class="col-sm-6">
-                <p style="font-weight: bolder; text-align: right;">peraperic@gmail.com</p>
+                <p style="font-weight: bolder; text-align: right;">{{patient.eMail}}</p>
               </div>
             </div>
             <div class="row d-flex">
@@ -52,7 +44,7 @@
                 <p style="font-weight: bolder; text-align: left;">Doctor:</p>
               </div>
               <div class="col-sm-6">
-                <p style="font-weight: bolder; text-align: right;">Doktor Doktorić</p>
+                <p style="font-weight: bolder; text-align: right;">{{patient.doctorName}}</p>
               </div>
             </div>
         </div>
@@ -69,7 +61,7 @@
                 <p style="font-weight: bolder; text-align: left;">Height:</p>
               </div>
               <div class="col-sm-6">
-                <p style="font-weight: bolder; text-align: right;">1.87m</p>
+                <p style="font-weight: bolder; text-align: right;">{{patient.height}}cm</p>
               </div>
             </div>
             <div class="row d-flex">
@@ -77,7 +69,7 @@
                 <p style="font-weight: bolder; text-align: left;">Weight:</p>
               </div>
               <div class="col-sm-6">
-                <p style="font-weight: bolder; text-align: right;">90kg</p>
+                <p style="font-weight: bolder; text-align: right;">{{patient.weight}}kg</p>
               </div>
             </div>
             <div class="row d-flex">
@@ -85,7 +77,7 @@
                 <p style="font-weight: bolder; text-align: left;">Blood Type:</p>
               </div>
               <div class="col-sm-6">
-                <p style="font-weight: bolder; text-align: right;">O+</p>
+                <p style="font-weight: bolder; text-align: right;">{{patient.bloodType}}</p>
               </div>
             </div>
         </div>

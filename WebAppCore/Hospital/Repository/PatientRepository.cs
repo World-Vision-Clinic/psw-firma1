@@ -36,6 +36,11 @@ namespace Hospital.Repository
             return _context.Patients.FirstOrDefault(p => p.Token == token);
         }
 
+        public Patient FindById(int id)
+        {
+            return _context.Patients.FirstOrDefault(p => p.Id == id);
+        }
+
         public void Modify(Patient patient)
         {
             _context.Entry(patient).State = EntityState.Modified;

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Patient } from 'src/patient';
+import { PatientFeedbackServiceService } from '../patient-feedback-service.service';
 
 @Component({
   selector: 'app-medical-record-view',
@@ -30,6 +32,8 @@ export class MedicalRecordViewComponent implements OnInit {
 
     ] }
   ];
+  public errorMsg = "";
+  public patient: Patient = {} as Patient;
 
   public appointments: { date: string, name: string, doctor: string }[] = [
     { "date": '14-05-2021', "name": 'Test1', "doctor": 'Doktor Doktorić' },
@@ -39,9 +43,11 @@ export class MedicalRecordViewComponent implements OnInit {
   ];
   public selectedDay: string = 'Monday';
 
-  constructor() { }
+  constructor(private _patientService : PatientFeedbackServiceService) { }
 
   ngOnInit(): void {
+    this._patientService.getPatient(1).subscribe(data => (this.patient = data),
+      error => this.errorMsg = "Couldn't load user feedback");
   }
 
   getFormattedDay(day: string): string {
@@ -50,6 +56,14 @@ export class MedicalRecordViewComponent implements OnInit {
       return day
     }
     return day.substring(0,2)
+  }
+
+  getPatientGender(): string {
+    if(this.patient.gender == 2)
+    {
+      return "Female";
+    }
+    return "Male";
   }
 
 }
