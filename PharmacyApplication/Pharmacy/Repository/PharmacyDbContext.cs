@@ -15,6 +15,7 @@ namespace Pharmacy.Repository
         public DbSet<Medicine> Medicines { get; set; }
         public DbSet<Substance> Substances { get; set; }
         public DbSet<SubstituteMedicine> SubstituteMedicines { get; set; }
+        public DbSet<News> News { get; set; }
 
         public PharmacyDbContext() { }
 
