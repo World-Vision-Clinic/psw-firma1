@@ -1,4 +1,4 @@
-using Hospital.Models;
+using Hospital.MedicalRecords.Model;
 using Hspital_API.Dto;
 using System;
 using System.Collections.Generic;

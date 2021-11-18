@@ -1,11 +1,13 @@
-﻿using Hospital.Models;
+﻿using Hospital.MedicalRecords.Model;
+using Hospital.Models;
+using Hospital.SharedModel;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Hospital.Repository
+namespace Hospital.MedicalRecords.Repository
 {
     public class PatientRepository
     {

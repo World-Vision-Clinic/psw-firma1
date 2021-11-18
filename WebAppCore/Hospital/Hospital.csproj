@@ -4,12 +4,6 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <PackageId>NuGet.HospitalLibrary</PackageId>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/World-Vision-Clinic/psw-firma1</RepositoryUrl>
-  </PropertyGroup>	
-
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.11">
 			<PrivateAssets>all</PrivateAssets>
@@ -23,5 +17,10 @@
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
 	</ItemGroup>
 
-
+	<ItemGroup>
+	  <Folder Include="Schedule\Model\" />
+	  <Folder Include="Schedule\Service\" />
+	  <Folder Include="Schedule\Repository\" />
+	</ItemGroup>
+	
 </Project>
