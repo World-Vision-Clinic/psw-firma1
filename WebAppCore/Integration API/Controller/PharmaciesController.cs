@@ -10,6 +10,7 @@ using Integration_API.Mapper;
 using RestSharp;
 using Integration.Pharmacy;
 using Integration.Pharmacy.Model;
+using Integration.Pharmacy.Repository;
 
 namespace Integration_API.Controller
 {
@@ -18,7 +19,7 @@ namespace Integration_API.Controller
     public class PharmaciesController : ControllerBase
     {
 
-        PharmaciesService pharmaciesService = new PharmaciesService();
+        PharmaciesService pharmaciesService = new PharmaciesService(new PharmaciesRepository());
         public const string HOSPITAL_NAME = "World Vision Clinic";
         public const string HOSPITAL_URL = "http://localhost:43818";
 

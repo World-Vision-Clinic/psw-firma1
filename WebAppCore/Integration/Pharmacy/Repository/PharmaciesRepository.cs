@@ -8,11 +8,11 @@ using System.Text;
 
 namespace Integration.Pharmacy.Repository
 {
-    class PharmaciesRepository : IPharmaciesRepository
+    public class PharmaciesRepository : IPharmaciesRepository
     {
         private IntegrationDbContext dbContext = new IntegrationDbContext();
 
-        public PharmacyProfile Get(String id)
+        public PharmacyProfile Get(string id)
         {
             PharmacyProfile foundedPharmacy = dbContext.Pharmacies.SingleOrDefault(pharmacy => pharmacy.Localhost == id);
             return foundedPharmacy;
