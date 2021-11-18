@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using Hospital.Models;
 using System.Net.Mail;
 using System.Net;
+using System.Threading;
 
 namespace Hospital.Service
 {
@@ -25,11 +26,16 @@ namespace Hospital.Service
             Patient newPatient = new Patient();
             newPatient.Activated = false;
             newPatient.Password = "123";
-            newPatient.UserName = "Petar";
-            newPatient.EMail = "sofoj64990@healteas.com";
+            newPatient.UserName = "ajajajajja";
+            newPatient.EMail = "kedosok152@funboxcn.com";
             newPatient.Token = TokenizeSHA256(newPatient.UserName);
             _repo.AddPatient(newPatient);
-            SendEmail(newPatient);
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+                SendEmail(newPatient);
+            }).Start();
+
         }
 
         public string TokenizeSHA256(string username) {  

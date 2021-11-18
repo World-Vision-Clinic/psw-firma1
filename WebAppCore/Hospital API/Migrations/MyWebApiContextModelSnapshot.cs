@@ -90,6 +90,9 @@ namespace Hospital_API.Migrations
                     b.Property<bool>("isPublic")
                         .HasColumnType("boolean");
 
+                    b.Property<bool>("isPublishable")
+                        .HasColumnType("boolean");
+
                     b.HasKey("Id");
 
                     b.ToTable("Feedbacks");

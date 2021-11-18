@@ -19,6 +19,8 @@ namespace Integration_API.Controller
     {
 
         PharmaciesService pharmaciesService = new PharmaciesService();
+        public const string HOSPITAL_NAME = "World Vision Clinic";
+        public const string HOSPITAL_URL = "http://localhost:43818";
 
         [HttpPost("registerPharmacy")]
         public IActionResult Add(PharmacyDto dto)
@@ -41,8 +43,8 @@ namespace Integration_API.Controller
             request.AddJsonBody(
             new
             {
-                   HospitalName = "World Vision Clinic",
-                   HospitalLocalhost = "http://localhost:43818",
+                   HospitalName = HOSPITAL_NAME,
+                   HospitalLocalhost = HOSPITAL_URL,
                    ApiKey = generatedKey
             });
 
@@ -61,6 +63,27 @@ namespace Integration_API.Controller
             pharmacies = pharmaciesService.GetAll();
             pharmacies.ForEach(pharmacy => result.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy)));
             return Ok(result);
+        }
+
+        [HttpGet("Filtered")]
+        public IActionResult Get(string searchFilter = "")
+        {
+            if (searchFilter != null)
+            {
+                List<PharmacyProfile> pharmacies = new List<PharmacyProfile>();
+                List<PharmacyDto> result = new List<PharmacyDto>();
+                pharmacies = pharmaciesService.GetFiltered(searchFilter);
+                pharmacies.ForEach(pharmacy => result.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy)));
+                return Ok(result);
+            }
+            else
+            {
+                List<PharmacyProfile> pharmacies = new List<PharmacyProfile>();
+                List<PharmacyDto> result = new List<PharmacyDto>();
+                pharmacies = pharmaciesService.GetAll();
+                pharmacies.ForEach(pharmacy => result.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy)));
+                return Ok(result);
+            }
         }
 
     }

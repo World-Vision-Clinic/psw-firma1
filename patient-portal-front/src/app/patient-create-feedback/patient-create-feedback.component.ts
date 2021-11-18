@@ -39,6 +39,7 @@ const DEFAULT_DURATION = 300;
 export class PatientCreateFeedbackComponent implements OnInit {
   content: string = "";
   isPublic: boolean = false;
+  isPublishable: boolean = false;
   isAnonymous: boolean = false;
   UserName: string = "Default User";
   feedbackSent: boolean = false;
@@ -51,7 +52,7 @@ export class PatientCreateFeedbackComponent implements OnInit {
   createFeedback() {
     if(this.contentIsValid())
     {
-      let feedback = new Feedback(this.content,this.isPublic,this.isAnonymous, this.UserName);
+      let feedback = new Feedback(this.content,this.isPublic,this.isPublishable,this.isAnonymous, this.UserName);
       this.feedbackSent = true;
       this._patientCreateFeedbackService.addFeedback(feedback).subscribe(
         success => setTimeout(() => {

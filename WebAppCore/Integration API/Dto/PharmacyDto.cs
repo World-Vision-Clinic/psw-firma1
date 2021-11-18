@@ -9,5 +9,7 @@ namespace Integration_API.Dto
     {
         public string Name { get; set; }
         public string Localhost { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
     }
 }

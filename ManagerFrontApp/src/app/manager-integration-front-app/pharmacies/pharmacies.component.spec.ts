@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManagerObjectionsComponent } from './manager-objections.component';
+import { PharmaciesComponent } from './pharmacies.component';
 
-describe('ManagerObjectionsComponent', () => {
-  let component: ManagerObjectionsComponent;
-  let fixture: ComponentFixture<ManagerObjectionsComponent>;
+describe('PharmaciesComponent', () => {
+  let component: PharmaciesComponent;
+  let fixture: ComponentFixture<PharmaciesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ManagerObjectionsComponent ]
+      declarations: [ PharmaciesComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ManagerObjectionsComponent);
+    fixture = TestBed.createComponent(PharmaciesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
