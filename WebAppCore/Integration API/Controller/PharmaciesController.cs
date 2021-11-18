@@ -65,5 +65,26 @@ namespace Integration_API.Controller
             return Ok(result);
         }
 
+        [HttpGet("Filtered")]
+        public IActionResult Get(string searchFilter = "")
+        {
+            if (searchFilter != null)
+            {
+                List<PharmacyProfile> pharmacies = new List<PharmacyProfile>();
+                List<PharmacyDto> result = new List<PharmacyDto>();
+                pharmacies = pharmaciesService.GetFiltered(searchFilter);
+                pharmacies.ForEach(pharmacy => result.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy)));
+                return Ok(result);
+            }
+            else
+            {
+                List<PharmacyProfile> pharmacies = new List<PharmacyProfile>();
+                List<PharmacyDto> result = new List<PharmacyDto>();
+                pharmacies = pharmaciesService.GetAll();
+                pharmacies.ForEach(pharmacy => result.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy)));
+                return Ok(result);
+            }
+        }
+
     }
 }

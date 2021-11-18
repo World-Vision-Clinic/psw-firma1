@@ -28,7 +28,7 @@ namespace Hospital_API
         {
             services.AddMvc();
             services.AddControllers();
-            services.AddEntityFrameworkNpgsql().AddDbContext<HospitalContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("MyWebApiConnection")));
+            //services.AddEntityFrameworkNpgsql().AddDbContext<HospitalContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("MyWebApiConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

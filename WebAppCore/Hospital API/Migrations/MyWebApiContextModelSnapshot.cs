@@ -19,6 +19,55 @@ namespace Hospital_API.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+            modelBuilder.Entity("Hospital.Models.Survey", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int?>("SectionId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SectionId");
+
+                    b.ToTable("Surveys");
+                });
+
+            modelBuilder.Entity("Hospital.Models.SurveyQuestion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("Answer")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SurveyQuestions");
+                });
+
+            modelBuilder.Entity("Hospital.Models.SurveySection", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int?>("QuestionId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("SurveySections");
+                });
+
             modelBuilder.Entity("Hospital_API.Models.Feedback", b =>
                 {
                     b.Property<int>("Id")
@@ -47,6 +96,24 @@ namespace Hospital_API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Feedbacks");
+                });
+
+            modelBuilder.Entity("Hospital.Models.Survey", b =>
+                {
+                    b.HasOne("Hospital.Models.SurveySection", "Section")
+                        .WithMany()
+                        .HasForeignKey("SectionId");
+
+                    b.Navigation("Section");
+                });
+
+            modelBuilder.Entity("Hospital.Models.SurveySection", b =>
+                {
+                    b.HasOne("Hospital.Models.SurveyQuestion", "Question")
+                        .WithMany()
+                        .HasForeignKey("QuestionId");
+
+                    b.Navigation("Question");
                 });
 #pragma warning restore 612, 618
         }
