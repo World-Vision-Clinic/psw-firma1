@@ -18,7 +18,25 @@ namespace Pharmacy.Repository
             dbContext.Medicines.ToList().ForEach(medicine => medicines.Add(medicine));
             return medicines;
         }
-
+        public bool OrderMedicine(Medicine medicine) 
+        {
+            foreach(Medicine med in dbContext.Medicines.ToList())
+            {
+                if (med.MedicineName.Equals(medicine.MedicineName))
+                {
+                    med.Quantity -= medicine.Quantity;
+                    if(med.Quantity == 0)
+                    {
+                        dbContext.Medicines.Remove(med);
+                        dbContext.SaveChanges();
+                        return true;
+                    }
+                    dbContext.SaveChanges();
+                    return true;
+                }
+            }    
+            return false;
+        }
         public Medicine GetById(long medicineId)
         {
             Medicine medicine = dbContext.Medicines.ToList().FirstOrDefault(medicine => medicine.MedicineId == medicineId);

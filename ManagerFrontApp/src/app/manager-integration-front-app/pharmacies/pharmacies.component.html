@@ -11,9 +11,9 @@
     <div class="row searchFilter" >
        <div class="col-sm-12" >
         <div class="input-group" >
-         <input id="table_filter" name="medicineName" [(ngModel)]="medicineName" placeholder="Enter medicine name..." type="text" class="form-control">
-         <input id="table_filter" name="medicineGrams" [(ngModel)]="medicineGrams" placeholder="Enter grams(mg)..." type="number" class="form-control">
-         <input id="table_filter" name="numOfBoxes" [(ngModel)]="numOfBoxes" placeholder="Enter number of boxes..." type="number" class="form-control">
+         <input id="table_filter" name="medicineName" [(ngModel)]="medicineName" placeholder="Enter medicine name..." type="text" class="form-control" (input)="disableButtons()">
+         <input id="table_filter" name="medicineGrams" [(ngModel)]="medicineGrams" placeholder="Enter grams(mg)..." type="number" class="form-control" (input)="disableButtons()">
+         <input id="table_filter" name="numOfBoxes" [(ngModel)]="numOfBoxes" placeholder="Enter number of boxes..." type="number" class="form-control" (input)="disableButtons()">
          <button id="searchBtn" type="button" class="btn btn-secondary btn-search" (click)="searchPharmaciesForMedicals()"><span class="glyphicon glyphicon-search" >&nbsp;</span> <span class="label-icon" >Search</span></button>
         </div>
        </div>
@@ -29,6 +29,7 @@
                         <div class="flex"> <a href="#" class="item-author text-color" data-abc="true">{{data.Name}}</a>
                             <div class="item-except text-muted text-sm h-1x">{{data.Address}}, {{data.City}}</div>
                         </div>
+                        <button class="btn btn-secondary btn-search" *ngIf="buttonClicked" id="orderButton" (click)="orderMedicines(data)" style="background-color: #00aced;">Order</button>
                     </div>
                 </div>
             </div>

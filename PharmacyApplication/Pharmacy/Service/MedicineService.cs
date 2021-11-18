@@ -20,6 +20,10 @@ namespace Pharmacy.Service
             return repository.GetAll();
         }
 
+        public bool OrderMedicine(Medicine dto)
+        {
+            return repository.OrderMedicine(dto);
+        }
         public Medicine GetById(long medicineId) 
         {
             return repository.GetById(medicineId);

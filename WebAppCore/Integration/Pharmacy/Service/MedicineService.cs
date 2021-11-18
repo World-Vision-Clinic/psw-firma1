@@ -36,7 +36,10 @@ namespace Integration.Services
         {
            return medicineRepository.GetByID(id);
         }
-
+        public bool AddOrderedMedicine(Medicine orderedMedicine)
+        {
+            return medicineRepository.AddOrderedMedicine(orderedMedicine);
+        }
         public void UpdateMedicine(Medicine medicine)
         {
             medicineRepository.EditMedicine(medicine);

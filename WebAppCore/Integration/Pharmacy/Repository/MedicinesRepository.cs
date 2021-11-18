@@ -3,6 +3,7 @@ using Integration.Repositories.Interfaces;
 using Integration.SharedModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Integration.Pharmacy.Repository
@@ -22,9 +23,23 @@ namespace Integration.Pharmacy.Repository
 
         public List<Medicine> GetAll()
         {
-            throw new NotImplementedException();
+            return dbContext.Medicines.ToList();
         }
-
+        public virtual bool AddOrderedMedicine(Medicine orderedMedicine)
+        {
+            foreach (Medicine medicine in dbContext.Medicines.ToList())
+            {
+                if (medicine.Name.ToLower().Equals(orderedMedicine.Name.ToLower()))
+                {
+                    medicine.Quantity += orderedMedicine.Quantity;
+                    dbContext.SaveChanges();
+                    return true;
+                }
+            }
+            dbContext.Medicines.Add(orderedMedicine);
+            dbContext.SaveChanges();
+            return true;
+        } 
         public List<string> GetAllIngredients()
         {
             throw new NotImplementedException();

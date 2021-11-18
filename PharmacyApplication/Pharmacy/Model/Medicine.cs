@@ -19,7 +19,12 @@ namespace Pharmacy.Model
         public int Quantity { get; set; }
 
         public Medicine() { }
-
+        public Medicine(string name, double dosageInMg, int quantity)
+        {
+            MedicineName = name;
+            Weigth = dosageInMg;
+            Quantity = quantity;
+        }
         public Medicine(long id, string medicineName, string manufacturer, string sideEffects, string usage, List<SubstituteMedicine> substituteMedicines, double weigth, string mainPrecautions, string potentialDangers, List<Substance> substances, int quantity)
         {
             MedicineId = id;

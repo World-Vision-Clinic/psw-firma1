@@ -21,7 +21,13 @@ namespace Integration
             return Name + " " + ID;
         }
         private System.Collections.Generic.List<Ingredient> ingredient;
-
+        public Medicine(string iD, string name, double dosageInMg, int quantity)
+        {
+            ID = iD;
+            Name = name;
+            DosageInMg = dosageInMg;
+            Quantity = quantity;
+        }
         public System.Collections.Generic.List<Ingredient> Ingredient
         {
             get

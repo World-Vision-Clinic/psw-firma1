@@ -382,6 +382,10 @@ a:link {
       height: 50px;
       min-width: 20px;
   }
+  #orderButton{
+    position: absolute;
+    margin-left: 100%;
+  }
   .searchFilter .btn-secondary {
       color: #373a3c;
       background-color: #fff;

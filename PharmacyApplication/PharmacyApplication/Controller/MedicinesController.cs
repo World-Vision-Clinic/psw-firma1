@@ -57,5 +57,25 @@ namespace PharmacyAPI.Controller
 
             return Ok();
         }
+
+        [HttpPost("OrderMedicine")]
+        public IActionResult OrderMedicine(OrderingMedicineDto dto)
+        {
+            if (!Request.Headers.TryGetValue("ApiKey", out var extractedApiKey))
+            {
+                return BadRequest("Api Key was not provided");
+            }
+
+            Hospital hospital = hospitalService.GetHospitalByApiKey(extractedApiKey);
+            if (hospital == null)
+            {
+                return BadRequest("Api Key is not valid!");
+            }
+
+            Medicine medicine = new Medicine(dto.MedicineName, Double.Parse(dto.MedicineGrams), int.Parse(dto.NumOfBoxes));
+            service.OrderMedicine(medicine);
+
+            return Ok();
+        }
     }
 }
