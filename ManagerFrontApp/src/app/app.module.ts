@@ -19,6 +19,7 @@ import { ManagerFeedbackViewComponent } from './manager-feedback-view/manager-fe
 import { PharmaciesComponent } from './manager-integration-front-app/pharmacies/pharmacies.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +33,7 @@ import { PharmaciesComponent } from './manager-integration-front-app/pharmacies/
     ObjectionFormPageComponent,
     ManagerFeedbackViewComponent,
     ManagerIntegrationFrontAppComponent,
-    PharmaciesComponent
+    PharmaciesComponent,
   ],
   imports: [
     BrowserModule,

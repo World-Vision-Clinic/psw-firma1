@@ -19,6 +19,7 @@ const routes: Routes = [
   {path: "overview-objections-replies", outlet: "showObjRepl", component:OverviewObjectionsRepliesComponent},
   {path: "overview-pharmacies", outlet: "showObjRepl", component:PharmaciesComponent},
   {path: "create-objection", outlet: "showObjRepl", component:ObjectionFormPageComponent}
+  
   ]},
   {path:"manager-feedback", component: ManagerFeedbackViewComponent}
   ];

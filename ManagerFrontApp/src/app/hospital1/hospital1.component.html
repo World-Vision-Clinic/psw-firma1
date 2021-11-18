@@ -56,6 +56,8 @@
           >
             Done
           </button>
+          <button (click)="moveEquipment()" class="btn">Move equipment</button>
+
         </div>
       </div>
     </div>
@@ -129,9 +131,7 @@
       <button class="btn" (click)="close()" *ngIf="formDisabled">Close</button>
       <div *ngIf="formDisabled"> 
       <button class="btn" (click)="equipment()">Equipment</button>
-      <button class="btn" (click)="enableEdit()" >
-        Edit
-      </button>
+      <button class="btn" (click)="enableEdit()" >Edit</button>
     </div>
       <button class="btn" (click)="cancel()" *ngIf="!formDisabled">
         Cancel
@@ -139,6 +139,7 @@
       <button class="btn" (click)="save()" *ngIf="!formDisabled">Save</button>
     </div>
   </div>
+
   <div *ngIf="!!equipmentBox">
     <table class="equipment-table">
     <thead>
@@ -153,6 +154,31 @@
     <div class="rightbtn">
       <button class="btn" (click)="closeEquip()">Close</button>
     </div>
+  </div>
+</div>
+
+<div class="list-box-equipment" *ngIf="!!listBoxEquipment">
+  <h3>EQUIPMENT</h3>
+  <table class="list-table">
+    <thead>
+      <tr><th>NAME</th><th>TYPE</th></tr>
+    </thead>
+    <tbody> </tbody>
+  </table>
+</div>
+
+<div class="move-box-equipment" *ngIf="!!moveBoxEquipment">
+  <h3>MOVING</h3>
+  <div class="labels-box">
+    <label for="">Starting room:</label><br />
+    <label for="">Starting room floor:</label><br />
+    <label for="">Amount:</label><br />
+    <label for="">Destination room:</label><br />
+    <label for="">Destination room floor:</label><br />
+  </div>
+  <div class="btnright">
+    <button class="btn">Next</button>
+    <button class="btn">Back</button>
   </div>
 </div>
 
