@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 
-namespace HospitalTests.Patient
+namespace HospitalTests.PatientTest
 {
     class ClientProvider
     {

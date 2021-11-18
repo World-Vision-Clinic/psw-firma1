@@ -16,7 +16,7 @@ namespace Hospital_API.Controllers
     public class PatientsController : ControllerBase
     {
         //private readonly HospitalContext _context;
-        private readonly PatientService _patientService;
+        public PatientService _patientService { get; set; }
 
         public PatientsController()
         {

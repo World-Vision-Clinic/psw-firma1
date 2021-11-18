@@ -17,6 +17,8 @@ namespace Hospital.SharedModel
 
         }
 
+        public HospitalContext(DbContextOptions<HospitalContext> options) : base(options) { }
+
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
 
@@ -24,7 +26,7 @@ namespace Hospital.SharedModel
 
         protected override void OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("User ID = admin;Password=ftn;Server=localhost;Port=5432;Database=MyWebApi.Dev;Integrated Security=true;Pooling=true;");
+            //optionsBuilder.UseNpgsql("User ID = admin;Password=ftn;Server=localhost;Port=5432;Database=MyWebApi.Dev;Integrated Security=true;Pooling=true;");
         }
     }
 }
