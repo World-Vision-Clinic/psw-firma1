@@ -78,8 +78,9 @@ a:not([href]):not([tabindex]):focus {
     }
 
     .col-sm-6 {
-        flex: 0 0 50%;
-        max-width: 50%
+      margin-left: 20%;
+        flex: 0 0 80%;
+        max-width: 80%
     }
 
     .col-sm-7 {
