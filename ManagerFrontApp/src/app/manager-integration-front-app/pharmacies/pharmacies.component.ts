@@ -52,5 +52,6 @@ export class PharmaciesComponent implements OnInit {
     const body = { Localhost: selectedPharmacy.Localhost, MedicineName: this.medicineName, MedicineGrams: this.medicineGrams, NumOfBoxes: this.numOfBoxes};
     this.http.put<any>('http://localhost:43818/medicines/OrderMedicine', body)
         .subscribe();
+    alert("Medicine succesfully ordered");
   }
 }
