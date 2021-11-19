@@ -38,6 +38,11 @@ namespace Hospital.MedicalRecords.Repository
             return _context.Patients.FirstOrDefault(p => p.Token == token);
         }
 
+        public Patient FindByUserName(string username)
+        {
+            return _context.Patients.FirstOrDefault(p => p.UserName == username);
+        }
+
         public void Modify(Patient patient)
         {
             _context.Entry(patient).State = EntityState.Modified;
