@@ -16,11 +16,5 @@
 		</PackageReference>
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Schedule\Model\" />
-	  <Folder Include="Schedule\Service\" />
-	  <Folder Include="Schedule\Repository\" />
-	</ItemGroup>
 	
 </Project>

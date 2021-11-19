@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Hospital.Models
+namespace Hospital.Schedule.Model
 {
-    public class SurveySection
+    public class Survey
     {
-        private SurveyQuestion question;
+        private SurveySection section;
         private int id;
 
-        public SurveyQuestion Question
+        public SurveySection Section
         {
-            get { return question; }
-            set { question = value; }
+            get { return section; }
+            set { section = value; }
+            
         }
 
         public int Id

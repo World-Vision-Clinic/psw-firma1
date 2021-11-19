@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Hospital.Models
+namespace Hospital.Schedule.Model
 {
     public class SurveyQuestion
     {

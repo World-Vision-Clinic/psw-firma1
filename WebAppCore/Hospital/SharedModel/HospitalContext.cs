@@ -1,5 +1,6 @@
 ﻿using Hospital;
 using Hospital.MedicalRecords.Model;
+using Hospital.Schedule.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,13 @@ namespace Hospital.SharedModel
 {
     public class HospitalContext : DbContext
     {
-        public DbSet<Feedback> Feedbacks{ get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Patient> Patients { get; set; }
-        
+        public DbSet<Survey> Surveys { get; set; }
+        public DbSet<SurveySection> SurveySections { get; set; }
+        public DbSet<SurveyQuestion> SurveyQuestions { get; set; }
+    
+
         public HospitalContext()
         {
 

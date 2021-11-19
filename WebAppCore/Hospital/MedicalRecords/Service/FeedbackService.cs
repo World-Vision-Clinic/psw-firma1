@@ -1,6 +1,5 @@
 ﻿using Hospital.MedicalRecords.Model;
 using Hospital.MedicalRecords.Repository;
-using Hospital.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;

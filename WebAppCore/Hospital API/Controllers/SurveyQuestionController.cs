@@ -1,30 +1,45 @@
-using Hospital.Models;
-using Hospital_API.Models;
+using Hospital.Schedule.Model;
+using Hospital.Schedule.Repository;
+using Hospital.Schedule.Service;
+using Hospital.SharedModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace Hospital_API
-{/*
+{
+    [Route("api/[controller]")]
+    [ApiController]
     public class SurveyQuestionController : ControllerBase
     {
-        private readonly HospitalContext _context;
+        private SurveyQuestionService surveyQuestionService;
 
-        public SurveyQuestionController(HospitalContext context)
+        public SurveyQuestionController()
         {
-            _context = context;
+            surveyQuestionService = new SurveyQuestionService(new SurveyQuestionRepository(new HospitalContext()));
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<SurveyQuestion> GetSurveyQuestion(int id)
+        {
+            var surveyQuestion = surveyQuestionService.FindById(id);
+
+            if (surveyQuestion == null)
+            {
+                return NotFound();
+            }
+
+            return surveyQuestion;
         }
 
         [HttpPost]
-        public async Task<ActionResult<SurveyQuestion>> PostSurvey([FromBody] SurveyQuestion question)
+        public ActionResult<SurveyQuestion> PostSurveyQuestion([FromBody] SurveyQuestion question)
         {
             SurveyQuestion newQuestion = question;
 
-            _context.SurveyQuestions.Add(newQuestion);
-            await _context.SaveChangesAsync();
+            surveyQuestionService.AddSurveyQuestion(newQuestion);
 
-            return CreatedAtAction("GetFeedback", new { id = newQuestion.Id }, newQuestion);
+            return CreatedAtAction("GetSurveyQuestion", new { id = newQuestion.Id }, newQuestion);
         }
-
-    }*/
+    }
 }
