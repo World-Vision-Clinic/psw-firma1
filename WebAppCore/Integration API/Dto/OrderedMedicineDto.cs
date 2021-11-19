@@ -16,5 +16,6 @@ namespace Integration_API.Dto
         public string PotentialDangers { get; set; }
         public string Quantity { get; set; }
         public List<string> Replacements { get; set; }
+        public double Price { get; set; }
     }
 }

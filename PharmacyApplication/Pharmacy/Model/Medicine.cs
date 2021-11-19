@@ -13,6 +13,7 @@ namespace Pharmacy.Model
         public string Usage { get; set; }
         public virtual List<SubstituteMedicine> SubstituteMedicines { get; set; }
         public double Weigth { get; set; }
+        public double Price{ get; set; }
         public string MainPrecautions { get; set; }
         public string PotentialDangers { get; set; }
         public virtual List<Substance> Substances { get; set; }

@@ -93,7 +93,8 @@ namespace PharmacyAPI.Controller
                 MainPrecautions = med.MainPrecautions,
                 PotentialDangers = med.PotentialDangers,
                 Quantity = dto.NumOfBoxes,
-                Replacements = replacements
+                Replacements = replacements,
+                Price = med.Price
             });
             IRestResponse response = client.Post(request);
 

@@ -127,12 +127,12 @@ namespace Integration_API.Controller
             {
                 if (med.Name.Equals(dto.MedicineName) && med.DosageInMg.Equals(dto.Weigth))
                 {
-                    orderedMedicine = new Medicine(med.ID, dto.MedicineName, Double.Parse(dto.Weigth), int.Parse(dto.Quantity), 200, dto.MainPrecautions, null, dto.Replacements);
+                    orderedMedicine = new Medicine(med.ID, dto.MedicineName, Double.Parse(dto.Weigth), int.Parse(dto.Quantity), dto.Price, dto.MainPrecautions, null, dto.Replacements);
                     ms.AddOrderedMedicine(orderedMedicine);
                     return Ok();
                 }
             }
-            orderedMedicine = new Medicine(Generator.GenerateMedicineId(), dto.MedicineName, Double.Parse(dto.Weigth), int.Parse(dto.Quantity), 200, dto.Usage, null, dto.Replacements);
+            orderedMedicine = new Medicine(Generator.GenerateMedicineId(), dto.MedicineName, Double.Parse(dto.Weigth), int.Parse(dto.Quantity), dto.Price, dto.Usage, null, dto.Replacements);
             ms.AddOrderedMedicine(orderedMedicine);
             return Ok();
         }
