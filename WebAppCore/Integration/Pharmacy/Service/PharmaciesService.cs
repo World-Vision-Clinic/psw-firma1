@@ -11,7 +11,6 @@ namespace Integration.Pharmacy.Service
 {
     public class PharmaciesService
     {
-        PharmaciesRepository pharamaciesRepository = new PharmaciesRepository();
         private IPharmaciesRepository pharmaciesRepository;
 
         public PharmaciesService(IPharmaciesRepository pharmaciesRepository)
@@ -23,8 +22,8 @@ namespace Integration.Pharmacy.Service
         {
             generatedKey = Generator.GenerateApiKey();
             newPharmacy.Key = generatedKey;
-            PharmacyProfile foundedPharmacy = pharamaciesRepository.Get(newPharmacy.Localhost);
-            if(foundedPharmacy != null)
+            PharmacyProfile foundedPharmacy = pharmaciesRepository.Get(newPharmacy.Localhost);
+            if (foundedPharmacy != null)
             {
                 return false;
             }
@@ -45,8 +44,19 @@ namespace Integration.Pharmacy.Service
 
         public List<PharmacyProfile> GetFiltered(string searchFilter)
         {
-            return pharamaciesRepository.GetFiltered(searchFilter);
+            return pharmaciesRepository.GetFiltered(searchFilter);
         }
-
+        public List<PharmacyProfile> FilterPharmacies(string searchFilter)
+        {
+            List<PharmacyProfile> pharmacies = new List<PharmacyProfile>();
+            foreach (PharmacyProfile pp in GetAll())
+            {
+                if (pp.Address.ToLower().Contains(searchFilter.ToLower()) || pp.City.ToLower().Contains(searchFilter.ToLower()))
+                {
+                    pharmacies.Add(pp);
+                }
+            }
+            return pharmacies;
+        }
     }
 }

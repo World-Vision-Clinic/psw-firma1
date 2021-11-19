@@ -77,7 +77,7 @@ namespace Integration_API.Controller
             return false;
         }
 
-        private bool SendMedicineOrderingRequest(OrderingMedicineDTO dto)
+        public bool SendMedicineOrderingRequest(OrderingMedicineDTO dto, bool test)
         {
 
             var client = new RestSharp.RestClient(dto.Localhost);
@@ -96,7 +96,8 @@ namespace Integration_API.Controller
             {
                 MedicineName = dto.MedicineName,
                 MedicineGrams = dto.MedicineGrams,
-                NumOfBoxes = dto.NumOfBoxes
+                NumOfBoxes = dto.NumOfBoxes,
+                Test = test
             });
             IRestResponse response = client.Post(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -110,7 +111,7 @@ namespace Integration_API.Controller
         [HttpPut("OrderMedicine")]
         public IActionResult Order(OrderingMedicineDTO dto)
         {
-            if (SendMedicineOrderingRequest(dto))
+            if (SendMedicineOrderingRequest(dto, false))
             {
                 return Ok();
             }

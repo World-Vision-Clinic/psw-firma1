@@ -10,5 +10,6 @@ namespace PharmacyAPI.Dto
         public string MedicineName { get; set; }
         public string MedicineGrams { get; set; }
         public string NumOfBoxes { get; set; }
+        public bool Test{ get; set; }
     }
 }

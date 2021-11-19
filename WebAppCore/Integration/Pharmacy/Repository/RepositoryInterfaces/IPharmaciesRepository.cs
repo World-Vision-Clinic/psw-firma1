@@ -9,5 +9,7 @@ namespace Integration.Pharmacy.Repository.RepositoryInterfaces
    public interface IPharmaciesRepository : IGenericRepository<PharmacyProfile>
    {
         public PharmacyProfile Get(string id);
+        public List<PharmacyProfile> GetFiltered(string searchFilter);
+
    }
 }

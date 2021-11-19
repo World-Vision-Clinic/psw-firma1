@@ -74,36 +74,41 @@ namespace PharmacyAPI.Controller
                 return BadRequest("Api Key is not valid!");
             }
 
-            Medicine medicine = new Medicine(dto.MedicineName, Double.Parse(dto.MedicineGrams), int.Parse(dto.NumOfBoxes));
-            service.OrderMedicine(medicine);
+            if (!dto.Test) {
+                Medicine medicine = new Medicine(dto.MedicineName, Double.Parse(dto.MedicineGrams), int.Parse(dto.NumOfBoxes));
+                service.OrderMedicine(medicine);
 
-            var client = new RestSharp.RestClient(hospital.Localhost);
-            var request = new RestRequest("/medicines/ordered");
-            Medicine med = service.FoundOrderedMedicine(medicine);
-            request.AddHeader("Content-Type", "application/json");
-            List<string> replacements = service.FoundReplacements(medicine);
-            request.AddJsonBody(
-            new
-            {
-                MedicineName = med.MedicineName,
-                Manufacturer = med.Manufacturer,
-                SideEffects = med.SideEffects,
-                Usage = med.Usage,
-                Weigth = med.Weigth,
-                MainPrecautions = med.MainPrecautions,
-                PotentialDangers = med.PotentialDangers,
-                Quantity = dto.NumOfBoxes,
-                Replacements = replacements,
-                Price = med.Price
-            });
-            IRestResponse response = client.Post(request);
+                var client = new RestSharp.RestClient(hospital.Localhost);
+                var request = new RestRequest("/medicines/ordered");
+                Medicine med = service.FoundOrderedMedicine(medicine);
+                request.AddHeader("Content-Type", "application/json");
+                List<string> replacements = service.FoundReplacements(medicine);
+                request.AddJsonBody(
+                new
+                {
+                    MedicineName = med.MedicineName,
+                    Manufacturer = med.Manufacturer,
+                    SideEffects = med.SideEffects,
+                    Usage = med.Usage,
+                    Weigth = med.Weigth,
+                    MainPrecautions = med.MainPrecautions,
+                    PotentialDangers = med.PotentialDangers,
+                    Quantity = dto.NumOfBoxes,
+                    Replacements = replacements,
+                    Price = med.Price
+                });
+                IRestResponse response = client.Post(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    return Ok();
+                }
+                return BadRequest();
+            }
+            else
             {
                 return Ok();
             }
-            return BadRequest();
         }
-
     }
 }
