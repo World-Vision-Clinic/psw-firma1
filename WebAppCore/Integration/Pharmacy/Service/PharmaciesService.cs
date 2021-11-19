@@ -46,17 +46,5 @@ namespace Integration.Pharmacy.Service
         {
             return pharmaciesRepository.GetFiltered(searchFilter);
         }
-        public List<PharmacyProfile> FilterPharmacies(string searchFilter)
-        {
-            List<PharmacyProfile> pharmacies = new List<PharmacyProfile>();
-            foreach (PharmacyProfile pp in GetAll())
-            {
-                if (pp.Address.ToLower().Contains(searchFilter.ToLower()) || pp.City.ToLower().Contains(searchFilter.ToLower()))
-                {
-                    pharmacies.Add(pp);
-                }
-            }
-            return pharmacies;
-        }
     }
 }

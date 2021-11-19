@@ -18,7 +18,7 @@ namespace IntegrationTests.UnitTests
         MedicineService service;
 
         [Fact]
-        public void OrderingExistingMedicineTest()
+        public void OrderingMedicinesTest()
         {
             var stubRepository = new Mock<IMedicinesRepository>();
             service = new MedicineService(stubRepository.Object, new MedicalRecordsRepository());

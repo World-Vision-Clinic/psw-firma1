@@ -13,7 +13,6 @@ namespace IntegrationTests.IntegrationTests
 {
     public class PharmaciesFilteringTest
     {
-        PharmaciesService service;
         
         [Fact]
         public void FilteringPharmacyByCityTest()
