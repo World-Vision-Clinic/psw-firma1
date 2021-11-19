@@ -26,11 +26,11 @@ namespace HospitalTests.PatientTest
 
         private IPatientRepository GetInMemoryPersonRepository()
         {
-            DbContextOptions<HospitalContext> options;
-            var builder = new DbContextOptionsBuilder<HospitalContext>();
+            DbContextOptions<TestContext> options;
+            var builder = new DbContextOptionsBuilder<TestContext>();
             builder.UseInMemoryDatabase("TestDb");
             options = builder.Options;
-            HospitalContext hospitalContext = new HospitalContext(options);
+            TestContext hospitalContext = new TestContext(options);
             hospitalContext.Database.EnsureDeleted();
             hospitalContext.Database.EnsureCreated();
             return new PatientRepository(hospitalContext);
