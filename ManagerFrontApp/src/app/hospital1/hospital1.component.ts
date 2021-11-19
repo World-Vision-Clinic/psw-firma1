@@ -13,6 +13,7 @@ import { emptyRoom, Room } from '../data/room';
 export class Hospital1Component implements OnInit {
   building = BUILDINGS;
 	rooms = ROOMS;
+  selectedRoom_ = null;
   selectedBuilding = this.building[0];
   selectedFloor = this.selectedBuilding.floors[0]
   constructor(private router: Router) { }

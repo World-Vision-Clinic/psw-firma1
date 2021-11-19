@@ -170,15 +170,41 @@
 <div class="move-box-equipment" *ngIf="!!moveBoxEquipment">
   <h3>MOVING</h3>
   <div class="labels-box">
-    <label for="">Starting room:</label><br />
-    <label for="">Starting room floor:</label><br />
-    <label for="">Amount:</label><br />
-    <label for="">Destination room:</label><br />
-    <label for="">Destination room floor:</label><br />
-  </div>
-  <div class="btnright">
-    <button class="btn">Next</button>
-    <button class="btn">Back</button>
+    <div class="label-container">
+      <label for="">Starting room::</label><br />
+      <select class="browser-default custom-select">
+        <option selected>Open this select menu</option>
+        <option *ngFor="let room of rooms"  [value]="room.roomId">{{room.name}}</option>
+      </select>
+    </div>
+    <div class="label-container">
+      <label for="">Starting  room floor::</label><br />
+      <input
+        type="text"
+        class="form-field"
+        [(ngModel)]="selectedRoom.purpose"
+        name="input"
+        [attr.disabled]="formDisabled ? '' : null"
+      />
+    </div>
+    <div class="label-container">
+      <label for="">Amount:</label><br />
+      <input
+        type="text"
+        class="form-field"
+        [(ngModel)]="selectedRoom.purpose"
+        name="input"
+        [attr.disabled]="formDisabled ? '' : null"
+      />
+    </div>
+    <div class="label-container">
+      <label for="">Destination room:</label><br />
+      <select class="browser-default custom-select">
+        <option selected>Open this select menu</option>
+        <option *ngFor="let room of rooms"  [value]="room.roomId">{{room.name}}</option>
+      </select>
+    </div>
+    
   </div>
 </div>
 

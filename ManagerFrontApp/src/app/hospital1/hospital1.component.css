@@ -240,14 +240,23 @@
     background-color: rgba(224, 223, 223, 0.911);
     margin-bottom: 20%;
 }
-
+.list-table thead{
+  display: flex;
+  width: 100%;
+}
+.list-table thead>tr{
+  display: flex;
+  flex: 1;
+}
 .list-table th{
   display: inline-block;
   padding: 8px;
   text-align: left;
   font-size: 14px;
+  text-align: center;
   color: #000;
   background:gray;
+  flex: 1;
 }
 
 .equipment-table tbody {
@@ -261,3 +270,12 @@
   display: inline-block;
 }
 
+
+.ng-select .ng-select-container .ng-value-container .ng-input>input{
+  background-color: white;
+  border: 1px solid black !important;
+}
+
+.label-container{
+  margin: 10px 0;
+}
