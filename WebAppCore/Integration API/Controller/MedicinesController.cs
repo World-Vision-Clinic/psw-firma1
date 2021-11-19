@@ -112,22 +112,31 @@ namespace Integration_API.Controller
         {
             if (SendMedicineOrderingRequest(dto))
             {
-                MedicineService ms = new MedicineService(new MedicinesRepository(), new MedicalRecordsRepository());
-                Medicine orderedMedicine;
-                foreach (Medicine med in ms.GetAll())
-                {
-                    if (med.Name.Equals(dto.MedicineName) && med.DosageInMg.Equals(dto.MedicineGrams))
-                    {
-                        orderedMedicine = new Medicine(med.ID, dto.MedicineName, Double.Parse(dto.MedicineGrams), int.Parse(dto.NumOfBoxes));
-                        ms.AddOrderedMedicine(orderedMedicine);
-                        return Ok();
-                    }
-                }
-                orderedMedicine = new Medicine(Generator.GenerateMedicineId(), dto.MedicineName, Double.Parse(dto.MedicineGrams), int.Parse(dto.NumOfBoxes));
-                ms.AddOrderedMedicine(orderedMedicine);
                 return Ok();
             }
             return BadRequest();
         }
+
+        [HttpPost("ordered")]
+        public IActionResult Ordered(OrderedMedicineDTO dto)
+        {
+            System.Diagnostics.Debug.WriteLine(dto.Replacements);
+            MedicineService ms = new MedicineService(new MedicinesRepository(), new MedicalRecordsRepository());
+            Medicine orderedMedicine;
+            foreach (Medicine med in ms.GetAll())
+            {
+                if (med.Name.Equals(dto.MedicineName) && med.DosageInMg.Equals(dto.Weigth))
+                {
+                    orderedMedicine = new Medicine(med.ID, dto.MedicineName, Double.Parse(dto.Weigth), int.Parse(dto.Quantity), 200, dto.MainPrecautions, null, dto.Replacements);
+                    ms.AddOrderedMedicine(orderedMedicine);
+                    return Ok();
+                }
+            }
+            orderedMedicine = new Medicine(Generator.GenerateMedicineId(), dto.MedicineName, Double.Parse(dto.Weigth), int.Parse(dto.Quantity), 200, dto.Usage, null, dto.Replacements);
+            ms.AddOrderedMedicine(orderedMedicine);
+            return Ok();
+        }
+         
+
     }
 }

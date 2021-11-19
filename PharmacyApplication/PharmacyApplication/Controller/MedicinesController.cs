@@ -4,6 +4,7 @@ using Pharmacy.Model;
 using Pharmacy.Repository;
 using Pharmacy.Service;
 using PharmacyAPI.Dto;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,8 @@ namespace PharmacyAPI.Controller
     {
         MedicineService service = new MedicineService(new MedicineRepository());
         HospitalsService hospitalService = new HospitalsService(new HospitalsRepository());
-        
+        CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
+
         [HttpGet("check")]
         public IActionResult CheckMedicineAvailability(string name = "", string dosage = "", string quantity = "")
         {
@@ -75,7 +77,32 @@ namespace PharmacyAPI.Controller
             Medicine medicine = new Medicine(dto.MedicineName, Double.Parse(dto.MedicineGrams), int.Parse(dto.NumOfBoxes));
             service.OrderMedicine(medicine);
 
-            return Ok();
+            var client = new RestSharp.RestClient(hospital.Localhost);
+            var request = new RestRequest("/medicines/ordered");
+            Medicine med = service.FoundOrderedMedicine(medicine);
+            request.AddHeader("Content-Type", "application/json");
+            List<string> replacements = service.FoundReplacements(medicine);
+            request.AddJsonBody(
+            new
+            {
+                MedicineName = med.MedicineName,
+                Manufacturer = med.Manufacturer,
+                SideEffects = med.SideEffects,
+                Usage = med.Usage,
+                Weigth = med.Weigth,
+                MainPrecautions = med.MainPrecautions,
+                PotentialDangers = med.PotentialDangers,
+                Quantity = dto.NumOfBoxes,
+                Replacements = replacements
+            });
+            IRestResponse response = client.Post(request);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
+
     }
 }

@@ -48,7 +48,15 @@ namespace Pharmacy.Service
         {
             return repository.ProcureMedicine(medicineId, quantity);
         }
-      
+        
+        public List<string> FoundReplacements(Medicine medicine)
+        {
+            return repository.FoundReplacements(medicine);
+        }
+        public Medicine FoundOrderedMedicine(Medicine medicine)
+        {
+            return repository.FoundOrderedMedicine(medicine);
+        }
         public List<Medicine> GetByName(string name) //Does not have to be full name
         { 
             List<Medicine> medicines = new List<Medicine>();

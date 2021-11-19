@@ -47,6 +47,34 @@ namespace Pharmacy.Repository
             return medicine;
         }
 
+        public List<string> FoundReplacements(Medicine medicine)
+        {
+            List<string> replacementsId = new List<string>();
+            foreach(Medicine med in dbContext.Medicines.ToList())
+            {
+                if (med.MedicineName.Equals(medicine.MedicineName))
+                {
+                    foreach(SubstituteMedicine sm in med.SubstituteMedicines)
+                    {
+                        replacementsId.Add(sm.Substitute.MedicineName);
+                    }
+                }
+            }
+            return replacementsId;
+        }
+
+        public Medicine FoundOrderedMedicine(Medicine medicine)
+        {
+            foreach(Medicine med in dbContext.Medicines.ToList())
+            {
+                if (med.MedicineName.Equals(medicine.MedicineName))
+                {
+                    return med;
+                }
+            }
+            return null;
+        }
+
         public bool AddMedicine(Medicine newMedicine)
         {
             Medicine medicine = dbContext.Medicines.ToList().FirstOrDefault(medicine => medicine.MedicineId == newMedicine.MedicineId);

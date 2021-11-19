@@ -20,10 +20,22 @@ namespace Pharmacy.Repository
         public Credential GetByHospitalLocalhost(string hospitalLocalhost)
         {
             List<Credential> credentials = new List<Credential>();
+            foreach (Credential credential in dbContext.Credentials.ToList())
+            {
+                if (credential.HospitalLocalhost.Equals(hospitalLocalhost))
+                {
+                    return credential;
+                }
+            }
+            return null;
+        }
+        public Credential GetByHospitalApi(string api)
+        {
+            List<Credential> credentials = new List<Credential>();
             dbContext.Credentials.ToList().ForEach(credential => credentials.Add(credential));
             foreach (Credential credential in credentials)
             {
-                if (credential.HospitalLocalhost.Equals(hospitalLocalhost))
+                if (credential.ApiKey.Equals(api))
                 {
                     return credential;
                 }
