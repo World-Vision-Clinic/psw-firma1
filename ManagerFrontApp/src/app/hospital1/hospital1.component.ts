@@ -28,6 +28,8 @@ export class Hospital1Component implements OnInit {
 	equipmentBox: boolean = false;
   listBoxEquipment: boolean = false;
   moveBoxEquipment: boolean = false;
+  searchEquipmentResultBox: boolean = false;
+  searchRooms : boolean = true;
 
   enableEdit(){
 	this.formDisabled = false;
@@ -94,6 +96,16 @@ export class Hospital1Component implements OnInit {
     this.listBoxEquipment=true;
     this.moveBoxEquipment=true;
   }
+
+  searchEquipment(){
+    this.searchEquipmentResultBox = true;
+  }
+
+  setSearchCriteria(){
+    
+    this.searchRooms = !this.searchRooms;
+   }
+
 
 
   ngOnInit(): void {

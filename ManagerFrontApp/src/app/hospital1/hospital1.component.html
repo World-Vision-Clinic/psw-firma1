@@ -209,10 +209,30 @@
 </div>
 
   <div class="search-box-rooms" >
-    <input class="search-txt-rooms" type="text" name="" placeholder="Search for room" >
-    <a class="search-btn-rooms" href="#">
+    <input class="search-txt-rooms" type="text" name="" placeholder="Search for..." >
+    <a class="search-btn-rooms" (click)="searchEquipment()">
       <i class="fas fa-search"></i>
     </a>
+  </div>
+  <div class="search-radio-buttons">
+    <form>
+      <label class="radio-inline">
+        <input type="radio" name="optradio" value="rooms" (change)="setSearchCriteria()" checked>rooms
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="optradio" value="equipment" (change)="setSearchCriteria()">equipment
+      </label>
+    </form>
+  </div>
+
+  <div class="search-list-box-equipment" *ngIf="!!searchEquipmentResultBox">
+    <h3>Search result</h3>
+    <table class="list-table">
+      <thead>
+        <tr><th>NAME</th><th>AMOUNT</th><th>ROOM</th></tr>
+      </thead>
+      <tbody> </tbody>
+    </table>
   </div>
 
 </div>
