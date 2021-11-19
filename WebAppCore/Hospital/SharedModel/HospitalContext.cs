@@ -17,6 +17,10 @@ namespace Hospital.SharedModel
 
         }
 
+        public HospitalContext(DbContextOptions<HospitalContext> options) : base(options) { }
+
+        public HospitalContext(DbContextOptions<TestContext> options) : base(options) { }
+
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
 
