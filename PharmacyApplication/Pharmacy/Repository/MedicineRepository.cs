@@ -18,7 +18,7 @@ namespace Pharmacy.Repository
             dbContext.Medicines.ToList().ForEach(medicine => medicines.Add(medicine));
             return medicines;
         }
-
+        
         public Medicine GetById(long medicineId)
         {
             Medicine medicine = dbContext.Medicines.ToList().FirstOrDefault(medicine => medicine.MedicineId == medicineId);
@@ -28,7 +28,10 @@ namespace Pharmacy.Repository
             }
             return medicine;
         }
-
+        public void SaveChanges()
+        {
+            dbContext.SaveChanges();
+        }
         public bool AddMedicine(Medicine newMedicine)
         {
             Medicine medicine = dbContext.Medicines.ToList().FirstOrDefault(medicine => medicine.MedicineId == newMedicine.MedicineId);

@@ -1,6 +1,8 @@
-﻿using Integration.Pharmacy.Model;
+﻿using Integration;
+using Integration.Pharmacy.Model;
 using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Service;
+using Integration.Services;
 using Integration_API.Dto;
 using Integration_API.Mapper;
 using Microsoft.AspNetCore.Http;
@@ -58,6 +60,11 @@ namespace Integration_API.Controller
 
             Credential credential = credentialsService.GetByPharmacyLocalhost(pharmacy.Localhost);
 
+            if(credential == null)
+            {
+                return false;
+            }
+
             request.AddHeader("ApiKey", credential.ApiKey);
 
             IRestResponse response = client.Get(request);
@@ -69,5 +76,68 @@ namespace Integration_API.Controller
 
             return false;
         }
+
+        public bool SendMedicineOrderingRequest(OrderingMedicineDTO dto, bool test)
+        {
+
+            var client = new RestSharp.RestClient(dto.Localhost);
+            var request = new RestRequest("medicines/OrderMedicine");
+
+            Credential credential = credentialsService.GetByPharmacyLocalhost(dto.Localhost);
+
+            if (credential == null)
+            {
+                return false;
+            }
+            request.AddHeader("ApiKey", credential.ApiKey);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddJsonBody(
+            new
+            {
+                MedicineName = dto.MedicineName,
+                MedicineGrams = dto.MedicineGrams,
+                NumOfBoxes = dto.NumOfBoxes,
+                Test = test
+            });
+            IRestResponse response = client.Post(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        [HttpPut("OrderMedicine")]
+        public IActionResult Order(OrderingMedicineDTO dto)
+        {
+            if (SendMedicineOrderingRequest(dto, false))
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
+
+        [HttpPost("ordered")]
+        public IActionResult Ordered(OrderedMedicineDTO dto)
+        {
+            System.Diagnostics.Debug.WriteLine(dto.Replacements);
+            MedicineService ms = new MedicineService(new MedicinesRepository(), new MedicalRecordsRepository());
+            Medicine orderedMedicine;
+            foreach (Medicine med in ms.GetAll())
+            {
+                if (med.Name.Equals(dto.MedicineName) && med.DosageInMg.Equals(dto.Weigth))
+                {
+                    orderedMedicine = new Medicine(med.ID, dto.MedicineName, Double.Parse(dto.Weigth), int.Parse(dto.Quantity), dto.Price, dto.MainPrecautions, null, dto.Replacements);
+                    ms.AddOrderedMedicine(orderedMedicine);
+                    return Ok();
+                }
+            }
+            orderedMedicine = new Medicine(Generator.GenerateMedicineId(), dto.MedicineName, Double.Parse(dto.Weigth), int.Parse(dto.Quantity), dto.Price, dto.Usage, null, dto.Replacements);
+            ms.AddOrderedMedicine(orderedMedicine);
+            return Ok();
+        }
+         
+
     }
 }
