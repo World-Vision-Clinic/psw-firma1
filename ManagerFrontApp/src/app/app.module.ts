@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ObjectionFormPageComponent } from './manager-integration-front-app/objection-form-page/objection-form-page.component';
 import { ManagerFeedbackViewComponent } from './manager-feedback-view/manager-feedback-view.component';
 import { PharmaciesComponent } from './manager-integration-front-app/pharmacies/pharmacies.component';
+import { NewsComponent } from './manager-integration-front-app/news/news.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { PharmaciesComponent } from './manager-integration-front-app/pharmacies/
     ObjectionFormPageComponent,
     ManagerFeedbackViewComponent,
     ManagerIntegrationFrontAppComponent,
-    PharmaciesComponent
+    PharmaciesComponent,
+    NewsComponent
   ],
   imports: [
     BrowserModule,

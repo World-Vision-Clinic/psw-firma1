@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Integration
@@ -12,6 +13,18 @@ namespace Integration
 
         public int Quantity { get; set; }
 
+        public Medicine(string iD, string name, double dosageInMg, int quantity, double price, string description, List<Ingredient> ingredient, List<string> replacementMedicineIDs)
+        {
+            ID = iD;
+            Name = name;
+            DosageInMg = dosageInMg;
+            Quantity = quantity;
+            Price = price;
+            Description = description;
+            this.ingredient = ingredient;
+            this.replacementMedicineIDs = replacementMedicineIDs;
+        }
+
         public double Price { get; set; }
        
         public string Description { get; set; }
@@ -21,7 +34,13 @@ namespace Integration
             return Name + " " + ID;
         }
         private System.Collections.Generic.List<Ingredient> ingredient;
-
+        public Medicine(string iD, string name, double dosageInMg, int quantity)
+        {
+            ID = iD;
+            Name = name;
+            DosageInMg = dosageInMg;
+            Quantity = quantity;
+        }
         public System.Collections.Generic.List<Ingredient> Ingredient
         {
             get

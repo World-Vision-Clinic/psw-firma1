@@ -19,7 +19,7 @@ namespace Integration_API.Controller
     public class ObjectionsController : ControllerBase
     {
         private ObjectionsService objectionsService = new ObjectionsService();
-        private PharmaciesService pharmaciesService = new PharmaciesService();
+        private PharmaciesService pharmaciesService = new PharmaciesService(new PharmaciesRepository());
         private CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
 
         [HttpGet]       

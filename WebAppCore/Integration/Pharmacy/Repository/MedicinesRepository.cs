@@ -3,6 +3,7 @@ using Integration.Repositories.Interfaces;
 using Integration.SharedModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Integration.Pharmacy.Repository
@@ -22,9 +23,13 @@ namespace Integration.Pharmacy.Repository
 
         public List<Medicine> GetAll()
         {
-            throw new NotImplementedException();
+            return dbContext.Medicines.ToList();
         }
-
+        public void SaveChanges()
+        {
+            dbContext.SaveChanges();
+        }
+       
         public List<string> GetAllIngredients()
         {
             throw new NotImplementedException();
@@ -38,6 +43,12 @@ namespace Integration.Pharmacy.Repository
         public Medicine GetByID(string id)
         {
             throw new NotImplementedException();
+        }
+
+        public void Add(Medicine medicine)
+        {
+            dbContext.Medicines.Add(medicine);
+            dbContext.SaveChanges();
         }
 
         public void Save(Medicine parameter)

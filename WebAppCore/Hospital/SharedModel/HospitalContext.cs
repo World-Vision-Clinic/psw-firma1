@@ -21,12 +21,13 @@ namespace Hospital.SharedModel
          
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {/*
-            modelBuilder.Entity<SurveyQuestion>()
-                .HasOne(p => p.Survey)
-                .WithMany(b => b.Questions)
-                .HasForeignKey(p => p.SurveyForeignKey);*/
+
+        public HospitalContext(DbContextOptions<HospitalContext> options) : base(options) { }
+
+        public HospitalContext(DbContextOptions<TestContext> options) : base(options) { }
+
+        protected override void OnModelCreating(ModelBuilder modelbuilder)
+        {
 
         }
 

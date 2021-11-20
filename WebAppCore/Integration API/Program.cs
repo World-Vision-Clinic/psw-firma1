@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Integration.Pharmacy.Service;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Integration_API
 {
@@ -21,6 +23,11 @@ namespace Integration_API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .UseWindowsService()
+                .ConfigureServices((hostContext, services) =>
+                {
+                    services.AddHostedService<RabbitMQService>();
                 });
     }
 }

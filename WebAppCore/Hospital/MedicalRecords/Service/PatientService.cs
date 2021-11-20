@@ -13,9 +13,9 @@ namespace Hospital.MedicalRecords.Service
     public class PatientService
     {
 
-        private readonly PatientRepository _repo;
+        private readonly IPatientRepository _repo;
 
-        public PatientService(PatientRepository repo)
+        public PatientService(IPatientRepository repo)
         {
             _repo = repo;
         }

@@ -8,11 +8,11 @@ using System.Text;
 
 namespace Integration.Pharmacy.Repository
 {
-    class PharmaciesRepository : IPharmaciesRepository
+    public class PharmaciesRepository : IPharmaciesRepository
     {
         private IntegrationDbContext dbContext = new IntegrationDbContext();
 
-        public PharmacyProfile Get(String id)
+        public PharmacyProfile Get(string id)
         {
             PharmacyProfile foundedPharmacy = dbContext.Pharmacies.SingleOrDefault(pharmacy => pharmacy.Localhost == id);
             return foundedPharmacy;
@@ -27,19 +27,6 @@ namespace Integration.Pharmacy.Repository
         public List<PharmacyProfile> GetAll()
         {
             return dbContext.Pharmacies.ToList();
-        }
-
-        public List<PharmacyProfile> GetFiltered(string searchFilter)
-        {
-            List<PharmacyProfile> pharmacies = new List<PharmacyProfile>();
-            foreach(PharmacyProfile pp in dbContext.Pharmacies.ToList())
-            {
-                if(pp.Address.ToLower().Contains(searchFilter.ToLower()) || pp.City.ToLower().Contains(searchFilter.ToLower()))
-                {
-                    pharmacies.Add(pp);
-                }
-            }
-            return pharmacies;
         }
 
         public void Delete(string id)

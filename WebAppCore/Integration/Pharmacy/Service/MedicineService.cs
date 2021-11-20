@@ -36,10 +36,27 @@ namespace Integration.Services
         {
            return medicineRepository.GetByID(id);
         }
-
+        public virtual bool AddOrderedMedicine(Medicine orderedMedicine)
+        {
+            foreach (Medicine medicine in GetAll())
+            {
+                if (medicine.Name.ToLower().Equals(orderedMedicine.Name.ToLower()))
+                {
+                    medicine.Quantity += orderedMedicine.Quantity;
+                    medicineRepository.SaveChanges();
+                    return true;
+                }
+            }
+            Add(orderedMedicine);
+            return true;
+        }
         public void UpdateMedicine(Medicine medicine)
         {
             medicineRepository.EditMedicine(medicine);
+        }
+        public void Add(Medicine medicine)
+        {
+            medicineRepository.Add(medicine);
         }
 
         public List<Medicine> GetAll()

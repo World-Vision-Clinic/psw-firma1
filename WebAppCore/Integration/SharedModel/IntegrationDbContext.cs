@@ -14,6 +14,7 @@ namespace Integration.SharedModel
         public DbSet<PharmacyProfile> Pharmacies { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
         public DbSet<MedicalRecord> MedicalRecords { get; set; }
+        public DbSet<News> News { get; set; }
         public IntegrationDbContext()
         {
 

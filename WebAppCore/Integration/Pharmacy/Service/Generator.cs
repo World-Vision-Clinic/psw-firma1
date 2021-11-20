@@ -44,5 +44,39 @@ namespace Integration.Pharmacy.Service
             return objectionId;
         }
 
+        public static string GenerateNewsId()
+        {
+            IntegrationDbContext context = new IntegrationDbContext();
+            News foundedNews = null;
+            string newsId = "";
+            do
+            {
+                var key = new byte[32];
+                using (var generator = RandomNumberGenerator.Create())
+                    generator.GetBytes(key);
+                newsId = Convert.ToBase64String(key);
+                foundedNews = context.News.SingleOrDefault(news => news.IdEncoded == newsId);
+
+            } while (foundedNews != null);
+
+            return newsId;
+        }
+        public static string GenerateMedicineId()
+        {
+            IntegrationDbContext context = new IntegrationDbContext();
+            Medicine foundedMedicine = null;
+            string medicineId = "";
+            do
+            {
+                var key = new byte[32];
+                using (var generator = RandomNumberGenerator.Create())
+                    generator.GetBytes(key);
+                medicineId = Convert.ToBase64String(key);
+                foundedMedicine = context.Medicines.SingleOrDefault(medicine => medicine.ID == medicineId);
+
+            } while (foundedMedicine != null || medicineId.Contains("+"));
+
+            return medicineId;
+        }
     }
 }
