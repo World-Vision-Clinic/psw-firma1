@@ -14,6 +14,5 @@ namespace Pharmacy.Repository.RepositoryInterfaces
         public bool UpdateMedicine(Medicine medicine);
         public void SaveChanges();
         public bool ProcureMedicine(long medicineId, int quantity);
-        public void Remove(Medicine medicine);
     }
 }

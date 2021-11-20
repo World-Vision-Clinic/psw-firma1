@@ -53,5 +53,6 @@ export class PharmaciesComponent implements OnInit {
     this.http.put<any>('http://localhost:43818/medicines/OrderMedicine', body)
         .subscribe();
     alert("Medicine succesfully ordered");
+    this.buttonClicked = false;
   }
 }

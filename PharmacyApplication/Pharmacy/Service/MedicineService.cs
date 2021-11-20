@@ -29,7 +29,7 @@ namespace Pharmacy.Service
                     med.Quantity -= medicine.Quantity;
                     if (med.Quantity == 0)
                     {
-                        Remove(med);
+                        DeleteMedicine(med.MedicineId);
                         return true;
                     }
                     repository.SaveChanges();
@@ -38,10 +38,7 @@ namespace Pharmacy.Service
             }
             return false;
         }
-        public void Remove(Medicine medicine)
-        {
-            repository.Remove(medicine);
-        }
+
         public Medicine GetById(long medicineId) 
         {
             return repository.GetById(medicineId);

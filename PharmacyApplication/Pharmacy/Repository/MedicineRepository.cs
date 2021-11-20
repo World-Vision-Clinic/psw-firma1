@@ -28,11 +28,6 @@ namespace Pharmacy.Repository
             }
             return medicine;
         }
-        public void Remove(Medicine medicine)
-        {
-            dbContext.Medicines.Remove(medicine);
-            dbContext.SaveChanges();
-        }
         public void SaveChanges()
         {
             dbContext.SaveChanges();
