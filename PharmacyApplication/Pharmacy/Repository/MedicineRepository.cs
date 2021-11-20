@@ -18,25 +18,7 @@ namespace Pharmacy.Repository
             dbContext.Medicines.ToList().ForEach(medicine => medicines.Add(medicine));
             return medicines;
         }
-        public bool OrderMedicine(Medicine medicine) 
-        {
-            foreach(Medicine med in dbContext.Medicines.ToList())
-            {
-                if (med.MedicineName.Equals(medicine.MedicineName))
-                {
-                    med.Quantity -= medicine.Quantity;
-                    if(med.Quantity == 0)
-                    {
-                        dbContext.Medicines.Remove(med);
-                        dbContext.SaveChanges();
-                        return true;
-                    }
-                    dbContext.SaveChanges();
-                    return true;
-                }
-            }    
-            return false;
-        }
+        
         public Medicine GetById(long medicineId)
         {
             Medicine medicine = dbContext.Medicines.ToList().FirstOrDefault(medicine => medicine.MedicineId == medicineId);
@@ -46,35 +28,15 @@ namespace Pharmacy.Repository
             }
             return medicine;
         }
-
-        public List<string> FoundReplacements(Medicine medicine)
+        public void Remove(Medicine medicine)
         {
-            List<string> replacementsId = new List<string>();
-            foreach(Medicine med in dbContext.Medicines.ToList())
-            {
-                if (med.MedicineName.Equals(medicine.MedicineName))
-                {
-                    foreach(SubstituteMedicine sm in med.SubstituteMedicines)
-                    {
-                        replacementsId.Add(sm.Substitute.MedicineName);
-                    }
-                }
-            }
-            return replacementsId;
+            dbContext.Medicines.Remove(medicine);
+            dbContext.SaveChanges();
         }
-
-        public Medicine FoundOrderedMedicine(Medicine medicine)
+        public void SaveChanges()
         {
-            foreach(Medicine med in dbContext.Medicines.ToList())
-            {
-                if (med.MedicineName.Equals(medicine.MedicineName))
-                {
-                    return med;
-                }
-            }
-            return null;
+            dbContext.SaveChanges();
         }
-
         public bool AddMedicine(Medicine newMedicine)
         {
             Medicine medicine = dbContext.Medicines.ToList().FirstOrDefault(medicine => medicine.MedicineId == newMedicine.MedicineId);

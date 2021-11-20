@@ -18,17 +18,32 @@ namespace IntegrationTests.UnitTests
         MedicineService service;
 
         [Fact]
-        public void OrderingMedicinesTest()
+        public void OrderingUnexistingMedicinesTest()
         {
             var stubRepository = new Mock<IMedicinesRepository>();
             service = new MedicineService(stubRepository.Object, new MedicalRecordsRepository());
             List<Medicine> medicines = new List<Medicine>();
             Medicine medicine = new Medicine("1", "Andol", 200, 2);
-            stubRepository.Setup(x => x.AddOrderedMedicine(medicine)).Callback((Medicine m) => medicines.Add(m));
+            stubRepository.Setup(m => m.GetAll()).Returns(medicines);
+            stubRepository.Setup(m => m.Add(medicine)).Callback((Medicine m) => medicines.Add(m));
 
             service.AddOrderedMedicine(medicine);
 
-            Assert.NotEmpty(medicines);
+            Assert.Single(medicines);
+        }
+        [Fact]
+        public void OrderingExistingMedicinesTest()
+        {
+            var stubRepository = new Mock<IMedicinesRepository>();
+            service = new MedicineService(stubRepository.Object, new MedicalRecordsRepository());
+            List<Medicine> medicines = new List<Medicine>();
+            Medicine medicine = new Medicine("1", "Andol", 200, 2);
+            medicines.Add(medicine);
+            stubRepository.Setup(m => m.GetAll()).Returns(medicines);
+
+            service.AddOrderedMedicine(medicine);
+
+            Assert.Equal(4, medicines[0].Quantity);
         }
     }
 }

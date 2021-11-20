@@ -19,7 +19,7 @@ namespace IntegrationTests.IntegrationTests
         /*[Fact]
         public void OrderingUnexistingMedicineHospitalTest()
         {
-            OrderedMedicineDTO omd = new OrderedMedicineDTO("Paracetamol", "Zdravko", "none", "2 times a day", "200", "none", "none", "2", null, 200);
+            OrderedMedicineDTO omd = new OrderedMedicineDTO("Amoksicilin", "Zdravko", "none", "2 times a day", "200", "none", "none", "2", null, 200);
             MedicinesRepository mr = new MedicinesRepository();
             int oldCount = mr.GetAll().Count;
             MedicinesController pc = new MedicinesController();

@@ -25,21 +25,11 @@ namespace Integration.Pharmacy.Repository
         {
             return dbContext.Medicines.ToList();
         }
-        public virtual bool AddOrderedMedicine(Medicine orderedMedicine)
+        public void SaveChanges()
         {
-            foreach (Medicine medicine in dbContext.Medicines.ToList())
-            {
-                if (medicine.Name.ToLower().Equals(orderedMedicine.Name.ToLower()))
-                {
-                    medicine.Quantity += orderedMedicine.Quantity;
-                    dbContext.SaveChanges();
-                    return true;
-                }
-            }
-            dbContext.Medicines.Add(orderedMedicine);
             dbContext.SaveChanges();
-            return true;
-        } 
+        }
+       
         public List<string> GetAllIngredients()
         {
             throw new NotImplementedException();
@@ -53,6 +43,12 @@ namespace Integration.Pharmacy.Repository
         public Medicine GetByID(string id)
         {
             throw new NotImplementedException();
+        }
+
+        public void Add(Medicine medicine)
+        {
+            dbContext.Medicines.Add(medicine);
+            dbContext.SaveChanges();
         }
 
         public void Save(Medicine parameter)

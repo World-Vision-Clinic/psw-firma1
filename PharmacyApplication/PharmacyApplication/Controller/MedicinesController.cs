@@ -76,11 +76,11 @@ namespace PharmacyAPI.Controller
 
             if (!dto.Test) {
                 Medicine medicine = new Medicine(dto.MedicineName, Double.Parse(dto.MedicineGrams), int.Parse(dto.NumOfBoxes));
+                Medicine med = service.FoundOrderedMedicine(medicine);
                 service.OrderMedicine(medicine);
 
                 var client = new RestSharp.RestClient(hospital.Localhost);
                 var request = new RestRequest("/medicines/ordered");
-                Medicine med = service.FoundOrderedMedicine(medicine);
                 request.AddHeader("Content-Type", "application/json");
                 List<string> replacements = service.FoundReplacements(medicine);
                 request.AddJsonBody(

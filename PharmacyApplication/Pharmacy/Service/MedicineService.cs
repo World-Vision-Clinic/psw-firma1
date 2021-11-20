@@ -20,9 +20,27 @@ namespace Pharmacy.Service
             return repository.GetAll();
         }
 
-        public bool OrderMedicine(Medicine dto)
+        public bool OrderMedicine(Medicine medicine)
         {
-            return repository.OrderMedicine(dto);
+            foreach (Medicine med in GetAll())
+            {
+                if (med.MedicineName.Equals(medicine.MedicineName))
+                {
+                    med.Quantity -= medicine.Quantity;
+                    if (med.Quantity == 0)
+                    {
+                        Remove(med);
+                        return true;
+                    }
+                    repository.SaveChanges();
+                    return true;
+                }
+            }
+            return false;
+        }
+        public void Remove(Medicine medicine)
+        {
+            repository.Remove(medicine);
         }
         public Medicine GetById(long medicineId) 
         {
@@ -48,14 +66,33 @@ namespace Pharmacy.Service
         {
             return repository.ProcureMedicine(medicineId, quantity);
         }
-        
+
         public List<string> FoundReplacements(Medicine medicine)
         {
-            return repository.FoundReplacements(medicine);
+            List<string> replacementsId = new List<string>();
+            foreach (Medicine med in GetAll())
+            {
+                if (med.MedicineName.Equals(medicine.MedicineName))
+                {
+                    foreach (SubstituteMedicine sm in med.SubstituteMedicines)
+                    {
+                        replacementsId.Add(sm.Substitute.MedicineName);
+                    }
+                }
+            }
+            return replacementsId;
         }
+
         public Medicine FoundOrderedMedicine(Medicine medicine)
         {
-            return repository.FoundOrderedMedicine(medicine);
+            foreach (Medicine med in GetAll())
+            {
+                if (med.MedicineName.Equals(medicine.MedicineName))
+                {
+                    return med;
+                }
+            }
+            return null;
         }
         public List<Medicine> GetByName(string name) //Does not have to be full name
         { 
