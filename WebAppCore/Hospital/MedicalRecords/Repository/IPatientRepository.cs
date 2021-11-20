@@ -15,6 +15,7 @@ namespace Hospital.MedicalRecords.Repository
 
         public Patient FindByToken(string token);
 
+        public Patient FindByUserName(string username);
 
         public void Modify(Patient patient);
 
