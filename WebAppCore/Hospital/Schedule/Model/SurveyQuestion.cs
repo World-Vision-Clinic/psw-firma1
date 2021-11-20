@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Hospital.Schedule.Model
@@ -7,7 +8,9 @@ namespace Hospital.Schedule.Model
     public class SurveyQuestion
     {
         private int id;
-        private int answer;
+        private string question;
+        private SurveySectionType section;
+        
 
         public int Id
         {
@@ -15,11 +18,17 @@ namespace Hospital.Schedule.Model
             set { id = value; }
         }
 
-        public int Answer
+        public string Question
         {
-            get { return answer; }
-            set { answer = value; }
+            get { return question; }
+            set { question = value; }
         }
         
+       public SurveySectionType Section
+       {
+           get { return section; }
+           set { section = value; }
+       }
+
     }
 }

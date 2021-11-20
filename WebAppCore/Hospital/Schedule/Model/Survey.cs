@@ -4,22 +4,32 @@ using System.Text;
 
 namespace Hospital.Schedule.Model
 {
-    public class Survey
+    public class Survey 
     {
-        private SurveySection section;
         private int id;
-
-        public SurveySection Section
-        {
-            get { return section; }
-            set { section = value; }
-            
-        }
-
+        private DateTime creationDate;
+        private int idAppointment;
+       
         public int Id
         {
             get { return id; }
             set { id = value; }
         }
+
+        public DateTime CreationDate
+        {
+            get { return creationDate; }
+            set { creationDate = value; }
+        }
+
+        public int IdAppointment
+        {
+            get { return idAppointment; }
+            set { idAppointment = value;
+            }
+        }
+
+       
+
     }
 }

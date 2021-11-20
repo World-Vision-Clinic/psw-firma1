@@ -3,15 +3,17 @@ using System;
 using Hospital.SharedModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Hospital.Migrations
 {
     [DbContext(typeof(HospitalContext))]
-    partial class HospitalContextModelSnapshot : ModelSnapshot
+    [Migration("20211120192715_SurveyUpdate")]
+    partial class SurveyUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,33 +75,6 @@ namespace Hospital.Migrations
                     b.ToTable("Patients");
                 });
 
-            modelBuilder.Entity("Hospital.Schedule.Model.AnsweredSurveyQuestion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int>("Answer")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PatientForeignKey")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Question")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Section")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SurveyForeignKey")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AnsweredQuestions");
-                });
-
             modelBuilder.Entity("Hospital.Schedule.Model.Survey", b =>
                 {
                     b.Property<int>("Id")
@@ -125,15 +100,24 @@ namespace Hospital.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<int>("Answer")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PatientForeignKey")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Question")
                         .HasColumnType("text");
 
                     b.Property<int>("Section")
                         .HasColumnType("integer");
 
+                    b.Property<int>("SurveyForeignKey")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Questions");
+                    b.ToTable("SurveyQuestion");
                 });
 #pragma warning restore 612, 618
         }

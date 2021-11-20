@@ -13,17 +13,20 @@ namespace Hospital.SharedModel
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Survey> Surveys { get; set; }
-        public DbSet<SurveySection> SurveySections { get; set; }
-        public DbSet<SurveyQuestion> SurveyQuestions { get; set; }
-    
+        public DbSet<SurveyQuestion> Questions { get; set; }
+        public DbSet<AnsweredSurveyQuestion> AnsweredQuestions { get; set; }
 
         public HospitalContext()
         {
-
+         
         }
 
-        protected override void OnModelCreating(ModelBuilder modelbuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {/*
+            modelBuilder.Entity<SurveyQuestion>()
+                .HasOne(p => p.Survey)
+                .WithMany(b => b.Questions)
+                .HasForeignKey(p => p.SurveyForeignKey);*/
 
         }
 
