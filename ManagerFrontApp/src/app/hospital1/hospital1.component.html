@@ -1,6 +1,5 @@
 <div class="title">
-  <h1></h1>
-  <h2> ROOMS MAP</h2>
+  <h1></h1><h2> ROOMS MAP</h2>
 </div>
 <div class="page-nav">
   <div class="floor-selection">
@@ -171,40 +170,39 @@
   <h3>MOVING</h3>
   <div class="labels-box">
     <div class="label-container">
-      <label for="">Starting room::</label><br />
+      <label for="">Start room:</label>
       <select class="browser-default custom-select">
-        <option selected>Open this select menu</option>
+        <option selected>Pick a room</option>
         <option *ngFor="let room of rooms"  [value]="room.roomId">{{room.name}}</option>
       </select>
     </div>
     <div class="label-container">
-      <label for="">Starting  room floor::</label><br />
-      <input
-        type="text"
-        class="form-field"
-        [(ngModel)]="selectedRoom.purpose"
-        name="input"
-        [attr.disabled]="formDisabled ? '' : null"
-      />
+      <label for="">Start room floor:</label>
+      <input type="text" class="fill-form-field" [(ngModel)]="selectedRoom.purpose" name="input" [attr.disabled]="formDisabled ? '' : null"/>
     </div>
     <div class="label-container">
-      <label for="">Amount:</label><br />
-      <input
-        type="text"
-        class="form-field"
-        [(ngModel)]="selectedRoom.purpose"
-        name="input"
-        [attr.disabled]="formDisabled ? '' : null"
-      />
+      <label for="">Amount:</label>
+      <input type="text" class="fill-form-field" [(ngModel)]="selectedRoom.purpose" name="input" [attr.disabled]="formDisabled ? '' : null"/> 
     </div>
     <div class="label-container">
-      <label for="">Destination room:</label><br />
+      <label for="">Destination room:</label>
       <select class="browser-default custom-select">
-        <option selected>Open this select menu</option>
+        <option selected>Pick a room</option>
         <option *ngFor="let room of rooms"  [value]="room.roomId">{{room.name}}</option>
       </select>
     </div>
-    
+    <div class="label-container">
+      <label for="">Destination room floor:</label>
+      <input type="text" class="fill-form-field" [(ngModel)]="selectedRoom.purpose" name="input" [attr.disabled]="formDisabled ? '' : null"/>
+    </div>
+  </div>
+  <div>
+    <br /><button class="round-button"></button>
+    <button class="round-button"></button> <br />
+  </div>
+  <div class="center-buttons">
+    <br /><br /><br /><button class="btn">Schedule</button>
+    <button class="btn">Close</button>
   </div>
 </div>
 
@@ -214,13 +212,14 @@
       <i class="fas fa-search"></i>
     </a>
   </div>
+
   <div class="search-radio-buttons">
     <form>
       <label class="radio-inline">
-        <input type="radio" name="optradio" value="rooms" (change)="setSearchCriteria()" checked>rooms
+        <input type="radio" name="optradio" value="rooms" (change)="setSearchCriteria()" checked>Rooms
       </label>
       <label class="radio-inline">
-        <input type="radio" name="optradio" value="equipment" (change)="setSearchCriteria()">equipment
+        <input type="radio" name="optradio" value="equipment" (change)="setSearchCriteria()">Equipment
       </label>
     </form>
   </div>
