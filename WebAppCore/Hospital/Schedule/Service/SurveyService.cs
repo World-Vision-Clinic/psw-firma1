@@ -8,9 +8,9 @@ namespace Hospital.Schedule.Service
 {
     public class SurveyService
     {
-        private SurveyRepository _repo;
+        private ISurveyRepository _repo;
 
-        public SurveyService(SurveyRepository repo)
+        public SurveyService(ISurveyRepository repo)
         {
             _repo = repo;
         }

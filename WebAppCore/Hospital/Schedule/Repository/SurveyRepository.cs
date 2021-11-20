@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Hospital.Schedule.Repository
 {
-    public class SurveyRepository
+    public class SurveyRepository : ISurveyRepository
     {
         private HospitalContext _context;
 
@@ -23,11 +23,17 @@ namespace Hospital.Schedule.Repository
             SaveSurvey();
         }
 
+        public void AddSurveyQuestion(SurveyQuestion newQuestion)
+        {
+            _context.Questions.Add(newQuestion);
+            SaveSurvey();
+        }
+
         public void SaveSurvey()
         {
             _context.SaveChanges();
         }
-
+      
         public Survey FindById(int id)
         {
             return _context.Surveys.Find(id);

@@ -15,7 +15,7 @@ namespace Hospital_API
     [ApiController]
     public class SurveyController : ControllerBase
     {
-        private SurveyService surveyService;
+        public SurveyService surveyService { get; set; }
 
         public SurveyController()
         {
@@ -36,7 +36,7 @@ namespace Hospital_API
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<QuestionDTO>> GetSurvey()
+        public ActionResult<IEnumerable<QuestionDTO>> GetQuestions()
         {
 
             List<QuestionDTO> dtoList = new List<QuestionDTO>();
@@ -44,7 +44,7 @@ namespace Hospital_API
             {
                 dtoList.Add(QuestionMapper.QuestionToQuestionDTO(question));
             }
-            return dtoList;
+            return Ok(dtoList);
         }
 
         // POST: api/Surveys
