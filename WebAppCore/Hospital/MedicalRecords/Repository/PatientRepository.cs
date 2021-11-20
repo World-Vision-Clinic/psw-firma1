@@ -1,5 +1,4 @@
 ﻿using Hospital.MedicalRecords.Model;
-using Hospital.Models;
 using Hospital.SharedModel;
 using Microsoft.EntityFrameworkCore;
 using System;
