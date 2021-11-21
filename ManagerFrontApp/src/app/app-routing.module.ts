@@ -19,8 +19,10 @@ const routes: Routes = [
   {path:"manager-front-app", component: ManagerIntegrationFrontAppComponent, children: [
   {path: "overview-objections-replies", outlet: "showObjRepl", component:OverviewObjectionsRepliesComponent},
   {path: "overview-pharmacies", outlet: "showObjRepl", component:PharmaciesComponent},
+
   {path: "create-objection", outlet: "showObjRepl", component:ObjectionFormPageComponent},
   {path: "news", outlet: "showObjRepl", component:NewsComponent}
+
   ]},
   {path:"manager-feedback", component: ManagerFeedbackViewComponent}
   ];

@@ -226,6 +226,6 @@ export let ROOMS: Room[] = [
         vertical: true,
         class:"staircase",
         doorExists: false
-    },
+    }
     
 ]

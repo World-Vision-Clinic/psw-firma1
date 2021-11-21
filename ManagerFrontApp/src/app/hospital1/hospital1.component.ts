@@ -13,6 +13,7 @@ import { emptyRoom, Room } from '../data/room';
 export class Hospital1Component implements OnInit {
   building = BUILDINGS;
 	rooms = ROOMS;
+  selectedRoom_ = null;
   selectedBuilding = this.building[0];
   selectedFloor = this.selectedBuilding.floors[0]
   constructor(private router: Router) { }
@@ -25,7 +26,10 @@ export class Hospital1Component implements OnInit {
   roomIsSelected = false;
 	formDisabled: boolean = true;
 	equipmentBox: boolean = false;
-
+  listBoxEquipment: boolean = false;
+  moveBoxEquipment: boolean = false;
+  searchEquipmentResultBox: boolean = false;
+  searchRooms : boolean = true;
 
   enableEdit(){
 	this.formDisabled = false;
@@ -86,6 +90,22 @@ export class Hospital1Component implements OnInit {
   closeEquip(){
     this.equipmentBox=false;
   }
+
+  moveEquipment(){
+    
+    this.listBoxEquipment=true;
+    this.moveBoxEquipment=true;
+  }
+
+  searchEquipment(){
+    this.searchEquipmentResultBox = true;
+  }
+
+  setSearchCriteria(){
+    
+    this.searchRooms = !this.searchRooms;
+   }
+
 
 
   ngOnInit(): void {
