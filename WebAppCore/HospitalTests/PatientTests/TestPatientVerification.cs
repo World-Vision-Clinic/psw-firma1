@@ -19,6 +19,8 @@ namespace HospitalTests.PatientTests
             PatientService _service = new PatientService(new PatientRepository());
             PatientRegisterDTO patient = new PatientRegisterDTO();
             patient.UserName = "branko";
+            patient.FirstName = "Branko";
+            patient.LastName = "Branković";
             patient.Password = "baki123"; //Za sad plaintext
             patient.EMail = "branko.brankovic@gmail.com";
             patient.Gender = "Male";
