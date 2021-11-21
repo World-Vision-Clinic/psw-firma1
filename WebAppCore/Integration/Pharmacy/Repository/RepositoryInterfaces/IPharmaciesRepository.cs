@@ -7,6 +7,8 @@ using System.Text;
 namespace Integration.Pharmacy.Repository.RepositoryInterfaces
 {
    public interface IPharmaciesRepository : IGenericRepository<PharmacyProfile>
-    {
-    }
+   {
+        public PharmacyProfile Get(string id);
+
+   }
 }

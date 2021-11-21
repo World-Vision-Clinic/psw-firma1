@@ -1,0 +1,15 @@
+<div *ngFor="let dataItem of NewsList; let i = index" class="list-group">
+    <li  class="list-group-item list-group-item-action flex-column align-items-start">
+        <h1 class="mb-1" style="text-align: center;">{{dataItem.Title}}
+        </h1>
+      <div class="d-flex w-100 justify-content-between">
+        
+        <h5 class="mb-1">Pharmacy: {{dataItem.PharmacyName}}</h5>
+        <h5 class="mb-1">Duration: {{dataItem.FromDate | date: 'dd.MM.yyyy'}} - {{dataItem.ToDate | date: 'dd.MM.yyyy'}}</h5>
+      </div>
+      <p class="mb-1" style="text-align: center;">{{dataItem.Content}}</p>
+      <span  style="float: right;">
+      <button (click)="changeNewsView(i)" type="button" class="btn btn-primary" style="text-align: right;">{{ dataItem.Posted == true ? 'Unpublish' : 'Publish' }}</button>
+    </span>
+    </li>
+  </div>

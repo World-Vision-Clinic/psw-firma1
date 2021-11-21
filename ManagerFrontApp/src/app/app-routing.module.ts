@@ -9,6 +9,7 @@ import { ManagerFeedbackViewComponent } from './manager-feedback-view/manager-fe
 import { OverviewObjectionsRepliesComponent } from './manager-integration-front-app/overview-objections-replies/overview-objections-replies.component';
 import { ObjectionFormPageComponent } from './manager-integration-front-app/objection-form-page/objection-form-page.component';
 import { PharmaciesComponent } from './manager-integration-front-app/pharmacies/pharmacies.component';
+import { NewsComponent } from './manager-integration-front-app/news/news.component';
 
 const routes: Routes = [
   {path: "", component: FrontPageComponent},
@@ -18,8 +19,10 @@ const routes: Routes = [
   {path:"manager-front-app", component: ManagerIntegrationFrontAppComponent, children: [
   {path: "overview-objections-replies", outlet: "showObjRepl", component:OverviewObjectionsRepliesComponent},
   {path: "overview-pharmacies", outlet: "showObjRepl", component:PharmaciesComponent},
-  {path: "create-objection", outlet: "showObjRepl", component:ObjectionFormPageComponent}
-  
+
+  {path: "create-objection", outlet: "showObjRepl", component:ObjectionFormPageComponent},
+  {path: "news", outlet: "showObjRepl", component:NewsComponent}
+
   ]},
   {path:"manager-feedback", component: ManagerFeedbackViewComponent}
   ];

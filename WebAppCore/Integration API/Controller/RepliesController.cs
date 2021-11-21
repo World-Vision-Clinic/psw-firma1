@@ -1,4 +1,5 @@
 ﻿using Integration.Pharmacy.Model;
+using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Service;
 using Integration_API.Dto;
 using Integration_API.Mapper;
@@ -15,7 +16,7 @@ namespace Integration_API.Controller
     [ApiController]
     public class RepliesController : ControllerBase
     {
-        private PharmaciesService pharmaciesService = new PharmaciesService();
+        private PharmaciesService pharmaciesService = new PharmaciesService(new PharmaciesRepository());
         private ObjectionsService objectionsService = new ObjectionsService();
         private RepliesService repliesService = new RepliesService();
 

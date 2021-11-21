@@ -1,5 +1,6 @@
 ﻿using Integration.Pharmacy.Model;
 using Integration.Pharmacy.Repository;
+using Integration.Pharmacy.Repository.RepositoryInterfaces;
 using Integration.SharedModel;
 using System;
 using System.Collections.Generic;
@@ -10,36 +11,48 @@ namespace Integration.Pharmacy.Service
 {
     public class PharmaciesService
     {
-        PharmaciesRepository pharamaciesRepository = new PharmaciesRepository();
+        private IPharmaciesRepository pharmaciesRepository;
+
+        public PharmaciesService(IPharmaciesRepository pharmaciesRepository)
+        {
+            this.pharmaciesRepository = pharmaciesRepository;
+        }
 
         public bool AddNewPharmacy(PharmacyProfile newPharmacy, out string generatedKey)
         {
             generatedKey = Generator.GenerateApiKey();
             newPharmacy.Key = generatedKey;
-            PharmacyProfile foundedPharmacy = pharamaciesRepository.Get(newPharmacy.Localhost);
-            if(foundedPharmacy != null)
+            PharmacyProfile foundedPharmacy = pharmaciesRepository.Get(newPharmacy.Localhost);
+            if (foundedPharmacy != null)
             {
                 return false;
             }
 
-            pharamaciesRepository.Save(newPharmacy);
+            pharmaciesRepository.Save(newPharmacy);
             return true;
         }
 
         public PharmacyProfile Get(string id)
         {
-            return pharamaciesRepository.Get(id);
+            return pharmaciesRepository.Get(id);
         }
 
         public List<PharmacyProfile> GetAll()
         {
-            return pharamaciesRepository.GetAll();
+            return pharmaciesRepository.GetAll();
         }
 
         public List<PharmacyProfile> GetFiltered(string searchFilter)
         {
-            return pharamaciesRepository.GetFiltered(searchFilter);
+            List<PharmacyProfile> pharmacies = new List<PharmacyProfile>();
+            foreach (PharmacyProfile pp in GetAll())
+            {
+                if (pp.Address.ToLower().Contains(searchFilter.ToLower()) || pp.City.ToLower().Contains(searchFilter.ToLower()))
+                {
+                    pharmacies.Add(pp);
+                }
+            }
+            return pharmacies;
         }
-
     }
 }

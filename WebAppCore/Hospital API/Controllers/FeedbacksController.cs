@@ -5,12 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Http;
 using System.Net;
-using Hospital_API.Models;
-using Hospital.Models;
-using Hospital.Service;
-using Hospital.Repository;
 using Hspital_API.Dto;
 using Hspital_API.Mapper;
+using Hospital.MedicalRecords.Service;
+using Hospital.MedicalRecords.Repository;
+using Hospital.MedicalRecords.Model;
 
 namespace Hospital_API
 {
@@ -24,8 +23,8 @@ namespace Hospital_API
 
         public FeedbacksController()
         {
-            _feedbackService = new FeedbackService(new FeedbackRepository(new Hospital.Models.HospitalContext()));
-            _patientService = new PatientService(new PatientRepository(new Hospital.Models.HospitalContext()));
+            _feedbackService = new FeedbackService(new FeedbackRepository(new Hospital.SharedModel.HospitalContext()));
+            _patientService = new PatientService(new PatientRepository(new Hospital.SharedModel.HospitalContext()));
         }
 
         // GET: api/Feedbacks
