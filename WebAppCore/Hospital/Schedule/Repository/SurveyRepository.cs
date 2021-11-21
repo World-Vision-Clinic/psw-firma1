@@ -49,7 +49,7 @@ namespace Hospital.Schedule.Repository
             return _context.Surveys.ToList();
         }
 
-        public List<SurveyQuestion> GetAllQuestions()
+        public List<SurveyQuestion> GetAllQuestions()  //TODO: napraviti upit koji ce dobavljati pitanja koja su vezana za neku konkretnu sekciju, umesto ovoga
         {
             return _context.Questions.ToList();
         }

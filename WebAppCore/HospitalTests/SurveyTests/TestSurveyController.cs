@@ -17,20 +17,20 @@ namespace HospitalTests.SurveyTests
 
         public ISurveyRepository inMemoryRepo;
 
-        public TestSurveyController()
-        {
+        public TestSurveyController() { }
 
-        }
 
-        private ISurveyRepository GetInMemoryPersonRepository()
+        private ISurveyRepository GetInMemorySurveyRepository()
         {
             DbContextOptions<TestContext> options;
             var builder = new DbContextOptionsBuilder<TestContext>();
             builder.UseInMemoryDatabase("TestDb");
             options = builder.Options;
+
             TestContext hospitalContext = new TestContext(options);
             hospitalContext.Database.EnsureDeleted();
             hospitalContext.Database.EnsureCreated();
+
             return new SurveyRepository(hospitalContext);
         }
 
@@ -39,7 +39,8 @@ namespace HospitalTests.SurveyTests
         {
 
             //Arrange
-            inMemoryRepo = GetInMemoryPersonRepository();
+            inMemoryRepo = GetInMemorySurveyRepository();
+
             SurveyQuestion question1 = new SurveyQuestion()
             {
                 Id = 1,

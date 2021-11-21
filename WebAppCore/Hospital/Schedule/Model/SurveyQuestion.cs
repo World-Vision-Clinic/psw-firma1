@@ -8,8 +8,8 @@ namespace Hospital.Schedule.Model
     public class SurveyQuestion
     {
         private int id;
-        private string question;
-        private SurveySectionType section;
+        private string question; //tekst pitanja
+        private SurveySectionType section; //sekcija kojoj ce pitanje pripadati
         
 
         public int Id

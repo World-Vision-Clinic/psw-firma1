@@ -9,6 +9,7 @@ namespace Hospital.Schedule.Model
         private int id;
         private DateTime creationDate;
         private int idAppointment;
+        //public List<SurveyQuestion> Questions {get; set;}  //od svih pitanja koja postoje u bazi ovo ce biti lista pitanja koja ce se naci na nekoj odredjenoj anketi 
        
         public int Id
         {

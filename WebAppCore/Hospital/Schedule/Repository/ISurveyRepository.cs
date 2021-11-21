@@ -9,7 +9,6 @@ namespace Hospital.Schedule.Repository
     {
         public void AddSurvey(Survey newSurvey);
         public void AddSurveyQuestion(SurveyQuestion newQuestion);
-
         public void SaveSurvey();
         public Survey FindById(int id);
         public bool SurveyExists(int id);
