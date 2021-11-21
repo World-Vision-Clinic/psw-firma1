@@ -1,20 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Hospital.Schedule.Model
 {
     public class Survey 
     {
-        private int id;
-        private DateTime creationDate;
-        private int idAppointment;
-        //public List<SurveyQuestion> Questions {get; set;}  //od svih pitanja koja postoje u bazi ovo ce biti lista pitanja koja ce se naci na nekoj odredjenoj anketi 
        
-        public int Id
+        private int idSurvey;
+        private DateTime creationDate;
+        public int IdAppointment { get; set; }
+
+        [ForeignKey("IdAppointment")]
+        public virtual Appointment Appointment { get; set; }
+
+
+        public Survey()
         {
-            get { return id; }
-            set { id = value; }
+            IdAppointment = 1;
+        }
+
+        public Survey(int id, int idAppointment)
+        {
+            this.IdSurvey = id;
+            this.IdAppointment = idAppointment;
+
+        }
+        [Key]
+        public int IdSurvey
+        {
+            get { return idSurvey; }
+            set { idSurvey = value; }
         }
 
         public DateTime CreationDate
@@ -23,12 +41,7 @@ namespace Hospital.Schedule.Model
             set { creationDate = value; }
         }
 
-        public int IdAppointment
-        {
-            get { return idAppointment; }
-            set { idAppointment = value;
-            }
-        }
+      
 
        
 

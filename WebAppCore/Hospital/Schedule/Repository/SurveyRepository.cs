@@ -41,7 +41,7 @@ namespace Hospital.Schedule.Repository
 
         public bool SurveyExists(int id)
         {
-            return _context.Surveys.Any(s => s.Id == id);
+            return _context.Surveys.Any(s => s.IdSurvey == id);
         }
 
         public List<Survey> GetAll()
@@ -49,7 +49,7 @@ namespace Hospital.Schedule.Repository
             return _context.Surveys.ToList();
         }
 
-        public List<SurveyQuestion> GetAllQuestions()  //TODO: napraviti upit koji ce dobavljati pitanja koja su vezana za neku konkretnu sekciju, umesto ovoga
+        public List<SurveyQuestion> GetAllQuestions()  //TODO: napraviti upit koji ce dobavljati pitanja koja su vezana za neku konkretnu anketu, umesto da dobavlja apsolutno sva pitanja  iz baze
         {
             return _context.Questions.ToList();
         }

@@ -48,14 +48,13 @@ namespace Hospital_API
         }
 
         // POST: api/Surveys
-        [HttpPost]
+        [HttpPost]  
         public ActionResult<Survey> PostSurvey([FromBody] Survey survey)
         {
             Survey newSurvey = survey;
-
             surveyService.AddSurvey(newSurvey);
 
-            return CreatedAtAction("GetSurvey", new { id = newSurvey.Id }, newSurvey);
+            return CreatedAtAction("GetSurvey", new { id = newSurvey.IdSurvey }, newSurvey);
         }
 
 

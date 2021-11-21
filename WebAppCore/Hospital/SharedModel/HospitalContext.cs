@@ -15,6 +15,8 @@ namespace Hospital.SharedModel
         public DbSet<Survey> Surveys { get; set; }
         public DbSet<SurveyQuestion> Questions { get; set; }
         public DbSet<AnsweredSurveyQuestion> AnsweredQuestions { get; set; }
+        public DbSet<Appointment> Appointmnets { get; set; }
+
 
         public HospitalContext()
         {
@@ -26,8 +28,30 @@ namespace Hospital.SharedModel
 
         public HospitalContext(DbContextOptions<TestContext> options) : base(options) { }
 
-        protected override void OnModelCreating(ModelBuilder modelbuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Survey>(entity =>
+            {
+                entity.ToTable("Surveys");
+                entity.HasKey(c => c.IdSurvey);
+
+                entity.HasOne(d => d.Appointment)
+               .WithMany(p => p.Surveys)
+               .HasForeignKey(d => d.IdAppointment);
+            });
+
+            modelBuilder.Entity<Appointment>(entity =>
+            {
+                entity.ToTable("Appointments");
+                entity.HasKey(c => c.IdAppointment);            
+
+            });
+
+           
+
+
+
+
 
         }
 

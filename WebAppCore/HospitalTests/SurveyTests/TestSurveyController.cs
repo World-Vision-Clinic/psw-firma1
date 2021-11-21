@@ -45,14 +45,16 @@ namespace HospitalTests.SurveyTests
             {
                 Id = 1,
                 Question = "Pitanje1",
-                Section = SurveySectionType.Doctor
+                Section = SurveySectionType.Doctor,
+                IdSurvey = 3
             };
 
             SurveyQuestion question2 = new SurveyQuestion()
             {
                 Id = 2,
                 Question = "Pitanje2",
-                Section = SurveySectionType.Hospital
+                Section = SurveySectionType.Hospital,
+                IdSurvey = 3
             };
 
 
