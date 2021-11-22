@@ -14,6 +14,13 @@ namespace Pharmacy.Model
 
         public Substance() { }
 
+        public Substance(long id, string name, double quantity, long medicineId)
+        {
+            SubstanceId = id;
+            Name = name;
+            Quantity = quantity;
+            medicineId = medicineId;
+        }
 
     }
 }
