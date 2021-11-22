@@ -1,3 +1,4 @@
+using Integration_API.Controller;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +37,12 @@ namespace Integration_API
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
                 .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver =
                 new DefaultContractResolver());
+
+            /*services.AddTransient(ctx =>
+            new MedicinesController(new PharmacyHTTPConnection()));*/
+
+            // Simple example with dependency injection for a data provider.
+            services.AddSingleton<IPharmacyConnection, PharmacyHTTPConnection>();
 
             services.AddControllers();
         }
