@@ -16,10 +16,6 @@ namespace Hospital.Schedule.Service
             _repo = repo;
         }
 
-        public AppointmentService(AppointmentRepository appointmentRepository)
-        {
-        }
-
         public void AddAppointment(Appointment newAppointment)
         {
             _repo.AddAppointment(newAppointment);

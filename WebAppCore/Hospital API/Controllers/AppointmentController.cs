@@ -9,9 +9,9 @@ using Hospital.Schedule.Model;
 
 namespace Hospital_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Appointments")]
     [ApiController]
-    public class AppointmentController : Controller
+    public class AppointmentController : ControllerBase
     {
         public AppointmentService _appointmentService { get; set; }
 

@@ -114,15 +114,15 @@
         <div class="timeline__event">
           <div class="timeline__event__icon ">
             <div class="timeline__event__date">
-              {{a.date}}
+              {{a.date | date:'dd/MM/yyyy'}}
             </div>
           </div>
           <div class="timeline__event__content ">
             <div class="timeline__event__title">
-              {{a.name}}
+              {{getAppointmentType(a.type)}}
             </div>
             <div class="timeline__event__description">
-              <p>{{a.doctor}}</p>
+              <p>{{a.doctorForeignKey}}</p>
             </div>
           </div>
         </div>
