@@ -1,0 +1,35 @@
+﻿using Integration.Pharmacy.Model;
+using Integration.Pharmacy.Repository;
+using Integration.Pharmacy.Service;
+using Integration_API.Dto;
+using RestSharp;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Integration_API.Controller
+{
+    public class PharmacyHTTPConnection: IPharmacyConnection
+    {
+        CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
+        public bool SendRequestToCheckAvailability(string pharmacyLocalhost, MedicineDto medicineDto)
+        {
+            var client = new RestSharp.RestClient(pharmacyLocalhost);
+            var request = new RestRequest("/medicines/check?name=" + medicineDto.Name + "&dosage=" + medicineDto.DosageInMg + "&quantity=" + medicineDto.Quantity);
+
+            Credential credential = credentialsService.GetByPharmacyLocalhost(pharmacyLocalhost);
+
+            request.AddHeader("ApiKey", credential.ApiKey);
+
+            IRestResponse response = client.Get(request);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return true;
+            }
+
+            return false;
+        }
+    }
+}
