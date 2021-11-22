@@ -17,7 +17,7 @@ namespace PharmacyApplicationTests.IntegrationTests
 
             MedicineService service = new MedicineService(new MedicineRepository());
 
-            Medicine strepsils = new Medicine(98, "Strepsils", "Galenika", "sideEffects1", "usage1", new List<SubstituteMedicine>(), 200.00, "mainPrecautions1", "potentialDangers1", null, 100);
+            Medicine strepsils = new Medicine(97, "Strepsils", "Galenika", "sideEffects1", "usage1", new List<SubstituteMedicine>(), 200.00, "mainPrecautions1", "potentialDangers1", null, 100);
 
 
             Assert.True(service.AddMedicine(strepsils));
@@ -28,7 +28,7 @@ namespace PharmacyApplicationTests.IntegrationTests
         {
             MedicineService service = new MedicineService(new MedicineRepository());
 
-            Medicine brufen = new Medicine(1, "Brufen", "Galenika", "sideEffects1", "usage1", new List<SubstituteMedicine>(), 200.00, "mainPrecautions1", "potentialDangers1", null, 100);
+            Medicine brufen = new Medicine(151521554, "Brufen", "Galenika", "sideEffects1", "usage1", new List<SubstituteMedicine>(), 200.00, "mainPrecautions1", "potentialDangers1", null, 100);
 
             Assert.False(service.AddMedicine(brufen));
 

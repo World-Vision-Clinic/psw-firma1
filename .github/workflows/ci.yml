@@ -16,5 +16,5 @@ jobs:
       uses: actions/checkout@v2
     - name: Build
       run: dotnet build ${{ env.PHARMACY-PROJECT-SOLUTION }} --configuration Release
-    - name: Test
-      run: dotnet test ${{ env.PHARMACY-PROJECT-SOLUTION }} --configuration Release --no-build
+    # - name: Test
+    #   run: dotnet test ${{ env.PHARMACY-PROJECT-SOLUTION }} --configuration Release --no-build
