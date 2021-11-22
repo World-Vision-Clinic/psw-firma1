@@ -25,6 +25,7 @@ import { PatientCreateFeedbackComponent } from './patient-create-feedback/patien
 import { PatientCreateFeedbackService } from './patient-create-feedback.service';
 import { HomePageComponent } from './homepage/homepage.component';
 import { SurveyComponent } from './survey/survey/survey.component';
+import { MedicalRecordViewComponent } from './medical-record-view/medical-record-view.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { SurveyComponent } from './survey/survey/survey.component';
     PatientFeedbackViewComponent,
     LoginComponent,
     HomePageComponent,
-    SurveyComponent
+    SurveyComponent,
+    MedicalRecordViewComponent
   ],
   imports: [
     BrowserModule,

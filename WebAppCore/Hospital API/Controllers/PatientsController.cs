@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Hospital.MedicalRecords.Service;
 using Hospital.MedicalRecords.Repository;
+using Hospital.MedicalRecords.Model;
 
 namespace Hospital_API.Controllers
 {
@@ -20,6 +21,20 @@ namespace Hospital_API.Controllers
         public PatientsController()
         {
             _patientService = new PatientService(new PatientRepository(new Hospital.SharedModel.HospitalContext()));
+        }
+
+        // GET: api/Feedbacks/5
+        [HttpGet("{id}")]
+        public ActionResult<Patient> GetPatient(int id)
+        {
+            var patient = _patientService.FindById(id);
+
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            return patient;
         }
 
         // GET: api/Patients/activate?token=

@@ -41,6 +41,9 @@ namespace Hospital.Migrations
                     b.Property<bool>("isPublic")
                         .HasColumnType("boolean");
 
+                    b.Property<bool>("isPublishable")
+                        .HasColumnType("boolean");
+
                     b.HasKey("Id");
 
                     b.ToTable("Feedbacks");
@@ -56,10 +59,31 @@ namespace Hospital.Migrations
                     b.Property<bool>("Activated")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("BloodType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ContactPhone")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("DoctorName")
+                        .HasColumnType("text");
+
                     b.Property<string>("EMail")
                         .HasColumnType("text");
 
+                    b.Property<int>("Gender")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Height")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Password")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Residence")
                         .HasColumnType("text");
 
                     b.Property<string>("Token")
@@ -67,6 +91,9 @@ namespace Hospital.Migrations
 
                     b.Property<string>("UserName")
                         .HasColumnType("text");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
