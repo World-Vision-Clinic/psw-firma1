@@ -8,7 +8,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      PHARMACY-PROJECT-SOLUTION: PharmacyApplication/PharmacyApplicationTests/PharmacyApplicationTests.csproj
+      PHARMACY-PROJECT-SOLUTION: PharmacyApplication
       HOSPITAL-PROJECT-SOLUTION: WebAppCore/HospitalTests/HospitalTests.csproj
       INTEGRATION-PROJECT-SOLUTION: WebAppCore/IntegrationTestsProject/IntegrationTestsProject.csproj
 
