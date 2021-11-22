@@ -47,15 +47,30 @@ namespace Hospital_API
             return Ok(dtoList);
         }
 
-        // POST: api/Surveys
         [HttpPost]
-        public ActionResult<Survey> PostSurvey([FromBody] Survey survey)
+        public ActionResult<Survey> PostSuveyQuestions([FromBody] List<QuestionDTO> questions)
         {
-            Survey newSurvey = survey;
 
-            surveyService.AddSurvey(newSurvey);
+            Survey newSurvey = new Survey();
+            newSurvey.CreationDate = System.DateTime.Now;
+            newSurvey.IdAppointment = 1;
 
-            return CreatedAtAction("GetSurvey", new { id = newSurvey.Id }, newSurvey);
+            foreach (QuestionDTO dtos in questions)
+            {
+                if(dtos.Answer <1 || dtos.Answer >5)
+                {
+                    return BadRequest();
+                }
+            }
+
+            int IdSurvey = surveyService.AddSurvey(newSurvey);
+
+            foreach(QuestionDTO dtos in questions)
+            {
+                surveyService.AddAnswer(QuestionMapper.QuestionDTOToAnswer(dtos, IdSurvey));
+            }
+
+            return Ok(newSurvey);
         }
 
 

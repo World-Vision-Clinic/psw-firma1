@@ -3,6 +3,7 @@ using Hospital.Schedule.Repository;
 using Hospital.Schedule.Service;
 using Hospital.SharedModel;
 using Hospital_API;
+using Hspital_API.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,20 +18,20 @@ namespace HospitalTests.SurveyTests
 
         public ISurveyRepository inMemoryRepo;
 
-        public TestSurveyController()
-        {
+        public TestSurveyController() { }
 
-        }
 
-        private ISurveyRepository GetInMemoryPersonRepository()
+        private ISurveyRepository GetInMemorySurveyRepository()
         {
             DbContextOptions<TestContext> options;
             var builder = new DbContextOptionsBuilder<TestContext>();
             builder.UseInMemoryDatabase("TestDb");
             options = builder.Options;
+
             TestContext hospitalContext = new TestContext(options);
             hospitalContext.Database.EnsureDeleted();
             hospitalContext.Database.EnsureCreated();
+
             return new SurveyRepository(hospitalContext);
         }
 
@@ -39,19 +40,22 @@ namespace HospitalTests.SurveyTests
         {
 
             //Arrange
-            inMemoryRepo = GetInMemoryPersonRepository();
+            inMemoryRepo = GetInMemorySurveyRepository();
+
             SurveyQuestion question1 = new SurveyQuestion()
             {
                 Id = 1,
                 Question = "Pitanje1",
-                Section = SurveySectionType.Doctor
+                Section = SurveySectionType.Doctor,
+                IdSurvey = 3
             };
 
             SurveyQuestion question2 = new SurveyQuestion()
             {
                 Id = 2,
                 Question = "Pitanje2",
-                Section = SurveySectionType.Hospital
+                Section = SurveySectionType.Hospital,
+                IdSurvey = 3
             };
 
 
@@ -68,6 +72,85 @@ namespace HospitalTests.SurveyTests
             //Assert
             Assert.Equal(200, result.StatusCode);
             Assert.NotNull(result.Value);
+
+        }
+
+        [Fact]
+        public void Test_post_correct_answers()
+        {
+
+            //Arrange
+            inMemoryRepo = GetInMemorySurveyRepository();
+            List<QuestionDTO> dtos = new List<QuestionDTO>();
+            
+
+            QuestionDTO answer1 = new QuestionDTO()
+            {
+                Question = "Pitanje1",
+                Section = SurveySectionType.Doctor,
+                Answer = 4
+            };
+
+            QuestionDTO answer2 = new QuestionDTO()
+            {
+                Question = "Pitanje2",
+                Section = SurveySectionType.Hospital,
+                Answer = 2
+            };
+
+
+            //Act
+            dtos.Add(answer1);
+            dtos.Add(answer2);
+
+            var controller = new SurveyController();
+
+            controller.surveyService = new SurveyService(inMemoryRepo);
+            var response = controller.PostSuveyQuestions(dtos);
+            var result = response.Result as OkObjectResult;
+
+            //Assert
+            Assert.Equal(200, result.StatusCode);
+            Assert.NotNull(result.Value);
+
+        }
+
+        [Fact]
+        public void Test_post_wrong_answers()
+        {
+
+            //Arrange
+            inMemoryRepo = GetInMemorySurveyRepository();
+            List<QuestionDTO> dtos = new List<QuestionDTO>();
+
+
+            QuestionDTO answer1 = new QuestionDTO()
+            {
+                Question = "Pitanje1",
+                Section = SurveySectionType.Doctor,
+                Answer = 4
+            };
+
+            QuestionDTO answer2 = new QuestionDTO()
+            {
+                Question = "Pitanje2",
+                Section = SurveySectionType.Hospital,
+                Answer = 7
+            };
+
+
+            //Act
+            dtos.Add(answer1);
+            dtos.Add(answer2);
+
+            var controller = new SurveyController();
+
+            controller.surveyService = new SurveyService(inMemoryRepo);
+            var response = controller.PostSuveyQuestions(dtos);
+            var result = response.Result as BadRequestResult;
+
+            //Assert
+            Assert.Equal(400, result.StatusCode);
 
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
@@ -7,10 +8,18 @@ namespace Hospital.Schedule.Model
 {
     public class SurveyQuestion
     {
+        [Key]
         private int id;
-        private string question;
-        private SurveySectionType section;
-        
+        private string question; //tekst pitanja
+        private SurveySectionType section; //sekcija kojoj ce pitanje pripadati
+        public int Answer { get; set; } //ocena koju mozemo dati, ovo mi zbog mapiranja na frontu treba
+        public int IdSurvey { get; set; }
+
+        [ForeignKey("IdSurvey")]
+        public virtual Survey Survey { get; set; }
+
+
+        public SurveyQuestion() { }
 
         public int Id
         {

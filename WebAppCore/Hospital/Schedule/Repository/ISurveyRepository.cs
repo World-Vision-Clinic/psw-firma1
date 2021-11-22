@@ -7,9 +7,9 @@ namespace Hospital.Schedule.Repository
 {
     public interface ISurveyRepository
     {
-        public void AddSurvey(Survey newSurvey);
+        public int AddSurvey(Survey newSurvey);
         public void AddSurveyQuestion(SurveyQuestion newQuestion);
-
+        public void AddAnswer(AnsweredSurveyQuestion answer);
         public void SaveSurvey();
         public Survey FindById(int id);
         public bool SurveyExists(int id);
