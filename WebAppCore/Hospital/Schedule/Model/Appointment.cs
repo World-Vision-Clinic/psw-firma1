@@ -7,22 +7,14 @@ namespace Hospital.Schedule.Model
 {
     public class Appointment
     {
-        private int id;
-        private DateTime date;
-        private TimeSpan time;
-        private int duration;
-        private Patient patient;
        // private Doctor doctor;
        // private Room room;
         private AppointmentType type;
-
-        public int Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
-
-
-
+        public int Id { get; set; }
+        public int PatientForeignKey { get; set; }
+        public int DoctorForeignKey { get; set; }
+        public AppointmentType Type { get; set; }
+        public DateTime Date { get; set; }
+        public TimeSpan Time { get; set; }
     }
 }
