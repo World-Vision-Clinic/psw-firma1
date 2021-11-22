@@ -24,6 +24,7 @@ namespace Hospital.MedicalRecords.Repository
 
         public void AddPatient(Patient newPatient)
         {
+            newPatient.Allergens = 0;
             _context.Patients.Add(newPatient);
             SaveSync();
         }

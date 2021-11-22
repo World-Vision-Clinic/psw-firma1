@@ -34,7 +34,8 @@ namespace Hospital.MedicalRecords.Model
         public string Address { get; set; }
         public string City { get; set; }
         public string Phone { get; set; }
-        public List<int> Allergens { get; set; }
+        //public List<int> Allergens { get; set; }
+        public int Allergens { get; set; }
         public int PreferedDoctor { get; set; }
         public int Weight { get; set; }
         public int Height { get; set; }

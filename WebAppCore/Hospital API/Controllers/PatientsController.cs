@@ -55,10 +55,9 @@ namespace Hospital_API.Controllers
             {
                 return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest };
             }
-            //Patient patient = patientDTO.ToPatient();
-            //_patientService.RegisterPatient(patient);
-
             Console.WriteLine("Patient register here!");
+            Patient patient = patientDTO.ToPatient();
+            _patientService.RegisterPatient(patient);
 
             return new HttpResponseMessage { StatusCode = HttpStatusCode.OK }; //TODO: Dodati smislene poruke ili redirect na "verifikacioni mejl poslat/resend"
         }

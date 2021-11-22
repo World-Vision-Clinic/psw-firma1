@@ -33,8 +33,15 @@ namespace Hospital_API.DTO
             Patient patient = new Patient();
             patient.UserName = UserName;
             patient.Password = Password;
-            patient.FirstName = FirstName;
-            patient.LastName = LastName;
+
+            patient.FirstName = Char.ToUpper(FirstName[0]) + "";
+            if(FirstName.Length > 1)
+                patient.FirstName += FirstName.Substring(1);
+            
+            patient.LastName = Char.ToUpper(LastName[0]) + "";
+            if (LastName.Length > 1)
+                patient.LastName += LastName.Substring(1);
+
             patient.Token = null;
             patient.Activated = false;
             patient.Gender = (Gender) Enum.Parse(typeof(Gender), Gender);
@@ -42,8 +49,10 @@ namespace Hospital_API.DTO
             patient.DateOfBirth = DateOfBirth;
             patient.Country = Country;
             patient.Address = Address;
+            patient.City = City;
+            patient.EMail = EMail;
             patient.Phone = Phone;
-            patient.Allergens = Allergens;
+            patient.Allergens = 0;//Allergens
             patient.PreferedDoctor = PreferedDoctor;
             patient.Weight = Weight;
             patient.Height = Height;
