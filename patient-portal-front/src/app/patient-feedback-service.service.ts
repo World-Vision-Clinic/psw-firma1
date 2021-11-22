@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Appointment } from 'src/appointment';
 import { Feedback } from 'src/feedback';
 import { Patient } from 'src/patient';
 
@@ -19,5 +20,9 @@ export class PatientFeedbackServiceService {
 
   getPatient(id: number) : Observable<Patient>{
     return this.http.get<Patient>("/api/Patients/1")
+  }
+
+  getPatientAppointments(id: number) : Observable<Appointment[]>{
+    return this.http.get<Appointment[]>("/api/Appointments/patient/1")
   }
 }

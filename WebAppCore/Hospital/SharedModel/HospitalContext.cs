@@ -18,6 +18,8 @@ namespace Hospital.SharedModel
         public DbSet<Appointment> Appointmnets { get; set; }
 
 
+        public DbSet<Appointment> Appointments { get; set; }
+
         public HospitalContext()
         {
          

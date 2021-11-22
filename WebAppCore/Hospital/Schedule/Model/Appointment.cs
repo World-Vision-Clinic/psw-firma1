@@ -8,30 +8,16 @@ namespace Hospital.Schedule.Model
 {
     public class Appointment
     {
-        private int id;
-        private DateTime date;
-        private TimeSpan time;
-        private int duration;
-
-        public int IdPatient { get; set; }
-
-        public virtual Patient Patient { get; set; }
        // private Doctor doctor;
        // private Room room;
         private AppointmentType type;
+        public int Id { get; set; }
+        public int PatientForeignKey { get; set; }
+        public int DoctorForeignKey { get; set; }
+        public AppointmentType Type { get; set; }
+        public DateTime Date { get; set; }
+        public TimeSpan Time { get; set; }
 
         public virtual ICollection<Survey> Surveys { get; set; }
-
-        public Appointment() { }
-
-        [Key]
-        public int IdAppointment
-        {
-            get { return id; }
-            set { id = value; }
-        }
-
-
-
     }
 }

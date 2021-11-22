@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Appointment } from 'src/appointment';
 import { Patient } from 'src/patient';
 import { PatientFeedbackServiceService } from '../patient-feedback-service.service';
 
@@ -35,12 +36,7 @@ export class MedicalRecordViewComponent implements OnInit {
   public errorMsg = "";
   public patient: Patient = {} as Patient;
 
-  public appointments: { date: string, name: string, doctor: string }[] = [
-    { "date": '14-05-2021', "name": 'Test1', "doctor": 'Doktor Doktorić' },
-    { "date": '11-05-2021', "name": 'Test2', "doctor": 'Marko Marković' },
-    { "date": '09-05-2021', "name": 'Test3', "doctor": 'Petar Petrović' },
-    { "date": '21-03-2021', "name": 'Test4', "doctor": 'Luka Luković' },
-  ];
+  public appointments = [] as any;
   public selectedDay: string = 'Monday';
 
   constructor(private _patientService : PatientFeedbackServiceService) { }
@@ -48,6 +44,9 @@ export class MedicalRecordViewComponent implements OnInit {
   ngOnInit(): void {
     this._patientService.getPatient(1).subscribe(data => (this.patient = data),
       error => this.errorMsg = "Couldn't load user feedback");
+    
+    this._patientService.getPatientAppointments(1).subscribe(data => this.appointments = data,
+      error => this.errorMsg = "Couldn't load user appointments");
   }
 
   getFormattedDay(day: string): string {
@@ -64,6 +63,18 @@ export class MedicalRecordViewComponent implements OnInit {
       return "Female";
     }
     return "Male";
+  }
+
+  getAppointmentType(appointmentType: number): string {
+    if(appointmentType == 2)
+    {
+      return "Operation";
+    }
+    if(appointmentType == 3)
+    {
+      return "Intervention";
+    }
+    return "Appointment";
   }
 
 }

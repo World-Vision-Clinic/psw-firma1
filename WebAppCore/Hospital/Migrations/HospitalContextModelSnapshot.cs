@@ -129,29 +129,29 @@ namespace Hospital.Migrations
 
             modelBuilder.Entity("Hospital.Schedule.Model.Appointment", b =>
                 {
-                    b.Property<int>("IdAppointment")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("IdPatient")
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("DoctorForeignKey")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("PatientId")
+                    b.Property<int>("PatientForeignKey")
                         .HasColumnType("integer");
 
-                    b.HasKey("IdAppointment");
+                    b.Property<TimeSpan>("Time")
+                        .HasColumnType("interval");
 
-                    b.HasIndex("PatientId");
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Appointments");
-
-                    b.HasData(
-                        new
-                        {
-                            IdAppointment = 1,
-                            IdPatient = 0
-                        });
                 });
 
             modelBuilder.Entity("Hospital.Schedule.Model.Survey", b =>
