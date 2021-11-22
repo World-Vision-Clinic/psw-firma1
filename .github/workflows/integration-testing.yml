@@ -10,7 +10,7 @@ jobs:
       PROJECT_DIRECTORY: Pharmacy
 
       SOLUTION_DIRECTORY_INTEGRATION: WebAppCore
-      PROJECT_DIRECTORY_INTEGRATION: Integration_API
+      PROJECT_DIRECTORY_INTEGRATION: Integration
 
     services:
       postgres:
