@@ -20,7 +20,7 @@ namespace Hospital.GraphicalEditor.Repository
         public void Delete(int id)
         {
             Building building = dbContext.Buildings.FirstOrDefault(building => building.id == id);
-            dbContext.Remove(building);
+            dbContext.Buildings.Remove(building);
             dbContext.SaveChanges();
         }
 
@@ -39,13 +39,13 @@ namespace Hospital.GraphicalEditor.Repository
 
         public void Save(Building newBuilding)
         {
-            dbContext.Add(newBuilding);
+            dbContext.Buildings.Add(newBuilding);
             dbContext.SaveChanges();
         }
 
         public void Update(Building updatedBuilding)
         {
-            dbContext.Update(updatedBuilding);
+            dbContext.Buildings.Update(updatedBuilding);
             dbContext.SaveChanges();
         }
 

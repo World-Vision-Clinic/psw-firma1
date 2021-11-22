@@ -45,5 +45,10 @@ namespace Hospital.GraphicalEditor.Service
         {
             return repository.Exists(id);
         }
+
+        public Building GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -8,28 +8,35 @@ namespace Hospital_API.DTO
 {
     public class BuildingDTO
     {
-        public int id;
-
-        public string Name { get; set; }
-        private string info;
+        public int id { get; set; }
+        public string name { get; set; }
+        public string info { get; set; }
+        public MapPosition mapPosition { get; set; }
+        public List<FloorDTO> floors { get; set; }
 
         public BuildingDTO(Building building)
         {
             id = building.id;
-            Name = building.Name;
-            Info = building.Info;
-            MapPosition = new MapPosition();
-            Area = building.Area;
+            name = building.Name;
+            info = building.Info;
+            mapPosition = new MapPosition();
+            floors = new List<FloorDTO>();
 
         }
 
-        public string Info
+        public BuildingDTO()
         {
-            get { return info; }
-            set { info = value; }
         }
 
-        public Area Area { get; set; }
-        public MapPosition MapPosition { get; set; }
+        internal static Building toBuilding(BuildingDTO buildingDto)
+        {
+            Building building = new Building();
+            building.id = buildingDto.id;
+            building.Name = building.Name;
+            building.Info = buildingDto.info;
+            building.MapPositionId = buildingDto.mapPosition.id;
+            building.Area = null;
+            return building;
+        }
     }
 }

@@ -16,7 +16,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hospital_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/buildings")]
     [ApiController]
     public class BuildingsController : ControllerBase
     {
@@ -35,22 +35,38 @@ namespace Hospital_API.Controllers
             List<BuildingDTO> buildings = new List<BuildingDTO>();
             foreach(Building building in buildingService.GetAll())
             {
-                buildings.Add(BuildingMapper.dataToBuildingMapDTO(building, mapPositionService));
+                buildings.Add(BuildingMapper.dataToBuildingSimpleDTO(building, mapPositionService));
             }
+            Console.WriteLine(buildings.ToString());
             return buildings;
         }
+
+        // GET: api/Feedbacks/5
+        [HttpGet("{id}")]
+        public ActionResult<BuildingDTO> GetBuilding(int id)
+        {
+            Building building = buildingService.GetById(id);
+
+            if (building == null)
+            {
+                return NotFound();
+            }
+            BuildingDTO bdto = new BuildingDTO(); 
+            return bdto;
+        }
+
         // PUT: api/Buildings/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public IActionResult PutBuilding(int id, Building building)
+        public IActionResult PutBuilding(int id, BuildingDTO buildingDto)
+           
         {
+            Building building = BuildingDTO.toBuilding(buildingDto);
             if (id != building.id)
             {
                 return BadRequest();
             }
-
-            
 
             try
             {
