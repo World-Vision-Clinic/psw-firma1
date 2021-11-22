@@ -1,0 +1,40 @@
+name: Unit-testing
+on:
+  push:
+  pull_request:
+
+jobs:
+  Run-Unit-Tests:
+
+    runs-on: ubuntu-latest
+    env:
+      PHARMACY-PROJECT-SOLUTION: PharmacyApplication/PharmacyApplicationTests/PharmacyApplicationTests.csproj
+      HOSPITAL-PROJECT-SOLUTION: WebAppCore/HospitalTests/HospitalTests.csproj
+      INTEGRATION-PROJECT-SOLUTION: WebAppCore/IntegrationTestsProject/IntegrationTestsProject.csproj
+
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install dependencies pharmacy
+        run: dotnet restore ${PHARMACY-PROJECT-SOLUTION}
+      - name: Build pharmacy
+        run: dotnet build ${PHARMACY-PROJECT-SOLUTION} --configuration Release --no-restore
+      - name: Test pharmacy
+        run: dotnet test ${PHARMACY-PROJECT-SOLUTION} --no-restore --verbosity quiet 
+
+      - name: Install dependencies hospital
+        run: dotnet restore ${HOSPITAL-PROJECT-SOLUTION}
+      - name: Build hospital
+        run: dotnet build ${HOSPITAL-PROJECT-SOLUTION} --configuration Release --no-restore
+      - name: Test hospital
+        run: dotnet test ${HOSPITAL-PROJECT-SOLUTION} --no-restore --verbosity quiet
+
+
+      - name: Install dependencies integration
+        run: dotnet restore ${INTEGRATION-PROJECT-SOLUTION}
+      - name: Build integration
+        run: dotnet build ${INTEGRATION-PROJECT-SOLUTION} --configuration Release --no-restore
+      - name: Test integration
+        run: dotnet test ${INTEGRATION-PROJECT-SOLUTION} --no-restore --verbosity quiet --filter FullyQualifiedName!~IntegrationTests
