@@ -41,7 +41,15 @@ namespace Pharmacy.Service
 
         public Medicine GetById(long medicineId) 
         {
-            return repository.GetById(medicineId);
+            List<Medicine> medicines = repository.GetAll();
+            foreach(Medicine medicine in medicines)
+            {
+                if(medicine.MedicineId == medicineId)
+                {
+                    return medicine;
+                }
+            }
+            return null;
         }
 
         public bool AddMedicine(Medicine medinice)
