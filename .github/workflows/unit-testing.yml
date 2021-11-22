@@ -17,24 +17,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install dependencies
+      - name: Install dependencies pharmacy
         run: dotnet restore ${PHARMACY_PROJECT_SOLUTION}
-      - name: Build
+      - name: Build pharmacy
         run: dotnet build ${PHARMACY_PROJECT_SOLUTION} --configuration Release --no-restore
-      - name: Test
+      - name: Test pharmacy
         run: dotnet test ${PHARMACY_PROJECT_SOLUTION} --no-restore --verbosity quiet --filter FullyQualifiedName!~IntegrationTests
 
-      - name: Install dependencies2
+      - name: Install dependencies hospital
         run: dotnet restore ${HOSPITAL_PROJECT_SOLUTION}
-      - name: Build2
+      - name: Build hospital
         run: dotnet build ${HOSPITAL_PROJECT_SOLUTION} --configuration Release --no-restore
-      - name: Test2
+      - name: Test hospital
         run: dotnet test ${HOSPITAL_PROJECT_SOLUTION} --no-restore --verbosity quiet --filter FullyQualifiedName!~IntegrationTests
 
 
-      - name: Install dependencies3
+      - name: Install dependencies integration
         run: dotnet restore ${INTEGRATION_PROJECT_SOLUTION}
-      - name: Build3
+      - name: Build integration
         run: dotnet build ${INTEGRATION_PROJECT_SOLUTION} --configuration Release --no-restore
-      # - name: Test3
+      # - name: Test integration
       #   run: dotnet test ${INTEGRATION_PROJECT_SOLUTION} --no-restore --verbosity quiet --filter FullyQualifiedName!~IntegrationTests
