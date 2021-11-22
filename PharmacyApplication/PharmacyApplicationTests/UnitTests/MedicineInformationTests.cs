@@ -14,7 +14,7 @@ namespace PharmacyApplicationTests
     public class MedicineInformationTests
     {
         [Fact]
-        public void Find_specific_medicine()
+        public void Find_specific_medicine_by_id()
         {
             IMedicineRepository stubRepository = CreateStubRepository();
 
@@ -48,7 +48,16 @@ namespace PharmacyApplicationTests
             stubRepository.Setup(m => m.GetAll()).Returns(medicines);
             return stubRepository.Object;
         }
-        
-       
+
+        [Fact]
+        public void Find_specific_substitute_medicine_by_id()
+        {
+            IMedicineRepository stubRepository = CreateStubRepository();
+
+            MedicineService service = new MedicineService(stubRepository);
+            Medicine medicine = service.GetById(1L);
+
+            Assert.Contains(medicine.SubstituteMedicines, item => item.SubstituteId == 2L);
+        }
     }
 }
