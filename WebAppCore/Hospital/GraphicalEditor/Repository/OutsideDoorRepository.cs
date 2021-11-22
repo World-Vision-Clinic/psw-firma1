@@ -20,7 +20,7 @@ namespace Hospital.GraphicalEditor.Repository
         public void Delete(int id)
         {
             OutsideDoor door = dbContext.OutsideDoors.FirstOrDefault(door => door.id == id);
-            dbContext.Remove(door);
+            dbContext.OutsideDoors.Remove(door);
             dbContext.SaveChanges();
         }
 
@@ -39,14 +39,19 @@ namespace Hospital.GraphicalEditor.Repository
 
         public void Save(OutsideDoor door)
         {
-            dbContext.Add(door);
+            dbContext.OutsideDoors.Add(door);
             dbContext.SaveChanges();
         }
 
         public void Update(OutsideDoor door)
         {
-            dbContext.Update(door);
+            dbContext.OutsideDoors.Update(door);
             dbContext.SaveChanges();
+        }
+
+        public bool Exists(int id)
+        {
+            return false;
         }
     }
 }

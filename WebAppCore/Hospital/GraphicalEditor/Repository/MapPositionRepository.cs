@@ -20,7 +20,7 @@ namespace Hospital.GraphicalEditor.Repository
         public void Delete(int id)
         {
             MapPosition position = dbContext.MapPositions.FirstOrDefault(pos => pos.id == id);
-            dbContext.Remove(position);
+            dbContext.MapPositions.Remove(position);
             dbContext.SaveChanges();
         }
 
@@ -39,14 +39,19 @@ namespace Hospital.GraphicalEditor.Repository
 
         public void Save(MapPosition position)
         {
-            dbContext.Add(position);
+            dbContext.MapPositions.Add(position);
             dbContext.SaveChanges();
         }
 
         public void Update(MapPosition position)
         {
-            dbContext.Update(position);
+            dbContext.MapPositions.Update(position);
             dbContext.SaveChanges();
+        }
+
+        public bool Exists(int id)
+        {
+            return false;
         }
     }
 }

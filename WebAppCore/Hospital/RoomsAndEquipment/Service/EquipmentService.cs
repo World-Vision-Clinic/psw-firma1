@@ -19,5 +19,10 @@ namespace Hospital.RoomsAndEquipment.Service
         {
             return repository.GetAll();
         }
+
+        public List<Equipment> getRoomEquipments(int roomId)
+        {
+            return repository.GetRoomEquipemnts(roomId);
+        }
     }
 }

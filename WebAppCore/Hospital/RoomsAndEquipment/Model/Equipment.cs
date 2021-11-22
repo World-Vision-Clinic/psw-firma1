@@ -14,27 +14,11 @@ namespace Hospital.RoomsAndEquipment.Model
     public class Equipment
     {
         public int id { get; set; }
-        private string name;
-        public string Name{
-            get{return name;}
-            set{name=value;}
-        }
-        private EquipmentType type;
-        public EquipmentType Type {
-            get{return type;}
-            set{type=value;}
-        }
-        private int amount;
-        public int Amount{   
-            get { return amount; } 
-            set { amount=value; }       
-        }
-        private int roomId;
-        public int RoomId
-        {
-            get { return roomId; }
-            set { roomId = value; }
-        }
+        public string Name { get; set; }
+        public EquipmentType Type { get; set; }
+
+        public int Amount { get; set; }
+        public int RoomId { get; set; }
 
         public Equipment()
         {

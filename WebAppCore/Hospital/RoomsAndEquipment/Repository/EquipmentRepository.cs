@@ -20,8 +20,18 @@ namespace Hospital.RoomsAndEquipment.Repository
         public void Delete(int id)
         {
             Equipment eq = dbContext.AllEquipment.FirstOrDefault(eq => eq.id == id);
-            dbContext.Remove(eq);
+            dbContext.AllEquipment.Remove(eq);
             dbContext.SaveChanges();
+        }
+
+        internal List<Equipment> GetRoomEquipemnts(int roomId)
+        {
+            List<Equipment> allEq = new List<Equipment>();
+            dbContext.AllEquipment.ToList().ForEach(eq =>
+            {
+                if (eq.RoomId == roomId) allEq.Add(eq);
+            });
+            return allEq;
         }
 
         public List<Equipment> GetAll()
@@ -39,14 +49,19 @@ namespace Hospital.RoomsAndEquipment.Repository
 
         public void Save(Equipment eq)
         {
-            dbContext.Add(eq);
+            dbContext.AllEquipment.Add(eq);
             dbContext.SaveChanges();
         }
 
         public void Update(Equipment eq)
         {
-            dbContext.Update(eq);
+            dbContext.AllEquipment.Update(eq);
             dbContext.SaveChanges();
+        }
+
+        public bool Exists(int id)
+        {
+            return false;
         }
     }
 }

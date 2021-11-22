@@ -57,8 +57,9 @@ namespace Hospital.SharedModel
                 new Equipment { id = 13, Name = "Chair", Type = EquipmentType.STATIC, Amount = 6, RoomId = 5 },
                 new Equipment { id = 14, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 25, RoomId = 5 }
                 );
+           
             modelbuilder.Entity<Room>().HasData(
-                new Room { id = 1, Name = "OPERATING ROOM 1", DoctorId = -1, Purpose = "", X = 0, Y = 150, Height = 190, Width = 150, DoorX = 148, DoorY = 285, Vertical = true, Css = "room room-cadetblue", DoorExist = true },
+                new Room { id = 1, FloorId=1, Name = "OPERATING ROOM 1", DoctorId = -1, Purpose = "", X = 0, Y = 150, Height = 190, Width = 150, DoorX = 148, DoorY = 285, Vertical = true, Css = "room room-cadetblue", DoorExist = true },
                 new Room { id = 2, Name = "OPERATING ROOM 2", DoctorId = -1, Purpose = "", X = 160, Y = 150, Height = 100, Width = 150, DoorX = 220, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
                 new Room { id = 3, Name = "OPERATING ROOM 3", DoctorId = -1, Purpose = "", X = 320, Y = 150, Height = 100, Width = 150, DoorX = 370, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
                 new Room { id = 4, Name = "ROOM 1", DoctorId = -1, Purpose = "", X = 480, Y = 150, Height = 100, Width = 170, DoorX = 520, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
