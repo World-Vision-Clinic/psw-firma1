@@ -52,22 +52,22 @@ namespace Pharmacy.Service
             return null;
         }
 
-        public bool AddMedicine(Medicine medinice)
+        public Boolean AddMedicine(Medicine medinice)
         {
             return repository.AddMedicine(medinice);
         }
 
-        public bool DeleteMedicine(long medicineId)
+        public Boolean DeleteMedicine(long medicineId)
         {
             return repository.DeleteMedicine(medicineId);
         }
 
-        public bool UpdateMedicine(Medicine medicine)
+        public Boolean UpdateMedicine(Medicine medicine)
         {
             return repository.UpdateMedicine(medicine);
         }
 
-        public bool ProcureMedicine(long medicineId, int quantity)
+        public Boolean ProcureMedicine(long medicineId, int quantity)
         {
             return repository.ProcureMedicine(medicineId, quantity);
         }
@@ -164,7 +164,7 @@ namespace Pharmacy.Service
             {
                 return true;
             }
-
+            
             return false;
         }
 

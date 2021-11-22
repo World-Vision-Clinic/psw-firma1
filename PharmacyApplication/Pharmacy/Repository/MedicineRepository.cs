@@ -32,7 +32,7 @@ namespace Pharmacy.Repository
         {
             dbContext.SaveChanges();
         }
-        public bool AddMedicine(Medicine newMedicine)
+        public Boolean AddMedicine(Medicine newMedicine)
         {
             Medicine medicine = dbContext.Medicines.ToList().FirstOrDefault(medicine => medicine.MedicineId == newMedicine.MedicineId);
             if(medicine != null)
@@ -45,7 +45,7 @@ namespace Pharmacy.Repository
             return true;
         }
 
-        public bool DeleteMedicine(long medicineId)
+        public Boolean DeleteMedicine(long medicineId)
         {
             Medicine medicine = dbContext.Medicines.ToList().FirstOrDefault(medicine => medicine.MedicineId == medicineId);
             if(medicine == null)
@@ -57,7 +57,7 @@ namespace Pharmacy.Repository
             return true;
         }
 
-        public bool UpdateMedicine(Medicine editedMedicine)
+        public Boolean UpdateMedicine(Medicine editedMedicine)
         {
             Medicine medicine = dbContext.Medicines.ToList().FirstOrDefault(medicine => medicine.MedicineId == editedMedicine.MedicineId);
             if (medicine == null)
@@ -83,7 +83,7 @@ namespace Pharmacy.Repository
         }
 
 
-        public bool ProcureMedicine(long medicineId, int quantity)
+        public Boolean ProcureMedicine(long medicineId, int quantity)
         {
             Medicine medicine = dbContext.Medicines.ToList().FirstOrDefault(medicine => medicine.MedicineId == medicineId);
             if(medicine == null)

@@ -9,10 +9,10 @@ namespace Pharmacy.Repository.RepositoryInterfaces
     {
         public List<Medicine> GetAll();
         Medicine GetById(long medicineId);
-        public bool AddMedicine(Medicine medinice);
-        public bool DeleteMedicine(long medicineId);
-        public bool UpdateMedicine(Medicine medicine);
+        public Boolean AddMedicine(Medicine medinice);
+        public Boolean DeleteMedicine(long medicineId);
+        public Boolean UpdateMedicine(Medicine medicine);
         public void SaveChanges();
-        public bool ProcureMedicine(long medicineId, int quantity);
+        public Boolean ProcureMedicine(long medicineId, int quantity);
     }
 }
