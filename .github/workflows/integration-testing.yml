@@ -8,6 +8,10 @@ jobs:
     env:
       SOLUTION_DIRECTORY: PharmacyApplication
       PROJECT_DIRECTORY: Pharmacy
+
+      SOLUTION_DIRECTORY2: WebAppCore
+      PROJECT_DIRECTORY2: Integration API
+
     services:
       postgres:
         image: postgres
