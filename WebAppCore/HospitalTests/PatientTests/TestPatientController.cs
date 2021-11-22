@@ -90,5 +90,49 @@ namespace HospitalTests.PatientTest
             Assert.Equal("http://localhost:4200/login", response.Url);
             //Assert.Equal(404, result.StatusCode);
         }
+
+        [Fact]
+        public void Test_patient_not_found()
+        {
+
+            //Arrange
+            inMemoryRepo = GetInMemoryPersonRepository();
+            var controller = new PatientsController();
+
+            controller._patientService = new PatientService(inMemoryRepo);
+            var response = controller.GetPatient(50);
+
+            //Assert
+            Assert.Null(response.Value);
+            //Assert.Equal(404, result.StatusCode);
+
+        }
+
+        [Fact]
+        public void Test_patient_found()
+        {
+            //Arrange
+            inMemoryRepo = GetInMemoryPersonRepository();
+            Patient patient = new Patient()
+            {
+                Id = 3,
+                UserName = "perislav",
+                Password = "123perislav",
+                EMail = "perislav.com",
+                Token = "dad554a",
+                Activated = false
+            };
+            //Act
+            inMemoryRepo.AddPatient(patient);
+
+            var controller = new PatientsController();
+
+            controller._patientService = new PatientService(inMemoryRepo);
+            var response = controller.GetPatient(3);
+
+            //Assert
+            Assert.Equal(3, response.Value.Id);
+            //Assert.Equal(404, result.StatusCode);
+        }
     }
 }
