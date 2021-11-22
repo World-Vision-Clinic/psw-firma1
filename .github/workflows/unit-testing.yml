@@ -36,5 +36,5 @@ jobs:
         run: dotnet restore ${SOLUTION_DIRECTORY3}
       - name: Build3
         run: dotnet build ${SOLUTION_DIRECTORY3} --configuration Release --no-restore
-      - name: Test3
-        run: dotnet test ${SOLUTION_DIRECTORY3} --no-restore --verbosity quiet --filter FullyQualifiedName!~IntegrationTests
+      # - name: Test3
+      #   run: dotnet test ${SOLUTION_DIRECTORY3} --no-restore --verbosity quiet --filter FullyQualifiedName!~IntegrationTests
