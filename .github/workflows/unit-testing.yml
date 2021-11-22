@@ -9,32 +9,32 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      SOLUTION_DIRECTORY: PharmacyApplication
-      SOLUTION_DIRECTORY2: WebAppCore/HospitalTests/HospitalTests.csproj
-      SOLUTION_DIRECTORY3: WebAppCore/IntegrationTests/IntegrationTests.csproj
+      PHARMACY-PROJECT-SOLUTION: PharmacyApplication
+      HOSPITAL-PROJECT-SOLUTION: WebAppCore/HospitalTests/HospitalTests.csproj
+      INTEGRATION-PROJECT-SOLUTION: WebAppCore/IntegrationTests/IntegrationTests.csproj
 
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install dependencies
-        run: dotnet restore ${SOLUTION_DIRECTORY}
+        run: dotnet restore ${PHARMACY-PROJECT-SOLUTION}
       - name: Build
-        run: dotnet build ${SOLUTION_DIRECTORY} --configuration Release --no-restore
+        run: dotnet build ${PHARMACY-PROJECT-SOLUTION} --configuration Release --no-restore
       - name: Test
-        run: dotnet test ${SOLUTION_DIRECTORY} --no-restore --verbosity quiet --filter FullyQualifiedName!~IntegrationTests
+        run: dotnet test ${PHARMACY-PROJECT-SOLUTION} --no-restore --verbosity quiet --filter FullyQualifiedName!~IntegrationTests
 
       - name: Install dependencies2
-        run: dotnet restore ${SOLUTION_DIRECTORY2}
+        run: dotnet restore ${HOSPITAL-PROJECT-SOLUTION}
       - name: Build2
-        run: dotnet build ${SOLUTION_DIRECTORY2} --configuration Release --no-restore
+        run: dotnet build ${HOSPITAL-PROJECT-SOLUTION} --configuration Release --no-restore
       - name: Test2
-        run: dotnet test ${SOLUTION_DIRECTORY2} --no-restore --verbosity quiet --filter FullyQualifiedName!~IntegrationTests
+        run: dotnet test ${HOSPITAL-PROJECT-SOLUTION} --no-restore --verbosity quiet --filter FullyQualifiedName!~IntegrationTests
 
 
       - name: Install dependencies3
-        run: dotnet restore ${SOLUTION_DIRECTORY3}
+        run: dotnet restore ${INTEGRATION-PROJECT-SOLUTION}
       - name: Build3
-        run: dotnet build ${SOLUTION_DIRECTORY3} --configuration Release --no-restore
+        run: dotnet build ${INTEGRATION-PROJECT-SOLUTION} --configuration Release --no-restore
       # - name: Test3
-      #   run: dotnet test ${SOLUTION_DIRECTORY3} --no-restore --verbosity quiet --filter FullyQualifiedName!~IntegrationTests
+      #   run: dotnet test ${INTEGRATION-PROJECT-SOLUTION} --no-restore --verbosity quiet --filter FullyQualifiedName!~IntegrationTests
