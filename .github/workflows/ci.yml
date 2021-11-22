@@ -2,14 +2,7 @@ name: Build and Test Pharmacy App With Every Push to Develop and Master
 
 on:
   push:
-    branches:
-    - master
-    - develop
-    - feat/implement-packaging  # TODO: izbrisati 
   pull_request:
-    branches:
-    - master
-    - develop
 
 env:
  PHARMACY-PROJECT-SOLUTION : 'PharmacyApplication/PharmacyApplication.sln'
