@@ -1,0 +1,98 @@
+.whitesmoke_background {
+    width: 100%;
+    height: 100%;
+    padding: 50px;
+
+    background: whitesmoke;
+}
+
+.card {
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.basic-info-header {
+    border-bottom: 5px solid whitesmoke;
+    padding-left: 10px;
+    padding-top: 10px
+}
+
+.basic-info-header h2 {
+    color: rgb(19, 103, 168);
+    margin-bottom: 0px !important;
+}
+
+.day-of-week-header {
+    padding: 10px;
+    /* fallback for old browsers */
+    color: white;
+    background: #4facfe;
+  
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(79, 172, 254, 1), #08d);
+  
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(79, 172, 254, 1), #08d)
+}
+
+.table-borderless > tbody > tr > td,
+.table-borderless > tbody > tr > th,
+.table-borderless > tfoot > tr > td,
+.table-borderless > tfoot > tr > th,
+.table-borderless > thead > tr > td,
+.table-borderless > thead > tr > th {
+    border: none;
+}
+
+/* TIMELINE */
+
+.timeline {
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+}
+.timeline__event {
+    background: #fff;
+    margin-bottom: 20px;
+    position: relative;
+    display: flex;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25), 0 18px 36px -18px rgba(0, 0, 0, 0.3), 0 -12px 36px -8px rgba(0, 0, 0, 0.025);
+}
+.timeline__event__title {
+    font-size: 1.2rem;
+    line-height: 1.4;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #4facfe;
+    letter-spacing: 1.5px;
+}
+.timeline__event__content {
+    padding: 20px;
+}
+.timeline__event__date {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.timeline__event__icon {
+    border-radius: 8px 0 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 40%;
+    font-size: 2rem;
+    padding: 20px;
+
+    background: #4facfe;
+  
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(79, 172, 254, 1), #08d);
+  
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(79, 172, 254, 1), #08d)
+}

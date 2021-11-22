@@ -20,14 +20,16 @@ import { LoginComponent } from './login/login.component';
 import { PatientCreateFeedbackComponent } from './patient-create-feedback/patient-create-feedback.component';
 import { PatientCreateFeedbackService } from './patient-create-feedback.service';
 import { HomePageComponent } from './homepage/homepage.component';
+import { MedicalRecordViewComponent } from './medical-record-view/medical-record-view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PatientCreateFeedbackComponent,
     PatientFeedbackViewComponent,
-    LoginComponent,
-    HomePageComponent
+    HomePageComponent,
+    MedicalRecordViewComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
