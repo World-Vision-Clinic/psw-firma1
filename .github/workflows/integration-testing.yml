@@ -10,7 +10,7 @@ jobs:
       PROJECT_DIRECTORY: Pharmacy
 
       SOLUTION_DIRECTORY_INTEGRATION: WebAppCore
-      PROJECT_DIRECTORY_INTEGRATION: Integration API
+      PROJECT_DIRECTORY_INTEGRATION: 'Integration API'
 
     services:
       postgres:
@@ -54,9 +54,9 @@ jobs:
         run: dotnet restore ${SOLUTION_DIRECTORY_INTEGRATION}
       - name: Create Migrations integration
         run:
-          dotnet ef migrations add InitialCreate --project ${SOLUTION_DIRECTORY_INTEGRATION}\/${PROJECT_DIRECTORY_INTEGRATION};
+          dotnet ef migrations add InitialCreate --project ${SOLUTION_DIRECTORY_INTEGRATION}\/${{env.PROJECT_DIRECTORY_INTEGRATION}};
       - name: Update Database integration
-        run: dotnet ef database update --project ${SOLUTION_DIRECTORY_INTEGRATION}\/${PROJECT_DIRECTORY_INTEGRATION};
+        run: dotnet ef database update --project ${SOLUTION_DIRECTORY_INTEGRATION}\/${{env.PROJECT_DIRECTORY_INTEGRATION}};
       - name: Test integration
         run: dotnet test ${SOLUTION_DIRECTORY_INTEGRATION} --no-restore --verbosity quiet --filter FullyQualifiedName\!~UnitTests
         env:
