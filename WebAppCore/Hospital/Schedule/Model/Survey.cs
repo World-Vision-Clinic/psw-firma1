@@ -8,9 +8,9 @@ namespace Hospital.Schedule.Model
 {
     public class Survey 
     {
-       
-        private int idSurvey;
-        private DateTime creationDate;
+        [Key]
+        public int IdSurvey { get; set; }
+        public DateTime CreationDate { get; set; }
         public int IdAppointment { get; set; }
 
         [ForeignKey("IdAppointment")]
@@ -28,19 +28,9 @@ namespace Hospital.Schedule.Model
             this.IdAppointment = idAppointment;
 
         }
-        [Key]
-        public int IdSurvey
-        {
-            get { return idSurvey; }
-            set { idSurvey = value; }
-        }
+       
 
-        public DateTime CreationDate
-        {
-            get { return creationDate; }
-            set { creationDate = value; }
-        }
-
+        
       
 
        

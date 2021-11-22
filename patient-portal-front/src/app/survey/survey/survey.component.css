@@ -154,4 +154,29 @@
     margin-left: auto;
 }
 
+.btn-box{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-box button{
+    flex-basis: 48%;
+    padding: 18px 0;
+}
+
+
+.btn-rounded {
+    border-radius: 20px;
+}
+
+.btn-blue {
+    background: rgb(19, 103, 168);;
+    color: white;
+    width: 300px;
+    margin-top: 10px;
+    padding: 10px 0px 10px 0px !important;
+    cursor: pointer;
+}
+
 

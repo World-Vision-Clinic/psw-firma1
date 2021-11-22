@@ -13,6 +13,8 @@ namespace Hospital.Schedule.Model
         private TimeSpan time;
         private int duration;
 
+        public int IdPatient { get; set; }
+
         public virtual Patient Patient { get; set; }
        // private Doctor doctor;
        // private Room room;

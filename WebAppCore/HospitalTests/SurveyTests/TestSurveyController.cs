@@ -3,6 +3,7 @@ using Hospital.Schedule.Repository;
 using Hospital.Schedule.Service;
 using Hospital.SharedModel;
 using Hospital_API;
+using Hspital_API.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -71,6 +72,85 @@ namespace HospitalTests.SurveyTests
             //Assert
             Assert.Equal(200, result.StatusCode);
             Assert.NotNull(result.Value);
+
+        }
+
+        [Fact]
+        public void Test_post_correct_answers()
+        {
+
+            //Arrange
+            inMemoryRepo = GetInMemorySurveyRepository();
+            List<QuestionDTO> dtos = new List<QuestionDTO>();
+            
+
+            QuestionDTO answer1 = new QuestionDTO()
+            {
+                Question = "Pitanje1",
+                Section = SurveySectionType.Doctor,
+                Answer = 4
+            };
+
+            QuestionDTO answer2 = new QuestionDTO()
+            {
+                Question = "Pitanje2",
+                Section = SurveySectionType.Hospital,
+                Answer = 2
+            };
+
+
+            //Act
+            dtos.Add(answer1);
+            dtos.Add(answer2);
+
+            var controller = new SurveyController();
+
+            controller.surveyService = new SurveyService(inMemoryRepo);
+            var response = controller.PostSuveyQuestions(dtos);
+            var result = response.Result as OkObjectResult;
+
+            //Assert
+            Assert.Equal(200, result.StatusCode);
+            Assert.NotNull(result.Value);
+
+        }
+
+        [Fact]
+        public void Test_post_wrong_answers()
+        {
+
+            //Arrange
+            inMemoryRepo = GetInMemorySurveyRepository();
+            List<QuestionDTO> dtos = new List<QuestionDTO>();
+
+
+            QuestionDTO answer1 = new QuestionDTO()
+            {
+                Question = "Pitanje1",
+                Section = SurveySectionType.Doctor,
+                Answer = 4
+            };
+
+            QuestionDTO answer2 = new QuestionDTO()
+            {
+                Question = "Pitanje2",
+                Section = SurveySectionType.Hospital,
+                Answer = 7
+            };
+
+
+            //Act
+            dtos.Add(answer1);
+            dtos.Add(answer2);
+
+            var controller = new SurveyController();
+
+            controller.surveyService = new SurveyService(inMemoryRepo);
+            var response = controller.PostSuveyQuestions(dtos);
+            var result = response.Result as BadRequestResult;
+
+            //Assert
+            Assert.Equal(400, result.StatusCode);
 
         }
     }

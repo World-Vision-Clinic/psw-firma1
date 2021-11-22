@@ -35,39 +35,27 @@
     </div>
   </div>  
 
-
   <div class="row d-flex align-items-center section1-panel">
     <div class="col-md-3">
     </div>
     <div class="col-md-6">
       <div class="row d-flex align-items-center h-100" style="background-color: white; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
         <div class="col-md-6 h-100">
-          <div class="section1-left-col">
+          <div>
             <h1>Hospital section</h1>
-               <mat-list role="list">
-                <mat-list-item role="listitem">Pitanje 1</mat-list-item>
-                <mat-list-item role="listitem">Pitanje 2</mat-list-item>
-                <mat-list-item role="listitem">Pitanje 3</mat-list-item>
-                <mat-list-item role="listitem">Pitanje 4</mat-list-item>
-                <mat-list-item role="listitem">Pitanje 5</mat-list-item>
-               </mat-list>             
+               <mat-list role="list" *ngFor = "let q of hospitalSection">
+                <mat-list-item role="listitem">{{q.question}}</mat-list-item>  
+                <mat-radio-group [(ngModel)]="q.answer">
+                  <mat-radio-button [value]='1'>1</mat-radio-button>
+                  <mat-radio-button [value]='2'>2</mat-radio-button>
+                  <mat-radio-button [value]='3'>3</mat-radio-button>
+                  <mat-radio-button [value]='4'>4</mat-radio-button>
+                  <mat-radio-button [value]='5'>5</mat-radio-button>
+              </mat-radio-group> 
+              </mat-list>             
           </div>
         </div>
-        <div class="col-md-6">
-            <div class="section1-right-col">
-                <mat-list role="list">
-                    <mat-list-item role="listitem">
-                        <mat-radio-group>
-                            <mat-radio-button value="1">1</mat-radio-button>
-                            <mat-radio-button value="2">2</mat-radio-button>
-                            <mat-radio-button value="3">3</mat-radio-button>
-                            <mat-radio-button value="4">4</mat-radio-button>
-                            <mat-radio-button value="5">5</mat-radio-button>
-                        </mat-radio-group>
-                    </mat-list-item>
-                </mat-list>   
-            </div>
-       </div>
+        
       </div>
     </div>
     <div class="col-md-3">
@@ -80,32 +68,21 @@
     <div class="col-md-6">
       <div class="row d-flex align-items-center h-100" style="background-color: white; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
         <div class="col-md-6 h-100">
-          <div class="section1-left-col">
+          <div>
             <h1>Doctor section</h1>
-               <mat-list role="list">
-                <mat-list-item role="listitem">Pitanje 1</mat-list-item>
-                <mat-list-item role="listitem">Pitanje 2</mat-list-item>
-                <mat-list-item role="listitem">Pitanje 3</mat-list-item>
-                <mat-list-item role="listitem">Pitanje 4</mat-list-item>
-                <mat-list-item role="listitem">Pitanje 5</mat-list-item>
-               </mat-list>             
+               <mat-list role="list" *ngFor = "let q of doctorSection">
+                <mat-list-item role="listitem">{{q.question}}</mat-list-item>  
+                <mat-radio-group [(ngModel)]="q.answer">
+                  <mat-radio-button [value]='1'>1</mat-radio-button>
+                  <mat-radio-button [value]='2'>2</mat-radio-button>
+                  <mat-radio-button [value]='3'>3</mat-radio-button>
+                  <mat-radio-button [value]='4'>4</mat-radio-button>
+                  <mat-radio-button [value]='5'>5</mat-radio-button>
+              </mat-radio-group> 
+              </mat-list>             
           </div>
         </div>
-        <div class="col-md-6">
-            <div class="section1-right-col">
-                <mat-list role="list">
-                    <mat-list-item role="listitem">
-                        <mat-radio-group>
-                            <mat-radio-button value="1">1</mat-radio-button>
-                            <mat-radio-button value="2">2</mat-radio-button>
-                            <mat-radio-button value="3">3</mat-radio-button>
-                            <mat-radio-button value="4">4</mat-radio-button>
-                            <mat-radio-button value="5">5</mat-radio-button>
-                        </mat-radio-group>
-                    </mat-list-item>
-                </mat-list>   
-            </div>
-       </div>
+        
       </div>
     </div>
     <div class="col-md-3">
@@ -118,50 +95,31 @@
     <div class="col-md-6">
       <div class="row d-flex align-items-center h-100" style="background-color: white; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
         <div class="col-md-6 h-100">
-          <div class="section1-left-col">
+          <div>
             <h1>Staff section</h1>
-               <mat-list role="list">
-                <mat-list-item role="listitem">
-                    <small>Pitanje 1</small> 
-                    <mat-radio-group class="answers">
-                        <mat-radio-button value="1">1</mat-radio-button>
-                        <mat-radio-button value="2">2</mat-radio-button>
-                        <mat-radio-button value="3">3</mat-radio-button>
-                        <mat-radio-button value="4">4</mat-radio-button>
-                        <mat-radio-button value="5">5</mat-radio-button>
-                    </mat-radio-group>
-                </mat-list-item>
-                <mat-list-item role="listitem">Pitanje 2</mat-list-item>
-                <mat-list-item role="listitem">Pitanje 3</mat-list-item>
-                <mat-list-item role="listitem">Pitanje 4</mat-list-item>
-                <mat-list-item role="listitem">Pitanje 5</mat-list-item>
-               </mat-list>             
+               <mat-list role="list" *ngFor = "let q of staffSection">
+                <mat-list-item role="listitem">{{q.question}}</mat-list-item>  
+                <mat-radio-group [(ngModel)]="q.answer">
+                  <mat-radio-button [value]='1'>1</mat-radio-button>
+                  <mat-radio-button [value]='2'>2</mat-radio-button>
+                  <mat-radio-button [value]='3'>3</mat-radio-button>
+                  <mat-radio-button [value]='4'>4</mat-radio-button>
+                  <mat-radio-button [value]='5'>5</mat-radio-button>
+              </mat-radio-group> 
+              </mat-list>             
           </div>
         </div>
-        <div class="col-md-6">
-            <div class="section1-right-col">
-                <mat-list role="list">
-                    <mat-list-item role="listitem">
-                        <mat-radio-group>
-                            <mat-radio-button value="1">1</mat-radio-button>
-                            <mat-radio-button value="2">2</mat-radio-button>
-                            <mat-radio-button value="3">3</mat-radio-button>
-                            <mat-radio-button value="4">4</mat-radio-button>
-                            <mat-radio-button value="5">5</mat-radio-button>
-                        </mat-radio-group>
-                    </mat-list-item>
-                </mat-list>   
-            </div>
-       </div>
+        
       </div>
     </div>
     <div class="col-md-3">
     </div>
   </div>
-
   
 
-
+  <div class="btn-box" >
+    <button class="btn btn-blue btn-rounded" (click)="submitSurvey()" >Submit</button> 
+  </div>
   
 
 

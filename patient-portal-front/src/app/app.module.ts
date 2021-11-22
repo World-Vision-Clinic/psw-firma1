@@ -12,6 +12,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatListModule} from '@angular/material/list';
+import { enableProdMode } from '@angular/core';
 
 
 import { FormsModule } from '@angular/forms';
@@ -47,6 +48,7 @@ import { SurveyComponent } from './survey/survey/survey.component';
     AppRoutingModule,
     MatRadioModule,
     MatListModule,
+    MatCardModule,
     BrowserAnimationsModule
   ],
   providers: [

@@ -17,15 +17,22 @@ namespace Hospital.Schedule.Repository
             _context = context;
         }
 
-        public void AddSurvey(Survey newSurvey)
+        public int AddSurvey(Survey newSurvey)
         {
             _context.Surveys.Add(newSurvey);
             SaveSurvey();
+            return newSurvey.IdSurvey;
         }
 
         public void AddSurveyQuestion(SurveyQuestion newQuestion)
         {
             _context.Questions.Add(newQuestion);
+            SaveSurvey();
+        }
+
+        public void AddAnswer(AnsweredSurveyQuestion answer)
+        {
+            _context.AnsweredQuestions.Add(answer);
             SaveSurvey();
         }
 

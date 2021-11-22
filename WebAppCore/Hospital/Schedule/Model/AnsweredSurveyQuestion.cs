@@ -14,7 +14,16 @@ namespace Hospital.Schedule.Model
         public int Answer { get; set; } //ocena koju mozemo dati
         public int Id { get; set; }
 
+        public AnsweredSurveyQuestion() { }
 
+        public AnsweredSurveyQuestion( int surveyKey, int patientKey, string question, SurveySectionType section, int answer)
+        {
+            this.SurveyForeignKey = surveyKey;
+            this.PatientForeignKey = patientKey;
+            this.Question = question;
+            this.Section = section;
+            this.Answer = answer;
+        }
 
 
     }

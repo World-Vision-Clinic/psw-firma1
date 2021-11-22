@@ -47,11 +47,33 @@ namespace Hospital.SharedModel
 
             });
 
-           
+            modelBuilder.Entity<Appointment>().HasData(
+                new Appointment { IdAppointment = 1, Surveys = new List<Survey>() }
+                );
 
+            modelBuilder.Entity<Survey>().HasData(
+                new Survey { IdAppointment = 1, CreationDate = DateTime.Now, IdSurvey = 1}
+                );
 
+            modelBuilder.Entity<SurveyQuestion>().HasData(
+                new SurveyQuestion { Id = 1, Question = "Has doctor been polite to you?", Section = SurveySectionType.Doctor, IdSurvey = 1},
+                new SurveyQuestion { Id = 2, Question = "How would you rate the professionalism of doctor?", Section = SurveySectionType.Doctor, IdSurvey = 1 },
+                new SurveyQuestion { Id = 3, Question = "How clearly did the doctor explain you your condition?", Section = SurveySectionType.Doctor, IdSurvey = 1 },
+                new SurveyQuestion { Id = 4, Question = "How smisli dalje?", Section = SurveySectionType.Doctor, IdSurvey = 1 },
+                new SurveyQuestion { Id = 5, Question = "What is your overall satisfaction with doctor?", Section = SurveySectionType.Doctor, IdSurvey = 1 },
 
+                new SurveyQuestion { Id = 6, Question = "Has doctor been polite to you?", Section = SurveySectionType.Hospital, IdSurvey = 1 },
+                new SurveyQuestion { Id = 7, Question = "How would you rate the professionalism of doctor?", Section = SurveySectionType.Hospital, IdSurvey = 1 },
+                new SurveyQuestion { Id = 8, Question = "How clearly did the doctor explain you your condition?", Section = SurveySectionType.Hospital, IdSurvey = 1 },
+                new SurveyQuestion { Id = 9, Question = "How smisli dalje?", Section = SurveySectionType.Hospital, IdSurvey = 1 },
+                new SurveyQuestion { Id = 10, Question = "What is your overall satisfaction with doctor?", Section = SurveySectionType.Hospital, IdSurvey = 1 },
 
+                new SurveyQuestion { Id = 11, Question = "Has doctor been polite to you?", Section = SurveySectionType.Staff, IdSurvey = 1 },
+                new SurveyQuestion { Id = 12, Question = "How would you rate the professionalism of doctor?", Section = SurveySectionType.Staff, IdSurvey = 1 },
+                new SurveyQuestion { Id = 13, Question = "How clearly did the doctor explain you your condition?", Section = SurveySectionType.Staff, IdSurvey = 1 },
+                new SurveyQuestion { Id = 14, Question = "How smisli dalje?", Section = SurveySectionType.Staff, IdSurvey = 1 },
+                new SurveyQuestion { Id = 15, Question = "What is your overall satisfaction with doctor?", Section = SurveySectionType.Staff, IdSurvey = 1 }
+                );
 
         }
 
