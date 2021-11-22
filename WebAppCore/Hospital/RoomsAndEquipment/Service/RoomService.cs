@@ -18,5 +18,29 @@ namespace Hospital.RoomsAndEquipment.Service
             return repository.GetAll();
         }
 
+        public List<Room> getRoomsForFloor(int id)
+        {
+            return repository.GetRoomsForFloor(id);
+        }
+
+        public List<Room> getRoomsForFloorAndBuilding(int id1, int id2)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Room GetById(int id)
+        {
+            return repository.GetByID(id);
+        }
+
+        public bool RoomExists(int id)
+        {
+            return repository.Exists(id);
+        }
+
+        public void Update(Room room)
+        {
+            repository.Update(room);
+        }
     }
 }
