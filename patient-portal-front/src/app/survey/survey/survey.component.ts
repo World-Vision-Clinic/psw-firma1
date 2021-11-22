@@ -41,9 +41,20 @@ export class SurveyComponent implements OnInit {
   ngOnInit(): void {
     this._surveyService.getQuestions().subscribe(data => this.questions = data,
     error => this.errorMsg = "Couldn't load user questions", 
-    ()  => this.sortQuestions());
-
-                                           
+    ()  => this.sortQuestions());                                         
   }
 
+  surveyIsValid(): boolean {
+    for (let question of this.questions) {
+      if (question.answer == 0) {
+        return false;
+      }
+    }
+    return true;
 }
+
+  
+  
+}
+
+
