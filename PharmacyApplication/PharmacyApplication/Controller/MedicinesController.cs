@@ -52,7 +52,7 @@ namespace PharmacyAPI.Controller
             }
 
 
-            if(!service.CheckQuantity(name, dosageInMg, quantityInBoxes))
+            if (!service.CheckQuantity(name, dosageInMg, quantityInBoxes))
             {
                 return BadRequest();
             }
@@ -74,7 +74,8 @@ namespace PharmacyAPI.Controller
                 return BadRequest("Api Key is not valid!");
             }
 
-            if (!dto.Test) {
+            if (!dto.Test)
+            {
                 Medicine medicine = new Medicine(dto.MedicineName, Double.Parse(dto.MedicineGrams), int.Parse(dto.NumOfBoxes));
                 Medicine med = service.FoundOrderedMedicine(medicine);
                 service.OrderMedicine(medicine);
@@ -109,6 +110,12 @@ namespace PharmacyAPI.Controller
             {
                 return Ok();
             }
+        }
+
+        [HttpGet("test")]
+        public IActionResult TestingController()
+        {
+            return Ok("Hello from Medicine controller");
         }
     }
 }
