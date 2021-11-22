@@ -152,6 +152,17 @@ namespace Hospital.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Appointments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorForeignKey = 0,
+                            PatientForeignKey = 0,
+                            Time = new TimeSpan(0, 0, 0, 0, 0),
+                            Type = 0
+                        });
                 });
 
             modelBuilder.Entity("Hospital.Schedule.Model.Survey", b =>
@@ -177,7 +188,7 @@ namespace Hospital.Migrations
                         new
                         {
                             IdSurvey = 1,
-                            CreationDate = new DateTime(2021, 11, 22, 15, 41, 37, 865, DateTimeKind.Local).AddTicks(441),
+                            CreationDate = new DateTime(2021, 11, 22, 22, 34, 56, 290, DateTimeKind.Local).AddTicks(932),
                             IdAppointment = 1
                         });
                 });
@@ -202,8 +213,6 @@ namespace Hospital.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdSurvey");
 
                     b.ToTable("Questions");
 
@@ -330,15 +339,6 @@ namespace Hospital.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Hospital.Schedule.Model.Appointment", b =>
-                {
-                    b.HasOne("Hospital.MedicalRecords.Model.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId");
-
-                    b.Navigation("Patient");
-                });
-
             modelBuilder.Entity("Hospital.Schedule.Model.Survey", b =>
                 {
                     b.HasOne("Hospital.Schedule.Model.Appointment", "Appointment")
@@ -348,17 +348,6 @@ namespace Hospital.Migrations
                         .IsRequired();
 
                     b.Navigation("Appointment");
-                });
-
-            modelBuilder.Entity("Hospital.Schedule.Model.SurveyQuestion", b =>
-                {
-                    b.HasOne("Hospital.Schedule.Model.Survey", "Survey")
-                        .WithMany()
-                        .HasForeignKey("IdSurvey")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Survey");
                 });
 
             modelBuilder.Entity("Hospital.Schedule.Model.Appointment", b =>

@@ -15,9 +15,6 @@ namespace Hospital.SharedModel
         public DbSet<Survey> Surveys { get; set; }
         public DbSet<SurveyQuestion> Questions { get; set; }
         public DbSet<AnsweredSurveyQuestion> AnsweredQuestions { get; set; }
-        public DbSet<Appointment> Appointmnets { get; set; }
-
-
         public DbSet<Appointment> Appointments { get; set; }
 
         public HospitalContext()
@@ -45,12 +42,12 @@ namespace Hospital.SharedModel
             modelBuilder.Entity<Appointment>(entity =>
             {
                 entity.ToTable("Appointments");
-                entity.HasKey(c => c.IdAppointment);            
+                entity.HasKey(c => c.Id);            
 
             });
 
             modelBuilder.Entity<Appointment>().HasData(
-                new Appointment { IdAppointment = 1, Surveys = new List<Survey>() }
+                new Appointment { Id = 1, Surveys = new List<Survey>() }
                 );
 
             modelBuilder.Entity<Survey>().HasData(

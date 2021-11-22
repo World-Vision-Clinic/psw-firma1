@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Hospital.Migrations
 {
-    public partial class ChangedAppointmentModel2 : Migration
+    public partial class MergedAppointmentAndSurveyChanges : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -91,6 +91,8 @@ namespace Hospital.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Answer = table.Column<int>(type: "integer", nullable: false),
+                    IdSurvey = table.Column<int>(type: "integer", nullable: false),
                     Question = table.Column<string>(type: "text", nullable: true),
                     Section = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -103,24 +105,64 @@ namespace Hospital.Migrations
                 name: "Surveys",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    IdSurvey = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreationDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     IdAppointment = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Surveys", x => x.Id);
+                    table.PrimaryKey("PK_Surveys", x => x.IdSurvey);
+                    table.ForeignKey(
+                        name: "FK_Surveys_Appointments_IdAppointment",
+                        column: x => x.IdAppointment,
+                        principalTable: "Appointments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Appointments",
+                columns: new[] { "Id", "Date", "DoctorForeignKey", "PatientForeignKey", "Time", "Type" },
+                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 0, new TimeSpan(0, 0, 0, 0, 0), 0 });
+
+            migrationBuilder.InsertData(
+                table: "Questions",
+                columns: new[] { "Id", "Answer", "IdSurvey", "Question", "Section" },
+                values: new object[,]
+                {
+                    { 1, 0, 1, "Has doctor been polite to you?", 1 },
+                    { 2, 0, 1, "How would you rate the professionalism of doctor?", 1 },
+                    { 3, 0, 1, "How clearly did the doctor explain you your condition?", 1 },
+                    { 4, 0, 1, "How smisli dalje?", 1 },
+                    { 5, 0, 1, "What is your overall satisfaction with doctor?", 1 },
+                    { 6, 0, 1, "Has doctor been polite to you?", 0 },
+                    { 7, 0, 1, "How would you rate the professionalism of doctor?", 0 },
+                    { 8, 0, 1, "How clearly did the doctor explain you your condition?", 0 },
+                    { 9, 0, 1, "How smisli dalje?", 0 },
+                    { 10, 0, 1, "What is your overall satisfaction with doctor?", 0 },
+                    { 11, 0, 1, "Has doctor been polite to you?", 2 },
+                    { 12, 0, 1, "How would you rate the professionalism of doctor?", 2 },
+                    { 13, 0, 1, "How clearly did the doctor explain you your condition?", 2 },
+                    { 14, 0, 1, "How smisli dalje?", 2 },
+                    { 15, 0, 1, "What is your overall satisfaction with doctor?", 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Surveys",
+                columns: new[] { "IdSurvey", "CreationDate", "IdAppointment" },
+                values: new object[] { 1, new DateTime(2021, 11, 22, 22, 34, 56, 290, DateTimeKind.Local).AddTicks(932), 1 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Surveys_IdAppointment",
+                table: "Surveys",
+                column: "IdAppointment");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "AnsweredQuestions");
-
-            migrationBuilder.DropTable(
-                name: "Appointments");
 
             migrationBuilder.DropTable(
                 name: "Feedbacks");
@@ -133,6 +175,9 @@ namespace Hospital.Migrations
 
             migrationBuilder.DropTable(
                 name: "Surveys");
+
+            migrationBuilder.DropTable(
+                name: "Appointments");
         }
     }
 }

@@ -15,10 +15,6 @@ namespace Hospital.Schedule.Model
         public int Answer { get; set; } //ocena koju mozemo dati, ovo mi zbog mapiranja na frontu treba
         public int IdSurvey { get; set; }
 
-        [ForeignKey("IdSurvey")]
-        public virtual Survey Survey { get; set; }
-
-
         public SurveyQuestion() { }
 
         public int Id

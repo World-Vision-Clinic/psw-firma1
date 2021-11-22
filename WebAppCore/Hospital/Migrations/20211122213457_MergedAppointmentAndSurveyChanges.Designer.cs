@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Hospital.Migrations
 {
     [DbContext(typeof(HospitalContext))]
-    [Migration("20211122144138_UpdateMigration")]
-    partial class UpdateMigration
+    [Migration("20211122213457_MergedAppointmentAndSurveyChanges")]
+    partial class MergedAppointmentAndSurveyChanges
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,6 +43,9 @@ namespace Hospital.Migrations
                     b.Property<bool>("isPublic")
                         .HasColumnType("boolean");
 
+                    b.Property<bool>("isPublishable")
+                        .HasColumnType("boolean");
+
                     b.HasKey("Id");
 
                     b.ToTable("Feedbacks");
@@ -58,10 +61,31 @@ namespace Hospital.Migrations
                     b.Property<bool>("Activated")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("BloodType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ContactPhone")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("DoctorName")
+                        .HasColumnType("text");
+
                     b.Property<string>("EMail")
                         .HasColumnType("text");
 
+                    b.Property<int>("Gender")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Height")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Password")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Residence")
                         .HasColumnType("text");
 
                     b.Property<string>("Token")
@@ -69,6 +93,9 @@ namespace Hospital.Migrations
 
                     b.Property<string>("UserName")
                         .HasColumnType("text");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -104,28 +131,39 @@ namespace Hospital.Migrations
 
             modelBuilder.Entity("Hospital.Schedule.Model.Appointment", b =>
                 {
-                    b.Property<int>("IdAppointment")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("IdPatient")
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("DoctorForeignKey")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("PatientId")
+                    b.Property<int>("PatientForeignKey")
                         .HasColumnType("integer");
 
-                    b.HasKey("IdAppointment");
+                    b.Property<TimeSpan>("Time")
+                        .HasColumnType("interval");
 
-                    b.HasIndex("PatientId");
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Appointments");
 
                     b.HasData(
                         new
                         {
-                            IdAppointment = 1,
-                            IdPatient = 0
+                            Id = 1,
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorForeignKey = 0,
+                            PatientForeignKey = 0,
+                            Time = new TimeSpan(0, 0, 0, 0, 0),
+                            Type = 0
                         });
                 });
 
@@ -152,7 +190,7 @@ namespace Hospital.Migrations
                         new
                         {
                             IdSurvey = 1,
-                            CreationDate = new DateTime(2021, 11, 22, 15, 41, 37, 865, DateTimeKind.Local).AddTicks(441),
+                            CreationDate = new DateTime(2021, 11, 22, 22, 34, 56, 290, DateTimeKind.Local).AddTicks(932),
                             IdAppointment = 1
                         });
                 });
@@ -177,8 +215,6 @@ namespace Hospital.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdSurvey");
 
                     b.ToTable("Questions");
 
@@ -305,15 +341,6 @@ namespace Hospital.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Hospital.Schedule.Model.Appointment", b =>
-                {
-                    b.HasOne("Hospital.MedicalRecords.Model.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId");
-
-                    b.Navigation("Patient");
-                });
-
             modelBuilder.Entity("Hospital.Schedule.Model.Survey", b =>
                 {
                     b.HasOne("Hospital.Schedule.Model.Appointment", "Appointment")
@@ -323,17 +350,6 @@ namespace Hospital.Migrations
                         .IsRequired();
 
                     b.Navigation("Appointment");
-                });
-
-            modelBuilder.Entity("Hospital.Schedule.Model.SurveyQuestion", b =>
-                {
-                    b.HasOne("Hospital.Schedule.Model.Survey", "Survey")
-                        .WithMany()
-                        .HasForeignKey("IdSurvey")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Survey");
                 });
 
             modelBuilder.Entity("Hospital.Schedule.Model.Appointment", b =>
