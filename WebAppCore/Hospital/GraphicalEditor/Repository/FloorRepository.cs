@@ -21,8 +21,18 @@ namespace Hospital.GraphicalEditor.Repository
         public void Delete(int id)
         {
             Floor floor = dbContext.Floors.FirstOrDefault(floor => floor.id == id);
-            dbContext.Remove(floor);
+            dbContext.Floors.Remove(floor);
             dbContext.SaveChanges();
+        }
+
+        internal IEnumerable<Floor> GetFloorsForBuilding(int id)
+        {
+            List<Floor> floors = new List<Floor>();
+            dbContext.Floors.ToList().ForEach(floor => {
+                if (floor.BuildingId == id)
+                    floors.Add(floor);
+            });
+            return floors;
         }
 
         public List<Floor> GetAll()
@@ -40,15 +50,19 @@ namespace Hospital.GraphicalEditor.Repository
 
         public void Save(Floor newFloor)
         {
-            dbContext.Add(newFloor);
+            dbContext.Floors.Add(newFloor);
             dbContext.SaveChanges();
         }
 
         public void Update(Floor updatedFloor)
         {
-            dbContext.Update(updatedFloor);
+            dbContext.Floors.Update(updatedFloor);
             dbContext.SaveChanges();
         }
 
+        public bool Exists(int id)
+        {
+            return false;
+        }
     }
 }

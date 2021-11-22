@@ -20,5 +20,14 @@ namespace Hospital.GraphicalEditor.Service
             return repository.GetAll();
         }
 
+        public IEnumerable<Floor> getFloorForBuilding(int id)
+        {
+            return repository.GetFloorsForBuilding(id);
+        }
+
+        public Floor GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

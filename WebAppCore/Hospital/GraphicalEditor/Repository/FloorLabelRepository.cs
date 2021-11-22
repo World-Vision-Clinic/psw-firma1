@@ -21,7 +21,7 @@ namespace Hospital.GraphicalEditor.Repository.RepositoryInterfaces
         public void Delete(int id)
         {
             FloorLabel floorL = dbContext.FloorLabels.FirstOrDefault(floorL => floorL.id == id);
-            dbContext.Remove(floorL);
+            dbContext.FloorLabels.Remove(floorL);
             dbContext.SaveChanges();
         }
 
@@ -40,14 +40,19 @@ namespace Hospital.GraphicalEditor.Repository.RepositoryInterfaces
 
         public void Save(FloorLabel newLabel)
         {
-            dbContext.Add(newLabel);
+            dbContext.FloorLabels.Add(newLabel);
             dbContext.SaveChanges();
         }
 
         public void Update(FloorLabel updatedLabel)
         {
-            dbContext.Update(updatedLabel);
+            dbContext.FloorLabels.Update(updatedLabel);
             dbContext.SaveChanges();
+        }
+
+        public bool Exists(int id)
+        {
+            return false;
         }
     }
 }
