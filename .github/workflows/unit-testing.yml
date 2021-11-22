@@ -11,7 +11,7 @@ jobs:
     env:
       SOLUTION_DIRECTORY: PharmacyApplication
       SOLUTION_DIRECTORY2: WebAppCore/HospitalTests/HospitalTests.csproj
-      SOLUTION_DIRECTORY3: WebAppCore/IntegrationTestsProject/IntegrationTestsProject.csproj
+      SOLUTION_DIRECTORY3: WebAppCore/IntegrationTests/IntegrationTests.csproj
 
 
     steps:
