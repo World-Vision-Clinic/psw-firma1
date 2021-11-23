@@ -9,6 +9,10 @@ body {
     background-color: #f9f9fa
 }
 
+.none{
+  margin-left: 10%;
+}
+
 #page-content {
     margin-top: 20px
 }
