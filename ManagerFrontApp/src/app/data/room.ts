@@ -13,7 +13,7 @@ export interface Room {
     doorX: number,
     doorY: number,
     vertical?:boolean,
-    class?: string,
+    css?: string,
     doorExists?:boolean
 }
 
@@ -30,7 +30,7 @@ export function emptyRoom():Room{
         doorX: -1,
         doorY: -1,
         vertical:false,
-        class: '',
+        css: '',
         doorExists: false
     }
 }

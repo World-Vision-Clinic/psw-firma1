@@ -38,7 +38,7 @@ namespace Hospital_API.Controllers
             {
                 floors.Add(FloorMapper.floorToFloorDTO(floor, roomService));
             }
-            return floors;
+            return floors.OrderBy(x => x.id).ToArray();
         }
 
         // GET: api/Floors/5

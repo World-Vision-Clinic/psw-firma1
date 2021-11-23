@@ -41,7 +41,7 @@ namespace Hospital_API.Controllers
             return buildings;
         }
 
-        // GET: api/Feedbacks/5
+        // GET: api/Buildings/5
         [HttpGet("{id}")]
         public ActionResult<BuildingDTO> GetBuilding(int id)
         {
@@ -51,7 +51,8 @@ namespace Hospital_API.Controllers
             {
                 return NotFound();
             }
-            BuildingDTO bdto = new BuildingDTO(); 
+            BuildingDTO bdto = new BuildingDTO(building);
+            
             return bdto;
         }
 
