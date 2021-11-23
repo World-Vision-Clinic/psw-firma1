@@ -35,8 +35,8 @@ namespace Hospital_API.Controllers
             List<BuildingDTO> buildings = new List<BuildingDTO>();
             foreach(Building building in buildingService.GetAll())
             {
-                building.MapPositionId = building.id;
-                buildingService.Update(building);
+                //building.MapPositionId = building.id;
+                //buildingService.Update(building);
                 buildings.Add(BuildingMapper.dataToBuildingSimpleDTO(building, mapPositionService));
             }
             //Console.WriteLine(buildings.ToString());
