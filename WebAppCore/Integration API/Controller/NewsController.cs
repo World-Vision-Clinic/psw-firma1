@@ -31,7 +31,7 @@ namespace Integration_API.Controller
         [HttpPut]
         public IActionResult UpdateNews(NewsDto dto)
         {
-            if (dto.Id.Length <= 0 || dto.Content.Length <= 0)
+            if (dto.Id.Length <= 0 || dto.Content.Length <= 0 || dto.Title.Length <= 0 || dto.FromDate == null || dto.ToDate == null)
             {
                 return BadRequest();
             }
