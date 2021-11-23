@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SurveyService } from 'src/app/survey.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-survey',
@@ -15,7 +17,7 @@ export class SurveyComponent implements OnInit {
   public hospitalSection = [] as any
   public staffSection = [] as any
 
-  constructor(private _surveyService : SurveyService) { }
+  constructor(private router: Router, private _surveyService : SurveyService) { }
 
   sortQuestions(): void {
     for (var question of this.questions){
@@ -35,8 +37,9 @@ export class SurveyComponent implements OnInit {
   submitSurvey(): void {
     console.log("komponenta");
     this._surveyService.addSurvey(this.questions).subscribe(
-      data => console.log(data));
+      data => console.log(data), success =>  this.router.navigate(['']));
   }
+
 
   ngOnInit(): void {
     this._surveyService.getQuestions().subscribe(data => this.questions = data,

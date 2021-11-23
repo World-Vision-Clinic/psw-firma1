@@ -15,11 +15,9 @@ namespace HospitalTests.SurveyTests
 {
     public class TestSurveyController
     {
-
         public ISurveyRepository inMemoryRepo;
 
         public TestSurveyController() { }
-
 
         private ISurveyRepository GetInMemorySurveyRepository()
         {
@@ -27,7 +25,6 @@ namespace HospitalTests.SurveyTests
             var builder = new DbContextOptionsBuilder<TestContext>();
             builder.UseInMemoryDatabase("TestDb");
             options = builder.Options;
-
             TestContext hospitalContext = new TestContext(options);
             hospitalContext.Database.EnsureDeleted();
             hospitalContext.Database.EnsureCreated();
@@ -37,9 +34,7 @@ namespace HospitalTests.SurveyTests
 
         [Fact]
         public void Test_retrieve_questions()
-        {
-
-            //Arrange
+        {   //Arrange
             inMemoryRepo = GetInMemorySurveyRepository();
 
             SurveyQuestion question1 = new SurveyQuestion()
@@ -49,7 +44,6 @@ namespace HospitalTests.SurveyTests
                 Section = SurveySectionType.Doctor,
                 IdSurvey = 3
             };
-
             SurveyQuestion question2 = new SurveyQuestion()
             {
                 Id = 2,
@@ -57,32 +51,45 @@ namespace HospitalTests.SurveyTests
                 Section = SurveySectionType.Hospital,
                 IdSurvey = 3
             };
-
-
             //Act
             inMemoryRepo.AddSurveyQuestion(question1);
             inMemoryRepo.AddSurveyQuestion(question2);
 
             var controller = new SurveyController();
-
             controller.surveyService = new SurveyService(inMemoryRepo);
             var response = controller.GetQuestions();
             var result = response.Result as OkObjectResult;
-
             //Assert
             Assert.Equal(200, result.StatusCode);
             Assert.NotNull(result.Value);
+        }
 
+        [Fact]
+        public void Test_survey_found()
+        {   //Arrange
+            inMemoryRepo = GetInMemorySurveyRepository();
+
+            Survey survey = new Survey()
+            {
+                IdSurvey = 4,
+                CreationDate = DateTime.Now,
+                IdAppointment = 1
+            };
+            //Act
+            inMemoryRepo.AddSurvey(survey);
+
+            var controller = new SurveyController();
+            controller.surveyService = new SurveyService(inMemoryRepo);
+            var response = controller.GetSurvey(4);
+            //Assert
+            Assert.Equal(4, response.Value.IdSurvey);
         }
 
         [Fact]
         public void Test_post_correct_answers()
-        {
-
-            //Arrange
+        {   //Arrange
             inMemoryRepo = GetInMemorySurveyRepository();
-            List<QuestionDTO> dtos = new List<QuestionDTO>();
-            
+            List<QuestionDTO> dtos = new List<QuestionDTO>();            
 
             QuestionDTO answer1 = new QuestionDTO()
             {
@@ -90,39 +97,30 @@ namespace HospitalTests.SurveyTests
                 Section = SurveySectionType.Doctor,
                 Answer = 4
             };
-
             QuestionDTO answer2 = new QuestionDTO()
             {
                 Question = "Pitanje2",
                 Section = SurveySectionType.Hospital,
                 Answer = 2
             };
-
-
             //Act
             dtos.Add(answer1);
             dtos.Add(answer2);
 
             var controller = new SurveyController();
-
             controller.surveyService = new SurveyService(inMemoryRepo);
             var response = controller.PostSuveyQuestions(dtos);
             var result = response.Result as OkObjectResult;
-
             //Assert
             Assert.Equal(200, result.StatusCode);
             Assert.NotNull(result.Value);
-
         }
 
         [Fact]
         public void Test_post_wrong_answers()
-        {
-
-            //Arrange
+        {   //Arrange
             inMemoryRepo = GetInMemorySurveyRepository();
             List<QuestionDTO> dtos = new List<QuestionDTO>();
-
 
             QuestionDTO answer1 = new QuestionDTO()
             {
@@ -130,28 +128,22 @@ namespace HospitalTests.SurveyTests
                 Section = SurveySectionType.Doctor,
                 Answer = 4
             };
-
             QuestionDTO answer2 = new QuestionDTO()
             {
                 Question = "Pitanje2",
                 Section = SurveySectionType.Hospital,
                 Answer = 7
             };
-
-
             //Act
             dtos.Add(answer1);
             dtos.Add(answer2);
 
             var controller = new SurveyController();
-
             controller.surveyService = new SurveyService(inMemoryRepo);
             var response = controller.PostSuveyQuestions(dtos);
             var result = response.Result as BadRequestResult;
-
             //Assert
             Assert.Equal(400, result.StatusCode);
-
         }
     }
 }
