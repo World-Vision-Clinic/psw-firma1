@@ -70,5 +70,16 @@ namespace IntegrationTests.IntegrationTests
 
             Assert.True(requestOk);
         }
+
+        /*[Fact]
+        public void CheckIfMedicineIsOrderedServerNotRunning()
+        {
+            OrderingMedicineDTO omd = new OrderingMedicineDTO("http://localhost:34616", "Brufen", "100", "2");
+            MedicinesController mc = new MedicinesController();
+
+            bool requestOk = mc.SendMedicineOrderingRequest(omd, true);
+
+            Assert.False(requestOk);
+        }*/
     }
 }
