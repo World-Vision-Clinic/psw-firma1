@@ -61,10 +61,10 @@ namespace Hospital_API.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public IActionResult PutRooms(int id, Room room)
+        public IActionResult PutRooms(int id, RoomDTO roomDto)
 
         {
-            //Room room = roomDto.toRoom();
+            Room room = roomDto.toRoom();
             if (id != room.id)
             {
                 return BadRequest();
