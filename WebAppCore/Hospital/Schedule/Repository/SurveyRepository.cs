@@ -61,34 +61,6 @@ namespace Hospital.Schedule.Repository
             return _context.Questions.ToList();
         }
 
-        public List<SurveyAnswerBreakdown> GetAnsweredQuestionsBreakdown()
-        {
-            var answeredQuestionsGroupByQuestion = _context.AnsweredQuestions
-                   .GroupBy(p => p.Question)
-                   .Select(g => new { Question = g.Key, Average = g.Average(i => i.Answer) }).ToList();
-
-            List<SurveyAnswerBreakdown> answeredQuestionsBreakdown = new List<SurveyAnswerBreakdown>();
-            foreach (var g in answeredQuestionsGroupByQuestion)
-            {
-                SurveyAnswerBreakdown newAnsweredQuestionBreakdown = new SurveyAnswerBreakdown();
-                newAnsweredQuestionBreakdown.Question = g.Question;
-                newAnsweredQuestionBreakdown.Average = g.Average;
-                newAnsweredQuestionBreakdown.RatingsCount = new double[5];
-                
-                for (int i = 0; i < 5; i++)
-                {
-                    newAnsweredQuestionBreakdown.RatingsCount[i] = 0;
-                    double answeredQuestionsCountByQuestion = _context.AnsweredQuestions
-                        .Where(p => String.Equals(p.Question, newAnsweredQuestionBreakdown.Question) && p.Answer == (i+1))
-                        .Count();
-                    newAnsweredQuestionBreakdown.RatingsCount[i] = answeredQuestionsCountByQuestion;
-                }
-
-                answeredQuestionsBreakdown.Add(newAnsweredQuestionBreakdown);
-            }
-            return answeredQuestionsBreakdown;
-        }
-
         public List<AnsweredSurveyQuestion> GetAllAnsweredQuestions()
         {
             return _context.AnsweredQuestions.ToList();

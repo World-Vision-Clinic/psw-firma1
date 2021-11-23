@@ -2,6 +2,6 @@
     <h2>{{s.question}}</h2>
     <h4>{{s.average}}</h4>
     <div *ngFor = "let rating of s.ratingsCount; index as ri">
-        <p>{{ri}}: {{rating}}</p>
+        <p>{{ri+1}}: {{rating}}</p>
     </div>
 </div>
