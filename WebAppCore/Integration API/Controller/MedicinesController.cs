@@ -21,8 +21,9 @@ namespace Integration_API.Controller
     {
         private PharmaciesService pharmaciesService = new PharmaciesService(new PharmaciesRepository());
         private CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
+        private SftpHandler sftpHandler = new SftpHandler();
         private IPharmacyConnection pharmacyConnection;
-
+        
         public MedicinesController(IPharmacyConnection connection)
         {
             pharmacyConnection = connection;
@@ -59,62 +60,17 @@ namespace Integration_API.Controller
                 return BadRequest();
             }
 
-            if(!SendRequestForSpecification(pharmacyLocalhost, medicine))
+            if(!pharmacyConnection.SendRequestForSpecification(pharmacyLocalhost, medicine))
             {
-                return BadRequest();
+                return BadRequest("Specification does not exists");
             }
 
-            if (!DownloadSpecification())
+            if (!sftpHandler.DownloadSpecification($"/public/Specification.txt"))
             {
                 return BadRequest("Unable to download specification file");
             }
 
             return Ok();
-        }
-
-        private bool SendRequestForSpecification(string pharmacyLocalhost, string medicineName)
-        {
-            var client = new RestSharp.RestClient(pharmacyLocalhost);
-            var request = new RestRequest("/medicines/spec?name=" + medicineName);
-
-            Credential credential = credentialsService.GetByPharmacyLocalhost(pharmacyLocalhost);
-
-            request.AddHeader("ApiKey", credential.ApiKey);
-
-            IRestResponse response = client.Get(request);
-
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        private bool DownloadSpecification()
-        {
-            try
-            {
-                using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.21", "user", "password")))
-                {
-                    client.Connect();
-
-                    string serverFile = @"\public\Specification.txt";
-                    string localFile = @"Specification.txt";
-                    using (Stream stream = System.IO.File.OpenWrite(localFile))
-                    {
-                        client.DownloadFile(serverFile, stream);
-                    }
-
-                    client.Disconnect();
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
         }
     }
 }

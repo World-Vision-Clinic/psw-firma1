@@ -1,9 +1,11 @@
 ﻿using Integration_API.Controller;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Web.Http.Results;
 using Xunit;
 
 namespace IntegrationTests.UnitTests
@@ -46,5 +48,64 @@ namespace IntegrationTests.UnitTests
             Assert.Empty((System.Collections.IEnumerable)okResult.Value);
 
         }
+
+        [Fact]
+        public void Check_response_when_specification_for_medicine_does_not_exist_in_pharmacy()
+        {
+            // Arrange
+            var mock = new Mock<MockConnection>();
+            MedicinesController controller = new MedicinesController(mock.Object);
+
+            // Act
+            var result = controller.GetSpecification("someLocalhost", "Hemomicin");
+            var badResult = result as BadRequestObjectResult;
+
+            // Assert
+            Assert.Equal(400, badResult.StatusCode);
+            Assert.Equal("Specification does not exists", badResult.Value);
+        }
+
+        [Fact]  // interaction with Rebex Client
+        public void Check_response_when_specification_for_medicine_exist()
+        {
+            // Arrange
+            var mock = new Mock<MockConnection>();
+            MedicinesController controller = new MedicinesController(mock.Object);
+
+            // Act
+            var result = controller.GetSpecification("someLocalhost", "Aspirin");
+            var okResult = result as Microsoft.AspNetCore.Mvc.OkResult;
+
+            // Assert
+            Assert.Equal(200, okResult.StatusCode);
+        }
+
+        [Fact]  // interaction with Rebex Client
+        public void File_does_not_uploaded()
+        {
+            // Arrange
+            SftpHandler sftp = new SftpHandler();
+            
+            // Act
+            bool downloaded = sftp.DownloadSpecification("/public/SomeFile.txt");
+
+            // Assert
+            Assert.False(downloaded);
+        }
+
+        [Fact]  // interaction with Rebex Client
+        public void File_is_uploaded()
+        {
+            // Arrange
+            SftpHandler sftp = new SftpHandler();
+
+            // Act
+            bool downloaded = sftp.DownloadSpecification("/public/Specification.txt");
+
+            // Assert
+            Assert.True(downloaded);
+
+        }
+
     }
 }
