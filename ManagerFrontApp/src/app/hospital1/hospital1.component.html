@@ -1,7 +1,8 @@
 <div class="title">
-  <h1></h1><h2> ROOMS MAP</h2>
+  <h1></h1>
+  <h2>ROOMS MAP</h2>
 </div>
-<div class="page-nav" >
+<div class="page-nav">
   <div class="floor-selection" *ngIf="!loadingFloors">
     <label for="">Floors:</label>
     <button
@@ -16,10 +17,10 @@
     </button>
     <button (click)="takeOut()" class="floor-button">🚪 Exit</button>
   </div>
-  <div style="margin: 0 10px; position: relative"  >
+  <div style="margin: 0 10px; position: relative">
     <div class="building-info" *ngIf="!loadingHospital">
       <div style="text-align: center">
-        <h3 style="align-self: flex-start; font-size: 17px;">Building info:</h3>
+        <h3 style="align-self: flex-start; font-size: 17px">Building info:</h3>
       </div>
       <div class="info-body">
         <div class="info-module">
@@ -56,7 +57,6 @@
             Done
           </button>
           <button (click)="moveEquipment()" class="btn">Move equipment</button>
-
         </div>
       </div>
     </div>
@@ -95,119 +95,286 @@
     </svg>
   </div>
 
-  <div class="info-box" *ngIf="!!roomIsSelected" >
+  <div class="info-box" *ngIf="!!roomIsSelected">
     <div *ngIf="!equipmentBox">
-    <div class="title"><h3>Room info:</h3></div>
-    <label for="">Room name:</label><br />
-    <input
-      type="text"
-      class="form-field"
-      [(ngModel)]="selectedRoom.name"
-      name="input"
-      [attr.disabled]="formDisabled ? '' : null"
-    />
-    <br />
-    <label for="">Doctor using it:</label><br />
-    <input
-      type="text"
-      class="form-field"
-      [(ngModel)]="selectedRoom.doctor"
-      name="input"
-      [attr.disabled]="formDisabled ? '' : null"
-    />
-    <br />
-    <label for="">Purpose:</label><br />
-    <input
-      type="text"
-      class="form-field"
-      [(ngModel)]="selectedRoom.purpose"
-      name="input"
-      [attr.disabled]="formDisabled ? '' : null"
-    />
-    <br />
-    <br />
-    <div class="rightbtn">
-      <button class="btn" (click)="close()" *ngIf="formDisabled">Close</button>
-      <div *ngIf="formDisabled"> 
-      <button class="btn" (click)="equipment()">Equipment</button>
-      <button class="btn" (click)="enableEdit()" >Edit</button>
+      <div class="title"><h3>Room info:</h3></div>
+      <label for="">Room name:</label><br />
+      <input
+        type="text"
+        class="form-field"
+        [(ngModel)]="selectedRoom.name"
+        name="input"
+        [attr.disabled]="formDisabled ? '' : null"
+      />
+      <br />
+      <label for="">Doctor using it:</label><br />
+      <input
+        type="text"
+        class="form-field"
+        [(ngModel)]="selectedRoom.doctor"
+        name="input"
+        [attr.disabled]="formDisabled ? '' : null"
+      />
+      <br />
+      <label for="">Purpose:</label><br />
+      <input
+        type="text"
+        class="form-field"
+        [(ngModel)]="selectedRoom.purpose"
+        name="input"
+        [attr.disabled]="formDisabled ? '' : null"
+      />
+      <br />
+      <br />
+      <div class="rightbtn">
+        <button class="btn" (click)="close()" *ngIf="formDisabled">
+          Close
+        </button>
+        <div *ngIf="formDisabled">
+          <button class="btn" (click)="equipment()">Equipment</button>
+          <button class="btn" (click)="enableEdit()">Edit</button>
+        </div>
+        <button class="btn" (click)="cancel()" *ngIf="!formDisabled">
+          Cancel
+        </button>
+        <button class="btn" (click)="save()" *ngIf="!formDisabled">Save</button>
+      </div>
     </div>
-      <button class="btn" (click)="cancel()" *ngIf="!formDisabled">
-        Cancel
+
+    <div *ngIf="!!equipmentBox">
+      <table class="equipment-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of selectedRoom.equipments">
+            <td>{{ item.name }}</td>
+            <td>{{ item.type }}</td>
+            <td>{{ item.amount }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="rightbtn">
+        <button class="btn" (click)="closeEquip()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="move-box-equipment" *ngIf="!!listBoxEquipment">
+    <div class="moving-container" *ngIf="currentState.index == 0">
+      <h3>Select Equipment:</h3>
+      <table class="list-table">
+        <thead>
+          <tr>
+            <th>NAME</th>
+            <th>TYPE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let equipment of allEquipment"
+            class="equipment-table-row"
+            (click)="selectEquipment(equipment)"
+          >
+            <td>{{ equipment.name }}</td>
+            <td style="text-align: center">
+              {{ equipment.type ? "Static" : "Dynamic" }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="moving-container" *ngIf="currentState.index == 1">
+      <h3 for="">
+        Selected equipment: <b>{{ selectedEquipment!.name }}</b>
+      </h3>
+      <p>Select Room:</p>
+      <table class="list-table">
+        <thead>
+          <tr>
+            <th>Room name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let room of roomsList"
+            class="equipment-table-row"
+            (click)="selectStartRoom(room)"
+          >
+            <td>
+              {{ room.roomName }} - {{ room.roomFloor }} - Amount:
+              {{ room.amount }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="moving-container" *ngIf="currentState.index == 2">
+      <h3 for="">
+        Selected equipment: <b>{{ selectedEquipment!.name }}</b>
+      </h3>
+      <h3 for="">
+        Selected room: <b>{{ startRoom!.roomName }}</b>
+      </h3>
+      <label for="">Enter amount:</label> <br />
+      <input
+        type="number"
+        class="fill-form-field"
+        [(ngModel)]="movingAmount"
+        name="input"
+        max="{{ startRoom!.amount }}"
+        placeholder="Max value: {{ startRoom!.amount }}"
+      />
+    </div>
+
+    <div class="moving-container" *ngIf="currentState.index == 3">
+      <h3 for="">
+        Selected equipment: <b>{{ selectedEquipment!.name }}</b>
+      </h3>
+      <h3 for="">
+        Selected room: <b>{{ startRoom!.roomName }}</b>
+      </h3>
+      <h3 for="">
+        Moving amount: <b>{{ movingAmount }}</b>
+      </h3>
+      <p>Select Destination Room:</p>
+      <div class="destination-table-container">
+        <table class="list-table">
+          <thead>
+            <tr>
+              <th>Room name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let room of destinationRooms"
+              class="equipment-table-row"
+              (click)="selectDestinationRoom(room)"
+            >
+              <td>{{ room.name }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="moving-container" *ngIf="currentState.index == 4">
+      <h3 for="">
+        Selected equipment: <b>{{ selectedEquipment!.name }}</b>
+      </h3>
+      <h3 for="">
+        Selected room: <b>{{ startRoom!.roomName }}</b>
+      </h3>
+      <h3 for="">
+        Moving amount: <b>{{ movingAmount }}</b>
+      </h3>
+      <h3 for="">
+        Destination room: <b>{{ destinationRoom!.name }}</b>
+      </h3>
+
+      <div style="text-align: center; margin: 10px 0">
+        <label for="" style="float: left">Select interval for transport</label>
+        <mat-form-field class="example-form-field" appearance="fill">
+          <mat-date-range-input
+            [formGroup]="interval"
+            [rangePicker]="campaignOnePicker"
+          >
+            <input
+              matStartDate
+              placeholder="Start date"
+              formControlName="start"
+            />
+            <input matEndDate placeholder="End date" formControlName="end" />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="campaignOnePicker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+      <div>
+        <label for="">Enter etimate duration time (in hours):</label> <br />
+        <input
+          type="number"
+          class="fill-form-field"
+          [(ngModel)]="estimateHours"
+          name="input"
+          min="0"
+          placeholder="Enter duration here...."
+        />
+      </div>
+    </div>
+
+    <div class="moving-container" *ngIf="currentState.index == 5">
+      <h2 for="">Preview</h2>
+      <h3 for="">
+        Selected equipment: <b>{{ selectedEquipment!.name }}</b>
+      </h3>
+      <h3 for="">
+        Selected room: <b>{{ startRoom!.roomName }}</b>
+      </h3>
+      <h3 for="">
+        Moving amount: <b>{{ movingAmount }}</b>
+      </h3>
+      <h3 for="">
+        Destination room: <b>{{ destinationRoom!.name }}</b>
+      </h3>
+      <h3 for="">
+        Estimate duration: <b>{{ estimateHours }}</b>
+      </h3>
+    </div>
+
+    <div *ngIf="!!suggestion">
+      <p>Suggested periods:</p>
+      <b
+        for=""
+        style="
+          display: block;
+          text-align: center;
+          background-color: cadetblue;
+          margin: 0 5px;
+          border-radius: 2px;
+          margin-bottom: 20px;
+        "
+        >{{ suggestion!.startDate | date: "short" }} -
+        {{ suggestion!.endDate | date: "short" }}</b
+      >
+    </div>
+    <div class="position-bottom">
+      <button
+        class="btn"
+        style="flex: 1"
+        (click)="goBack()"
+        [disabled]="currentState.index == 0"
+      >
+        Back
       </button>
-      <button class="btn" (click)="save()" *ngIf="!formDisabled">Save</button>
+      <button
+        class="btn"
+        style="flex: 1"
+        (click)="goNext()"
+        [disabled]="disableNextButton()"
+      >
+        {{ currentState.index == 5 ? "Move" : "Next" }}
+      </button>
+    </div>
+    <div class="position-bottom">
+      <!-- <button class="btn">Schedule</button> -->
+      <button class="btn" (click)="closeMovingContainer()">Close</button>
     </div>
   </div>
 
-  <div *ngIf="!!equipmentBox">
-    <table class="equipment-table">
-    <thead>
-      <tr><th>   Name</th><th>Type</th><th>Amount</th></tr>
-    </thead>
-    <tbody >
-      <tr *ngFor="let item of selectedRoom.equipments">
-        <td>{{item.name}}</td><td>{{item.type}}</td><td>{{item.amount}}</td>
-      </tr>     
-    </tbody>
-    </table>
-    <div class="rightbtn">
-      <button class="btn" (click)="closeEquip()">Close</button>
-    </div>
-  </div>
-</div>
-
-<div class="list-box-equipment" *ngIf="!!listBoxEquipment">
-  <h3>EQUIPMENT</h3>
-  <table class="list-table">
-    <thead>
-      <tr><th>NAME</th><th>TYPE</th></tr>
-    </thead>
-    <tbody> </tbody>
-  </table>
-</div>
-
-<div class="move-box-equipment" *ngIf="!!moveBoxEquipment">
-  <h3>MOVING</h3>
-  <div class="labels-box">
-    <div class="label-container">
-      <label for="">Start room:</label>
-      <select class="browser-default custom-select">
-        <option selected>Pick a room</option>
-        <option *ngFor="let room of rooms"  [value]="room.id">{{room.name}}</option>
-      </select>
-    </div>
-    <div class="label-container">
-      <label for="">Start room floor:</label>
-      <input type="text" class="fill-form-field" [(ngModel)]="selectedRoom.purpose" name="input" [attr.disabled]="formDisabled ? '' : null"/>
-    </div>
-    <div class="label-container">
-      <label for="">Amount:</label>
-      <input type="text" class="fill-form-field" [(ngModel)]="selectedRoom.purpose" name="input" [attr.disabled]="formDisabled ? '' : null"/> 
-    </div>
-    <div class="label-container">
-      <label for="">Destination room:</label>
-      <select class="browser-default custom-select">
-        <option selected>Pick a room</option>
-        <option *ngFor="let room of rooms"  [value]="room.id">{{room.name}}</option>
-      </select>
-    </div>
-    <div class="label-container">
-      <label for="">Destination room floor:</label>
-      <input type="text" class="fill-form-field" [(ngModel)]="selectedRoom.purpose" name="input" [attr.disabled]="formDisabled ? '' : null"/>
-    </div>
-  </div>
-  <div>
-    <br /><button class="round-button"></button>
-    <button class="round-button"></button> <br />
-  </div>
-  <div class="center-buttons">
-    <br /><br /><br /><button class="btn">Schedule</button>
-    <button class="btn">Close</button>
-  </div>
-</div>
-
-  <div class="search-box-rooms" >
-    <input class="search-txt-rooms" type="text" name="" placeholder="Search for..." >
+  <div class="search-box-rooms">
+    <input
+      class="search-txt-rooms"
+      type="text"
+      name=""
+      placeholder="Search for..."
+    />
     <a class="search-btn-rooms" (click)="searchEquipment()">
       <i class="fas fa-search"></i>
     </a>
@@ -216,10 +383,21 @@
   <div class="search-radio-buttons">
     <form>
       <label class="radio-inline">
-        <input type="radio" name="optradio" value="rooms" (change)="setSearchCriteria()" checked>Rooms
+        <input
+          type="radio"
+          name="optradio"
+          value="rooms"
+          (change)="setSearchCriteria()"
+          checked
+        />Rooms
       </label>
       <label class="radio-inline">
-        <input type="radio" name="optradio" value="equipment" (change)="setSearchCriteria()">Equipment
+        <input
+          type="radio"
+          name="optradio"
+          value="equipment"
+          (change)="setSearchCriteria()"
+        />Equipment
       </label>
     </form>
   </div>
@@ -228,10 +406,13 @@
     <h3>Search result</h3>
     <table class="list-table">
       <thead>
-        <tr><th>NAME</th><th>AMOUNT</th><th>ROOM</th></tr>
+        <tr>
+          <th>NAME</th>
+          <th>AMOUNT</th>
+          <th>ROOM</th>
+        </tr>
       </thead>
-      <tbody> </tbody>
+      <tbody></tbody>
     </table>
   </div>
-
 </div>

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { Building } from '../data/building';
-import { BUILDINGS } from '../data/mock-buildings';
+//import { BUILDINGS } from '../data/mock-buildings';
 import { Parking } from '../data/parking';
 import { BuildingsService } from './buildings.service';
 

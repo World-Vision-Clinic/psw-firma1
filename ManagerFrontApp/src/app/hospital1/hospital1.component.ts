@@ -1,10 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Building } from '../data/building';
+//import { Building } from '../data/building';
+import { Equipment } from '../data/equipment';
 import { Floor } from '../data/floor';
-import { BUILDINGS } from '../data/mock-buildings';
+import { iEquipmentRoom } from '../data/iEquipmentRoom';
+//import { BUILDINGS } from '../data/mock-buildings';
 import { ROOMS } from '../data/mock-rooms';
 import { emptyRoom, Room } from '../data/room';
 import { HospitalService } from './hospital.service';
@@ -15,19 +19,35 @@ import { HospitalService } from './hospital.service';
 })
 export class Hospital1Component implements OnInit {
   hospitalId;
+  interval: FormGroup;
+  //destinationRoom: iEquipmentRoom | null = null;
+  movingAmount: number | null = null;
   loadingFloors = true;
   loadingHospital = true;
-  floors;
-  building = BUILDINGS;
+  floors: Floor[] = [];
+  building: Building[] = [];
   rooms = ROOMS;
   selectedRoom_ = null;
   selectedBuilding;
   selectedFloor;
+  startRoom: iEquipmentRoom | null = null;
+  selectedEquipment: Equipment | null = null;
+  roomsList: iEquipmentRoom[] = [];
+  destinationRooms: Room[] | null = [];
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private hospitalService: HospitalService
-  ) {}
+  ) {
+    const today = new Date();
+    const month = today.getMonth();
+    const year = today.getFullYear();
+
+    this.interval = new FormGroup({
+      start: new FormControl(),
+      end: new FormControl(),
+    });
+  }
   btntext = 'Edit';
   buildingFormDisabled = true;
   roomName: string = '';
@@ -41,9 +61,72 @@ export class Hospital1Component implements OnInit {
   moveBoxEquipment: boolean = false;
   searchEquipmentResultBox: boolean = false;
   searchRooms: boolean = true;
+  allEquipment: any[] = [];
+
+  currentState = {
+    index: 0,
+  };
 
   enableEdit() {
     this.formDisabled = false;
+  }
+
+  selectStartRoom(room) {
+    this.startRoom = room;
+    this.currentState.index = 2;
+    const allRooms = this.floors
+      .map((e) => e.rooms)
+      .reduce((accumulator, value) => accumulator.concat(value), []);
+    console.log('All rooms: ', allRooms);
+
+    this.destinationRooms = allRooms.filter(
+      (e) => !!e.doorExist && e.name != room.roomName && e.name != 'TOILET'
+    );
+    console.log('Destination rooms: ', this.destinationRooms);
+  }
+
+  goBack() {
+    if (this.currentState.index > 0) this.currentState.index--;
+  }
+  estimateHours: number | null = null;
+  goNext() {
+    if (this.currentState.index <= 5) this.currentState.index++;
+    if (this.currentState.index == 5) this.getSuggestion(this.estimateHours);
+    if (this.currentState.index == 6) this.orderMovingEquipment();
+  }
+
+  orderMovingEquipment() {
+    const data = {
+      TargetRoomId: this.destinationRoom?.id,
+      TargetEqupmentId: this.selectedEquipment?.id,
+      startDate: this.suggestion?.startDate,
+      endDate: this.suggestion?.endDate,
+      Amount: this.movingAmount,
+    };
+    this.hospitalService.orderMoving(data).subscribe(
+      (d) => {
+        this.startRoom = null;
+        this.selectedEquipment = null;
+        this.destinationRoom = null;
+        this.movingAmount = null;
+        this.interval = new FormGroup({
+          start: new FormControl(),
+          end: new FormControl(),
+        });
+        this.estimateHours = null;
+        this.listBoxEquipment = false;
+        this.currentState.index = 0;
+        this.suggestion = null;
+        console.log('Hura iznenilo seee!!!');
+      },
+      (e) => {}
+    );
+  }
+
+  destinationRoom: Room | null = null;
+  selectDestinationRoom(room) {
+    this.destinationRoom = room;
+    this.currentState.index++;
   }
 
   cancel() {
@@ -100,7 +183,7 @@ export class Hospital1Component implements OnInit {
   }
 
   equipment() {
-    this.equipmentBox = true;    
+    this.equipmentBox = true;
   }
 
   closeEquip() {
@@ -108,8 +191,63 @@ export class Hospital1Component implements OnInit {
   }
 
   moveEquipment() {
+    this.loadAllEquipment();
     this.listBoxEquipment = true;
     this.moveBoxEquipment = true;
+  }
+  loadAllEquipment() {
+    const hospitalId = this.router.url.split('/')[2];
+    this.hospitalService.getEquipments(hospitalId, '').subscribe(
+      (data) => {
+        this.allEquipment = data.sort((a, b) => (a.name < b.name ? -1 : 1));
+      },
+      (error) => console.log(error)
+    );
+  }
+  suggestion: any = null;
+
+  getSuggestion(time) {
+    const startDate = this.interval.controls['start'].value;
+    const endDate = this.interval.controls['end'].value;
+    console.log('Dates: ', startDate, endDate);
+
+    const hospitalId = this.router.url.split('/')[2];
+    this.hospitalService
+      .getSuggestionForPeriod(hospitalId, startDate, endDate, time)
+      .subscribe(
+        (data) => {
+          this.suggestion = data;
+          console.log(data);
+        },
+        (e) => console.log(e)
+      );
+  }
+
+  closeMovingContainer() {
+    this.startRoom = null;
+    this.selectedEquipment = null;
+  }
+  disableNextButton() {
+    if (this.currentState.index == 0 && !this.selectedEquipment) return true;
+    else if (this.currentState.index == 1 && !this.startRoom) return true;
+    else if (this.currentState.index == 2 && !this.movingAmount) return true;
+    else if (this.currentState.index == 3 && !this.destinationRoom) return true;
+    else if (this.currentState.index == 4 && !this.estimateHours) return true;
+    return false;
+  }
+
+  selectEquipment(eq: Equipment) {
+    this.selectedEquipment = eq;
+    this.startRoom = null;
+    const hospitalId = this.router.url.split('/')[2];
+    this.hospitalService.getEquipmentRooms(hospitalId, eq.name).subscribe(
+      (data) => {
+        console.log(data);
+        this.currentState.index++;
+        this.roomsList = data;
+      },
+      (err) => console.log(err)
+    );
   }
 
   searchEquipment() {
@@ -162,12 +300,12 @@ export class Hospital1Component implements OnInit {
     );
   }
 
-  async loadEquipment(id: number){
+  async loadEquipment(id: number) {
     this.hospitalService.getEquipment(id).subscribe(
-    (data)=>{
-      this.selectedRoom.equipments=data.equipments;
-    },
-    (error) => console.log(error)
+      (data) => {
+        this.selectedRoom.equipments = data.equipments;
+      },
+      (error) => console.log(error)
     );
   }
 }
