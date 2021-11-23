@@ -22,7 +22,7 @@ namespace IntegrationTests.IntegrationTests
             OrderedMedicineDTO omd = new OrderedMedicineDTO("Amoksicilin", "Zdravko", "none", "2 times a day", "200", "none", "none", "2", null, 200);
             MedicinesRepository mr = new MedicinesRepository();
             int oldCount = mr.GetAll().Count;
-            MedicinesController pc = new MedicinesController();
+            MedicinesController pc = new MedicinesController(new PharmacyHTTPConnection());
 
             pc.Ordered(omd);
 
