@@ -15,6 +15,8 @@ namespace Hospital.Schedule.Repository
         public bool SurveyExists(int id);
         public List<Survey> GetAll();
         public List<SurveyQuestion> GetAllQuestions();
-        
+        List<AnsweredSurveyQuestion> GetAllAnsweredQuestions();
+
+        public List<SurveyAnswerBreakdown> GetAnsweredQuestionsBreakdown();
     }
 }

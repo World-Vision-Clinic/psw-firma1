@@ -18,6 +18,7 @@ import { ObjectionFormPageComponent } from './manager-integration-front-app/obje
 import { ManagerFeedbackViewComponent } from './manager-feedback-view/manager-feedback-view.component';
 import { PharmaciesComponent } from './manager-integration-front-app/pharmacies/pharmacies.component';
 import { NewsComponent } from './manager-integration-front-app/news/news.component';
+import { ViewSurveyResultsComponent } from './view-survey-results/view-survey-results.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { NewsComponent } from './manager-integration-front-app/news/news.compone
     ManagerFeedbackViewComponent,
     ManagerIntegrationFrontAppComponent,
     PharmaciesComponent,
-    NewsComponent
+    NewsComponent,
+    ViewSurveyResultsComponent
   ],
   imports: [
     BrowserModule,

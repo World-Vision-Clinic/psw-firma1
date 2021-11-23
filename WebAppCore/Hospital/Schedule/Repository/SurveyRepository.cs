@@ -60,5 +60,27 @@ namespace Hospital.Schedule.Repository
         {
             return _context.Questions.ToList();
         }
+
+        public List<SurveyAnswerBreakdown> GetAnsweredQuestionsBreakdown()  //TODO: napraviti upit koji ce dobavljati pitanja koja su vezana za neku konkretnu anketu, umesto da dobavlja apsolutno sva pitanja  iz baze
+        {
+            var tmp = _context.AnsweredQuestions
+                   .GroupBy(p => p.Question)
+                   .Select(g => new { Question = g.Key, Average = g.Average(i => i.Answer) }).ToList();
+
+            List<SurveyAnswerBreakdown> answeredQuestionsBreakdown = new List<SurveyAnswerBreakdown>();
+            foreach (var g in tmp)
+            {
+                SurveyAnswerBreakdown newAnsweredQuestionBreakdown = new SurveyAnswerBreakdown();
+                newAnsweredQuestionBreakdown.Question = g.Question;
+                newAnsweredQuestionBreakdown.Average = g.Average;
+                answeredQuestionsBreakdown.Add(newAnsweredQuestionBreakdown);
+            }
+            return answeredQuestionsBreakdown;
+        }
+
+        public List<AnsweredSurveyQuestion> GetAllAnsweredQuestions()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

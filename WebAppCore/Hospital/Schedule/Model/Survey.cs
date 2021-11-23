@@ -28,12 +28,5 @@ namespace Hospital.Schedule.Model
             this.IdAppointment = idAppointment;
 
         }
-       
-
-        
-      
-
-       
-
     }
 }

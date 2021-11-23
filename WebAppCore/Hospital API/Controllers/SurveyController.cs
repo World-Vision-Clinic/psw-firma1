@@ -47,6 +47,12 @@ namespace Hospital_API
             return Ok(dtoList);
         }
 
+        [HttpGet("answered_questions_breakdown")]
+        public ActionResult<IEnumerable<SurveyAnswerBreakdown>> GetAnsweredQuestionsBreakdown()
+        {
+            return surveyService.GetAnsweredQuestionsBreakdown();
+        }
+
         [HttpPost]
         public ActionResult<Survey> PostSuveyQuestions([FromBody] List<QuestionDTO> questions)
         {
