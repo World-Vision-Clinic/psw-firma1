@@ -100,7 +100,7 @@ namespace IntegrationTests.UnitTests
             SftpHandler sftp = new SftpHandler();
 
             // Act
-            bool downloaded = sftp.DownloadSpecification("/public/Specification.txt");
+            bool downloaded = sftp.DownloadSpecification("/public/Proba.txt");
 
             // Assert
             Assert.True(downloaded);
