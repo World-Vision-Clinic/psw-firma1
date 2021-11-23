@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Hospital.MedicalRecords.Repository
 {
-    interface IAllergenRepository
+    public interface IAllergenRepository
     {
         public void SaveSync();
         public Allergen FindById(int id);
