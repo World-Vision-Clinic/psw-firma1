@@ -70,7 +70,48 @@ namespace PharmacyAPI.Controller
                 return BadRequest("Api Key was not provided");
             }
 
-            return Ok();
+            Hospital hospital = hospitalService.GetHospitalByApiKey(extractedApiKey);
+            if (hospital == null)
+            {
+                return BadRequest("Api Key is not valid!");
+            }
+
+            if (!dto.Test)
+            {
+                Medicine medicine = new Medicine(dto.MedicineName, Double.Parse(dto.MedicineGrams), int.Parse(dto.NumOfBoxes));
+                Medicine med = service.FoundOrderedMedicine(medicine);
+                service.OrderMedicine(medicine);
+
+                var client = new RestSharp.RestClient(hospital.Localhost);
+                var request = new RestRequest("/medicines/ordered");
+                request.AddHeader("Content-Type", "application/json");
+                List<string> replacements = service.FoundReplacements(medicine);
+                request.AddJsonBody(
+                new
+                {
+                    MedicineName = med.MedicineName,
+                    Manufacturer = med.Manufacturer,
+                    SideEffects = med.SideEffects,
+                    Usage = med.Usage,
+                    Weigth = med.Weigth,
+                    MainPrecautions = med.MainPrecautions,
+                    PotentialDangers = med.PotentialDangers,
+                    Quantity = dto.NumOfBoxes,
+                    Replacements = replacements,
+                    Price = med.Price
+                });
+                IRestResponse response = client.Post(request);
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    return Ok();
+                }
+                return BadRequest();
+            }
+            else
+            {
+                return Ok();
+            }
         }
 
         [HttpGet("spec")]
