@@ -10,6 +10,8 @@ using System.Net;
 using Shouldly;
 using Integration.Pharmacy.Model;
 using Newtonsoft.Json;
+using Moq;
+using Microsoft.AspNetCore.Mvc;
 
 namespace IntegrationTests.IntegrationTests
 {
