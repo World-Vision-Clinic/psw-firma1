@@ -32,7 +32,7 @@ namespace Hospital_API.DTO
         {
             Building building = new Building();
             building.id = buildingDto.id;
-            building.Name = building.Name;
+            building.Name = buildingDto.name;
             building.Info = buildingDto.info;
             building.MapPositionId = buildingDto.mapPosition.id;
             building.Area = null;

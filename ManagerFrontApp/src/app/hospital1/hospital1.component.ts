@@ -60,13 +60,17 @@ export class Hospital1Component implements OnInit {
 
   save() {
     const index = this.selectedFloor.rooms.findIndex(
-      (e) => e.roomId === this.selectedRoom?.roomId
+      (e) => e.id === this.selectedRoom?.id
     );
+    const room = this.selectedRoom;
     this.selectedFloor.rooms[index] = this.selectedRoom;
     this.formDisabled = true;
     this.roomIsSelected = false;
     this.selectedRoom = emptyRoom();
-    console.log(this.selectedRoom);
+    this.hospitalService.updateRoom('' + room.id, room).subscribe(
+      (e) => console.log(e),
+      (e) => console.log(e)
+    );
   }
 
   calculateTextX(room: Room) {

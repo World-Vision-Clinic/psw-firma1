@@ -79,7 +79,7 @@
           {{ room.name }}
         </text>
         <rect
-          *ngIf="room.doorExists"
+          *ngIf="room.doorExist"
           [attr.x]="room.doorX"
           [attr.y]="room.doorY"
           [attr.width]="room?.vertical ? 6 : 35"
@@ -173,7 +173,7 @@
       <label for="">Start room:</label>
       <select class="browser-default custom-select">
         <option selected>Pick a room</option>
-        <option *ngFor="let room of rooms"  [value]="room.roomId">{{room.name}}</option>
+        <option *ngFor="let room of rooms"  [value]="room.id">{{room.name}}</option>
       </select>
     </div>
     <div class="label-container">
@@ -188,7 +188,7 @@
       <label for="">Destination room:</label>
       <select class="browser-default custom-select">
         <option selected>Pick a room</option>
-        <option *ngFor="let room of rooms"  [value]="room.roomId">{{room.name}}</option>
+        <option *ngFor="let room of rooms"  [value]="room.id">{{room.name}}</option>
       </select>
     </div>
     <div class="label-container">

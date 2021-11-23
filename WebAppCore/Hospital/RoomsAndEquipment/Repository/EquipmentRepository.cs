@@ -27,10 +27,19 @@ namespace Hospital.RoomsAndEquipment.Repository
         internal List<Equipment> GetRoomEquipemnts(int roomId)
         {
             List<Equipment> allEq = new List<Equipment>();
-            dbContext.AllEquipment.ToList().ForEach(eq =>
+            try
             {
-                if (eq.RoomId == roomId) allEq.Add(eq);
-            });
+                dbContext.AllEquipment.ToList().ForEach(eq =>
+                {
+                    if (eq.RoomId == roomId) allEq.Add(eq);
+                });
+            }
+            catch
+            {
+
+            }
+            
+            
             return allEq;
         }
 

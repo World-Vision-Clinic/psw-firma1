@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Building } from '../data/building';
+import { Room } from '../data/room';
 
 @Injectable({
   providedIn: 'root',
@@ -9,19 +10,33 @@ import { Building } from '../data/building';
 export class HospitalService {
   constructor(private http: HttpClient) {}
 
-  getHospital(id): Observable<Building> {
+  getHospital(id: string): Observable<Building> {
     return this.http.get<Building>(
       `http://localhost:39901/api/Buildings/${id}`
     );
   }
-  updateHospital(id, hospital): Observable<boolean> {
+
+  updateHospital(id: string, hospital: Building): Observable<boolean> {
+    const headers = { 'content-type': 'application/json' };
     return this.http.put<boolean>(
-      `http://localhost:39901/api/Buildings/${id}`,
-      hospital
+      `http://localhost:39901/api/buildings/${id}`,
+      hospital,
+      { headers }
     );
   }
 
-  getFloors(id): Observable<Building> {
+  updateRoom(id: string, room: Room): Observable<boolean> {
+    console.log(room);
+
+    const headers = { 'content-type': 'application/json' };
+    return this.http.put<boolean>(
+      `http://localhost:39901/api/Rooms/${id}`,
+      room,
+      { headers }
+    );
+  }
+
+  getFloors(id: string): Observable<Building> {
     return this.http.get<Building>(
       `http://localhost:39901/api/floors?buildingId=${id}`
     );

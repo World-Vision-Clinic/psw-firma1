@@ -18,7 +18,7 @@ using Hospital_API.Mapper;
 
 namespace Hospital_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Rooms")]
     [ApiController]
     public class RoomsController : ControllerBase
     {
@@ -30,8 +30,7 @@ namespace Hospital_API.Controllers
         private MapPositionService mapPositionService = new MapPositionService(new MapPositionRepository(new Hospital.SharedModel.HospitalContext()));
         private OutsideDoorService outsideDoorService = new OutsideDoorService(new OutsideDoorRepository(new Hospital.SharedModel.HospitalContext()));
 
-        // GET FLOORS FOR BUILDING
-        // GET: api/Floors?buildingId=3
+       
         [HttpGet]
         public ActionResult<IEnumerable<Room>> GetRooms()
         {
@@ -57,10 +56,10 @@ namespace Hospital_API.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public IActionResult PutBuilding(int id, RoomDTO roomDto)
+        public IActionResult PutRooms(int id, Room room)
 
         {
-            Room room = roomDto.toRoom();
+            //Room room = roomDto.toRoom();
             if (id != room.id)
             {
                 return BadRequest();
