@@ -31,6 +31,7 @@ namespace Integration_API.Controller
             pharmacyConnection = connection;
         }
 
+
         [HttpGet("check")]
         public IActionResult CheckMedicineAvailability(string name = "", string dosage = "", string quantity = "")
         {

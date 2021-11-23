@@ -92,7 +92,7 @@ namespace Pharmacy.Service
         {
             foreach (Medicine med in GetAll())
             {
-                if (med.MedicineName.Equals(medicine.MedicineName))
+                if (med.MedicineName.Equals(medicine.MedicineName) && med.Weigth == medicine.Weigth)
                 {
                     return med;
                 }
