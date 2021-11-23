@@ -12,22 +12,12 @@ namespace PharmacyApplicationTests.IntegrationTests
     {
 
         [Fact]
-        public void Update_medicine_true()
-        {
-            MedicineService service = new MedicineService(new MedicineRepository());
-            Medicine brufen = new Medicine(151521554, "Brufen", "Galenika 22", "sideEffects1", "usage1", new List<SubstituteMedicine>(), 200.00, "mainPrecautions1", "potentialDangers1", null, 100);
-
-            Assert.True(service.UpdateMedicine(brufen));
-
-        }
-
-        [Fact]
         public void Add_medicine_true()
         {
 
             MedicineService service = new MedicineService(new MedicineRepository());
 
-            Medicine strepsils = new Medicine(201, "Strepsils", "Galenika", "sideEffects1", "usage1", new List<SubstituteMedicine>(), 200.00, "mainPrecautions1", "potentialDangers1", null, 100);
+            Medicine strepsils = new Medicine(262, "Strepsils", "Galenika", "sideEffects1", "usage1", new List<SubstituteMedicine>(), 200.00, "mainPrecautions1", "potentialDangers1", null, 100);
 
 
             Assert.True(service.AddMedicine(strepsils));
