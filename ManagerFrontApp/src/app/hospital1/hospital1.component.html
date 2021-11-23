@@ -1,11 +1,11 @@
 <div class="title">
   <h1></h1><h2> ROOMS MAP</h2>
 </div>
-<div class="page-nav">
-  <div class="floor-selection">
+<div class="page-nav" >
+  <div class="floor-selection" *ngIf="!loadingFloors">
     <label for="">Floors:</label>
     <button
-      *ngFor="let floor of selectedBuilding.floors; index as i"
+      *ngFor="let floor of floors; index as i"
       (click)="selectFloor(floor)"
       class="floor-button"
       [ngClass]="{
@@ -16,8 +16,8 @@
     </button>
     <button (click)="takeOut()" class="floor-button">🚪 Exit</button>
   </div>
-  <div style="margin: 0 10px; position: relative">
-    <div class="building-info">
+  <div style="margin: 0 10px; position: relative"  >
+    <div class="building-info" *ngIf="!loadingHospital">
       <div style="text-align: center">
         <h3 style="align-self: flex-start; font-size: 17px;">Building info:</h3>
       </div>
@@ -50,7 +50,7 @@
           </button>
           <button
             class="btn"
-            (click)="buildingFormDisabled = true"
+            (click)="saveHospital()"
             *ngIf="!buildingFormDisabled"
           >
             Done
@@ -60,7 +60,7 @@
         </div>
       </div>
     </div>
-    <svg width="850" height="700">
+    <svg width="850" height="700" *ngIf="!loadingFloors">
       <rect x="0" y="150" width="841" height="451" class="floor" />
       <g *ngFor="let room of selectedFloor.rooms">
         <rect
@@ -68,7 +68,7 @@
           [attr.y]="room.y"
           [attr.width]="room.width"
           [attr.height]="room.height"
-          [attr.class]="room.class"
+          [attr.class]="room.css"
           (click)="selectRoom(room)"
         />
         <text
@@ -79,7 +79,7 @@
           {{ room.name }}
         </text>
         <rect
-          *ngIf="room.doorExists"
+          *ngIf="room.doorExist"
           [attr.x]="room.doorX"
           [attr.y]="room.doorY"
           [attr.width]="room?.vertical ? 6 : 35"
@@ -145,7 +145,7 @@
       <tr><th>   Name</th><th>Type</th><th>Amount</th></tr>
     </thead>
     <tbody >
-      <tr *ngFor="let item of selectedRoom.equipment">
+      <tr *ngFor="let item of selectedRoom.equipments">
         <td>{{item.name}}</td><td>{{item.type}}</td><td>{{item.amount}}</td>
       </tr>     
     </tbody>
@@ -173,7 +173,7 @@
       <label for="">Start room:</label>
       <select class="browser-default custom-select">
         <option selected>Pick a room</option>
-        <option *ngFor="let room of rooms"  [value]="room.roomId">{{room.name}}</option>
+        <option *ngFor="let room of rooms"  [value]="room.id">{{room.name}}</option>
       </select>
     </div>
     <div class="label-container">
@@ -188,7 +188,7 @@
       <label for="">Destination room:</label>
       <select class="browser-default custom-select">
         <option selected>Pick a room</option>
-        <option *ngFor="let room of rooms"  [value]="room.roomId">{{room.name}}</option>
+        <option *ngFor="let room of rooms"  [value]="room.id">{{room.name}}</option>
       </select>
     </div>
     <div class="label-container">

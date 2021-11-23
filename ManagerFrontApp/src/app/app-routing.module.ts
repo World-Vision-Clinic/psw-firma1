@@ -14,7 +14,7 @@ import { NewsComponent } from './manager-integration-front-app/news/news.compone
 const routes: Routes = [
   {path: "", component: FrontPageComponent},
   {path:"buildings", component: BuildingsMapComponent},
-  {path:"hospital1", component: Hospital1Component},
+  {path:"hospital/:hospitalId", component: Hospital1Component},
   {path:"pharmacy-registration", component: PharmacyRegistrationComponent},
   {path:"manager-front-app", component: ManagerIntegrationFrontAppComponent, children: [
   {path: "overview-objections-replies", outlet: "showObjRepl", component:OverviewObjectionsRepliesComponent},
