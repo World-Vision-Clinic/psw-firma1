@@ -100,7 +100,7 @@ export class Hospital1Component implements OnInit {
   }
 
   equipment() {
-    this.equipmentBox = true;
+    this.equipmentBox = true;    
   }
 
   closeEquip() {
@@ -159,6 +159,15 @@ export class Hospital1Component implements OnInit {
         this.loadingHospital = false;
       },
       (error) => console.log(error)
+    );
+  }
+
+  async loadEquipment(id: number){
+    this.hospitalService.getEquipment(id).subscribe(
+    (data)=>{
+      this.selectedRoom.equipments=data.equipments;
+    },
+    (error) => console.log(error)
     );
   }
 }

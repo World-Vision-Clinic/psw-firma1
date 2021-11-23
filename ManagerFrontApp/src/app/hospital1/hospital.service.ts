@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Building } from '../data/building';
+import { Equipment } from '../data/equipment';
 import { Room } from '../data/room';
 
 @Injectable({
@@ -39,6 +40,12 @@ export class HospitalService {
   getFloors(id: string): Observable<Building> {
     return this.http.get<Building>(
       `http://localhost:39901/api/floors?buildingId=${id}`
+    );
+  }
+
+  getEquipment(roomid: number): Observable<Room>{
+    return this.http.get<Room>(
+      `http://localhost:39901/api/Rooms/${roomid}`
     );
   }
 }

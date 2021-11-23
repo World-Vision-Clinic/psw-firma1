@@ -4,7 +4,7 @@ export interface Room {
   id?: number;
   name: string;
   purpose: string;
-  equipment?: Equipment[];
+  equipments?: Equipment[];
   doctor: string;
   x: number;
   y: number;

@@ -38,7 +38,7 @@ export let BUILDINGS: Building[] = [
             name: 'OPERATING ROOM 1',
             doctor: '',
             purpose: '',
-            equipment: [
+            equipments: [
               { name: 'Bandage', type: 'Dynamic', amount: 15 },
               { name: 'Operating table', type: 'Static', amount: 2 },
               { name: 'Bed', type: 'Static', amount: 2 },
@@ -59,7 +59,7 @@ export let BUILDINGS: Building[] = [
             name: 'OPERATING ROOM 2',
             doctor: '',
             purpose: '',
-            equipment: [
+            equipments: [
               { name: 'Bandage', type: 'Dynamic', amount: 31 },
               { name: 'Operating table', type: 'Static', amount: 1 },
               { name: 'Bed', type: 'Static', amount: 1 },
@@ -80,7 +80,7 @@ export let BUILDINGS: Building[] = [
             name: 'OPERATING ROOM 3',
             doctor: '',
             purpose: '',
-            equipment: [
+            equipments: [
               { name: 'Bandage', type: 'Dynamic', amount: 15 },
               { name: 'Operating table', type: 'Static', amount: 2 },
               { name: 'Bed', type: 'Static', amount: 2 },
@@ -101,7 +101,7 @@ export let BUILDINGS: Building[] = [
             name: 'ROOM 1',
             doctor: '',
             purpose: '',
-            equipment: [
+            equipments: [
               { name: 'Bandage', type: 'Dynamic', amount: 15 },
               { name: 'Bed', type: 'Static', amount: 7 },
               { name: 'Infusion', type: 'Dynamic', amount: 15 },
@@ -121,7 +121,7 @@ export let BUILDINGS: Building[] = [
             name: 'ROOM 2',
             doctor: '',
             purpose: '',
-            equipment: [
+            equipments: [
               { name: 'Bandage', type: 'Dynamic', amount: 15 },
               { name: 'Bed', type: 'Static', amount: 5 },
               { name: 'Infusion', type: 'Dynamic', amount: 12 },
@@ -141,7 +141,7 @@ export let BUILDINGS: Building[] = [
             name: 'OFFICE 1',
             doctor: '',
             purpose: '',
-            equipment: [{ name: 'Chair', type: 'Static', amount: 5 }],
+            equipments: [{ name: 'Chair', type: 'Static', amount: 5 }],
             x: 730,
             y: 260,
             width: 110,
@@ -157,7 +157,7 @@ export let BUILDINGS: Building[] = [
             name: 'LIFT',
             doctor: '',
             purpose: '',
-            equipment: [],
+            equipments: [],
             x: 690,
             y: 370,
             width: 150,
@@ -173,7 +173,7 @@ export let BUILDINGS: Building[] = [
             name: 'TOILET',
             doctor: '',
             purpose: '',
-            equipment: [],
+            equipments: [],
             x: 730,
             y: 470,
             width: 110,
@@ -189,7 +189,7 @@ export let BUILDINGS: Building[] = [
             name: 'TOILET',
             doctor: '',
             purpose: '',
-            equipment: [],
+            equipments: [],
             x: 730,
             y: 540,
             width: 110,
@@ -205,7 +205,7 @@ export let BUILDINGS: Building[] = [
             name: 'OPERATING ROOM 2',
             doctor: '',
             purpose: '',
-            equipment: [],
+            equipments: [],
             x: 0,
             y: 410,
             width: 150,
@@ -221,7 +221,7 @@ export let BUILDINGS: Building[] = [
             name: 'ROOM 3',
             doctor: '',
             purpose: '',
-            equipment: [],
+            equipments: [],
             x: 160,
             y: 500,
             width: 100,
@@ -237,7 +237,7 @@ export let BUILDINGS: Building[] = [
             name: 'ROOM 4',
             doctor: '',
             purpose: '',
-            equipment: [],
+            equipments: [],
             x: 270,
             y: 500,
             width: 150,
@@ -253,7 +253,7 @@ export let BUILDINGS: Building[] = [
             name: 'ROOM 5',
             doctor: '',
             purpose: '',
-            equipment: [],
+            equipments: [],
             x: 430,
             y: 500,
             width: 150,
