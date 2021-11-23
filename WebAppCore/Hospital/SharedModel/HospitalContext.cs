@@ -13,6 +13,7 @@ namespace Hospital.SharedModel
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Allergen> Allergens { get; set; }
+        public DbSet<PatientAllergen> PatientAllergens { get; set; }
 
         public HospitalContext()
         {
