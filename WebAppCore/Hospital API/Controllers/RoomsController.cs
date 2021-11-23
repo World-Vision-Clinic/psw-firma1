@@ -34,6 +34,11 @@ namespace Hospital_API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Room>> GetRooms()
         {
+            foreach(Room room in roomService.getAll())
+            {
+                room.FloorId = room.id <= 13 ? 1 : 2;
+                roomService.Update(room);
+            }
             return roomService.getAll();
         }
 

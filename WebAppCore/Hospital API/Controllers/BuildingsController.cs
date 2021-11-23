@@ -28,18 +28,18 @@ namespace Hospital_API.Controllers
         private MapPositionService mapPositionService = new MapPositionService(new MapPositionRepository(new Hospital.SharedModel.HospitalContext()));
         private OutsideDoorService outsideDoorService = new OutsideDoorService(new OutsideDoorRepository(new Hospital.SharedModel.HospitalContext()));
 
-        // GET: api/Buildings
+        // GET: api/buildings
         [HttpGet]
         public ActionResult<IEnumerable<BuildingDTO>> GetBuildings()
         {
             List<BuildingDTO> buildings = new List<BuildingDTO>();
             foreach(Building building in buildingService.GetAll())
             {
-                //building.MapPositionId = building.id;
-                //buildingService.Update(building);
+                building.MapPositionId = building.id;
+                buildingService.Update(building);
                 buildings.Add(BuildingMapper.dataToBuildingSimpleDTO(building, mapPositionService));
             }
-            Console.WriteLine(buildings.ToString());
+            //Console.WriteLine(buildings.ToString());
             return buildings;
         }
 

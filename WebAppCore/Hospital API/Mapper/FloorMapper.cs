@@ -1,4 +1,5 @@
 ﻿using Hospital.GraphicalEditor.Model;
+using Hospital.RoomsAndEquipment.Model;
 using Hospital.RoomsAndEquipment.Service;
 using Hospital_API.DTO;
 using System;
@@ -10,10 +11,14 @@ namespace Hospital_API.Mapper
 {
     public class FloorMapper
     {
-        internal static FloorDTO floorToFloorDTO(Floor floor, RoomService roomService)
+        internal static FloorDTO floorToFloorDTO(Floor floor, RoomService roomService, EquipmentService equipmentService)
         {
             FloorDTO floorDto = new FloorDTO(floor);
-            floorDto.rooms = roomService.getRoomsForFloor(floor.id);
+            foreach(Room room in roomService.getRoomsForFloor(floor.id))
+            {
+                floorDto.rooms.Add(RoomMapper.dataToRoomDTO(room, equipmentService));
+            }
+            
             return floorDto;
         }
     }

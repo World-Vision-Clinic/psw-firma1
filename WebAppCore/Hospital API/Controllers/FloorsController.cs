@@ -36,7 +36,8 @@ namespace Hospital_API.Controllers
             List<FloorDTO> floors = new List<FloorDTO>();
             foreach (Floor floor in floorService.getFloorForBuilding(buildingId))
             {
-                floors.Add(FloorMapper.floorToFloorDTO(floor, roomService));
+               
+                floors.Add(FloorMapper.floorToFloorDTO(floor, roomService, equipmentService));
             }
             return floors.OrderBy(x => x.id).ToArray();
         }

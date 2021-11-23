@@ -12,7 +12,7 @@ namespace Hospital_API.DTO
         public int id { get; set; }
         public string level { get; set; }
         public string info { get; set; }
-        public List<Room> rooms { get; set; }
+        public List<RoomDTO> rooms { get; set; }
         private Floor floor;
 
         public FloorDTO(Floor floor)
@@ -20,7 +20,7 @@ namespace Hospital_API.DTO
             id = floor.id;
             level = floor.Level;
             info = floor.Info;
-            rooms = new List<Room>();
+            rooms = new List<RoomDTO>();
         }
     }
 }
