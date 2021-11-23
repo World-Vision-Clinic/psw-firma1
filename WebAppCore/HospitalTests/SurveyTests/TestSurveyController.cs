@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xunit;
 
@@ -73,6 +74,73 @@ namespace HospitalTests.SurveyTests
             Assert.Equal(200, result.StatusCode);
             Assert.NotNull(result.Value);
 
+        }
+
+        [Fact]
+        public void Test_check_survey_breakdown()
+        {
+
+            //Arrange
+            inMemoryRepo = GetInMemorySurveyRepository();
+
+            AnsweredSurveyQuestion question1Answer1 = new AnsweredSurveyQuestion
+            {
+                Id = 1,
+                Question = "Pitanje1",
+                Section = SurveySectionType.Hospital,
+                SurveyForeignKey = 3,
+                PatientForeignKey = 1,
+                Answer = 5
+            };
+
+            AnsweredSurveyQuestion question2Answer1 = new AnsweredSurveyQuestion
+            {
+                Id = 2,
+                Question = "Pitanje2",
+                Section = SurveySectionType.Hospital,
+                SurveyForeignKey = 3,
+                PatientForeignKey = 1,
+                Answer = 2
+            };
+
+            AnsweredSurveyQuestion question1Answer2 = new AnsweredSurveyQuestion
+            {
+                Id = 3,
+                Question = "Pitanje1",
+                Section = SurveySectionType.Hospital,
+                SurveyForeignKey = 4,
+                PatientForeignKey = 1,
+                Answer = 1
+            };
+
+            AnsweredSurveyQuestion question2Answer2 = new AnsweredSurveyQuestion
+            {
+                Id = 4,
+                Question = "Pitanje2",
+                Section = SurveySectionType.Hospital,
+                SurveyForeignKey = 4,
+                PatientForeignKey = 1,
+                Answer = 2
+            };
+
+
+            //Act
+            inMemoryRepo.AddAnswer(question1Answer1);
+            inMemoryRepo.AddAnswer(question2Answer1);
+            inMemoryRepo.AddAnswer(question1Answer2);
+            inMemoryRepo.AddAnswer(question2Answer2);
+
+            var controller = new SurveyController();
+
+            controller.surveyService = new SurveyService(inMemoryRepo);
+            var response = inMemoryRepo.GetAllAnsweredQuestions();
+
+            //Assert
+            Assert.Equal(4, response.Count);
+
+            var response2 = inMemoryRepo.GetAnsweredQuestionsBreakdown();
+            response = inMemoryRepo.GetAllAnsweredQuestions();
+            Assert.Equal(4, response.Count);
         }
 
         [Fact]

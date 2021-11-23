@@ -8,5 +8,6 @@ namespace Hospital.Schedule.Model
     {
         public string Question { get; set; }
         public double Average { get; set; }
+        public double[] RatingsCount { get; set; } 
     }
 }

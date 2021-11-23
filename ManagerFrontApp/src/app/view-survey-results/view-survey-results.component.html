@@ -1,4 +1,7 @@
 <div *ngFor = "let s of surveyBreakdowns; index as i">
     <h2>{{s.question}}</h2>
     <h4>{{s.average}}</h4>
+    <div *ngFor = "let rating of s.ratingsCount; index as ri">
+        <p>{{ri}}: {{rating}}</p>
+    </div>
 </div>
