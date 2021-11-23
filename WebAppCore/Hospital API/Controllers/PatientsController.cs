@@ -13,6 +13,7 @@ using Hospital.MedicalRecords.Model;
 using System.Net;
 using Hospital_API.DTO;
 using Hospital_API.Verification;
+using Hospital.SharedModel;
 
 namespace Hospital_API.Controllers
 {
@@ -22,10 +23,12 @@ namespace Hospital_API.Controllers
     {
         //private readonly HospitalContext _context;
         public PatientService _patientService { get; set; }
+        public PatientAllergenService _patientAllergenService { get; set; }
         private PatientVerification _verification { get; set; }
         public PatientsController()
         {
-            _patientService = new PatientService(new PatientRepository(new Hospital.SharedModel.HospitalContext()));
+            _patientService = new PatientService(new PatientRepository(new HospitalContext()));
+            _patientAllergenService = new PatientAllergenService(new PatientAllergenRepository(new HospitalContext(), new PatientRepository(), new AllergenRepository()));
             _verification = new PatientVerification();
         }
 
@@ -51,13 +54,19 @@ namespace Hospital_API.Controllers
         [HttpPost("register")]
         public HttpResponseMessage RegisterPatient([FromBody] PatientRegisterDTO patientDTO)
         {
-            if(!_verification.Verify(patientDTO)) //TODO: Refactor -> patientDTO.Verify();
+            if(!_verification.Verify(patientDTO))
             {
                 return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest };
             }
-            Console.WriteLine("Patient register here!");
             Patient patient = patientDTO.ToPatient();
             _patientService.RegisterPatient(patient);
+            foreach(int aid in patientDTO.Allergens)
+            {
+                patient = _patientService.FindByUserName(patientDTO.UserName);
+                if(patient == null)
+                    return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest };
+                _patientAllergenService.AddPatientAllergen(patient.Id, aid);
+            }
 
             return new HttpResponseMessage { StatusCode = HttpStatusCode.OK }; //TODO: Dodati smislene poruke ili redirect na "verifikacioni mejl poslat/resend"
         }
@@ -70,7 +79,7 @@ namespace Hospital_API.Controllers
             Console.WriteLine(testDTO.Count);
             Console.WriteLine("Test here");
 
-            return new HttpResponseMessage { StatusCode = HttpStatusCode.OK }; //TODO: Dodati smislene poruke ili redirect na "verifikacioni mejl poslat/resend"
+            return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }
 
     }

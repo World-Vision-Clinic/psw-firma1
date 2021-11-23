@@ -52,7 +52,6 @@ namespace Hospital_API.DTO
             patient.City = City;
             patient.EMail = EMail;
             patient.Phone = Phone;
-            patient.Allergens = 0;//Allergens
             patient.PreferedDoctor = PreferedDoctor;
             patient.Weight = Weight;
             patient.Height = Height;

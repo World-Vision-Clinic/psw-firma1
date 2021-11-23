@@ -24,7 +24,6 @@ namespace Hospital.MedicalRecords.Repository
 
         public void AddPatient(Patient newPatient)
         {
-            newPatient.Allergens = 0;
             _context.Patients.Add(newPatient);
             SaveSync();
         }
@@ -42,6 +41,11 @@ namespace Hospital.MedicalRecords.Repository
         public Patient FindByUserName(string username)
         {
             return _context.Patients.FirstOrDefault(p => p.UserName == username);
+        }
+
+        public Patient FindById(int id)
+        {
+            return _context.Patients.FirstOrDefault(p => p.Id == id);
         }
 
         public void Modify(Patient patient)
