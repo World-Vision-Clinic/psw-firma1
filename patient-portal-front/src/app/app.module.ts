@@ -12,6 +12,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatListModule} from '@angular/material/list';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import { enableProdMode } from '@angular/core';
 
 
@@ -51,6 +52,7 @@ import { MedicalRecordViewComponent } from './medical-record-view/medical-record
     MatRadioModule,
     MatListModule,
     MatCardModule,
+    MatTooltipModule,
     BrowserAnimationsModule
   ],
   providers: [
