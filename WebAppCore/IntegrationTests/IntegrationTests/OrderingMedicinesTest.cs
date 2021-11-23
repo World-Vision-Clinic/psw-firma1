@@ -42,7 +42,7 @@ namespace IntegrationTests.IntegrationTests
                     quantity = med.Quantity;
                 }
             }
-            MedicinesController pc = new MedicinesController();
+            MedicinesController pc = new MedicinesController(new PharmacyHTTPConnection());
 
             pc.Ordered(omd);
 
@@ -64,7 +64,7 @@ namespace IntegrationTests.IntegrationTests
         public void CheckIfMedicineIsOrdered()
         {
             OrderingMedicineDTO omd = new OrderingMedicineDTO("http://localhost:34616", "Brufen", "100", "2");
-            MedicinesController mc = new MedicinesController();
+            MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection());
             
             bool requestOk = mc.SendMedicineOrderingRequest(omd, true);
 
