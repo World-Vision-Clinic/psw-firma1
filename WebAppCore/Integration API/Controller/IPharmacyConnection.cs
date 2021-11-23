@@ -10,5 +10,7 @@ namespace Integration_API.Controller
     public interface IPharmacyConnection
     {
         bool SendRequestToCheckAvailability(string pharmacyLocalhost, MedicineDto medicineDto);
+
+        bool SendRequestForSpecification(string pharmacyLocalhost, string medicineName);
     }
 }
