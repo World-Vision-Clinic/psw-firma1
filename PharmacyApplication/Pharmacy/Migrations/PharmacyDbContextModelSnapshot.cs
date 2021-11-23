@@ -80,6 +80,9 @@ namespace Pharmacy.Migrations
                     b.Property<string>("PotentialDangers")
                         .HasColumnType("text");
 
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 

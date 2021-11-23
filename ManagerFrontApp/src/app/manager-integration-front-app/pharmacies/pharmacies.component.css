@@ -9,6 +9,10 @@ body {
     background-color: #f9f9fa
 }
 
+.none{
+  margin-left: 10%;
+}
+
 #page-content {
     margin-top: 20px
 }
@@ -78,8 +82,9 @@ a:not([href]):not([tabindex]):focus {
     }
 
     .col-sm-6 {
-        flex: 0 0 50%;
-        max-width: 50%
+      margin-left: 20%;
+        flex: 0 0 80%;
+        max-width: 80%
     }
 
     .col-sm-7 {
@@ -381,6 +386,10 @@ a:link {
       border-radius: .25rem;
       height: 50px;
       min-width: 20px;
+  }
+  #orderButton{
+    position: absolute;
+    margin-left: 100%;
   }
   .searchFilter .btn-secondary {
       color: #373a3c;

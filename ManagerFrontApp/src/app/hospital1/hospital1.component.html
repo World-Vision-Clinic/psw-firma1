@@ -1,6 +1,5 @@
 <div class="title">
-  <h1></h1>
-  <h2> ROOMS MAP</h2>
+  <h1></h1><h2> ROOMS MAP</h2>
 </div>
 <div class="page-nav">
   <div class="floor-selection">
@@ -56,6 +55,8 @@
           >
             Done
           </button>
+          <button (click)="moveEquipment()" class="btn">Move equipment</button>
+
         </div>
       </div>
     </div>
@@ -129,9 +130,7 @@
       <button class="btn" (click)="close()" *ngIf="formDisabled">Close</button>
       <div *ngIf="formDisabled"> 
       <button class="btn" (click)="equipment()">Equipment</button>
-      <button class="btn" (click)="enableEdit()" >
-        Edit
-      </button>
+      <button class="btn" (click)="enableEdit()" >Edit</button>
     </div>
       <button class="btn" (click)="cancel()" *ngIf="!formDisabled">
         Cancel
@@ -139,6 +138,7 @@
       <button class="btn" (click)="save()" *ngIf="!formDisabled">Save</button>
     </div>
   </div>
+
   <div *ngIf="!!equipmentBox">
     <table class="equipment-table">
     <thead>
@@ -156,11 +156,82 @@
   </div>
 </div>
 
+<div class="list-box-equipment" *ngIf="!!listBoxEquipment">
+  <h3>EQUIPMENT</h3>
+  <table class="list-table">
+    <thead>
+      <tr><th>NAME</th><th>TYPE</th></tr>
+    </thead>
+    <tbody> </tbody>
+  </table>
+</div>
+
+<div class="move-box-equipment" *ngIf="!!moveBoxEquipment">
+  <h3>MOVING</h3>
+  <div class="labels-box">
+    <div class="label-container">
+      <label for="">Start room:</label>
+      <select class="browser-default custom-select">
+        <option selected>Pick a room</option>
+        <option *ngFor="let room of rooms"  [value]="room.roomId">{{room.name}}</option>
+      </select>
+    </div>
+    <div class="label-container">
+      <label for="">Start room floor:</label>
+      <input type="text" class="fill-form-field" [(ngModel)]="selectedRoom.purpose" name="input" [attr.disabled]="formDisabled ? '' : null"/>
+    </div>
+    <div class="label-container">
+      <label for="">Amount:</label>
+      <input type="text" class="fill-form-field" [(ngModel)]="selectedRoom.purpose" name="input" [attr.disabled]="formDisabled ? '' : null"/> 
+    </div>
+    <div class="label-container">
+      <label for="">Destination room:</label>
+      <select class="browser-default custom-select">
+        <option selected>Pick a room</option>
+        <option *ngFor="let room of rooms"  [value]="room.roomId">{{room.name}}</option>
+      </select>
+    </div>
+    <div class="label-container">
+      <label for="">Destination room floor:</label>
+      <input type="text" class="fill-form-field" [(ngModel)]="selectedRoom.purpose" name="input" [attr.disabled]="formDisabled ? '' : null"/>
+    </div>
+  </div>
+  <div>
+    <br /><button class="round-button"></button>
+    <button class="round-button"></button> <br />
+  </div>
+  <div class="center-buttons">
+    <br /><br /><br /><button class="btn">Schedule</button>
+    <button class="btn">Close</button>
+  </div>
+</div>
+
   <div class="search-box-rooms" >
-    <input class="search-txt-rooms" type="text" name="" placeholder="Search for room" >
-    <a class="search-btn-rooms" href="#">
+    <input class="search-txt-rooms" type="text" name="" placeholder="Search for..." >
+    <a class="search-btn-rooms" (click)="searchEquipment()">
       <i class="fas fa-search"></i>
     </a>
+  </div>
+
+  <div class="search-radio-buttons">
+    <form>
+      <label class="radio-inline">
+        <input type="radio" name="optradio" value="rooms" (change)="setSearchCriteria()" checked>Rooms
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="optradio" value="equipment" (change)="setSearchCriteria()">Equipment
+      </label>
+    </form>
+  </div>
+
+  <div class="search-list-box-equipment" *ngIf="!!searchEquipmentResultBox">
+    <h3>Search result</h3>
+    <table class="list-table">
+      <thead>
+        <tr><th>NAME</th><th>AMOUNT</th><th>ROOM</th></tr>
+      </thead>
+      <tbody> </tbody>
+    </table>
   </div>
 
 </div>

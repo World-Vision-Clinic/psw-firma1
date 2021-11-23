@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Hospital.MedicalRecords.Repository
 {
-    public class PatientRepository
+    public class PatientRepository : IPatientRepository
     {
         private readonly HospitalContext _context;
 

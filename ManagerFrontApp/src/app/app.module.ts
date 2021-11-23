@@ -8,6 +8,7 @@ import { Hospital1Component } from './hospital1/hospital1.component';
 import { FrontPageComponent } from './front-page/front-page.component';
 import { RoomComponent } from './room/room.component';
 import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { PharmacyRegistrationComponent } from './pharmacy-registration/pharmacy-registration.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ManagerIntegrationFrontAppComponent } from './manager-integration-front-app/manager-integration-front-app.component';
@@ -18,6 +19,7 @@ import { ObjectionFormPageComponent } from './manager-integration-front-app/obje
 import { ManagerFeedbackViewComponent } from './manager-feedback-view/manager-feedback-view.component';
 import { PharmaciesComponent } from './manager-integration-front-app/pharmacies/pharmacies.component';
 import { NewsComponent } from './manager-integration-front-app/news/news.component';
+
 
 
 @NgModule({
@@ -34,7 +36,9 @@ import { NewsComponent } from './manager-integration-front-app/news/news.compone
     ManagerFeedbackViewComponent,
     ManagerIntegrationFrontAppComponent,
     PharmaciesComponent,
+
     NewsComponent
+
   ],
   imports: [
     BrowserModule,
@@ -43,7 +47,8 @@ import { NewsComponent } from './manager-integration-front-app/news/news.compone
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

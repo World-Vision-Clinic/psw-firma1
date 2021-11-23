@@ -29,19 +29,6 @@ namespace Integration.Pharmacy.Repository
             return dbContext.Pharmacies.ToList();
         }
 
-        public List<PharmacyProfile> GetFiltered(string searchFilter)
-        {
-            List<PharmacyProfile> pharmacies = new List<PharmacyProfile>();
-            foreach(PharmacyProfile pp in dbContext.Pharmacies.ToList())
-            {
-                if(pp.Address.ToLower().Contains(searchFilter.ToLower()) || pp.City.ToLower().Contains(searchFilter.ToLower()))
-                {
-                    pharmacies.Add(pp);
-                }
-            }
-            return pharmacies;
-        }
-
         public void Delete(string id)
         {
             throw new NotImplementedException();

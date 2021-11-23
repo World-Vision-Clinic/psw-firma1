@@ -5,6 +5,7 @@ using Pharmacy.Repository;
 using Pharmacy.Service;
 using PharmacyAPI.Dto;
 using Renci.SshNet;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,7 +20,8 @@ namespace PharmacyAPI.Controller
     {
         MedicineService service = new MedicineService(new MedicineRepository());
         HospitalsService hospitalService = new HospitalsService(new HospitalsRepository());
-        
+        CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
+
         [HttpGet("check")]
         public IActionResult CheckMedicineAvailability(string name = "", string dosage = "", string quantity = "")
         {
@@ -52,9 +54,20 @@ namespace PharmacyAPI.Controller
             }
 
 
-            if(!service.CheckQuantity(name, dosageInMg, quantityInBoxes))
+            if (!service.CheckQuantity(name, dosageInMg, quantityInBoxes))
             {
                 return BadRequest();
+            }
+
+            return Ok();
+        }
+
+        [HttpPost("OrderMedicine")]
+        public IActionResult OrderMedicine(OrderingMedicineDto dto)
+        {
+            if (!Request.Headers.TryGetValue("ApiKey", out var extractedApiKey))
+            {
+                return BadRequest("Api Key was not provided");
             }
 
             return Ok();
@@ -79,14 +92,14 @@ namespace PharmacyAPI.Controller
                 return BadRequest();
             }
 
-            name = name.Substring(0, 1).ToUpper() + name.Substring(1, name.Length-1);
+            name = name.Substring(0, 1).ToUpper() + name.Substring(1, name.Length - 1);
             List<Medicine> medicines = service.GetByName(name);
             if (medicines.Count <= 0)
             {
                 return BadRequest("Medicine don't exist");
             }
 
-            foreach(Medicine medicine in medicines)
+            foreach (Medicine medicine in medicines)
             {
                 createFile(service.GetSpecification(medicine));
                 break;
@@ -106,16 +119,16 @@ namespace PharmacyAPI.Controller
 
         private void uploadSpecification()
         {
-            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.21", "user", "password")))
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.28", "user", "password")))
             {
                 client.Connect();
 
                 string sourceFile = @"Specification.txt";
                 using (Stream stream = System.IO.File.OpenRead(sourceFile))
                 {
-                    client.UploadFile(stream, @"\public\" + Path.GetFileName(sourceFile));
+                    client.UploadFile(stream, @"\public" + Path.GetFileName(sourceFile));
                 }
-                
+
                 client.Disconnect();
             }
 

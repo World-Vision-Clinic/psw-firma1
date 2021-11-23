@@ -20,9 +20,36 @@ namespace Pharmacy.Service
             return repository.GetAll();
         }
 
+        public bool OrderMedicine(Medicine medicine)
+        {
+            foreach (Medicine med in GetAll())
+            {
+                if (med.MedicineName.Equals(medicine.MedicineName))
+                {
+                    med.Quantity -= medicine.Quantity;
+                    if (med.Quantity == 0)
+                    {
+                        DeleteMedicine(med.MedicineId);
+                        return true;
+                    }
+                    repository.SaveChanges();
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public Medicine GetById(long medicineId) 
         {
-            return repository.GetById(medicineId);
+            List<Medicine> medicines = repository.GetAll();
+            foreach(Medicine medicine in medicines)
+            {
+                if(medicine.MedicineId == medicineId)
+                {
+                    return medicine;
+                }
+            }
+            return null;
         }
 
         public bool AddMedicine(Medicine medinice)
@@ -44,7 +71,34 @@ namespace Pharmacy.Service
         {
             return repository.ProcureMedicine(medicineId, quantity);
         }
-      
+
+        public List<string> FoundReplacements(Medicine medicine)
+        {
+            List<string> replacementsId = new List<string>();
+            foreach (Medicine med in GetAll())
+            {
+                if (med.MedicineName.Equals(medicine.MedicineName))
+                {
+                    foreach (SubstituteMedicine sm in med.SubstituteMedicines)
+                    {
+                        replacementsId.Add(sm.Substitute.MedicineName);
+                    }
+                }
+            }
+            return replacementsId;
+        }
+
+        public Medicine FoundOrderedMedicine(Medicine medicine)
+        {
+            foreach (Medicine med in GetAll())
+            {
+                if (med.MedicineName.Equals(medicine.MedicineName))
+                {
+                    return med;
+                }
+            }
+            return null;
+        }
         public List<Medicine> GetByName(string name) //Does not have to be full name
         { 
             List<Medicine> medicines = new List<Medicine>();

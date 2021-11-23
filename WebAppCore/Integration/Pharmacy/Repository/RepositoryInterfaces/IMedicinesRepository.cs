@@ -11,6 +11,8 @@ namespace Integration.Repositories.Interfaces
     {
         List<string> GetAllMedicines();
         List<string> GetAllIngredients();
+        public void Add(Medicine medicine);
         void EditMedicine(Medicine editedMedicine);
+        public void SaveChanges();
     }
 }

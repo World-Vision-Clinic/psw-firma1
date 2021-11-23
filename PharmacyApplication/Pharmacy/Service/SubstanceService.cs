@@ -15,7 +15,6 @@ namespace Pharmacy.Service
             this.substanceRepository = substanceRepository;
         }
 
-
         public List<Substance> GetAll()
         {
             return substanceRepository.GetAll();
