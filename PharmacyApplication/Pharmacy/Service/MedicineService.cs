@@ -168,6 +168,33 @@ namespace Pharmacy.Service
             return false;
         }
 
+        public string GetSpecification(Medicine medicine)
+        {
+            string specificaton = "Name: " + medicine.MedicineName + "\n\n";
+            specificaton += "Weigth: " + medicine.Weigth + "mg\n\n";
+            specificaton += "Manufacturer: " + medicine.Manufacturer + "\n\n";
+            specificaton += "SideEffects: " + medicine.SideEffects + "\n\n";
+            specificaton += "Usage: " + medicine.Usage + "\n\n";
+            specificaton += "Main precautions: " + medicine.MainPrecautions + "\n\n";
+            specificaton += "Potential dangers: " + medicine.PotentialDangers + "\n\n";
+            specificaton += "Substances: ";
+            foreach (Substance substance in medicine.Substances)
+            {
+                specificaton += substance.Name + ", ";
+            }
 
+            specificaton = specificaton.Substring(0, specificaton.Length - 2);
+            specificaton += "\n\n";
+
+            specificaton += "Substitute medicines: ";
+            foreach (SubstituteMedicine substitute in medicine.SubstituteMedicines)
+            {
+                specificaton += substitute.Substitute.MedicineName + " " + substitute.Substitute.Weigth + "mg, ";
+            }
+
+            specificaton = specificaton.Substring(0, specificaton.Length - 2);
+
+            return specificaton;
+        }
     }
 }

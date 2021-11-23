@@ -4,9 +4,11 @@ using Pharmacy.Model;
 using Pharmacy.Repository;
 using Pharmacy.Service;
 using PharmacyAPI.Dto;
+using Renci.SshNet;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -68,54 +70,68 @@ namespace PharmacyAPI.Controller
                 return BadRequest("Api Key was not provided");
             }
 
+            return Ok();
+        }
+
+        [HttpGet("spec")]
+        public IActionResult GetMedicineSpecification(string name = "")
+        {
+            if (!Request.Headers.TryGetValue("ApiKey", out var extractedApiKey))
+            {
+                return BadRequest("Api Key was not provided");
+            }
+
             Hospital hospital = hospitalService.GetHospitalByApiKey(extractedApiKey);
             if (hospital == null)
             {
                 return BadRequest("Api Key is not valid!");
             }
 
-            if (!dto.Test)
+            if (name.Length <= 0)
             {
-                Medicine medicine = new Medicine(dto.MedicineName, Double.Parse(dto.MedicineGrams), int.Parse(dto.NumOfBoxes));
-                Medicine med = service.FoundOrderedMedicine(medicine);
-                service.OrderMedicine(medicine);
-
-                var client = new RestSharp.RestClient(hospital.Localhost);
-                var request = new RestRequest("/medicines/ordered");
-                request.AddHeader("Content-Type", "application/json");
-                List<string> replacements = service.FoundReplacements(medicine);
-                request.AddJsonBody(
-                new
-                {
-                    MedicineName = med.MedicineName,
-                    Manufacturer = med.Manufacturer,
-                    SideEffects = med.SideEffects,
-                    Usage = med.Usage,
-                    Weigth = med.Weigth,
-                    MainPrecautions = med.MainPrecautions,
-                    PotentialDangers = med.PotentialDangers,
-                    Quantity = dto.NumOfBoxes,
-                    Replacements = replacements,
-                    Price = med.Price
-                });
-                IRestResponse response = client.Post(request);
-
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    return Ok();
-                }
                 return BadRequest();
             }
-            else
+
+            name = name.Substring(0, 1).ToUpper() + name.Substring(1, name.Length - 1);
+            List<Medicine> medicines = service.GetByName(name);
+            if (medicines.Count <= 0)
             {
-                return Ok();
+                return BadRequest("Medicine don't exist");
             }
+
+            foreach (Medicine medicine in medicines)
+            {
+                createFile(service.GetSpecification(medicine));
+                break;
+            }
+
+            uploadSpecification();
+
+            return Ok();
         }
 
-        [HttpGet("test")]
-        public IActionResult TestingController()
+        private void createFile(string specification)
         {
-            return Ok("Hello from Medicine controller");
+            StreamWriter file = new StreamWriter("Specification.txt");
+            file.Write(specification);
+            file.Close();
+        }
+
+        private void uploadSpecification()
+        {
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.21", "user", "password")))
+            {
+                client.Connect();
+
+                string sourceFile = @"Specification.txt";
+                using (Stream stream = System.IO.File.OpenRead(sourceFile))
+                {
+                    client.UploadFile(stream, @"\public" + Path.GetFileName(sourceFile));
+                }
+
+                client.Disconnect();
+            }
+
         }
     }
 }
