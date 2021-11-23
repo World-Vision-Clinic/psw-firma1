@@ -92,9 +92,6 @@ namespace Hospital.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("text");
 
-                    b.Property<int>("Allergens")
-                        .HasColumnType("integer");
-
                     b.Property<int>("BloodType")
                         .HasColumnType("integer");
 
@@ -146,6 +143,24 @@ namespace Hospital.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("Hospital.MedicalRecords.Model.PatientAllergen", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("AllergenId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PatientAllergens");
                 });
 #pragma warning restore 612, 618
         }
