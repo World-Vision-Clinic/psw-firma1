@@ -48,6 +48,9 @@ export class PharmaciesComponent implements OnInit {
       this.PharmaciesList=data;
     });
   }
+  checkIfThereArePharmacies(){
+    return this.PharmaciesList.length == 0;
+  }
   orderMedicines(selectedPharmacy){
     const body = { Localhost: selectedPharmacy.Localhost, MedicineName: this.medicineName, MedicineGrams: this.medicineGrams, NumOfBoxes: this.numOfBoxes};
     this.http.put<any>('http://localhost:43818/medicines/OrderMedicine', body)
