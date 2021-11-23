@@ -18,7 +18,7 @@ namespace Integration_API.Controller
                     client.Connect();
 
                     string serverFile = @path;
-                    string localFile = @"Test.txt";
+                    string localFile = @"Specification.txt";
                     using (Stream stream = System.IO.File.OpenWrite(localFile))
                     {
                         client.DownloadFile(serverFile, stream);
