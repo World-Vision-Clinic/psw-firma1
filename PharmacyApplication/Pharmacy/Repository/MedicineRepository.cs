@@ -83,19 +83,6 @@ namespace Pharmacy.Repository
         }
 
 
-        public Boolean ProcureMedicine(long medicineId, int quantity)
-        {
-            Medicine medicine = dbContext.Medicines.ToList().FirstOrDefault(medicine => medicine.MedicineId == medicineId);
-            if(medicine == null)
-            {
-                return false;
-            }
-
-            medicine.Quantity -= quantity;
-            dbContext.Medicines.Update(medicine);
-            dbContext.SaveChanges();
-            return true;
-
-        }
+        
     }
 }

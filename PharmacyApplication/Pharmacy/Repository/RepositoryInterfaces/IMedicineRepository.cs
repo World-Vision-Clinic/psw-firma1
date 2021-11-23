@@ -13,6 +13,5 @@ namespace Pharmacy.Repository.RepositoryInterfaces
         public Boolean DeleteMedicine(long medicineId);
         public Boolean UpdateMedicine(Medicine medicine);
         public void SaveChanges();
-        public Boolean ProcureMedicine(long medicineId, int quantity);
     }
 }

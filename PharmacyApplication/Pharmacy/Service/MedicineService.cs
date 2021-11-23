@@ -67,9 +67,18 @@ namespace Pharmacy.Service
             return repository.UpdateMedicine(medicine);
         }
 
-        public Boolean ProcureMedicine(long medicineId, int quantity)
+        public bool ProcureMedicine(long medicineId, int quantity)
         {
-            return repository.ProcureMedicine(medicineId, quantity);
+            Medicine medicine = repository.GetById(medicineId);
+            if (medicine == null)
+            {
+                return false;
+            }
+
+            medicine.Quantity -= quantity;
+            repository.UpdateMedicine(medicine);
+            return true;
+
         }
 
         public List<string> FoundReplacements(Medicine medicine)
