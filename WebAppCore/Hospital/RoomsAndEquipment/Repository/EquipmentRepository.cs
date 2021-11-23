@@ -31,7 +31,7 @@ namespace Hospital.RoomsAndEquipment.Repository
             {
                 dbContext.AllEquipment.ToList().ForEach(eq =>
                 {
-                    if (eq.RoomId == roomId) 
+                    if (eq.RoomId == roomId && !eq.InTransport) 
                         allEq.Add(eq);
                 });
             }
