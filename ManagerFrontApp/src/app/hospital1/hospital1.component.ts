@@ -23,11 +23,15 @@ export class Hospital1Component implements OnInit {
   selectedRoom_ = null;
   selectedBuilding;
   selectedFloor;
+  hospitalEquipment;
+  searchResultList;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private hospitalService: HospitalService
   ) {}
+
   btntext = 'Edit';
   buildingFormDisabled = true;
   roomName: string = '';
@@ -41,6 +45,7 @@ export class Hospital1Component implements OnInit {
   moveBoxEquipment: boolean = false;
   searchEquipmentResultBox: boolean = false;
   searchRooms: boolean = true;
+  searchBoxDisabled: boolean = true;
 
   enableEdit() {
     this.formDisabled = false;
@@ -89,6 +94,11 @@ export class Hospital1Component implements OnInit {
     this.roomIsSelected = false;
     this.selectedRoom = emptyRoom();
   };
+
+  closeSearchBox = () => {
+    this.searchBoxDisabled = true;
+    this.searchEquipmentResultBox = false;
+  }
   showInfo(roomName: string) {
     this.roomName = roomName;
   }
@@ -118,6 +128,19 @@ export class Hospital1Component implements OnInit {
 
   setSearchCriteria() {
     this.searchRooms = !this.searchRooms;
+  }
+
+  searchForEquipment(event: any){
+    var inputValue = event.target.value.toLowerCase();
+    this.searchResultList = [];
+
+    this.hospitalEquipment.forEach(element => {
+      if(element.name.toLowerCase().includes(inputValue)){
+        this.searchResultList.push(element);
+      }
+    });
+    this.searchEquipment();
+    
   }
 
   ngOnInit(): void {
@@ -157,6 +180,8 @@ export class Hospital1Component implements OnInit {
       (data) => {
         this.selectedBuilding = data;
         this.loadingHospital = false;
+        this.hospitalEquipment = data.equipment;
+        console.log(this.hospitalEquipment);
       },
       (error) => console.log(error)
     );

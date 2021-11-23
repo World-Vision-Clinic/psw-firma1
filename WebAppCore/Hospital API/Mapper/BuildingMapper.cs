@@ -12,10 +12,11 @@ namespace Hospital_API.Mappers
     public class BuildingMapper
     {
         
-        public static BuildingDTO dataToBuildingSimpleDTO(Building building, MapPositionService mapPositionService)
+        public static BuildingDTO dataToBuildingSimpleDTO(Building building, MapPositionService mapPositionService, EquipmentService equipmentService)
         {
             BuildingDTO buildingDto = new BuildingDTO(building);
             buildingDto.mapPosition = mapPositionService.getById(building.MapPositionId);
+            buildingDto.equipment = equipmentService.getAll();
            
             return buildingDto;
         }

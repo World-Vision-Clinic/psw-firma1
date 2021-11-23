@@ -1,3 +1,4 @@
+import { Equipment } from "./equipment";
 import { Floor } from "./floor";
 
 export interface Building{
@@ -5,7 +6,8 @@ export interface Building{
     info?: string,
     floors: Floor[],
     area?: Area,
-    mapPosition: MapPosition
+    mapPosition: MapPosition,
+    equipment: Equipment[]
 }
 
 

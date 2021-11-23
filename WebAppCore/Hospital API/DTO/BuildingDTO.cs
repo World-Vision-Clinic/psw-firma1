@@ -1,4 +1,5 @@
 ﻿using Hospital.GraphicalEditor.Model;
+using Hospital.RoomsAndEquipment.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace Hospital_API.DTO
         public string info { get; set; }
         public MapPosition mapPosition { get; set; }
         public List<FloorDTO> floors { get; set; }
+        public List<Equipment> equipment { get; set; }
 
         public BuildingDTO(Building building)
         {
@@ -21,6 +23,7 @@ namespace Hospital_API.DTO
             info = building.Info;
             mapPosition = new MapPosition();
             floors = new List<FloorDTO>();
+            equipment = new List<Equipment>(); 
 
         }
 
