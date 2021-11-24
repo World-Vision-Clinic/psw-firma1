@@ -28,7 +28,7 @@
 .highlightedRoom {
   stroke: black;
   stroke-width: 4px;
-  fill: cornsilk;
+  fill: white;
 }
 
 .room-cadetblue {
@@ -59,8 +59,8 @@
 
 .info-box {
   display: block;
-  width: 370px;
-  height: 360px;
+  width: 360px;
+  height: 400px;
   border: 2px solid black;
   padding: 5px;
 }
@@ -145,30 +145,30 @@
 .equipment-table {
   display: block;
   margin-left: 5%;
-  margin-right: 5%;
-  margin-top: 10px;
+  margin-right: 6%;
+  margin-top: 15px;
   background-color: white;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
 
 .equipment-table th {
   display: inline-block;
-  padding: 10px 23px;
+  padding: 10px 30px;
   text-align: left;
   font-weight: bold;
   font-size: 15px;
-  color: #000;
+  color: white;
   text-transform: uppercase;
-  background: rgb(160, 159, 159);
+  background: cadetblue;
 }
 
 .equipment-table tbody {
   display: inline-block;
-  height: 240px;
+  height: 270px;
   overflow-y: scroll;
   scrollbar-color: rgb(248, 246, 246);
-  width: 320px;
+  width: 305px;
 }
 
 
@@ -200,24 +200,24 @@
   margin-left: 5%;
   margin-right: 5%;
   margin-top: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   background-color: white;
 }
 
 .search-list-table th {
   display: inline-block;
-  padding: 20px 23px;
+  padding: 10px 24px;
   text-align: left;
   font-weight: bold;
   font-size: 15px;
-  color: #000;
+  color: white;
   text-transform: uppercase;
-  background: rgba(0, 0, 0, 0.1);
+  background: cadetblue;
 }
 
 .search-list-table tbody {
   display: inline-block;
-  height: 260px;
+  height: 400px;
   overflow-y: scroll;
   scrollbar-color: rgb(248, 246, 246);
   width: 270px;
@@ -232,10 +232,8 @@
   padding: 10px;
   text-align: left;
   vertical-align: middle;
-  font-weight: 300;
-  font-size: 18px;
+  font-size: 16px;
   color: #000;
-  border-bottom: solid 1px rgba(0, 0, 0, 0.1);
   word-wrap: break-word;
   height: 50%;
   width: 50%;
@@ -262,7 +260,7 @@
   position: absolute;
   top: 6%;
   right: 2%;
-  background: rgb(160, 159, 159);
+  background: cadetblue;
   height: 40px;
   border-radius: 40px;
   padding: 8px;
@@ -275,7 +273,7 @@
 
 .search-box-rooms:hover > .search-btn-rooms {
   background: white;
-  color: rgb(160, 159, 159);
+  color: cadetblue;
 }
 
 .search-btn-rooms {
@@ -285,7 +283,7 @@
   height: 25px;
   text-decoration: none;
   border-radius: 50%;
-  background: rgb(160, 159, 159);
+  background: cadetblue;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -314,10 +312,16 @@
 }
 
 .search-list-box-equipment {
+  position: absolute;
+  top: 17%;
+  right: 2%;
   width: 320px;
-  height: 400px;
-  border: 2px solid black;
+  height: 550px;
+  border: 2px solid cadetblue;
   padding: 5px;
+  justify-content: center;
+  align-items: center;
+  color: cadetblue;
 }
 
 .move-box-equipment {
@@ -391,7 +395,7 @@
   margin-left: 5%;
   margin-right: 5%;
   margin-top: 6px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   background-color: white;
 }
 
@@ -401,14 +405,14 @@
   text-align: left;
   font-weight: bold;
   font-size: 15px;
-  color: #000;
+  color: white;
   text-transform: uppercase;
-  background: rgb(160, 159, 159);
+  background: cadetblue;
 }
 
 .rooms-table tbody {
   display: inline-block;
-  height: 260px;
+  height: 400px;
   overflow-y: scroll;
   background: rgba(0, 0, 0, 0.1);
   scrollbar-color: rgba(0, 0, 0, 0.1);
@@ -427,7 +431,6 @@
   padding: 10px;  
   font-size: 16px;
   color: #000;
-  border-bottom: solid 1px rgba(0, 0, 0, 0.1);
   word-wrap: break-word;
 }
   
