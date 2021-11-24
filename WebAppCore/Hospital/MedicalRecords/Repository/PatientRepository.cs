@@ -37,6 +37,18 @@ namespace Hospital.MedicalRecords.Repository
             return _context.Patients.FirstOrDefault(p => p.Token == token);
         }
 
+        public Patient FindByUserName(string username)
+        {
+            try
+            { 
+                return _context.Patients.FirstOrDefault(p => p.UserName == username);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public Patient FindById(int id)
         {
             return _context.Patients.FirstOrDefault(p => p.Id == id);

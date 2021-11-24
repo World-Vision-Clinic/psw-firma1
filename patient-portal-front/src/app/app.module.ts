@@ -23,6 +23,7 @@ import { HomePageComponent } from './homepage/homepage.component';
 import { SurveyComponent } from './survey/survey/survey.component';
 import { SurveyService } from './survey.service';
 import { MedicalRecordViewComponent } from './medical-record-view/medical-record-view.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { MedicalRecordViewComponent } from './medical-record-view/medical-record
     LoginComponent,
     HomePageComponent,
     SurveyComponent,
-    MedicalRecordViewComponent
+    MedicalRecordViewComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

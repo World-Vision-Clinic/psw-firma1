@@ -16,6 +16,9 @@ namespace Hospital.SharedModel
         public DbSet<SurveyQuestion> Questions { get; set; }
         public DbSet<AnsweredSurveyQuestion> AnsweredQuestions { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Allergen> Allergens { get; set; }
+        public DbSet<PatientAllergen> PatientAllergens { get; set; }
 
         public HospitalContext() { }
 
