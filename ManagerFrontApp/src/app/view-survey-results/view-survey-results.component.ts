@@ -17,4 +17,7 @@ export class ViewSurveyResultsComponent implements OnInit {
       error => this.errorMsg = "Couldn't load survey breakdown");
   }
 
+  getReducedPrecision(numberToRound: number): number {
+    return Math.round(numberToRound*100)/100;
+  }
 }
