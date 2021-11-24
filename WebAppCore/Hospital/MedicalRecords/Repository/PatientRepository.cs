@@ -40,7 +40,14 @@ namespace Hospital.MedicalRecords.Repository
 
         public Patient FindByUserName(string username)
         {
-            return _context.Patients.FirstOrDefault(p => p.UserName == username);
+            try
+            { 
+                return _context.Patients.FirstOrDefault(p => p.UserName == username);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public Patient FindById(int id)
