@@ -10,7 +10,7 @@ using Xunit;
 
 namespace HospitalTests.EditorTests
 {
-    public class UnitTest1
+    public class RepositoryUnitTest
     {
         [Fact]
         public void RepositoryTest1()
