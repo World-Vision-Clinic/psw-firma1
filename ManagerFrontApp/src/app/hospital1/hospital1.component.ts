@@ -178,7 +178,8 @@ export class Hospital1Component implements OnInit {
 
   closeRoomTable = () => {
     this.searchBoxDisabled = true;
-    this.searchRooms = false;
+    this.searchRooms = true;
+    this.searchBegin = false;
     this.selectedFloor.highlightedRoomId = -1;
   };
 
@@ -307,6 +308,17 @@ export class Hospital1Component implements OnInit {
     });
     console.log(this.searchResultList);
     this.searchrooms();
+  }
+
+  getRoomName(id){
+    var name;
+    this.hospitalRooms.forEach(room => {
+      if(room.id == id){
+        name = room.name;
+      }
+    });
+    return name;
+    
   }
 
   selecteddEquipment(roomId){

@@ -2,7 +2,7 @@ import { Room } from './room';
 
 export let ROOMS: Room[] = [
   {
-    roomId: 1,
+    id: 1,
     name: 'OPERATING ROOM 1',
     doctor: '',
     purpose: '',
@@ -17,7 +17,7 @@ export let ROOMS: Room[] = [
     doorExist: true,
   },
   {
-    roomId: 2,
+    id: 2,
     name: 'OPERATING ROOM 2',
     doctor: '',
     purpose: '',
