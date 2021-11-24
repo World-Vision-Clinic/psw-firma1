@@ -1,4 +1,5 @@
-using Hospital;
+
+﻿using Hospital;
 using Hospital.MedicalRecords.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,9 +15,9 @@ namespace Hospital.SharedModel
 {
     public class HospitalContext : DbContext
     {
-        public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<Feedback> Feedbacks{ get; set; }
         public DbSet<Patient> Patients { get; set; }
-
+        
         public HospitalContext()
         {
 
@@ -57,12 +58,12 @@ namespace Hospital.SharedModel
                 new Equipment { id = 13, Name = "Chair", Type = EquipmentType.STATIC, Amount = 6, RoomId = 17 },
                 new Equipment { id = 14, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 25, RoomId = 5 }
                 );
-
+           
             modelbuilder.Entity<Room>().HasData(
-                new Room { id = 1, FloorId = 1, Name = "OPERATING ROOM 1", DoctorId = -1, Purpose = "", X = 0, Y = 150, Height = 190, Width = 150, DoorX = 148, DoorY = 285, Vertical = true, Css = "room room-cadetblue", DoorExist = true },
+                new Room { id = 1, FloorId=1 , Name = "OPERATING ROOM 1", DoctorId = -1, Purpose = "", X = 0, Y = 150, Height = 190, Width = 150, DoorX = 148, DoorY = 285, Vertical = true, Css = "room room-cadetblue", DoorExist = true },
                 new Room { id = 2, FloorId = 1, Name = "OPERATING ROOM 2", DoctorId = -1, Purpose = "", X = 160, Y = 150, Height = 100, Width = 150, DoorX = 220, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
                 new Room { id = 3, FloorId = 1, Name = "OPERATING ROOM 3", DoctorId = -1, Purpose = "", X = 320, Y = 150, Height = 100, Width = 150, DoorX = 370, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
-                new Room { id = 4, FloorId = 1, Name = "ROOM 1", DoctorId = -1, Purpose = "", X = 480, Y = 150, Height = 100, Width = 170, DoorX = 520, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
+                new Room { id = 4, FloorId = 1, Name = "ROOM 1", DoctorId = -1, Purpose = "", X = 480, Y = 150, Height = 100, Width = 170, DoorX = 680, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
                 new Room { id = 5, FloorId = 1, Name = "ROOM 2", DoctorId = -1, Purpose = "", X = 660, Y = 150, Height = 100, Width = 180, DoorX = 680, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
                 new Room { id = 6, FloorId = 1, Name = "OFFICE 1", DoctorId = -1, Purpose = "", X = 730, Y = 260, Height = 100, Width = 110, DoorX = 728, DoorY = 290, Vertical = true, Css = "room room-cadetblue", DoorExist = true },
                 new Room { id = 7, FloorId = 1, Name = "LIFT", DoctorId = -1, Purpose = "", X = 690, Y = 370, Height = 90, Width = 150, DoorX = 728, DoorY = 290, Vertical = false, Css = "staircase", DoorExist = false },
@@ -73,10 +74,10 @@ namespace Hospital.SharedModel
                 new Room { id = 12, FloorId = 1, Name = "ROOM 4", DoctorId = -1, Purpose = "", X = 270, Y = 500, Height = 100, Width = 150, DoorX = 315, DoorY = 498, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
                 new Room { id = 13, FloorId = 1, Name = "ROOM 5", DoctorId = -1, Purpose = "", X = 430, Y = 500, Height = 100, Width = 150, DoorX = 475, DoorY = 498, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
                 new Room { id = 14, FloorId = 2, Name = "DOCTOR'S OFFICE 1", DoctorId = -1, Purpose = "", X = 0, Y = 150, Height = 100, Width = 150, DoorX = 100, DoorY = 248, Vertical = false, Css = "room", DoorExist = true },
-                new Room { id = 15, FloorId = 2, Name = "DOCTOR'S OFFICE 2", DoctorId = -1, Purpose = "", X = 160, Y = 150, Height = 100, Width = 150, DoorX = 260, DoorY = 498, Vertical = false, Css = "room", DoorExist = true },
-                new Room { id = 16, FloorId = 2, Name = "DOCTOR'S OFFICE 3", DoctorId = -1, Purpose = "", X = 320, Y = 150, Height = 100, Width = 150, DoorX = 420, DoorY = 498, Vertical = false, Css = "room", DoorExist = true },
-                new Room { id = 17, FloorId = 2, Name = "DOCTOR'S OFFICE 4", DoctorId = -1, Purpose = "", X = 480, Y = 150, Height = 100, Width = 170, DoorX = 595, DoorY = 498, Vertical = false, Css = "room", DoorExist = true },
-                new Room { id = 18, FloorId = 2, Name = "ROOM 1", DoctorId = -1, Purpose = "", X = 660, Y = 150, Height = 100, Width = 180, DoorX = 680, DoorY = 498, Vertical = false, Css = "room", DoorExist = true },
+                new Room { id = 15, FloorId = 2, Name = "DOCTOR'S OFFICE 2", DoctorId = -1, Purpose = "", X = 160, Y = 150, Height = 100, Width = 150, DoorX = 260, DoorY = 248, Vertical = false, Css = "room", DoorExist = true },
+                new Room { id = 16, FloorId = 2, Name = "DOCTOR'S OFFICE 3", DoctorId = -1, Purpose = "", X = 320, Y = 150, Height = 100, Width = 150, DoorX = 420, DoorY = 248, Vertical = false, Css = "room", DoorExist = true },
+                new Room { id = 17, FloorId = 2, Name = "DOCTOR'S OFFICE 4", DoctorId = -1, Purpose = "", X = 480, Y = 150, Height = 100, Width = 170, DoorX = 595, DoorY = 248, Vertical = false, Css = "room", DoorExist = true },
+                new Room { id = 18, FloorId = 2, Name = "ROOM 1", DoctorId = -1, Purpose = "", X = 660, Y = 150, Height = 100, Width = 180, DoorX = 680, DoorY = 248, Vertical = false, Css = "room", DoorExist = true },
                 new Room { id = 19, FloorId = 2, Name = "STAIRS", DoctorId = -1, Purpose = "", X = 770, Y = 258, Height = 104, Width = 70, DoorX = 728, DoorY = 290, Vertical = true, Css = "room", DoorExist = false },
                 new Room { id = 20, FloorId = 2, Name = "LIFT", DoctorId = -1, Purpose = "", X = 690, Y = 370, Height = 90, Width = 150, DoorX = 728, DoorY = 290, Vertical = false, Css = "staircase", DoorExist = false },
                 new Room { id = 21, FloorId = 2, Name = "TOILET", DoctorId = -1, Purpose = "", X = 730, Y = 470, Height = 60, Width = 110, DoorX = 728, DoorY = 485, Vertical = true, Css = "room", DoorExist = true },
@@ -106,10 +107,10 @@ namespace Hospital.SharedModel
 
         protected override void OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseNpgsql("User ID = admin;Password=ftn;Server=localhost;Port=5432;Database=MyWebApi.Dev;Integrated Security=true;Pooling=true;");
-            }
+            optionsBuilder.UseNpgsql("User ID = admin;Password=ftn;Server=localhost;Port=5432;Database=MyWebApi.Dev;Integrated Security=true;Pooling=true;");
+            //optionsBuilder.UseNpgsql("User ID = admin;Password=ftn;Server=hospitalapi;Port=5432;Database=MyWebApi.Dev;Integrated Security=true;Pooling=true;");
+
         }
     }
 }
+

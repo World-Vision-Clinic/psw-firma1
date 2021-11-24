@@ -422,7 +422,7 @@
         <tr *ngFor="let item of searchResultList" (click)="selecteddEquipment(item.roomId)">
           <td>{{ item.name }}</td>
           <td>{{ item.amount }}</td>
-          <td>{{ item.roomId }}</td>
+          <td>{{ getRoomName(item.roomId) }}</td>
         </tr>
       </tbody>
     </table>
@@ -444,11 +444,12 @@
           <td>{{ item.name }}</td>
           <td></td>
           <td></td>
+          <td></td>
           <td>{{ item.floorId }}</td>
         </tr>
       </tbody>
     </table>
-    <button class="btn">Close</button>
+    <button class="btn" (click)="closeRoomTable()" *ngIf="searchBoxDisabled">Close</button>
   </div>
 
 </div>
