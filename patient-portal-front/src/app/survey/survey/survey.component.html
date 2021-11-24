@@ -14,10 +14,10 @@
     </div>
     <div class="col-md-4">
       <nav class="navMenu">
-        <a href="#/" style="float:none">Home</a>
-        <a href="#/" style="float:none">About</a>
-        <a href="#/" style="float:none">Services</a>
-        <a href="#/" style="float:none">Book</a>
+        <a href=" " style="float:none">Home</a>
+        <a href="survey" style="float:none">Surveys</a>
+        <a href="create-feedback" style="float:none">Feedbacks</a>
+        <a href="login" style="float:none">Login</a>
       </nav>
     </div>
     <div class="col-md-4">
@@ -84,7 +84,7 @@
         </mat-card-content>
     </mat-card>
 
-    <button class="submit-btn" mat-raised-button title="You need to answer all the questions above" color="primary" (click)="submitSurvey()" [disabled]="!surveyIsValid()">Submit</button>
+    <button class="submit-btn" routerLink="/" mat-raised-button title="You need to answer all the questions above" color="primary" (click)="submitSurvey()" [disabled]="!surveyIsValid()">Submit</button>
 
   
   </mat-card>
