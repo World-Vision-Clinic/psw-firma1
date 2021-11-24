@@ -14,7 +14,7 @@ export interface Room {
   doorY: number;
   vertical?: boolean;
   css?: string;
-  doorExists?: boolean;
+  doorExist?: boolean;
 }
 
 export function emptyRoom(): Room {
@@ -31,6 +31,6 @@ export function emptyRoom(): Room {
     doorY: -1,
     vertical: false,
     css: '',
-    doorExists: false,
+    doorExist: false
   };
 }

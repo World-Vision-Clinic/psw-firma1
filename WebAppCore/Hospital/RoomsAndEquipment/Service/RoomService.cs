@@ -1,4 +1,6 @@
-﻿using Hospital.RoomsAndEquipment.Model;
+﻿using Hospital.GraphicalEditor.Model;
+using Hospital.GraphicalEditor.Service;
+using Hospital.RoomsAndEquipment.Model;
 using Hospital.RoomsAndEquipment.Repository;
 using System;
 using System.Collections.Generic;
@@ -41,6 +43,17 @@ namespace Hospital.RoomsAndEquipment.Service
         public void Update(Room room)
         {
             repository.Update(room);
+        }
+
+        public List<int> getRoomIdsForBuilding(int buildingId, FloorService floorService)
+        {
+            List<int> floorIds = new List<int>();
+            foreach(Floor floor in floorService.getFloorForBuilding(buildingId))
+            {
+                floorIds.Add(floor.id);
+            }
+            return repository.GetRoomsForFloors(floorIds);
+
         }
     }
 }

@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Building } from '../data/building';
 import { Equipment } from '../data/equipment';
+import { Floor } from '../data/floor';
+import { iEquipmentRoom } from '../data/iEquipmentRoom';
 import { Room } from '../data/room';
 
 @Injectable({
@@ -25,6 +27,31 @@ export class HospitalService {
       { headers }
     );
   }
+  orderMoving(data: {
+    TargetRoomId: number | undefined;
+    TargetEqupmentId: number | undefined;
+    startDate: any;
+    endDate: any;
+    Amount: number | null;
+  }): Observable<any> {
+    const headers = { 'content-type': 'application/json' };
+    return this.http.post<any>(
+      `http://localhost:39901/api/transportPeriod`,
+      data,
+      { headers: headers }
+    );
+  }
+  getSuggestionForPeriod(
+    buildingId: string,
+    startDate: Date,
+    endDate: Date,
+    etimateTime: number
+  ): Observable<any> {
+    const headers = { 'content-type': 'application/json' };
+    return this.http.get<any>(
+      `http://localhost:39901/api/transportPeriod?buildingId=${buildingId}&transportDurationInHours=${etimateTime}&startDateTimeStamp=${startDate.getTime()}&endDateTimeStamp=${endDate.getTime()}`
+    );
+  }
 
   updateRoom(id: string, room: Room): Observable<boolean> {
     console.log(room);
@@ -37,15 +64,28 @@ export class HospitalService {
     );
   }
 
-  getFloors(id: string): Observable<Building> {
-    return this.http.get<Building>(
+  getFloors(id: string): Observable<Floor[]> {
+    return this.http.get<Floor[]>(
       `http://localhost:39901/api/floors?buildingId=${id}`
     );
   }
 
-  getEquipment(roomid: number): Observable<Room>{
-    return this.http.get<Room>(
-      `http://localhost:39901/api/Rooms/${roomid}`
+  getEquipments(id: string, searchText: string): Observable<Equipment[]> {
+    return this.http.get<Equipment[]>(
+      `http://localhost:39901/api/equipment?buildingId=${id}&searchText=${searchText}`
     );
+  }
+
+  getEquipmentRooms(
+    id: string,
+    equipmentName: string
+  ): Observable<iEquipmentRoom[]> {
+    return this.http.get<iEquipmentRoom[]>(
+      `http://localhost:39901/api/equipment/byRooms?buildingId=${id}&equipmentName=${equipmentName}`
+    );
+  }
+
+  getEquipment(roomid: number): Observable<Room> {
+    return this.http.get<Room>(`http://localhost:39901/api/Rooms/${roomid}`);
   }
 }

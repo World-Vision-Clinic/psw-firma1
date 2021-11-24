@@ -14,7 +14,7 @@ namespace IntegrationTests.UnitTests
     {
         [Theory]
         [MemberData(nameof(Data))]
-        public void ChangeViewStatus(News pieceOfNews, bool isPublished)
+        public void Change_view_status(News pieceOfNews, bool isPublished)
         {
           
             NewsService service = new NewsService(CreateStubRepository());

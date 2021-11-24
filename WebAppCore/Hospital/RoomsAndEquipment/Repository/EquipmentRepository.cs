@@ -31,7 +31,8 @@ namespace Hospital.RoomsAndEquipment.Repository
             {
                 dbContext.AllEquipment.ToList().ForEach(eq =>
                 {
-                    if (eq.RoomId == roomId) allEq.Add(eq);
+                    if (eq.RoomId == roomId) 
+                        allEq.Add(eq);
                 });
             }
             catch
@@ -40,6 +41,56 @@ namespace Hospital.RoomsAndEquipment.Repository
             }
             
             
+            return allEq;
+        }
+
+        internal List<Equipment> GetAllInTransport(List<int> roomIds)
+        {
+            List<Equipment> allEq = new List<Equipment>();
+            try
+            {
+                dbContext.AllEquipment.ToList().ForEach(eq =>
+                {
+                    if (roomIds.Contains(eq.RoomId) && (bool)eq?.InTransport) allEq.Add(eq);
+                });
+            }
+            catch
+            {
+
+            }
+
+
+            return allEq;
+        }
+
+        internal IEnumerable<Equipment> GetByNameInBuilding(List<int> roomIds, string equipmentName)
+        {
+            List<Equipment> allEq = new List<Equipment>();
+
+            dbContext.AllEquipment.ToList().ForEach(eq =>
+            {
+                if (roomIds.Contains(eq.RoomId) && eq.Name == equipmentName && !eq.InTransport)
+                {
+                    allEq.Add(eq);
+                }
+            });
+
+            return allEq;
+        }
+
+        internal List<Equipment> getUniqueInBuilding(List<int> roomIds)
+        {
+            List<Equipment> allEq = new List<Equipment>();
+            List<string> names = new List<string>();
+           
+            dbContext.AllEquipment.ToList().ForEach(eq =>
+            {
+                if (roomIds.Contains(eq.RoomId) && !names.Contains(eq.Name)) {
+                    allEq.Add(eq);
+                    names.Add(eq.Name);
+                }
+            });
+           
             return allEq;
         }
 
@@ -58,6 +109,7 @@ namespace Hospital.RoomsAndEquipment.Repository
 
         public void Save(Equipment eq)
         {
+
             dbContext.AllEquipment.Add(eq);
             dbContext.SaveChanges();
         }

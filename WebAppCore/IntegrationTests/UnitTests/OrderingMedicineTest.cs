@@ -21,7 +21,7 @@ namespace IntegrationTests.UnitTests
         public void OrderingUnexistingMedicinesTest()
         {
             var stubRepository = new Mock<IMedicinesRepository>();
-            service = new MedicineService(stubRepository.Object, new MedicalRecordsRepository());
+            service = new MedicineService(stubRepository.Object, new MedicalRecordsRepository(), new ExaminationRepository());
             List<Medicine> medicines = new List<Medicine>();
             Medicine medicine = new Medicine("1", "Andol", 200, 2);
             stubRepository.Setup(m => m.GetAll()).Returns(medicines);
@@ -35,7 +35,7 @@ namespace IntegrationTests.UnitTests
         public void OrderingExistingMedicinesTest()
         {
             var stubRepository = new Mock<IMedicinesRepository>();
-            service = new MedicineService(stubRepository.Object, new MedicalRecordsRepository());
+            service = new MedicineService(stubRepository.Object, new MedicalRecordsRepository(), new ExaminationRepository());
             List<Medicine> medicines = new List<Medicine>();
             Medicine medicine = new Medicine("1", "Andol", 200, 2);
             medicines.Add(medicine);

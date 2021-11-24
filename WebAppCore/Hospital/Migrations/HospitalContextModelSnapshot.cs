@@ -16,7 +16,7 @@ namespace Hospital.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
-                .HasAnnotation("ProductVersion", "5.0.10")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
             modelBuilder.Entity("Hospital.GraphicalEditor.Model.Area", b =>
@@ -342,11 +342,20 @@ namespace Hospital.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("InTransport")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
                     b.Property<int>("RoomId")
                         .HasColumnType("integer");
+
+                    b.Property<DateTime>("TransportEnd")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("TransportStart")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("Type")
                         .HasColumnType("integer");
@@ -360,112 +369,154 @@ namespace Hospital.Migrations
                         {
                             id = 1,
                             Amount = 15,
+                            InTransport = false,
                             Name = "Bandage",
-                            RoomId = 1,
+                            RoomId = 15,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
                         },
                         new
                         {
                             id = 2,
                             Amount = 3,
+                            InTransport = false,
                             Name = "Operating table",
-                            RoomId = 1,
+                            RoomId = 23,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         },
                         new
                         {
                             id = 3,
                             Amount = 11,
+                            InTransport = false,
                             Name = "Infusion",
                             RoomId = 1,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
                         },
                         new
                         {
                             id = 4,
                             Amount = 17,
+                            InTransport = false,
                             Name = "Bandage",
                             RoomId = 2,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
                         },
                         new
                         {
                             id = 5,
                             Amount = 2,
+                            InTransport = false,
                             Name = "Operating table",
                             RoomId = 2,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         },
                         new
                         {
                             id = 6,
                             Amount = 23,
+                            InTransport = false,
                             Name = "Infusion",
-                            RoomId = 2,
+                            RoomId = 23,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
                         },
                         new
                         {
                             id = 7,
                             Amount = 15,
+                            InTransport = false,
                             Name = "Bandage",
                             RoomId = 3,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
                         },
                         new
                         {
                             id = 8,
                             Amount = 1,
+                            InTransport = false,
                             Name = "Operating table",
                             RoomId = 3,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         },
                         new
                         {
                             id = 9,
                             Amount = 11,
+                            InTransport = false,
                             Name = "Syringe",
                             RoomId = 3,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
                         },
                         new
                         {
                             id = 10,
                             Amount = 7,
+                            InTransport = false,
                             Name = "Bed",
                             RoomId = 4,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         },
                         new
                         {
                             id = 11,
                             Amount = 4,
+                            InTransport = false,
                             Name = "Chair",
-                            RoomId = 4,
+                            RoomId = 16,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         },
                         new
                         {
                             id = 12,
                             Amount = 11,
+                            InTransport = false,
                             Name = "Bed",
                             RoomId = 5,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         },
                         new
                         {
                             id = 13,
                             Amount = 6,
+                            InTransport = false,
                             Name = "Chair",
-                            RoomId = 5,
+                            RoomId = 17,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         },
                         new
                         {
                             id = 14,
                             Amount = 25,
+                            InTransport = false,
                             Name = "Bandage",
                             RoomId = 5,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
                         });
                 });

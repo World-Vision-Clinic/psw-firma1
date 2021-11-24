@@ -14,7 +14,7 @@ export let ROOMS: Room[] = [
     doorY: 248,
     vertical: false,
     css: 'room',
-    doorExists: true,
+    doorExist: true,
   },
 
   {
@@ -30,7 +30,7 @@ export let ROOMS: Room[] = [
     doorY: 248,
     vertical: false,
     css: 'room',
-    doorExists: true,
+    doorExist: true,
   },
   {
     id: 3,
@@ -45,7 +45,7 @@ export let ROOMS: Room[] = [
     doorY: 248,
     vertical: false,
     css: 'room',
-    doorExists: true,
+    doorExist: true,
   },
   {
     id: 4,
@@ -60,7 +60,7 @@ export let ROOMS: Room[] = [
     doorY: 248,
     vertical: false,
     css: 'room',
-    doorExists: true,
+    doorExist: true,
   },
   {
     id: 5,
@@ -75,7 +75,7 @@ export let ROOMS: Room[] = [
     doorY: 248,
     vertical: false,
     css: 'room',
-    doorExists: true,
+    doorExist: true,
   },
   {
     id: 6,
@@ -90,7 +90,7 @@ export let ROOMS: Room[] = [
     doorY: 290,
     vertical: true,
     css: 'staircase',
-    doorExists: false,
+    doorExist: false,
   },
   {
     id: 7,
@@ -105,7 +105,7 @@ export let ROOMS: Room[] = [
     doorY: 290,
     vertical: true,
     css: 'staircase',
-    doorExists: false,
+    doorExist: false,
   },
   {
     id: 8,
@@ -120,7 +120,7 @@ export let ROOMS: Room[] = [
     doorY: 485,
     vertical: true,
     css: 'room',
-    doorExists: true,
+    doorExist: true,
   },
   {
     id: 9,
@@ -135,7 +135,7 @@ export let ROOMS: Room[] = [
     doorY: 555,
     vertical: true,
     css: 'room',
-    doorExists: true,
+    doorExist: true,
   },
   {
     id: 10,
@@ -150,7 +150,7 @@ export let ROOMS: Room[] = [
     doorY: 419,
     vertical: true,
     css: 'room',
-    doorExists: true,
+    doorExist: true,
   },
   {
     id: 11,
@@ -165,7 +165,7 @@ export let ROOMS: Room[] = [
     doorY: 498,
     vertical: false,
     css: 'room',
-    doorExists: true,
+    doorExist: true,
   },
   {
     id: 12,
@@ -180,7 +180,7 @@ export let ROOMS: Room[] = [
     doorY: 498,
     vertical: false,
     css: 'room',
-    doorExists: true,
+    doorExist: true,
   },
   {
     id: 13,
@@ -195,7 +195,7 @@ export let ROOMS: Room[] = [
     doorY: 398,
     vertical: false,
     css: 'room',
-    doorExists: true,
+    doorExist: true,
   },
   {
     id: 14,
@@ -210,7 +210,7 @@ export let ROOMS: Room[] = [
     doorY: 290,
     vertical: true,
     css: 'staircase',
-    doorExists: false,
+    doorExist: false,
   },
   {
     id: 15,
@@ -225,6 +225,6 @@ export let ROOMS: Room[] = [
     doorY: 290,
     vertical: true,
     css: 'staircase',
-    doorExists: false,
+    doorExist: false,
   },
 ];

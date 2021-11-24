@@ -10,15 +10,16 @@ namespace Integration
 {
     public class Therapy
     {
+        public int Id { get; set; }
        public string description;
         public string name;
        private System.Collections.Generic.List<MedicineTherapy> medicine;
-   
-       /// <summary>
-       /// Property for collection of Medicine
-       /// </summary>
-       /// <pdGenerated>Default opposite class collection property</pdGenerated>
-       public System.Collections.Generic.List<MedicineTherapy> Medicine
+        public String MedicineId { get; set; }
+        /// <summary>
+        /// Property for collection of Medicine
+        /// </summary>
+        /// <pdGenerated>Default opposite class collection property</pdGenerated>
+        public System.Collections.Generic.List<MedicineTherapy> Medicine
        {
           get
           {

@@ -41,6 +41,38 @@ namespace Integration.Migrations
                     b.ToTable("Allergen");
                 });
 
+            modelBuilder.Entity("Integration.Appointment", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<double>("DurationInHours")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("IDAppointment")
+                        .HasColumnType("text");
+
+                    b.Property<string>("IDDoctor")
+                        .HasColumnType("text");
+
+                    b.Property<string>("IDpatient")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PatientsRecordMedicalRecordID")
+                        .HasColumnType("text");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("PatientsRecordMedicalRecordID");
+
+                    b.ToTable("Appointment");
+                });
+
             modelBuilder.Entity("Integration.Examination", b =>
                 {
                     b.Property<int>("Id")
@@ -48,14 +80,36 @@ namespace Integration.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("MedicalRecordID")
+                    b.Property<string>("Diagnosis")
                         .HasColumnType("text");
+
+                    b.Property<string>("MedicalRecordId")
+                        .HasColumnType("text");
+
+                    b.Property<int>("TherapyId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("anamnesis")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("appointmentID")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("dateOfExamination")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("patientVisible")
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MedicalRecordID");
+                    b.HasIndex("MedicalRecordId");
 
-                    b.ToTable("Examination");
+                    b.HasIndex("TherapyId");
+
+                    b.HasIndex("appointmentID");
+
+                    b.ToTable("Examinations");
                 });
 
             modelBuilder.Entity("Integration.Ingredient", b =>
@@ -136,6 +190,37 @@ namespace Integration.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Medicines");
+                });
+
+            modelBuilder.Entity("Integration.Model.MedicineTherapy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<int>("DurationInDays")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("MedicineID")
+                        .HasColumnType("text");
+
+                    b.Property<int>("TherapyId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TimesPerDay")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicineID");
+
+                    b.HasIndex("TherapyId");
+
+                    b.ToTable("MedicineTherapys");
                 });
 
             modelBuilder.Entity("Integration.Patient", b =>
@@ -278,11 +363,43 @@ namespace Integration.Migrations
                     b.ToTable("Replies");
                 });
 
+            modelBuilder.Entity("Integration.Therapy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("MedicineId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Therapies");
+                });
+
+            modelBuilder.Entity("Integration.Appointment", b =>
+                {
+                    b.HasOne("Integration.MedicalRecord", "PatientsRecord")
+                        .WithMany()
+                        .HasForeignKey("PatientsRecordMedicalRecordID");
+                });
+
             modelBuilder.Entity("Integration.Examination", b =>
                 {
                     b.HasOne("Integration.MedicalRecord", null)
                         .WithMany("Examination")
-                        .HasForeignKey("MedicalRecordID");
+                        .HasForeignKey("MedicalRecordId");
+
+                    b.HasOne("Integration.Therapy", "therapy")
+                        .WithMany()
+                        .HasForeignKey("TherapyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Integration.Appointment", "appointment")
+                        .WithMany()
+                        .HasForeignKey("appointmentID");
                 });
 
             modelBuilder.Entity("Integration.Ingredient", b =>
@@ -301,6 +418,19 @@ namespace Integration.Migrations
                     b.HasOne("Integration.Patient", "Patient")
                         .WithMany()
                         .HasForeignKey("PatientId");
+                });
+
+            modelBuilder.Entity("Integration.Model.MedicineTherapy", b =>
+                {
+                    b.HasOne("Integration.Medicine", "Medicine")
+                        .WithMany()
+                        .HasForeignKey("MedicineID");
+
+                    b.HasOne("Integration.Therapy", null)
+                        .WithMany("Medicine")
+                        .HasForeignKey("TherapyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

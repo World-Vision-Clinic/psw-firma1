@@ -57,6 +57,18 @@ namespace Hospital.RoomsAndEquipment.Repository
             dbContext.SaveChanges();
         }
 
+        internal List<int> GetRoomsForFloors(List<int> floorIds)
+        {
+            List<int> roomIds = new List<int>();
+            dbContext.Rooms.ToList().ForEach(room => {
+                if (floorIds.Contains(room.FloorId))
+                {
+                    roomIds.Add(room.id);
+                }
+            });
+            return roomIds;
+        }
+
         public void Update(Room room)
         {
             dbContext.Rooms.Update(room);

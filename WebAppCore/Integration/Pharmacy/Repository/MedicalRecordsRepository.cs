@@ -3,6 +3,7 @@ using Integration.Repositories.Interfaces;
 using Integration.SharedModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Integration.Pharmacy.Repository
@@ -17,7 +18,9 @@ namespace Integration.Pharmacy.Repository
 
         public List<MedicalRecord> GetAll()
         {
-            throw new NotImplementedException();
+            List<MedicalRecord> records = new List<MedicalRecord>();
+            dbContext.MedicalRecords.ToList().ForEach(record => records.Add(record));
+            return records;
         }
 
         public MedicalRecord GetByID(string id)

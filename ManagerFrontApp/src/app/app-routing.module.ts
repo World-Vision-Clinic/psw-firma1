@@ -10,6 +10,8 @@ import { OverviewObjectionsRepliesComponent } from './manager-integration-front-
 import { ObjectionFormPageComponent } from './manager-integration-front-app/objection-form-page/objection-form-page.component';
 import { PharmaciesComponent } from './manager-integration-front-app/pharmacies/pharmacies.component';
 import { NewsComponent } from './manager-integration-front-app/news/news.component';
+import { MedicineConsumptionComponent } from './manager-integration-front-app/medicine-consumption/medicine-consumption.component';
+
 
 const routes: Routes = [
   {path: "", component: FrontPageComponent},
@@ -21,7 +23,8 @@ const routes: Routes = [
   {path: "overview-pharmacies", outlet: "showObjRepl", component:PharmaciesComponent},
 
   {path: "create-objection", outlet: "showObjRepl", component:ObjectionFormPageComponent},
-  {path: "news", outlet: "showObjRepl", component:NewsComponent}
+  {path: "news", outlet: "showObjRepl", component:NewsComponent},
+  {path: "medicine-consumption-report", outlet: "showObjRepl", component:MedicineConsumptionComponent},
 
   ]},
   {path:"manager-feedback", component: ManagerFeedbackViewComponent}

@@ -1,4 +1,4 @@
-﻿using Hospital;
+using Hospital;
 using Hospital.MedicalRecords.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
