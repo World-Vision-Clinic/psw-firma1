@@ -419,7 +419,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of searchResultList" (click)="selectedEquipment(item.roomId)">
+        <tr *ngFor="let item of searchResultList" (click)="selecteddEquipment(item.roomId)">
           <td>{{ item.name }}</td>
           <td>{{ item.amount }}</td>
           <td>{{ item.roomId }}</td>
@@ -440,7 +440,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of searchResultList" (click)="selectedEquipment(item.id)">
+        <tr *ngFor="let item of searchResultList" (click)="selecteddEquipment(item.id)">
           <td>{{ item.name }}</td>
           <td></td>
           <td></td>

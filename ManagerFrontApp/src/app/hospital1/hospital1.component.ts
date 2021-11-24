@@ -114,18 +114,7 @@ export class Hospital1Component implements OnInit {
     };
     this.hospitalService.orderMoving(data).subscribe(
       (d) => {
-        this.startRoom = null;
-        this.selectedEquipment = null;
-        this.destinationRoom = null;
-        this.movingAmount = null;
-        this.interval = new FormGroup({
-          start: new FormControl(),
-          end: new FormControl(),
-        });
-        this.estimateHours = null;
-        this.listBoxEquipment = false;
-        this.currentState.index = 0;
-        this.suggestion = null;
+        this.closeMovingContainer();
         console.log('Hura iznenilo seee!!!');
       },
       (e) => {}
@@ -247,6 +236,16 @@ export class Hospital1Component implements OnInit {
   closeMovingContainer() {
     this.startRoom = null;
     this.selectedEquipment = null;
+    this.destinationRoom = null;
+    this.movingAmount = null;
+    this.interval = new FormGroup({
+      start: new FormControl(),
+      end: new FormControl(),
+    });
+    this.estimateHours = null;
+    this.listBoxEquipment = false;
+    this.currentState.index = 0;
+    this.suggestion = null;
   }
   disableNextButton() {
     if (this.currentState.index == 0 && !this.selectedEquipment) return true;
@@ -310,7 +309,7 @@ export class Hospital1Component implements OnInit {
     this.searchrooms();
   }
 
-  selectedEquipment(roomId){
+  selecteddEquipment(roomId){
     this.hospitalRooms.forEach(room => {
       if(room.id == roomId){
         if(room.floorId == 1){
