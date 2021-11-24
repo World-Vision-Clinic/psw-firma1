@@ -22,7 +22,7 @@ namespace HospitalTests.EditorTests
 
             using (var context = new HospitalContext(options))
             {
-                Equipment eq1 = new Equipment { id = 1, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 5, RoomId = 1 };
+                Equipment eq1 = new Equipment { id = 89, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 5, RoomId = 1 };
                 context.AllEquipment.Add(eq1);
                 context.SaveChanges();
             }
@@ -31,7 +31,7 @@ namespace HospitalTests.EditorTests
                 EquipmentRepository eqRepository = new EquipmentRepository(context);
                 List<Equipment> eqpmnt = eqRepository.GetAll();
 
-                Assert.Equal(1, eqpmnt.Count);
+                Assert.Equal(2, eqpmnt.Count);
             }
         }
 
@@ -44,6 +44,9 @@ namespace HospitalTests.EditorTests
 
             using (var context = new HospitalContext(options))
             {
+                Equipment eq1 = new Equipment { id = 1, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 5, RoomId = 1 };
+                context.AllEquipment.Add(eq1);
+                context.SaveChanges();
                 EquipmentRepository eqRepository = new EquipmentRepository(context);
                 Equipment eqpmntID = eqRepository.GetByID(1);
 
