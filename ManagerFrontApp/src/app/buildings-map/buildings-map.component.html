@@ -1,9 +1,9 @@
-<div style="text-align: center">
+<div style="text-align: center; margin-top: 10px;">
   <h1></h1>
   <h2 style="color: rgb(70, 70, 70)" class="text">
     World Vision Clinic Map
   </h2>
-  <svg width="980" height="660">
+  <svg width="980" height="660" *ngIf="loadingFinished">
     <g>
       <rect x="0" y="0" width="960" height="660" class="yard" />
       <g *ngFor="let building of buildings">
@@ -13,7 +13,7 @@
           width="520"
           height="180"
           class="building"
-          (dblclick)="enterHospital()"
+          (dblclick)="enterHospital(building)"
         >
           <title>
             Building review&#013;*********************&#013;Name: {{ building.name }}&#013;Info: {{ building.info }}&#013;Floors:

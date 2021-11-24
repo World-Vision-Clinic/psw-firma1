@@ -19,17 +19,20 @@ namespace Integration.Pharmacy.Service
         IModel channel;
         INewsRepository newsRepository;
         IPharmaciesRepository pharmaciesRepository;
+        Boolean isTest;
 
         public RabbitMQService(INewsRepository newsRepository, IPharmaciesRepository pharmaciesRepository)
         {
             this.newsRepository = newsRepository;
             this.pharmaciesRepository = pharmaciesRepository;
+            isTest = true;
         }
 
         public RabbitMQService()
         {
             newsRepository = new NewsRepository();
             pharmaciesRepository = new PharmaciesRepository();
+            isTest = false;
         }
         public override Task StartAsync(CancellationToken cancellationToken)
         {
@@ -38,11 +41,16 @@ namespace Integration.Pharmacy.Service
                 var factory = new ConnectionFactory() { HostName = "localhost" };
                 connection = factory.CreateConnection();
                 channel = connection.CreateModel();
-                channel.QueueDeclare(queue: pharmacyProfile.Name,
-                                        durable: false,
-                                        exclusive: false,
-                                        autoDelete: false,
-                                        arguments: null);
+
+                channel.ExchangeDeclare(exchange: "NewsChannel", type: ExchangeType.Fanout);
+                var queueName = channel.QueueDeclare(queue: pharmacyProfile.Name,
+                                       durable: false,
+                                       exclusive: false,
+                                       autoDelete: false,
+                                       arguments: null).QueueName;
+                channel.QueueBind(queue: queueName,
+                                    exchange: "NewsChannel",
+                                    routingKey: pharmacyProfile.Name);
 
                 var consumer = new EventingBasicConsumer(channel);
                 consumer.Received += (model, ea) =>
@@ -53,12 +61,12 @@ namespace Integration.Pharmacy.Service
 
                     news = JsonConvert.DeserializeObject<News>(jsonMessage);
 
-
+                    if (isTest) newsRepository.GetAll();
                     news.Posted = false;
                     news.IdEncoded = Generator.GenerateNewsId();
                     news.PharmacyName = pharmacyProfile.Name;
                     newsRepository.Save(news);
-
+                    
                 };
 
 

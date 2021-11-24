@@ -13,18 +13,20 @@ import { PharmacyRegistrationComponent } from './pharmacy-registration/pharmacy-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ManagerIntegrationFrontAppComponent } from './manager-integration-front-app/manager-integration-front-app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { OverviewObjectionsRepliesComponent } from './manager-integration-front-app/overview-objections-replies/overview-objections-replies.component'; 
+import { OverviewObjectionsRepliesComponent } from './manager-integration-front-app/overview-objections-replies/overview-objections-replies.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ObjectionFormPageComponent } from './manager-integration-front-app/objection-form-page/objection-form-page.component';
 import { ManagerFeedbackViewComponent } from './manager-feedback-view/manager-feedback-view.component';
 import { PharmaciesComponent } from './manager-integration-front-app/pharmacies/pharmacies.component';
 import { NewsComponent } from './manager-integration-front-app/news/news.component';
-import { MedicineConsumptionComponent } from './manager-integration-front-app/medicine-consumption/medicine-consumption.component';
-import {MatDatepickerModule} from '@angular/material/datepicker'; 
-import {MatInputModule} from '@angular/material/input';
+// import {
+//   MatDatepicker,
+//   MatDateRangeInput,
+//   MatDateRangePicker,
+// } from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
-
-
+import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,8 +43,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     PharmaciesComponent,
 
     NewsComponent,
-      MedicineConsumptionComponent
-
   ],
   imports: [
     BrowserModule,
@@ -54,11 +54,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     ReactiveFormsModule,
     NgSelectModule,
     MatDatepickerModule,
-    MatInputModule,
-    MatFormFieldModule
-
+    MatFormFieldModule,
+    MatNativeDateModule,
+    // MatDatepicker,
+    // MatDateRangeInput,
+    // MatDateRangePicker,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

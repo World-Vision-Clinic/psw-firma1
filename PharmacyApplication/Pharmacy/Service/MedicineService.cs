@@ -69,7 +69,16 @@ namespace Pharmacy.Service
 
         public bool ProcureMedicine(long medicineId, int quantity)
         {
-            return repository.ProcureMedicine(medicineId, quantity);
+            Medicine medicine = repository.GetById(medicineId);
+            if (medicine == null)
+            {
+                return false;
+            }
+
+            medicine.Quantity -= quantity;
+            repository.UpdateMedicine(medicine);
+            return true;
+
         }
 
         public List<string> FoundReplacements(Medicine medicine)
@@ -92,7 +101,7 @@ namespace Pharmacy.Service
         {
             foreach (Medicine med in GetAll())
             {
-                if (med.MedicineName.Equals(medicine.MedicineName))
+                if (med.MedicineName.Equals(medicine.MedicineName) && med.Weigth == medicine.Weigth)
                 {
                     return med;
                 }
@@ -168,6 +177,33 @@ namespace Pharmacy.Service
             return false;
         }
 
+        public string GetSpecification(Medicine medicine)
+        {
+            string specificaton = "Name: " + medicine.MedicineName + "\n\n";
+            specificaton += "Weigth: " + medicine.Weigth + "mg\n\n";
+            specificaton += "Manufacturer: " + medicine.Manufacturer + "\n\n";
+            specificaton += "SideEffects: " + medicine.SideEffects + "\n\n";
+            specificaton += "Usage: " + medicine.Usage + "\n\n";
+            specificaton += "Main precautions: " + medicine.MainPrecautions + "\n\n";
+            specificaton += "Potential dangers: " + medicine.PotentialDangers + "\n\n";
+            specificaton += "Substances: ";
+            foreach (Substance substance in medicine.Substances)
+            {
+                specificaton += substance.Name + ", ";
+            }
 
+            specificaton = specificaton.Substring(0, specificaton.Length - 2);
+            specificaton += "\n\n";
+
+            specificaton += "Substitute medicines: ";
+            foreach (SubstituteMedicine substitute in medicine.SubstituteMedicines)
+            {
+                specificaton += substitute.Substitute.MedicineName + " " + substitute.Substitute.Weigth + "mg, ";
+            }
+
+            specificaton = specificaton.Substring(0, specificaton.Length - 2);
+
+            return specificaton;
+        }
     }
 }

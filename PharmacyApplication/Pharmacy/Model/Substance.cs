@@ -19,7 +19,7 @@ namespace Pharmacy.Model
             SubstanceId = id;
             Name = name;
             Quantity = quantity;
-            medicineId = medicineId;
+            MedicineId = medicineId;
         }
 
     }

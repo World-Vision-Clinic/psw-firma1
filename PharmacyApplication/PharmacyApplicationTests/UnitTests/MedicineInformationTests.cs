@@ -59,5 +59,25 @@ namespace PharmacyApplicationTests
 
             Assert.Contains(medicine.SubstituteMedicines, item => item.SubstituteId == 2L);
         }
+
+        [Fact]
+        public void Check_quantity_true()
+        {
+            IMedicineRepository stubRepository = CreateStubRepository();
+
+            MedicineService service = new MedicineService(stubRepository);
+
+            Assert.True(service.CheckQuantity("Brufen", 500.00, 200));
+        }
+
+        [Fact]
+        public void Check_quantity_false()
+        {
+            IMedicineRepository stubRepository = CreateStubRepository();
+
+            MedicineService service = new MedicineService(stubRepository);
+
+            Assert.False(service.CheckQuantity("Brufen", 500.00, 201));
+        }
     }
 }

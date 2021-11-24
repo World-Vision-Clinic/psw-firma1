@@ -36,6 +36,7 @@ namespace PharmacyAPI.Controller
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
+                channel.ExchangeDeclare(exchange: "NewsChannel", type: ExchangeType.Fanout);
                 channel.QueueDeclare(queue: "Jankovic",
                                      durable: false,
                                      exclusive: false,
@@ -45,7 +46,7 @@ namespace PharmacyAPI.Controller
 
                 var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(dto));
 
-                channel.BasicPublish(exchange: "",
+                channel.BasicPublish(exchange: "NewsChannel",
                                      routingKey: "Jankovic",
                                      basicProperties: null,
                                      body: body);
