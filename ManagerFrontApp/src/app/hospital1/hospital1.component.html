@@ -304,17 +304,21 @@
 
   <div class="search-list-box-equipment" *ngIf="searchRooms && searchBegin">
     <h3>Search result</h3>
-    <table class="list-table">
+    <table class="rooms-table">
       <thead>
         <tr>
-          <th>ROOM NAME</th>
+          <th>ROOM NAME</th><th>FLOOR</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of searchResultList">
-          <td>{{ item.roomName }}</td>
+          <td>{{ item.name }}</td>
+          <td></td>
+          <td></td>
+          <td>{{ item.floorId }}</td>
         </tr>
       </tbody>
     </table>
+    <button class="btn">Close</button>
   </div>
 </div>
