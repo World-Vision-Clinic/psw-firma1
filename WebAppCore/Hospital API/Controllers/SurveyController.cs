@@ -31,14 +31,12 @@ namespace Hospital_API
             {
                 return NotFound();
             }
-
             return survey;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<QuestionDTO>> GetQuestions()
         {
-
             List<QuestionDTO> dtoList = new List<QuestionDTO>();
             foreach (SurveyQuestion question in surveyService.GetAllQuestions())
             {
@@ -48,9 +46,8 @@ namespace Hospital_API
         }
 
         [HttpPost]
-        public ActionResult<Survey> PostSuveyQuestions([FromBody] List<QuestionDTO> questions)
+        public ActionResult<Survey> PostSurveyQuestions([FromBody] List<QuestionDTO> questions)
         {
-
             Survey newSurvey = new Survey();
             newSurvey.CreationDate = System.DateTime.Now;
             newSurvey.IdAppointment = 1;
@@ -69,10 +66,7 @@ namespace Hospital_API
             {
                 surveyService.AddAnswer(QuestionMapper.QuestionDTOToAnswer(dtos, IdSurvey));
             }
-
             return Ok(newSurvey);
         }
-
-
     }
 }

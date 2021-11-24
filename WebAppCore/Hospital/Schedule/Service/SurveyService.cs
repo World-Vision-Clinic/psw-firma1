@@ -27,8 +27,7 @@ namespace Hospital.Schedule.Service
 
         public int AddSurvey(Survey newSurvey)
         {
-            return _repo.AddSurvey(newSurvey);
-            
+            return _repo.AddSurvey(newSurvey);            
         }
 
         public void AddAnswer(AnsweredSurveyQuestion answer)
