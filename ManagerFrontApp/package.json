@@ -10,10 +10,11 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-devkit/build-webpack": "^0.1300.3",
     "@angular/animations": "^12.2.12",
     "@angular/cdk": "^12.2.12",
     "@angular/common": "~12.2.0",
-    "@angular/compiler": "~12.2.0",
+    "@angular/compiler": "^12.2.13",
     "@angular/core": "^12.2.12",
     "@angular/forms": "~12.2.0",
     "@angular/material": "^12.2.12",
@@ -26,8 +27,8 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^12.2.13",
-    "@angular/cli": "~12.2.11",
-    "@angular/compiler-cli": "~12.2.0",
+    "@angular/cli": "^12.2.13",
+    "@angular/compiler-cli": "^12.2.13",
     "@types/jasmine": "~3.8.0",
     "@types/node": "^12.11.1",
     "jasmine-core": "~3.8.0",
