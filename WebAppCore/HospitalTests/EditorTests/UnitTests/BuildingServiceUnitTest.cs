@@ -17,18 +17,37 @@ using Hospital.GraphicalEditor.Repository;
 using Hospital.GraphicalEditor.Model;
 using Hospital.GraphicalEditor.Service;
 using Shouldly;
+using Moq;
 
 namespace HospitalTests.EditorTests
 {
     public class BuildingServiceUnitTest
     {
+        private static IBuildingRepository CreateStubRepository()
+        {
+            var stubRepository = new Mock<IBuildingRepository>();
+            var buildings = new List<Building>();
+
+
+            Building hospital1 = new Building { id = 1, Name = "Hospital I", Area = null, Info = "Gynecology", MapPositionId = 1 };
+            Building hospital2 = new Building { id = 2, Name = "Hospital II", Area = null, Info = "Oncology", MapPositionId = 2 };
+            Building hospital3 = new Building { id = 3, Name = "Hospital III", Area = null, Info = "Dermatology", MapPositionId = 3 };
+
+            buildings.Add(hospital1);
+            buildings.Add(hospital2);
+            buildings.Add(hospital3);
+
+            stubRepository.Setup(m => m.GetAll()).Returns(buildings);
+            return stubRepository.Object;
+        }
+
         [Fact]
         public void building_service_test_1()
         {
-            HospitalContext context = new HospitalContext();
-            IBuildingRepository repo = new BuildingRepository(context);
+            IBuildingRepository repo = CreateStubRepository();
+
             BuildingService service = new BuildingService(repo);
-            service.GetAll().Count.ShouldBeEquivalentTo(2);
+            service.GetAll().Count.ShouldBeEquivalentTo(3);
         }
     }
 }
