@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using Integration.SharedModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Integration.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211124120657_ExaminationAndMedicineTherapyAdded")]
+    partial class ExaminationAndMedicineTherapyAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,9 +88,6 @@ namespace Integration.Migrations
                     b.Property<string>("MedicalRecordId")
                         .HasColumnType("text");
 
-                    b.Property<int>("TherapyId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("anamnesis")
                         .HasColumnType("text");
 
@@ -101,13 +100,16 @@ namespace Integration.Migrations
                     b.Property<bool>("patientVisible")
                         .HasColumnType("boolean");
 
+                    b.Property<int?>("therapyId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("MedicalRecordId");
 
-                    b.HasIndex("TherapyId");
-
                     b.HasIndex("appointmentID");
+
+                    b.HasIndex("therapyId");
 
                     b.ToTable("Examinations");
                 });
@@ -208,7 +210,7 @@ namespace Integration.Migrations
                     b.Property<string>("MedicineID")
                         .HasColumnType("text");
 
-                    b.Property<int>("TherapyId")
+                    b.Property<int?>("TherapyId")
                         .HasColumnType("integer");
 
                     b.Property<int>("TimesPerDay")
@@ -370,12 +372,9 @@ namespace Integration.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("MedicineId")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Therapies");
+                    b.ToTable("Therapy");
                 });
 
             modelBuilder.Entity("Integration.Appointment", b =>
@@ -391,15 +390,13 @@ namespace Integration.Migrations
                         .WithMany("Examination")
                         .HasForeignKey("MedicalRecordId");
 
-                    b.HasOne("Integration.Therapy", "therapy")
-                        .WithMany()
-                        .HasForeignKey("TherapyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Integration.Appointment", "appointment")
                         .WithMany()
                         .HasForeignKey("appointmentID");
+
+                    b.HasOne("Integration.Therapy", "therapy")
+                        .WithMany()
+                        .HasForeignKey("therapyId");
                 });
 
             modelBuilder.Entity("Integration.Ingredient", b =>
@@ -428,9 +425,7 @@ namespace Integration.Migrations
 
                     b.HasOne("Integration.Therapy", null)
                         .WithMany("Medicine")
-                        .HasForeignKey("TherapyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TherapyId");
                 });
 #pragma warning restore 612, 618
         }

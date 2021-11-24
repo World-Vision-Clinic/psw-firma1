@@ -19,7 +19,10 @@ import { ObjectionFormPageComponent } from './manager-integration-front-app/obje
 import { ManagerFeedbackViewComponent } from './manager-feedback-view/manager-feedback-view.component';
 import { PharmaciesComponent } from './manager-integration-front-app/pharmacies/pharmacies.component';
 import { NewsComponent } from './manager-integration-front-app/news/news.component';
-
+import { MedicineConsumptionComponent } from './manager-integration-front-app/medicine-consumption/medicine-consumption.component';
+import {MatDatepickerModule} from '@angular/material/datepicker'; 
+import {MatInputModule} from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 @NgModule({
@@ -37,7 +40,8 @@ import { NewsComponent } from './manager-integration-front-app/news/news.compone
     ManagerIntegrationFrontAppComponent,
     PharmaciesComponent,
 
-    NewsComponent
+    NewsComponent,
+      MedicineConsumptionComponent
 
   ],
   imports: [
@@ -48,7 +52,11 @@ import { NewsComponent } from './manager-integration-front-app/news/news.compone
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NgSelectModule
+    NgSelectModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatFormFieldModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

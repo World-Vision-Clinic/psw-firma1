@@ -33,6 +33,14 @@
                 }]"
                 class="m-1 btn btn-light btn-outline-primary" Button>Overview of news</button>
             </li>
+            <li class="nav-item">
+                <button [routerLink]="['/manager-front-app', {
+                    outlets:{
+                        'showObjRepl' : ['medicine-consumption-report']
+                    }
+                }]"
+                class="m-1 btn btn-light btn-outline-primary" Button>Medicine consumption</button>
+            </li>
         </ul>
     </nav>
 <div>

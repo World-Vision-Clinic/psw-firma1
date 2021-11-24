@@ -4,9 +4,11 @@ using Pharmacy.Model;
 using Pharmacy.Repository;
 using Pharmacy.Service;
 using PharmacyAPI.Dto;
+using Renci.SshNet;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -116,6 +118,45 @@ namespace PharmacyAPI.Controller
         public IActionResult TestingController()
         {
             return Ok("Hello from Medicine controller");
+        }
+
+        [HttpGet]
+        public IActionResult GetConsumptionNotification()
+        {
+            //FileStream fs = medicineService.GetConsumedMedicinesInPeriodFile(dto.Beginning, dto.End);
+            //UploadFile(fs);
+
+            return Ok();
+        }
+
+        [HttpGet("medicineConsumation")]
+        public IActionResult GetMedicineCousumation()
+        {
+            LoadFile();
+            String consumationReport = ReadConsumationReport();
+            return Ok(consumationReport);
+        }
+
+        public void LoadFile()
+        {
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.56.1", "user", "password")))
+            {
+                client.Connect();
+                string serverFile = @"\public\consumed-medicine.txt";
+                string localFile = "consumed-medicine.txt";
+                using (Stream stream = System.IO.File.OpenWrite(localFile))
+                {
+                    client.DownloadFile(serverFile, stream, x => { Console.WriteLine(x); });
+                }
+                client.Disconnect();
+            }
+        }
+        public String ReadConsumationReport()
+        {
+            StreamReader reader = new StreamReader("consumed-medicine.txt");
+            String consumationReport = reader.ReadToEnd();
+            reader.Close();
+            return consumationReport;
         }
     }
 }

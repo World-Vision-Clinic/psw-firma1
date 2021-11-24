@@ -1,4 +1,5 @@
 ﻿using Integration.Model;
+using Integration.Pharmacy.Repository.RepositoryInterfaces;
 using Integration.Repositories;
 using Integration.Repositories.Interfaces;
 using System;
@@ -16,11 +17,12 @@ namespace Integration.Services
     {
         private IMedicinesRepository medicineRepository;
         private IMedicalRecordsRepository medicalRecordRepository;
-
-        public MedicineService(IMedicinesRepository medicineRepository, IMedicalRecordsRepository medicalRecordRepository)
+        private IExaminationRepository examinationRepository;
+        public MedicineService(IMedicinesRepository medicineRepository, IMedicalRecordsRepository medicalRecordRepository, IExaminationRepository examinationRepository)
         {
             this.medicineRepository = medicineRepository;
             this.medicalRecordRepository = medicalRecordRepository;
+            this.examinationRepository = examinationRepository;
         }
 
         public List<string> GetAllMedicines()
@@ -77,15 +79,41 @@ namespace Integration.Services
             medicineRepository.EditMedicine(medicine);
         }
 
-        internal List<Medicine> GetConsumedMedicineInPeriod(DateTime startDate, DateTime endDate)
+        public List<Medicine> GetConsumedMedicineInPeriod(DateTime startDate, DateTime endDate)
         {
             List<Medicine> medicines = new List<Medicine>();
             foreach (MedicalRecord record in medicalRecordRepository.GetAll())
+            {
+                record.Examination = examinationRepository.GetAllByMedicalRecordId(record.MedicalRecordID);
                 foreach (Examination examination in record.Examination)
+                {
                     if (examination.dateOfExamination.Date >= startDate.Date && examination.dateOfExamination.Date <= endDate.Date)
-                        foreach (MedicineTherapy medicineTherapy in examination.therapy.Medicine)
-                            medicines.Add(medicineRepository.GetByID(medicineTherapy.MedicineID));
+                    {
+                        Therapy therapie = examinationRepository.GetTherapyById(examination.TherapyId);
+                        if(therapie!=null)
+                            medicines.Add(medicineRepository.GetByID(therapie.MedicineId));
+                    }
+                }
+            }
             return medicines;
+        }
+
+        public void CreateConsumedMedicinesInPeriodFile(DateTime startDate, DateTime endDate)
+        {
+            StreamWriter writer = new StreamWriter("consumed-medicine.txt");
+            writer.WriteLine("Medicine consumption report for World vision clinic\n\nReport for date period between " + startDate.Date.ToShortDateString()
+                + " and " + endDate.Date.ToShortDateString());
+
+            List<Medicine> consumedMedicine = GetConsumedMedicineInPeriod(startDate, endDate);
+            if(consumedMedicine.Count==0)
+            {
+                writer.WriteLine("Between this period there were no medicine consumed.");
+            }
+            foreach (Medicine medicine in consumedMedicine)
+            {
+                writer.WriteLine("Name: " + medicine.Name + ", quantity: " + medicine.Quantity);
+            }
+            writer.Close();
         }
 
         public bool IsMedicineIDUnique(string id)

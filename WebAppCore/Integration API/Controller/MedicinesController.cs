@@ -7,9 +7,11 @@ using Integration_API.Dto;
 using Integration_API.Mapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Renci.SshNet;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,6 +23,31 @@ namespace Integration_API.Controller
     {
         private PharmaciesService pharmaciesService = new PharmaciesService(new PharmaciesRepository());
         private CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
+        private MedicineService medicineService = new MedicineService(new MedicinesRepository(), new MedicalRecordsRepository(), new ExaminationRepository());
+
+        [HttpPost("sendConsumptionNotification")]
+        public IActionResult SendConsumptionNotification(MedicineConsumptionDto dto)
+        {
+            medicineService.CreateConsumedMedicinesInPeriodFile(dto.Beginning, dto.End);
+            UploadFile();
+
+
+            return Ok();
+        }
+
+        public void UploadFile()
+        {
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.56.1", "user", "password")))
+            {
+                client.Connect();
+                string sourceFile = @"consumed-medicine.txt";
+                using (Stream stream = System.IO.File.OpenRead(sourceFile))
+                {
+                    client.UploadFile(stream, @"\public\" + Path.GetFileName(sourceFile), x => { Console.WriteLine(x); });
+                }
+                client.Disconnect();
+            }
+        }
 
         [HttpGet("check")]
         public IActionResult CheckMedicineAvailability(string name = "", string dosage = "", string quantity = "")
@@ -122,7 +149,7 @@ namespace Integration_API.Controller
         public IActionResult Ordered(OrderedMedicineDTO dto)
         {
             System.Diagnostics.Debug.WriteLine(dto.Replacements);
-            MedicineService ms = new MedicineService(new MedicinesRepository(), new MedicalRecordsRepository());
+            MedicineService ms = new MedicineService(new MedicinesRepository(), new MedicalRecordsRepository(), new ExaminationRepository());
             Medicine orderedMedicine;
             foreach (Medicine med in ms.GetAll())
             {
