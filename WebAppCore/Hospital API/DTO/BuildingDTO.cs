@@ -16,6 +16,8 @@ namespace Hospital_API.DTO
         public List<FloorDTO> floors { get; set; }
         public List<Equipment> equipment { get; set; }
 
+        public List<Room> rooms { get; set; }
+
         public BuildingDTO(Building building)
         {
             id = building.id;
@@ -23,7 +25,8 @@ namespace Hospital_API.DTO
             info = building.Info;
             mapPosition = new MapPosition();
             floors = new List<FloorDTO>();
-            equipment = new List<Equipment>(); 
+            equipment = new List<Equipment>();
+            rooms = new List<Room>();
 
         }
 

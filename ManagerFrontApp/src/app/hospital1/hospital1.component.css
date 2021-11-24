@@ -83,7 +83,7 @@
 
 .btn {
   color: black;
-  background-color:rgb(160, 159, 159);
+  background-color: rgb(160, 159, 159);
   border-radius: 3px;
   min-width: 100px;
   height: 24px;
@@ -135,23 +135,24 @@
   display: flex;
 }
 
-.equipment-table{
+.equipment-table {
   display: block;
-    margin-left: 10%;
-    margin-top: 20px;
-    background-color: white;
-    margin-bottom: 50px;
+  margin-left: 10%;
+  margin-top: 20px;
+  background-color: white;
+  margin-bottom: 50px;
 }
 
 .list-table {
   display: block;
-    margin-left: 10%;
-    margin-top: 20px;
-    background-color: white;
-    margin-bottom: 50px;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  background-color: white;
 }
 
-.equipment-table th{
+.equipment-table th {
   display: inline-block;
   padding: 20px 23px;
   text-align: left;
@@ -159,9 +160,9 @@
   font-size: 15px;
   color: #000;
   text-transform: uppercase;
-  background:rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.1);
 }
-.list-table th{
+.list-table th {
   display: inline-block;
   padding: 20px 23px;
   text-align: left;
@@ -169,7 +170,7 @@
   font-size: 15px;
   color: #000;
   text-transform: uppercase;
-  background:rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .equipment-table tbody {
@@ -180,7 +181,7 @@
 }
 .list-table tbody {
   display: inline-block;
-  height: 275px;
+  height: 260px;
   overflow-y: scroll;
   scrollbar-color: rgb(248, 246, 246);
   width: 270px;
@@ -234,20 +235,20 @@
   position: absolute;
   top: 6%;
   right: 2%;
-  background:rgb(160, 159, 159);
+  background: rgb(160, 159, 159);
   height: 40px;
   border-radius: 40px;
   padding: 8px;
 }
 
-.search-box-rooms:hover > .search-txt-rooms{
+.search-box-rooms:hover > .search-txt-rooms {
   width: 220px;
   padding: 0 6px;
 }
 
-.search-box-rooms:hover > .search-btn-rooms{
- background: white;
- color: rgb(160, 159, 159);
+.search-box-rooms:hover > .search-btn-rooms {
+  background: white;
+  color: rgb(160, 159, 159);
 }
 
 .search-btn-rooms {
@@ -265,7 +266,7 @@
 }
 
 .search-txt-rooms {
-  border:none;
+  border: none;
   background: none;
   outline: none;
   float: left;
@@ -286,13 +287,11 @@
 }
 
 .search-list-box-equipment {
-  margin-right: 5px;
-  width: 330px;
-  height: 451px;
+  width: 320px;
+  height: 400px;
   border: 2px solid black;
   padding: 5px;
 }
-
 
 .move-box-equipment {
   width: 320px;
@@ -319,18 +318,17 @@
   display: inline-block;
 }
 
-
-.ng-select .ng-select-container .ng-value-container .ng-input>input{
+.ng-select .ng-select-container .ng-value-container .ng-input > input {
   background-color: white;
   border: 1px solid black !important;
 }
 
-.label-container{
+.label-container {
   margin: 10px 0;
 }
 
-.round-button{
-  background-color:  rgb(160, 159, 159);
+.round-button {
+  background-color: rgb(160, 159, 159);
   border: none;
   color: white;
   padding: 18px;
@@ -342,6 +340,6 @@
   margin-right: 15px;
 }
 
-.center-buttons{
+.center-buttons {
   margin-left: 14%;
 }

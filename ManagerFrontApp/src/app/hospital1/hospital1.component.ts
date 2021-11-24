@@ -24,6 +24,7 @@ export class Hospital1Component implements OnInit {
   selectedBuilding;
   selectedFloor;
   hospitalEquipment;
+  hospitalRooms;
   searchResultList;
 
   constructor(
@@ -45,6 +46,7 @@ export class Hospital1Component implements OnInit {
   moveBoxEquipment: boolean = false;
   searchEquipmentResultBox: boolean = false;
   searchRooms: boolean = true;
+  searchBegin: boolean = false;
   searchBoxDisabled: boolean = true;
 
   enableEdit() {
@@ -98,7 +100,7 @@ export class Hospital1Component implements OnInit {
   closeSearchBox = () => {
     this.searchBoxDisabled = true;
     this.searchEquipmentResultBox = false;
-  }
+  };
   showInfo(roomName: string) {
     this.roomName = roomName;
   }
@@ -110,7 +112,7 @@ export class Hospital1Component implements OnInit {
   }
 
   equipment() {
-    this.equipmentBox = true;    
+    this.equipmentBox = true;
   }
 
   closeEquip() {
@@ -126,21 +128,39 @@ export class Hospital1Component implements OnInit {
     this.searchEquipmentResultBox = true;
   }
 
-  setSearchCriteria() {
-    this.searchRooms = !this.searchRooms;
+  searchrooms() {
+    this.searchRooms = true;
   }
 
-  searchForEquipment(event: any){
+  setSearchCriteria() {
+    this.searchRooms = !this.searchRooms;
+    this.searchBegin = true;
+  }
+
+  searchForEquipment(event: any) {
     var inputValue = event.target.value.toLowerCase();
     this.searchResultList = [];
 
-    this.hospitalEquipment.forEach(element => {
-      if(element.name.toLowerCase().includes(inputValue)){
+    this.hospitalEquipment.forEach((element) => {
+      if (element.name.toLowerCase().includes(inputValue)) {
         this.searchResultList.push(element);
       }
     });
     this.searchEquipment();
-    
+  }
+
+  searchForRooms(event: any) {
+    this.searchBegin = true;
+    var inputValue = event.target.value.toLowerCase();
+    this.searchResultList = [];
+
+    this.hospitalRooms.forEach((element) => {
+      if (element.name.toLowerCase().includes(inputValue)) {
+        this.searchResultList.push(element);
+      }
+    });
+    console.log(this.searchResultList);
+    this.searchrooms();
   }
 
   ngOnInit(): void {
@@ -181,18 +201,19 @@ export class Hospital1Component implements OnInit {
         this.selectedBuilding = data;
         this.loadingHospital = false;
         this.hospitalEquipment = data.equipment;
-        console.log(this.hospitalEquipment);
+        this.hospitalRooms = data.rooms;
+        console.log(data);
       },
       (error) => console.log(error)
     );
   }
 
-  async loadEquipment(id: number){
+  async loadEquipment(id: number) {
     this.hospitalService.getEquipment(id).subscribe(
-    (data)=>{
-      this.selectedRoom.equipments=data.equipments;
-    },
-    (error) => console.log(error)
+      (data) => {
+        this.selectedRoom.equipments = data.equipments;
+      },
+      (error) => console.log(error)
     );
   }
 }

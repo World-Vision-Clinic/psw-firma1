@@ -2,7 +2,8 @@ import { Building } from './building';
 
 export let BUILDINGS: Building[] = [
   {
-    equipment:[],
+    rooms: [],
+    equipment: [],
     name: 'Hospital I',
     info: 'Gynecology',
     mapPosition: {
@@ -501,7 +502,8 @@ export let BUILDINGS: Building[] = [
     ],
   },
   {
-    equipment:[],
+    rooms: [],
+    equipment: [],
     name: 'Hospital II',
     mapPosition: {
       x: 30,
