@@ -10,12 +10,14 @@ import { OverviewObjectionsRepliesComponent } from './manager-integration-front-
 import { ObjectionFormPageComponent } from './manager-integration-front-app/objection-form-page/objection-form-page.component';
 import { PharmaciesComponent } from './manager-integration-front-app/pharmacies/pharmacies.component';
 import { NewsComponent } from './manager-integration-front-app/news/news.component';
+import { ViewSurveyResultsComponent } from './view-survey-results/view-survey-results.component';
 
 const routes: Routes = [
   {path: "", component: FrontPageComponent},
   {path:"buildings", component: BuildingsMapComponent},
   {path:"hospital1", component: Hospital1Component},
   {path:"pharmacy-registration", component: PharmacyRegistrationComponent},
+  {path:"survey-results", component: ViewSurveyResultsComponent},
   {path:"manager-front-app", component: ManagerIntegrationFrontAppComponent, children: [
   {path: "overview-objections-replies", outlet: "showObjRepl", component:OverviewObjectionsRepliesComponent},
   {path: "overview-pharmacies", outlet: "showObjRepl", component:PharmaciesComponent},

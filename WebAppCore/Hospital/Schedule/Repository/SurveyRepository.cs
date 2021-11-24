@@ -59,5 +59,10 @@ namespace Hospital.Schedule.Repository
         {
             return _context.Questions.ToList();
         }
+
+        public List<AnsweredSurveyQuestion> GetAllAnsweredQuestions()
+        {
+            return _context.AnsweredQuestions.ToList();
+        }
     }
 }

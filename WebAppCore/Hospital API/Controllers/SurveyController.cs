@@ -2,6 +2,8 @@ using Hospital.Schedule.Model;
 using Hospital.Schedule.Repository;
 using Hospital.Schedule.Service;
 using Hospital.SharedModel;
+using Hospital_API.DTO;
+using Hospital_API.Mapper;
 using Hspital_API.Dto;
 using Hspital_API.Mapper;
 using Microsoft.AspNetCore.Mvc;
@@ -43,6 +45,12 @@ namespace Hospital_API
                 dtoList.Add(QuestionMapper.QuestionToQuestionDTO(question));
             }
             return Ok(dtoList);
+        }
+
+        [HttpGet("answered_questions_breakdown")]
+        public ActionResult<IEnumerable<SurveyBreakdownDTO>> GetAnsweredQuestionsBreakdown()
+        {
+            return SurveyBreakdownMapper.AllSurveysToSurveyBreakdownDTO(surveyService.GetAllAnsweredQuestions());
         }
 
         [HttpPost]

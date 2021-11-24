@@ -25,6 +25,11 @@ namespace Hospital.Schedule.Service
             return _repo.GetAllQuestions();
         }
 
+        public List<AnsweredSurveyQuestion> GetAllAnsweredQuestions()
+        {
+            return _repo.GetAllAnsweredQuestions();
+        }
+
         public int AddSurvey(Survey newSurvey)
         {
             return _repo.AddSurvey(newSurvey);            
