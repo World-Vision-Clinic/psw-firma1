@@ -10,7 +10,6 @@ namespace Hspital_API.Mapper
 {
     public class QuestionMapper
     {
-
         public static QuestionDTO QuestionToQuestionDTO(SurveyQuestion question)
         {
             QuestionDTO dto = new QuestionDTO(question.Question, question.Section, 0 );            

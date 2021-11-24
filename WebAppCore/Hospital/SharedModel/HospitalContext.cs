@@ -17,14 +17,9 @@ namespace Hospital.SharedModel
         public DbSet<AnsweredSurveyQuestion> AnsweredQuestions { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
 
-        public HospitalContext()
-        {
-         
-        }
-
+        public HospitalContext() { }
 
         public HospitalContext(DbContextOptions<HospitalContext> options) : base(options) { }
-
         public HospitalContext(DbContextOptions<TestContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -42,8 +37,7 @@ namespace Hospital.SharedModel
             modelBuilder.Entity<Appointment>(entity =>
             {
                 entity.ToTable("Appointments");
-                entity.HasKey(c => c.Id);            
-
+                entity.HasKey(c => c.Id);      
             });
 
             modelBuilder.Entity<Appointment>().HasData(
@@ -73,7 +67,6 @@ namespace Hospital.SharedModel
                 new SurveyQuestion { Id = 14, Question = "How yould you rate to what extent staff was available to you during your visit to the hospital?", Section = SurveySectionType.Staff, IdSurvey = 1 },
                 new SurveyQuestion { Id = 15, Question = "What is your overall satisfaction with our staff?", Section = SurveySectionType.Staff, IdSurvey = 1 }
                 );
-
         }
 
         protected override void OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder optionsBuilder)

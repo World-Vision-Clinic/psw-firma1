@@ -8,10 +8,9 @@ namespace Hospital.Schedule.Model
     {
         public int SurveyForeignKey { get; set; }
         public int PatientForeignKey { get; set; }
-
         public string Question { get; set; }
         public SurveySectionType Section { get; set; }
-        public int Answer { get; set; } //ocena koju mozemo dati
+        public int Answer { get; set; } 
         public int Id { get; set; }
 
         public AnsweredSurveyQuestion() { }

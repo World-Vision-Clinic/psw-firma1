@@ -107,19 +107,14 @@
     vertical-align: center;
 }
 
-.section1-panel {
-    padding-top: 100px;
-    padding-bottom: 100px;
-    background: -webkit-linear-gradient(to border-bottom, rgb(245, 245, 245), rgb(255, 255, 255));  
-    background: linear-gradient(to border-bottom, rgb(245, 245, 245), rgb(255, 255, 255))
-}
-
 .mat-radio-button ~ .mat-radio-button {
     margin-left: 15px;
 }
 
 .mat-radio-button {
-    margin-left: 2%;
+    margin-left: 2.5%;
+    font-weight: bolder;
+
 }
 
 ::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
@@ -163,11 +158,12 @@
 .hospital-title, .staff-title, .doctor-title {
     margin-top: 5%;
     margin-left: 2%;
-    font-size: 27px;
+    font-size: 30px;
+    color: rgb(19, 103, 168) ;
 }
 
 .hospital-questions, .staff-questions, .doctor-questions {
-    font-size: 17px;
+    font-size: 19px;
 }
 
 

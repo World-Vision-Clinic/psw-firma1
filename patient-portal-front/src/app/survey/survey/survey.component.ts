@@ -31,20 +31,18 @@ export class SurveyComponent implements OnInit {
         this.staffSection.push(question);
       }
     }     
-
   }
-
-  submitSurvey(): void {
-    console.log("komponenta");
-    this._surveyService.addSurvey(this.questions).subscribe(
-      data => console.log(data), success =>  this.router.navigate(['']));
-  }
-
 
   ngOnInit(): void {
     this._surveyService.getQuestions().subscribe(data => this.questions = data,
     error => this.errorMsg = "Couldn't load user questions", 
     ()  => this.sortQuestions());                                         
+  }
+
+  submitSurvey() {
+    console.log("komponenta");
+    this._surveyService.addSurvey(this.questions).subscribe(
+     data => console.log(data), success => this.router.navigate([" "]));
   }
 
   surveyIsValid(): boolean {
@@ -56,7 +54,6 @@ export class SurveyComponent implements OnInit {
     return true;
 }
 
-  
   
 }
 

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xunit;
 
@@ -33,9 +34,30 @@ namespace HospitalTests.SurveyTests
         }
 
         [Fact]
+        public void Test_survey_found()
+        {   //Arrange
+            inMemoryRepo = GetInMemorySurveyRepository();
+
+            Survey survey = new Survey()
+            {
+                IdSurvey = 4,
+                CreationDate = DateTime.Now,
+                IdAppointment = 1
+            };
+            //Act
+            inMemoryRepo.AddSurvey(survey);
+            var controller = new SurveyController();
+            controller.surveyService = new SurveyService(inMemoryRepo);
+            var response = controller.GetSurvey(4);
+            //Assert
+            Assert.Equal(4, response.Value.IdSurvey);
+        }
+
+        [Fact]
         public void Test_retrieve_questions()
         {   //Arrange
             inMemoryRepo = GetInMemorySurveyRepository();
+            List<SurveyQuestion> questions = new List<SurveyQuestion>();
 
             SurveyQuestion question1 = new SurveyQuestion()
             {
@@ -52,9 +74,8 @@ namespace HospitalTests.SurveyTests
                 IdSurvey = 3
             };
             //Act
-            inMemoryRepo.AddSurveyQuestion(question1);
-            inMemoryRepo.AddSurveyQuestion(question2);
-
+            questions.Add(question1);
+            questions.Add(question2);   
             var controller = new SurveyController();
             controller.surveyService = new SurveyService(inMemoryRepo);
             var response = controller.GetQuestions();
@@ -62,27 +83,7 @@ namespace HospitalTests.SurveyTests
             //Assert
             Assert.Equal(200, result.StatusCode);
             Assert.NotNull(result.Value);
-        }
-
-        [Fact]
-        public void Test_survey_found()
-        {   //Arrange
-            inMemoryRepo = GetInMemorySurveyRepository();
-
-            Survey survey = new Survey()
-            {
-                IdSurvey = 4,
-                CreationDate = DateTime.Now,
-                IdAppointment = 1
-            };
-            //Act
-            inMemoryRepo.AddSurvey(survey);
-
-            var controller = new SurveyController();
-            controller.surveyService = new SurveyService(inMemoryRepo);
-            var response = controller.GetSurvey(4);
-            //Assert
-            Assert.Equal(4, response.Value.IdSurvey);
+            Assert.Equal(2, questions.Count);
         }
 
         [Fact]
@@ -106,14 +107,14 @@ namespace HospitalTests.SurveyTests
             //Act
             dtos.Add(answer1);
             dtos.Add(answer2);
-
             var controller = new SurveyController();
             controller.surveyService = new SurveyService(inMemoryRepo);
-            var response = controller.PostSuveyQuestions(dtos);
+            var response = controller.PostSurveyQuestions(dtos);
             var result = response.Result as OkObjectResult;
             //Assert
             Assert.Equal(200, result.StatusCode);
             Assert.NotNull(result.Value);
+            Assert.Equal(2, dtos.Count);
         }
 
         [Fact]
@@ -137,10 +138,9 @@ namespace HospitalTests.SurveyTests
             //Act
             dtos.Add(answer1);
             dtos.Add(answer2);
-
             var controller = new SurveyController();
             controller.surveyService = new SurveyService(inMemoryRepo);
-            var response = controller.PostSuveyQuestions(dtos);
+            var response = controller.PostSurveyQuestions(dtos);
             var result = response.Result as BadRequestResult;
             //Assert
             Assert.Equal(400, result.StatusCode);

@@ -12,9 +12,7 @@ namespace Hospital.Schedule.Repository
     {
         private readonly HospitalContext _context;
 
-        public AppointmentRepository()
-        {
-        }
+        public AppointmentRepository() {}
 
         public AppointmentRepository(HospitalContext context)
         {

@@ -10,8 +10,8 @@ namespace Hospital.Schedule.Model
     {
         [Key]
         private int id;
-        private string question; //tekst pitanja
-        private SurveySectionType section; //sekcija kojoj ce pitanje pripadati
+        private string question; 
+        private SurveySectionType section; 
         public int Answer { get; set; } 
         public int IdSurvey { get; set; }
 

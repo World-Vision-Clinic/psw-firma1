@@ -16,7 +16,6 @@ namespace Hospital.Schedule.Model
         [ForeignKey("IdAppointment")]
         public virtual Appointment Appointment { get; set; }
 
-
         public Survey()
         {
             IdAppointment = 1;
@@ -26,14 +25,6 @@ namespace Hospital.Schedule.Model
         {
             this.IdSurvey = id;
             this.IdAppointment = idAppointment;
-
-        }
-       
-
-        
-      
-
-       
-
+        }    
     }
 }

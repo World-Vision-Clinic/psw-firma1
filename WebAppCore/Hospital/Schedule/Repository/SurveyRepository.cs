@@ -11,7 +11,6 @@ namespace Hospital.Schedule.Repository
     {
         private HospitalContext _context;
 
-
         public SurveyRepository(HospitalContext context)
         {
             _context = context;
@@ -56,7 +55,7 @@ namespace Hospital.Schedule.Repository
             return _context.Surveys.ToList();
         }
 
-        public List<SurveyQuestion> GetAllQuestions()  //TODO: napraviti upit koji ce dobavljati pitanja koja su vezana za neku konkretnu anketu, umesto da dobavlja apsolutno sva pitanja  iz baze
+        public List<SurveyQuestion> GetAllQuestions()  
         {
             return _context.Questions.ToList();
         }
