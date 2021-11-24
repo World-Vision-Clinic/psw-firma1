@@ -19,6 +19,7 @@ import { ObjectionFormPageComponent } from './manager-integration-front-app/obje
 import { ManagerFeedbackViewComponent } from './manager-feedback-view/manager-feedback-view.component';
 import { PharmaciesComponent } from './manager-integration-front-app/pharmacies/pharmacies.component';
 import { NewsComponent } from './manager-integration-front-app/news/news.component';
+import { MedicineConsumptionComponent } from './manager-integration-front-app/medicine-consumption/medicine-consumption.component';
 // import {
 //   MatDatepicker,
 //   MatDateRangeInput,
@@ -41,7 +42,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     ManagerFeedbackViewComponent,
     ManagerIntegrationFrontAppComponent,
     PharmaciesComponent,
-
+    MedicineConsumptionComponent,
     NewsComponent,
   ],
   imports: [

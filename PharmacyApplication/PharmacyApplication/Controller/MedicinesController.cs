@@ -124,7 +124,7 @@ namespace PharmacyAPI.Controller
 
         public void LoadFile()
         {
-            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.56.1", "user", "password")))
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.28", "user", "password")))
             {
                 client.Connect();
                 string serverFile = @"\public\consumed-medicine.txt";
@@ -190,7 +190,7 @@ namespace PharmacyAPI.Controller
 
         private void uploadSpecification()
         {
-            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.21", "user", "password")))
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.28", "user", "password")))
             {
                 client.Connect();
 
