@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Appointment } from 'src/appointment';
 import { Feedback } from 'src/feedback';
-import { Patient } from 'src/patient';
+import { MedicalRecord } from 'src/medical-record';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +18,8 @@ export class PatientFeedbackServiceService {
     return this.http.get<Feedback[]>("/api/Feedbacks/published")
   }
 
-  getPatient(id: number) : Observable<Patient>{
-    return this.http.get<Patient>("/api/Patients/1")
+  getPatient(id: number) : Observable<MedicalRecord>{
+    return this.http.get<MedicalRecord>("/api/Patients/1")
   }
 
   getPatientAppointments(id: number) : Observable<Appointment[]>{

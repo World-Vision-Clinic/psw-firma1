@@ -1,6 +1,6 @@
 import { DatePipe } from "@angular/common";
 
-export class Patient {
+export class MedicalRecord {
     userName: string = "";
     eMail: string = "";
     residence: string = "";
@@ -10,7 +10,7 @@ export class Patient {
 
     dateOfBirth: Date = new Date();
 
-    gender: number = 1;
+    gender: string = "";
     height: number = 190;
     weight: number = 90;
     
