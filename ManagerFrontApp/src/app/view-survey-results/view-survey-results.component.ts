@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ManagerFeedbackService } from '../manager-feedback.service';
+import { SurveyBreakdown } from '../survey-breakdown';
 
 @Component({
   selector: 'app-view-survey-results',
@@ -29,5 +30,23 @@ export class ViewSurveyResultsComponent implements OnInit {
     if(totalCount == 0)
       return 0
     return (rating/totalCount)*100
+  }
+
+  getSectionAverage(section:string, surveyBreakdownList: SurveyBreakdown[] = [] as any)
+  {
+    let average: number = 0;
+    let count: number = 0;
+    surveyBreakdownList.forEach(element => {
+      if(element.section == section)
+      {
+        average += element.average;
+        count++;
+      }
+    });
+    if(count > 0)
+    {
+      average = average/count;
+    }
+    return average;
   }
 }
