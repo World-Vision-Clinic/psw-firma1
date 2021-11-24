@@ -68,7 +68,7 @@
           [attr.y]="room.y"
           [attr.width]="room.width"
           [attr.height]="room.height"
-          [attr.class]="room.css"
+          [attr.class]="(room.id == selectedFloor.highlightedRoomId) ? 'highlightedRoom' : 'room'"
           (click)="selectRoom(room)"
         />
         <text
@@ -290,7 +290,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of searchResultList">
+        <tr *ngFor="let item of searchResultList" (click)="selectedEquipment(item.roomId)">
           <td>{{ item.name }}</td>
           <td>{{ item.amount }}</td>
           <td>{{ item.roomId }}</td>

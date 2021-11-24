@@ -57,7 +57,6 @@ export class Hospital1Component implements OnInit {
     this.formDisabled = true;
   }
   selectFloor = (floor: Floor) => {
-    console.log(floor);
     this.selectedFloor = floor;
   };
 
@@ -100,6 +99,7 @@ export class Hospital1Component implements OnInit {
   closeSearchBox = () => {
     this.searchBoxDisabled = true;
     this.searchEquipmentResultBox = false;
+    this.selectedFloor.highlightedRoomId = -1;
   };
   showInfo(roomName: string) {
     this.roomName = roomName;
@@ -163,6 +163,21 @@ export class Hospital1Component implements OnInit {
     this.searchrooms();
   }
 
+  selectedEquipment(roomId){
+    this.hospitalRooms.forEach(room => {
+      if(room.id == roomId){
+        if(room.floorId == 1){
+          this.selectFloor(this.floors[0]);
+          this.selectedFloor.highlightedRoomId = room.id;
+        }
+        else{
+          this.selectFloor(this.floors[1]);
+          this.selectedFloor.highlightedRoomId = room.id;
+        }
+      }
+    });
+  }
+
   ngOnInit(): void {
     this.loadHospital();
     this.loadHospitalFloors();
@@ -202,7 +217,7 @@ export class Hospital1Component implements OnInit {
         this.loadingHospital = false;
         this.hospitalEquipment = data.equipment;
         this.hospitalRooms = data.rooms;
-        console.log(data);
+        console.log(this.hospitalRooms);
       },
       (error) => console.log(error)
     );

@@ -25,6 +25,12 @@
   fill: cornsilk;
 }
 
+.highlightedRoom {
+  stroke: red;
+  stroke-width: 4px;
+  fill: cornsilk;
+}
+
 .room-cadetblue {
   fill: cadetblue;
 }
