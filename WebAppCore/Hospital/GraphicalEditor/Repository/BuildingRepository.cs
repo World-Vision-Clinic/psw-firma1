@@ -33,8 +33,16 @@ namespace Hospital.GraphicalEditor.Repository
 
         public Building GetByID(int id)
         {
-            Building building = dbContext.Buildings.FirstOrDefault(building => building.id == id);
-            return building;
+            foreach (Building b in dbContext.Buildings.ToList())
+            {
+                if (b.id == id)
+                {
+                    return b;
+
+                }
+            }
+            
+            return null;
         }
 
         public void Save(Building newBuilding)
