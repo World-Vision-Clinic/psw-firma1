@@ -42,19 +42,19 @@ namespace Hospital.SharedModel
                );
             //modelbuilder.Entity<Area>().HasData();
             modelbuilder.Entity<Equipment>().HasData(
-                new Equipment { id = 1, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 15, RoomId = 1 },
-                new Equipment { id = 2, Name = "Operating table", Type = EquipmentType.STATIC, Amount = 3, RoomId = 1 },
+                new Equipment { id = 1, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 15, RoomId = 15 },
+                new Equipment { id = 2, Name = "Operating table", Type = EquipmentType.STATIC, Amount = 3, RoomId = 23 },
                 new Equipment { id = 3, Name = "Infusion", Type = EquipmentType.DYNAMIC, Amount = 11, RoomId = 1 },
                 new Equipment { id = 4, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 17, RoomId = 2 },
                 new Equipment { id = 5, Name = "Operating table", Type = EquipmentType.STATIC, Amount = 2, RoomId = 2 },
-                new Equipment { id = 6, Name = "Infusion", Type = EquipmentType.DYNAMIC, Amount = 23, RoomId = 2 },
+                new Equipment { id = 6, Name = "Infusion", Type = EquipmentType.DYNAMIC, Amount = 23, RoomId = 23 },
                 new Equipment { id = 7, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 15, RoomId = 3 },
                 new Equipment { id = 8, Name = "Operating table", Type = EquipmentType.STATIC, Amount = 1, RoomId = 3 },
                 new Equipment { id = 9, Name = "Syringe", Type = EquipmentType.DYNAMIC, Amount = 11, RoomId = 3 },
                 new Equipment { id = 10, Name = "Bed", Type = EquipmentType.STATIC, Amount = 7, RoomId = 4 },
-                new Equipment { id = 11, Name = "Chair", Type = EquipmentType.STATIC, Amount = 4, RoomId = 4 },
+                new Equipment { id = 11, Name = "Chair", Type = EquipmentType.STATIC, Amount = 4, RoomId = 16 },
                 new Equipment { id = 12, Name = "Bed", Type = EquipmentType.STATIC, Amount = 11, RoomId = 5 },
-                new Equipment { id = 13, Name = "Chair", Type = EquipmentType.STATIC, Amount = 6, RoomId = 5 },
+                new Equipment { id = 13, Name = "Chair", Type = EquipmentType.STATIC, Amount = 6, RoomId = 17 },
                 new Equipment { id = 14, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 25, RoomId = 5 }
                 );
            
