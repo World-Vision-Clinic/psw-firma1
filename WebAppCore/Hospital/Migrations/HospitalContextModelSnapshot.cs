@@ -188,7 +188,7 @@ namespace Hospital.Migrations
                         new
                         {
                             IdSurvey = 1,
-                            CreationDate = new DateTime(2021, 11, 22, 23, 53, 5, 49, DateTimeKind.Local).AddTicks(1413),
+                            CreationDate = new DateTime(2021, 11, 24, 16, 21, 13, 235, DateTimeKind.Local).AddTicks(3363),
                             IdAppointment = 1
                         });
                 });
