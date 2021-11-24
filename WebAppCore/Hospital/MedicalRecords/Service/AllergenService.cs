@@ -8,9 +8,9 @@ namespace Hospital.MedicalRecords.Service
 {
     public class AllergenService
     {
-        private readonly AllergenRepository _repo;
+        private readonly IAllergenRepository _repo;
 
-        public AllergenService(AllergenRepository repo)
+        public AllergenService(IAllergenRepository repo)
         {
             _repo = repo;
         }

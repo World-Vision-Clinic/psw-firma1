@@ -16,12 +16,20 @@ namespace Hospital_API.Verification
         private DoctorService doctorService; //Ovde treba injection?
         private AllergenService allergenService;
 
+        public PatientVerification(PatientService patientService, DoctorService doctorService, AllergenService allergenService)
+        {
+            this.patientService = patientService;
+            this.doctorService = doctorService;
+            this.allergenService = allergenService;
+        }
+
         public PatientVerification()
         {
             patientService = new PatientService(new PatientRepository());
             doctorService = new DoctorService(new DoctorRepository());
             allergenService = new AllergenService(new AllergenRepository());
         }
+
         private bool VerifyUsername()
         {
             Regex regex = new Regex("\\A[a-zA-Z0-9]{1,30}\\z");
@@ -29,8 +37,8 @@ namespace Hospital_API.Verification
                 return false;
             if (!regex.IsMatch(patient.UserName))
                 return false;
-            //if (patientService.FindByUserName(patient.UserName) != null) //Treba negde prijaviti username taken
-            //    return false;
+            if (patientService.FindByUserName(patient.UserName) != null) //Treba negde prijaviti username taken
+                return false;
             return true;
         }
 
@@ -142,7 +150,7 @@ namespace Hospital_API.Verification
         {
             if (patient.Allergens == null)
                 return false;
-            /*List<Allergen> allergens = allergenService.GetAllergens();
+            List<Allergen> allergens = allergenService.GetAllergens();
             foreach(int aid in patient.Allergens)
             {
                 bool found = false;
@@ -150,12 +158,13 @@ namespace Hospital_API.Verification
                 {
                     if (a.Id == aid)
                     {
+                        found = true;
                         break;
                     }
                 }
                 if (!found)
                     return false;
-            }*/
+            }
             return true;
         }
 
@@ -163,14 +172,13 @@ namespace Hospital_API.Verification
         {
             if (patient.PreferedDoctor < 0)
                 return false;
-            /*List<Doctor> availableDoctors = doctorService.GetAvailableDoctors();
+            List<Doctor> availableDoctors = doctorService.GetAvailableDoctors();
             foreach(Doctor d in availableDoctors)
             {
                 if (d.Id == patient.PreferedDoctor)
                     return true;
             }
-            return false;*/
-            return true;
+            return false;
         }
 
         private bool VerifyWeight()

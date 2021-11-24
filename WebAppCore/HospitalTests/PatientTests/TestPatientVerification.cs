@@ -7,16 +7,56 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
+using Moq;
 
 namespace HospitalTests.PatientTests
 {
     public class TestPatientVerification
     {
-        PatientVerification _verification = new PatientVerification();
+        PatientVerification _verification;
+
+        private void setupVerification()
+        {
+            var stubPatientRepository = new Mock<IPatientRepository>();
+            Patient nullPatient = null;
+            Patient truePatient = new Patient();
+            truePatient.UserName = "branko1";
+            stubPatientRepository.Setup(m => m.FindByUserName("branko")).Returns(nullPatient);
+            stubPatientRepository.Setup(m => m.FindByUserName(truePatient.UserName)).Returns(truePatient);
+
+            var stubDoctorRepository = new Mock<IDoctorRepository>();
+            List<Doctor> doctors = new List<Doctor>();
+            Doctor trueDoctor1 = new Doctor();
+            trueDoctor1.Id = 0;
+            Doctor trueDoctor2 = new Doctor();
+            trueDoctor2.Id = 4;
+            doctors.Add(trueDoctor1);
+            doctors.Add(trueDoctor2);
+            stubDoctorRepository.Setup(m => m.GetAvailableDoctors()).Returns(doctors);
+
+            var stubAllergenRepository = new Mock<IAllergenRepository>();
+            List<Allergen> allergens = new List<Allergen>();
+            Allergen trueAllergen1 = new Allergen();
+            trueAllergen1.Id = 0;
+            Allergen trueAllergen2 = new Allergen();
+            trueAllergen2.Id = 1;
+            Allergen trueAllergen3 = new Allergen();
+            trueAllergen3.Id = 2;
+            allergens.Add(trueAllergen1);
+            allergens.Add(trueAllergen2);
+            allergens.Add(trueAllergen3);
+            stubAllergenRepository.Setup(m => m.GetAllergens()).Returns(allergens);
+
+            PatientService patientService = new PatientService(stubPatientRepository.Object);
+            DoctorService doctorService = new DoctorService(stubDoctorRepository.Object);
+            AllergenService allergenService = new AllergenService(stubAllergenRepository.Object);
+            _verification = new PatientVerification(patientService, doctorService, allergenService);
+        }
 
         private PatientRegisterDTO GenerateValidBranko()
         {
-            PatientService _service = new PatientService(new PatientRepository());
+            setupVerification();
+
             PatientRegisterDTO patient = new PatientRegisterDTO();
             patient.UserName = "branko";
             patient.FirstName = "Branko";
@@ -31,6 +71,8 @@ namespace HospitalTests.PatientTests
             patient.City = "Novi Sad";
             patient.Phone = "063123123";
             patient.Allergens = new List<int>();
+            patient.Allergens.Add(0);
+            patient.Allergens.Add(2);
             patient.PreferedDoctor = 0;
             patient.Weight = 75;
             patient.Height = 182;
@@ -48,6 +90,7 @@ namespace HospitalTests.PatientTests
         [Fact]
         public void Test_patient_is_null()
         {
+            setupVerification();
             PatientRegisterDTO patient = null;
             Assert.False(_verification.Verify(patient));
         }
@@ -372,16 +415,15 @@ namespace HospitalTests.PatientTests
             Assert.False(_verification.Verify(patient));
         }
 
-        //TODO: Loading allergens from file
-        /*
         [Fact]
-        public void Test_patient_allergens_exist()
+        public void Test_patient_allergens_dont_exist()
         {
             PatientRegisterDTO patient = GenerateValidBranko();
-            patient.Allergens = null;
+            patient.Allergens = new List<int>();
+            patient.Allergens.Add(2);
+            patient.Allergens.Add(12);
             Assert.False(_verification.Verify(patient));
         }
-        */
 
         //Prefered Doctor ------------------------------------------------------------------------------------
 
@@ -393,8 +435,6 @@ namespace HospitalTests.PatientTests
             Assert.False(_verification.Verify(patient));
         }
 
-        //TODO: Loading doctors and available doctors
-        /*
         [Fact]
         public void Test_patient_prefered_doctor_exists()
         {
@@ -402,12 +442,12 @@ namespace HospitalTests.PatientTests
             patient.PreferedDoctor = 9999;
             Assert.False(_verification.Verify(patient));
         }
-        */
+        
 
         //Weight ------------------------------------------------------------------------------------
 
         [Fact]
-        public void Test_patient_weight_negative() //TODO: Prebaciti u UINT, i testirati sta se desi kada se posalje negativan broj u POST-u
+        public void Test_patient_weight_negative()
         {
             PatientRegisterDTO patient = GenerateValidBranko();
             patient.Weight = -1;
@@ -417,7 +457,7 @@ namespace HospitalTests.PatientTests
         //Height ------------------------------------------------------------------------------------
 
         [Fact]
-        public void Test_patient_height_negative() //TODO: Prebaciti u UINT, i testirati sta se desi kada se posalje negativan broj u POST-u
+        public void Test_patient_height_negative()
         {
             PatientRegisterDTO patient = GenerateValidBranko();
             patient.Height = -1;
