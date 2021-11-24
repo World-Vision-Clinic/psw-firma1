@@ -236,8 +236,8 @@ namespace Hospital_API.Verification
                 return false;
             if (!VerifyAllergens())
                 return false;
-            if (!VerifyPreferedDoctor())
-                return false;
+            /*if (!VerifyPreferedDoctor())
+                return false;*/
             if (!VerifyWeight())
                 return false;
             if (!VerifyHeight())

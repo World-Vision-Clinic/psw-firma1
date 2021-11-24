@@ -23,12 +23,16 @@ namespace Hospital_API.Controllers
         //private readonly HospitalContext _context;
         public PatientService _patientService { get; set; }
         public PatientAllergenService _patientAllergenService { get; set; }
+        public AllergenService _allergenService { get; set; }
+        public DoctorService _doctorService { get; set; }
         private PatientVerification _verification { get; set; }
         public PatientsController()
         {
-            _patientService = new PatientService(new PatientRepository(new HospitalContext()));
-            _patientAllergenService = new PatientAllergenService(new PatientAllergenRepository(new HospitalContext(), new PatientRepository(), new AllergenRepository()));
-            _verification = new PatientVerification();
+            _patientService = new PatientService(new PatientRepository(new Hospital.SharedModel.HospitalContext()));
+            _patientAllergenService = new PatientAllergenService(new PatientAllergenRepository(new Hospital.SharedModel.HospitalContext(), new PatientRepository(new Hospital.SharedModel.HospitalContext()), new AllergenRepository(new Hospital.SharedModel.HospitalContext())));
+            _allergenService = new AllergenService(new AllergenRepository(new Hospital.SharedModel.HospitalContext()));
+            _doctorService = new DoctorService(new DoctorRepository(new Hospital.SharedModel.HospitalContext()));
+            _verification = new PatientVerification(_patientService, _doctorService, _allergenService);
         }
 
         // GET: api/Feedbacks/5
