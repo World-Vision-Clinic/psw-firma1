@@ -164,78 +164,207 @@
     </div>
   </div>
 
-  <div class="list-box-equipment" *ngIf="!!listBoxEquipment">
-    <h3>EQUIPMENT</h3>
-    <table class="list-table2">
-      <thead>
-        <tr>
-          <th>NAME</th>
-          <th>TYPE</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
+  <div class="move-box-equipment" *ngIf="!!listBoxEquipment">
+    <div class="moving-container" *ngIf="currentState.index == 0">
+      <h3>Select Equipment:</h3>
+      <table class="list-table">
+        <thead>
+          <tr>
+            <th>NAME</th>
+            <th>TYPE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let equipment of allEquipment"
+            class="equipment-table-row"
+            (click)="selectEquipment(equipment)"
+          >
+            <td>{{ equipment.name }}</td>
+            <td style="text-align: center">
+              {{ equipment.type ? "Static" : "Dynamic" }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="moving-container" *ngIf="currentState.index == 1">
+      <h3 for="">
+        Selected equipment: <b>{{ selectedEquipment!.name }}</b>
+      </h3>
+      <p>Select Room:</p>
+      <table class="list-table">
+        <thead>
+          <tr>
+            <th>Room name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let room of roomsList"
+            class="equipment-table-row"
+            (click)="selectStartRoom(room)"
+          >
+            <td>
+              {{ room.roomName }} - {{ room.roomFloor }} - Amount:
+              {{ room.amount }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="moving-container" *ngIf="currentState.index == 2">
+      <h3 for="">
+        Selected equipment: <b>{{ selectedEquipment!.name }}</b>
+      </h3>
+      <h3 for="">
+        Selected room: <b>{{ startRoom!.roomName }}</b>
+      </h3>
+      <label for="">Enter amount:</label> <br />
+      <input
+        type="number"
+        class="fill-form-field"
+        [(ngModel)]="movingAmount"
+        name="input"
+        max="{{ startRoom!.amount }}"
+        placeholder="Max value: {{ startRoom!.amount }}"
+      />
+    </div>
 
-  <div class="move-box-equipment" *ngIf="!!moveBoxEquipment">
-    <h3>MOVING</h3>
-    <div class="labels-box">
-      <div class="label-container">
-        <label for="">Start room:</label>
-        <select class="browser-default custom-select">
-          <option selected>Pick a room</option>
-          <option *ngFor="let room of rooms" [value]="room.id">
-            {{ room.name }}
-          </option>
-        </select>
+    <div class="moving-container" *ngIf="currentState.index == 3">
+      <h3 for="">
+        Selected equipment: <b>{{ selectedEquipment!.name }}</b>
+      </h3>
+      <h3 for="">
+        Selected room: <b>{{ startRoom!.roomName }}</b>
+      </h3>
+      <h3 for="">
+        Moving amount: <b>{{ movingAmount }}</b>
+      </h3>
+      <p>Select Destination Room:</p>
+      <div class="destination-table-container">
+        <table class="list-table">
+          <thead>
+            <tr>
+              <th>Room name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let room of destinationRooms"
+              class="equipment-table-row"
+              (click)="selectDestinationRoom(room)"
+            >
+              <td>{{ room.name }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="label-container">
-        <label for="">Start room floor:</label>
+    </div>
+    <div class="moving-container" *ngIf="currentState.index == 4">
+      <h3 for="">
+        Selected equipment: <b>{{ selectedEquipment!.name }}</b>
+      </h3>
+      <h3 for="">
+        Selected room: <b>{{ startRoom!.roomName }}</b>
+      </h3>
+      <h3 for="">
+        Moving amount: <b>{{ movingAmount }}</b>
+      </h3>
+      <h3 for="">
+        Destination room: <b>{{ destinationRoom!.name }}</b>
+      </h3>
+
+      <div style="text-align: center; margin: 10px 0">
+        <label for="" style="float: left">Select interval for transport</label>
+        <mat-form-field class="example-form-field" appearance="fill">
+          <mat-date-range-input
+            [formGroup]="interval"
+            [rangePicker]="campaignOnePicker"
+          >
+            <input
+              matStartDate
+              placeholder="Start date"
+              formControlName="start"
+            />
+            <input matEndDate placeholder="End date" formControlName="end" />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="campaignOnePicker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+      <div>
+        <label for="">Enter etimate duration time (in hours):</label> <br />
         <input
-          type="text"
+          type="number"
           class="fill-form-field"
-          [(ngModel)]="selectedRoom.purpose"
+          [(ngModel)]="estimateHours"
           name="input"
-          [attr.disabled]="formDisabled ? '' : null"
-        />
-      </div>
-      <div class="label-container">
-        <label for="">Amount:</label>
-        <input
-          type="text"
-          class="fill-form-field"
-          [(ngModel)]="selectedRoom.purpose"
-          name="input"
-          [attr.disabled]="formDisabled ? '' : null"
-        />
-      </div>
-      <div class="label-container">
-        <label for="">Destination room:</label>
-        <select class="browser-default custom-select">
-          <option selected>Pick a room</option>
-          <option *ngFor="let room of rooms" [value]="room.id">
-            {{ room.name }}
-          </option>
-        </select>
-      </div>
-      <div class="label-container">
-        <label for="">Destination room floor:</label>
-        <input
-          type="text"
-          class="fill-form-field"
-          [(ngModel)]="selectedRoom.purpose"
-          name="input"
-          [attr.disabled]="formDisabled ? '' : null"
+          min="0"
+          placeholder="Enter duration here...."
         />
       </div>
     </div>
-    <div>
-      <br /><button class="round-button"></button>
-      <button class="round-button"></button> <br />
+
+    <div class="moving-container" *ngIf="currentState.index == 5">
+      <h2 for="">Preview</h2>
+      <h3 for="">
+        Selected equipment: <b>{{ selectedEquipment!.name }}</b>
+      </h3>
+      <h3 for="">
+        Selected room: <b>{{ startRoom!.roomName }}</b>
+      </h3>
+      <h3 for="">
+        Moving amount: <b>{{ movingAmount }}</b>
+      </h3>
+      <h3 for="">
+        Destination room: <b>{{ destinationRoom!.name }}</b>
+      </h3>
+      <h3 for="">
+        Estimate duration: <b>{{ estimateHours }}</b>
+      </h3>
     </div>
-    <div class="center-buttons">
-      <br /><br /><br /><button class="btn">Schedule</button>
-      <button class="btn">Close</button>
+
+    <div *ngIf="!!suggestion">
+      <p>Suggested periods:</p>
+      <b
+        for=""
+        style="
+          display: block;
+          text-align: center;
+          background-color: cadetblue;
+          margin: 0 5px;
+          border-radius: 2px;
+          margin-bottom: 20px;
+        "
+        >{{ suggestion!.startDate | date: "short" }} -
+        {{ suggestion!.endDate | date: "short" }}</b
+      >
+    </div>
+    <div class="position-bottom">
+      <button
+        class="btn"
+        style="flex: 1"
+        (click)="goBack()"
+        [disabled]="currentState.index == 0"
+      >
+        Back
+      </button>
+      <button
+        class="btn"
+        style="flex: 1"
+        (click)="goNext()"
+        [disabled]="disableNextButton()"
+      >
+        {{ currentState.index == 5 ? "Move" : "Next" }}
+      </button>
+    </div>
+    <div class="position-bottom">
+      <!-- <button class="btn">Schedule</button> -->
+      <button class="btn" (click)="closeMovingContainer()">Close</button>
     </div>
   </div>
 
@@ -321,4 +450,5 @@
     </table>
     <button class="btn">Close</button>
   </div>
+
 </div>

@@ -42,7 +42,9 @@ namespace Integration.Pharmacy.Repository
 
         public Medicine GetByID(string id)
         {
-            throw new NotImplementedException();
+            Medicine medicine = new Medicine();
+            medicine = dbContext.Medicines.Find(id);
+            return medicine;
         }
 
         public void Add(Medicine medicine)

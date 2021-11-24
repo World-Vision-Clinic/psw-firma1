@@ -27,7 +27,7 @@ namespace Hospital.GraphicalEditor.Service
 
         public Floor GetById(int id)
         {
-            throw new NotImplementedException();
+            return repository.GetByID(id);
         }
     }
 }

@@ -54,7 +54,7 @@ export let BUILDINGS: Building[] = [
             doorY: 285,
             vertical: true,
             css: 'room room-cadetblue',
-            doorExists: true,
+            doorExist: true,
           },
           {
             id: 2,
@@ -75,7 +75,7 @@ export let BUILDINGS: Building[] = [
             doorY: 248,
             vertical: false,
             css: 'room room-cadetblue',
-            doorExists: true,
+            doorExist: true,
           },
           {
             id: 3,
@@ -96,7 +96,7 @@ export let BUILDINGS: Building[] = [
             doorY: 248,
             vertical: false,
             css: 'room room-cadetblue',
-            doorExists: true,
+            doorExist: true,
           },
           {
             id: 4,
@@ -116,7 +116,7 @@ export let BUILDINGS: Building[] = [
             doorY: 248,
             vertical: false,
             css: 'room room-cadetblue',
-            doorExists: true,
+            doorExist: true,
           },
           {
             id: 5,
@@ -136,14 +136,14 @@ export let BUILDINGS: Building[] = [
             doorY: 248,
             vertical: false,
             css: 'room room-cadetblue',
-            doorExists: true,
+            doorExist: true,
           },
           {
             id: 6,
             name: 'OFFICE 1',
             doctor: '',
             purpose: '',
-            equipments: [{ name: 'Chair', type: 'Static', amount: 5 }],
+            equipments: [],
             x: 730,
             y: 260,
             width: 110,
@@ -152,7 +152,7 @@ export let BUILDINGS: Building[] = [
             doorY: 290,
             vertical: true,
             css: 'room room-cadetblue',
-            doorExists: true,
+            doorExist: true,
           },
           {
             id: 7,
@@ -168,7 +168,7 @@ export let BUILDINGS: Building[] = [
             doorY: 290,
             vertical: true,
             css: 'staircase',
-            doorExists: false,
+            doorExist: false,
           },
           {
             id: 8,
@@ -184,7 +184,7 @@ export let BUILDINGS: Building[] = [
             doorY: 485,
             vertical: true,
             css: 'room room-cadetblue',
-            doorExists: true,
+            doorExist: true,
           },
           {
             id: 9,
@@ -200,7 +200,7 @@ export let BUILDINGS: Building[] = [
             doorY: 555,
             vertical: true,
             css: 'room room-cadetblue',
-            doorExists: true,
+            doorExist: true,
           },
           {
             id: 10,
@@ -216,7 +216,7 @@ export let BUILDINGS: Building[] = [
             doorY: 419,
             vertical: true,
             css: 'room room-cadetblue',
-            doorExists: true,
+            doorExist: true,
           },
           {
             id: 11,
@@ -232,7 +232,7 @@ export let BUILDINGS: Building[] = [
             doorY: 498,
             vertical: false,
             css: 'room room-cadetblue',
-            doorExists: true,
+            doorExist: true,
           },
           {
             id: 12,
@@ -248,7 +248,7 @@ export let BUILDINGS: Building[] = [
             doorY: 498,
             vertical: false,
             css: 'room room-cadetblue',
-            doorExists: true,
+            doorExist: true,
           },
           {
             id: 13,
@@ -264,7 +264,7 @@ export let BUILDINGS: Building[] = [
             doorY: 498,
             vertical: false,
             css: 'room room-cadetblue',
-            doorExists: true,
+            doorExist: true,
           },
         ],
       },
@@ -284,7 +284,7 @@ export let BUILDINGS: Building[] = [
             doorY: 248,
             vertical: false,
             css: 'room',
-            doorExists: true,
+            doorExist: true,
           },
 
           {
@@ -300,7 +300,7 @@ export let BUILDINGS: Building[] = [
             doorY: 248,
             vertical: false,
             css: 'room',
-            doorExists: true,
+            doorExist: true,
           },
           {
             id: 3,
@@ -315,7 +315,7 @@ export let BUILDINGS: Building[] = [
             doorY: 248,
             vertical: false,
             css: 'room',
-            doorExists: true,
+            doorExist: true,
           },
           {
             id: 4,
@@ -330,7 +330,7 @@ export let BUILDINGS: Building[] = [
             doorY: 248,
             vertical: false,
             css: 'room',
-            doorExists: true,
+            doorExist: true,
           },
           {
             id: 5,
@@ -345,7 +345,7 @@ export let BUILDINGS: Building[] = [
             doorY: 248,
             vertical: false,
             css: 'room',
-            doorExists: true,
+            doorExist: true,
           },
           {
             id: 6,
@@ -360,7 +360,7 @@ export let BUILDINGS: Building[] = [
             doorY: 290,
             vertical: true,
             css: 'staircase',
-            doorExists: false,
+            doorExist: false,
           },
           {
             id: 7,
@@ -375,7 +375,7 @@ export let BUILDINGS: Building[] = [
             doorY: 290,
             vertical: true,
             css: 'staircase',
-            doorExists: false,
+            doorExist: false,
           },
           {
             id: 8,
@@ -390,7 +390,7 @@ export let BUILDINGS: Building[] = [
             doorY: 485,
             vertical: true,
             css: 'room',
-            doorExists: true,
+            doorExist: true,
           },
           {
             id: 9,
@@ -405,7 +405,7 @@ export let BUILDINGS: Building[] = [
             doorY: 555,
             vertical: true,
             css: 'room',
-            doorExists: true,
+            doorExist: true,
           },
           {
             id: 10,
@@ -420,7 +420,7 @@ export let BUILDINGS: Building[] = [
             doorY: 419,
             vertical: true,
             css: 'room',
-            doorExists: true,
+            doorExist: true,
           },
           {
             id: 11,
@@ -435,7 +435,7 @@ export let BUILDINGS: Building[] = [
             doorY: 498,
             vertical: false,
             css: 'room',
-            doorExists: true,
+            doorExist: true,
           },
           {
             id: 12,
@@ -450,7 +450,7 @@ export let BUILDINGS: Building[] = [
             doorY: 498,
             vertical: false,
             css: 'room',
-            doorExists: true,
+            doorExist: true,
           },
           {
             id: 13,
@@ -465,7 +465,7 @@ export let BUILDINGS: Building[] = [
             doorY: 398,
             vertical: false,
             css: 'room',
-            doorExists: true,
+            doorExist: true,
           },
           // {
           //     id: 14,
@@ -480,7 +480,7 @@ export let BUILDINGS: Building[] = [
           //     doorY: 290,
           //     vertical: true,
           //     css:"staircase",
-          //     doorExists: false
+          //     doorExist: false
           // },
           // {
           //     id: 15,
@@ -495,7 +495,7 @@ export let BUILDINGS: Building[] = [
           //     doorY: 290,
           //     vertical: true,
           //     css:"staircase",
-          //     doorExists: false
+          //     doorExist: false
           // },
         ],
       },
