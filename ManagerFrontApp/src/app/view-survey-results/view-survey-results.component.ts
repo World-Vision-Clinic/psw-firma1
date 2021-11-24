@@ -20,4 +20,14 @@ export class ViewSurveyResultsComponent implements OnInit {
   getReducedPrecision(numberToRound: number): number {
     return Math.round(numberToRound*100)/100;
   }
+
+  getRatingPercentage(rating: number, ratingArray: number[]): number {
+    let totalCount: number = 0;
+    ratingArray.forEach(element => {
+      totalCount+=element;
+    });
+    if(totalCount == 0)
+      return 0
+    return (rating/totalCount)*100
+  }
 }
