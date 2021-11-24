@@ -31,6 +31,6 @@ export function emptyRoom(): Room {
     doorY: -1,
     vertical: false,
     css: '',
-    doorExist: false,
+    doorExist: false
   };
 }

@@ -30,14 +30,19 @@ export class Hospital1Component implements OnInit {
   selectedRoom_ = null;
   selectedBuilding;
   selectedFloor;
+  hospitalEquipment;
+  hospitalRooms;
+  searchResultList;
   startRoom: iEquipmentRoom | null = null;
   selectedEquipment: Equipment | null = null;
   roomsList: iEquipmentRoom[] = [];
   destinationRooms: Room[] | null = [];
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private hospitalService: HospitalService
+
   ) {
     const today = new Date();
     const month = today.getMonth();
@@ -48,6 +53,7 @@ export class Hospital1Component implements OnInit {
       end: new FormControl(),
     });
   }
+
   btntext = 'Edit';
   buildingFormDisabled = true;
   roomName: string = '';
@@ -61,11 +67,14 @@ export class Hospital1Component implements OnInit {
   moveBoxEquipment: boolean = false;
   searchEquipmentResultBox: boolean = false;
   searchRooms: boolean = true;
+  searchBegin: boolean = false;
+  searchBoxDisabled: boolean = true;
   allEquipment: any[] = [];
 
   currentState = {
     index: 0,
   };
+
 
   enableEdit() {
     this.formDisabled = false;
@@ -105,18 +114,7 @@ export class Hospital1Component implements OnInit {
     };
     this.hospitalService.orderMoving(data).subscribe(
       (d) => {
-        this.startRoom = null;
-        this.selectedEquipment = null;
-        this.destinationRoom = null;
-        this.movingAmount = null;
-        this.interval = new FormGroup({
-          start: new FormControl(),
-          end: new FormControl(),
-        });
-        this.estimateHours = null;
-        this.listBoxEquipment = false;
-        this.currentState.index = 0;
-        this.suggestion = null;
+        this.closeMovingContainer();
         console.log('Hura iznenilo seee!!!');
       },
       (e) => {}
@@ -133,7 +131,6 @@ export class Hospital1Component implements OnInit {
     this.formDisabled = true;
   }
   selectFloor = (floor: Floor) => {
-    console.log(floor);
     this.selectedFloor = floor;
   };
 
@@ -172,6 +169,19 @@ export class Hospital1Component implements OnInit {
     this.roomIsSelected = false;
     this.selectedRoom = emptyRoom();
   };
+
+  closeSearchBox = () => {
+    this.searchBoxDisabled = true;
+    this.searchEquipmentResultBox = false;
+    this.selectedFloor.highlightedRoomId = -1;
+  };
+
+  closeRoomTable = () => {
+    this.searchBoxDisabled = true;
+    this.searchRooms = false;
+    this.selectedFloor.highlightedRoomId = -1;
+  };
+
   showInfo(roomName: string) {
     this.roomName = roomName;
   }
@@ -226,6 +236,16 @@ export class Hospital1Component implements OnInit {
   closeMovingContainer() {
     this.startRoom = null;
     this.selectedEquipment = null;
+    this.destinationRoom = null;
+    this.movingAmount = null;
+    this.interval = new FormGroup({
+      start: new FormControl(),
+      end: new FormControl(),
+    });
+    this.estimateHours = null;
+    this.listBoxEquipment = false;
+    this.currentState.index = 0;
+    this.suggestion = null;
   }
   disableNextButton() {
     if (this.currentState.index == 0 && !this.selectedEquipment) return true;
@@ -254,8 +274,54 @@ export class Hospital1Component implements OnInit {
     this.searchEquipmentResultBox = true;
   }
 
+  searchrooms() {
+    this.searchRooms = true;
+  }
+
   setSearchCriteria() {
     this.searchRooms = !this.searchRooms;
+    this.searchBegin = true;
+  }
+
+  searchForEquipment(event: any) {
+    var inputValue = event.target.value.toLowerCase();
+    this.searchResultList = [];
+
+    this.hospitalEquipment.forEach((element) => {
+      if (element.name.toLowerCase().includes(inputValue)) {
+        this.searchResultList.push(element);
+      }
+    });
+    this.searchEquipment();
+  }
+
+  searchForRooms(event: any) {
+    this.searchBegin = true;
+    var inputValue = event.target.value.toLowerCase();
+    this.searchResultList = [];
+
+    this.hospitalRooms.forEach((element) => {
+      if (element.name.toLowerCase().includes(inputValue)) {
+        this.searchResultList.push(element);
+      }
+    });
+    console.log(this.searchResultList);
+    this.searchrooms();
+  }
+
+  selecteddEquipment(roomId){
+    this.hospitalRooms.forEach(room => {
+      if(room.id == roomId){
+        if(room.floorId == 1){
+          this.selectFloor(this.floors[0]);
+          this.selectedFloor.highlightedRoomId = room.id;
+        }
+        else{
+          this.selectFloor(this.floors[1]);
+          this.selectedFloor.highlightedRoomId = room.id;
+        }
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -295,6 +361,9 @@ export class Hospital1Component implements OnInit {
       (data) => {
         this.selectedBuilding = data;
         this.loadingHospital = false;
+        this.hospitalEquipment = data.equipment;
+        this.hospitalRooms = data.rooms;
+        console.log(this.hospitalRooms);
       },
       (error) => console.log(error)
     );

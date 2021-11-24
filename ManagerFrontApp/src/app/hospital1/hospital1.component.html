@@ -68,7 +68,7 @@
           [attr.y]="room.y"
           [attr.width]="room.width"
           [attr.height]="room.height"
-          [attr.class]="room.css"
+          [attr.class]="(room.id == selectedFloor.highlightedRoomId) ? 'highlightedRoom' : 'room'"
           (click)="selectRoom(room)"
         />
         <text
@@ -153,7 +153,7 @@
         <tbody>
           <tr *ngFor="let item of selectedRoom.equipments">
             <td>{{ item.name }}</td>
-            <td>{{ item.type }}</td>
+            <td>{{ item.type?"Static":"Dynamic" }}</td>
             <td>{{ item.amount }}</td>
           </tr>
         </tbody>
@@ -374,6 +374,9 @@
       type="text"
       name=""
       placeholder="Search for..."
+      (keyup)="
+        searchRooms ? searchForRooms($event) : searchForEquipment($event)
+      "
     />
     <a class="search-btn-rooms" (click)="searchEquipment()">
       <i class="fas fa-search"></i>
@@ -402,9 +405,12 @@
     </form>
   </div>
 
-  <div class="search-list-box-equipment" *ngIf="!!searchEquipmentResultBox">
+  <div
+    class="search-list-box-equipment"
+    *ngIf="searchEquipmentResultBox && !searchRooms"
+  >
     <h3>Search result</h3>
-    <table class="list-table">
+    <table class="search-list-table">
       <thead>
         <tr>
           <th>NAME</th>
@@ -412,7 +418,37 @@
           <th>ROOM</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        <tr *ngFor="let item of searchResultList" (click)="selecteddEquipment(item.roomId)">
+          <td>{{ item.name }}</td>
+          <td>{{ item.amount }}</td>
+          <td>{{ item.roomId }}</td>
+        </tr>
+      </tbody>
     </table>
+    <button class="btn" (click)="closeSearchBox()" *ngIf="searchBoxDisabled">
+      Close
+    </button>
   </div>
+
+  <div class="search-list-box-equipment" *ngIf="searchRooms && searchBegin">
+    <h3>Search result</h3>
+    <table class="rooms-table">
+      <thead>
+        <tr>
+          <th>ROOM NAME</th><th>FLOOR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of searchResultList" (click)="selecteddEquipment(item.id)">
+          <td>{{ item.name }}</td>
+          <td></td>
+          <td></td>
+          <td>{{ item.floorId }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn">Close</button>
+  </div>
+
 </div>
