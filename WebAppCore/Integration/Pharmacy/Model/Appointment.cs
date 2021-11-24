@@ -6,6 +6,7 @@ namespace Integration
 {
     public class Appointment
     {
+        public int ID{get;set;}
         private double durationInHours = 0.5;
         public double DurationInHours
         {

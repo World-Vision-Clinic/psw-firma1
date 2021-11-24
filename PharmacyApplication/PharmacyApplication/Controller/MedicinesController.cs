@@ -112,8 +112,38 @@ namespace PharmacyAPI.Controller
             {
                 return Ok();
             }
+        }   
+
+        [HttpGet("medicineConsumation")]
+        public IActionResult GetMedicineCousumation()
+        {
+            LoadFile();
+            String consumationReport = ReadConsumationReport();
+            return Ok(consumationReport);
         }
 
+        public void LoadFile()
+        {
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.28", "user", "password")))
+            {
+                client.Connect();
+                string serverFile = @"\public\consumed-medicine.txt";
+                string localFile = "consumed-medicine.txt";
+                using (Stream stream = System.IO.File.OpenWrite(localFile))
+                {
+                    client.DownloadFile(serverFile, stream, x => { Console.WriteLine(x); });
+                }
+                client.Disconnect();
+            }
+        }
+        public String ReadConsumationReport()
+        {
+            StreamReader reader = new StreamReader("consumed-medicine.txt");
+            String consumationReport = reader.ReadToEnd();
+            reader.Close();
+            return consumationReport;
+        }
+        
         [HttpGet("spec")]
         public IActionResult GetMedicineSpecification(string name = "")
         {
@@ -160,7 +190,7 @@ namespace PharmacyAPI.Controller
 
         private void uploadSpecification()
         {
-            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.21", "user", "password")))
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.28", "user", "password")))
             {
                 client.Connect();
 
