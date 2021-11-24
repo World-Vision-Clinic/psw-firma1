@@ -178,7 +178,8 @@ export class Hospital1Component implements OnInit {
 
   closeRoomTable = () => {
     this.searchBoxDisabled = true;
-    this.searchRooms = false;
+    this.searchRooms = true;
+    this.searchBegin = false;
     this.selectedFloor.highlightedRoomId = -1;
   };
 
