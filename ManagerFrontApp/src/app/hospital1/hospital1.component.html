@@ -153,7 +153,7 @@
         <tbody>
           <tr *ngFor="let item of selectedRoom.equipments">
             <td>{{ item.name }}</td>
-            <td>{{ item.type }}</td>
+            <td>{{ item.type?"Static":"Dynamic" }}</td>
             <td>{{ item.amount }}</td>
           </tr>
         </tbody>

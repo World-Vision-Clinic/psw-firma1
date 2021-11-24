@@ -101,6 +101,13 @@ export class Hospital1Component implements OnInit {
     this.searchEquipmentResultBox = false;
     this.selectedFloor.highlightedRoomId = -1;
   };
+
+  closeRoomTable = () => {
+    this.searchBoxDisabled = true;
+    this.searchRooms = false;
+    this.selectedFloor.highlightedRoomId = -1;
+  };
+
   showInfo(roomName: string) {
     this.roomName = roomName;
   }
