@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Hospital.GraphicalEditor.Model;
 using Hospital_API.Mappers;
 using Microsoft.EntityFrameworkCore;
+using Hospital.RoomsAndEquipment.Model;
 
 namespace Hospital_API.Controllers
 {
@@ -32,6 +33,7 @@ namespace Hospital_API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<BuildingDTO>> GetBuildings()
         {
+            List<Equipment> eq = equipmentService.getAll();
             List<BuildingDTO> buildings = new List<BuildingDTO>();
             foreach(Building building in buildingService.GetAll())
             {

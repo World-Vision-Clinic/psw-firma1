@@ -1,5 +1,8 @@
-export interface Equipment{
-    name: string,
-    type: string,
-    amount: number
+export interface Equipment {
+  name: string;
+  type: string;
+  amount: number;
+  roomId: number;
+  InTransport: boolean;
+  id: number;
 }
