@@ -27,11 +27,6 @@ namespace Pharmacy.Service
                 if (med.MedicineName.Equals(medicine.MedicineName))
                 {
                     med.Quantity -= medicine.Quantity;
-                    if (med.Quantity == 0)
-                    {
-                        DeleteMedicine(med.MedicineId);
-                        return true;
-                    }
                     repository.SaveChanges();
                     return true;
                 }

@@ -1,6 +1,4 @@
 Medicine consumption report for World vision clinic
 
-Report for date period between 11/1/2021 and 11/25/2021
-Name: Genericki lek, quantity: 4
-Name: Genericki lek, quantity: 4
-Name: caffetin cold, quantity: 5
+Report for date period between 11/4/2021 and 11/24/2021
+Name: Brufen, quantity: 61
