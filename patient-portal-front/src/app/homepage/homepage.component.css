@@ -195,25 +195,16 @@
 }
 
 .sign-up-left-col h1{
-    margin-left: 25px;
+    margin-left: 30%;
     font-weight: bolder;
 }
 
 form{
     max-width: 350px;
     margin: 30px;
-    margin-left: 25px;
+    margin-left: 30%;
 }
 
-form input{
-    width: 100%;
-    padding: 12px 10px;
-    margin-bottom: 5px;
-    outline: none;
-    box-shadow: none;
-    box-sizing: border-box;
-    border: 3px solid rgb(19, 103, 168);
-}
 
 .btn-box{
     width: 100%;

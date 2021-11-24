@@ -42,7 +42,9 @@ export class SurveyComponent implements OnInit {
   submitSurvey() {
     console.log("komponenta");
     this._surveyService.addSurvey(this.questions).subscribe(
-     data => console.log(data), success => this.router.navigate([" "]));
+        success => setTimeout(() => {
+        this.router.navigate(['/']);
+    }, 800));
   }
 
   surveyIsValid(): boolean {
@@ -53,8 +55,8 @@ export class SurveyComponent implements OnInit {
     }
     return true;
 }
-
-  
+ 
+   
 }
 
 
