@@ -150,7 +150,7 @@
   margin-bottom: 10px;
 }
 
-.list-table {
+.search-list-table {
   display: block;
   margin-left: 5%;
   margin-right: 5%;
@@ -170,7 +170,7 @@
   text-transform: uppercase;
   background: rgb(160, 159, 159);
 }
-.list-table th {
+.search-list-table th {
   display: inline-block;
   padding: 10px 23px;
   text-align: left;
@@ -188,14 +188,14 @@
   scrollbar-color: rgb(248, 246, 246);
   width: 320px;
 }
-.list-table tbody {
+.search-list-table tbody {
   display: inline-block;
   height: 260px;
   overflow-y: scroll;
   scrollbar-color: rgb(248, 246, 246);
   width: 270px;
 }
-.list-table thead {
+.search-list-table thead {
   width: 250px;
 }
 
@@ -207,7 +207,7 @@
   height: 15px;
 }
 
-.list-table tbody tr {
+.search-list-table tbody tr {
   height: 15px;
 }
 
@@ -223,7 +223,7 @@
   height: 50%;
   width: 50%;
 }
-.list-table td {
+.search-list-table td {
   padding: 10px;
   text-align: left;
   vertical-align: middle;
@@ -323,7 +323,7 @@
   background-color: rgba(224, 223, 223, 0.911);
 }
 
-.list-table tbody {
+.search-list-table tbody {
   display: inline-block;
   overflow-y: scroll;
   scrollbar-color: rgb(248, 246, 246);
