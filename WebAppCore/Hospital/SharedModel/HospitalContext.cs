@@ -1,5 +1,4 @@
-
-﻿using Hospital;
+using Hospital;
 using Hospital.MedicalRecords.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,9 +14,9 @@ namespace Hospital.SharedModel
 {
     public class HospitalContext : DbContext
     {
-        public DbSet<Feedback> Feedbacks{ get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Patient> Patients { get; set; }
-        
+
         public HospitalContext()
         {
 
@@ -58,12 +57,12 @@ namespace Hospital.SharedModel
                 new Equipment { id = 13, Name = "Chair", Type = EquipmentType.STATIC, Amount = 6, RoomId = 17 },
                 new Equipment { id = 14, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 25, RoomId = 5 }
                 );
-           
+
             modelbuilder.Entity<Room>().HasData(
-                new Room { id = 1, FloorId=1 , Name = "OPERATING ROOM 1", DoctorId = -1, Purpose = "", X = 0, Y = 150, Height = 190, Width = 150, DoorX = 148, DoorY = 285, Vertical = true, Css = "room room-cadetblue", DoorExist = true },
+                new Room { id = 1, FloorId = 1, Name = "OPERATING ROOM 1", DoctorId = -1, Purpose = "", X = 0, Y = 150, Height = 190, Width = 150, DoorX = 148, DoorY = 285, Vertical = true, Css = "room room-cadetblue", DoorExist = true },
                 new Room { id = 2, FloorId = 1, Name = "OPERATING ROOM 2", DoctorId = -1, Purpose = "", X = 160, Y = 150, Height = 100, Width = 150, DoorX = 220, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
                 new Room { id = 3, FloorId = 1, Name = "OPERATING ROOM 3", DoctorId = -1, Purpose = "", X = 320, Y = 150, Height = 100, Width = 150, DoorX = 370, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
-                new Room { id = 4, FloorId = 1, Name = "ROOM 1", DoctorId = -1, Purpose = "", X = 480, Y = 150, Height = 100, Width = 170, DoorX = 680, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
+                new Room { id = 4, FloorId = 1, Name = "ROOM 1", DoctorId = -1, Purpose = "", X = 480, Y = 150, Height = 100, Width = 170, DoorX = 520, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
                 new Room { id = 5, FloorId = 1, Name = "ROOM 2", DoctorId = -1, Purpose = "", X = 660, Y = 150, Height = 100, Width = 180, DoorX = 680, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
                 new Room { id = 6, FloorId = 1, Name = "OFFICE 1", DoctorId = -1, Purpose = "", X = 730, Y = 260, Height = 100, Width = 110, DoorX = 728, DoorY = 290, Vertical = true, Css = "room room-cadetblue", DoorExist = true },
                 new Room { id = 7, FloorId = 1, Name = "LIFT", DoctorId = -1, Purpose = "", X = 690, Y = 370, Height = 90, Width = 150, DoorX = 728, DoorY = 290, Vertical = false, Css = "staircase", DoorExist = false },
@@ -107,10 +106,10 @@ namespace Hospital.SharedModel
 
         protected override void OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("User ID = admin;Password=ftn;Server=localhost;Port=5432;Database=MyWebApi.Dev;Integrated Security=true;Pooling=true;");
-            //optionsBuilder.UseNpgsql("User ID = admin;Password=ftn;Server=hospitalapi;Port=5432;Database=MyWebApi.Dev;Integrated Security=true;Pooling=true;");
-
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseNpgsql("User ID = admin;Password=ftn;Server=localhost;Port=5432;Database=MyWebApi.Dev;Integrated Security=true;Pooling=true;");
+            }
         }
     }
 }
-
