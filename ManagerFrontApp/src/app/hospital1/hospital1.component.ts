@@ -310,6 +310,17 @@ export class Hospital1Component implements OnInit {
     this.searchrooms();
   }
 
+  getRoomName(id){
+    var name;
+    this.hospitalRooms.forEach(room => {
+      if(room.id == id){
+        name = room.name;
+      }
+    });
+    return name;
+    
+  }
+
   selecteddEquipment(roomId){
     this.hospitalRooms.forEach(room => {
       if(room.id == roomId){

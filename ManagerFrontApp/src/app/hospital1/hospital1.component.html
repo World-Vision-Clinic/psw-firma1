@@ -422,7 +422,7 @@
         <tr *ngFor="let item of searchResultList" (click)="selecteddEquipment(item.roomId)">
           <td>{{ item.name }}</td>
           <td>{{ item.amount }}</td>
-          <td>{{ item.roomId }}</td>
+          <td>{{ getRoomName(item.roomId) }}</td>
         </tr>
       </tbody>
     </table>
