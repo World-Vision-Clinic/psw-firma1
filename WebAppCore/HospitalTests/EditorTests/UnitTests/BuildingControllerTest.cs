@@ -12,10 +12,10 @@ using Shouldly;
 
 namespace HospitalTests.EditorTests
 {
-    public class ControllerUnitTest
+    public class BuildingControllerTest
     {
         [Fact]
-        public void controllerTest1()
+        public void building_controller_test_1()
         {                
                 var controller = new BuildingsController();
                 var response = controller.GetBuilding(3);
@@ -24,7 +24,7 @@ namespace HospitalTests.EditorTests
         }
 
         [Fact]
-        public void controllerTest2()
+        public void building_controller_test_2()
         {
             
                 var controller = new BuildingsController();

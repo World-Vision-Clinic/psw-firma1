@@ -32,7 +32,7 @@ namespace HospitalTests.EditorTests.IntegrationTests
         }
 
         [Fact]
-        public void RelocateEquipmentTest()
+        public void relocate_equipment_test()
         {
             Equipment equpmentForTransfer = new Equipment { id = 77, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 5, RoomId = 2 };
             

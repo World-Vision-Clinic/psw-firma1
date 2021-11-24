@@ -20,10 +20,10 @@ using Shouldly;
 
 namespace HospitalTests.EditorTests
 {
-    public class ServiceUnitTest
+    public class BuildingServiceUnitTest
     {
         [Fact]
-        public void ServiceTest1()
+        public void building_service_test_1()
         {
             HospitalContext context = new HospitalContext();
             IBuildingRepository repo = new BuildingRepository(context);

@@ -10,10 +10,10 @@ using Xunit;
 
 namespace HospitalTests.EditorTests
 {
-    public class RepositoryUnitTest
+    public class EquipmentRepositoryUnitTest
     {
         [Fact]
-        public void RepositoryTest1()
+        public void equipment_repository_test_1()
         {
             var options = new DbContextOptionsBuilder<HospitalContext>()
                 .UseInMemoryDatabase(databaseName: "HospitalDB")
@@ -36,7 +36,7 @@ namespace HospitalTests.EditorTests
         }
 
         [Fact]
-        public void RepositoryTest2()
+        public void equipment_repository_test_2()
         {
             var options = new DbContextOptionsBuilder<HospitalContext>()
                 .UseInMemoryDatabase(databaseName: "HospitalDB")
