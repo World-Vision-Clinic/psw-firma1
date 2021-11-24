@@ -24,7 +24,7 @@ namespace Pharmacy.Service
         {
             foreach (Medicine med in GetAll())
             {
-                if (med.MedicineName.Equals(medicine.MedicineName))
+                if (med.MedicineName.ToLower().Equals(medicine.MedicineName.ToLower()) && med.Weigth == medicine.Weigth)
                 {
                     med.Quantity -= medicine.Quantity;
                     repository.SaveChanges();
@@ -96,7 +96,7 @@ namespace Pharmacy.Service
         {
             foreach (Medicine med in GetAll())
             {
-                if (med.MedicineName.Equals(medicine.MedicineName) && med.Weigth == medicine.Weigth)
+                if (med.MedicineName.ToLower().Equals(medicine.MedicineName.ToLower()) && med.Weigth == medicine.Weigth)
                 {
                     return med;
                 }
