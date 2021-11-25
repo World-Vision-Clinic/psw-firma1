@@ -56,9 +56,16 @@ namespace Hospital.MedicalRecords.Repository
             return doctors;
         }
 
-        public List<Doctor> GetAvailableDoctors()
+        public List<Doctor> GetAll()
+        {
+            return _context.Doctors.ToList();
+        }
+
+        public List<Doctor> GetAvailableDoctors() //TODO: Refactor
         {
             int maxDifference = 3;
+            return GetAll();
+            /*
             var query = from p in _context.Patients
                         group p by p.PreferedDoctor into g
                         select new
@@ -72,13 +79,40 @@ namespace Hospital.MedicalRecords.Repository
                 if(minCount == -1 || d.count < minCount)
                     minCount = d.count;
             }
+            if (minCount == -1)
+            {
+                return GetAll();
+            }
+            else
+            {
+                foreach(Doctor d in GetAll())
+                {
+                    bool found = false;
+                    foreach(Patient p in _patientRepository.GetAll())
+                    {
+                        if (p.PreferedDoctor == d.Id)
+                        {
+                            found = true;
+                            break;
+                        }
+                        if (!found)
+                        {
+                            minCount = 0;
+                            break;
+                        }
+                    }
+                }
+            }
             List<int> availableDoctorIds = new List<int>();
             foreach (var d in query)
             {
                 if(d.count <= minCount + maxDifference)
                     availableDoctorIds.Add(d.preferedDoctor);
             }
+            
+
             return GetDoctorsFromList(availableDoctorIds);
+            */
         }
     }
 }
