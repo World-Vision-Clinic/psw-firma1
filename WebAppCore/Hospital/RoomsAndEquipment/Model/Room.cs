@@ -1,5 +1,4 @@
 ﻿using Hospital.GraphicalEditor.Model;
-using Hospital.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
