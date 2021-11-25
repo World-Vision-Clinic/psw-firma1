@@ -60,5 +60,10 @@ namespace Hospital.MedicalRecords.Repository
             _context.Entry(patient).State = EntityState.Modified;
             SaveSync();
         }
+
+        public List<Patient> GetAll()
+        {
+            return _context.Patients.ToList();
+        }
     }
 }

@@ -22,14 +22,16 @@ namespace Hospital_API.Controllers
     public class PatientsController : ControllerBase
     {
         //private readonly HospitalContext _context;
+        private HospitalContext _context;
         public PatientService _patientService { get; set; }
         public PatientAllergenService _patientAllergenService { get; set; }
         private PatientVerification _verification { get; set; }
         public PatientsController()
         {
-            _patientService = new PatientService(new PatientRepository(new HospitalContext()));
-            _patientAllergenService = new PatientAllergenService(new PatientAllergenRepository(new HospitalContext(), new PatientRepository(), new AllergenRepository()));
-            _verification = new PatientVerification();
+            _context = new HospitalContext();
+            _patientService = new PatientService(new PatientRepository(_context));
+            _patientAllergenService = new PatientAllergenService(new PatientAllergenRepository(_context, new PatientRepository(), new AllergenRepository()));
+            _verification = new PatientVerification(_context);
         }
 
         // GET: api/Patients/activate?token=
