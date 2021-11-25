@@ -24,6 +24,10 @@ namespace Integration
             this.ingredient = ingredient;
             this.replacementMedicineIDs = replacementMedicineIDs;
         }
+        public Medicine()
+        { 
+
+        }
 
         public double Price { get; set; }
        

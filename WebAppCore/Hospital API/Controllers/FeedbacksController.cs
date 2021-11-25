@@ -29,7 +29,7 @@ namespace Hospital_API
 
         // GET: api/Feedbacks
         [HttpGet]
-        public  ActionResult<IEnumerable<Feedback>> GetFeedbacks()
+        public ActionResult<IEnumerable<Feedback>> GetFeedbacks()
         {
             //_patientService.AddPatient();
             return _feedbackService.GetAll();
@@ -39,7 +39,8 @@ namespace Hospital_API
         public ActionResult<IEnumerable<FeedbackPatientDTO>> GetFeedbacksPublished()
         {
             List<FeedbackPatientDTO> dtoList = new List<FeedbackPatientDTO>();
-            foreach (Feedback feedbakc in _feedbackService.GetPublished()) {
+            foreach (Feedback feedbakc in _feedbackService.GetPublished())
+            {
                 dtoList.Add(FeedbackMapper.FeedbackToFeedbackPatientDTO(feedbakc));
             }
             return dtoList;
@@ -95,7 +96,7 @@ namespace Hospital_API
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public  ActionResult<Feedback> PostFeedback([FromBody] Feedback feedback)
+        public ActionResult<Feedback> PostFeedback([FromBody] Feedback feedback)
         {
             Feedback newFeedback = feedback;
 
@@ -128,6 +129,12 @@ namespace Hospital_API
         private bool FeedbackExists(int id)
         {
             return _feedbackService.FeedbackExists(id);
+        }
+
+        [HttpGet("test")]
+        public ActionResult TestingController()
+        {
+            return Ok("Hello from Feedbacks controller");
         }
     }
 }

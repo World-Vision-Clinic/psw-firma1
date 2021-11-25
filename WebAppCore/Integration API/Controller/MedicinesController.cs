@@ -1,4 +1,4 @@
-﻿using Integration;
+using Integration;
 using Integration.Pharmacy.Model;
 using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Service;
@@ -7,9 +7,11 @@ using Integration_API.Dto;
 using Integration_API.Mapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Renci.SshNet;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,6 +23,39 @@ namespace Integration_API.Controller
     {
         private PharmaciesService pharmaciesService = new PharmaciesService(new PharmaciesRepository());
         private CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
+        private MedicineService medicineService = new MedicineService(new MedicinesRepository(), new MedicalRecordsRepository(), new ExaminationRepository());
+
+        private SftpHandler sftpHandler = new SftpHandler();
+        private IPharmacyConnection pharmacyConnection;
+        
+        public MedicinesController(IPharmacyConnection connection)
+        {
+            pharmacyConnection = connection;
+        }
+
+        [HttpPost("sendConsumptionNotification")]
+        public IActionResult SendConsumptionNotification(MedicineConsumptionDto dto)
+        {
+            medicineService.CreateConsumedMedicinesInPeriodFile(dto.Beginning, dto.End);
+            UploadFile();
+
+
+            return Ok();
+        }
+
+        public void UploadFile()
+        {
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.28", "user", "password")))
+            {
+                client.Connect();
+                string sourceFile = @"consumed-medicine.txt";
+                using (Stream stream = System.IO.File.OpenRead(sourceFile))
+                {
+                    client.UploadFile(stream, @"\public\" + Path.GetFileName(sourceFile), x => { Console.WriteLine(x); });
+                }
+                client.Disconnect();
+            }
+        }
 
         [HttpGet("check")]
         public IActionResult CheckMedicineAvailability(string name = "", string dosage = "", string quantity = "")
@@ -30,51 +65,19 @@ namespace Integration_API.Controller
                 return BadRequest();
             }
 
-            MedicineDto medicineDto;
-            try
-            {
-                medicineDto = new MedicineDto { Name = name, DosageInMg = Double.Parse(dosage), Quantity = Int32.Parse(quantity) };
-            }
-            catch
-            {
-                return BadRequest();
-            }
-
+            MedicineDto medicineDto = new MedicineDto { Name = name, DosageInMg = Double.Parse(dosage), Quantity = Int32.Parse(quantity) };
+           
             List<PharmacyDto> pharmaciesWithMedicine = new List<PharmacyDto>();
 
             foreach(PharmacyProfile pharmacy in pharmaciesService.GetAll())
             {
-                if (SendRequest(pharmacy, medicineDto))
+                if (pharmacyConnection.SendRequestToCheckAvailability(pharmacy.Localhost, medicineDto))
                 {
                     pharmaciesWithMedicine.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
                 }
             }
 
             return Ok(pharmaciesWithMedicine);
-        }
-
-        private bool SendRequest(PharmacyProfile pharmacy, MedicineDto medicineDto)
-        {
-            var client = new RestSharp.RestClient(pharmacy.Localhost);
-            var request = new RestRequest("/medicines/check?name=" + medicineDto.Name + "&dosage=" + medicineDto.DosageInMg + "&quantity=" + medicineDto.Quantity);
-
-            Credential credential = credentialsService.GetByPharmacyLocalhost(pharmacy.Localhost);
-
-            if(credential == null)
-            {
-                return false;
-            }
-
-            request.AddHeader("ApiKey", credential.ApiKey);
-
-            IRestResponse response = client.Get(request);
-
-            if(response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                return true;
-            }
-
-            return false;
         }
 
         public bool SendMedicineOrderingRequest(OrderingMedicineDTO dto, bool test)
@@ -122,7 +125,7 @@ namespace Integration_API.Controller
         public IActionResult Ordered(OrderedMedicineDTO dto)
         {
             System.Diagnostics.Debug.WriteLine(dto.Replacements);
-            MedicineService ms = new MedicineService(new MedicinesRepository(), new MedicalRecordsRepository());
+            MedicineService ms = new MedicineService(new MedicinesRepository(), new MedicalRecordsRepository(), new ExaminationRepository());
             Medicine orderedMedicine;
             foreach (Medicine med in ms.GetAll())
             {
@@ -137,7 +140,26 @@ namespace Integration_API.Controller
             ms.AddOrderedMedicine(orderedMedicine);
             return Ok();
         }
-         
 
+        [HttpGet("spec")]
+        public IActionResult GetSpecification(string pharmacyLocalhost = "", string medicine = "")
+        {
+            if (pharmacyLocalhost.Length <= 0 || medicine.Length <= 0)
+            {
+                return BadRequest();
+            }
+
+            if (!pharmacyConnection.SendRequestForSpecification(pharmacyLocalhost, medicine))
+            {
+                return BadRequest("Specification does not exists");
+            }
+
+            if (!sftpHandler.DownloadSpecification($"/public/Specification.txt"))
+            {
+                return BadRequest("Unable to download specification file");
+            }
+
+            return Ok();
+        }
     }
 }

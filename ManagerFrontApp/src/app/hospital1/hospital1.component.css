@@ -22,7 +22,13 @@
 .room {
   stroke: black;
   stroke-width: 2px;
-  fill: cornsilk;
+  fill: cadetblue;
+}
+
+.highlightedRoom {
+  stroke: black;
+  stroke-width: 4px;
+  fill: white;
 }
 
 .room-cadetblue {
@@ -53,8 +59,8 @@
 
 .info-box {
   display: block;
-  width: 370px;
-  height: 360px;
+  width: 346px;
+  height: 400px;
   border: 2px solid black;
   padding: 5px;
 }
@@ -70,6 +76,11 @@
   transition: border-color 0.2s;
 }
 
+.fill-form-field {
+  box-sizing: border-box;
+  border: 3px;
+}
+
 .rightbtn {
   display: flex;
   flex-direction: row;
@@ -77,23 +88,38 @@
 }
 
 .btn {
-  color: black;
-  background-color:rgb(160, 159, 159);
+  color: white;
+  background-color: cadetblue;
   border-radius: 3px;
-  width: 80px;
+  min-width: 100px;
   height: 24px;
   font-size: 18px;
   transition: 0.7s;
   margin: 0 5px;
+  width: max-content;
+  padding: 0 10px;
+}
+
+.btnInfo {
+  color: white;
+  background-color: cadetblue;
+  border-radius: 3px;
+  min-width: 120px;
+  height: 24px;
+  font-size: 18px;
+  transition: 0.7s;
+  margin: 0 5px;
+  width: max-content;
+  padding: 0 10px;
 }
 
 .floor-button {
   display: block;
-  padding: 5px 10px;
+  padding: 5px 8px;
   border-radius: 7px;
   outline: none;
   border: none;
-  margin: 5px 0;
+  margin: 3px 4px;
   cursor: pointer;
 }
 
@@ -126,51 +152,126 @@
 }
 .info-module {
   margin: 0 10px;
+  display: flex;
 }
 
-.equipment-table{
+.equipment-table {
   display: block;
-    margin-left: 10%;
-    margin-top: 20px;
-    background-color: white;
-    margin-bottom: 50px;
+  margin-left: 5%;
+  margin-right: 6%;
+  margin-top: 15px;
+  background-color: white;
+  margin-bottom: 30px;
 }
 
-.equipment-table th{
+
+.equipment-table th {
   display: inline-block;
-  padding: 20px 23px;
+  padding: 10px 28px;
   text-align: left;
   font-weight: bold;
   font-size: 15px;
-  color: #000;
+  color: white;
   text-transform: uppercase;
-  background:rgba(0, 0, 0, 0.1);
+  background: cadetblue;
 }
 
 .equipment-table tbody {
   display: inline-block;
-  height: 180px;
+  height: 270px;
   overflow-y: scroll;
   scrollbar-color: rgb(248, 246, 246);
+  width: 290px;
+}
+
+
+.equipment-table thead {
+  width: 320px;
 }
 
 .equipment-table tbody tr {
   height: 15px;
 }
 
+
 .equipment-table td {
   padding: 10px;
   text-align: left;
   vertical-align: middle;
   font-weight: 300;
-  font-size: 18px;
+  font-size: 16px;
   color: #000;
   border-bottom: solid 1px rgba(0, 0, 0, 0.1);
   word-wrap: break-word;
+  height: 50%;
+  width: 50%;
 }
-.search-box-rooms {
+
+
+.search-list-table {
+  display: block;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  background-color: white;
+}
+
+.search-list-table th {
+  display: inline-block;
+  padding: 10px 24px;
+  text-align: left;
+  font-weight: bold;
+  font-size: 15px;
+  color: white;
+  text-transform: uppercase;
+  background: cadetblue;
+}
+
+.search-list-table tbody {
+  display: inline-block;
+  height: 400px;
+  overflow-y: scroll;
+  scrollbar-color: rgb(248, 246, 246);
+  width: 270px; 
+}
+.search-list-table thead {
+  width: 250px;
+}
+.search-list-table tbody tr {
+  height: 15px;
+}
+.search-list-table td {
+  padding: 10px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 16px;
+  color: #000;
+  word-wrap: break-word;
+  height: 50%;
+  width: 50%;
+}
+.search-list-table tbody {
+  display: inline-block;
+  overflow-y: scroll;
+  scrollbar-color: rgb(248, 246, 246);
+  background-color: rgba(224, 223, 223, 0.911);
+}
+
+.search-radio-buttons {
   position: absolute;
   top: 2%;
+  right: 3%;
+}
+
+.radio-inline {
+  display: inline;
+  margin-left: 0.5em;
+}
+
+.search-box-rooms {
+  position: absolute;
+  top: 6%;
   right: 2%;
   background: cadetblue;
   height: 40px;
@@ -178,14 +279,14 @@
   padding: 8px;
 }
 
-.search-box-rooms:hover > .search-txt-rooms{
+.search-box-rooms:hover > .search-txt-rooms {
   width: 220px;
   padding: 0 6px;
 }
 
-.search-box-rooms:hover > .search-btn-rooms{
- background: white;
- color: cadetblue;
+.search-box-rooms:hover > .search-btn-rooms {
+  background: white;
+  color: cadetblue;
 }
 
 .search-btn-rooms {
@@ -203,7 +304,7 @@
 }
 
 .search-txt-rooms {
-  border:none;
+  border: none;
   background: none;
   outline: none;
   float: left;
@@ -213,4 +314,189 @@
   transition: 0.4s;
   width: 0px;
   line-height: 25px;
+}
+
+.list-box-equipment {
+  margin-right: 5px;
+  width: 320px;
+  height: 400px;
+  border: 2px solid black;
+  padding: 5px;
+}
+
+.search-list-box-equipment {
+  position: absolute;
+  top: 17%;
+  right: 2%;
+  width: 320px;
+  height: 550px;
+  border: 2px solid cadetblue;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  color: cadetblue;
+}
+
+.move-box-equipment {
+  width: 320px;
+  height: 400px;
+  border: 2px solid black;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+}
+.position-bottom {
+  display: flex;
+  margin: 5px 0;
+}
+
+.position-bottom > .btn {
+  flex: 1;
+}
+
+
+
+.equipment-table-row:hover {
+  background-color: rgba(160, 159, 159, 0.5);
+  cursor: pointer;
+}
+
+.selected-equipment {
+  background-color: rgba(160, 159, 159, 0.6);
+}
+
+.equipment-table tbody {
+  display: inline-block;
+  overflow-y: scroll;
+  scrollbar-color: rgb(248, 246, 246);
+  background-color: rgba(224, 223, 223, 0.911);
+}
+
+.labels-box {
+  display: inline-block;
+  flex: 1;
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-input > input {
+  background-color: white;
+  border: 1px solid black !important;
+}
+
+.label-container {
+  margin: 10px 0;
+}
+
+.round-button {
+  background-color: rgb(160, 159, 159);
+  border: none;
+  color: white;
+  padding: 18px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  border-radius: 20px;
+  margin-right: 15px;
+}
+
+.center-buttons {
+  margin-left: 14%;
+}
+
+.rooms-table {
+  display: block;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 6px;
+  margin-bottom: 20px;
+  background-color: white;
+}
+
+.rooms-table th {
+  display: inline-block;
+  padding: 10px 38px;
+  text-align: left;
+  font-weight: bold;
+  font-size: 15px;
+  color: white;
+  text-transform: uppercase;
+  background: cadetblue;
+}
+
+.rooms-table tbody {
+  display: inline-block;
+  height: 400px;
+  overflow-y: scroll;
+  background: rgba(0, 0, 0, 0.1);
+  scrollbar-color: rgba(0, 0, 0, 0.1);
+  width: 270px;
+}
+
+.rooms-table thead {
+  width: 250px;
+}
+
+.rooms-table tbody tr {
+  height: 15px;
+}
+
+.rooms-table td {
+  padding: 10px;  
+  font-size: 16px;
+  color: #000;
+  word-wrap: break-word;
+}
+  
+.moving-container {
+  flex: 1;
+}
+
+.moving-container h3 {
+  margin-bottom: 2px;
+}
+.destination-table-container {
+  height: 190px;
+  overflow-y: auto;
+}
+
+.list-table {
+  display: block;
+  margin-left: 2%;
+  margin-right: 2%;
+  background-color: rgba(224, 223, 223, 0.911);
+}
+.list-table thead {
+  display: flex;
+  width: 100%;
+}
+.list-table tbody {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.list-table thead > tr {
+  display: flex;
+  flex: 1;
+}
+.list-table tbody > tr {
+  display: flex;
+  flex: 1;
+}
+.list-table tbody > tr > td {
+  display: inline-block;
+  padding: 8px;
+  text-align: left;
+  font-size: 14px;
+  color: #000;
+  flex: 1;
+}
+.list-table th {
+  display: inline-block;
+  padding: 8px;
+  text-align: left;
+  font-size: 14px;
+  text-align: center;
+  color: white;
+  background: cadetblue;
+  flex: 1;
 }

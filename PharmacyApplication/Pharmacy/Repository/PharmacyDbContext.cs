@@ -21,7 +21,6 @@ namespace Pharmacy.Repository
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
-
             modelbuilder.Entity<SubstituteMedicine>().HasKey(sm => new { sm.MedicineId, sm.SubstituteId });
             modelbuilder.Entity<SubstituteMedicine>()
                 .HasOne(pt => pt.Substitute)
@@ -42,8 +41,7 @@ namespace Pharmacy.Repository
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=PharmacyDatabase;User id=postgres;Password=admin").UseLazyLoadingProxies();
+            //optionsBuilder.UseNpgsql("Server=pharmacyapi;Port=5432;Database=PharmacyDatabase;User id=postgres;Password=admin").UseLazyLoadingProxies();
         }
-
-
     }
 }

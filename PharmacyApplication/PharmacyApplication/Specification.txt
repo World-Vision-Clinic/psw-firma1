@@ -1,0 +1,18 @@
+Name: Aspirin
+
+Weigth: 200mg
+
+Manufacturer: Hemofarm
+
+SideEffects: rash, gastrointestinal ulcerations, abdominal pain, upset stomach, heartburn, drowsiness, headache, cramping
+
+Usage: used to reduce fever and relieve mild to moderate pain
+
+Main precautions: bleeding disorders, such as hemophilia,
+uncontrolled high blood pressure, asthma, peptic or stomach ulcers, liver or kidney disease
+
+Potential dangers: stomach bleeding, bleeding in the brain, and kidney failure
+
+Substances: acetylsalicylic acid
+
+Substitute medicines: Brufen 150mg, Cardiopirin 200mg

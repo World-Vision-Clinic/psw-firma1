@@ -11,18 +11,23 @@ import { ObjectionFormPageComponent } from './manager-integration-front-app/obje
 import { PharmaciesComponent } from './manager-integration-front-app/pharmacies/pharmacies.component';
 import { NewsComponent } from './manager-integration-front-app/news/news.component';
 import { ViewSurveyResultsComponent } from './view-survey-results/view-survey-results.component';
+import { MedicineConsumptionComponent } from './manager-integration-front-app/medicine-consumption/medicine-consumption.component';
+
 
 const routes: Routes = [
   {path: "", component: FrontPageComponent},
   {path:"buildings", component: BuildingsMapComponent},
-  {path:"hospital1", component: Hospital1Component},
+  {path:"hospital/:hospitalId", component: Hospital1Component},
   {path:"pharmacy-registration", component: PharmacyRegistrationComponent},
   {path:"survey-results", component: ViewSurveyResultsComponent},
   {path:"manager-front-app", component: ManagerIntegrationFrontAppComponent, children: [
   {path: "overview-objections-replies", outlet: "showObjRepl", component:OverviewObjectionsRepliesComponent},
   {path: "overview-pharmacies", outlet: "showObjRepl", component:PharmaciesComponent},
+
   {path: "create-objection", outlet: "showObjRepl", component:ObjectionFormPageComponent},
-  {path: "news", outlet: "showObjRepl", component:NewsComponent}
+  {path: "news", outlet: "showObjRepl", component:NewsComponent},
+  {path: "medicine-consumption-report", outlet: "showObjRepl", component:MedicineConsumptionComponent},
+
   ]},
   {path:"manager-feedback", component: ManagerFeedbackViewComponent}
   ];

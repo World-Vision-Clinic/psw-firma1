@@ -28,15 +28,15 @@ namespace Integration_API.Controller
             return Ok(result);
         }
 
-        [HttpPut]      
+        [HttpPut]
         public IActionResult UpdateNews(NewsDto dto)
         {
-            if (dto.Id.Length <= 0 || dto.Content.Length <= 0)
+            if (dto.Id.Length <= 0 || dto.Content.Length <= 0 || dto.Title.Length <= 0 || dto.FromDate == null || dto.ToDate == null)
             {
-                return BadRequest();        
+                return BadRequest();
             }
 
-            List<News> news= newsService.GetAll();
+            List<News> news = newsService.GetAll();
             News pieceOfNews = news.Find(pieceOfNews => pieceOfNews.IdEncoded == dto.Id);
 
             if (pieceOfNews == null)
@@ -48,6 +48,12 @@ namespace Integration_API.Controller
                 newsService.Update(pieceOfNews);
                 return Ok(NewsMapper.NewsToNewsDto(pieceOfNews));
             }
+        }
+
+        [HttpGet("test")]
+        public IActionResult TestingController()
+        {
+            return Ok("Hello from News controller");
         }
     }
 

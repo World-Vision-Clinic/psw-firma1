@@ -4,7 +4,8 @@ export interface Floor{
     level: string,
     info?: string,
     rooms: Room[],
-    labels?: FloorLabel[]
+    labels?: FloorLabel[],
+    highlightedRoomId?: number
 }
 
 

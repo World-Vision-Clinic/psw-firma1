@@ -8,61 +8,17 @@ using System.Threading.Tasks;
 
 namespace Integration.Model
 {
-   public class MedicineTherapy : INotifyPropertyChanged
+   public class MedicineTherapy
     {
-        private int durationInDays;
-        public int DurationInDays
-        {
-            get => durationInDays;
-            set
-            {
-                durationInDays = value;
-                OnPropertyChanged("durationInDays");
-            }
-        }
-        private int timesPerDay;
-        public int TimesPerDay
-        {
-            get => timesPerDay;
-            set
-            {
-                timesPerDay = value;
-                OnPropertyChanged("timesPerDay");
-            }
-        }
+        public int Id { get; set; }
+        public string MedicineID { get; set; }
+        public int DurationInDays { get; set; }
+        public int TimesPerDay{ get; set; }
 
-        private string description;
-        public string Description
-        {
-            get => description;
-            set
-            {
-                description = value;
-                OnPropertyChanged("Description");
-            }
-        }
+        public string Description { get; set; }
 
-        private string medicineID;
-        public string MedicineID
-        {
-            get => medicineID;
-            set
-            {
-                medicineID = value;
-                OnPropertyChanged("MedicineID");
-            }
-        }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string name)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
-        }
-
+        public int TherapyId { get; set; }
         public Medicine Medicine { get; set; }
     }
 }
