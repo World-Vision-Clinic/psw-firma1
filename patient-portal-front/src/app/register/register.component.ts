@@ -77,8 +77,40 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  contentIsValid() {
+  verifyPassword() {
+    if(this.password == "")
+      return false;
     if(this.password != this.confirmPassword)
+      return false;
+    return true;
+  }
+
+  verifyUsername() {
+    if(this.username == "")
+      return false;
+    return true;
+  }
+
+  verifyFirstName() {
+    if(this.firstName == "")
+      return false;
+    return true;
+  }
+
+  verifyLastName() {
+    if(this.firstName == "")
+      return false;
+    return true;
+  }
+
+  contentIsValid() {
+    if(!this.verifyPassword())
+      return false;
+    if(!this.verifyUsername())
+      return false;
+    if(!this.verifyFirstName())
+      return false;
+    if(!this.verifyLastName())
       return false;
     return true;
   }
