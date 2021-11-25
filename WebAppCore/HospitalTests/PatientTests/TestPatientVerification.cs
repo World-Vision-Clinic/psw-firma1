@@ -127,7 +127,33 @@ namespace HospitalTests.PatientTests
             Assert.False(_verification.Verify(patient));
         }
 
-        //TODO: Username unique?
+        [Fact]
+        public void Test_patient_username_not_unique()
+        {
+            PatientRegisterDTO patient = GenerateValidBranko();
+            patient.UserName = "branko1";
+            Assert.False(_verification.Verify(patient));
+        }
+
+        //Password ------------------------
+
+        [Fact]
+        public void Test_patient_password_is_null()
+        {
+            PatientRegisterDTO patient = GenerateValidBranko();
+            patient.Password = null;
+            Assert.False(_verification.Verify(patient));
+        }
+
+        [Fact]
+        public void Test_patient_password_is_empty()
+        {
+            PatientRegisterDTO patient = GenerateValidBranko();
+            patient.Password = "";
+            Assert.False(_verification.Verify(patient));
+        }
+
+        //-------------------------------
 
         [Fact]
         public void Test_patient_first_name_null()
