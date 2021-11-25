@@ -38,7 +38,7 @@ namespace Hospital_API.DTO
             this.Address = patientToCopy.Address;
             this.City = patientToCopy.City;
             this.Phone = patientToCopy.Phone;
-            this.PreferedDoctorName = "Doktor Doktorić";
+            this.PreferedDoctorName = "";
             this.Height = patientToCopy.Height;
             this.Weight = patientToCopy.Weight;
             this.BloodType = patientToCopy.BloodType.ToString();

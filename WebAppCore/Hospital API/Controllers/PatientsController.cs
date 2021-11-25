@@ -54,6 +54,9 @@ namespace Hospital_API.Controllers
                 if(allergen != null)
                     medicalRecordDTO.AllergenList.Add(allergen.name);
             }
+            Doctor patientDoctor = _doctorService.FindById(patient.Id);
+            if (patientDoctor != null)
+                medicalRecordDTO.PreferedDoctorName = (patientDoctor.FirstName + " " + patientDoctor.LastName);
 
             return medicalRecordDTO;
         }
