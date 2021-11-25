@@ -40,14 +40,22 @@ namespace Hospital_API.Controllers
         [HttpGet("{id}")]
         public ActionResult<MedicalRecordDTO> GetPatient(int id)
         {
-            var patient = _patientService.FindById(id);
+            Patient patient = _patientService.FindById(id);
 
             if (patient == null)
             {
                 return NotFound();
             }
 
-            return MedicalRecordMapper.PatientToMedicalRecordDTO(patient);
+            MedicalRecordDTO medicalRecordDTO = MedicalRecordMapper.PatientToMedicalRecordDTO(patient);
+            List<Allergen> allergenList = _patientAllergenService.FindByPatientId(patient.Id);
+            foreach (Allergen allergen in allergenList)
+            {
+                if(allergen != null)
+                    medicalRecordDTO.AllergenList.Add(allergen.name);
+            }
+
+            return medicalRecordDTO;
         }
 
         // GET: api/Patients/activate?token=

@@ -131,7 +131,7 @@ namespace HospitalTests.PatientTest
             var response = controller.GetPatient(3);
 
             //Assert
-            Assert.Equal(3, response.Value.Id);
+            Assert.Equal("perislav", response.Value.UserName);
             //Assert.Equal(404, result.StatusCode);
         }
     }

@@ -2,7 +2,7 @@
   <div class="col-md-3">
       <div class="card">
         <div class="header basic-info-header">
-          <h2 class="text-black" style="font-weight: bolder; font-size: 26px;">{{patient.userName}}</h2>
+          <h2 class="text-black" style="font-weight: bolder; font-size: 26px;">{{patient.firstName}} {{patient.lastName}} ({{patient.userName}})</h2>
           <div class="row d-flex" style="margin-left: inherit;"><h4 class="text-black" style="font-weight: bolder">{{patient.dateOfBirth | date:'dd/MM/yyyy'}}</h4><h4 class="text-black" style="font-style: italic;">(DOB)</h4></div>
         </div>
       
@@ -17,10 +17,18 @@
             </div>
             <div class="row d-flex">
               <div class="col-sm-6">
+                <p style="font-weight: bolder; text-align: left;">Personal ID:</p>
+              </div>
+              <div class="col-sm-6">
+                <p style="font-weight: bolder; text-align: right;">{{patient.jmbg}}</p>
+              </div>
+            </div>
+            <div class="row d-flex">
+              <div class="col-sm-6">
                 <p style="font-weight: bolder; text-align: left;">Residence:</p>
               </div>
               <div class="col-sm-6">
-                <p style="font-weight: bolder; text-align: right;">{{patient.residence}}</p>
+                <p style="font-weight: bolder; text-align: right;">{{patient.address}}, {{patient.city}}, {{patient.country}}</p>
               </div>
             </div>
             <div class="row d-flex">
@@ -28,7 +36,7 @@
                 <p style="font-weight: bolder; text-align: left;">Contact Phone:</p>
               </div>
               <div class="col-sm-6">
-                <p style="font-weight: bolder; text-align: right;">{{patient.contactPhone}}</p>
+                <p style="font-weight: bolder; text-align: right;">{{patient.phone}}</p>
               </div>
             </div>
             <div class="row d-flex">
@@ -44,7 +52,7 @@
                 <p style="font-weight: bolder; text-align: left;">Doctor:</p>
               </div>
               <div class="col-sm-6">
-                <p style="font-weight: bolder; text-align: right;">{{patient.doctorName}}</p>
+                <p style="font-weight: bolder; text-align: right;">{{patient.preferedDoctorName}}</p>
               </div>
             </div>
         </div>
@@ -88,10 +96,8 @@
           <h2 class="text-black" style="font-weight: bolder; font-size: 22px;">Allergens</h2>
         </div>
       
-        <div class="card-body">
-            <div class="row d-flex" style="margin-left: inherit;"><p style="font-weight: bolder;">Allergen1</p></div>
-            <div class="row d-flex" style="margin-left: inherit;"><p style="font-weight: bolder;">Allergen2</p></div>
-            <div class="row d-flex" style="margin-left: inherit;"><p style="font-weight: bolder;">Allergen3</p></div>
+        <div class="card-body" *ngFor = "let a of patient.allergenList">
+            <div class="row d-flex" style="margin-left: inherit;"><p style="font-weight: bolder;">{{a}}</p></div>
         </div>
       </div>
   </div>
