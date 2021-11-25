@@ -12,6 +12,7 @@ using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Model;
 using Hospital_API.DTO;
 using Hospital_API.Verification;
+using Hospital_API.Mapper;
 using Hospital.SharedModel;
 
 namespace Hospital_API.Controllers
@@ -37,7 +38,7 @@ namespace Hospital_API.Controllers
 
         // GET: api/Feedbacks/5
         [HttpGet("{id}")]
-        public ActionResult<Patient> GetPatient(int id)
+        public ActionResult<MedicalRecordDTO> GetPatient(int id)
         {
             var patient = _patientService.FindById(id);
 
@@ -46,7 +47,7 @@ namespace Hospital_API.Controllers
                 return NotFound();
             }
 
-            return patient;
+            return MedicalRecordMapper.PatientToMedicalRecordDTO(patient);
         }
 
         // GET: api/Patients/activate?token=

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Appointment } from 'src/appointment';
-import { Patient } from 'src/patient';
+import { MedicalRecord } from 'src/medical-record';
 import { PatientFeedbackServiceService } from '../patient-feedback-service.service';
 
 @Component({
@@ -34,7 +34,7 @@ export class MedicalRecordViewComponent implements OnInit {
     ] }
   ];
   public errorMsg = "";
-  public patient: Patient = {} as Patient;
+  public patient: MedicalRecord = {} as MedicalRecord;
 
   public appointments = [] as any;
   public selectedDay: string = 'Monday';
@@ -55,14 +55,6 @@ export class MedicalRecordViewComponent implements OnInit {
       return day
     }
     return day.substring(0,2)
-  }
-
-  getPatientGender(): string {
-    if(this.patient.gender == 2)
-    {
-      return "Female";
-    }
-    return "Male";
   }
 
   getAppointmentType(appointmentType: number): string {
