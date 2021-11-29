@@ -3,17 +3,15 @@ using System;
 using Hospital.SharedModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Hospital.Migrations
 {
     [DbContext(typeof(HospitalContext))]
-    [Migration("20211123135145_editorMigration")]
-    partial class editorMigration
+    partial class HospitalContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,7 +87,7 @@ namespace Hospital.Migrations
 
             modelBuilder.Entity("Hospital.GraphicalEditor.Model.Floor", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -103,20 +101,20 @@ namespace Hospital.Migrations
                     b.Property<string>("Level")
                         .HasColumnType("text");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("Floors");
 
                     b.HasData(
                         new
                         {
-                            id = 1,
+                            Id = 1,
                             BuildingId = 1,
                             Level = "Ground floor"
                         },
                         new
                         {
-                            id = 2,
+                            Id = 2,
                             BuildingId = 1,
                             Level = "First floor"
                         });
@@ -280,6 +278,39 @@ namespace Hospital.Migrations
                     b.ToTable("Parkings");
                 });
 
+            modelBuilder.Entity("Hospital.MedicalRecords.Model.Allergen", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Allergens");
+                });
+
+            modelBuilder.Entity("Hospital.MedicalRecords.Model.Doctor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Doctors");
+                });
+
             modelBuilder.Entity("Hospital.MedicalRecords.Model.Feedback", b =>
                 {
                     b.Property<int>("Id")
@@ -293,14 +324,17 @@ namespace Hospital.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<bool>("IsAnonymous")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPublic")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPublishable")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("UserName")
                         .HasColumnType("text");
-
-                    b.Property<bool>("isAnonymous")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("isPublic")
-                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
@@ -317,11 +351,47 @@ namespace Hospital.Migrations
                     b.Property<bool>("Activated")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
+
+                    b.Property<int>("BloodType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("City")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<string>("EMail")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Height")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Jmbg")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
                         .HasColumnType("text");
 
                     b.Property<string>("Password")
                         .HasColumnType("text");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("text");
+
+                    b.Property<int>("PreferedDoctor")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Token")
                         .HasColumnType("text");
@@ -329,14 +399,35 @@ namespace Hospital.Migrations
                     b.Property<string>("UserName")
                         .HasColumnType("text");
 
+                    b.Property<int>("Weight")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.ToTable("Patients");
                 });
 
+            modelBuilder.Entity("Hospital.MedicalRecords.Model.PatientAllergen", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("AllergenId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PatientAllergens");
+                });
+
             modelBuilder.Entity("Hospital.RoomsAndEquipment.Model.Equipment", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -344,137 +435,188 @@ namespace Hospital.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("InTransport")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
                     b.Property<int>("RoomId")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime>("TransportEnd")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("TransportStart")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("AllEquipment");
 
                     b.HasData(
                         new
                         {
-                            id = 1,
+                            Id = 1,
                             Amount = 15,
+                            InTransport = false,
                             Name = "Bandage",
-                            RoomId = 1,
+                            RoomId = 15,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
                         },
                         new
                         {
-                            id = 2,
+                            Id = 2,
                             Amount = 3,
+                            InTransport = false,
                             Name = "Operating table",
-                            RoomId = 1,
+                            RoomId = 23,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         },
                         new
                         {
-                            id = 3,
+                            Id = 3,
                             Amount = 11,
+                            InTransport = false,
                             Name = "Infusion",
                             RoomId = 1,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
                         },
                         new
                         {
-                            id = 4,
+                            Id = 4,
                             Amount = 17,
+                            InTransport = false,
                             Name = "Bandage",
                             RoomId = 2,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
                         },
                         new
                         {
-                            id = 5,
+                            Id = 5,
                             Amount = 2,
+                            InTransport = false,
                             Name = "Operating table",
                             RoomId = 2,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         },
                         new
                         {
-                            id = 6,
+                            Id = 6,
                             Amount = 23,
+                            InTransport = false,
                             Name = "Infusion",
-                            RoomId = 2,
+                            RoomId = 23,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
                         },
                         new
                         {
-                            id = 7,
+                            Id = 7,
                             Amount = 15,
+                            InTransport = false,
                             Name = "Bandage",
                             RoomId = 3,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
                         },
                         new
                         {
-                            id = 8,
+                            Id = 8,
                             Amount = 1,
+                            InTransport = false,
                             Name = "Operating table",
                             RoomId = 3,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         },
                         new
                         {
-                            id = 9,
+                            Id = 9,
                             Amount = 11,
+                            InTransport = false,
                             Name = "Syringe",
                             RoomId = 3,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
                         },
                         new
                         {
-                            id = 10,
+                            Id = 10,
                             Amount = 7,
+                            InTransport = false,
                             Name = "Bed",
                             RoomId = 4,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         },
                         new
                         {
-                            id = 11,
+                            Id = 11,
                             Amount = 4,
+                            InTransport = false,
                             Name = "Chair",
-                            RoomId = 4,
+                            RoomId = 16,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         },
                         new
                         {
-                            id = 12,
+                            Id = 12,
                             Amount = 11,
+                            InTransport = false,
                             Name = "Bed",
                             RoomId = 5,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         },
                         new
                         {
-                            id = 13,
+                            Id = 13,
                             Amount = 6,
+                            InTransport = false,
                             Name = "Chair",
-                            RoomId = 5,
+                            RoomId = 17,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         },
                         new
                         {
-                            id = 14,
+                            Id = 14,
                             Amount = 25,
+                            InTransport = false,
                             Name = "Bandage",
                             RoomId = 5,
+                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
                         });
                 });
 
             modelBuilder.Entity("Hospital.RoomsAndEquipment.Model.Room", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -518,14 +660,14 @@ namespace Hospital.Migrations
                     b.Property<int>("Y")
                         .HasColumnType("integer");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("Rooms");
 
                     b.HasData(
                         new
                         {
-                            id = 1,
+                            Id = 1,
                             Css = "room room-cadetblue",
                             DoctorId = -1,
                             DoorExist = true,
@@ -542,13 +684,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 2,
+                            Id = 2,
                             Css = "room room-cadetblue",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 220,
                             DoorY = 248,
-                            FloorId = 0,
+                            FloorId = 1,
                             Height = 100,
                             Name = "OPERATING ROOM 2",
                             Purpose = "",
@@ -559,13 +701,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 3,
+                            Id = 3,
                             Css = "room room-cadetblue",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 370,
                             DoorY = 248,
-                            FloorId = 0,
+                            FloorId = 1,
                             Height = 100,
                             Name = "OPERATING ROOM 3",
                             Purpose = "",
@@ -576,13 +718,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 4,
+                            Id = 4,
                             Css = "room room-cadetblue",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 520,
                             DoorY = 248,
-                            FloorId = 0,
+                            FloorId = 1,
                             Height = 100,
                             Name = "ROOM 1",
                             Purpose = "",
@@ -593,13 +735,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 5,
+                            Id = 5,
                             Css = "room room-cadetblue",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 680,
                             DoorY = 248,
-                            FloorId = 0,
+                            FloorId = 1,
                             Height = 100,
                             Name = "ROOM 2",
                             Purpose = "",
@@ -610,13 +752,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 6,
+                            Id = 6,
                             Css = "room room-cadetblue",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 728,
                             DoorY = 290,
-                            FloorId = 0,
+                            FloorId = 1,
                             Height = 100,
                             Name = "OFFICE 1",
                             Purpose = "",
@@ -627,13 +769,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 7,
+                            Id = 7,
                             Css = "staircase",
                             DoctorId = -1,
                             DoorExist = false,
                             DoorX = 728,
                             DoorY = 290,
-                            FloorId = 0,
+                            FloorId = 1,
                             Height = 90,
                             Name = "LIFT",
                             Purpose = "",
@@ -644,13 +786,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 8,
+                            Id = 8,
                             Css = "room room-cadetblue",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 728,
                             DoorY = 485,
-                            FloorId = 0,
+                            FloorId = 1,
                             Height = 60,
                             Name = "TOILET",
                             Purpose = "",
@@ -661,13 +803,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 9,
+                            Id = 9,
                             Css = "room room-cadetblue",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 728,
                             DoorY = 555,
-                            FloorId = 0,
+                            FloorId = 1,
                             Height = 60,
                             Name = "TOILET",
                             Purpose = "",
@@ -678,13 +820,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 10,
+                            Id = 10,
                             Css = "room room-cadetblue",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 148,
                             DoorY = 419,
-                            FloorId = 0,
+                            FloorId = 1,
                             Height = 190,
                             Name = "OPERATING ROOM 4",
                             Purpose = "",
@@ -695,13 +837,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 11,
+                            Id = 11,
                             Css = "room room-cadetblue",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 200,
                             DoorY = 498,
-                            FloorId = 0,
+                            FloorId = 1,
                             Height = 100,
                             Name = "ROOM 3",
                             Purpose = "",
@@ -712,13 +854,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 12,
+                            Id = 12,
                             Css = "room room-cadetblue",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 315,
                             DoorY = 498,
-                            FloorId = 0,
+                            FloorId = 1,
                             Height = 100,
                             Name = "ROOM 4",
                             Purpose = "",
@@ -729,13 +871,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 13,
+                            Id = 13,
                             Css = "room room-cadetblue",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 475,
                             DoorY = 498,
-                            FloorId = 0,
+                            FloorId = 1,
                             Height = 100,
                             Name = "ROOM 5",
                             Purpose = "",
@@ -746,13 +888,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 14,
+                            Id = 14,
                             Css = "room",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 100,
                             DoorY = 248,
-                            FloorId = 0,
+                            FloorId = 2,
                             Height = 100,
                             Name = "DOCTOR'S OFFICE 1",
                             Purpose = "",
@@ -763,13 +905,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 15,
+                            Id = 15,
                             Css = "room",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 260,
-                            DoorY = 498,
-                            FloorId = 0,
+                            DoorY = 248,
+                            FloorId = 2,
                             Height = 100,
                             Name = "DOCTOR'S OFFICE 2",
                             Purpose = "",
@@ -780,13 +922,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 16,
+                            Id = 16,
                             Css = "room",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 420,
-                            DoorY = 498,
-                            FloorId = 0,
+                            DoorY = 248,
+                            FloorId = 2,
                             Height = 100,
                             Name = "DOCTOR'S OFFICE 3",
                             Purpose = "",
@@ -797,13 +939,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 17,
+                            Id = 17,
                             Css = "room",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 595,
-                            DoorY = 498,
-                            FloorId = 0,
+                            DoorY = 248,
+                            FloorId = 2,
                             Height = 100,
                             Name = "DOCTOR'S OFFICE 4",
                             Purpose = "",
@@ -814,13 +956,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 18,
+                            Id = 18,
                             Css = "room",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 680,
-                            DoorY = 498,
-                            FloorId = 0,
+                            DoorY = 248,
+                            FloorId = 2,
                             Height = 100,
                             Name = "ROOM 1",
                             Purpose = "",
@@ -831,13 +973,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 19,
+                            Id = 19,
                             Css = "room",
                             DoctorId = -1,
                             DoorExist = false,
                             DoorX = 728,
                             DoorY = 290,
-                            FloorId = 0,
+                            FloorId = 2,
                             Height = 104,
                             Name = "STAIRS",
                             Purpose = "",
@@ -848,13 +990,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 20,
+                            Id = 20,
                             Css = "staircase",
                             DoctorId = -1,
                             DoorExist = false,
                             DoorX = 728,
                             DoorY = 290,
-                            FloorId = 0,
+                            FloorId = 2,
                             Height = 90,
                             Name = "LIFT",
                             Purpose = "",
@@ -865,13 +1007,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 21,
+                            Id = 21,
                             Css = "room",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 728,
                             DoorY = 485,
-                            FloorId = 0,
+                            FloorId = 2,
                             Height = 60,
                             Name = "TOILET",
                             Purpose = "",
@@ -882,13 +1024,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 22,
+                            Id = 22,
                             Css = "room",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 728,
                             DoorY = 555,
-                            FloorId = 0,
+                            FloorId = 2,
                             Height = 60,
                             Name = "TOILET",
                             Purpose = "",
@@ -899,13 +1041,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 23,
+                            Id = 23,
                             Css = "room",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 148,
                             DoorY = 419,
-                            FloorId = 0,
+                            FloorId = 2,
                             Height = 190,
                             Name = "OPERATING ROOM 2",
                             Purpose = "",
@@ -916,13 +1058,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 24,
+                            Id = 24,
                             Css = "room",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 200,
                             DoorY = 498,
-                            FloorId = 0,
+                            FloorId = 2,
                             Height = 100,
                             Name = "ROOM 2",
                             Purpose = "",
@@ -933,13 +1075,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 25,
+                            Id = 25,
                             Css = "room",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 350,
                             DoorY = 498,
-                            FloorId = 0,
+                            FloorId = 2,
                             Height = 100,
                             Name = "OPERATING ROOM 3",
                             Purpose = "",
@@ -950,13 +1092,13 @@ namespace Hospital.Migrations
                         },
                         new
                         {
-                            id = 26,
+                            Id = 26,
                             Css = "room",
                             DoctorId = -1,
                             DoorExist = true,
                             DoorX = 400,
                             DoorY = 398,
-                            FloorId = 0,
+                            FloorId = 2,
                             Height = 100,
                             Name = "OPERATING ROOM 1",
                             Purpose = "",
@@ -967,6 +1109,245 @@ namespace Hospital.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Hospital.Schedule.Model.AnsweredSurveyQuestion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("Answer")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PatientForeignKey")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Question")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Section")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SurveyForeignKey")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AnsweredQuestions");
+                });
+
+            modelBuilder.Entity("Hospital.Schedule.Model.Appointment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("DoctorForeignKey")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PatientForeignKey")
+                        .HasColumnType("integer");
+
+                    b.Property<TimeSpan>("Time")
+                        .HasColumnType("interval");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Appointments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorForeignKey = 0,
+                            PatientForeignKey = 0,
+                            Time = new TimeSpan(0, 0, 0, 0, 0),
+                            Type = 0
+                        });
+                });
+
+            modelBuilder.Entity("Hospital.Schedule.Model.Survey", b =>
+                {
+                    b.Property<int>("IdSurvey")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("IdAppointment")
+                        .HasColumnType("integer");
+
+                    b.HasKey("IdSurvey");
+
+                    b.HasIndex("IdAppointment");
+
+                    b.ToTable("Surveys");
+
+                    b.HasData(
+                        new
+                        {
+                            IdSurvey = 1,
+                            CreationDate = new DateTime(2021, 11, 29, 22, 43, 18, 896, DateTimeKind.Local).AddTicks(8286),
+                            IdAppointment = 1
+                        });
+                });
+
+            modelBuilder.Entity("Hospital.Schedule.Model.SurveyQuestion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("Answer")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("IdSurvey")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Question")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Section")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Questions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Answer = 0,
+                            IdSurvey = 1,
+                            Question = "Has doctor been polite to you?",
+                            Section = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Answer = 0,
+                            IdSurvey = 1,
+                            Question = "How would you rate the professionalism of doctor?",
+                            Section = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Answer = 0,
+                            IdSurvey = 1,
+                            Question = "How clearly did the doctor explain you your condition?",
+                            Section = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Answer = 0,
+                            IdSurvey = 1,
+                            Question = "How would you rate the doctor's patience with you?",
+                            Section = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Answer = 0,
+                            IdSurvey = 1,
+                            Question = "What is your overall satisfaction with doctor?",
+                            Section = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Answer = 0,
+                            IdSurvey = 1,
+                            Question = "How easy is to use our application?",
+                            Section = 0
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Answer = 0,
+                            IdSurvey = 1,
+                            Question = "How easy it was to schedule an appointment?",
+                            Section = 0
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Answer = 0,
+                            IdSurvey = 1,
+                            Question = "What is an opportunity to recommend us to your friends and family?",
+                            Section = 0
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Answer = 0,
+                            IdSurvey = 1,
+                            Question = "How satisfied are you with the services that the hospital provides you?",
+                            Section = 0
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Answer = 0,
+                            IdSurvey = 1,
+                            Question = "What is your overall satisfaction with our hospital?",
+                            Section = 0
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Answer = 0,
+                            IdSurvey = 1,
+                            Question = "How would you rate the kindness of our staff?",
+                            Section = 2
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Answer = 0,
+                            IdSurvey = 1,
+                            Question = "How would you rate the professionalism of our staff?",
+                            Section = 2
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Answer = 0,
+                            IdSurvey = 1,
+                            Question = "How clearly did the staff explain you some procedures of our hospital?",
+                            Section = 2
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Answer = 0,
+                            IdSurvey = 1,
+                            Question = "How yould you rate to what extent staff was available to you during your visit to the hospital?",
+                            Section = 2
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Answer = 0,
+                            IdSurvey = 1,
+                            Question = "What is your overall satisfaction with our staff?",
+                            Section = 2
+                        });
+                });
+
             modelBuilder.Entity("Hospital.GraphicalEditor.Model.Building", b =>
                 {
                     b.HasOne("Hospital.GraphicalEditor.Model.Area", "Area")
@@ -974,6 +1355,22 @@ namespace Hospital.Migrations
                         .HasForeignKey("Areaid");
 
                     b.Navigation("Area");
+                });
+
+            modelBuilder.Entity("Hospital.Schedule.Model.Survey", b =>
+                {
+                    b.HasOne("Hospital.Schedule.Model.Appointment", "Appointment")
+                        .WithMany("Surveys")
+                        .HasForeignKey("IdAppointment")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Appointment");
+                });
+
+            modelBuilder.Entity("Hospital.Schedule.Model.Appointment", b =>
+                {
+                    b.Navigation("Surveys");
                 });
 #pragma warning restore 612, 618
         }

@@ -55,7 +55,7 @@ namespace Hospital_API.Controllers
             foreach (Allergen allergen in allergenList)
             {
                 if (allergen != null)
-                    medicalRecordDTO.AllergenList.Add(allergen.name);
+                    medicalRecordDTO.AllergenList.Add(allergen.Name);
             }
             Doctor patientDoctor = _doctorService.FindById(patient.Id);
             if (patientDoctor != null)

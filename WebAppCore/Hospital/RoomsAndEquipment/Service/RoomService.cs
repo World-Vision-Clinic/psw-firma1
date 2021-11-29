@@ -50,7 +50,7 @@ namespace Hospital.RoomsAndEquipment.Service
             List<int> floorIds = new List<int>();
             foreach(Floor floor in floorService.getFloorForBuilding(buildingId))
             {
-                floorIds.Add(floor.id);
+                floorIds.Add(floor.Id);
             }
             return repository.GetRoomsForFloors(floorIds);
 

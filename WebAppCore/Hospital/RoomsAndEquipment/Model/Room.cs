@@ -7,7 +7,7 @@ namespace Hospital.RoomsAndEquipment.Model
 {
     public class Room
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Purpose { get; set; }
         public int DoctorId { get; set; }

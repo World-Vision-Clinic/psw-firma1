@@ -13,7 +13,7 @@ namespace Hospital.RoomsAndEquipment.Model
 
     public class Equipment
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public EquipmentType Type { get; set; }
 

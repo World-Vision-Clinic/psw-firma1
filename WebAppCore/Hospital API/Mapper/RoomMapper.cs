@@ -13,7 +13,7 @@ namespace Hospital_API.Mapper
         internal static RoomDTO dataToRoomDTO(Room room, EquipmentService equipmentService)
         {
             RoomDTO roomDto = new RoomDTO(room);
-            roomDto.equipments = equipmentService.getRoomEquipments(room.id);
+            roomDto.equipments = equipmentService.getRoomEquipments(room.Id);
             return roomDto;
         }
 

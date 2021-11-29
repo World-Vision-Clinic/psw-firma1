@@ -24,7 +24,7 @@ namespace Hospital.MedicalRecords.Repository
 
         public List<Feedback> GetPublished()
         {
-            return _context.Feedbacks.Where(f => f.isPublic).ToList();
+            return _context.Feedbacks.Where(f => f.IsPublic).ToList();
         }
 
         public Feedback FindById(int id)
