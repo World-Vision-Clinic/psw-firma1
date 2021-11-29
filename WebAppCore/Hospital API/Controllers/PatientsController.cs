@@ -35,7 +35,7 @@ namespace Hospital_API.Controllers
             _patientService = new PatientService(new PatientRepository(new Hospital.SharedModel.HospitalContext()));
             _patientAllergenService = new PatientAllergenService(new PatientAllergenRepository(_context, new PatientRepository(_context), new AllergenRepository(_context)));
             _allergenService = new AllergenService(new AllergenRepository(_context));
-            _doctorService = new DoctorService(new DoctorRepository(_context));
+            _doctorService = new DoctorService(new DoctorRepository(_context, new PatientRepository(_context)));
             _verification = new PatientVerification(_patientService, _doctorService, _allergenService);
         }
 

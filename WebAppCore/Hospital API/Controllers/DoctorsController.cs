@@ -23,7 +23,7 @@ namespace Hospital_API.Controllers
         {
             _context = new HospitalContext();
             PatientRepository _patientRepository = new PatientRepository(_context);
-            _doctorService = new DoctorService(new DoctorRepository(_context));
+            _doctorService = new DoctorService(new DoctorRepository(_context, _patientRepository));
         }
 
         // GET: api/Doctors
