@@ -5,7 +5,7 @@ using System.Text;
 using Hospital.MedicalRecords.Service;
 using Hospital.MedicalRecords.Repository;
 
-namespace HospitalTests.PatientTest
+namespace HospitalTests.PatientPortalTests.UnitTests
 {
     public class TestPatientService
     {
