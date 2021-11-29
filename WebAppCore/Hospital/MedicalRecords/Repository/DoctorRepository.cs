@@ -11,14 +11,16 @@ namespace Hospital.MedicalRecords.Repository
     public class DoctorRepository : IDoctorRepository
     {
         private readonly HospitalContext _context;
+        private readonly IPatientRepository _patientRepository;
 
         public DoctorRepository()
         {
         }
 
-        public DoctorRepository(HospitalContext context)
+        public DoctorRepository(HospitalContext context, IPatientRepository patientRepository)
         {
             _context = context;
+            _patientRepository = patientRepository;
         }
 
         public void AddDoctor(Doctor doctor)
