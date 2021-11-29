@@ -13,7 +13,7 @@ using Hospital.MedicalRecords.Model;
 using Hospital.MedicalRecords.Service;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HospitalTests.PatientTest
+namespace HospitalTests.PatientPortalTests.IntegrationTests
 {
     public class TestPatientController
     {

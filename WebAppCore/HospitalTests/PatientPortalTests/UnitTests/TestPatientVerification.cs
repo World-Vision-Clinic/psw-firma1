@@ -9,7 +9,7 @@ using System.Text;
 using Xunit;
 using Moq;
 
-namespace HospitalTests.PatientTests
+namespace HospitalTests.PatientPortalTests.UnitTests
 {
     public class TestPatientVerification
     {

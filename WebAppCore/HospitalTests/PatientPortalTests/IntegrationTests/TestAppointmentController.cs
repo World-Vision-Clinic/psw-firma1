@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace HospitalTests.AppointmentTests
+namespace HospitalTests.PatientPortalTests.IntegrationTests
 {
     public class TestAppointmentController
     {
