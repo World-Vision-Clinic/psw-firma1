@@ -13,7 +13,7 @@ namespace Hospital.MedicalRecords.Model
         public string Content { get; set; }
         public bool IsPublic { get; set; }
         public bool IsPublishable { get; set; }
-        public bool IsAnonymousss { get; set; }
+        public bool IsAnonymous { get; set; }
         public DateTime Date { get; set; }
         public string UserName { get; set; }
 

@@ -14,7 +14,7 @@ namespace Hspital_API.Mapper
             FeedbackPatientDTO dto = new FeedbackPatientDTO();
             dto.Date = feedback.Date;
             dto.Content = feedback.Content;
-            if (feedback.IsAnonymousss)
+            if (feedback.IsAnonymous)
             {
                 dto.UserName = "Anonymous";
             }
