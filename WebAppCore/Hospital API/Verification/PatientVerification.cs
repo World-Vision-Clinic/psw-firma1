@@ -1,6 +1,7 @@
 ﻿using Hospital.MedicalRecords.Model;
 using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Service;
+using Hospital.SharedModel;
 using Hospital_API.DTO;
 using System;
 using System.Collections.Generic;
@@ -23,11 +24,12 @@ namespace Hospital_API.Verification
             this.allergenService = allergenService;
         }
 
-        public PatientVerification()
+        public PatientVerification(HospitalContext context)
         {
-            patientService = new PatientService(new PatientRepository());
-            doctorService = new DoctorService(new DoctorRepository());
-            allergenService = new AllergenService(new AllergenRepository());
+            PatientRepository patientRepository = new PatientRepository(context);
+            patientService = new PatientService(patientRepository);
+            doctorService = new DoctorService(new DoctorRepository(context, patientRepository));
+            allergenService = new AllergenService(new AllergenRepository(context));
         }
 
         private bool VerifyUsername()
@@ -38,6 +40,15 @@ namespace Hospital_API.Verification
             if (!regex.IsMatch(patient.UserName))
                 return false;
             if (patientService.FindByUserName(patient.UserName) != null) //Treba negde prijaviti username taken
+                return false;
+            return true;
+        }
+
+        private bool VerifyPassword()
+        {
+            if (patient.Password == null)
+                return false;
+            if (patient.Password.Length <= 0 || patient.Password.Length > 100)
                 return false;
             return true;
         }
@@ -213,6 +224,8 @@ namespace Hospital_API.Verification
             if (patient == null)
                 return false;
             if(!VerifyUsername())
+                return false;
+            if(!VerifyPassword())
                 return false;
             if (!VerifyFirstName())
                 return false;

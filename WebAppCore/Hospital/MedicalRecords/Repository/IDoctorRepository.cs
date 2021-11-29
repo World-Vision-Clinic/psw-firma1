@@ -15,7 +15,7 @@ namespace Hospital.MedicalRecords.Repository
 
         public void Modify(Doctor doctor);
         public List<Doctor> GetDoctorsFromList(List<int> doctorIds);
-
         public List<Doctor> GetAvailableDoctors();
+        public List<Doctor> GetAll();
     }
 }

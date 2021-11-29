@@ -14,68 +14,67 @@
             <div style="padding: 5%; margin: auto;">
                 <form>
                     <div>
-                        <input type="text" id="firstname" placeholder="First name">
+                        <input type="text" name="firstname" [(ngModel)]="firstName" placeholder="First name">
                     </div>
                     <div>
-                        <input type="text" id="lastname" placeholder="Last name" style="margin-top: 10px;">
+                        <input type="text" name="lastname" [(ngModel)]="lastName" placeholder="Last name" style="margin-top: 10px;">
                     </div>
                     <div style="margin-top: 10px;">
                         <label for="gender">Gender:</label>
-                        <select name="gender" id="gender">
-                            <option value="none"></option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
+                        <select name="gender" name="gender" [(ngModel)]="gender">
+                            <option value=""></option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
                         </select>
                     </div>
                     <div>
-                        <input type="text" id="jmbg" placeholder="JMBG" style="margin-top: 10px;">
+                        <input type="text" name="jmbg" [(ngModel)]="jmbg" placeholder="JMBG" style="margin-top: 10px;">
                     </div>
                     <div>
-                        <input type="text" id="username" placeholder="Username" style="margin-top: 10px;">
+                        <input type="text" name="username" [(ngModel)]="username" placeholder="Username" style="margin-top: 10px;">
                     </div>
                     <div>
-                        <input type="text" id="email" placeholder="Email" style="margin-top: 10px;">
+                        <input type="text" name="email" [(ngModel)]="email" placeholder="Email" style="margin-top: 10px;">
                     </div>
                     <div>
                         <label for="birthdate">Date of birth:</label>
-                        <input type="date" id="birthdate" style="margin-top: 10px;">
+                        <input type="date" name="birthdate" [(ngModel)]="dateOfBirth" style="margin-top: 10px;">
                     </div>
                     <div>
-                        <input type="text" id="birthdate" placeholder="Country" style="margin-top: 10px;">
+                        <input type="text" name="country" [(ngModel)]="country" placeholder="Country" style="margin-top: 10px;">
                     </div>
                     <div>
-                        <input type="text" id="address" placeholder="Address" style="margin-top: 10px;">
+                        <input type="text" name="address" [(ngModel)]="address" placeholder="Address" style="margin-top: 10px;">
                     </div>
                     <div>
-                        <input type="text" id="city" placeholder="City" style="margin-top: 10px;">
+                        <input type="text" name="city" [(ngModel)]="city" placeholder="City" style="margin-top: 10px;">
                     </div>
                     <div>
-                        <input type="text" id="phone" placeholder="Phone number" style="margin-top: 10px;">
+                        <input type="text" name="phone" [(ngModel)]="phoneNumber" placeholder="Phone number" style="margin-top: 10px;">
                     </div>
                     <div>
-                        <input type="text" id="height" placeholder="Height (cm)" style="margin-top: 10px;">
+                        <input type="number" name="height" [(ngModel)]="height" placeholder="Height (cm)" style="margin-top: 10px;">
                     </div>
                     <div>
-                        <input type="text" id="weight" placeholder="Weight (kg)" style="margin-top: 10px;">
+                        <input type="number" name="weight" [(ngModel)]="weight" placeholder="Weight (kg)" style="margin-top: 10px;">
                     </div>
                     <div style="margin-top: 10px;">
                         <label for="allergens">Allergens:</label>
-                        <select name="allergens" id="allergens" multiple>
-                            <option value="none"></option>
-                            <option value="gluten">Gluten</option>
-                            <option value="milk">Milk</option>
+                        <select name="allergens" id="allergens" [(ngModel)]="allergens" multiple>
+                            <option *ngFor="let a of allAllergens" [value]="a.id">{{a.name}}</option>
                         </select>
                     </div>
                     <div>
                         <label for="doctors">Prefered doctor:</label>
-                        <select name="doctors" id="doctors">
-                            <option value="Milan Savić">Milan Savić</option>
-                            <option value="Jovana Nikolić">Jovana Nikolić</option>
+                        <select name="doctors" id="doctors" [(ngModel)]="preferedDoctor">
+                            <option *ngFor="let d of doctors" [value]="d.id">{{d.firstName}} {{d.lastName}}</option>
+                            <!--<option value="0">Milan Savić</option>
+                            <option value="1">Jovana Nikolić</option>-->
                         </select>
                     </div>
                     <div>
                         <label for="bloodtype">Blood Type:</label>
-                        <select name="bloodtype" id="bloodtype">
+                        <select name="bloodtype" id="bloodtype" [(ngModel)]="bloodType">
                             <option value="None"></option>
                             <option value="A">A</option>
                             <option value="B">B</option>
@@ -84,12 +83,12 @@
                         </select>
                     </div>
                     <div>
-                        <input type="password" id="password" placeholder="Password" style="margin-top: 10px;">
+                        <input type="password" name="password" [(ngModel)]="password" placeholder="Password" style="margin-top: 10px;">
                     </div>
                     <div>
-                        <input type="password" id="confirm" placeholder="Confirm password" style="margin-top: 10px;">
+                        <input type="password" name="confirm" [(ngModel)]="confirmPassword" placeholder="Confirm password" style="margin-top: 10px;">
                     </div>
-                    <button style="margin-top: 30px;">Register</button>
+                    <button style="margin-top: 30px;" (click)="register()" [disabled]="!contentIsValid()">Register</button>
                 </form>
             </div>
         </div>

@@ -39,6 +39,11 @@ namespace Hospital.MedicalRecords.Service
             return _repo.GetAvailableDoctors();
         }
 
+        public List<Doctor> GetAll()
+        {
+            return _repo.GetAll();
+        }
+
         public void SaveSync()
         {
             _repo.SaveSync();
