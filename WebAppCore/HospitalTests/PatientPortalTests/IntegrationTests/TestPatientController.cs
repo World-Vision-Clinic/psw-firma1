@@ -17,14 +17,18 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
 {
     public class TestPatientController
     {
+        public PatientRepository _patientRepository;
+        public PatientAllergenRepository _patientAllergenRepository;
+        public AllergenRepository _allergenRepository;
+        public DoctorRepository _doctorRepository;
 
-        public IPatientRepository inMemoryRepo;
+        public PatientsController _patientsController;
 
         public TestPatientController() {
-
+            GetInMemoryPersonRepository();
         }
 
-        private IPatientRepository GetInMemoryPersonRepository()
+        private void GetInMemoryPersonRepository()
         {
             DbContextOptions<TestContext> options;
             var builder = new DbContextOptionsBuilder<TestContext>();
@@ -33,15 +37,21 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             TestContext hospitalContext = new TestContext(options);
             hospitalContext.Database.EnsureDeleted();
             hospitalContext.Database.EnsureCreated();
-            return new PatientRepository(hospitalContext);
+            _patientRepository = new PatientRepository(hospitalContext);
+            _allergenRepository = new AllergenRepository(hospitalContext);
+            _patientAllergenRepository = new PatientAllergenRepository(hospitalContext, _patientRepository, _allergenRepository);
+            _doctorRepository = new DoctorRepository(hospitalContext, _patientRepository);
+
+            _patientsController = new PatientsController();
+            _patientsController._patientService = new PatientService(_patientRepository);
+            _patientsController._allergenService = new AllergenService(_allergenRepository);
+            _patientsController._patientAllergenService = new PatientAllergenService(_patientAllergenRepository);
+            _patientsController._doctorService = new DoctorService(_doctorRepository);
         }
 
         [Fact]
         public void Test_token_not_found()
         {
-
-            //Arrange
-            inMemoryRepo = GetInMemoryPersonRepository();
             Patient patient = new Patient()
             {
                 Id = 1,
@@ -52,11 +62,9 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 Activated = false
             };
             //Act
-            inMemoryRepo.AddPatient(patient);
-            var controller = new PatientsController();
+            _patientRepository.AddPatient(patient);
 
-            controller._patientService = new PatientService(inMemoryRepo);
-            var response =(NotFoundResult) controller.ActivatePatient("123456722");
+            var response =(NotFoundResult) _patientsController.ActivatePatient("123456722");
 
             //Assert
             Assert.Equal(404,response.StatusCode);
@@ -67,8 +75,6 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         [Fact]
         public void Test_token_found()
         {
-            //Arrange
-            inMemoryRepo = GetInMemoryPersonRepository();
             Patient patient = new Patient()
             {
                 Id = 2,
@@ -78,13 +84,9 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 Token = "dadada",
                 Activated = false
             };
-            //Act
-            inMemoryRepo.AddPatient(patient);
+            _patientRepository.AddPatient(patient);
 
-            var controller = new PatientsController();
-
-            controller._patientService = new PatientService(inMemoryRepo);
-            var response = (RedirectResult)controller.ActivatePatient("dadada");
+            var response = (RedirectResult)_patientsController.ActivatePatient("dadada");
 
             //Assert
             Assert.Equal("http://localhost:4200/login", response.Url);
@@ -94,13 +96,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         [Fact]
         public void Test_patient_not_found()
         {
-
-            //Arrange
-            inMemoryRepo = GetInMemoryPersonRepository();
-            var controller = new PatientsController();
-
-            controller._patientService = new PatientService(inMemoryRepo);
-            var response = controller.GetPatient(50);
+            var response = _patientsController.GetPatient(50);
 
             //Assert
             Assert.Null(response.Value);
@@ -111,8 +107,6 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         [Fact]
         public void Test_patient_found()
         {
-            //Arrange
-            inMemoryRepo = GetInMemoryPersonRepository();
             Patient patient = new Patient()
             {
                 Id = 3,
@@ -123,12 +117,9 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 Activated = false
             };
             //Act
-            inMemoryRepo.AddPatient(patient);
+            _patientRepository.AddPatient(patient);
 
-            var controller = new PatientsController();
-
-            controller._patientService = new PatientService(inMemoryRepo);
-            var response = controller.GetPatient(3);
+            var response = _patientsController.GetPatient(3);
 
             //Assert
             Assert.Equal("perislav", response.Value.UserName);
