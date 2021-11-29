@@ -11,8 +11,9 @@ namespace Hospital.MedicalRecords.Model
     {
         public int Id { get; set; }
         public string Content { get; set; }
-        public bool isPublic { get; set; }
-        public bool isAnonymous { get; set; }
+        public bool IsPublic { get; set; }
+        public bool IsPublishable { get; set; }
+        public bool IsAnonymous { get; set; }
         public DateTime Date { get; set; }
         public string UserName { get; set; }
 

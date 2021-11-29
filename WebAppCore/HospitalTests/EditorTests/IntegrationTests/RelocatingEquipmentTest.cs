@@ -34,7 +34,7 @@ namespace HospitalTests.EditorTests.IntegrationTests
         [Fact]
         public void relocate_equipment_test()
         {
-            Equipment equpmentForTransfer = new Equipment { id = 77, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 5, RoomId = 2 };
+            Equipment equpmentForTransfer = new Equipment { Id = 77, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 5, RoomId = 2 };
             
             var roomController = new RoomsController();
             RoomDTO roomFrom = roomController.GetRoom(2).Value;

@@ -1,0 +1,137 @@
+<div class="row d-flex whitesmoke_background">
+  <div class="col-md-3">
+      <div class="card">
+        <div class="header basic-info-header">
+          <h2 class="text-black" style="font-weight: bolder; font-size: 26px;">{{patient.firstName}} {{patient.lastName}} ({{patient.userName}})</h2>
+          <div class="row d-flex" style="margin-left: inherit;"><h4 class="text-black" style="font-weight: bolder">{{patient.dateOfBirth | date:'dd/MM/yyyy'}}</h4><h4 class="text-black" style="font-style: italic;">(DOB)</h4></div>
+        </div>
+      
+        <div class="card-body">
+            <div class="row d-flex">
+              <div class="col-sm-6">
+                <p style="font-weight: bolder; text-align: left;">Gender:</p>
+              </div>
+              <div class="col-sm-6">
+                <p style="font-weight: bolder; text-align: right;">{{patient.gender}}</p>
+              </div>
+            </div>
+            <div class="row d-flex">
+              <div class="col-sm-6">
+                <p style="font-weight: bolder; text-align: left;">Personal ID:</p>
+              </div>
+              <div class="col-sm-6">
+                <p style="font-weight: bolder; text-align: right;">{{patient.jmbg}}</p>
+              </div>
+            </div>
+            <div class="row d-flex">
+              <div class="col-sm-6">
+                <p style="font-weight: bolder; text-align: left;">Residence:</p>
+              </div>
+              <div class="col-sm-6">
+                <p style="font-weight: bolder; text-align: right;">{{patient.address}}, {{patient.city}}, {{patient.country}}</p>
+              </div>
+            </div>
+            <div class="row d-flex">
+              <div class="col-sm-6">
+                <p style="font-weight: bolder; text-align: left;">Contact Phone:</p>
+              </div>
+              <div class="col-sm-6">
+                <p style="font-weight: bolder; text-align: right;">{{patient.phone}}</p>
+              </div>
+            </div>
+            <div class="row d-flex">
+              <div class="col-sm-6">
+                <p style="font-weight: bolder; text-align: left;">Email:</p>
+              </div>
+              <div class="col-sm-6">
+                <p style="font-weight: bolder; text-align: right;">{{patient.eMail}}</p>
+              </div>
+            </div>
+            <div class="row d-flex">
+              <div class="col-sm-6">
+                <p style="font-weight: bolder; text-align: left;">Doctor:</p>
+              </div>
+              <div class="col-sm-6">
+                <p style="font-weight: bolder; text-align: right;">{{patient.preferedDoctorName}}</p>
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 50px;">
+        <div class="header basic-info-header">
+          <h2 class="text-black" style="font-weight: bolder; font-size: 22px;">Physical Information</h2>
+        </div>
+      
+        <div class="card-body">
+            <div class="row d-flex">
+              <div class="col-sm-6">
+                <p style="font-weight: bolder; text-align: left;">Height:</p>
+              </div>
+              <div class="col-sm-6">
+                <p style="font-weight: bolder; text-align: right;">{{patient.height}}cm</p>
+              </div>
+            </div>
+            <div class="row d-flex">
+              <div class="col-sm-6">
+                <p style="font-weight: bolder; text-align: left;">Weight:</p>
+              </div>
+              <div class="col-sm-6">
+                <p style="font-weight: bolder; text-align: right;">{{patient.weight}}kg</p>
+              </div>
+            </div>
+            <div class="row d-flex">
+              <div class="col-sm-6">
+                <p style="font-weight: bolder; text-align: left;">Blood Type:</p>
+              </div>
+              <div class="col-sm-6">
+                <p style="font-weight: bolder; text-align: right;">{{patient.bloodType}}</p>
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 50px;">
+        <div class="header basic-info-header">
+          <h2 class="text-black" style="font-weight: bolder; font-size: 22px;">Allergens</h2>
+        </div>
+      
+        <div class="card-body" *ngFor = "let a of patient.allergenList">
+            <div class="row d-flex" style="margin-left: inherit;"><p style="font-weight: bolder;">{{a}}</p></div>
+        </div>
+      </div>
+  </div>
+  <div class="col-md-9">
+    <div class="row d-flex align-items-center">
+        <div class="card" *ngFor = "let d of daysOfTheWeek" style="margin:5; float: none; height: 200px; max-width: 200px;" (click)="selectedDay = d.day">
+          <div class="header day-of-week-header"  [ngStyle]="{'background-color': (true) ? '#73c7af' : '#ffffff'}" style="border-radius: 8px 8px 0px 0px;">
+            <h2 class="text-black" style="font-weight: bolder; font-size: 26px;">{{getFormattedDay(d.day)}}</h2>
+          </div>
+        
+          <div class="card-body" *ngIf="selectedDay == d.day">
+              <div *ngFor = "let i of d.scheduleItems">
+                <div class="row d-flex"><h4>{{i.name}}</h4><h4 style="margin-left: 10px; margin-right: 10px;">{{i.amount}}</h4><h4> {{i.time}}</h4></div>
+              </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="timeline" *ngFor = "let a of appointments">
+        <div class="timeline__event">
+          <div class="timeline__event__icon ">
+            <div class="timeline__event__date">
+              {{a.date | date:'dd/MM/yyyy'}}
+            </div>
+          </div>
+          <div class="timeline__event__content ">
+            <div class="timeline__event__title">
+              {{getAppointmentType(a.type)}}
+            </div>
+            <div class="timeline__event__description">
+              <p>{{a.doctorForeignKey}}</p>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

@@ -7,7 +7,7 @@ namespace Hospital.GraphicalEditor.Model
 {
     public class Floor
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public string Level { get; set; }
         public string Info { get; set; }
         public int BuildingId { get; set; }

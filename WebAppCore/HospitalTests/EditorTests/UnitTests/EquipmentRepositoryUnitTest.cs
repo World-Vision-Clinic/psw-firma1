@@ -22,7 +22,7 @@ namespace HospitalTests.EditorTests
 
             using (var context = new HospitalContext(options))
             {
-                Equipment eq1 = new Equipment { id = 89, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 5, RoomId = 1 };
+                Equipment eq1 = new Equipment { Id = 89, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 5, RoomId = 1 };
                 context.AllEquipment.Add(eq1);
                 context.SaveChanges();
             }
@@ -44,13 +44,13 @@ namespace HospitalTests.EditorTests
 
             using (var context = new HospitalContext(options))
             {
-                Equipment eq1 = new Equipment { id = 1, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 5, RoomId = 1 };
+                Equipment eq1 = new Equipment { Id = 1, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 5, RoomId = 1 };
                 context.AllEquipment.Add(eq1);
                 context.SaveChanges();
                 EquipmentRepository eqRepository = new EquipmentRepository(context);
                 Equipment eqpmntID = eqRepository.GetByID(1);
 
-                eqpmntID.id.ShouldBeEquivalentTo(1);
+                eqpmntID.Id.ShouldBeEquivalentTo(1);
             }
         }
     }

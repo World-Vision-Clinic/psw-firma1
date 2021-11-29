@@ -19,7 +19,7 @@ namespace Hospital_API.Mapper
             Floor floor = floorService.GetById(room.FloorId);
             eqRoomDto.amount = eq.Amount;
             eqRoomDto.roomName = room.Name;
-            eqRoomDto.roomId = room.id;
+            eqRoomDto.roomId = room.Id;
             eqRoomDto.roomFloor = floor.Level;
 
             return eqRoomDto;

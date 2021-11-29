@@ -1,5 +1,4 @@
 ﻿using Hospital.MedicalRecords.Model;
-using Hospital.Models;
 using Hospital.SharedModel;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -38,10 +37,32 @@ namespace Hospital.MedicalRecords.Repository
             return _context.Patients.FirstOrDefault(p => p.Token == token);
         }
 
+        public Patient FindByUserName(string username)
+        {
+            try
+            { 
+                return _context.Patients.FirstOrDefault(p => p.UserName == username);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public Patient FindById(int id)
+        {
+            return _context.Patients.FirstOrDefault(p => p.Id == id);
+        }
+
         public void Modify(Patient patient)
         {
             _context.Entry(patient).State = EntityState.Modified;
             SaveSync();
+        }
+
+        public List<Patient> GetAll()
+        {
+            return _context.Patients.ToList();
         }
     }
 }

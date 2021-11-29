@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Hospital_API.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hospital_API

@@ -19,7 +19,7 @@ namespace Hospital.RoomsAndEquipment.Repository
 
         public void Delete(int id)
         {
-            Room room = dbContext.Rooms.FirstOrDefault(room => room.id == id);
+            Room room = dbContext.Rooms.FirstOrDefault(room => room.Id == id);
             dbContext.Rooms.Remove(room);
             dbContext.SaveChanges();
         }
@@ -47,7 +47,7 @@ namespace Hospital.RoomsAndEquipment.Repository
 
         public Room GetByID(int id)
         {
-            Room room = dbContext.Rooms.FirstOrDefault(room => room.id == id);
+            Room room = dbContext.Rooms.FirstOrDefault(room => room.Id == id);
             return room;
         }
 
@@ -63,7 +63,7 @@ namespace Hospital.RoomsAndEquipment.Repository
             dbContext.Rooms.ToList().ForEach(room => {
                 if (floorIds.Contains(room.FloorId))
                 {
-                    roomIds.Add(room.id);
+                    roomIds.Add(room.Id);
                 }
             });
             return roomIds;
@@ -77,7 +77,7 @@ namespace Hospital.RoomsAndEquipment.Repository
 
         public bool Exists(int id)
         {
-            return dbContext.Rooms.Any(r => r.id == id);
+            return dbContext.Rooms.Any(r => r.Id == id);
         }
     }
 }

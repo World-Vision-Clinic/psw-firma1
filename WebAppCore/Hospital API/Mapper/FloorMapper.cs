@@ -14,7 +14,7 @@ namespace Hospital_API.Mapper
         internal static FloorDTO floorToFloorDTO(Floor floor, RoomService roomService, EquipmentService equipmentService)
         {
             FloorDTO floorDto = new FloorDTO(floor);
-            foreach(Room room in roomService.getRoomsForFloor(floor.id))
+            foreach(Room room in roomService.getRoomsForFloor(floor.Id))
             {
                 floorDto.rooms.Add(RoomMapper.dataToRoomDTO(room, equipmentService));
             }

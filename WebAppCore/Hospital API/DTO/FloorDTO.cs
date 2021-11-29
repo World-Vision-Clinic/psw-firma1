@@ -17,7 +17,7 @@ namespace Hospital_API.DTO
 
         public FloorDTO(Floor floor)
         {
-            id = floor.id;
+            id = floor.Id;
             level = floor.Level;
             info = floor.Info;
             rooms = new List<RoomDTO>();

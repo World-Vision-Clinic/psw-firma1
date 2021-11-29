@@ -1,0 +1,124 @@
+
+<div class="row d-flex align-items-center w-100">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8 website_name_label">
+      WORLD VISION CLINIC
+    </div>
+    <div class="col-md-2">
+    </div>
+  </div>
+  
+  <div class="row d-flex align-items-center w-100">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+      <nav class="navMenu">
+        <a href=" " style="float:none">Home</a>
+        <a href="survey" style="float:none">Surveys</a>
+        <a href="create-feedback" style="float:none">Feedbacks</a>
+        <a href="login" style="float:none">Login</a>
+      </nav>
+    </div>
+    <div class="col-md-4">
+    </div>
+  </div>
+
+  <div class="row d-flex align-items-center survey_gray_banner">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">
+      <div class="row d-flex align-items-center survey_gray_banner_label">Your opinion matters!</div>
+      <div class="row d-flex align-items-center survey_gray_banner_label2">How satisfied are you with the following?</div>
+    </div>
+    <div class="col-md-2">
+    </div>
+  </div>  
+
+  <mat-card class="survey-card">
+    <mat-card class="doctor-card">
+      <mat-card-title class="doctor-title">Doctor section</mat-card-title>
+        <mat-card-content>
+          <mat-list role="list" *ngFor = "let q of doctorSection">
+            <mat-list-item class="doctor-questions" role="listitem">{{q.question}}</mat-list-item>  
+              <mat-radio-group [(ngModel)]="q.answer">
+               <mat-radio-button [value]='1'>1</mat-radio-button>
+               <mat-radio-button [value]='2'>2</mat-radio-button>
+               <mat-radio-button [value]='3'>3</mat-radio-button>
+               <mat-radio-button [value]='4'>4</mat-radio-button>
+               <mat-radio-button [value]='5'>5</mat-radio-button>
+              </mat-radio-group> 
+            </mat-list>     
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="hospital-card">
+      <mat-card-title class="hospital-title">Hospital section</mat-card-title>
+        <mat-card-content>
+          <mat-list role="list" *ngFor = "let q of hospitalSection">
+            <mat-list-item class="hospital-questions" role="listitem">{{q.question}}</mat-list-item>  
+              <mat-radio-group [(ngModel)]="q.answer">
+                <mat-radio-button [value]='1'>1</mat-radio-button>
+                <mat-radio-button [value]='2'>2</mat-radio-button>
+                <mat-radio-button [value]='3'>3</mat-radio-button>
+                <mat-radio-button [value]='4'>4</mat-radio-button>
+                <mat-radio-button [value]='5'>5</mat-radio-button>
+              </mat-radio-group> 
+            </mat-list>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="staff-card">
+      <mat-card-title class="staff-title">Medical staff section</mat-card-title>
+        <mat-card-content>
+          <mat-list role="list" *ngFor = "let q of staffSection">
+            <mat-list-item class="staff-questions" role="listitem">{{q.question}}</mat-list-item>  
+              <mat-radio-group [(ngModel)]="q.answer">
+                <mat-radio-button [value]='1'>1</mat-radio-button>
+                <mat-radio-button [value]='2'>2</mat-radio-button>
+                <mat-radio-button [value]='3'>3</mat-radio-button>
+                <mat-radio-button [value]='4'>4</mat-radio-button>
+                <mat-radio-button [value]='5'>5</mat-radio-button>
+              </mat-radio-group> 
+          </mat-list>   
+        </mat-card-content>
+    </mat-card>
+
+    <button class="submit-btn" routerLink="/" mat-raised-button title="You need to answer all the questions above" color="primary" (click)="submitSurvey()" [disabled]="!surveyIsValid()">Submit</button>
+
+  
+  </mat-card>
+
+  
+<hr>
+
+<div class="row d-flex align-items-center footer">
+  <div class="col-md-3">
+    <h2 class="link_title">Product</h2>
+    <h4 class="link_subtitle">Our plan</h4>
+    <h4 class="link_subtitle">Free trial</h4>
+  </div>
+  <div class="col-md-3">
+    <h2 class="link_title">About us</h2>
+    <h4 class="link_subtitle">Request demo</h4>
+    <h4 class="link_subtitle">FAQs</h4>
+  </div>
+  <div class="col-md-3">
+    <h2 class="link_title">Support</h2>
+    <h4 class="link_subtitle">Services</h4>
+    <h4 class="link_subtitle">Contact us</h4>
+  </div>
+  <div class="col-md-3">
+    <h2 class="link_title">Product</h2>
+    <h4 class="link_subtitle">Our plan</h4>
+    <h4 class="link_subtitle">Free trial</h4>
+  </div>
+</div>
+
+
+  
+
+  
+
+
+  

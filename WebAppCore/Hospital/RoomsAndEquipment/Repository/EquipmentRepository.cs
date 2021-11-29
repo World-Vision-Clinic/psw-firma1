@@ -19,7 +19,7 @@ namespace Hospital.RoomsAndEquipment.Repository
 
         public void Delete(int id)
         {
-            Equipment eq = dbContext.AllEquipment.FirstOrDefault(eq => eq.id == id);
+            Equipment eq = dbContext.AllEquipment.FirstOrDefault(eq => eq.Id == id);
             dbContext.AllEquipment.Remove(eq);
             dbContext.SaveChanges();
         }
@@ -103,7 +103,7 @@ namespace Hospital.RoomsAndEquipment.Repository
 
         public Equipment GetByID(int id)
         {
-            Equipment eq = dbContext.AllEquipment.FirstOrDefault(eq => eq.id == id);
+            Equipment eq = dbContext.AllEquipment.FirstOrDefault(eq => eq.Id == id);
             return eq;
         }
 

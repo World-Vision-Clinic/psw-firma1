@@ -29,7 +29,7 @@ namespace Hospital_API.DTO
         public List<Equipment> equipments { get; set; }
         public RoomDTO(Room room)
         {
-            id = room.id;
+            id = room.Id;
             name = room.Name;
             purpose = room.Purpose;
             doctorId = -1;
@@ -49,7 +49,7 @@ namespace Hospital_API.DTO
         internal Room toRoom()
         {
             Room room = new Room();
-            room.id = id;
+            room.Id = id;
             room.Name = name;
             room.Purpose = purpose;
             room.DoctorId = -1;

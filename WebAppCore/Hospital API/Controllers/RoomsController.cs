@@ -61,7 +61,7 @@ namespace Hospital_API.Controllers
 
         {
             Room room = roomDto.toRoom();
-            if (id != room.id)
+            if (id != room.Id)
             {
                 return BadRequest();
             }

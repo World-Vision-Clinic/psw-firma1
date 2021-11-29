@@ -19,15 +19,12 @@ import { ObjectionFormPageComponent } from './manager-integration-front-app/obje
 import { ManagerFeedbackViewComponent } from './manager-feedback-view/manager-feedback-view.component';
 import { PharmaciesComponent } from './manager-integration-front-app/pharmacies/pharmacies.component';
 import { NewsComponent } from './manager-integration-front-app/news/news.component';
+import { ViewSurveyResultsComponent } from './view-survey-results/view-survey-results.component';
 import { MedicineConsumptionComponent } from './manager-integration-front-app/medicine-consumption/medicine-consumption.component';
-// import {
-//   MatDatepicker,
-//   MatDateRangeInput,
-//   MatDateRangePicker,
-// } from '@angular/material/datepicker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,8 +39,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     ManagerFeedbackViewComponent,
     ManagerIntegrationFrontAppComponent,
     PharmaciesComponent,
+    ViewSurveyResultsComponent,
     MedicineConsumptionComponent,
-    NewsComponent,
+    NewsComponent
   ],
   imports: [
     BrowserModule,

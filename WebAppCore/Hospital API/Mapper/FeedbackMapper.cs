@@ -9,13 +9,12 @@ namespace Hspital_API.Mapper
 {
     public class FeedbackMapper
     {
-
         public static FeedbackPatientDTO FeedbackToFeedbackPatientDTO(Feedback feedback)
         {
             FeedbackPatientDTO dto = new FeedbackPatientDTO();
             dto.Date = feedback.Date;
             dto.Content = feedback.Content;
-            if (feedback.isAnonymous)
+            if (feedback.IsAnonymous)
             {
                 dto.UserName = "Anonymous";
             }

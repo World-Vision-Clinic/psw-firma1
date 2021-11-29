@@ -4,13 +4,13 @@ import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSliderModule } from '@angular/material/slider';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
-import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
-
+import {MatRadioModule} from '@angular/material/radio';
+import {MatListModule} from '@angular/material/list';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -20,6 +20,10 @@ import { LoginComponent } from './login/login.component';
 import { PatientCreateFeedbackComponent } from './patient-create-feedback/patient-create-feedback.component';
 import { PatientCreateFeedbackService } from './patient-create-feedback.service';
 import { HomePageComponent } from './homepage/homepage.component';
+import { SurveyComponent } from './survey/survey/survey.component';
+import { SurveyService } from './survey.service';
+import { MedicalRecordViewComponent } from './medical-record-view/medical-record-view.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +31,10 @@ import { HomePageComponent } from './homepage/homepage.component';
     PatientCreateFeedbackComponent,
     PatientFeedbackViewComponent,
     LoginComponent,
-    HomePageComponent
+    HomePageComponent,
+    SurveyComponent,
+    MedicalRecordViewComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -40,11 +47,16 @@ import { HomePageComponent } from './homepage/homepage.component';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+    MatRadioModule,
+    MatListModule,
+    MatCardModule,
+    MatTooltipModule,
     BrowserAnimationsModule
   ],
   providers: [
     PatientCreateFeedbackService,
-    PatientFeedbackServiceService
+    PatientFeedbackServiceService,
+    SurveyService
   ],
   bootstrap: [AppComponent]
 })

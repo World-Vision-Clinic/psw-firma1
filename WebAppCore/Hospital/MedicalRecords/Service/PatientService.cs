@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Security.Cryptography;
-using Hospital.Models;
 using System.Net.Mail;
 using System.Net;
 using System.Threading;
@@ -39,6 +38,21 @@ namespace Hospital.MedicalRecords.Service
 
         }
 
+        public void RegisterPatient(Patient patient)
+        {
+            if (FindByUserName(patient.UserName) != null)
+                return;
+
+            patient.Activated = false;
+            patient.Token = TokenizeSHA256(patient.UserName);
+            _repo.AddPatient(patient);
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+                SendEmail(patient);
+            }).Start();
+        }
+
         public string TokenizeSHA256(string username) {  
   
             using (SHA256 sha256Hash = SHA256.Create())
@@ -57,6 +71,16 @@ namespace Hospital.MedicalRecords.Service
         public Patient FindByToken(string token)
         {
             return _repo.FindByToken(token);
+        }
+
+        public Patient FindById(int id)
+        {
+            return _repo.FindById(id);
+        }
+        
+        public Patient FindByUserName(string username)
+        {
+            return _repo.FindByUserName(username);
         }
 
         public void SendEmail(Patient patient) {

@@ -20,7 +20,7 @@ namespace Hospital.GraphicalEditor.Repository
 
         public void Delete(int id)
         {
-            Floor floor = dbContext.Floors.FirstOrDefault(floor => floor.id == id);
+            Floor floor = dbContext.Floors.FirstOrDefault(floor => floor.Id == id);
             dbContext.Floors.Remove(floor);
             dbContext.SaveChanges();
         }
@@ -44,7 +44,7 @@ namespace Hospital.GraphicalEditor.Repository
 
         public Floor GetByID(int id)
         {
-            Floor floor = dbContext.Floors.FirstOrDefault(floor => floor.id == id);
+            Floor floor = dbContext.Floors.FirstOrDefault(floor => floor.Id == id);
             return floor;
         }
 
