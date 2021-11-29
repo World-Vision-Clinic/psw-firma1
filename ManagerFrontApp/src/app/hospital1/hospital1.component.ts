@@ -70,6 +70,7 @@ export class Hospital1Component implements OnInit {
   searchBegin: boolean = false;
   searchBoxDisabled: boolean = true;
   allEquipment: any[] = [];
+  buildingBox : boolean = false;
 
   currentState = {
     index: 0,
@@ -168,6 +169,11 @@ export class Hospital1Component implements OnInit {
     this.formDisabled = true;
     this.roomIsSelected = false;
     this.selectedRoom = emptyRoom();
+  };
+
+  closeInfo = () => {
+    this.formDisabled = true;
+    this.buildingBox = false;
   };
 
   closeSearchBox = () => {

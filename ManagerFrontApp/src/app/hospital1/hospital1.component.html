@@ -1,65 +1,18 @@
 <div class="title">
-  <h1></h1>
-  <h2>ROOMS MAP</h2>
+  <h1></h1><h2>ROOMS MAP</h2>
 </div>
 <div class="page-nav">
   <div class="floor-selection" *ngIf="!loadingFloors">
     <label for="">Floors:</label>
-    <button
-      *ngFor="let floor of floors; index as i"
-      (click)="selectFloor(floor)"
-      class="floor-button"
-      [ngClass]="{
-        'selected-floor': floor.level === selectedFloor.level
-      }"
+    <button *ngFor="let floor of floors; index as i" (click)="selectFloor(floor)" class="floor-button"
+      [ngClass]="{'selected-floor': floor.level === selectedFloor.level}"
     >
       <span class="floor-number">{{ i }}</span> {{ floor.level }}
     </button>
     <button (click)="takeOut()" class="floor-button">🚪 Exit</button>
   </div>
+
   <div style="margin: 0 10px; position: relative">
-    <div class="building-info" *ngIf="!loadingHospital">
-      <div style="text-align: center">
-        <h3 style="align-self: flex-start; font-size: 17px">Building info:</h3>
-      </div>
-      <div class="info-body">
-        <div class="info-module">
-          <label for="">Building name:</label><br />
-          <input
-            type="text"
-            class="form-field"
-            [(ngModel)]="selectedBuilding.name"
-            name="input"
-            [attr.disabled]="buildingFormDisabled ? '' : null"
-          />
-        </div>
-        <label for="">Info:</label><br />
-        <input
-          type="text"
-          class="form-field"
-          [(ngModel)]="selectedBuilding.info"
-          name="input"
-          [attr.disabled]="buildingFormDisabled ? '' : null"
-        />
-        <div class="info-module" style="align-self: flex-end">
-          <button
-            class="btn"
-            (click)="buildingFormDisabled = false"
-            *ngIf="buildingFormDisabled"
-          >
-            Edit
-          </button>
-          <button
-            class="btn"
-            (click)="saveHospital()"
-            *ngIf="!buildingFormDisabled"
-          >
-            Done
-          </button>
-          <button (click)="moveEquipment()" class="btn">Move equipment</button>
-        </div>
-      </div>
-    </div>
     <svg width="850" height="700" *ngIf="!loadingFloors">
       <rect x="0" y="150" width="841" height="451" class="floor" />
       <g *ngFor="let room of selectedFloor.rooms">
@@ -105,8 +58,7 @@
         [(ngModel)]="selectedRoom.name"
         name="input"
         [attr.disabled]="formDisabled ? '' : null"
-      />
-      <br />
+      /><br />
       <label for="">Doctor using it:</label><br />
       <input
         type="text"
@@ -114,8 +66,7 @@
         [(ngModel)]="selectedRoom.doctor"
         name="input"
         [attr.disabled]="formDisabled ? '' : null"
-      />
-      <br />
+      /><br />
       <label for="">Purpose:</label><br />
       <input
         type="text"
@@ -123,24 +74,17 @@
         [(ngModel)]="selectedRoom.purpose"
         name="input"
         [attr.disabled]="formDisabled ? '' : null"
-      />
-      <br />
-      <br />
+      /><br /><br />
       <div class="rightbtn">
-        <button class="btn" (click)="close()" *ngIf="formDisabled">
-          Close
-        </button>
+        <button class="btn" (click)="close()" *ngIf="formDisabled">Close</button>
         <div *ngIf="formDisabled">
           <button class="btn" (click)="equipment()">Equipment</button>
           <button class="btn" (click)="enableEdit()">Edit</button>
         </div>
-        <button class="btn" (click)="cancel()" *ngIf="!formDisabled">
-          Cancel
-        </button>
+        <button class="btn" (click)="cancel()" *ngIf="!formDisabled">Cancel</button>
         <button class="btn" (click)="save()" *ngIf="!formDisabled">Save</button>
       </div>
     </div>
-
     <div *ngIf="!!equipmentBox">
       <table class="equipment-table">
         <thead>
@@ -374,9 +318,7 @@
       type="text"
       name=""
       placeholder="Search for..."
-      (keyup)="
-        searchRooms ? searchForRooms($event) : searchForEquipment($event)
-      "
+      (keyup)=" searchRooms ? searchForRooms($event) : searchForEquipment($event)"
     />
     <a class="search-btn-rooms" (click)="searchEquipment()">
       <i class="fas fa-search"></i>
@@ -386,29 +328,15 @@
   <div class="search-radio-buttons">
     <form>
       <label class="radio-inline">
-        <input
-          type="radio"
-          name="optradio"
-          value="rooms"
-          (change)="setSearchCriteria()"
-          checked
-        />Rooms
+        <input type="radio" name="optradio" value="rooms" (change)="setSearchCriteria()" checked/>Rooms
       </label>
       <label class="radio-inline">
-        <input
-          type="radio"
-          name="optradio"
-          value="equipment"
-          (change)="setSearchCriteria()"
-        />Equipment
+        <input type="radio" name="optradio" value="equipment" (change)="setSearchCriteria()"/>Equipment
       </label>
     </form>
   </div>
 
-  <div
-    class="search-list-box-equipment"
-    *ngIf="searchEquipmentResultBox && !searchRooms"
-  >
+  <div class="search-list-box-equipment" *ngIf="searchEquipmentResultBox && !searchRooms">
     <h3>Search result</h3>
     <table class="search-list-table">
       <thead>
@@ -426,9 +354,7 @@
         </tr>
       </tbody>
     </table>
-    <button class="btn" (click)="closeSearchBox()" *ngIf="searchBoxDisabled">
-      Close
-    </button>
+    <button class="btn" (click)="closeSearchBox()" *ngIf="searchBoxDisabled">Close</button>
   </div>
 
   <div class="search-list-box-equipment" *ngIf="searchRooms && searchBegin">
@@ -452,4 +378,43 @@
     <button class="btn" (click)="closeRoomTable()" *ngIf="searchBoxDisabled">Close</button>
   </div>
 
+  <div class="info-box" *ngIf="buildingBox">
+    <div  *ngIf="!loadingHospital">
+      <div class="title"><h3>Building info:</h3></div>
+      <label for="">Building name:</label><br />
+      <input
+        type="text" 
+        class="form-field" 
+        [(ngModel)]="selectedBuilding.name" 
+        name="input" 
+        [attr.disabled]="buildingFormDisabled ? '' : null"
+      /><br /><br />
+      <label for="">Informations:</label><br />
+      <input 
+        type="text" 
+        class="form-field" 
+        [(ngModel)]="selectedBuilding.info" 
+        name="input" 
+        [attr.disabled]="buildingFormDisabled ? '' : null"
+      /><br /><br />
+      <label for="">Floors:</label><br />
+      <input
+        type="text" 
+        class="form-field" 
+        [(ngModel)]="selectedBuilding.floors" 
+        name="input" 
+        [attr.disabled]="buildingFormDisabled ? '' : null"
+      /><br /><br />
+      <button class="btn" (click)="buildingFormDisabled = false" *ngIf="buildingFormDisabled" >Edit</button>
+      <button class="btn" (click)="saveHospital()" *ngIf="!buildingFormDisabled">Save</button>
+      <button class="btn" (click)="closeInfo()" *ngIf="formDisabled">Close</button>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <button (click)="buildingBox = true" class="toolbar-btn">Building info</button>
+    <button (click)="moveEquipment()" class="toolbar-btn">Move equipment</button>
+    
+  </div>
+  
 </div>
