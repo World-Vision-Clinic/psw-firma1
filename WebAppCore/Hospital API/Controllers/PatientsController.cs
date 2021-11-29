@@ -36,8 +36,33 @@ namespace Hospital_API.Controllers
             _verification = new PatientVerification(_context);
         }
 
-        // GET: api/Patients/activate?token=
-        [HttpGet("activate")]
+        // GET: api/Feedbacks/5
+        [HttpGet("{id}")]
+        public ActionResult<MedicalRecordDTO> GetPatient(int id)
+        {
+            Patient patient = _patientService.FindById(id);
+
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            MedicalRecordDTO medicalRecordDTO = MedicalRecordMapper.PatientToMedicalRecordDTO(patient);
+            List<Allergen> allergenList = _patientAllergenService.FindByPatientId(patient.Id);
+            foreach (Allergen allergen in allergenList)
+            {
+                if (allergen != null)
+                    medicalRecordDTO.AllergenList.Add(allergen.name);
+            }
+            Doctor patientDoctor = _doctorService.FindById(patient.Id);
+            if (patientDoctor != null)
+                medicalRecordDTO.PreferedDoctorName = (patientDoctor.FirstName + " " + patientDoctor.LastName);
+
+            return medicalRecordDTO;
+        }
+
+            // GET: api/Patients/activate?token=
+            [HttpGet("activate")]
         public IActionResult ActivatePatient([FromQuery]string token)
         {
             var patient = _patientService.FindByToken(token);
