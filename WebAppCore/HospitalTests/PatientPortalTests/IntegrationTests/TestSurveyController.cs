@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace HospitalTests.SurveyTests
+namespace HospitalTests.PatientPortalTests.IntegrationTests
 {
     public class TestSurveyController
     {

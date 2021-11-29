@@ -23,21 +23,49 @@ namespace Hospital_API.Controllers
     {
         //private readonly HospitalContext _context;
         private HospitalContext _context;
-        public PatientService _patientService { get; set; }
-        public PatientAllergenService _patientAllergenService { get; set; }
-        public AllergenService _allergenService { get; set; }
-        public DoctorService _doctorService { get; set; }
-        private PatientVerification _verification { get; set; }
+        public PatientService _patientService;
+        public PatientAllergenService _patientAllergenService;
+        public AllergenService _allergenService;
+        public DoctorService _doctorService;
+        private PatientVerification _verification;
         public PatientsController()
         {
             _context = new HospitalContext();
-            _patientService = new PatientService(new PatientRepository(_context));
-            _patientAllergenService = new PatientAllergenService(new PatientAllergenRepository(_context, new PatientRepository(), new AllergenRepository()));
-            _verification = new PatientVerification(_context);
+
+            _patientService = new PatientService(new PatientRepository(new Hospital.SharedModel.HospitalContext()));
+            _patientAllergenService = new PatientAllergenService(new PatientAllergenRepository(_context, new PatientRepository(_context), new AllergenRepository(_context)));
+            _allergenService = new AllergenService(new AllergenRepository(_context));
+            _doctorService = new DoctorService(new DoctorRepository(_context));
+            _verification = new PatientVerification(_patientService, _doctorService, _allergenService);
         }
 
-        // GET: api/Patients/activate?token=
-        [HttpGet("activate")]
+        // GET: api/Feedbacks/5
+        [HttpGet("{id}")]
+        public ActionResult<MedicalRecordDTO> GetPatient(int id)
+        {
+            Patient patient = _patientService.FindById(id);
+
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            MedicalRecordDTO medicalRecordDTO = MedicalRecordMapper.PatientToMedicalRecordDTO(patient);
+            List<Allergen> allergenList = _patientAllergenService.FindByPatientId(patient.Id);
+            foreach (Allergen allergen in allergenList)
+            {
+                if (allergen != null)
+                    medicalRecordDTO.AllergenList.Add(allergen.name);
+            }
+            Doctor patientDoctor = _doctorService.FindById(patient.Id);
+            if (patientDoctor != null)
+                medicalRecordDTO.PreferedDoctorName = (patientDoctor.FirstName + " " + patientDoctor.LastName);
+
+            return medicalRecordDTO;
+        }
+
+            // GET: api/Patients/activate?token=
+            [HttpGet("activate")]
         public IActionResult ActivatePatient([FromQuery]string token)
         {
             var patient = _patientService.FindByToken(token);
