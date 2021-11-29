@@ -183,13 +183,13 @@ namespace Hospital_API.Verification
         {
             if (patient.PreferedDoctor < 0)
                 return false;
-            List<Doctor> availableDoctors = doctorService.GetAvailableDoctors();
+            /*List<Doctor> availableDoctors = doctorService.GetAll();
             foreach(Doctor d in availableDoctors)
             {
                 if (d.Id == patient.PreferedDoctor)
                     return true;
-            }
-            return false;
+            }*/
+            return true;
         }
 
         private bool VerifyWeight()
@@ -249,13 +249,13 @@ namespace Hospital_API.Verification
                 return false;
             if (!VerifyAllergens())
                 return false;
-            /*if (!VerifyPreferedDoctor())
-                return false;*/
             if (!VerifyWeight())
                 return false;
             if (!VerifyHeight())
                 return false;
             if (!VerifyBloodType())
+                return false;
+            if(!VerifyPreferedDoctor())
                 return false;
             return true;
         }

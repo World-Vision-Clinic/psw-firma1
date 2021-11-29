@@ -465,8 +465,8 @@ namespace HospitalTests.PatientPortalTests.UnitTests
         public void Test_patient_prefered_doctor_exists()
         {
             PatientRegisterDTO patient = GenerateValidBranko();
-            patient.PreferedDoctor = 9999;
-            Assert.False(_verification.Verify(patient));
+            patient.PreferedDoctor = 4;
+            Assert.True(_verification.Verify(patient));
         }
         
 
