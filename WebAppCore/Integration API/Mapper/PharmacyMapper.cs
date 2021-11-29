@@ -17,6 +17,7 @@ namespace Integration_API.Mapper
             pharmacy.Protocol = ProtocolType.HTTP;
             pharmacy.Address = dto.Address;
             pharmacy.City = dto.City;
+            pharmacy.Protocol = dto.Protocol;
             return pharmacy;
         }
 

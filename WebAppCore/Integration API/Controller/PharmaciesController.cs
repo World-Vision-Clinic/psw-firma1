@@ -11,6 +11,8 @@ using RestSharp;
 using Integration.Pharmacy;
 using Integration.Pharmacy.Model;
 using Integration.Pharmacy.Repository;
+using IntegrationAPI.Protos;
+using Grpc.Core;
 
 namespace Integration_API.Controller
 {
@@ -22,6 +24,7 @@ namespace Integration_API.Controller
         PharmaciesService pharmaciesService = new PharmaciesService(new PharmaciesRepository());
         public const string HOSPITAL_NAME = "World Vision Clinic";
         public const string HOSPITAL_URL = "http://localhost:43818";
+        public const string HOSPITAL_PORT = "3000";
 
         [HttpPost("registerPharmacy")]
         public IActionResult Add(PharmacyDto dto)
@@ -37,23 +40,41 @@ namespace Integration_API.Controller
                 return BadRequest();
             }
 
-            var client = new RestSharp.RestClient(dto.Localhost);
-            var request = new RestRequest("/credentials");
-
-            request.AddHeader("Content-Type", "application/json");
-            request.AddJsonBody(
-            new
+            if (dto.Protocol.Equals(ProtocolType.HTTP))
             {
-                   HospitalName = HOSPITAL_NAME,
-                   HospitalLocalhost = HOSPITAL_URL,
-                   ApiKey = generatedKey
-            });
+                var client = new RestSharp.RestClient(dto.Localhost);
+                var request = new RestRequest("/credentials");
 
-            IRestResponse response = client.Post(request);  // POST /credential  {"Name": "World Vision Clinic", "HospitalLocalhost": "http://localhost:43818", "ApiKey": "wqhegyqwegqyw21543"}
-            System.Diagnostics.Debug.WriteLine(response.StatusCode);
-            if(response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                return BadRequest();
-            return Ok();
+                request.AddHeader("Content-Type", "application/json");
+                request.AddJsonBody(
+                new
+                {
+                    HospitalName = HOSPITAL_NAME,
+                    HospitalLocalhost = HOSPITAL_URL,
+                    ApiKey = generatedKey
+                });
+
+                IRestResponse response = client.Post(request);  // POST /credential  {"Name": "World Vision Clinic", "HospitalLocalhost": "http://localhost:43818", "ApiKey": "wqhegyqwegqyw21543"}
+                System.Diagnostics.Debug.WriteLine(response.StatusCode);
+                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    return BadRequest();
+                return Ok();
+            }
+            else
+            {
+                var input = new RegisterPharmacyRequest { HospitalName = HOSPITAL_NAME, HospitalLocalhost = HOSPITAL_PORT, ApiKey = generatedKey};
+                var channel = new Channel("127.0.0.1:" + dto.Localhost, ChannelCredentials.Insecure);
+                var client = new gRPCService.gRPCServiceClient(channel);
+                var reply = client.registerPharmacyAsync(input);
+                if (reply.ResponseAsync.Result.Response.Equals("OK"))
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
         }
 
         [HttpGet]
