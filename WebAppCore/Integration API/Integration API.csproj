@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.19.1" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
+    <PackageReference Include="Grpc.AspNetCore.Server" Version="2.40.0" />
+    <PackageReference Include="Grpc.Core" Version="2.42.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.42.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.9" />
     <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="3.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
@@ -20,5 +28,11 @@
     <ProjectReference Include="..\Integration\Integration.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<Protobuf Include="Protos\gRPCService.proto" GrpcServices="Client" />
+		<Protobuf Include="Protos\gRPCHospitalService.proto" GrpcServices="Server" />
+		<Protobuf Include="Protos\registerPharmacy.proto" GrpcServices="none" />
+		<Protobuf Include="Protos\registerHospital.proto" GrpcServices="none" />
+	</ItemGroup>
 
 </Project>

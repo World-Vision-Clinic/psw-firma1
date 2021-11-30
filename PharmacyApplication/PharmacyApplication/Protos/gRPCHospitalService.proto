@@ -1,0 +1,8 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "PharmacyApi.Protos";
+import "Protos/registerHospital.proto";
+
+service gRPCHospitalService{
+	rpc registerHospital(RegisterHospitalRequest) returns (RegisterHospitalResponse);
+}

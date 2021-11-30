@@ -16,6 +16,7 @@ export class PharmacyRegistrationComponent implements OnInit {
   localhost: string = '';
   address: string = '';
   city: string = '';
+  protocol: string = '';
 
   constructor(private http:HttpClient) { }
     ngOnInit(): void {
@@ -25,7 +26,8 @@ export class PharmacyRegistrationComponent implements OnInit {
     var val = {Name:this.name,
                Localhost:this.localhost,
               Address:this.address,
-              City:this.city}
+              City:this.city,
+              Protocol:this.protocol}
                const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify(val);
     alert("Request sent... Please wait...");

@@ -7,7 +7,18 @@
       <input style="text-align: center;" type="text" class="form-control" aria-describedby="emailHelp" name="name" [(ngModel)]="name">
     </div>
     <div class="mb-3" style="margin-top: 3em;">
+      <label for="exampleInputPassword1" class="form-label"  style="font-size: 1.5em; color: rgb(70, 70, 70);"><b>Communication protocol</b></label>
+      <select style="text-align: center;" type="text" class="form-control" aria-describedby="emailHelp" name="protocol" [(ngModel)]="protocol">
+        <option value="HTTP">HTTP</option>
+        <option value="gRPC">gRPC</option>
+      </select>
+    </div>
+    <div class="mb-3" style="margin-top: 3em;" *ngIf="protocol === 'HTTP'">
       <label for="exampleInputPassword1" class="form-label"  style="font-size: 1.5em; color: rgb(70, 70, 70);"><b>Pharmacy domain</b></label>
+      <input style="text-align: center;" type="text" class="form-control" name="localhost" [(ngModel)]="localhost">
+    </div>
+    <div class="mb-3" style="margin-top: 3em;" *ngIf="protocol === 'gRPC'">
+      <label for="exampleInputPassword1" class="form-label"  style="font-size: 1.5em; color: rgb(70, 70, 70);"><b>Communication port</b></label>
       <input style="text-align: center;" type="text" class="form-control" name="localhost" [(ngModel)]="localhost">
     </div>
     <div class="mb-3" style="margin-top: 3em;">
