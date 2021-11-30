@@ -1,7 +1,5 @@
-﻿using Integration.Model;
-using Integration.Pharmacy.Repository.RepositoryInterfaces;
-using Integration.Repositories;
-using Integration.Repositories.Interfaces;
+﻿using Hospital.MedicalRecords.Model;
+using Hospital.MedicalRecords.Repository;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Integration.Services
+namespace Hospital.MedicalRecords.Services
 {
     public class MedicineService
     {

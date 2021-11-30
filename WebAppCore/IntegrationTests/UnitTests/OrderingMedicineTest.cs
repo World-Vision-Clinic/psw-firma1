@@ -1,10 +1,12 @@
-﻿using Integration;
+﻿using Hospital.MedicalRecords.Model;
+using Hospital.MedicalRecords.Repository;
+using Hospital.MedicalRecords.Services;
+using Integration;
 using Integration.Pharmacy.Model;
 using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Repository.RepositoryInterfaces;
 using Integration.Pharmacy.Service;
 using Integration.Repositories.Interfaces;
-using Integration.Services;
 using Moq;
 using System;
 using System.Collections.Generic;

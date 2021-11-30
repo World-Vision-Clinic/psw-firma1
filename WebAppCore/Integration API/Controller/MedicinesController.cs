@@ -1,8 +1,10 @@
+using Hospital.MedicalRecords.Model;
+using Hospital.MedicalRecords.Repository;
+using Hospital.MedicalRecords.Services;
 using Integration;
 using Integration.Pharmacy.Model;
 using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Service;
-using Integration.Services;
 using Integration_API.Dto;
 using Integration_API.Mapper;
 using Microsoft.AspNetCore.Http;
@@ -136,7 +138,7 @@ namespace Integration_API.Controller
                     return Ok();
                 }
             }
-            orderedMedicine = new Medicine(Generator.GenerateMedicineId(), dto.MedicineName, Double.Parse(dto.Weigth), int.Parse(dto.Quantity), dto.Price, dto.Usage, null, dto.Replacements);
+            orderedMedicine = new Medicine(Hospital.MedicalRecords.Service.Generator.GenerateMedicineId(), dto.MedicineName, Double.Parse(dto.Weigth), int.Parse(dto.Quantity), dto.Price, dto.Usage, null, dto.Replacements);
             ms.AddOrderedMedicine(orderedMedicine);
             return Ok();
         }

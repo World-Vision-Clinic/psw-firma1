@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace Integration
+namespace Hospital.MedicalRecords.Model
 {
     public class Medicine
     {

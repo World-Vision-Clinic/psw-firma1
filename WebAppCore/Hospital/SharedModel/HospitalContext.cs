@@ -31,6 +31,10 @@ namespace Hospital.SharedModel
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Floor> Floors { get; set; }
         public DbSet<Building> Buildings { get; set; }
+        public DbSet<Examination> Examinations { get; set; }
+        public DbSet<Therapy> Therapies { get; set; }
+        public DbSet<MedicalRecord> MedicalRecords { get; set; }
+        public DbSet<Medicine> Medicines { get; set; }
 
 
         public HospitalContext() { }
@@ -157,7 +161,8 @@ namespace Hospital.SharedModel
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql("User ID = admin;Password=ftn;Server=localhost;Port=5432;Database=MyWebApi.Dev;Integrated Security=true;Pooling=true;");
+                //optionsBuilder.UseNpgsql("User ID = admin;Password=ftn;Server=localhost;Port=5432;Database=MyWebApi.Dev;Integrated Security=true;Pooling=true;");
+                optionsBuilder.UseNpgsql("User ID = postgres;Password=admin;Server=localhost;Port=5432;Database=MyWebApi.Dev;Integrated Security=true;Pooling=true;");
             }
         }
     }
