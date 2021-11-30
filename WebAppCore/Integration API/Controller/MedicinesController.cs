@@ -47,7 +47,7 @@ namespace Integration_API.Controller
 
         public void UploadFile()
         {
-            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.137.1", "user", "password")))
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.28", "user", "password")))
             {
                 client.Connect();
                 string sourceFile = @"consumed-medicine.txt";
