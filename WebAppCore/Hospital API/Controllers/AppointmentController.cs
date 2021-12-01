@@ -9,6 +9,8 @@ using Hospital.Schedule.Model;
 using System.Net.Http;
 using System.Net;
 using Hospital_API.DTO;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 
 namespace Hospital_API.Controllers
 {
@@ -18,6 +20,7 @@ namespace Hospital_API.Controllers
     {
         public AppointmentService _appointmentService { get; set; }
 
+        [ActivatorUtilitiesConstructor]
         public AppointmentController()
         {
             _appointmentService = new AppointmentService(new AppointmentRepository(new Hospital.SharedModel.HospitalContext()));
@@ -52,10 +55,10 @@ namespace Hospital_API.Controllers
             return _appointmentService.GetByDoctorId(id);
         }
 
-        [HttpGet("recommendation_doctor/{id}")]
-        public ActionResult<IEnumerable<Appointment>> GetRecommendedAppointmentsByDoctorPriority([FromBody] AppointmentRecommendationRequestDTO request)
+        [HttpPost("recommendation_doctor")]
+        public ActionResult<IEnumerable<Appointment>> GetRecommendedAppointmentsByDoctorPriority([FromBody] AppointmentRecommendationRequestDTO appointmentRecommendationRequest)
         {
-            return _appointmentService.GetAvailableByDateRangeAndDoctor(request.LowerDateRange, request.UpperDateRange, request.LowerTimeRange, request.UpperTimeRange, request.DoctorId, AppointmentSearchPriority.DOCTOR_PRIORITY);
+            return _appointmentService.GetAvailableByDateRangeAndDoctor(appointmentRecommendationRequest.LowerDateRange, appointmentRecommendationRequest.UpperDateRange, TimeSpan.Parse(appointmentRecommendationRequest.LowerTimeRange), TimeSpan.Parse(appointmentRecommendationRequest.UpperTimeRange), appointmentRecommendationRequest.DoctorId, AppointmentSearchPriority.DOCTOR_PRIORITY);
         }
 
         [HttpPost("add_appointment")]

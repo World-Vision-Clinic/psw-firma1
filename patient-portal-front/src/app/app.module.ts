@@ -24,6 +24,7 @@ import { SurveyComponent } from './survey/survey/survey.component';
 import { SurveyService } from './survey.service';
 import { MedicalRecordViewComponent } from './medical-record-view/medical-record-view.component';
 import { RegisterComponent } from './register/register.component';
+import { PatientAppointmentCreationComponent } from './patient-appointment-creation/patient-appointment-creation.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { RegisterComponent } from './register/register.component';
     HomePageComponent,
     SurveyComponent,
     MedicalRecordViewComponent,
-    RegisterComponent
+    RegisterComponent,
+    PatientAppointmentCreationComponent
   ],
   imports: [
     BrowserModule,

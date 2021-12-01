@@ -3,6 +3,7 @@ using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Service;
 using Hospital.SharedModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace Hospital_API.Controllers
         private readonly HospitalContext _context;
         private readonly DoctorService _doctorService;
 
+        [ActivatorUtilitiesConstructor]
         public DoctorsController()
         {
             _context = new HospitalContext();

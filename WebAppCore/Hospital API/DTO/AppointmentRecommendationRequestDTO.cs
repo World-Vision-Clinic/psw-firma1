@@ -9,9 +9,8 @@ namespace Hospital_API.DTO
     {
         public DateTime LowerDateRange { get; set; }
         public DateTime UpperDateRange { get; set; }
-        public TimeSpan LowerTimeRange { get; set; }
-        public TimeSpan UpperTimeRange { get; set; }
-        public TimeSpan AppointmentLength { get; set; }
+        public string LowerTimeRange { get; set; }
+        public string UpperTimeRange { get; set; }
 
         public int DoctorId { get; set; }
     }

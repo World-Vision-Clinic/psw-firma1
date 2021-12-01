@@ -163,10 +163,9 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             AppointmentRecommendationRequestDTO appointmentRecommendationRequestDTO = new AppointmentRecommendationRequestDTO();
             appointmentRecommendationRequestDTO.LowerDateRange = new DateTime(2022, 6, 6, 0, 0, 0);
             appointmentRecommendationRequestDTO.UpperDateRange = new DateTime(2022, 6, 7, 23, 59, 59);
-            appointmentRecommendationRequestDTO.LowerTimeRange = new TimeSpan(12, 0, 0);
-            appointmentRecommendationRequestDTO.UpperTimeRange = new TimeSpan(14, 0, 0);
+            appointmentRecommendationRequestDTO.LowerTimeRange = "12:00:00";
+            appointmentRecommendationRequestDTO.UpperTimeRange = "14:00:00";
             appointmentRecommendationRequestDTO.DoctorId = 1;
-            appointmentRecommendationRequestDTO.AppointmentLength = new TimeSpan(0, 30, 0);
             List<Appointment> freeAppointmentsBeforeAddition = _appointmentController.GetRecommendedAppointmentsByDoctorPriority(appointmentRecommendationRequestDTO).Value.ToList();
 
             Assert.NotNull(freeAppointmentsBeforeAddition);
@@ -195,10 +194,9 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             AppointmentRecommendationRequestDTO appointmentRecommendationRequestDTO = new AppointmentRecommendationRequestDTO();
             appointmentRecommendationRequestDTO.LowerDateRange = new DateTime(2022, 7, 7, 0, 0, 0);
             appointmentRecommendationRequestDTO.UpperDateRange = new DateTime(2022, 7, 7, 23, 59, 59);
-            appointmentRecommendationRequestDTO.LowerTimeRange = new TimeSpan(12, 0, 0);
-            appointmentRecommendationRequestDTO.UpperTimeRange = new TimeSpan(13, 0, 0);
+            appointmentRecommendationRequestDTO.LowerTimeRange = "12:00:00";
+            appointmentRecommendationRequestDTO.UpperTimeRange = "13:00:00";
             appointmentRecommendationRequestDTO.DoctorId = 1;
-            appointmentRecommendationRequestDTO.AppointmentLength = new TimeSpan(0, 30, 0);
 
             Appointment appointment = new Appointment()
             {
