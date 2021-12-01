@@ -1,5 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using iText.IO.Font;
+using iText.Kernel.Font;
+using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas.Draw;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.Layout.Properties;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Pharmacy.Model;
 using Pharmacy.Repository;
 using Pharmacy.Service;
@@ -9,7 +17,7 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace PharmacyAPI.Controller
@@ -172,7 +180,7 @@ namespace PharmacyAPI.Controller
 
             foreach (Medicine medicine in medicines)
             {
-                createFile(service.GetSpecification(medicine));
+                createPDFFile(service.GetSpecification(medicine));
                 break;
             }
 
@@ -181,11 +189,24 @@ namespace PharmacyAPI.Controller
             return Ok();
         }
 
-        private void createFile(string specification)
+        private void createPDFFile(string specification)
         {
-            StreamWriter file = new StreamWriter("Specification.txt");
-            file.Write(specification);
-            file.Close();
+            PdfWriter writer = new PdfWriter("Specification.pdf");
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+            FontProgram fontProgram = FontProgramFactory.CreateFont();
+            PdfFont font = PdfFontFactory.CreateFont(fontProgram, "Cp1250");
+            document.SetFont(font);
+            Paragraph header = new Paragraph("Specification" + "\n").SetTextAlignment(TextAlignment.CENTER).SetFontSize(26);
+            document.Add(header);
+            string[] paragraphs = specification.Split("\n");
+            foreach (string p in paragraphs)
+            {
+                Paragraph paragraph = new Paragraph().SetTextAlignment(TextAlignment.LEFT).SetFontSize(16);
+                paragraph.Add(p);
+                document.Add(paragraph);
+            }
+            document.Close();
         }
 
         private void uploadSpecification()
@@ -194,10 +215,10 @@ namespace PharmacyAPI.Controller
             {
                 client.Connect();
 
-                string sourceFile = @"Specification.txt";
+                string sourceFile = @"Specification.pdf";
                 using (Stream stream = System.IO.File.OpenRead(sourceFile))
                 {
-                    client.UploadFile(stream, @"\public\" + Path.GetFileName(sourceFile));
+                    client.UploadFile(stream, @"\public\" + System.IO.Path.GetFileName(sourceFile));
                 }
 
                 client.Disconnect();
