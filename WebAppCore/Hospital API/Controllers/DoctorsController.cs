@@ -26,6 +26,12 @@ namespace Hospital_API.Controllers
             _doctorService = new DoctorService(new DoctorRepository(_context, _patientRepository));
         }
 
+        public DoctorsController(HospitalContext _context, DoctorService _doctorService)
+        {
+            this._context = _context;
+            this._doctorService = _doctorService;
+        }
+
         // GET: api/Doctors
         [HttpGet]
         public ActionResult<IEnumerable<Doctor>> GetDoctors()
