@@ -188,5 +188,44 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             Assert.NotNull(freeAppointmentsAfterAddition);
             Assert.Equal(7, freeAppointmentsAfterAddition.Count);
         }
+
+        [Fact]
+        public void Test_get_free_doctor_appointments_in_range_with_interval_loosening()
+        {
+            AppointmentRecommendationRequestDTO appointmentRecommendationRequestDTO = new AppointmentRecommendationRequestDTO();
+            appointmentRecommendationRequestDTO.LowerDateRange = new DateTime(2022, 7, 7, 0, 0, 0);
+            appointmentRecommendationRequestDTO.UpperDateRange = new DateTime(2022, 7, 7, 23, 59, 59);
+            appointmentRecommendationRequestDTO.LowerTimeRange = new TimeSpan(12, 0, 0);
+            appointmentRecommendationRequestDTO.UpperTimeRange = new TimeSpan(13, 0, 0);
+            appointmentRecommendationRequestDTO.DoctorId = 1;
+            appointmentRecommendationRequestDTO.AppointmentLength = new TimeSpan(0, 30, 0);
+
+            Appointment appointment = new Appointment()
+            {
+                Id = 7,
+                PatientForeignKey = 1,
+                DoctorForeignKey = 1,
+                Type = AppointmentType.Appointment,
+                Date = new DateTime(2022, 7, 7, 12, 0, 0),
+                Time = new TimeSpan(0, 0, 45, 0, 0)
+            };
+            _appointmentRepository.AddAppointment(appointment);
+
+            Appointment earlierAppointment = new Appointment()
+            {
+                Id = 8,
+                PatientForeignKey = 1,
+                DoctorForeignKey = 1,
+                Type = AppointmentType.Appointment,
+                Date = new DateTime(2022, 7, 6, 12, 0, 0),
+                Time = new TimeSpan(0, 0, 45, 0, 0)
+            };
+            _appointmentRepository.AddAppointment(earlierAppointment);
+
+            List<Appointment> freeAppointmentsAfterAddition = _appointmentController.GetRecommendedAppointmentsByDoctorPriority(appointmentRecommendationRequestDTO).Value.ToList();
+
+            Assert.NotNull(freeAppointmentsAfterAddition);
+            Assert.Equal(18, freeAppointmentsAfterAddition.Count);
+        }
     }
 }

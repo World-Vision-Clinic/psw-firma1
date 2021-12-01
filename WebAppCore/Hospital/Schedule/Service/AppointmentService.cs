@@ -64,12 +64,34 @@ namespace Hospital.Schedule.Service
         {
             List<Appointment> doctorAppointments = GetByDoctorId(doctorId, lowerDateRange, upperDateRange);
             List<Appointment> freeAppointments = GenerateFreeAppointmentList(lowerDateRange, upperDateRange, lowerTimeRange, upperTimeRange, new TimeSpan(0, 30, 0));
-            List<Appointment> freeAppointmentsFiltered = new List<Appointment>();
 
-            foreach(Appointment appointmentIterator in freeAppointments)
+            List<Appointment> freeAppointmentsFiltered = FilterFreeAppointmentsByDoctorOccupation(freeAppointments, doctorAppointments);
+
+            if (freeAppointmentsFiltered.Count <= 0 && priority == AppointmentSearchPriority.DOCTOR_PRIORITY)
+            {
+                List<Appointment> freeAppointmentsBefore = GenerateFreeAppointmentList((lowerDateRange.AddDays(-5) > DateTime.Today.AddDays(2) ? lowerDateRange.AddDays(-5) : DateTime.Today.AddDays(2)), 
+                    lowerDateRange, lowerTimeRange, upperTimeRange, new TimeSpan(0, 30, 0));
+                List<Appointment> doctorAppointmentsBefore = GetByDoctorId(doctorId, (lowerDateRange.AddDays(-5) > DateTime.Today.AddDays(2) ? lowerDateRange.AddDays(-5) : DateTime.Today.AddDays(2)),
+                    lowerDateRange);
+                List<Appointment> freeAppointmentsFilteredBefore = FilterFreeAppointmentsByDoctorOccupation(freeAppointmentsBefore, doctorAppointmentsBefore);
+
+                List<Appointment> freeAppointmentsAfter = GenerateFreeAppointmentList(upperDateRange.Date, upperDateRange.AddDays(5).Date, lowerTimeRange, upperTimeRange, new TimeSpan(0, 30, 0));
+                List<Appointment> doctorAppointmentsAfter = GetByDoctorId(doctorId, upperDateRange, upperDateRange.AddDays(5));
+                List<Appointment> freeAppointmentsFilteredAfter = FilterFreeAppointmentsByDoctorOccupation(freeAppointmentsAfter, doctorAppointmentsAfter);
+
+                freeAppointmentsFiltered = freeAppointmentsFilteredBefore.Concat(freeAppointmentsFilteredAfter).ToList();
+            }
+
+            return freeAppointmentsFiltered;
+        }
+
+        private List<Appointment> FilterFreeAppointmentsByDoctorOccupation(List<Appointment> freeAppointments, List<Appointment> doctorAppointments)
+        {
+            List<Appointment> freeAppointmentsFiltered = new List<Appointment>();
+            foreach (Appointment appointmentIterator in freeAppointments)
             {
                 bool overlapFound = false;
-                foreach(Appointment doctorAppointmentIterator in doctorAppointments)
+                foreach (Appointment doctorAppointmentIterator in doctorAppointments)
                 {
                     if (DatesOverlap(appointmentIterator.Date, appointmentIterator.Time, doctorAppointmentIterator.Date, doctorAppointmentIterator.Time))
                     {
