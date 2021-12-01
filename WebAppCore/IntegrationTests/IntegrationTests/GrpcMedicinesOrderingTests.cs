@@ -7,28 +7,17 @@ using Xunit;
 
 namespace IntegrationTests.IntegrationTests
 {
-    public class GrpcTests
+    public class GrpcMedicinesOrderingTests
     {
         [Fact]
-        public void Check_medicine_existence_when_medicine_exists_grpc()
+        public void Check_if_medicine_is_ordered()
         {
-            MedicineDto omd = new MedicineDto("Aspirin", 200, 2);
+            OrderingMedicineDTO omd = new OrderingMedicineDTO("127.0.0.1:5000", "Brufen", "100", "2");
             MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection());
 
-            bool requestOk = mc.SendRequestToCheckAvailabilityGrpc("127.0.0.1:5000", omd);
+            bool requestOk = mc.SendMedicineOrderingRequestGRPC(omd, true);
 
             Assert.True(requestOk);
-        }
-
-        [Fact]
-        public void Check_medicine_existence_when_medicine_does_not_exists_grpc()
-        {
-            MedicineDto omd = new MedicineDto("Aspirin", 200, 1000);
-            MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection());
-
-            bool requestOk = mc.SendRequestToCheckAvailabilityGrpc("127.0.0.1:5000", omd);
-
-            Assert.False(requestOk);
         }
     }
 }

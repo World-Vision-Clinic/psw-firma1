@@ -45,7 +45,7 @@ namespace IntegrationTests.IntegrationTests
             }
             MedicinesController pc = new MedicinesController(new PharmacyHTTPConnection());
 
-            pc.Ordered(omd);
+            pc.OrderedHTTP(omd);
 
 
             MedicinesRepository mr1 = new MedicinesRepository();

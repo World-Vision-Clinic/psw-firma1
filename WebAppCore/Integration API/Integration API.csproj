@@ -35,6 +35,8 @@
 		<Protobuf Include="Protos\registerPharmacy.proto" GrpcServices="none" />
 		<Protobuf Include="Protos\registerHospital.proto" GrpcServices="none" />
 		<Protobuf Include="Protos\checkMedicineExistence.proto" GrpcServices="none" />
+		<Protobuf Include="Protos\medicineOrdering.proto" GrpcServices="none" />
+		<Protobuf Include="Protos\addOrderedMedicine.proto" GrpcServices="none" />
 	</ItemGroup>
 
 </Project>

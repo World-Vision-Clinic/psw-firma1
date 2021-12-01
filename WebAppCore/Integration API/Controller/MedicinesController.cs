@@ -128,20 +128,9 @@ namespace Integration_API.Controller
             return false;
         }
 
-        [HttpPut("OrderMedicine")]
-        public IActionResult Order(OrderingMedicineDTO dto)
-        {
-            if (SendMedicineOrderingRequestHTTP(dto, false))
-            {
-                return Ok();
-            }
-            return BadRequest();
-        }
-
         [HttpPost("ordered")]
-        public IActionResult Ordered(OrderedMedicineDTO dto)
+        public IActionResult OrderedHTTP(OrderedMedicineDTO dto)
         {
-            System.Diagnostics.Debug.WriteLine(dto.Replacements);
             MedicineService ms = new MedicineService(new MedicinesRepository(), new MedicalRecordsRepository(), new ExaminationRepository());
             Medicine orderedMedicine;
             foreach (Medicine med in ms.GetAll())
@@ -156,6 +145,61 @@ namespace Integration_API.Controller
             orderedMedicine = new Medicine(Hospital.MedicalRecords.Service.Generator.GenerateMedicineId(), dto.MedicineName, Double.Parse(dto.Weigth), int.Parse(dto.Quantity), dto.Price, dto.Usage, null, dto.Replacements);
             ms.AddOrderedMedicine(orderedMedicine);
             return Ok();
+        }
+
+        [HttpPut("OrderMedicine")]
+        public IActionResult Order(OrderingMedicineDTO dto)
+        {
+            if (pharmaciesService.Get(dto.Localhost).Protocol.Equals(ProtocolType.HTTP))
+            {
+                if (SendMedicineOrderingRequestHTTP(dto, false))
+                {
+                    return Ok();
+                }
+                return BadRequest();
+            }
+            else
+            {
+                if (SendMedicineOrderingRequestGRPC(dto, false))
+                {
+                    return Ok();
+                }
+                return BadRequest();
+            }
+        }
+
+        public bool SendMedicineOrderingRequestGRPC(OrderingMedicineDTO dto, bool test)
+        {
+            double medicineGrams;
+            int numOfBoxes;
+            Credential credential = credentialsService.GetByPharmacyLocalhost(dto.Localhost);
+            if (credential == null)
+            {
+                return false;
+            }
+            try
+            {
+                medicineGrams = Double.Parse(dto.MedicineGrams);
+                numOfBoxes = int.Parse(dto.NumOfBoxes);
+            }
+            catch
+            {
+                return false;
+            }
+
+            var input = new MedicineOrderingRequest { MedicineName = dto.MedicineName, MedicineDosage = medicineGrams, Quantity = numOfBoxes, ApiKey = credential.ApiKey, Test = test };
+            var channel = new Channel(dto.Localhost, ChannelCredentials.Insecure);
+            var client = new gRPCService.gRPCServiceClient(channel);
+            var reply = client.orderMedicineAsync(input);
+
+            if (reply.ResponseAsync.Result.Response.Equals("OK"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         [HttpGet("spec")]

@@ -2,7 +2,9 @@
 
 option csharp_namespace = "IntegrationAPI.Protos";
 import "Protos/registerHospital.proto";
+import "Protos/addOrderedMedicine.proto";
 
 service gRPCHospitalService{
 	rpc registerHospital(RegisterHospitalRequest) returns (RegisterHospitalResponse);
+	rpc addOrderedMedicine(SentOrderedMedicineRequest) returns (SentOrderedMedicineResponse);
 }

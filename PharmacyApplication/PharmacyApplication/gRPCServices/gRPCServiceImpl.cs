@@ -4,6 +4,7 @@ using Pharmacy.Repository;
 using Pharmacy.Service;
 using PharmacyApi.Protos;
 using PharmacyAPI.Mapper;
+using PharmacyAPI.Protos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -97,6 +98,51 @@ namespace PharmacyAPI.gRPCServices
 
             response.Response = "OK";
             return Task.FromResult(response);
+        }
+
+        public override Task<MedicineOrderingResponse> orderMedicine(MedicineOrderingRequest request, ServerCallContext context)
+        {
+            string apiKey = request.ApiKey;
+            MedicineOrderingResponse response = new MedicineOrderingResponse();
+            if (apiKey == null)
+            {
+                response.Response = "BAD REQUEST";
+                return Task.FromResult(response);
+            }
+            Hospital hospital = hospitalsService.GetHospitalByApiKey(apiKey);
+            if (hospital == null)
+            {
+                response.Response = "BAD REQUEST";
+                return Task.FromResult(response);
+            }
+            if (!request.Test)
+            {
+                Medicine medicine = new Medicine(request.MedicineName, request.MedicineDosage, (int)request.Quantity);
+                List<string> replacements = service.FoundReplacements(medicine);
+                Medicine med = service.FoundOrderedMedicine(medicine);
+                service.OrderMedicine(medicine);
+
+                var input = new SentOrderedMedicineRequest { MedicineName = med.MedicineName, Manufacturer = med.Manufacturer, SideEffects = med.SideEffects, Usage = med.Usage, Weight = med.Weigth, PotentialDangers = med.PotentialDangers, Quantity = request.Quantity, Replacements = { replacements }, Price = med.Price};
+                var channel = new Channel(hospital.Localhost, ChannelCredentials.Insecure);
+                var client = new gRPCHospitalService.gRPCHospitalServiceClient(channel);
+                var reply = client.addOrderedMedicineAsync(input);
+
+                if (reply.ResponseAsync.Result.Response.Equals("OK"))
+                {
+                    response.Response = "OK";
+                    return Task.FromResult(response);
+                }
+                else
+                {
+                    response.Response = "BAD REQUEST";
+                    return Task.FromResult(response);
+                }
+            }
+            else
+            {
+                response.Response = "OK";
+                return Task.FromResult(response);
+            }
         }
     }
 }

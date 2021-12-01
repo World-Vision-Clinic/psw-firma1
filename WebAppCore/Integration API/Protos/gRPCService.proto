@@ -3,8 +3,10 @@
 option csharp_namespace = "IntegrationAPI.Protos";
 import "Protos/registerPharmacy.proto";
 import "Protos/checkMedicineExistence.proto";
+import "Protos/medicineOrdering.proto";
 
 service gRPCService{
 	rpc registerPharmacy (RegisterPharmacyRequest) returns (RegisterPharmacyResponse);
 	rpc checkMedicineExistence(CheckMedicineExistenceRequest) returns (CheckMedicineExistenceResponse);
+	rpc orderMedicine(MedicineOrderingRequest) returns (MedicineOrderingResponse);
 }
