@@ -64,8 +64,8 @@ namespace Hospital_API.Controllers
             return medicalRecordDTO;
         }
 
-            // GET: api/Patients/activate?token=
-            [HttpGet("activate")]
+        // GET: api/Patients/activate?token=
+        [HttpGet("activate")]
         public IActionResult ActivatePatient([FromQuery]string token)
         {
             var patient = _patientService.FindByToken(token);
