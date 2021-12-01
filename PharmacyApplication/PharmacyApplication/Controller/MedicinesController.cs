@@ -197,7 +197,7 @@ namespace PharmacyAPI.Controller
                 string sourceFile = @"Specification.txt";
                 using (Stream stream = System.IO.File.OpenRead(sourceFile))
                 {
-                    client.UploadFile(stream, @"\public" + Path.GetFileName(sourceFile));
+                    client.UploadFile(stream, @"\public\" + Path.GetFileName(sourceFile));
                 }
 
                 client.Disconnect();

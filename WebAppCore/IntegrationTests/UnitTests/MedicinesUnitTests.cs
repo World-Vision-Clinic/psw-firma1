@@ -65,7 +65,7 @@ namespace IntegrationTests.UnitTests
             Assert.Equal("Specification does not exists", badResult.Value);
         }
 
-        /*[Fact]  // interaction with Rebex Client
+        [Fact]  // interaction with Rebex Client
         public void Check_response_when_specification_for_medicine_exist()
         {
             // Arrange
@@ -78,7 +78,7 @@ namespace IntegrationTests.UnitTests
 
             // Assert
             Assert.Equal(200, okResult.StatusCode);
-        }*/
+        }
 
         [Fact]  // interaction with Rebex Client
         public void File_does_not_uploaded()
@@ -93,7 +93,7 @@ namespace IntegrationTests.UnitTests
             Assert.False(downloaded);
         }
 
-        /*[Fact]  // interaction with Rebex Client
+        [Fact]  // interaction with Rebex Client
         public void File_is_uploaded()
         {
             // Arrange
@@ -105,7 +105,7 @@ namespace IntegrationTests.UnitTests
             // Assert
             Assert.True(downloaded);
 
-        }*/
+        }
 
     }
 }
