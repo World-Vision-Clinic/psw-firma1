@@ -56,6 +56,11 @@ namespace Hospital.MedicalRecords.Repository
             return doctors;
         }
 
+        public List<Doctor> GetDoctorsByType(DoctorType type)
+        {
+            return _context.Doctors.Where(d => d.Type == type).ToList();
+        }
+
         public List<Doctor> GetAll()
         {
             return _context.Doctors.ToList();

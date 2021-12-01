@@ -39,6 +39,11 @@ namespace Hospital.MedicalRecords.Service
             return _repo.GetAvailableDoctors();
         }
 
+        public List<Doctor> GetDoctorsByType(DoctorType type)
+        {
+            return _repo.GetDoctorsByType(type);
+        }
+
         public List<Doctor> GetAll()
         {
             return _repo.GetAll();
