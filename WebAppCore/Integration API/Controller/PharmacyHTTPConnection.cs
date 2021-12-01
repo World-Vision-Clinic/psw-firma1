@@ -1,11 +1,14 @@
-﻿using Integration.Pharmacy.Model;
+﻿using Grpc.Core;
+using Integration.Pharmacy.Model;
 using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Service;
 using Integration_API.Dto;
+using IntegrationAPI.Protos;
 using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using IntegrationAPI.Protos;
 using System.Threading.Tasks;
 
 namespace Integration_API.Controller
@@ -32,6 +35,8 @@ namespace Integration_API.Controller
 
             return false;
         }
+
+        
 
         public bool SendRequestForSpecification(string pharmacyLocalhost, string medicineName)
         {

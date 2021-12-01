@@ -1,3 +1,4 @@
+using Grpc.Core;
 using Hospital.MedicalRecords.Model;
 using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Services;
@@ -7,6 +8,7 @@ using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Service;
 using Integration_API.Dto;
 using Integration_API.Mapper;
+using IntegrationAPI.Protos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Renci.SshNet;
@@ -59,16 +61,43 @@ namespace Integration_API.Controller
 
             foreach(PharmacyProfile pharmacy in pharmaciesService.GetAll())
             {
-                if (pharmacyConnection.SendRequestToCheckAvailability(pharmacy.Localhost, medicineDto))
+                if (pharmacy.Protocol.Equals(ProtocolType.HTTP))
                 {
-                    pharmaciesWithMedicine.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
+                    if (pharmacyConnection.SendRequestToCheckAvailability(pharmacy.Localhost, medicineDto))
+                    {
+                        pharmaciesWithMedicine.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
+                    }
+                }
+                else
+                {
+                    if (SendRequestToCheckAvailabilityGrpc(pharmacy.Localhost, medicineDto))
+                    {
+                        pharmaciesWithMedicine.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
+                    }
                 }
             }
 
             return Ok(pharmaciesWithMedicine);
         }
+        public bool SendRequestToCheckAvailabilityGrpc(string pharmacyLocalhost, MedicineDto medicineDto)
+        {
+            Credential credential = credentialsService.GetByPharmacyLocalhost(pharmacyLocalhost);
 
-        public bool SendMedicineOrderingRequest(OrderingMedicineDTO dto, bool test)
+            var input = new CheckMedicineExistenceRequest { MedicineName = medicineDto.Name, MedicineDosage = medicineDto.DosageInMg, Quantity = medicineDto.Quantity, ApiKey = credential.ApiKey };
+            var channel = new Channel(pharmacyLocalhost, ChannelCredentials.Insecure);
+            var client = new gRPCService.gRPCServiceClient(channel);
+            var reply = client.checkMedicineExistenceAsync(input);
+            if (reply.ResponseAsync.Result.Response.Equals("OK"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool SendMedicineOrderingRequestHTTP(OrderingMedicineDTO dto, bool test)
         {
 
             var client = new RestSharp.RestClient(dto.Localhost);
@@ -102,7 +131,7 @@ namespace Integration_API.Controller
         [HttpPut("OrderMedicine")]
         public IActionResult Order(OrderingMedicineDTO dto)
         {
-            if (SendMedicineOrderingRequest(dto, false))
+            if (SendMedicineOrderingRequestHTTP(dto, false))
             {
                 return Ok();
             }

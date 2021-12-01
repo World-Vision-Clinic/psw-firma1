@@ -67,7 +67,7 @@ namespace IntegrationTests.IntegrationTests
             OrderingMedicineDTO omd = new OrderingMedicineDTO("http://localhost:34616", "Brufen", "100", "2");
             MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection());
             
-            bool requestOk = mc.SendMedicineOrderingRequest(omd, true);
+            bool requestOk = mc.SendMedicineOrderingRequestHTTP(omd, true);
 
             Assert.True(requestOk);
         }
