@@ -1,16 +1,15 @@
-﻿using Integration;
-using Integration.Repositories.Interfaces;
-using Integration.SharedModel;
+﻿using Hospital.MedicalRecords.Model;
+using Hospital.SharedModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Integration.Pharmacy.Repository
+namespace Hospital.MedicalRecords.Repository
 {
     public class MedicalRecordsRepository : IMedicalRecordsRepository
     {
-        private IntegrationDbContext dbContext = new IntegrationDbContext();
+        private HospitalContext dbContext = new HospitalContext();
         public void Delete(string id)
         {
             throw new NotImplementedException();

@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
-using Integration.Services;
 using Integration.Pharmacy.Repository.RepositoryInterfaces;
 using Integration.Repositories.Interfaces;
 using Moq;
 using Integration;
-using Integration.Model;
 using Integration.Pharmacy.Repository;
-
+using Hospital.MedicalRecords.Services;
+using Hospital.MedicalRecords.Model;
+using Hospital.MedicalRecords.Repository;
 
 namespace IntegrationTests.UnitTests
 {

@@ -1,11 +1,11 @@
-﻿using Integration.Repositories.Interfaces;
+﻿using Hospital.MedicalRecords.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Integration.Pharmacy.Repository.RepositoryInterfaces
+namespace Hospital.MedicalRecords.Repository
 {
-    public interface IExaminationRepository : IGenericRepository<Examination>
+    public interface IExaminationRepository
     {
         List<Examination> GetAllByMedicalRecordId(String medicalRecordId);
         public Therapy GetTherapyById(int id);

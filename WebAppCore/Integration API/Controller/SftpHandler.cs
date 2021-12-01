@@ -35,6 +35,20 @@ namespace Integration_API.Controller
             }
         }
 
+        public void UploadFile()
+        {
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.28", "user", "password")))
+            {
+                client.Connect();
+                string sourceFile = @"consumed-medicine.txt";
+                using (Stream stream = System.IO.File.OpenRead(sourceFile))
+                {
+                    client.UploadFile(stream, @"\public\" + Path.GetFileName(sourceFile), x => { Console.WriteLine(x); });
+                }
+                client.Disconnect();
+            }
+        }
+
         public bool fileExists(string path)
         {
             return File.Exists(@path);

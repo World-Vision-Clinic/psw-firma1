@@ -1,8 +1,10 @@
+using Hospital.MedicalRecords.Model;
+using Hospital.MedicalRecords.Repository;
+using Hospital.MedicalRecords.Services;
 using Integration;
 using Integration.Pharmacy.Model;
 using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Service;
-using Integration.Services;
 using Integration_API.Dto;
 using Integration_API.Mapper;
 using Microsoft.AspNetCore.Http;
@@ -37,24 +39,10 @@ namespace Integration_API.Controller
         public IActionResult SendConsumptionNotification(MedicineConsumptionDto dto)
         {
             medicineService.CreateConsumedMedicinesInPeriodFile(dto.Beginning, dto.End);
-            UploadFile();
+            sftpHandler.UploadFile();
 
 
             return Ok();
-        }
-
-        public void UploadFile()
-        {
-            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.28", "user", "password")))
-            {
-                client.Connect();
-                string sourceFile = @"consumed-medicine.txt";
-                using (Stream stream = System.IO.File.OpenRead(sourceFile))
-                {
-                    client.UploadFile(stream, @"\public\" + Path.GetFileName(sourceFile), x => { Console.WriteLine(x); });
-                }
-                client.Disconnect();
-            }
         }
 
         [HttpGet("check")]
@@ -136,7 +124,7 @@ namespace Integration_API.Controller
                     return Ok();
                 }
             }
-            orderedMedicine = new Medicine(Generator.GenerateMedicineId(), dto.MedicineName, Double.Parse(dto.Weigth), int.Parse(dto.Quantity), dto.Price, dto.Usage, null, dto.Replacements);
+            orderedMedicine = new Medicine(Hospital.MedicalRecords.Service.Generator.GenerateMedicineId(), dto.MedicineName, Double.Parse(dto.Weigth), int.Parse(dto.Quantity), dto.Price, dto.Usage, null, dto.Replacements);
             ms.AddOrderedMedicine(orderedMedicine);
             return Ok();
         }
