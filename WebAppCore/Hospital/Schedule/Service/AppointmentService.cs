@@ -38,6 +38,16 @@ namespace Hospital.Schedule.Service
             return _repo.GetByPatientId(patientId);
         }
 
+        public List<Appointment> GetByDoctorId(int doctorId)
+        {
+            return _repo.GetByDoctorId(doctorId);
+        }
+
+        public List<Appointment> GetByDoctorId(int doctorId, DateTime lowerDateRange, DateTime upperDateRange)
+        {
+            return _repo.GetByDoctorId(doctorId, lowerDateRange, upperDateRange);
+        }
+
         public List<Appointment> GetAll()
         {
             return _repo.GetAll();
@@ -50,11 +60,27 @@ namespace Hospital.Schedule.Service
                    .Where(g => DatesOverlap(g.Date, g.Time, date, time)).ToList().FirstOrDefault();
         }
 
-        public Appointment GetAvailableByDateRangeAndDoctor(DateTime lowerDateRange, DateTime upperDateRange, int doctorId, AppointmentSearchPriority priority = AppointmentSearchPriority.NO_PRIORITY)
+        public List<Appointment> GetAvailableByDateRangeAndDoctor(DateTime lowerDateRange, DateTime upperDateRange, TimeSpan lowerTimeRange, TimeSpan upperTimeRange, int doctorId, AppointmentSearchPriority priority = AppointmentSearchPriority.NO_PRIORITY)
         {
-            /*List<Appointment> allAppointments = GetAll();
-            if(GetByDateAndDoctor())*/
-            return null;
+            List<Appointment> doctorAppointments = GetByDoctorId(doctorId, lowerDateRange, upperDateRange);
+            List<Appointment> freeAppointments = GenerateFreeAppointmentList(lowerDateRange, upperDateRange, lowerTimeRange, upperTimeRange, new TimeSpan(0, 30, 0));
+            List<Appointment> freeAppointmentsFiltered = new List<Appointment>();
+
+            foreach(Appointment appointmentIterator in freeAppointments)
+            {
+                bool overlapFound = false;
+                foreach(Appointment doctorAppointmentIterator in doctorAppointments)
+                {
+                    if (DatesOverlap(appointmentIterator.Date, appointmentIterator.Time, doctorAppointmentIterator.Date, doctorAppointmentIterator.Time))
+                    {
+                        overlapFound = true;
+                        break;
+                    }
+                }
+                if (!overlapFound)
+                    freeAppointmentsFiltered.Add(appointmentIterator);
+            }
+            return freeAppointmentsFiltered;
         }
 
         public bool DatesOverlap(DateTime firstDate, TimeSpan firstTimeSpan, DateTime secondDate, TimeSpan secondTimeSpan)

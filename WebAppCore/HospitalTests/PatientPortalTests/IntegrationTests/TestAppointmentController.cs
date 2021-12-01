@@ -5,6 +5,7 @@ using Hospital.Schedule.Repository;
 using Hospital.Schedule.Service;
 using Hospital.SharedModel;
 using Hospital_API.Controllers;
+using Hospital_API.DTO;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -69,6 +70,18 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             foreach (Appointment appointmentIterator in response.Value)
             {
                 Assert.Equal(1, appointmentIterator.PatientForeignKey);
+            }
+        }
+
+        [Fact]
+        public void Test_appointment_by_doctor_found()
+        {
+            var response = _appointmentController.GetAppointmentsByDoctorId(1);
+
+            Assert.NotNull(response);
+            foreach (Appointment appointmentIterator in response.Value)
+            {
+                Assert.Equal(1, appointmentIterator.DoctorForeignKey);
             }
         }
 
@@ -142,6 +155,38 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
 
             Assert.NotNull(addedAppointment);
             Assert.Null(notAddedAppointment);
+        }
+
+        [Fact]
+        public void Test_get_free_doctor_appointments_in_range()
+        {
+            AppointmentRecommendationRequestDTO appointmentRecommendationRequestDTO = new AppointmentRecommendationRequestDTO();
+            appointmentRecommendationRequestDTO.LowerDateRange = new DateTime(2022, 6, 6, 0, 0, 0);
+            appointmentRecommendationRequestDTO.UpperDateRange = new DateTime(2022, 6, 7, 23, 59, 59);
+            appointmentRecommendationRequestDTO.LowerTimeRange = new TimeSpan(12, 0, 0);
+            appointmentRecommendationRequestDTO.UpperTimeRange = new TimeSpan(14, 0, 0);
+            appointmentRecommendationRequestDTO.DoctorId = 1;
+            appointmentRecommendationRequestDTO.AppointmentLength = new TimeSpan(0, 30, 0);
+            List<Appointment> freeAppointmentsBeforeAddition = _appointmentController.GetRecommendedAppointmentsByDoctorPriority(appointmentRecommendationRequestDTO).Value.ToList();
+
+            Assert.NotNull(freeAppointmentsBeforeAddition);
+            Assert.Equal(8, freeAppointmentsBeforeAddition.Count);
+
+            Appointment appointment = new Appointment()
+            {
+                Id = 6,
+                PatientForeignKey = 1,
+                DoctorForeignKey = 1,
+                Type = AppointmentType.Appointment,
+                Date = new DateTime(2022, 6, 6, 12, 0, 0),
+                Time = new TimeSpan(0, 0, 30, 0, 0)
+            };
+            _appointmentRepository.AddAppointment(appointment);
+
+            List<Appointment> freeAppointmentsAfterAddition = _appointmentController.GetRecommendedAppointmentsByDoctorPriority(appointmentRecommendationRequestDTO).Value.ToList();
+
+            Assert.NotNull(freeAppointmentsAfterAddition);
+            Assert.Equal(7, freeAppointmentsAfterAddition.Count);
         }
     }
 }

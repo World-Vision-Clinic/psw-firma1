@@ -8,6 +8,7 @@ using Hospital.Schedule.Repository;
 using Hospital.Schedule.Model;
 using System.Net.Http;
 using System.Net;
+using Hospital_API.DTO;
 
 namespace Hospital_API.Controllers
 {
@@ -43,6 +44,18 @@ namespace Hospital_API.Controllers
         public ActionResult<IEnumerable<Appointment>> GetAppointmentsByPatientId(int id)
         {
             return _appointmentService.GetByPatientId(id);
+        }
+
+        [HttpGet("doctor/{id}")]
+        public ActionResult<IEnumerable<Appointment>> GetAppointmentsByDoctorId(int id)
+        {
+            return _appointmentService.GetByDoctorId(id);
+        }
+
+        [HttpGet("recommendation_doctor/{id}")]
+        public ActionResult<IEnumerable<Appointment>> GetRecommendedAppointmentsByDoctorPriority([FromBody] AppointmentRecommendationRequestDTO request)
+        {
+            return _appointmentService.GetAvailableByDateRangeAndDoctor(request.LowerDateRange, request.UpperDateRange, request.LowerTimeRange, request.UpperTimeRange, request.DoctorId, AppointmentSearchPriority.DOCTOR_PRIORITY);
         }
 
         [HttpPost("add_appointment")]
