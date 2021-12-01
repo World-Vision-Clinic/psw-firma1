@@ -1,4 +1,5 @@
-﻿using Hospital.MedicalRecords.Repository;
+﻿using Hospital.MedicalRecords.Model;
+using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Service;
 using Hospital.Schedule.Model;
 using Hospital.Schedule.Repository;
@@ -21,6 +22,10 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
     {
         public AppointmentRepository _appointmentRepository;
 
+        public DoctorRepository _doctorRepository;
+
+        public PatientRepository _patientRepository;
+
         public AppointmentController _appointmentController;
 
         public TestAppointmentController()
@@ -37,7 +42,9 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             TestContext hospitalContext = new TestContext(options);
             hospitalContext.Database.EnsureCreated();
             _appointmentRepository = new AppointmentRepository(hospitalContext);
-            _appointmentController = new AppointmentController(new AppointmentService(_appointmentRepository));
+            _patientRepository = new PatientRepository(hospitalContext);
+            _doctorRepository = new DoctorRepository(hospitalContext, _patientRepository);
+            _appointmentController = new AppointmentController(new AppointmentService(_appointmentRepository, _doctorRepository));
         }
 
         [Fact]
@@ -225,6 +232,57 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             List<Appointment> freeAppointmentsAfterAddition = _appointmentController.GetRecommendedAppointmentsByDoctorPriority(appointmentRecommendationRequestDTO).Value.ToList();
 
             Assert.NotNull(freeAppointmentsAfterAddition);
+            Assert.Equal(18, freeAppointmentsAfterAddition.Count);
+        }
+
+        [Fact]
+        public void Test_get_free_doctor_appointments_in_range_with_interval_loosening_date_priority()
+        {
+            AppointmentRecommendationRequestDTO appointmentRecommendationRequestDTO = new AppointmentRecommendationRequestDTO();
+            appointmentRecommendationRequestDTO.LowerDateRange = new DateTime(2022, 7, 7, 0, 0, 0);
+            appointmentRecommendationRequestDTO.UpperDateRange = new DateTime(2022, 7, 7, 23, 59, 59);
+            appointmentRecommendationRequestDTO.LowerTimeRange = new TimeSpan(12, 0, 0);
+            appointmentRecommendationRequestDTO.UpperTimeRange = new TimeSpan(13, 0, 0);
+            appointmentRecommendationRequestDTO.DoctorId = 1;
+            appointmentRecommendationRequestDTO.AppointmentLength = new TimeSpan(0, 30, 0);
+
+            Doctor doctorCardi1 = new Doctor()
+            {
+                Id = 1,
+                FirstName = "Sava",
+                LastName = "Savić",
+                Type = DoctorType.Cardiologist
+            };
+
+            Doctor doctorCardi2 = new Doctor()
+            {
+                Id = 2,
+                FirstName = "Milana",
+                LastName = "Milanović",
+                Type = DoctorType.Cardiologist
+            };
+
+            Doctor doctorOphta1 = new Doctor()
+            {
+                Id = 3,
+                FirstName = "Nikola",
+                LastName = "Marković",
+                Type = DoctorType.Ophthalmologist
+            };
+
+            Appointment appointment = new Appointment()
+            {
+                Id = 7,
+                PatientForeignKey = 1,
+                DoctorForeignKey = 1,
+                Type = AppointmentType.Appointment,
+                Date = new DateTime(2022, 7, 7, 12, 0, 0),
+                Time = new TimeSpan(0, 0, 45, 0, 0)
+            };
+            _appointmentRepository.AddAppointment(appointment);
+
+            List<Appointment> freeAppointmentsAfterAddition = _appointmentController.GetRecommendedAppointmentsByDatePriority(appointmentRecommendationRequestDTO).Value.ToList();
+
             Assert.Equal(18, freeAppointmentsAfterAddition.Count);
         }
     }
