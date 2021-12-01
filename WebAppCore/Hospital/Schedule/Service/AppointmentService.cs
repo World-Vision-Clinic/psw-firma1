@@ -1,4 +1,5 @@
-﻿using Hospital.MedicalRecords.Repository;
+﻿using Hospital.MedicalRecords.Model;
+using Hospital.MedicalRecords.Repository;
 using Hospital.Schedule.Model;
 using Hospital.Schedule.Repository;
 using System;
@@ -17,10 +18,12 @@ namespace Hospital.Schedule.Service
     public class AppointmentService
     {
         private readonly IAppointmentRepository _repo;
+        private readonly IDoctorRepository _doctorRepository;
 
-        public AppointmentService(IAppointmentRepository repo)
+        public AppointmentService(IAppointmentRepository repo, IDoctorRepository doctorRepository)
         {
             _repo = repo;
+            _doctorRepository = doctorRepository;
         }
 
         public void AddAppointment(Appointment newAppointment)
@@ -65,27 +68,42 @@ namespace Hospital.Schedule.Service
             List<Appointment> doctorAppointments = GetByDoctorId(doctorId, lowerDateRange, upperDateRange);
             List<Appointment> freeAppointments = GenerateFreeAppointmentList(lowerDateRange, upperDateRange, lowerTimeRange, upperTimeRange, new TimeSpan(0, 30, 0));
 
-            List<Appointment> freeAppointmentsFiltered = FilterFreeAppointmentsByDoctorOccupation(freeAppointments, doctorAppointments);
+            List<Appointment> freeAppointmentsFiltered = FilterFreeAppointmentsByDoctorAvailability(freeAppointments, doctorAppointments);
 
-            if (freeAppointmentsFiltered.Count <= 0 && priority == AppointmentSearchPriority.DOCTOR_PRIORITY)
+            if (freeAppointmentsFiltered.Count <= 0)
             {
-                List<Appointment> freeAppointmentsBefore = GenerateFreeAppointmentList((lowerDateRange.AddDays(-5) > DateTime.Today.AddDays(2) ? lowerDateRange.AddDays(-5) : DateTime.Today.AddDays(2)), 
-                    lowerDateRange, lowerTimeRange, upperTimeRange, new TimeSpan(0, 30, 0));
-                List<Appointment> doctorAppointmentsBefore = GetByDoctorId(doctorId, (lowerDateRange.AddDays(-5) > DateTime.Today.AddDays(2) ? lowerDateRange.AddDays(-5) : DateTime.Today.AddDays(2)),
-                    lowerDateRange);
-                List<Appointment> freeAppointmentsFilteredBefore = FilterFreeAppointmentsByDoctorOccupation(freeAppointmentsBefore, doctorAppointmentsBefore);
+                if (priority == AppointmentSearchPriority.DOCTOR_PRIORITY)
+                {
+                    int range = 5;
+                    int minimumDaysCount = 2;
+                    DateTime minimumDate = DateTime.Now.AddDays(minimumDaysCount);
+                    DateTime extendedLowerDate = lowerDateRange.AddDays(-range);
+                    DateTime extendedUpperRange = upperDateRange.AddDays(range);
+                    List<Appointment> freeAppointmentsBefore = GenerateFreeAppointmentList((extendedLowerDate > minimumDate ? extendedLowerDate : minimumDate),
+                        lowerDateRange, lowerTimeRange, upperTimeRange, new TimeSpan(0, 30, 0));
+                    List<Appointment> doctorAppointmentsBefore = GetByDoctorId(doctorId, (extendedLowerDate > minimumDate ? extendedLowerDate : minimumDate),
+                        lowerDateRange);
+                    List<Appointment> freeAppointmentsFilteredBefore = FilterFreeAppointmentsByDoctorAvailability(freeAppointmentsBefore, doctorAppointmentsBefore);
 
-                List<Appointment> freeAppointmentsAfter = GenerateFreeAppointmentList(upperDateRange.Date, upperDateRange.AddDays(5).Date, lowerTimeRange, upperTimeRange, new TimeSpan(0, 30, 0));
-                List<Appointment> doctorAppointmentsAfter = GetByDoctorId(doctorId, upperDateRange, upperDateRange.AddDays(5));
-                List<Appointment> freeAppointmentsFilteredAfter = FilterFreeAppointmentsByDoctorOccupation(freeAppointmentsAfter, doctorAppointmentsAfter);
+                    List<Appointment> freeAppointmentsAfter = GenerateFreeAppointmentList(upperDateRange.Date, extendedUpperRange.Date, lowerTimeRange, upperTimeRange, new TimeSpan(0, 30, 0));
+                    List<Appointment> doctorAppointmentsAfter = GetByDoctorId(doctorId, upperDateRange, extendedUpperRange);
+                    List<Appointment> freeAppointmentsFilteredAfter = FilterFreeAppointmentsByDoctorAvailability(freeAppointmentsAfter, doctorAppointmentsAfter);
 
-                freeAppointmentsFiltered = freeAppointmentsFilteredBefore.Concat(freeAppointmentsFilteredAfter).ToList();
+                    freeAppointmentsFiltered = freeAppointmentsFilteredBefore.Concat(freeAppointmentsFilteredAfter).ToList();
+                }
+                else
+                {
+                    Doctor doctor = _doctorRepository.FindById(doctorId);
+                    List<Appointment> appointmentsByDoctorType = _repo.GetByDoctorType(doctor.Type);
+
+                    freeAppointmentsFiltered = FilterFreeAppointmentsByDoctorAvailability(freeAppointments, doctorAppointments);
+                }
             }
 
             return freeAppointmentsFiltered;
         }
 
-        private List<Appointment> FilterFreeAppointmentsByDoctorOccupation(List<Appointment> freeAppointments, List<Appointment> doctorAppointments)
+        private List<Appointment> FilterFreeAppointmentsByDoctorAvailability(List<Appointment> freeAppointments, List<Appointment> doctorAppointments)
         {
             List<Appointment> freeAppointmentsFiltered = new List<Appointment>();
             foreach (Appointment appointmentIterator in freeAppointments)

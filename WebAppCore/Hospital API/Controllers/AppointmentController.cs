@@ -52,10 +52,16 @@ namespace Hospital_API.Controllers
             return _appointmentService.GetByDoctorId(id);
         }
 
-        [HttpGet("recommendation_doctor/{id}")]
+        [HttpGet("recommendation_doctor")]
         public ActionResult<IEnumerable<Appointment>> GetRecommendedAppointmentsByDoctorPriority([FromBody] AppointmentRecommendationRequestDTO request)
         {
             return _appointmentService.GetAvailableByDateRangeAndDoctor(request.LowerDateRange, request.UpperDateRange, request.LowerTimeRange, request.UpperTimeRange, request.DoctorId, AppointmentSearchPriority.DOCTOR_PRIORITY);
+        }
+
+        [HttpGet("recommendation_date")]
+        public ActionResult<IEnumerable<Appointment>> GetRecommendedAppointmentsByDatePriority([FromBody] AppointmentRecommendationRequestDTO request)
+        {
+            return _appointmentService.GetAvailableByDateRangeAndDoctor(request.LowerDateRange, request.UpperDateRange, request.LowerTimeRange, request.UpperTimeRange, request.DoctorId, AppointmentSearchPriority.DATE_TIME_PRIORITY);
         }
 
         [HttpPost("add_appointment")]
