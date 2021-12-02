@@ -31,7 +31,8 @@ export class PharmaciesComponent implements OnInit {
       this.PharmaciesWithMedicalList=data;
       this.PharmaciesList = this.PharmaciesList.filter(o => data.some(({Localhost}) => o.Localhost === Localhost));
       this.buttonClicked = true;
-    });
+    },
+    error =>{alert("Please enter proper values")});
   }
   disableButtons(){
     this.buttonClicked = false;

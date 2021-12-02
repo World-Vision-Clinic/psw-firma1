@@ -50,6 +50,10 @@ namespace Integration_API.Controller
         [HttpGet("check")]
         public IActionResult CheckMedicineAvailability(string name = "", string dosage = "", string quantity = "")
         {
+            if(name == null || dosage == null || quantity == null)
+            {
+                return BadRequest();
+            }
             if (name.Length <= 0 || dosage.Length <= 0 || quantity.Length <= 0)
             {
                 return BadRequest();
