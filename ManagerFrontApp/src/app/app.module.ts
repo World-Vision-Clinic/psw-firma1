@@ -24,6 +24,8 @@ import { MedicineConsumptionComponent } from './manager-integration-front-app/me
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ToastrModule } from 'ngx-toastr';
+import { GetSpecificationComponent } from './manager-integration-front-app/get-specification/get-specification.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     PharmaciesComponent,
     ViewSurveyResultsComponent,
     MedicineConsumptionComponent,
-    NewsComponent
+    NewsComponent,
+    GetSpecificationComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +58,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatDatepickerModule,
     MatFormFieldModule,
     MatNativeDateModule,
+    ToastrModule.forRoot()
     // MatDatepicker,
     // MatDateRangeInput,
     // MatDateRangePicker,

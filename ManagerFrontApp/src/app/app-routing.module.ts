@@ -12,7 +12,7 @@ import { PharmaciesComponent } from './manager-integration-front-app/pharmacies/
 import { NewsComponent } from './manager-integration-front-app/news/news.component';
 import { ViewSurveyResultsComponent } from './view-survey-results/view-survey-results.component';
 import { MedicineConsumptionComponent } from './manager-integration-front-app/medicine-consumption/medicine-consumption.component';
-
+import { GetSpecificationComponent } from './manager-integration-front-app/get-specification/get-specification.component';
 
 const routes: Routes = [
   {path: "", component: FrontPageComponent},
@@ -27,7 +27,7 @@ const routes: Routes = [
   {path: "create-objection", outlet: "showObjRepl", component:ObjectionFormPageComponent},
   {path: "news", outlet: "showObjRepl", component:NewsComponent},
   {path: "medicine-consumption-report", outlet: "showObjRepl", component:MedicineConsumptionComponent},
-
+  {path: "get-specification", outlet:"showObjRepl", component: GetSpecificationComponent}
   ]},
   {path:"manager-feedback", component: ManagerFeedbackViewComponent}
   ];
