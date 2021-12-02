@@ -3,32 +3,38 @@ using Integration_API.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace IntegrationTests.IntegrationTests
 {
     public class GrpcCheckingMedicineExistenceTests
     {
-        [Fact]
-        public void Check_medicine_existence_when_medicine_exists_grpc()
+        [Theory]
+        [MemberData(nameof(Data))]
+        public void Check_medicine_existence_grpcAsync(MedicineDto omd, bool medicineExist)
         {
-            MedicineDto omd = new MedicineDto("Aspirin", 200, 2);
             MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection());
 
             bool requestOk = mc.SendRequestToCheckAvailabilityGrpc("127.0.0.1:5000", omd);
 
-            Assert.True(requestOk);
+            if (medicineExist)
+            {
+                Assert.True(requestOk);
+            }
+            else
+            {
+                Assert.False(requestOk);
+            }
         }
-
-        [Fact]
-        public void Check_medicine_existence_when_medicine_does_not_exists_grpc()
+        public static IEnumerable<object[]> Data()
         {
-            MedicineDto omd = new MedicineDto("Aspirin", 200, 1000);
-            MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection());
+            var retVal = new List<object[]>();
 
-            bool requestOk = mc.SendRequestToCheckAvailabilityGrpc("127.0.0.1:5000", omd);
+            retVal.Add(new object[] { new MedicineDto("Aspirin", 200, 2), true});
+            retVal.Add(new object[] { new MedicineDto("Aspirin", 200, 1000), false });
 
-            Assert.False(requestOk);
+            return retVal;
         }
     }
 }
