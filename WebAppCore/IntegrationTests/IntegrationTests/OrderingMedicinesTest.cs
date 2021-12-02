@@ -45,7 +45,7 @@ namespace IntegrationTests.IntegrationTests
             }
             MedicinesController pc = new MedicinesController(new PharmacyHTTPConnection());
 
-            pc.Ordered(omd);
+            pc.OrderedHTTP(omd);
 
 
             MedicinesRepository mr1 = new MedicinesRepository();
@@ -62,14 +62,25 @@ namespace IntegrationTests.IntegrationTests
         }
 
         [Fact]
-        public void CheckIfMedicineIsOrdered()
+        public void CheckIfMedicineIsOrderedHttp()
         {
             OrderingMedicineDTO omd = new OrderingMedicineDTO("http://localhost:34616", "Brufen", "100", "2");
             MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection());
-            
-            bool requestOk = mc.SendMedicineOrderingRequest(omd, true);
+
+            bool requestOk = mc.SendMedicineOrderingRequestHTTP(omd, true);
 
             Assert.True(requestOk);
         }
+
+        /*[Fact]
+        public void Check_if_medicine_is_ordered()
+        {
+            OrderingMedicineDTO omd = new OrderingMedicineDTO("127.0.0.1:5000", "Brufen", "100", "2");
+            MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection());
+
+            bool requestOk = mc.SendMedicineOrderingRequestGRPC(omd, true);
+
+            Assert.True(requestOk);
+        }*/
     }
 }

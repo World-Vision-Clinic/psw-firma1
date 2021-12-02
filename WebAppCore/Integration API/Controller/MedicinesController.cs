@@ -1,3 +1,4 @@
+using Grpc.Core;
 using Hospital.MedicalRecords.Model;
 using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Services;
@@ -7,6 +8,7 @@ using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Service;
 using Integration_API.Dto;
 using Integration_API.Mapper;
+using IntegrationAPI.Protos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Renci.SshNet;
@@ -48,6 +50,10 @@ namespace Integration_API.Controller
         [HttpGet("check")]
         public IActionResult CheckMedicineAvailability(string name = "", string dosage = "", string quantity = "")
         {
+            if(name == null || dosage == null || quantity == null)
+            {
+                return BadRequest();
+            }
             if (name.Length <= 0 || dosage.Length <= 0 || quantity.Length <= 0)
             {
                 return BadRequest();
@@ -59,16 +65,43 @@ namespace Integration_API.Controller
 
             foreach(PharmacyProfile pharmacy in pharmaciesService.GetAll())
             {
-                if (pharmacyConnection.SendRequestToCheckAvailability(pharmacy.Localhost, medicineDto))
+                if (pharmacy.Protocol.Equals(ProtocolType.HTTP))
                 {
-                    pharmaciesWithMedicine.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
+                    if (pharmacyConnection.SendRequestToCheckAvailability(pharmacy.Localhost, medicineDto))
+                    {
+                        pharmaciesWithMedicine.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
+                    }
+                }
+                else
+                {
+                    if (SendRequestToCheckAvailabilityGrpc(pharmacy.Localhost, medicineDto))
+                    {
+                        pharmaciesWithMedicine.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
+                    }
                 }
             }
 
             return Ok(pharmaciesWithMedicine);
         }
+        public bool SendRequestToCheckAvailabilityGrpc(string pharmacyLocalhost, MedicineDto medicineDto)
+        {
+            Credential credential = credentialsService.GetByPharmacyLocalhost(pharmacyLocalhost);
 
-        public bool SendMedicineOrderingRequest(OrderingMedicineDTO dto, bool test)
+            var input = new CheckMedicineExistenceRequest { MedicineName = medicineDto.Name, MedicineDosage = medicineDto.DosageInMg, Quantity = medicineDto.Quantity, ApiKey = credential.ApiKey };
+            var channel = new Channel(pharmacyLocalhost, ChannelCredentials.Insecure);
+            var client = new gRPCService.gRPCServiceClient(channel);
+            var reply = client.checkMedicineExistenceAsync(input);
+            if (reply.ResponseAsync.Result.Response.Equals("OK"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool SendMedicineOrderingRequestHTTP(OrderingMedicineDTO dto, bool test)
         {
 
             var client = new RestSharp.RestClient(dto.Localhost);
@@ -99,20 +132,9 @@ namespace Integration_API.Controller
             return false;
         }
 
-        [HttpPut("OrderMedicine")]
-        public IActionResult Order(OrderingMedicineDTO dto)
-        {
-            if (SendMedicineOrderingRequest(dto, false))
-            {
-                return Ok();
-            }
-            return BadRequest();
-        }
-
         [HttpPost("ordered")]
-        public IActionResult Ordered(OrderedMedicineDTO dto)
+        public IActionResult OrderedHTTP(OrderedMedicineDTO dto)
         {
-            System.Diagnostics.Debug.WriteLine(dto.Replacements);
             MedicineService ms = new MedicineService(new MedicinesRepository(), new MedicalRecordsRepository(), new ExaminationRepository());
             Medicine orderedMedicine;
             foreach (Medicine med in ms.GetAll())
@@ -127,6 +149,61 @@ namespace Integration_API.Controller
             orderedMedicine = new Medicine(Hospital.MedicalRecords.Service.Generator.GenerateMedicineId(), dto.MedicineName, Double.Parse(dto.Weigth), int.Parse(dto.Quantity), dto.Price, dto.Usage, null, dto.Replacements);
             ms.AddOrderedMedicine(orderedMedicine);
             return Ok();
+        }
+
+        [HttpPut("OrderMedicine")]
+        public IActionResult Order(OrderingMedicineDTO dto)
+        {
+            if (pharmaciesService.Get(dto.Localhost).Protocol.Equals(ProtocolType.HTTP))
+            {
+                if (SendMedicineOrderingRequestHTTP(dto, false))
+                {
+                    return Ok();
+                }
+                return BadRequest();
+            }
+            else
+            {
+                if (SendMedicineOrderingRequestGRPC(dto, false))
+                {
+                    return Ok();
+                }
+                return BadRequest();
+            }
+        }
+
+        public bool SendMedicineOrderingRequestGRPC(OrderingMedicineDTO dto, bool test)
+        {
+            double medicineGrams;
+            int numOfBoxes;
+            Credential credential = credentialsService.GetByPharmacyLocalhost(dto.Localhost);
+            if (credential == null)
+            {
+                return false;
+            }
+            try
+            {
+                medicineGrams = Double.Parse(dto.MedicineGrams);
+                numOfBoxes = int.Parse(dto.NumOfBoxes);
+            }
+            catch
+            {
+                return false;
+            }
+
+            var input = new MedicineOrderingRequest { MedicineName = dto.MedicineName, MedicineDosage = medicineGrams, Quantity = numOfBoxes, ApiKey = credential.ApiKey, Test = test };
+            var channel = new Channel(dto.Localhost, ChannelCredentials.Insecure);
+            var client = new gRPCService.gRPCServiceClient(channel);
+            var reply = client.orderMedicineAsync(input);
+
+            if (reply.ResponseAsync.Result.Response.Equals("OK"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         [HttpGet("spec")]
