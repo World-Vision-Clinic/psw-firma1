@@ -72,7 +72,7 @@ namespace IntegrationTests.IntegrationTests
             Assert.True(requestOk);
         }
 
-        [Fact]
+        /*[Fact]
         public void Check_if_medicine_is_ordered()
         {
             OrderingMedicineDTO omd = new OrderingMedicineDTO("127.0.0.1:5000", "Brufen", "100", "2");
@@ -81,6 +81,6 @@ namespace IntegrationTests.IntegrationTests
             bool requestOk = mc.SendMedicineOrderingRequestGRPC(omd, true);
 
             Assert.True(requestOk);
-        }
+        }*/
     }
 }
