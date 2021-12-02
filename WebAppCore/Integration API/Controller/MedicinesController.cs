@@ -142,7 +142,7 @@ namespace Integration_API.Controller
                 return BadRequest("Specification does not exists");
             }
 
-            if (!sftpHandler.DownloadSpecification($"/public/Specification.txt"))
+            if (!sftpHandler.DownloadSpecification($"/public/Specification.pdf"))
             {
                 return BadRequest("Unable to download specification file");
             }
