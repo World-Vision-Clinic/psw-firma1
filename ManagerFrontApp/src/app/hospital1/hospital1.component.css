@@ -558,3 +558,32 @@
   width: max-content;
   padding: 0 10px;
 }
+
+.renovate-type-box {
+  width: 170px;
+  height: auto;
+  border: 2px solid black;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 100px;
+  align-items: center;
+}
+
+.renovate-type-box button{
+  color: white;
+  background-color: cadetblue;
+  border-radius: 3px;
+  min-width: 100px;
+  height: 28px;
+  font-size: 18px;
+  transition: 0.7s;
+  margin: 10px 5px;
+  width: 130px;
+  padding: 0 10px;
+}
+
+.renovate-type-box hr{
+  height: 1px;
+  width: 160px;
+}

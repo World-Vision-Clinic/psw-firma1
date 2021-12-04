@@ -83,7 +83,6 @@
         <button class="btn" (click)="save()" *ngIf="!formDisabled">Save</button>
       </div>
     </div>
-
     <div *ngIf="!!equipmentBox">
       <table class="equipment-table">
         <thead>
@@ -107,6 +106,13 @@
     </div>
   </div>
 
+  <div class="renovate-type-box" *ngIf="renovationTypeBox">
+      <button (click)="pickRenovationType('merge')">Merge rooms</button>
+      <button (click)="pickRenovationType('split')">Split room</button>
+      <hr>
+      <button (click)="renovationTypeBox = false">Close</button>
+  </div>  
+  
   <div class="move-box-equipment" *ngIf="!!listBoxEquipment">
     <div class="moving-container" *ngIf="currentState.index == 0">
       <h3>Select Equipment:</h3>
@@ -420,7 +426,7 @@
     <button (click)="buildingBox = true" class="toolbar-btn">Building info</button>
     <button (click)="moveEquipment()" class="toolbar-btn">Move equipment</button>
     <button class="toolbar-btn"  (click)="scheduleBox = true" >Schedule</button>
-    <button class="toolbar-btn">Renovate rooms</button>
+    <button class="toolbar-btn" (click)="renovationTypeBox=true" >Renovate rooms</button>
   </div>
   
 </div>

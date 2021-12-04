@@ -72,6 +72,8 @@ export class Hospital1Component implements OnInit {
   allEquipment: any[] = [];
   buildingBox : boolean = false;
   scheduleBox : boolean = false;
+  typeOfRenovation: string ='';
+  renovationTypeBox : boolean = false;
 
   currentState = {
     index: 0,
@@ -401,4 +403,10 @@ export class Hospital1Component implements OnInit {
       (error) => console.log(error)
     );
   }
+
+  pickRenovationType(type){
+    this.typeOfRenovation=type;
+    console.log(this.typeOfRenovation);
+  }
+
 }
