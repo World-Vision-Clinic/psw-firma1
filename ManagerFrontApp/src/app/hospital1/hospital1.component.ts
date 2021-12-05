@@ -72,8 +72,13 @@ export class Hospital1Component implements OnInit {
   allEquipment: any[] = [];
   buildingBox : boolean = false;
   scheduleBox : boolean = false;
-  typeOfRenovation: string ='';
   renovationTypeBox : boolean = false;
+  roomsMergeBox : boolean = false;
+  roomsSplitBox : boolean = false;
+  isFirstMergeSelected: boolean=false;
+  isSecondMergeSeleced : boolean = false;
+  firstMergeSelected: Room= emptyRoom();
+  secondMergeSelected : Room= emptyRoom();
 
   currentState = {
     index: 0,
@@ -405,8 +410,52 @@ export class Hospital1Component implements OnInit {
   }
 
   pickRenovationType(type){
-    this.typeOfRenovation=type;
-    console.log(this.typeOfRenovation);
+    if(type==='merge'){
+      this.renovationTypeBox=false;
+      this.roomsMergeBox=true;
+    } else {
+      this.renovationTypeBox=false;
+      this.roomsSplitBox=true;
+    }
+  }
+
+  selectForMerging(room: Room){
+    if(!this.isFirstMergeSelected){
+      this.isFirstMergeSelected=true;
+      this.firstMergeSelected=room;
+      return;
+    }
+    if(this.isFirstMergeSelected && !this.isSecondMergeSeleced){
+      let positionXRight = this.firstMergeSelected.x+ this.firstMergeSelected.width;
+      let positionYDown= this.firstMergeSelected.y+this.firstMergeSelected.height;
+      let positionXLeft = this.firstMergeSelected.x;
+      let positionYUp= this.firstMergeSelected.y;
+      if(room.x>positionXRight && room.x===positionXRight+10){     
+        this.isSecondMergeSeleced=true;
+        this.secondMergeSelected=room;
+      } else
+      if(room.x<positionXLeft && room.x+room.width===positionXLeft-10){
+        this.isSecondMergeSeleced=true;
+        this.secondMergeSelected=room;
+      }else
+      if(room.y<positionYUp && room.y+room.height===positionYUp-10){
+        this.isSecondMergeSeleced=true;
+        this.secondMergeSelected=room;
+      }else
+      if(room.y>positionYDown && room.y===positionYDown+10){
+        this.isSecondMergeSeleced=true;
+        this.secondMergeSelected=room;
+      } else{
+        alert('You must select neighbouring rooms to merge.')
+      }
+    }
+  }
+
+  restartMergeSelection(){
+    this.isFirstMergeSelected=false;
+    this.isSecondMergeSeleced=false;
+    this.firstMergeSelected=emptyRoom();
+    this.secondMergeSelected=emptyRoom();
   }
 
 }

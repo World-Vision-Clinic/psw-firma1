@@ -587,3 +587,7 @@
   height: 1px;
   width: 160px;
 }
+
+.selected-for-merge{
+  background-color: rgba(160, 159, 159, 0.6);
+}
