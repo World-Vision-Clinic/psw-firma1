@@ -79,7 +79,9 @@ export class Hospital1Component implements OnInit {
   isSecondMergeSeleced : boolean = false;
   firstMergeSelected: Room= emptyRoom();
   secondMergeSelected : Room= emptyRoom();
-
+  roomForSplit: Room = emptyRoom();
+  isForSplitSelected:boolean=false;
+  
   currentState = {
     index: 0,
   };
@@ -451,11 +453,42 @@ export class Hospital1Component implements OnInit {
     }
   }
 
-  restartMergeSelection(){
+  selectForSplit(room: Room){
+    if(!this.isForSplitSelected){
+      this.roomForSplit=room;
+    } else{
+      alert('You have already selected room. Please restart you selection if you want to pick another one.')
+    }
+    
+  }
+
+  closeRenovationBoxes(){
+    this.roomsSplitBox=false;
+    this.roomsMergeBox=false;
+    this.restartSelection();
+  }
+
+  restartSelection(){
     this.isFirstMergeSelected=false;
     this.isSecondMergeSeleced=false;
     this.firstMergeSelected=emptyRoom();
     this.secondMergeSelected=emptyRoom();
+    this.isForSplitSelected=false;
+    this.roomForSplit=emptyRoom();
+  }
+
+  Merge(){
+    if(this.firstMergeSelected.id===-1 || this.secondMergeSelected.id===-1){
+      alert('You must select rooms first!')
+      return;
+    } 
+  }
+
+  Split(){
+    if(this.roomForSplit.id===-1){
+      alert('You must select room first!')
+      return;
+    } 
   }
 
 }

@@ -122,8 +122,25 @@
         </tr>
       </tbody>
     </table>
-    <button class="btn" (click)="restartMergeSelection()">Restart selection</button>
-    <button class="btn" (click)="roomsMergeBox=false">Close</button>
+    <hr/>
+    <button class="btn" (click)="restartSelection()">Restart selection</button>
+    <button class="btn" (click)="Merge()">Merge</button>
+    <button class="btn" (click)="closeRenovationBoxes()">Close</button>
+  </div>
+
+  <div *ngIf="roomsSplitBox">
+    <table class="list-table">
+      <thead><tr><th>Room name:</th></tr></thead>
+      <tbody>
+        <tr *ngFor="let room of selectedFloor.rooms" class="equipment-table-row" (click)="selectForSplit(room)" [ngClass]="{'selected-for-merge': room.id===roomForSplit.id}">
+          <td>{{room.name}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <hr/>
+    <button class="btn" (click)="restartSelection()">Restart selection</button>
+    <button class="btn" (click)="Split()">Split</button>
+    <button class="btn" (click)="closeRenovationBoxes()">Close</button>
   </div>
 
   <div *ngIf="roomsSplitBox">
