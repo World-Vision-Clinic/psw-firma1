@@ -81,13 +81,13 @@ namespace IntegrationTests.UnitTests
         }
 
         [Fact]  // interaction with Rebex Client
-        public void File_does_not_uploaded()
+        public void File_does_not_pdf_uploaded()
         {
             // Arrange
             SftpHandler sftp = new SftpHandler();
             
             // Act
-            bool downloaded = sftp.DownloadSpecification("/public/SomeFile.txt");
+            bool downloaded = sftp.DownloadSpecification($"/public/SomeFile.txt", "Specifications/SomeFile.txt");
 
             // Assert
             Assert.False(downloaded);
@@ -100,7 +100,7 @@ namespace IntegrationTests.UnitTests
             SftpHandler sftp = new SftpHandler();
 
             // Act
-            bool downloaded = sftp.DownloadSpecification("/public/Proba.txt");
+            bool downloaded = sftp.DownloadSpecification($"/public/Aspirin.pdf", "Specifications/Aspirin.pdf");
 
             // Assert
             Assert.True(downloaded);

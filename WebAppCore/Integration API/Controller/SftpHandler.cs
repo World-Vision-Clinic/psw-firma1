@@ -11,7 +11,7 @@ namespace Integration_API.Controller
     public class SftpHandler
     {
         FilesRepository repository = new FilesRepository();
-        public bool DownloadSpecification(string path)
+        public bool DownloadSpecification(string fromPath, string localPath)
         {
             try
             {
@@ -19,8 +19,10 @@ namespace Integration_API.Controller
                 {
                     client.Connect();
 
-                    string serverFile = @path;
-                    string localFile = @"Specification.pdf";
+                    Directory.CreateDirectory("Specifications");  // create directory
+
+                    string serverFile = @fromPath;
+                    string localFile = @localPath;
                     using (Stream stream = System.IO.File.OpenWrite(localFile))
                     {
                         client.DownloadFile(serverFile, stream);
@@ -29,14 +31,16 @@ namespace Integration_API.Controller
                     client.Disconnect();
                 }
 
-                Integration.Pharmacy.Model.File file = new Integration.Pharmacy.Model.File { Name = "Specification", Extension = "pdf", Path = "Specification.pdf" };
+                Integration.Pharmacy.Model.File file = new Integration.Pharmacy.Model.File { Name = localPath.Split("/")[1].Split(".")[0], Extension = localPath.Split("/")[1].Split(".")[1], Path = localPath };
                 repository.Save(file);
 
                 return true;
             }
-            catch
+            catch(Exception e)
             {
+                Console.WriteLine(e.StackTrace);
                 return false;
+               
             }
         }
 
@@ -52,11 +56,6 @@ namespace Integration_API.Controller
                 }
                 client.Disconnect();
             }
-        }
-
-        public bool fileExists(string path)
-        {
-            return File.Exists(@path);
         }
     }
 }

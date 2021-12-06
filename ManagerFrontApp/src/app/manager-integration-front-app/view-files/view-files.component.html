@@ -5,12 +5,11 @@
     <div class="card-body">
       <div class="container-fluid">
         <h2>View All Files</h2>
-      <table class="table table-bordered">
+      <table class="table">
         <tbody>
             <tr *ngFor="let file of files">
-              <td>{{file.Name}}.{{file.Extension}}</td>
-              <td>
-                <input type="button" class="btn btn-success" (click)="downloadFile(file.Id, 'application/pdf')" value="View"/>
+              <td>{{file.Name}}.{{file.Extension}}
+                <input style="margin-left: 5%;" type="button" class="btn btn-success" (click)="downloadFile(file.Id, 'application/pdf')" value="View"/>
               </td>
             </tr>
           </tbody>
