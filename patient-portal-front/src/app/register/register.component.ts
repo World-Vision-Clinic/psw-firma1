@@ -115,4 +115,23 @@ export class RegisterComponent implements OnInit {
     return true;
   }
 
+  addAllergen(id: number) {
+    this.allergens.push(id)
+  }
+
+  removeAllergen(id: number) {
+    let index = this.allergens.findIndex(a => a === id)
+    if(index >= 0) {
+      this.allergens.splice(index,1)
+    }
+  }
+
+  allergenIsPicked(id: number) {
+    for (let a of this.allergens) {
+        if (a == id) {
+          return true;
+        }
+    } 
+    return false
+  }
 }
