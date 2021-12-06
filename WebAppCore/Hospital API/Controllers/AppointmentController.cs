@@ -11,6 +11,8 @@ using System.Net;
 using Hospital_API.DTO;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Hospital.SharedModel;
+using Hospital.MedicalRecords.Repository;
 
 namespace Hospital_API.Controllers
 {
@@ -23,7 +25,10 @@ namespace Hospital_API.Controllers
         [ActivatorUtilitiesConstructor]
         public AppointmentController()
         {
-            _appointmentService = new AppointmentService(new AppointmentRepository(new Hospital.SharedModel.HospitalContext()));
+            HospitalContext context = new HospitalContext();
+            IPatientRepository patientRepository = new PatientRepository(context);
+            IDoctorRepository doctorRepository = new DoctorRepository(context, patientRepository);
+            _appointmentService = new AppointmentService(new AppointmentRepository(context), doctorRepository);
         }
 
         public AppointmentController(AppointmentService _appointmentService)

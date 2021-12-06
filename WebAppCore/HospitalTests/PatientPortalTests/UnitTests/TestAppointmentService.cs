@@ -1,4 +1,5 @@
-﻿using Hospital.Schedule.Model;
+﻿using Hospital.MedicalRecords.Repository;
+using Hospital.Schedule.Model;
 using Hospital.Schedule.Repository;
 using Hospital.Schedule.Service;
 using System;
@@ -13,7 +14,7 @@ namespace HospitalTests.PatientPortalTests.UnitTests
         [Fact]
         public void TestTermsOverlap()
         {
-            AppointmentService _service = new AppointmentService(new AppointmentRepository());
+            AppointmentService _service = new AppointmentService(new AppointmentRepository(), new DoctorRepository());
             DateTime firstDate = new DateTime(2021, 6, 6, 12, 0, 0);
             TimeSpan firstTimeSpan = new TimeSpan(0, 0, 45, 0, 0);
             DateTime secondDate = new DateTime(2021, 6, 6, 11, 30, 0);
@@ -24,7 +25,7 @@ namespace HospitalTests.PatientPortalTests.UnitTests
         [Fact]
         public void TestTermsDoNotOverlap()
         {
-            AppointmentService _service = new AppointmentService(new AppointmentRepository());
+            AppointmentService _service = new AppointmentService(new AppointmentRepository(), new DoctorRepository());
             DateTime firstDate = new DateTime(2021, 6, 6, 17, 0, 0);
             TimeSpan firstTimeSpan = new TimeSpan(0, 0, 45, 0, 0);
             DateTime secondDate = new DateTime(2021, 6, 6, 11, 30, 0);
@@ -35,7 +36,7 @@ namespace HospitalTests.PatientPortalTests.UnitTests
         [Fact]
         public void TestFreeAppointmentsListGenerated()
         {
-            AppointmentService _service = new AppointmentService(new AppointmentRepository());
+            AppointmentService _service = new AppointmentService(new AppointmentRepository(), new DoctorRepository());
             DateTime firstDate = new DateTime(2021, 6, 6, 0, 0, 0);
             DateTime secondDate = new DateTime(2021, 6, 8, 23, 59, 59);
             List<Appointment> freeAppointmentList = _service.GenerateFreeAppointmentList(firstDate, secondDate, new TimeSpan(12, 0, 0), new TimeSpan(14, 0, 0), new TimeSpan(1, 0, 0));
