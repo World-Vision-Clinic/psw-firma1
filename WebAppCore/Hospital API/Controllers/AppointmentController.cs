@@ -9,6 +9,8 @@ using Hospital.Schedule.Model;
 using System.Net.Http;
 using System.Net;
 using Hospital_API.DTO;
+using Hospital.SharedModel;
+using Hospital.MedicalRecords.Repository;
 
 namespace Hospital_API.Controllers
 {
@@ -20,7 +22,10 @@ namespace Hospital_API.Controllers
 
         public AppointmentController()
         {
-            _appointmentService = new AppointmentService(new AppointmentRepository(new Hospital.SharedModel.HospitalContext()));
+            HospitalContext context = new HospitalContext();
+            IPatientRepository patientRepository = new PatientRepository(context);
+            IDoctorRepository doctorRepository = new DoctorRepository(context, patientRepository);
+            _appointmentService = new AppointmentService(new AppointmentRepository(context), doctorRepository);
         }
 
         public AppointmentController(AppointmentService _appointmentService)

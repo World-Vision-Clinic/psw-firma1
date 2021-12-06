@@ -94,13 +94,32 @@ namespace Hospital.Schedule.Service
                 else
                 {
                     Doctor doctor = _doctorRepository.FindById(doctorId);
-                    List<Appointment> appointmentsByDoctorType = _repo.GetByDoctorType(doctor.Type);
+                    List<Doctor> matchingDoctors = _doctorRepository.GetDoctorsByType(doctor.Type);
 
-                    freeAppointmentsFiltered = FilterFreeAppointmentsByDoctorAvailability(freeAppointments, doctorAppointments);
+                    foreach (Doctor d in matchingDoctors)
+                    {
+                        if (d.Id != doctorId)
+                        {
+                            doctorAppointments = GetByDoctorId(d.Id, lowerDateRange, upperDateRange);
+                            List<Appointment> newAppointments = FilterFreeAppointmentsByDoctorAvailability(freeAppointments, doctorAppointments);
+                            FillAppointmentsWithDoctorId(newAppointments, d.Id);
+                            freeAppointmentsFiltered.AddRange(newAppointments);
+
+                        }
+                    }
+                    return freeAppointmentsFiltered;
                 }
             }
 
             return freeAppointmentsFiltered;
+        }
+
+        private void FillAppointmentsWithDoctorId(List<Appointment> appointments, int doctorId)
+        {
+            foreach (Appointment a in appointments)
+            {
+                a.DoctorForeignKey = doctorId;
+            }
         }
 
         private List<Appointment> FilterFreeAppointmentsByDoctorAvailability(List<Appointment> freeAppointments, List<Appointment> doctorAppointments)
