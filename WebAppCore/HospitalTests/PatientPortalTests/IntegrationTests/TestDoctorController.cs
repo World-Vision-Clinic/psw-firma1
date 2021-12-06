@@ -3,6 +3,7 @@ using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Service;
 using Hospital.SharedModel;
 using Hospital_API.Controllers;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -66,6 +67,49 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
 
             Assert.Equal("TestDoktorIme", response.Value.FirstName);
             Assert.Equal("TestDoktorPrezime", response.Value.LastName);
+        }
+
+        [Fact]
+        public void Test_get_docotrs_for_specialty()
+        {
+            Doctor doctor1 = new Doctor()
+            {
+                Id = 2,
+                FirstName = "TestDoktorIme",
+                LastName = "TestDoktorPrezime",
+                Specilaty = DoctorSpecialty.General
+            };
+
+            Doctor doctor2 = new Doctor()
+            {
+                Id = 3,
+                FirstName = "TestDoktorIme",
+                LastName = "TestDoktorPrezime",
+                Specilaty = DoctorSpecialty.General
+
+            };
+
+            Doctor doctor3 = new Doctor()
+            {
+                Id = 4,
+                FirstName = "TestDoktorIme",
+                LastName = "TestDoktorPrezime",
+                Specilaty = DoctorSpecialty.Dentist
+
+            };
+
+            _doctorRepository.AddDoctor(doctor1);
+            _doctorRepository.AddDoctor(doctor2);
+            _doctorRepository.AddDoctor(doctor3);
+            var response = _doctorsController.GetDoctorForSpecialty(0);
+            var result = response.Result as OkObjectResult;
+            var data = result.Value as List<Doctor>;
+
+            Assert.Equal(200, result.StatusCode);
+            Assert.NotNull(result.Value);
+            Assert.Equal(2, data.Count);
+            Assert.Contains(doctor2, data);
+
         }
     }
 }

@@ -61,11 +61,26 @@ namespace Hospital_API.Controllers
 
             return doctor;
         }
+        [HttpGet("GeForSpecialty/{specialty}")]
+        public ActionResult<IEnumerable<Doctor>> GetDoctorForSpecialty(int specialty)
+        {
+
+            List<Doctor> doctors = _doctorService.GetForSpecialty(specialty);
+
+            if (doctors.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(doctors);
+        }
 
         [HttpOptions]
         public HttpResponseMessage Options()
         {
             return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }
+
+
     }
 }

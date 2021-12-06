@@ -55,6 +55,32 @@ namespace Hospital_API.Controllers
             return _appointmentService.GetByDoctorId(id);
         }
 
+        [HttpGet("4step/{id}/{dateString}")]
+        public ActionResult<IEnumerable<Appointment>> GetAppointments4Step(int id, string dateString)
+        {
+            List<Appointment> freeAppointments = new List<Appointment>();
+            DateTime date = Convert.ToDateTime(dateString);
+            if (date < DateTime.Now) 
+            {
+                return BadRequest(freeAppointments);  
+            }
+
+            List<Appointment> doctorsAppointments = _appointmentService.GetByDoctorIdAndDate(id, date);
+
+            //freeAppointments = _appointmentService.GenerateFreeAppointments(id,date,doctorsAppointments);
+            Appointment appointment = new Appointment()
+            {
+                Id = 1,
+                PatientForeignKey = 1,
+                DoctorForeignKey = 1,
+                Type = AppointmentType.Appointment,
+                Date = DateTime.Now,
+                Time = TimeSpan.Zero
+            };
+            freeAppointments.Add(appointment);
+            return Ok(freeAppointments);
+        }
+
         [HttpPost("recommendation_doctor")]
         public ActionResult<IEnumerable<Appointment>> GetRecommendedAppointmentsByDoctorPriority([FromBody] AppointmentRecommendationRequestDTO appointmentRecommendationRequest)
         {

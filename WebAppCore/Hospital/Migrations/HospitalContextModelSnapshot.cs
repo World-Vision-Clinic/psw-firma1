@@ -306,6 +306,9 @@ namespace Hospital.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("text");
 
+                    b.Property<int>("Specilaty")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.ToTable("Doctors");
@@ -1197,7 +1200,7 @@ namespace Hospital.Migrations
                         new
                         {
                             IdSurvey = 1,
-                            CreationDate = new DateTime(2021, 11, 30, 0, 19, 50, 483, DateTimeKind.Local).AddTicks(7383),
+                            CreationDate = new DateTime(2021, 12, 6, 11, 5, 8, 211, DateTimeKind.Local).AddTicks(8863),
                             IdAppointment = 1
                         });
                 });

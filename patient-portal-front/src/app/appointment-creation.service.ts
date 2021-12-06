@@ -23,6 +23,14 @@ export class AppointmentCreationService {
     return this.http.get<Doctor[]>("/api/Doctors")
   }
 
+  getDoctorsForSpecialty(specialty: any) : Observable<Doctor[]>{
+    return this.http.get<Doctor[]>("/api/Doctors/GeForSpecialty/" + specialty)
+  }
+
+  getAppointments4Step(doctorId: any,date: any) : Observable<Appointment[]>{
+    return this.http.get<Appointment[]>("/api/Appointments/4step/"+ doctorId + "/" + date)
+  }
+
   getPatientAppointments(id: number) : Observable<Appointment[]>{
     return this.http.get<Appointment[]>("/api/Appointments/patient/1")
   }

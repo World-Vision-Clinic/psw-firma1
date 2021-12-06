@@ -39,6 +39,9 @@ namespace Hospital.Schedule.Repository
             _context.Appointments.Add(newAppointment);
             SaveSync();
         }
+        public List<Appointment> GetByDoctorIdAndDate(int id, DateTime date) {
+            return _context.Appointments.Where(f => f.DoctorForeignKey == id && f.Date.Date.Equals(date.Date)).ToList();
+        }
 
         public Appointment FindById(int id)
         {

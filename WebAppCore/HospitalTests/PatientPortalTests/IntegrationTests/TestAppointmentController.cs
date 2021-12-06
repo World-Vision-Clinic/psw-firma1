@@ -1,4 +1,5 @@
-﻿using Hospital.MedicalRecords.Repository;
+﻿using Hospital.MedicalRecords.Model;
+using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Service;
 using Hospital.Schedule.Model;
 using Hospital.Schedule.Repository;
@@ -6,6 +7,7 @@ using Hospital.Schedule.Service;
 using Hospital.SharedModel;
 using Hospital_API.Controllers;
 using Hospital_API.DTO;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -20,6 +22,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
     public class TestAppointmentController
     {
         public AppointmentRepository _appointmentRepository;
+        public DoctorRepository _doctorRepository;
 
         public AppointmentController _appointmentController;
 
@@ -37,6 +40,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             TestContext hospitalContext = new TestContext(options);
             hospitalContext.Database.EnsureCreated();
             _appointmentRepository = new AppointmentRepository(hospitalContext);
+            _doctorRepository = new DoctorRepository(hospitalContext);
             _appointmentController = new AppointmentController(new AppointmentService(_appointmentRepository));
         }
 
@@ -48,6 +52,48 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
 
             //Assert
             Assert.Empty(response.Value.ToList());
+
+        }
+
+        [Fact]
+        public void Test_get_appointments_4step_bad()
+        {
+            Doctor doctor = new Doctor()
+            {
+                Id = 5,
+                FirstName = "TestDoktorIme",
+                LastName = "TestDoktorPrezime",
+                Specilaty = DoctorSpecialty.Dentist
+
+            };
+            _doctorRepository.AddDoctor(doctor);
+
+            var controller = new AppointmentController();
+            var response = controller.GetAppointments4Step(5, "2020-12-08").Result as BadRequestObjectResult;
+
+            //Assert
+            Assert.Equal(400,response.StatusCode);
+
+        }
+
+        [Fact]
+        public void Test_get_appointments_4step_good()
+        {
+            Doctor doctor = new Doctor()
+            {
+                Id = 6,
+                FirstName = "TestDoktorIme",
+                LastName = "TestDoktorPrezime",
+                Specilaty = DoctorSpecialty.Dentist
+
+            };
+            _doctorRepository.AddDoctor(doctor);
+
+            var controller = new AppointmentController();
+            var response = controller.GetAppointments4Step(6, "2021-12-08").Result as OkObjectResult;
+
+            //Assert
+            Assert.Equal(200, response.StatusCode);
 
         }
 

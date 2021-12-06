@@ -1,0 +1,64 @@
+<mat-stepper [linear]= true #stepper>
+  <mat-step label="Step 1" [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+        <p>Pick a date: <input matInput [(ngModel)]="selectedParameters.date" type="date" name="dateOfAppointment" formControlName="firstCtrl" required></p>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+  </mat-step>
+  <mat-step label="Step 2" [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <p>Pick a specialty: 
+        <select [(ngModel)]="specialty" name="specialty" id="specialty" formControlName="secondCtrl" required>
+        <option [value]='0'>General Practitioner</option>
+        <option [value]='1'>Dentist</option>
+        <option [value]='2'>Cardiologist</option>
+        <option [value]='3'>Immunologist</option>
+        <option [value]='4'>Neurologist</option>
+      </select></p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button type="button" mat-button matStepperNext (click)="getDoctors()">Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step label="Step 3" [stepControl]="thirdFormGroup">
+    <form [formGroup]="thirdFormGroup">
+      <p>Pick a doctor: 
+      </p>
+      <input style="display: none;" matInput [(ngModel)]="selectedParameters.doctorId" type="text" name="doctor" formControlName="thirdCtrl" required>
+      <table>
+        <tr>
+          <th>FirstName</th>
+          <th>LastName</th>
+        </tr>
+        <tr *ngFor = "let d of doctors" (click)="selectDoctor(d)">
+          <td>{{d.firstName}}</td>
+          <td>{{d.lastName}}</td>
+        </tr>
+    </table>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext (click)="getAppointments()">Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step label="Step 4" [stepControl]="fourthFormGroup">
+    <form [formGroup]="fourthFormGroup">
+      <p>Pick the time of Your appointment (Every appointmet lasts 30 minutes): 
+      </p>
+      <table>
+        <tr>
+          <th>Starts at</th>
+        </tr>
+        <tr *ngFor = "let a of appointments">
+          <td>{{a.date | date:'MMM d, y, h:mm'}}</td>
+        </tr>
+    </table>
+      <div>
+        <button mat-button>Finish</button>
+      </div>
+    </form>
+  </mat-step>
+</mat-stepper>
