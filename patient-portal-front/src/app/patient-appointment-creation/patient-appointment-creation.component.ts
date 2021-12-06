@@ -23,6 +23,7 @@ export class PatientAppointmentCreationComponent implements OnInit {
   ]
   public doctors = [] as any;
   public appointments = [] as any;
+  public priority: string = "Doctor";
 
   constructor(private router: Router, private _appointmentCreationService: AppointmentCreationService) { }
 
@@ -36,4 +37,8 @@ export class PatientAppointmentCreationComponent implements OnInit {
     this._appointmentCreationService.requestAppointmentRecommendationDoctorPriority(this.appointmentRequest).subscribe(data => this.appointments = data);
   }
 
+  getTermEnd(dateString: string) {
+    let date = new Date(dateString);
+    return date.setMinutes(date.getMinutes() + 30)
+  }
 }
