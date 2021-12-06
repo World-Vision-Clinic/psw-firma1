@@ -166,7 +166,8 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             appointmentRecommendationRequestDTO.LowerTimeRange = "12:00:00";
             appointmentRecommendationRequestDTO.UpperTimeRange = "14:00:00";
             appointmentRecommendationRequestDTO.DoctorId = 1;
-            List<Appointment> freeAppointmentsBeforeAddition = _appointmentController.GetRecommendedAppointmentsByDoctorPriority(appointmentRecommendationRequestDTO).Value.ToList();
+            appointmentRecommendationRequestDTO.PriorityType = "DOCTOR_PRIORITY";
+            List<Appointment> freeAppointmentsBeforeAddition = _appointmentController.GetRecommendedAppointments(appointmentRecommendationRequestDTO).Value.ToList();
 
             Assert.NotNull(freeAppointmentsBeforeAddition);
             Assert.Equal(8, freeAppointmentsBeforeAddition.Count);
@@ -182,7 +183,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             };
             _appointmentRepository.AddAppointment(appointment);
 
-            List<Appointment> freeAppointmentsAfterAddition = _appointmentController.GetRecommendedAppointmentsByDoctorPriority(appointmentRecommendationRequestDTO).Value.ToList();
+            List<Appointment> freeAppointmentsAfterAddition = _appointmentController.GetRecommendedAppointments(appointmentRecommendationRequestDTO).Value.ToList();
 
             Assert.NotNull(freeAppointmentsAfterAddition);
             Assert.Equal(7, freeAppointmentsAfterAddition.Count);
@@ -197,6 +198,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             appointmentRecommendationRequestDTO.LowerTimeRange = "12:00:00";
             appointmentRecommendationRequestDTO.UpperTimeRange = "13:00:00";
             appointmentRecommendationRequestDTO.DoctorId = 1;
+            appointmentRecommendationRequestDTO.PriorityType = "DOCTOR_PRIORITY";
 
             Appointment appointment = new Appointment()
             {
@@ -220,7 +222,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             };
             _appointmentRepository.AddAppointment(earlierAppointment);
 
-            List<Appointment> freeAppointmentsAfterAddition = _appointmentController.GetRecommendedAppointmentsByDoctorPriority(appointmentRecommendationRequestDTO).Value.ToList();
+            List<Appointment> freeAppointmentsAfterAddition = _appointmentController.GetRecommendedAppointments(appointmentRecommendationRequestDTO).Value.ToList();
 
             Assert.NotNull(freeAppointmentsAfterAddition);
             Assert.Equal(18, freeAppointmentsAfterAddition.Count);

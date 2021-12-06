@@ -57,9 +57,9 @@
                             </div>
                             <div class="col-md-6">
                                 <label>
-                                    <select name="priority" id="priority" [(ngModel)]="priority" class="datepicker" required="required">
-                                        <option value="Doctor">Doctor</option>
-                                        <option value="Doctor">Time</option>
+                                    <select name="priority" id="priority" [(ngModel)]="appointmentRequest.PriorityType" class="datepicker" required="required">
+                                        <option value="DOCTOR_PRIORITY">Doctor</option>
+                                        <option value="DATE_TIME_PRIORITY">Time</option>
                                     </select>
                                     <span>Priority</span>
                                 </label>
