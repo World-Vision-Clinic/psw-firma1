@@ -109,7 +109,7 @@ export class PharmaciesComponent implements OnInit {
         .subscribe(data => {this.selectedProfile = data
 
           if((this.formData==null || this.formData.length == 0) && this.isPictureRemoved==true){
-            this.http.delete('http://localhost:43818/Pharmacies/deletePhoto/'+this.selectedProfile.Name).subscribe((data:any)=>{
+            this.http.delete('http://localhost:43818/api/Photos/deletePhoto/'+this.selectedProfile.Name).subscribe((data:any)=>{
               this.isViewing = true;
               this.isEditing = false;
               this.isPictureRemoved=true;
@@ -118,7 +118,7 @@ export class PharmaciesComponent implements OnInit {
             })
          
           } else if(this.formData!=null && this.formData.length != 0){
-              this.http.post('http://localhost:43818/Pharmacies/addPhoto/'+this.selectedProfile.Name, this.formData).subscribe((data:any)=>{
+              this.http.post('http://localhost:43818/api/Photos/addPhoto/'+this.selectedProfile.Name, this.formData).subscribe((data:any)=>{
                  this.PhotoFileName = data.toString();
                  this.setLinkPicture('http://localhost:43818/Photos/'+this.PhotoFileName);
                  this.isViewing = true;
