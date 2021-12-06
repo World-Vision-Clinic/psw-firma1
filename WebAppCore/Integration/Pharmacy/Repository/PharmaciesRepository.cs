@@ -39,5 +39,10 @@ namespace Integration.Pharmacy.Repository
             throw new NotImplementedException();
         }
 
+        public void Update()
+        {
+            dbContext.SaveChanges();
+        }
+
     }
 }
