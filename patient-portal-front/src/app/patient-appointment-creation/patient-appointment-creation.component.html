@@ -32,7 +32,7 @@
                             <div class="col-md-6">
                                 <label>
                                     <select name="lowerTime" id="lowerTime" [(ngModel)]="appointmentRequest.LowerTimeRange" class="datepicker" required="required">
-                                        <option *ngFor="let time of availableTimes" [value]="time">{{time}}</option>
+                                        <option *ngFor="let time of availableLowerTimes()" [value]="time">{{time}}</option>
                                     </select>
                                     <span>From Time</span>
                                 </label>
@@ -40,7 +40,7 @@
                             <div class="col-md-6">
                                 <label>
                                     <select name="upperTime" id="upperTime" [(ngModel)]="appointmentRequest.UpperTimeRange" class="datepicker" required="required">
-                                        <option *ngFor="let time of availableTimes" [value]="time">{{time}}</option>
+                                        <option *ngFor="let time of availableUpperTimes()" [value]="time">{{time}}</option>
                                     </select>
                                     <span>To Time</span>
                                 </label>
