@@ -1,4 +1,5 @@
-﻿using Renci.SshNet;
+﻿using Integration.Pharmacy.Repository;
+using Renci.SshNet;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,11 +10,12 @@ namespace Integration_API.Controller
 {
     public class SftpHandler
     {
+        FilesRepository repository = new FilesRepository();
         public bool DownloadSpecification(string path)
         {
             try
             {
-                using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.21", "user", "password")))
+                using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.22", "user", "password")))
                 {
                     client.Connect();
 
@@ -26,6 +28,9 @@ namespace Integration_API.Controller
 
                     client.Disconnect();
                 }
+
+                Integration.Pharmacy.Model.File file = new Integration.Pharmacy.Model.File { Name = "Specification", Extension = "pdf", Path = "Specification.pdf" };
+                repository.Save(file);
 
                 return true;
             }

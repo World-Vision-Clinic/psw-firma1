@@ -71,7 +71,7 @@ namespace Integration_API
             server = new Server
             {
                 Services = { gRPCHospitalService.BindService(new GRPCHospitalServiceImpl()) },
-                Ports = { new ServerPort("127.0.0.1", 2000, ServerCredentials.Insecure) }
+                Ports = { new ServerPort("127.0.0.1", 2500, ServerCredentials.Insecure) }
             };
             server.Start();
 
