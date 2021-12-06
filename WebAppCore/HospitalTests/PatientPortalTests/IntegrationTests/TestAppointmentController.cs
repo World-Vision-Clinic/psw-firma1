@@ -239,8 +239,8 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         public void Test_get_free_doctor_appointments_in_range_with_interval_loosening_date_priority()
         {
             AppointmentRecommendationRequestDTO appointmentRecommendationRequestDTO = new AppointmentRecommendationRequestDTO();
-            appointmentRecommendationRequestDTO.LowerDateRange = new DateTime(2022, 7, 7, 0, 0, 0);
-            appointmentRecommendationRequestDTO.UpperDateRange = new DateTime(2022, 7, 7, 23, 59, 59);
+            appointmentRecommendationRequestDTO.LowerDateRange = new DateTime(2022, 9, 9, 0, 0, 0);
+            appointmentRecommendationRequestDTO.UpperDateRange = new DateTime(2022, 9, 9, 23, 59, 59);
             appointmentRecommendationRequestDTO.LowerTimeRange = new TimeSpan(12, 0, 0);
             appointmentRecommendationRequestDTO.UpperTimeRange = new TimeSpan(13, 0, 0);
             appointmentRecommendationRequestDTO.DoctorId = 1;
@@ -253,6 +253,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 LastName = "Savić",
                 Type = DoctorType.Cardiologist
             };
+            _doctorRepository.AddDoctor(doctorCardi1);
 
             Doctor doctorCardi2 = new Doctor()
             {
@@ -261,6 +262,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 LastName = "Milanović",
                 Type = DoctorType.Cardiologist
             };
+            _doctorRepository.AddDoctor(doctorCardi2);
 
             Doctor doctorOphta1 = new Doctor()
             {
@@ -269,21 +271,22 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 LastName = "Marković",
                 Type = DoctorType.Ophthalmologist
             };
+            _doctorRepository.AddDoctor(doctorOphta1);
 
             Appointment appointment = new Appointment()
             {
-                Id = 7,
+                Id = 9,
                 PatientForeignKey = 1,
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
-                Date = new DateTime(2022, 7, 7, 12, 0, 0),
+                Date = new DateTime(2022, 9, 9, 12, 0, 0),
                 Time = new TimeSpan(0, 0, 45, 0, 0)
             };
             _appointmentRepository.AddAppointment(appointment);
 
             List<Appointment> freeAppointmentsAfterAddition = _appointmentController.GetRecommendedAppointmentsByDatePriority(appointmentRecommendationRequestDTO).Value.ToList();
 
-            Assert.Equal(18, freeAppointmentsAfterAddition.Count);
+            Assert.Equal(2, freeAppointmentsAfterAddition.Count);
         }
     }
 }
