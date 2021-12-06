@@ -43,17 +43,8 @@ namespace Hospital.MedicalRecords.Repository
 
         public List<Allergen> FindByPatientId(int patientId)
         {
-            var query = from pa in _context.PatientAllergens
-                        where pa.PatientId == patientId
-                        select new
-                        {
-                            allergenId = pa.AllergenId
-                        };
-            List<Allergen> allergens = new List<Allergen>();
-            foreach(var a in query)
-            {
-                allergens.Add(_allergenRepository.FindById(a.allergenId));
-            }
+            List<int> patientAllergenIds = _context.PatientAllergens.Where(f => f.PatientId == patientId).Select(u => u.Id).ToList();
+            List<Allergen> allergens = _context.Allergens.Where(a => patientAllergenIds.Contains(a.Id)).ToList();
             return allergens;
         }
 
