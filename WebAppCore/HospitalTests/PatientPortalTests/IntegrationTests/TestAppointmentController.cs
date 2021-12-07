@@ -90,7 +90,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             _doctorRepository.AddDoctor(doctor);
 
             var controller = new AppointmentController();
-            var response = controller.GetAppointments4Step(6, "2021-12-08").Result as OkObjectResult;
+            var response = controller.GetAppointments4Step(6, DateTime.Now.AddDays(2).ToString()).Result as OkObjectResult;
             var data = response.Value as List<Appointment>;
 
             //Assert
