@@ -13,5 +13,6 @@ namespace Integration_API.Dto
         public string Address { get; set; }
         public string City { get; set; }
         public ProtocolType Protocol { get; set; }
+        public string Note { get; set; }
     }
 }

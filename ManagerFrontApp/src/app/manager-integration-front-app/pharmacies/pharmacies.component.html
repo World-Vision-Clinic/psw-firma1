@@ -1,39 +1,64 @@
-<div class="container">
-    <div class="row searchFilter" >
-       <div class="col-sm-12" >
-        <div class="input-group" >
-         <input id="table_filter" name="searchFilter" [(ngModel)]="searchFilter" (input)="searchPharmacies()" placeholder="Enter city or adress to search pharmacies..." type="text" class="form-control" aria-label="Text input with segmented button dropdown" >
+<div *ngIf="profileNotSelected; else chosenProfile">
+    <div class="container">
+        <div class="row searchFilter" >
+        <div class="col-sm-12" >
+            <div class="input-group" >
+            <input id="table_filter" name="searchFilter" [(ngModel)]="searchFilter" (input)="searchPharmacies()" placeholder="Enter city or adress to search pharmacies..." type="text" class="form-control" aria-label="Text input with segmented button dropdown" >
+            </div>
         </div>
-       </div>
-    </div>
-</div>
-<div class="container">
-    <div class="row searchFilter" >
-       <div class="col-sm-12" >
-        <div class="input-group" >
-         <input id="table_filter" name="medicineName" [(ngModel)]="medicineName" placeholder="Enter medicine name..." type="text" class="form-control" (input)="disableButtons()">
-         <input id="table_filter" name="medicineGrams" [(ngModel)]="medicineGrams" placeholder="Enter grams(mg)..." type="number" class="form-control" (input)="disableButtons()">
-         <input id="table_filter" name="numOfBoxes" [(ngModel)]="numOfBoxes" placeholder="Enter number of boxes..." type="number" class="form-control" (input)="disableButtons()">
-         <button id="searchBtn" type="button" class="btn btn-secondary btn-search" (click)="searchPharmaciesForMedicals()"><span class="glyphicon glyphicon-search" >&nbsp;</span> <span class="label-icon" >Search</span></button>
         </div>
-       </div>
     </div>
-</div>
-<div class="none" id="page-content"  *ngIf="checkIfThereArePharmacies()"> <span class="item-author text-color">There is no proper pharmacy</span></div>
-<div class="page-content page-container" id="page-content"  *ngFor="let data of PharmaciesList">
-    <div class="padding">
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="list list-row block">
-                    <div class="list-item" data-id="19">
-                        <div><a href="#" data-abc="true"><span class="w-48 avatar gd-info">{{data.Name.charAt(0)}}</span></a></div>
-                        <div class="flex"> <a href="#" class="item-author text-color" data-abc="true">{{data.Name}}</a>
-                            <div class="item-except text-muted text-sm h-1x">{{data.Address}}, {{data.City}}</div>
+    <div class="container">
+        <div class="row searchFilter" >
+        <div class="col-sm-12" >
+            <div class="input-group" >
+            <input id="table_filter" name="medicineName" [(ngModel)]="medicineName" placeholder="Enter medicine name..." type="text" class="form-control" (input)="disableButtons()">
+            <input id="table_filter" name="medicineGrams" [(ngModel)]="medicineGrams" placeholder="Enter grams(mg)..." type="number" class="form-control" (input)="disableButtons()">
+            <input id="table_filter" name="numOfBoxes" [(ngModel)]="numOfBoxes" placeholder="Enter number of boxes..." type="number" class="form-control" (input)="disableButtons()">
+            <button id="searchBtn" type="button" class="btn btn-secondary btn-search" (click)="searchPharmaciesForMedicals()"><span class="glyphicon glyphicon-search" >&nbsp;</span> <span class="label-icon" >Search</span></button>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="none" id="page-content"  *ngIf="checkIfThereArePharmacies()"> <span class="item-author text-color">There is no proper pharmacy</span></div>
+    <div class="page-content page-container" id="page-content"  *ngFor="let data of PharmaciesList">
+        <div class="padding">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="list list-row block">
+                        <div class="list-item" data-id="19">
+                            <div><a href="#" data-abc="true"><span class="w-48 avatar gd-info">{{data.Name.charAt(0)}}</span></a></div>
+                            <div class="flex"> <a href="#" class="item-author text-color" data-abc="true">{{data.Name}}</a>
+                                <div class="item-except text-muted text-sm h-1x">{{data.Address}}, {{data.City}}</div>
+                            </div>
+                            <button class="btn btn-secondary btn-search" *ngIf="buttonClicked" id="orderButton" (click)="orderMedicines(data)" style="background-color: #00aced;">Order</button>
+                            <button class="btn btn-secondary btn-search" style="background-color: #00aced; margin-left: 30em;" (click)="showProfile(data)">Show profile</button>
                         </div>
-                        <button class="btn btn-secondary btn-search" *ngIf="buttonClicked" id="orderButton" (click)="orderMedicines(data)" style="background-color: #00aced;">Order</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<ng-template #chosenProfile>
+    <div style="text-align: center; margin-top: 2em; color: #00aced;">
+    <h1 style="margin-bottom: 1em; font-size: 3em; color: #00aced;">{{selectedProfile.Name}}</h1>
+
+    <img *ngIf="!isPictureRemoved" [src]=getLinkPicture() height="250px" width="250px" style="margin-bottom: 2em;"><br>
+    <button *ngIf="isEditing && !isPictureRemoved" style=" position: absolute; top: 158px; right: 835px;" (click)="removePicture()"><img src="/assets/cross.png" height="20px" width="20px"/></button>
+    <p *ngIf="isEditing && isPictureRemoved" style="position:relative; left:45px;">Slika: <input *ngIf="isEditing && isPictureRemoved" type="file" (change)="uploadPhoto($event)" style="color: #00aced;"/></p>
+    
+
+    <p *ngIf="isViewing">Grad : {{selectedProfile.City}}</p>
+    <p *ngIf="isEditing" style="position:relative; left:7px;">Grad : <input type="text" [(ngModel)]="selectedProfile.City" style="color: #00aced; border-color: #00aced;"/> </p>
+    <p style="margin-bottom: 2em;" *ngIf="isViewing">Adresa : {{selectedProfile.Address}}</p>    
+    <p *ngIf="isEditing" style="margin-bottom: 2em;">Adresa : <input type="text" [(ngModel)]="selectedProfile.Address" style="color: #00aced; border-color: #00aced;"/> </p>
+    <textarea *ngIf="isViewing" [(ngModel)]="selectedProfile.Note" style="margin-bottom: 2em; cursor: default; pointer-events:none; color: #00aced; text-align: center; min-width: 250px; border-color: #00aced;" readonly></textarea>
+    <textarea *ngIf="isEditing" [(ngModel)]="selectedProfile.Note" style="margin-bottom: 2em; color: #00aced; text-align: center; min-width: 250px; border-color: #00aced;"></textarea>
+    <p style="margin-bottom: 2em;" (click)="editProfile()" *ngIf="isViewing"><button class="btn btn-secondary" style="background-color: #00aced;">Edit profile</button></p>
+    <p style="margin-bottom: 2em;" (click)="saveChanges()" *ngIf="isEditing"><button class="btn btn-secondary" style="background-color: #00aced;">Save changes</button></p>
+    <p style="margin-bottom: 2em;" (click)="discardChanges()" *ngIf="isEditing"><button class="btn btn-secondary" style="background-color: #00aced;">Discard changes</button></p>
+    <p><button (click)="goBack()" *ngIf="isViewing" class="btn btn-secondary" style="background-color: #00aced;">Back</button></p>
+    </div>
+</ng-template>

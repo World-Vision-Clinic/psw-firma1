@@ -10,5 +10,7 @@ namespace Integration.Pharmacy.Repository.RepositoryInterfaces
    {
         public PharmacyProfile Get(string id);
 
-   }
+        public void Update();
+
+    }
 }

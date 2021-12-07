@@ -15,6 +15,19 @@ namespace Integration.Pharmacy.Model
         public string Address { set; get; }
         public string City { get; set; }
 
+        public string Note { get; set; }
+
+        public PharmacyProfile(string name, string key, string localhost, ProtocolType protocol, string address, string city, string note)
+        {
+            Name = name;
+            Key = key;
+            Localhost = localhost;
+            Protocol = protocol;
+            Address = address;
+            City = city;
+            Note = note;
+        }
+
         public PharmacyProfile(string name, string key, string localhost, ProtocolType protocol, string address, string city)
         {
             Name = name;
@@ -23,6 +36,7 @@ namespace Integration.Pharmacy.Model
             Protocol = protocol;
             Address = address;
             City = city;
+            Note = "";
         }
 
         public PharmacyProfile() { }

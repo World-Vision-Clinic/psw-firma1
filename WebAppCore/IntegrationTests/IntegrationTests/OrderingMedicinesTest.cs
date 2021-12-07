@@ -61,26 +61,30 @@ namespace IntegrationTests.IntegrationTests
             Assert.Equal(quantity + int.Parse(omd.Quantity), newQuantity);
         }
 
-        [Fact]
-        public void CheckIfMedicineIsOrderedHttp()
+        [Theory]
+        [MemberData(nameof(Data))]
+        public void CheckIf_medicine_is_ordered(OrderingMedicineDTO omd, bool isHttp)
         {
-            OrderingMedicineDTO omd = new OrderingMedicineDTO("http://localhost:34616", "Brufen", "100", "2");
             MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection());
-
-            bool requestOk = mc.SendMedicineOrderingRequestHTTP(omd, true);
-
+            bool requestOk = false;
+            if (isHttp)
+            {
+                requestOk = mc.SendMedicineOrderingRequestHTTP(omd, true);
+            }
+            else
+            {
+                requestOk = mc.SendMedicineOrderingRequestGRPC(omd, true);
+            }
             Assert.True(requestOk);
         }
-
-        /*[Fact]
-        public void Check_if_medicine_is_ordered()
+        public static IEnumerable<object[]> Data()
         {
-            OrderingMedicineDTO omd = new OrderingMedicineDTO("127.0.0.1:5000", "Brufen", "100", "2");
-            MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection());
+            var retVal = new List<object[]>();
 
-            bool requestOk = mc.SendMedicineOrderingRequestGRPC(omd, true);
+            retVal.Add(new object[] { new OrderingMedicineDTO("http://localhost:34616", "Brufen", "100", "2"), true });
+            retVal.Add(new object[] { new OrderingMedicineDTO("127.0.0.1:5000", "Brufen", "100", "2"), false });
 
-            Assert.True(requestOk);
-        }*/
+            return retVal;
+        }
     }
 }

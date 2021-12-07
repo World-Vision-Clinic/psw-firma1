@@ -180,9 +180,8 @@ namespace Integration_API.Controller
             int numOfBoxes;
             Credential credential = credentialsService.GetByPharmacyLocalhost(dto.Localhost);
             if (credential == null)
-            {
                 return false;
-            }
+            
             try
             {
                 medicineGrams = Double.Parse(dto.MedicineGrams);
