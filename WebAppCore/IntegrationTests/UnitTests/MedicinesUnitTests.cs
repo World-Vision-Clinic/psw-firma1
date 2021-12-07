@@ -1,4 +1,5 @@
-﻿using Integration_API.Controller;
+﻿using Integration.Pharmacy.Model;
+using Integration_API.Controller;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -87,10 +88,10 @@ namespace IntegrationTests.UnitTests
             SftpHandler sftp = new SftpHandler();
             
             // Act
-            bool downloaded = sftp.DownloadSpecification($"/public/SomeFile.txt", "Specifications/SomeFile.txt");
+            File downloaded = sftp.DownloadSpecification($"/public/SomeFile.txt", "Specifications/SomeFile.txt");
 
             // Assert
-            Assert.False(downloaded);
+            Assert.Null(downloaded);
         }
 
         [Fact]  // interaction with Rebex Client
@@ -100,10 +101,10 @@ namespace IntegrationTests.UnitTests
             SftpHandler sftp = new SftpHandler();
 
             // Act
-            bool downloaded = sftp.DownloadSpecification($"/public/Aspirin.pdf", "Specifications/Aspirin.pdf");
+            File downloaded = sftp.DownloadSpecification($"/public/Aspirin.pdf", "Specifications/Aspirin.pdf");
 
             // Assert
-            Assert.True(downloaded);
+            Assert.NotNull(downloaded);
 
         }
 

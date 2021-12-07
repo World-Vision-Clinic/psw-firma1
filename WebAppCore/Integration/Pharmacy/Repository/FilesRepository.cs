@@ -26,6 +26,11 @@ namespace Integration.Pharmacy.Repository
             throw new NotImplementedException();
         }
 
+        public File GetByName(string fileName)
+        {
+            return dbContext.Files.Where(f => f.Name == fileName).SingleOrDefault();
+        }
+
         public void Save(File parameter)
         {
             dbContext.Files.Add(parameter);

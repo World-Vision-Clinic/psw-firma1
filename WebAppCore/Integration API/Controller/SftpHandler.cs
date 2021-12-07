@@ -1,8 +1,8 @@
-﻿using Integration.Pharmacy.Repository;
+﻿using Integration.Pharmacy.Model;
+using Integration.Pharmacy.Repository;
 using Renci.SshNet;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,7 +11,7 @@ namespace Integration_API.Controller
     public class SftpHandler
     {
         FilesRepository repository = new FilesRepository();
-        public bool DownloadSpecification(string fromPath, string localPath)
+        public File DownloadSpecification(string fromPath, string localPath)
         {
             try
             {
@@ -19,11 +19,11 @@ namespace Integration_API.Controller
                 {
                     client.Connect();
 
-                    Directory.CreateDirectory("Specifications");  // create directory
+                    System.IO.Directory.CreateDirectory("Specifications");  // create directory
 
                     string serverFile = @fromPath;
                     string localFile = @localPath;
-                    using (Stream stream = System.IO.File.OpenWrite(localFile))
+                    using (System.IO.Stream stream = System.IO.File.OpenWrite(localFile))
                     {
                         client.DownloadFile(serverFile, stream);
                     }
@@ -31,15 +31,13 @@ namespace Integration_API.Controller
                     client.Disconnect();
                 }
 
-                Integration.Pharmacy.Model.File file = new Integration.Pharmacy.Model.File { Name = localPath.Split("/")[1].Split(".")[0], Extension = localPath.Split("/")[1].Split(".")[1], Path = localPath };
-                repository.Save(file);
+                File file = new Integration.Pharmacy.Model.File { Name = localPath.Split("/")[1].Split(".")[0], Extension = localPath.Split("/")[1].Split(".")[1], Path = localPath };
 
-                return true;
+                return file;
             }
-            catch(Exception e)
+            catch
             {
-                Console.WriteLine(e.StackTrace);
-                return false;
+                return null;
                
             }
         }
@@ -50,9 +48,9 @@ namespace Integration_API.Controller
             {
                 client.Connect();
                 string sourceFile = @"consumed-medicine.txt";
-                using (Stream stream = System.IO.File.OpenRead(sourceFile))
+                using (System.IO.Stream stream = System.IO.File.OpenRead(sourceFile))
                 {
-                    client.UploadFile(stream, @"\public\" + Path.GetFileName(sourceFile), x => { Console.WriteLine(x); });
+                    client.UploadFile(stream, @"\public\" + System.IO.Path.GetFileName(sourceFile), x => { Console.WriteLine(x); });
                 }
                 client.Disconnect();
             }
