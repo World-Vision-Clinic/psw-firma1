@@ -15,7 +15,7 @@ namespace Integration_API.Controller
         {
             try
             {
-                using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.22", "user", "password")))
+                using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.16", "user", "password")))
                 {
                     client.Connect();
 
