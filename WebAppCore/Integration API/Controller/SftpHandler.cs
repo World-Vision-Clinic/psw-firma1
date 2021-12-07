@@ -1,7 +1,8 @@
-﻿using Renci.SshNet;
+﻿using Integration.Pharmacy.Model;
+using Integration.Pharmacy.Repository;
+using Renci.SshNet;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,17 +10,20 @@ namespace Integration_API.Controller
 {
     public class SftpHandler
     {
-        public bool DownloadSpecification(string path)
+        FilesRepository repository = new FilesRepository();
+        public File DownloadSpecification(string fromPath, string localPath)
         {
             try
             {
-                using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.21", "user", "password")))
+                using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.16", "user", "password")))
                 {
                     client.Connect();
 
-                    string serverFile = @path;
-                    string localFile = @"Specification.pdf";
-                    using (Stream stream = System.IO.File.OpenWrite(localFile))
+                    System.IO.Directory.CreateDirectory("Specifications");  // create directory
+
+                    string serverFile = @fromPath;
+                    string localFile = @localPath;
+                    using (System.IO.Stream stream = System.IO.File.OpenWrite(localFile))
                     {
                         client.DownloadFile(serverFile, stream);
                     }
@@ -27,11 +31,14 @@ namespace Integration_API.Controller
                     client.Disconnect();
                 }
 
-                return true;
+                File file = new Integration.Pharmacy.Model.File { Name = localPath.Split("/")[1].Split(".")[0], Extension = localPath.Split("/")[1].Split(".")[1], Path = localPath };
+
+                return file;
             }
             catch
             {
-                return false;
+                return null;
+               
             }
         }
 
@@ -41,17 +48,12 @@ namespace Integration_API.Controller
             {
                 client.Connect();
                 string sourceFile = @"consumed-medicine.txt";
-                using (Stream stream = System.IO.File.OpenRead(sourceFile))
+                using (System.IO.Stream stream = System.IO.File.OpenRead(sourceFile))
                 {
-                    client.UploadFile(stream, @"\public\" + Path.GetFileName(sourceFile), x => { Console.WriteLine(x); });
+                    client.UploadFile(stream, @"\public\" + System.IO.Path.GetFileName(sourceFile), x => { Console.WriteLine(x); });
                 }
                 client.Disconnect();
             }
-        }
-
-        public bool fileExists(string path)
-        {
-            return File.Exists(@path);
         }
     }
 }

@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using File = Integration.Pharmacy.Model.File;
 
 namespace Integration_API.Controller
 {
@@ -28,6 +29,7 @@ namespace Integration_API.Controller
         private PharmaciesService pharmaciesService = new PharmaciesService(new PharmaciesRepository());
         private CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
         private MedicineService medicineService = new MedicineService(new MedicinesRepository(), new MedicalRecordsRepository(), new ExaminationRepository());
+        private FilesService filesService = new FilesService(new FilesRepository());
 
         private SftpHandler sftpHandler = new SftpHandler();
         private IPharmacyConnection pharmacyConnection;
@@ -218,10 +220,14 @@ namespace Integration_API.Controller
                 return BadRequest("Specification does not exists");
             }
 
-            if (!sftpHandler.DownloadSpecification($"/public/Specification.pdf"))
+            File dowloadedSpec = sftpHandler.DownloadSpecification($"/public/" + medicine + ".pdf", "Specifications/" + medicine + ".pdf");
+
+            if (dowloadedSpec == null)
             {
                 return BadRequest("Unable to download specification file");
             }
+
+            filesService.UpdateSpecification(dowloadedSpec);
 
             return Ok();
         }

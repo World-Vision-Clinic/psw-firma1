@@ -26,6 +26,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ToastrModule } from 'ngx-toastr';
 import { GetSpecificationComponent } from './manager-integration-front-app/get-specification/get-specification.component';
+import { ViewFilesComponent } from './manager-integration-front-app/view-files/view-files.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { GetSpecificationComponent } from './manager-integration-front-app/get-s
     ViewSurveyResultsComponent,
     MedicineConsumptionComponent,
     NewsComponent,
-    GetSpecificationComponent
+    GetSpecificationComponent,
+    ViewFilesComponent
   ],
   imports: [
     BrowserModule,

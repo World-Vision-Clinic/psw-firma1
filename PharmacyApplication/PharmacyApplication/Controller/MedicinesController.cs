@@ -132,7 +132,7 @@ namespace PharmacyAPI.Controller
 
         public void LoadFile()
         {
-            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.28", "user", "password")))
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.16", "user", "password")))
             {
                 client.Connect();
                 string serverFile = @"\public\consumed-medicine.txt";
@@ -180,18 +180,18 @@ namespace PharmacyAPI.Controller
 
             foreach (Medicine medicine in medicines)
             {
-                createPDFFile(service.GetSpecification(medicine));
+                createPDFFile(service.GetSpecification(medicine), medicine.MedicineName);
                 break;
             }
-
-            uploadSpecification();
+            
+            uploadSpecification(name + ".pdf");
 
             return Ok();
         }
 
-        private void createPDFFile(string specification)
+        private void createPDFFile(string specification, string fileName)
         {
-            PdfWriter writer = new PdfWriter("Specification.pdf");
+            PdfWriter writer = new PdfWriter(fileName + ".pdf");
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf);
             FontProgram fontProgram = FontProgramFactory.CreateFont();
@@ -209,13 +209,13 @@ namespace PharmacyAPI.Controller
             document.Close();
         }
 
-        private void uploadSpecification()
+        private void uploadSpecification(string filePath)
         {
-            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.21", "user", "password")))
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.16", "user", "password")))
             {
                 client.Connect();
 
-                string sourceFile = @"Specification.pdf";
+                string sourceFile = @filePath;
                 using (Stream stream = System.IO.File.OpenRead(sourceFile))
                 {
                     client.UploadFile(stream, @"\public\" + System.IO.Path.GetFileName(sourceFile));

@@ -28,7 +28,7 @@ namespace IntegrationTests.IntegrationTests
             _client = server.CreateClient();
         }
 
-        /*[Fact]
+        [Fact]
         public async Task Check_response_when_medicine_is_available()
         {
             // Arrange
@@ -44,7 +44,7 @@ namespace IntegrationTests.IntegrationTests
             // Assert
             response.EnsureSuccessStatusCode();
             Assert.Single(pharmacies);
-        }*/
+        }
 
         [Fact]
         public async Task Check_response_when_medicine_is_not_available()

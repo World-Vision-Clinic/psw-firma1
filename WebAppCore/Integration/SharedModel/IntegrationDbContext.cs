@@ -13,6 +13,8 @@ namespace Integration.SharedModel
         public DbSet<Reply> Replies { get; set; }
         public DbSet<PharmacyProfile> Pharmacies { get; set; }
         public DbSet<News> News { get; set; }
+        public DbSet<File> Files { get; set; }
+
         public IntegrationDbContext()
         {
 

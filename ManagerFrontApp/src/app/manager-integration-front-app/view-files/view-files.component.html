@@ -1,0 +1,19 @@
+<div class="card">
+    <div class="card-header">
+      Dowloaded pdf files
+    </div>
+    <div class="card-body">
+      <div class="container-fluid">
+        <h2>View All Files</h2>
+      <table class="table">
+        <tbody>
+            <tr *ngFor="let file of files">
+              <td>{{file.Name}}.{{file.Extension}}
+                <input style="margin-left: 5%;" type="button" class="btn btn-success" (click)="downloadFile(file.Id, 'application/pdf')" value="View"/>
+              </td>
+            </tr>
+          </tbody>
+      </table>
+      </div>
+    </div>
+  </div>

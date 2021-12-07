@@ -1,0 +1,13 @@
+﻿using Integration.Pharmacy.Model;
+using Integration.Repositories.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Integration.Pharmacy.Repository.RepositoryInterfaces
+{
+    public interface IFilesRepository : IGenericRepository<File>
+    {
+        File GetByName(string fileName);
+    }
+}
