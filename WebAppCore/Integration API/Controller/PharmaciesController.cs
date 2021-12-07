@@ -42,41 +42,50 @@ namespace Integration_API.Controller
 
             if (dto.Protocol.Equals(ProtocolType.HTTP))
             {
-                var client = new RestSharp.RestClient(dto.Localhost);
-                var request = new RestRequest("/credentials");
+                return SendRegistrationRequestHttp(dto, generatedKey);
+            }
+            else
+            {
+                return SendRegistrationRequestGrpc(dto, generatedKey);
+            }
+        }
 
-                request.AddHeader("Content-Type", "application/json");
-                request.AddJsonBody(
-                new
-                {
-                    HospitalName = HOSPITAL_NAME,
-                    HospitalLocalhost = HOSPITAL_URL,
-                    ApiKey = generatedKey
-                });
+        private IActionResult SendRegistrationRequestHttp(PharmacyDto dto, String generatedKey)
+        {
+            var client = new RestSharp.RestClient(dto.Localhost);
+            var request = new RestRequest("/credentials");
 
-                IRestResponse response = client.Post(request);  // POST /credential  {"Name": "World Vision Clinic", "HospitalLocalhost": "http://localhost:43818", "ApiKey": "wqhegyqwegqyw21543"}
-                System.Diagnostics.Debug.WriteLine(response.StatusCode);
-                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                    return BadRequest();
+            request.AddHeader("Content-Type", "application/json");
+            request.AddJsonBody(
+            new
+            {
+                HospitalName = HOSPITAL_NAME,
+                HospitalLocalhost = HOSPITAL_URL,
+                ApiKey = generatedKey
+            });
+
+            IRestResponse response = client.Post(request);  // POST /credential  {"Name": "World Vision Clinic", "HospitalLocalhost": "http://localhost:43818", "ApiKey": "wqhegyqwegqyw21543"}
+            System.Diagnostics.Debug.WriteLine(response.StatusCode);
+            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                return BadRequest();
+            return Ok();
+        }
+
+        private IActionResult SendRegistrationRequestGrpc(PharmacyDto dto, String generatedKey)
+        {
+            var input = new RegisterPharmacyRequest { HospitalName = HOSPITAL_NAME, HospitalLocalhost = HOSPITAL_PORT, ApiKey = generatedKey };
+            var channel = new Channel(dto.Localhost, ChannelCredentials.Insecure);
+            var client = new gRPCService.gRPCServiceClient(channel);
+            var reply = client.registerPharmacyAsync(input);
+            if (reply.ResponseAsync.Result.Response.Equals("OK"))
+            {
                 return Ok();
             }
             else
             {
-                var input = new RegisterPharmacyRequest { HospitalName = HOSPITAL_NAME, HospitalLocalhost = HOSPITAL_PORT, ApiKey = generatedKey};
-                var channel = new Channel(dto.Localhost, ChannelCredentials.Insecure);
-                var client = new gRPCService.gRPCServiceClient(channel);
-                var reply = client.registerPharmacyAsync(input);
-                if (reply.ResponseAsync.Result.Response.Equals("OK"))
-                {
-                    return Ok();
-                }
-                else
-                {
-                    return BadRequest();
-                }
+                return BadRequest();
             }
         }
-
         [HttpGet]
         public IActionResult Get()
         {
