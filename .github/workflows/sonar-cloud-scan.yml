@@ -2,7 +2,7 @@ name: Sonar-scanner
 on:
   push:
     branches:
-      [master, develop]
+      [master, develop, feat/sonar-cloud]
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
