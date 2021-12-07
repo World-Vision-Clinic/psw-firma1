@@ -241,10 +241,10 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             AppointmentRecommendationRequestDTO appointmentRecommendationRequestDTO = new AppointmentRecommendationRequestDTO();
             appointmentRecommendationRequestDTO.LowerDateRange = new DateTime(2022, 9, 9, 0, 0, 0);
             appointmentRecommendationRequestDTO.UpperDateRange = new DateTime(2022, 9, 9, 23, 59, 59);
-            appointmentRecommendationRequestDTO.LowerTimeRange = new TimeSpan(12, 0, 0);
-            appointmentRecommendationRequestDTO.UpperTimeRange = new TimeSpan(13, 0, 0);
+            appointmentRecommendationRequestDTO.LowerTimeRange = "12:00:00";
+            appointmentRecommendationRequestDTO.UpperTimeRange = "13:00:00";
             appointmentRecommendationRequestDTO.DoctorId = 1;
-            appointmentRecommendationRequestDTO.AppointmentLength = new TimeSpan(0, 30, 0);
+            appointmentRecommendationRequestDTO.PriorityType = "DATE_TIME_PRIORITY";
 
             Doctor doctorCardi1 = new Doctor()
             {
@@ -284,7 +284,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             };
             _appointmentRepository.AddAppointment(appointment);
 
-            List<Appointment> freeAppointmentsAfterAddition = _appointmentController.GetRecommendedAppointmentsByDatePriority(appointmentRecommendationRequestDTO).Value.ToList();
+            List<Appointment> freeAppointmentsAfterAddition = _appointmentController.GetRecommendedAppointments(appointmentRecommendationRequestDTO).Value.ToList();
 
             Assert.Equal(2, freeAppointmentsAfterAddition.Count);
         }
