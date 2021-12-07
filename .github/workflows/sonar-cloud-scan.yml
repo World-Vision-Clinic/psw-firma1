@@ -1,10 +1,8 @@
 name: Sonar-scanner
 on:
   push:
-    branches:
-      [master, develop, feat/sonar-cloud]
   pull_request:
-    types: [opened, synchronize, reopened]
+    
 jobs:
   build:
     name: Build
@@ -42,6 +40,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"World-Vision-Clinic_psw-firma1" /o:"World-Vision-Clinic" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"World-Vision-Clinic_psw-firma1" /o:"world-vision-clinic" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           dotnet build "./PharmacyApplication/PharmacyApplication.sln"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
