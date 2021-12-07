@@ -46,9 +46,19 @@
     </svg>
   </div>
 
-  <div class="info-box" *ngIf="!!roomIsSelected">
+  <div class="info-box" *ngIf="!!roomIsSelected && !scheduleBox">
     <div *ngIf="!equipmentBox">
-      <div class="title"><h3>Room info:</h3></div>
+      <div class="title"><h3>Room informations</h3></div>
+      <div class="rightbtn">
+        <button class="btn" (click)="schedule()">Schedule</button>
+        <div *ngIf="formDisabled">
+          <button class="btn" (click)="equipment()">Equipment</button>
+          <button class="btn" (click)="enableEdit()">Edit</button>
+        </div>
+        <button class="btn" (click)="cancel()" *ngIf="!formDisabled">Cancel</button>
+        <button class="btn" (click)="save()" *ngIf="!formDisabled">Save</button>
+      </div>
+      <br>
       <label for="">Room name:</label><br />
       <input
         type="text"
@@ -64,24 +74,9 @@
         [(ngModel)]="selectedRoom.doctor"
         name="input"
         [attr.disabled]="formDisabled ? '' : null"
-      /><br /><br />
-      <label for="">Purpose:</label><br />
-      <input
-        type="text"
-        class="form-field"
-        [(ngModel)]="selectedRoom.purpose"
-        name="input"
-        [attr.disabled]="formDisabled ? '' : null"
-      /><br /><br /><br />
-      <div class="rightbtn">
-        <button class="btn" (click)="close()" *ngIf="formDisabled">Close</button>
-        <div *ngIf="formDisabled">
-          <button class="btn" (click)="equipment()">Equipment</button>
-          <button class="btn" (click)="enableEdit()">Edit</button>
-        </div>
-        <button class="btn" (click)="cancel()" *ngIf="!formDisabled">Cancel</button>
-        <button class="btn" (click)="save()" *ngIf="!formDisabled">Save</button>
-      </div>
+      />
+      <br /><br /><br /><br />
+      <button class="btn" (click)="close()" *ngIf="formDisabled">Close</button>
     </div>
 
     <div *ngIf="!!equipmentBox">
@@ -104,6 +99,25 @@
       <div class="rightbtn">
         <button class="btn" (click)="closeEquip()">Close</button>
       </div>
+    </div>
+  </div>
+
+  
+  <div class="schedule-box" *ngIf="!!scheduleBox">
+    <div class="title"><h3>Schedule</h3></div>
+    <table class="schedule-table">
+      <thead>
+        <tr>
+          <th>TYPE</th><th>DATE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr></tr>
+      </tbody>
+    </table>
+    <div class="rightbtn">
+      <button class="schedule-btn">Delete</button>
+      <button class="schedule-btn" (click)="closeSchedule()" *ngIf="formDisabled">Close</button>
     </div>
   </div>
 
@@ -398,28 +412,9 @@
     </div>
   </div>
 
-  <div class="schedule-box" *ngIf="scheduleBox">
-    <div class="title"><h3>Schedule</h3></div>
-    <table class="schedule-table">
-      <thead>
-        <tr>
-          <th>TYPE</th><th>DATE</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr></tr>
-      </tbody>
-    </table>
-    <div class="rightbtn">
-      <button class="schedule-btn">Delete</button>
-      <button class="schedule-btn" (click)="closeSchedule()" *ngIf="formDisabled">Close</button>
-    </div>
-  </div>
-
   <div class="toolbar">
     <button (click)="buildingBox = true" class="toolbar-btn">Building info</button>
     <button (click)="moveEquipment()" class="toolbar-btn">Move equipment</button>
-    <button class="toolbar-btn"  (click)="scheduleBox = true" >Schedule</button>
     <button class="toolbar-btn">Renovate rooms</button>
   </div>
   

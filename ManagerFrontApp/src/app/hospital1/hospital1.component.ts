@@ -58,7 +58,6 @@ export class Hospital1Component implements OnInit {
   buildingFormDisabled = true;
   roomName: string = '';
   doctorUsing: string = '';
-  purpose: string = '';
   selectedRoom: Room = emptyRoom();
   roomIsSelected = false;
   formDisabled: boolean = true;
@@ -207,6 +206,10 @@ export class Hospital1Component implements OnInit {
 
   equipment() {
     this.equipmentBox = true;
+  }
+
+  schedule() {
+    this.scheduleBox = true;
   }
 
   closeEquip() {
