@@ -44,6 +44,8 @@ export class PatientAppointmentCreationComponent implements OnInit {
   public appointments = [] as any;
   public priority: string = "Doctor";
 
+  public currentDate: Date = new Date()
+
   constructor(private router: Router, private _appointmentCreationService: AppointmentCreationService) { }
 
 
@@ -54,6 +56,11 @@ export class PatientAppointmentCreationComponent implements OnInit {
 
   send_request() {
     this._appointmentCreationService.requestAppointmentRecommendationDoctorPriority(this.appointmentRequest).subscribe(data => this.appointments = data);
+  }
+
+  createAppointment(appointment: any) {
+    appointment.patientForeignKey = 1
+    this._appointmentCreationService.createAppointment(appointment).subscribe();
   }
 
   getTermEnd(dateString: string) {
@@ -105,5 +112,25 @@ export class PatientAppointmentCreationComponent implements OnInit {
       }
     });
     return result
+  }
+
+  contentIsValid(): boolean {
+    if(this.appointmentRequest.LowerDateRange === undefined || this.appointmentRequest.UpperDateRange === undefined)
+    {
+      return false
+    }
+    if(this.appointmentRequest.LowerDateRange > this.appointmentRequest.UpperDateRange)
+    {
+      return false
+    }
+    if(this.appointmentRequest.LowerDateRange <= this.currentDate || this.appointmentRequest.UpperDateRange <= this.currentDate)
+    {
+      return false
+    }
+    if(this.firstTimeIsGreaterThanSecondTime(this.appointmentRequest.LowerTimeRange, this.appointmentRequest.UpperTimeRange))
+    {
+      return false
+    }
+    return true
   }
 }

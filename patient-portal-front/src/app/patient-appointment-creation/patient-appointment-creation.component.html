@@ -49,8 +49,8 @@
                         <div class="row d-flex">
                             <div class="col-md-6">
                                 <label>
-                                    <select name="doctors" id="doctors" [(ngModel)]="appointmentRequest.DoctorId" class="datepicker" required="required">
-                                        <option *ngFor="let d of doctors" [value]="appointmentRequest.DoctorId">{{d.firstName}} {{d.lastName}}</option>
+                                    <select name="doctors" id="doctors" [(ngModel)]="appointmentRequest.DoctorForeignKey" class="datepicker" required="required">
+                                        <option *ngFor="let d of doctors" [value]="appointmentRequest.DoctorForeignKey">{{d.firstName}} {{d.lastName}}</option>
                                     </select>
                                     <span>Doctor</span>
                                 </label>
@@ -68,7 +68,7 @@
                         <div class="row d-flex">
                             <div class="col-md-9"></div>
                             <div class="col-md-3">
-                                <button class="btn btn-blue btn-rounded" (click)="send_request()">Search</button>
+                                <button class="btn btn-blue btn-rounded" (click)="send_request()" [disabled]="!contentIsValid()">Search</button>
                             </div>
                         </div>
                     </form>
@@ -99,11 +99,11 @@
                         </div>
                         <div class="col-md-5">
                             <h1 class="font-weight-bold">
-                                Doktor
+                                Doktor Doktorić
                             </h1>
                         </div>
                         <div class="col-md-2">
-                            <button class="btn btn-blue btn-rounded">Reserve</button>
+                            <button class="btn btn-blue btn-rounded" (click)="createAppointment(a)">Reserve</button>
                         </div>
                     </div>
                 </div>

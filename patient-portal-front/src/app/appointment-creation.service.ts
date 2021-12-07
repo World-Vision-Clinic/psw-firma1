@@ -19,6 +19,10 @@ export class AppointmentCreationService {
     return this.http.post<AppointmentRequest>("/api/Appointments/recommendation_doctor", JSON.stringify(appointmentRequest), this.httpOptions);
   }
 
+  createAppointment(appointmentRequest: AppointmentRequest): Observable<AppointmentRequest> {
+    return this.http.post<AppointmentRequest>("/api/Appointments/add_appointment", JSON.stringify(appointmentRequest), this.httpOptions);
+  }
+
   getDoctors() : Observable<Doctor[]>{
     return this.http.get<Doctor[]>("/api/Doctors")
   }
