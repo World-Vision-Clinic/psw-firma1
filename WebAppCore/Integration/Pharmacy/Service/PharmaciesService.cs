@@ -54,5 +54,22 @@ namespace Integration.Pharmacy.Service
             }
             return pharmacies;
         }
+
+        public PharmacyProfile Edit(PharmacyProfile editedPharmacy)
+        {
+            List<PharmacyProfile> pharmacies = GetAll();
+            PharmacyProfile pharmacy = pharmacies.Find(pharmacy => pharmacy.Localhost == editedPharmacy.Localhost);
+
+            if (pharmacy == null) return null;
+
+            pharmacy.City = editedPharmacy.City;
+            pharmacy.Address = editedPharmacy.Address;
+            pharmacy.Note = editedPharmacy.Note;
+
+            pharmaciesRepository.Update();
+
+            return pharmacy;
+
+        }
     }
 }

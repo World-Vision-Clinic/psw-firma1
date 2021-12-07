@@ -108,5 +108,26 @@ namespace Integration_API.Controller
             }
         }
 
+        [HttpPut]
+        public IActionResult EditPharmacy(PharmacyDto dto)
+        {
+            if (dto.Name.Length <= 0 || dto.Localhost.Length <= 0 || dto.Address.Length <= 0 || dto.City.Length <= 0)
+            {
+                return BadRequest();
+            }
+
+            List<PharmacyProfile> pharmacies = pharmaciesService.GetAll();
+
+            PharmacyProfile pharmacy = pharmaciesService.Edit(PharmacyMapper.PharmacyDtoToPharmacy(dto));
+            if (pharmacy == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(pharmacy);
+            }
+        }
+
     }
 }

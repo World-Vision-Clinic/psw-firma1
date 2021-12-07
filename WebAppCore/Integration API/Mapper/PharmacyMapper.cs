@@ -18,6 +18,7 @@ namespace Integration_API.Mapper
             pharmacy.Address = dto.Address;
             pharmacy.City = dto.City;
             pharmacy.Protocol = dto.Protocol;
+            pharmacy.Note = dto.Note;
             return pharmacy;
         }
 
@@ -28,6 +29,7 @@ namespace Integration_API.Mapper
             dto.Localhost = pharmacy.Localhost;
             dto.Address = pharmacy.Address;
             dto.City = pharmacy.City;
+            dto.Note = pharmacy.Note;
             return dto;
         }
     }
