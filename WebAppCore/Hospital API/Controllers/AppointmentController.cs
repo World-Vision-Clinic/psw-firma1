@@ -67,17 +67,8 @@ namespace Hospital_API.Controllers
 
             List<Appointment> doctorsAppointments = _appointmentService.GetByDoctorIdAndDate(id, date);
 
-            //freeAppointments = _appointmentService.GenerateFreeAppointments(id,date,doctorsAppointments);
-            Appointment appointment = new Appointment()
-            {
-                Id = 1,
-                PatientForeignKey = 1,
-                DoctorForeignKey = 1,
-                Type = AppointmentType.Appointment,
-                Date = DateTime.Now,
-                Time = TimeSpan.Zero
-            };
-            freeAppointments.Add(appointment);
+            freeAppointments = _appointmentService.GenerateFreeAppointments(id,date,doctorsAppointments);
+
             return Ok(freeAppointments);
         }
 

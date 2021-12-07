@@ -91,10 +91,11 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
 
             var controller = new AppointmentController();
             var response = controller.GetAppointments4Step(6, "2021-12-08").Result as OkObjectResult;
+            var data = response.Value as List<Appointment>;
 
             //Assert
             Assert.Equal(200, response.StatusCode);
-
+            Assert.NotEmpty(data);
         }
 
         [Fact]

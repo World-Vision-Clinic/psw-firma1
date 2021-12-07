@@ -17,6 +17,7 @@ export class Appointment4stepComponent implements OnInit {
 
   public doctors = [] as any;
   public appointments = [] as any;
+  public selectedAppointment = "";
   public specialty = "";
   public errorMsg = "";
   public selectedParameters = {
@@ -45,21 +46,42 @@ export class Appointment4stepComponent implements OnInit {
     console.log(this.selectedParameters.date);
     console.log(this.specialty);
   }
-  selectDoctor(d: any) {
+  selectDoctor(event:any, d: any) {
     this.selectedParameters.doctorId = d.id
   }
+  selectAppointment(event:any,a: any) {
+    this.selectedAppointment = a;
+  }
 
+  tryAppointment() {  
+    this._appointmentCreationService.makeAppointment(this.selectedAppointment).subscribe(success => this.router.navigate(['/medical-record']),
+      error => alert("Couldn't reserve that appointment please choose another one!")); 
+  }
+
+  getDoctorsError(){
+    this.errorMsg = "Couldn't load doctors"
+    this.doctors = []
+  }
+
+  removeError(){
+    this.errorMsg = ""
+  }
+
+  getAppointmentsError(){
+    this.errorMsg = "Couldn't load available appointments"
+    this.appointments = []
+  }
   getDoctors() {
     this._appointmentCreationService.getDoctorsForSpecialty(this.specialty).subscribe(data => this.doctors = data,
-      error => this.errorMsg = "Couldn't load doctors", 
-      () => console.log(this.doctors)); 
+      error => this.getDoctorsError(), 
+      () => this.errorMsg = ""); 
 
   }
 
   getAppointments() {
     this._appointmentCreationService.getAppointments4Step(this.selectedParameters.doctorId,this.selectedParameters.date).subscribe(data => this.appointments = data,
-      error => this.errorMsg = "Couldn't load appointments", 
-      () => console.log(this.appointments));
+      error => this.getAppointmentsError(), 
+      () => this.errorMsg = "");
 
   }
 

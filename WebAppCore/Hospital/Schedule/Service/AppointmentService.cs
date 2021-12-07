@@ -90,7 +90,7 @@ namespace Hospital.Schedule.Service
             TimeSpan appointmentLenght = new TimeSpan(0, 29, 59);
             List<Appointment> appointments = new List<Appointment>();
             DateTime appointmentBegin = workdayBegin;
-            while (appointmentBegin.Day == workdayEnd.Day) 
+            while (appointmentBegin < workdayEnd) 
             {
                 Appointment appointment = new Appointment();
                 appointment.Date = appointmentBegin;
@@ -99,7 +99,7 @@ namespace Hospital.Schedule.Service
                 appointment.Type = AppointmentType.Appointment;
                 appointment.DoctorForeignKey = id;
                 appointments.Add(appointment);
-                appointmentBegin.AddMinutes(30);
+                appointmentBegin = appointmentBegin.AddMinutes(30);
             }
             return appointments;
         }

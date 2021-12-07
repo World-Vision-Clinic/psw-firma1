@@ -1,14 +1,17 @@
 .mat-stepper-horizontal {
     margin-top: 8px;
   }
-  
+  ::ng-deep .mat-horizontal-stepper-header{
+    pointer-events: none !important;
+}
   .mat-form-field {
     margin-top: 16px;
   }
-
+  td{
+    cursor: pointer;
+}
   tr{
     width: 33%;
-    cursor: pointer;
     font-size: large;
 }
   th{
@@ -18,3 +21,13 @@
   p, button{
       font-size: large;
   }
+.error{
+  text-align : center;
+  font-size: xx-large;
+  color: red;
+  margin-top: 50px;
+}
+
+.highlighted{
+  background-color:skyblue;
+}
