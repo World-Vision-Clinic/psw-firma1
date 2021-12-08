@@ -36,5 +36,12 @@ namespace Integration.Pharmacy.Repository
             dbContext.Files.Add(parameter);
             dbContext.SaveChanges();
         }
+
+        public void DeleteByPath(string path)
+        {
+            File file = dbContext.Files.Where(f => f.Path == path).SingleOrDefault();
+            dbContext.Files.Remove(file);
+            dbContext.SaveChanges();
+        }
     }
 }
