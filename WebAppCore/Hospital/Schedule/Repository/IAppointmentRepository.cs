@@ -21,5 +21,6 @@ namespace Hospital.Schedule.Repository
         List<Appointment> GetByDoctorId(int doctorId, DateTime lowerDateRange, DateTime upperDateRange);
         List<Appointment> GetByDoctorId(int doctorId);
         List<Appointment> GetByDoctorType(DoctorType type);
+
     }
 }

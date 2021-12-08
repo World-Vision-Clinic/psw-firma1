@@ -46,6 +46,8 @@ namespace Hospital.Schedule.Service
             return _repo.GetByDoctorId(doctorId);
         }
 
+       
+
         public List<Appointment> GetByDoctorId(int doctorId, DateTime lowerDateRange, DateTime upperDateRange)
         {
             return _repo.GetByDoctorId(doctorId, lowerDateRange, upperDateRange);
@@ -187,6 +189,11 @@ namespace Hospital.Schedule.Service
         public void SaveSync()
         {
             _repo.SaveSync();
+        }
+
+        public void Modify(Appointment appointment)
+        {
+            _repo.Modify(appointment);
         }
     }
 }

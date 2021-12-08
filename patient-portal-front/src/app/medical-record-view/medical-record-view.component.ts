@@ -38,6 +38,7 @@ export class MedicalRecordViewComponent implements OnInit {
 
   public appointments = [] as any;
   public selectedDay: string = 'Monday';
+  
 
   constructor(private _patientService : PatientFeedbackServiceService) { }
 
@@ -58,15 +59,53 @@ export class MedicalRecordViewComponent implements OnInit {
   }
 
   getAppointmentType(appointmentType: number): string {
-    if(appointmentType == 2)
+    if(appointmentType == 1)
     {
       return "Operation";
     }
-    if(appointmentType == 3)
+    if(appointmentType == 2)
     {
       return "Intervention";
     }
     return "Appointment";
   }
+
+getAppointmentStatus(isCanceled: boolean, isFinished: boolean, isUpcoming: boolean): string {
+
+   if(isCanceled === true && isFinished === false && isUpcoming === false)
+    {
+    return  "Canceled";
+    } 
+    else if(isCanceled === false && isFinished === true && isUpcoming === false)
+    {
+    return "Finished"
+  }
+  return "Upcoming"
+  
+  }
+
+ 
+
+  isCancelValid(isCanceled: boolean, isFinished: boolean): boolean{
+    if(isCanceled === true || isFinished === true)
+      {
+        return false;
+      }
+      return true;
+    }
+
+    canSurveyBeDone(isCanceled: boolean, isUpcoming: boolean): boolean{
+      if(isCanceled === true || isUpcoming === true)
+        {
+          return false;
+        }
+        return true;
+      }
+
+  cancelAppointment() {
+    this._patientService.cancelAppointment(this.appointments).subscribe();
+  }
+  
+
 
 }

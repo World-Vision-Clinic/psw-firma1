@@ -16,7 +16,7 @@ using Hospital.MedicalRecords.Repository;
 
 namespace Hospital_API.Controllers
 {
-    [Route("api/Appointments")]
+    [Route("api/Appointment")]
     [ApiController]
     public class AppointmentController : ControllerBase
     {
@@ -78,8 +78,23 @@ namespace Hospital_API.Controllers
             if (_appointmentService.GetByDateAndDoctor(appointmentToAdd.Date, appointmentToAdd.Time, appointmentToAdd.DoctorForeignKey) != null)
                 return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest };
 
+            appointmentToAdd.IsUpcoming = true;
             _appointmentService.AddAppointment(appointmentToAdd);
             return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult<Appointment> CancelAppointment(int id)
+        {
+            var appointment = _appointmentService.FindById(id);
+            if (appointment == null)
+            {
+                return NotFound();
+            }
+
+            appointment.IsCanceled = true;
+            _appointmentService.Modify(appointment);
+            return appointment;
         }
     }
 }
