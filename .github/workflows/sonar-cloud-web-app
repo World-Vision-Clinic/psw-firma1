@@ -1,4 +1,4 @@
-name: Build Pharmacy
+name: Build Hospital
 on:
   push:
   pull_request:
@@ -38,9 +38,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          
+          lib_path: WebAppCore\Hospital\Hospital.csproj
+          api_path: WebAppCore\Hospital API\Hospital API.csproj
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"World-Vision-Clinic_psw-firma1" /o:"world-vision-clinic" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build "./PharmacyApplication/PharmacyApplication.sln"
+           dotnet build ${{ env.lib_path }}
+           dotnet build ${{ env.api_path }}
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
