@@ -88,6 +88,15 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
 
             };
             _doctorRepository.AddDoctor(doctor);
+            DateTime dateForTest = DateTime.Now.Date;
+            if (dateForTest.DayOfWeek == DayOfWeek.Friday || dateForTest.DayOfWeek == DayOfWeek.Saturday || dateForTest.DayOfWeek == DayOfWeek.Sunday)
+            {
+                dateForTest = dateForTest.AddDays(3);
+            }
+            else 
+            {
+                dateForTest = dateForTest.AddDays(1);
+            }
 
             var controller = new AppointmentController();
             var response = controller.GetAppointments4Step(6, DateTime.Now.AddDays(2).ToString()).Result as OkObjectResult;

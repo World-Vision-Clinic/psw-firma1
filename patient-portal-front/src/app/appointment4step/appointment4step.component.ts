@@ -42,6 +42,7 @@ export class Appointment4stepComponent implements OnInit {
     });
 
   }
+
   printInConsole() {
     console.log(this.selectedParameters.date);
     console.log(this.specialty);
@@ -53,9 +54,13 @@ export class Appointment4stepComponent implements OnInit {
     this.selectedAppointment = a;
   }
 
+  tryAppointmentError(){
+    alert("Couldn't reserve that appointment please choose another one!")
+    this.getAppointments();
+  }
   tryAppointment() {  
     this._appointmentCreationService.makeAppointment(this.selectedAppointment).subscribe(success => this.router.navigate(['/medical-record']),
-      error => alert("Couldn't reserve that appointment please choose another one!")); 
+      error => this.tryAppointmentError()); 
   }
 
   getDoctorsError(){
@@ -65,10 +70,12 @@ export class Appointment4stepComponent implements OnInit {
 
   removeError(){
     this.errorMsg = ""
+    this.selectedParameters.doctorId = ""
+    this.selectedAppointment = ""
   }
 
-  getAppointmentsError(){
-    this.errorMsg = "Couldn't load available appointments"
+  getAppointmentsError(error: any){
+    this.errorMsg = error.error
     this.appointments = []
   }
   getDoctors() {
@@ -80,7 +87,7 @@ export class Appointment4stepComponent implements OnInit {
 
   getAppointments() {
     this._appointmentCreationService.getAppointments4Step(this.selectedParameters.doctorId,this.selectedParameters.date).subscribe(data => this.appointments = data,
-      error => this.getAppointmentsError(), 
+      error => this.getAppointmentsError(error), 
       () => this.errorMsg = "");
 
   }

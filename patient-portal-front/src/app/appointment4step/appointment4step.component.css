@@ -1,5 +1,8 @@
 .mat-stepper-horizontal {
     margin-top: 8px;
+    text-align: center;
+    overflow: hidden;
+    padding: 0;
   }
   ::ng-deep .mat-horizontal-stepper-header{
     pointer-events: none !important;
@@ -7,16 +10,18 @@
   .mat-form-field {
     margin-top: 16px;
   }
+
   td{
     cursor: pointer;
 }
   tr{
-    width: 33%;
+    width: 50%;
     font-size: large;
 }
   th{
-    width: 33%;
+    width: 50%;
     font-size: large;
+    font-weight: bold;
   }
   p, button{
       font-size: large;
@@ -29,5 +34,5 @@
 }
 
 .highlighted{
-  background-color:skyblue;
+  background-color:rgb(196, 135, 237 );;
 }

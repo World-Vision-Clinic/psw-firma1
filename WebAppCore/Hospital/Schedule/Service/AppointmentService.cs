@@ -104,36 +104,43 @@ namespace Hospital.Schedule.Service
             return appointments;
         }
 
+        private List<Appointment> GetFreeAppointments(List<Appointment> possibleAppointments, List<Appointment> takenAppointments) 
+        {
+            List<Appointment> appointments = new List<Appointment>();
+            foreach (Appointment appointment in possibleAppointments)
+            {
+                if (!OverlapsWithAppointments(appointment,takenAppointments))
+                {
+                    appointments.Add(appointment);
+                }
+            }
+            return appointments;
+        }
+
+        private bool OverlapsWithAppointments(Appointment appointment,List<Appointment> takenAppointments)
+        {
+            foreach (Appointment takenAppointment in takenAppointments)
+            {
+                if (DatesOverlap(appointment.Date, appointment.Time, takenAppointment.Date, takenAppointment.Time))
+                    return true;
+            }
+            return false;
+        }
+
         public List<Appointment> GenerateFreeAppointments(int id, DateTime date, List<Appointment> doctorsAppointments)
         {
             DateTime workdayBegin = date.AddHours(9);
             DateTime workdayEnd = date.AddHours(17);
-            TimeSpan appointmentLenght = new TimeSpan(0, 29, 59);
             List<Appointment> appointments = new List<Appointment>();
-            List<Appointment> appointmentsOfTheDay = GenerateEveryAppointmentForWorkday(workdayBegin,workdayEnd,id);
+            List<Appointment> allPossibleAppointments = GenerateEveryAppointmentForWorkday(workdayBegin,workdayEnd,id);
 
             if (doctorsAppointments.Count != 0)
             {
-                foreach (Appointment appointment in appointmentsOfTheDay) 
-                {
-                    bool overlapFound = false;
-                    foreach (Appointment doctorsAppointment in doctorsAppointments) 
-                    {
-                        if (DatesOverlap(appointment.Date, appointment.Time, doctorsAppointment.Date, doctorsAppointment.Time))
-                        {
-                            overlapFound = true;
-                            break;
-                        }
-                    }
-                    if (!overlapFound) 
-                    {
-                        appointments.Add(appointment);
-                    }
-                }
+                appointments = GetFreeAppointments(allPossibleAppointments, doctorsAppointments);
             }
             else 
             {
-                appointments = appointmentsOfTheDay;
+                appointments = allPossibleAppointments;
             }
             return appointments;
         }
