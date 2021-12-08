@@ -124,7 +124,7 @@
     </table>
     <hr/>
     <button class="btn" (click)="restartSelection()">Restart selection</button>
-    <button class="btn" (click)="Merge()">Merge</button>
+    <button class="btn" (click)="FillMergeInfo()">Merge</button>
     <button class="btn" (click)="closeRenovationBoxes()">Close</button>
   </div>
 
@@ -139,13 +139,64 @@
     </table>
     <hr/>
     <button class="btn" (click)="restartSelection()">Restart selection</button>
-    <button class="btn" (click)="Split()">Split</button>
+    <button class="btn" (click)="FillSplitInfo()">Split</button>
     <button class="btn" (click)="closeRenovationBoxes()">Close</button>
   </div>
 
-  <div *ngIf="roomsSplitBox">
-
+  <div *ngIf="roomsSplitInfoBox">
+    <label for="">Name of first new room:</label>
+    <input
+        type="text"
+        class="form-field"
+        [(ngModel)]="roomSplitDto.name1"
+        name="input"
+      /><br /><br />
+    <label for="">Name of second new room:</label>
+    <input
+        type="text"
+        class="form-field"
+        [(ngModel)]="roomSplitDto.name2"
+        name="input"
+      /><br /><br />
+    <label for="">Purpose of first new room:</label>
+    <input
+        type="text"
+        class="form-field"
+        [(ngModel)]="roomSplitDto.purpose1"
+        name="input"
+      /><br /><br />
+    <label for="">Purpose of second new room:</label>
+    <input
+        type="text"
+        class="form-field"
+        [(ngModel)]="roomSplitDto.purpose2"
+        name="input"
+      /><br /><br />
+      <button class="btn" *ngIf="showBtns" (click)="Split()">Split</button>
+      <button class="btn" *ngIf="showBtns" (click)="BackSplit()">Back</button>
+      <button class="btn" *ngIf="!showBtns" (click)="FinishRenovation()">Finish renovation</button>
   </div>
+
+  <div *ngIf="roomsMergeInfoBox">
+    <label for="">Name new room:</label>
+    <input
+        type="text"
+        class="form-field"
+        [(ngModel)]="roomMergeDto.name"
+        name="input"
+      /><br /><br />
+    <label for="">Purpose of new room:</label>
+    <input
+        type="text"
+        class="form-field"
+        [(ngModel)]="roomMergeDto.purpose"
+        name="input"
+      /><br /><br />
+      <button class="btn" *ngIf="showBtns" (click)="Merge()">Merge</button>
+      <button class="btn" *ngIf="showBtns" (click)="BackMerge()">Back</button>
+      <button class="btn" *ngIf="!showBtns" (click)="FinishRenovation()">Finish renovation</button>
+  </div>
+
   
   <div class="move-box-equipment" *ngIf="!!listBoxEquipment">
     <div class="moving-container" *ngIf="currentState.index == 0">

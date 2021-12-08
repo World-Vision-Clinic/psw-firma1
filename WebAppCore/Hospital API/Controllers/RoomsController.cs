@@ -85,6 +85,40 @@ namespace Hospital_API.Controllers
             return NoContent();
         }
 
+        [Route("/Merge")]
+        [HttpPost]
+        public IActionResult Merge(RoomMergeDTO dto)
+        {
+            /*try
+            {
+                roomService.mergeRooms(dto.room1, dto.room2, dto.name, dto.purpose);
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            return NoContent();*/
+            return Ok();
+        }
+
+        [Route("/Split")]
+        [HttpPost]
+        public IActionResult Split(RoomSplitDTO dto)
+        {
+            /*try
+            {
+                roomService.splitRoom(dto.room, dto.name1, dto.purpose1, dto.name2, dto.purpose2);
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            return NoContent();*/
+            return Ok();
+        }
+
 
         private bool RoomExists(int id)
         {

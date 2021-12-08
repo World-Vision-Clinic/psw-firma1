@@ -81,7 +81,24 @@ export class Hospital1Component implements OnInit {
   secondMergeSelected : Room= emptyRoom();
   roomForSplit: Room = emptyRoom();
   isForSplitSelected:boolean=false;
-  
+  roomsMergeInfoBox : boolean = false;
+  roomsSplitInfoBox : boolean = false;
+  roomSplitDto = {
+    room: emptyRoom(),
+    name1: '',
+    name2: '',
+    purpose1: '',
+    purpose2: ''
+  };
+  roomMergeDto = {
+    room1: emptyRoom(),
+    room2: emptyRoom(),
+    name: '',
+    purpose: ''
+  };
+  showBtns: boolean = true;
+
+
   currentState = {
     index: 0,
   };
@@ -410,7 +427,7 @@ export class Hospital1Component implements OnInit {
       (error) => console.log(error)
     );
   }
-
+//RENOVATION OF ROOMS
   pickRenovationType(type){
     if(type==='merge'){
       this.renovationTypeBox=false;
@@ -477,18 +494,58 @@ export class Hospital1Component implements OnInit {
     this.roomForSplit=emptyRoom();
   }
 
-  Merge(){
+  FillMergeInfo(){
     if(this.firstMergeSelected.id===-1 || this.secondMergeSelected.id===-1){
       alert('You must select rooms first!')
       return;
     } 
+    this.roomsMergeBox=false;
+    this.roomsMergeInfoBox=true;
   }
 
-  Split(){
+  FillSplitInfo(){
     if(this.roomForSplit.id===-1){
       alert('You must select room first!')
       return;
     } 
+    this.roomsSplitBox=false;
+    this.roomsSplitInfoBox=true;
+  }
+  BackSplit(){
+    this.roomsSplitBox=true;
+    this.roomsSplitInfoBox=false;
+  }
+  BackMerge(){
+    this.roomsMergeBox=true;
+    this.roomsMergeInfoBox=false;
+  }
+  Merge(){
+    if(this.roomMergeDto.name==='' || this.roomMergeDto.purpose===''){
+      alert('You must type informations about new room.')
+      return;
+    }
+    this.roomMergeDto.room1=this.firstMergeSelected;
+    this.roomMergeDto.room2=this.secondMergeSelected;
+    this.hospitalService.mergeRooms(this.roomMergeDto);
+    this.showBtns=false;
+  }
+  
+  Split(){
+    if(this.roomSplitDto.name1==='' || this.roomSplitDto.purpose1==='' || this.roomSplitDto.name2==='' || this.roomSplitDto.purpose2===''){
+      alert('You must type informations about new rooms.')
+      return;
+    }
+    this.roomSplitDto.room=this.roomForSplit;
+    this.hospitalService.splitRoom(this.roomSplitDto);
+    this.showBtns=false;
   }
 
+  FinishRenovation(){
+    this.roomsSplitInfoBox=false;
+    this.roomsMergeInfoBox=false;
+    this.showBtns=true;
+    this.loadHospital();
+    this.loadHospitalFloors();
+  }
+//END OF RENOVATIONS PART
 }
