@@ -144,6 +144,7 @@ namespace PharmacyAPI.Controller
                 client.Disconnect();
             }
         }
+
         public String ReadConsumationReport()
         {
             StreamReader reader = new StreamReader("consumed-medicine.txt");

@@ -55,5 +55,19 @@ namespace Integration_API.Controller
                 client.Disconnect();
             }
         }
+
+        public void UploadPdfFile(String filename)
+        {
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.56.1", "user", "password")))
+            {
+                client.Connect();
+                string sourceFile = filename;
+                using (System.IO.Stream stream = System.IO.File.OpenRead(sourceFile))
+                {
+                    client.UploadFile(stream, @"\public\" + System.IO.Path.GetFileName(sourceFile), x => { Console.WriteLine(x); });
+                }
+                client.Disconnect();
+            }
+        }
     }
 }
