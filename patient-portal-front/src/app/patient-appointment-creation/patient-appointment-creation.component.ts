@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
 import { AppointmentRequest } from 'src/appointment-request';
 import { AppointmentCreationService } from '../appointment-creation.service';
@@ -44,9 +45,18 @@ export class PatientAppointmentCreationComponent implements OnInit {
   public appointments = [] as any;
   public priority: string = "Doctor";
 
-  public currentDate: Date = new Date()
+  currentDate: Date
+  minDate = ""
+  maxDate =""
 
-  constructor(private router: Router, private _appointmentCreationService: AppointmentCreationService) { }
+  constructor(private router: Router, private _appointmentCreationService: AppointmentCreationService) {
+    this.currentDate = new Date()
+    let tmpDateVariable = this.currentDate
+    tmpDateVariable.setDate(this.currentDate.getDate() + 2)
+    this.minDate = formatDate(tmpDateVariable, 'YYYY-MM-dd', 'en');
+    tmpDateVariable.setFullYear(this.currentDate.getFullYear() + 1)
+    this.maxDate = formatDate(tmpDateVariable, 'YYYY-MM-dd', 'en');
+  }
 
 
   ngOnInit(): void {
@@ -61,6 +71,7 @@ export class PatientAppointmentCreationComponent implements OnInit {
   createAppointment(appointment: any) {
     appointment.patientForeignKey = 1
     this._appointmentCreationService.createAppointment(appointment).subscribe();
+    this.router.navigate(['/medical-record']);
   }
 
   getTermEnd(dateString: string) {
@@ -112,6 +123,37 @@ export class PatientAppointmentCreationComponent implements OnInit {
       }
     });
     return result
+  }
+
+  getDoctorName(doctorId: number): string {
+    for(let d of this.doctors)
+    {
+      if(d.id === doctorId)
+      {
+        return d.firstName + " " + d.lastName;
+      }
+    }
+    return ""
+  }
+
+  getFormattedLowerDateRange(): string {
+    if(this.appointmentRequest.LowerDateRange === undefined)
+    {
+      let tmpDateVariable = this.currentDate
+      tmpDateVariable.setDate(this.currentDate.getDate() + 2)
+      return formatDate(tmpDateVariable, 'YYYY-MM-dd', 'en');
+    }
+    return formatDate(this.appointmentRequest.LowerDateRange, 'YYYY-MM-dd', 'en');
+  }
+
+  getFormattedUpperDateRange(): string {
+    if(this.appointmentRequest.UpperDateRange === undefined)
+    {
+      let tmpDateVariable = this.currentDate
+      tmpDateVariable.setFullYear(this.currentDate.getFullYear() + 1)
+      return formatDate(tmpDateVariable, 'YYYY-MM-dd', 'en');
+    }
+    return formatDate(this.appointmentRequest.UpperDateRange, 'YYYY-MM-dd', 'en');
   }
 
   contentIsValid(): boolean {
