@@ -16,11 +16,11 @@ export class AppointmentCreationService {
   constructor(private http: HttpClient) { }
 
   requestAppointmentRecommendationDoctorPriority(appointmentRequest: AppointmentRequest): Observable<AppointmentRequest> {
-    return this.http.post<AppointmentRequest>("/api/Appointments/recommendation_doctor", JSON.stringify(appointmentRequest), this.httpOptions);
+    return this.http.post<AppointmentRequest>("/api/Appointment/recommendation_doctor", JSON.stringify(appointmentRequest), this.httpOptions);
   }
 
   createAppointment(appointmentRequest: AppointmentRequest): Observable<AppointmentRequest> {
-    return this.http.post<AppointmentRequest>("/api/Appointments/add_appointment", JSON.stringify(appointmentRequest), this.httpOptions);
+    return this.http.post<AppointmentRequest>("/api/Appointment/add_appointment", JSON.stringify(appointmentRequest), this.httpOptions);
   }
 
   getDoctors() : Observable<Doctor[]>{
@@ -28,6 +28,6 @@ export class AppointmentCreationService {
   }
 
   getPatientAppointments(id: number) : Observable<Appointment[]>{
-    return this.http.get<Appointment[]>("/api/Appointments/patient/1")
+    return this.http.get<Appointment[]>("/api/Appointment/patient/1")
   }
 }

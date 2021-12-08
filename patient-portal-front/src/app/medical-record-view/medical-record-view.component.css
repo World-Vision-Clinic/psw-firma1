@@ -96,3 +96,38 @@
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background: linear-gradient(to right, rgba(79, 172, 254, 1), #08d)
 }
+
+  /* WINDOW */
+  .dropdown-menu {
+    margin-top: 0.75rem;
+}
+
+.card {
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.header {
+    border-radius: 20px 20px 0px 0px;
+}
+
+.btn-rounded {
+    border-radius: 20px;
+}
+
+.btn-blue {
+    background: #08d;
+    color: white;
+    width: 100px;
+    margin-bottom: 10px
+}
+
+.gradient-blue {
+    /* fallback for old browsers */
+    background: #4facfe;
+  
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(79, 172, 254, 1), #08d);
+  
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(79, 172, 254, 1), #08d)
+  }

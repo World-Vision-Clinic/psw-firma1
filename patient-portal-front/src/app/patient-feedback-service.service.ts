@@ -23,6 +23,6 @@ export class PatientFeedbackServiceService {
   }
 
   getPatientAppointments(id: number) : Observable<Appointment[]>{
-    return this.http.get<Appointment[]>("/api/Appointments/patient/1")
+    return this.http.get<Appointment[]>("/api/Appointment/patient/1")
   }
 }
