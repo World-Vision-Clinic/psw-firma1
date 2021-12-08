@@ -18,6 +18,7 @@ namespace Hospital_API
     public class SurveyController : ControllerBase
     {
         public SurveyService surveyService { get; set; }
+        public AppointmentService _appointmentService { get; set; }
 
         public SurveyController()
         {
@@ -54,11 +55,13 @@ namespace Hospital_API
         }
 
         [HttpPost]
-        public ActionResult<Survey> PostSurveyQuestions([FromBody] List<QuestionDTO> questions)
+        public ActionResult<Survey> PostSurveyQuestions([FromBody] List<QuestionDTO> questions, int id)
         {
             Survey newSurvey = new Survey();
             newSurvey.CreationDate = System.DateTime.Now;
             newSurvey.IdAppointment = 1;
+           // var appointment = _appointmentService.FindById(id);
+            //newSurvey.IdAppointment = appointment.Id;
 
             foreach (QuestionDTO dtos in questions)
             {

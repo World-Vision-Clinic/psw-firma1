@@ -188,5 +188,10 @@ namespace Hospital.Schedule.Service
         {
             _repo.SaveSync();
         }
+
+        public void Modify(Appointment appointment)
+        {
+            _repo.Modify(appointment);
+        }
     }
 }

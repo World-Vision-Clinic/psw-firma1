@@ -154,7 +154,7 @@
                 </h1>
             </div>              
               <div class="col-md-2">
-                  <button class="btn btn-blue btn-rounded" [disabled]="!isCancelValid(a.isCanceled, a.isFinished)">Cancel</button>
+                  <button class="btn btn-blue btn-rounded" (click)="cancelAppointment()" [disabled]="!isCancelValid(a.isCanceled, a.isFinished)">Cancel</button>
               </div>
               <div class="col-md-2">
                 <button class="btn btn-blue btn-rounded" routerLink="/survey" [disabled]="!canSurveyBeDone(a.isCanceled, a.isUpcoming)" >Survey</button>

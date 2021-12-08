@@ -21,6 +21,7 @@ namespace Hospital.Schedule.Model
         public string DoctorName { get; set; }
         public string DoctorSurname { get; set; }
 
+        //public int IdSurvey {get; set;}
         public virtual ICollection<Survey> Surveys { get; set; }
 
         public Appointment(int id, int patientId, int doctorId, DateTime date, bool isCanceled, bool isDone, bool isUpcoming, AppointmentType type)

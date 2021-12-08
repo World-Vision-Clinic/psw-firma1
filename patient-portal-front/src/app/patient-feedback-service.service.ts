@@ -25,4 +25,8 @@ export class PatientFeedbackServiceService {
   getPatientAppointments(id: number) : Observable<Appointment[]>{
     return this.http.get<Appointment[]>("/api/Appointment/patient/1")
   }
+
+  cancelAppointment(id: number) : Observable<Appointment>{
+    return this.http.delete<Appointment>("/api/Appointment/1");
+  }
 }

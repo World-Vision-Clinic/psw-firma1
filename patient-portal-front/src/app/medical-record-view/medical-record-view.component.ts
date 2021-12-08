@@ -38,8 +38,6 @@ export class MedicalRecordViewComponent implements OnInit {
 
   public appointments = [] as any;
   public selectedDay: string = 'Monday';
-  public surveyBtn : boolean = true;
-  public hide = true;
   
 
   constructor(private _patientService : PatientFeedbackServiceService) { }
@@ -86,12 +84,7 @@ getAppointmentStatus(isCanceled: boolean, isFinished: boolean, isUpcoming: boole
   
   }
 
-  doSurveyForAppointment(isFinished: boolean) {
-    if(isFinished === true){
-      this.hide = false;
-    }
-    this.hide = true;
-  }
+ 
 
   isCancelValid(isCanceled: boolean, isFinished: boolean): boolean{
     if(isCanceled === true || isFinished === true)
@@ -109,7 +102,9 @@ getAppointmentStatus(isCanceled: boolean, isFinished: boolean, isUpcoming: boole
         return true;
       }
 
-  
+  cancelAppointment() {
+    this._patientService.cancelAppointment(this.appointments).subscribe();
+  }
   
 
 
