@@ -7,5 +7,5 @@ export class AppointmentRequest {
     UpperTimeRange: string = "20:00:00";
     PriorityType: string = "DOCTOR_PRIORITY";
 
-    DoctorForeignKey: number = 0;
+    DoctorId: number = 0;
 }

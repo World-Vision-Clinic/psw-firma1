@@ -66,9 +66,10 @@ namespace Hospital.Schedule.Service
         public List<Appointment> GetAvailableByDateRangeAndDoctor(DateTime lowerDateRange, DateTime upperDateRange, TimeSpan lowerTimeRange, TimeSpan upperTimeRange, int doctorId, AppointmentSearchPriority priority = AppointmentSearchPriority.NO_PRIORITY)
         {
             List<Appointment> doctorAppointments = GetByDoctorId(doctorId, lowerDateRange, upperDateRange);
-            List<Appointment> freeAppointments = GenerateFreeAppointmentList(lowerDateRange, upperDateRange, lowerTimeRange, upperTimeRange, new TimeSpan(0, 30, 0));
+            List<Appointment> freeAppointments = GenerateFreeAppointmentList(lowerDateRange, upperDateRange, lowerTimeRange, upperTimeRange, new TimeSpan(0, 30, 0), doctorId);
 
             List<Appointment> freeAppointmentsFiltered = FilterFreeAppointmentsByDoctorAvailability(freeAppointments, doctorAppointments);
+            FillAppointmentsWithDoctorId(freeAppointmentsFiltered, doctorId);
 
             if (freeAppointmentsFiltered.Count <= 0)
             {
@@ -80,16 +81,17 @@ namespace Hospital.Schedule.Service
                     DateTime extendedLowerDate = lowerDateRange.AddDays(-range);
                     DateTime extendedUpperRange = upperDateRange.AddDays(range);
                     List<Appointment> freeAppointmentsBefore = GenerateFreeAppointmentList((extendedLowerDate > minimumDate ? extendedLowerDate : minimumDate),
-                        lowerDateRange, lowerTimeRange, upperTimeRange, new TimeSpan(0, 30, 0));
+                        lowerDateRange, lowerTimeRange, upperTimeRange, new TimeSpan(0, 30, 0), doctorId);
                     List<Appointment> doctorAppointmentsBefore = GetByDoctorId(doctorId, (extendedLowerDate > minimumDate ? extendedLowerDate : minimumDate),
                         lowerDateRange);
                     List<Appointment> freeAppointmentsFilteredBefore = FilterFreeAppointmentsByDoctorAvailability(freeAppointmentsBefore, doctorAppointmentsBefore);
 
-                    List<Appointment> freeAppointmentsAfter = GenerateFreeAppointmentList(upperDateRange.Date, extendedUpperRange.Date, lowerTimeRange, upperTimeRange, new TimeSpan(0, 30, 0));
+                    List<Appointment> freeAppointmentsAfter = GenerateFreeAppointmentList(upperDateRange.Date, extendedUpperRange.Date, lowerTimeRange, upperTimeRange, new TimeSpan(0, 30, 0), doctorId);
                     List<Appointment> doctorAppointmentsAfter = GetByDoctorId(doctorId, upperDateRange, extendedUpperRange);
                     List<Appointment> freeAppointmentsFilteredAfter = FilterFreeAppointmentsByDoctorAvailability(freeAppointmentsAfter, doctorAppointmentsAfter);
 
                     freeAppointmentsFiltered = freeAppointmentsFilteredBefore.Concat(freeAppointmentsFilteredAfter).ToList();
+                    FillAppointmentsWithDoctorId(freeAppointmentsFiltered, doctorId);
                 }
                 else
                 {
@@ -155,7 +157,7 @@ namespace Hospital.Schedule.Service
             return false;
         }
 
-        public List<Appointment> GenerateFreeAppointmentList(DateTime lowerDateRange, DateTime upperDateRange, TimeSpan lowerTimeRange, TimeSpan upperTimeRange, TimeSpan appointmentLength, bool includeWeekends = false)
+        public List<Appointment> GenerateFreeAppointmentList(DateTime lowerDateRange, DateTime upperDateRange, TimeSpan lowerTimeRange, TimeSpan upperTimeRange, TimeSpan appointmentLength, int doctorId = 0, bool includeWeekends = false)
         {
             List<Appointment> freeAppointmentList = new List<Appointment>();
             DateTime dayIterator = lowerDateRange;
@@ -168,7 +170,7 @@ namespace Hospital.Schedule.Service
                     {
                         Appointment appointment = new Appointment();
                         appointment.Type = AppointmentType.Appointment;
-                        appointment.DoctorForeignKey = 0;
+                        appointment.DoctorForeignKey = doctorId;
                         appointment.PatientForeignKey = 0;
                         appointment.Date = timeIterator;
                         appointment.Time = appointmentLength;

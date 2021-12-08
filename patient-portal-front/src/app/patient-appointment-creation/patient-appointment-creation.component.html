@@ -49,8 +49,8 @@
                         <div class="row d-flex">
                             <div class="col-md-6">
                                 <label>
-                                    <select name="doctors" id="doctors" [(ngModel)]="appointmentRequest.DoctorForeignKey" class="datepicker" required="required">
-                                        <option *ngFor="let d of doctors" [value]="appointmentRequest.DoctorForeignKey">{{d.firstName}} {{d.lastName}}</option>
+                                    <select name="doctors" id="doctors" [(ngModel)]="appointmentRequest.DoctorId" class="datepicker" required="required">
+                                        <option *ngFor="let d of doctors" [value]="d.id">{{d.firstName}} {{d.lastName}}</option>
                                     </select>
                                     <span>Doctor</span>
                                 </label>
