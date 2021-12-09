@@ -16,12 +16,11 @@ export class SurveyService {
 
   getQuestions() : Observable<SurveyQuestion[]>{
     return this.http.get<SurveyQuestion[]>("/api/Survey"); 
-    }
+  }
 
-addSurvey(questions: SurveyQuestion[]): Observable<SurveyQuestion[]> {
-  console.log("servis");
-  return this.http.post<SurveyQuestion[]>("api/Survey", JSON.stringify(questions), this.httpOptions);
-}
+  addSurvey(questions: SurveyQuestion[], appointmentId: number): Observable<SurveyQuestion[]> {
+    return this.http.post<SurveyQuestion[]>("api/Survey/" + appointmentId, JSON.stringify(questions), this.httpOptions);
+  }
  
 }
 

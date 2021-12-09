@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Appointment } from 'src/appointment';
 import { MedicalRecord } from 'src/medical-record';
+import { Router } from '@angular/router';
 import { PatientFeedbackServiceService } from '../patient-feedback-service.service';
 
 @Component({
@@ -40,7 +41,7 @@ export class MedicalRecordViewComponent implements OnInit {
   public selectedDay: string = 'Monday';
   
 
-  constructor(private _patientService : PatientFeedbackServiceService) { }
+  constructor(private router: Router, private _patientService : PatientFeedbackServiceService) { }
 
   ngOnInit(): void {
     this._patientService.getPatient(1).subscribe(data => (this.patient = data),
@@ -84,10 +85,14 @@ export class MedicalRecordViewComponent implements OnInit {
     return true;
   }
 
-  canSurveyBeDone(appointment: Appointment): boolean{
-    if(appointment.isCancelled === true || appointment.isUpcoming === true)
+  canSurveyBeDone(appointment: Appointment): boolean {
+    if(appointment.isCancelled === true || appointment.isUpcoming === true || appointment.hasCompletedSurvey === true)
       return false;
     return true;
+  }
+
+  doSurveyForAppointment(appointmentId: number) {
+    this.router.navigate(['/survey/' + appointmentId]);
   }
 
   cancelAppointment(appointmentId: number) {

@@ -14,7 +14,7 @@ const routes: Routes = [
 { path: "view-feedback", component: PatientFeedbackViewComponent },
 { path: "medical-record", component: MedicalRecordViewComponent },
 { path: "login", component: LoginComponent },
-{ path: "survey", component: SurveyComponent},
+{ path: "survey/:id", component: SurveyComponent},
 { path: "register", component: RegisterComponent },
 { path: "create-appointment", component: PatientAppointmentCreationComponent },
 { path: '', component: HomePageComponent}

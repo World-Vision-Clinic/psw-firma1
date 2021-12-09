@@ -54,14 +54,12 @@ namespace Hospital_API
             return SurveyBreakdownMapper.AllSurveysToSurveyBreakdownDTO(surveyService.GetAllAnsweredQuestions());
         }
 
-        [HttpPost]
+        [HttpPost("{id}")]
         public ActionResult<Survey> PostSurveyQuestions([FromBody] List<QuestionDTO> questions, int id)
         {
             Survey newSurvey = new Survey();
             newSurvey.CreationDate = System.DateTime.Now;
-            newSurvey.IdAppointment = 1;
-           // var appointment = _appointmentService.FindById(id);
-            //newSurvey.IdAppointment = appointment.Id;
+            newSurvey.IdAppointment = id;
 
             foreach (QuestionDTO dtos in questions)
             {
