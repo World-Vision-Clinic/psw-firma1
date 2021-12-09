@@ -35,9 +35,23 @@ namespace HospitalTests.EditorTests.UnitTests
                 RoomRepository roomRepository = new RoomRepository(context);
                 RoomService roomService = new RoomService(roomRepository, eqRepository);
                 Room r1 = roomRepository.GetByID(88);
-
+                int r1Width = r1.Width;
+                int r1Height = r1.Height;
                 roomService.splitRoom(r1, "New room 1", "Operations room", "New room 2", "Office");
-                Assert.Equal(2, roomRepository.GetAll().Count);
+
+                roomRepository.GetAll().Count.ShouldBe(2);
+                foreach(Room room in roomRepository.GetAll())
+                {
+                    if (room.Vertical)
+                    {
+                        room.Height.ShouldBeLessThan(r1Height);
+                    }
+                    else
+                    {
+                        room.Width.ShouldBeLessThan(r1.Width);
+                    }
+                }
+
                 context.Dispose();
             }
             }
