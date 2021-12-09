@@ -24,7 +24,7 @@ namespace Integration_API.Controller
         PharmaciesService pharmaciesService = new PharmaciesService(new PharmaciesRepository());
         public const string HOSPITAL_NAME = "World Vision Clinic";
         public const string HOSPITAL_URL = "http://localhost:43818";
-        public const string HOSPITAL_PORT = "3000";
+        public const string HOSPITAL_PORT = "127.0.0.1:3000";
 
         [HttpPost("registerPharmacy")]
         public IActionResult Add(PharmacyDto dto)
@@ -63,7 +63,7 @@ namespace Integration_API.Controller
             else
             {
                 var input = new RegisterPharmacyRequest { HospitalName = HOSPITAL_NAME, HospitalLocalhost = HOSPITAL_PORT, ApiKey = generatedKey};
-                var channel = new Channel("127.0.0.1:" + dto.Localhost, ChannelCredentials.Insecure);
+                var channel = new Channel(dto.Localhost, ChannelCredentials.Insecure);
                 var client = new gRPCService.gRPCServiceClient(channel);
                 var reply = client.registerPharmacyAsync(input);
                 if (reply.ResponseAsync.Result.Response.Equals("OK"))

@@ -1,6 +1,7 @@
-﻿using Integration;
+﻿using Hospital.MedicalRecords.Model;
+using Hospital.MedicalRecords.Repository;
+using Integration;
 using Integration.Pharmacy.Repository;
-using Integration.Services;
 using Integration_API.Controller;
 using Integration_API.Dto;
 using Newtonsoft.Json;

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Integration.Model
+namespace Hospital.MedicalRecords.Model
 {
    public class MedicineTherapy
     {

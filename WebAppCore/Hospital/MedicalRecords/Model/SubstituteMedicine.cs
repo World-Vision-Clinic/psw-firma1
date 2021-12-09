@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Integration.Pharmacy.Model
+namespace Hospital.MedicalRecords.Model
 {
     class SubstituteMedicine
     {

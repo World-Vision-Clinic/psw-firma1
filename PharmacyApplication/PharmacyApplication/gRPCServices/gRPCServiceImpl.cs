@@ -16,7 +16,7 @@ namespace PharmacyAPI.gRPCServices
         CredentialsService service = new CredentialsService(new CredentialsRepository());
         HospitalsService hospitalsService = new HospitalsService(new HospitalsRepository());
         public const string PHARMACY_NAME = "Jankovic";
-        public const string PHARMACY_URL = "5000";
+        public const string PHARMACY_URL = "127.0.0.1:5000";
         public override Task<RegisterPharmacyResponse> registerPharmacy(RegisterPharmacyRequest request, ServerCallContext context)
         {
             Credential newCredential = CredentialMapper.CredentialDtoToCredential(request.HospitalName, request.HospitalLocalhost, request.ApiKey);
@@ -30,7 +30,7 @@ namespace PharmacyAPI.gRPCServices
             string generatedKey = Generator.GenerateApiKey();
 
             var input = new RegisterHospitalRequest { PharmacyName = PHARMACY_NAME, PharmacyLocalhost = PHARMACY_URL, ApiKey = generatedKey };
-            var channel = new Channel("127.0.0.1:" + request.HospitalLocalhost, ChannelCredentials.Insecure);
+            var channel = new Channel(request.HospitalLocalhost, ChannelCredentials.Insecure);
             var client = new gRPCHospitalService.gRPCHospitalServiceClient(channel);
 
             var reply = client.registerHospitalAsync(input);

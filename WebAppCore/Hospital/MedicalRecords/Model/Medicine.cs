@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Integration
+namespace Hospital.MedicalRecords.Model
 {
     public class Medicine
     {
@@ -90,7 +91,7 @@ namespace Integration
         }
 
         private System.Collections.Generic.List<string> replacementMedicineIDs;
-
+        [NotMapped]
         public System.Collections.Generic.List<string> ReplacementMedicineIDs
         {
             get

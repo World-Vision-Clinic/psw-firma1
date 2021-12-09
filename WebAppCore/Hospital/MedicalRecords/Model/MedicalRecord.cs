@@ -1,10 +1,9 @@
-using Integration.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace Integration
+namespace Hospital.MedicalRecords.Model
 {
     public class MedicalRecord
     {
@@ -15,18 +14,8 @@ namespace Integration
         private Patient patient = new Patient();
         private List<Examination> examination = new List<Examination>();
         private Allergen allergen = new Allergen();
-        private BloodType bloodType;
 
         public MedicalRecord() { }
-
-        public BloodType BloodType
-        {
-            get { return bloodType; }
-            set
-            {
-                bloodType = value;
-            }
-        }
 
         public Allergen Allergen
         {
@@ -130,7 +119,7 @@ namespace Integration
         public string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder("");
-            stringBuilder.Append(this.Patient.FirstName).Append(" ").Append(this.Patient.LastName).Append(" | ").Append(this.Patient.PersonalID);
+            stringBuilder.Append(this.Patient.FirstName).Append(" ").Append(this.Patient.LastName).Append(" | ").Append(this.Patient.Id);
 
             return stringBuilder.ToString();
         }

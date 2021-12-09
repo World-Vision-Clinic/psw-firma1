@@ -99,7 +99,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             }
 
             var controller = new AppointmentController();
-            var response = controller.GetAppointments4Step(6, DateTime.Now.AddDays(2).ToString()).Result as OkObjectResult;
+            var response = (OkObjectResult) controller.GetAppointments4Step(6, dateForTest.ToString()).Result;
             var data = response.Value as List<Appointment>;
 
             //Assert

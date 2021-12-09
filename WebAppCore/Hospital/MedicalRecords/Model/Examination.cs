@@ -1,7 +1,8 @@
 
+using Hospital.Schedule.Model;
 using System;
 
-namespace Integration
+namespace Hospital.MedicalRecords.Model
 {
     public class Examination
     {

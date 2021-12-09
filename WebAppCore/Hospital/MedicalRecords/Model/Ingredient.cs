@@ -5,7 +5,7 @@
 
 using System;
 
-namespace Integration
+namespace Hospital.MedicalRecords.Model
 {
     public class Ingredient
     {
