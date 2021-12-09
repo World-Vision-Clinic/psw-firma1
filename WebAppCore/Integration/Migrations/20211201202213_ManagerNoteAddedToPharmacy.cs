@@ -9,32 +9,7 @@ namespace Integration.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Examinations");
-
-            migrationBuilder.DropTable(
-                name: "Ingredient");
-
-            migrationBuilder.DropTable(
-                name: "MedicineTherapys");
-
-            migrationBuilder.DropTable(
-                name: "Appointment");
-
-            migrationBuilder.DropTable(
-                name: "Medicines");
-
-            migrationBuilder.DropTable(
-                name: "Therapies");
-
-            migrationBuilder.DropTable(
-                name: "MedicalRecords");
-
-            migrationBuilder.DropTable(
-                name: "Allergen");
-
-            migrationBuilder.DropTable(
-                name: "Patient");
+            
 
             migrationBuilder.AddColumn<string>(
                 name: "Note",
