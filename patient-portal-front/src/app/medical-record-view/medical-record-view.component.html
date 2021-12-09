@@ -140,7 +140,7 @@
               </div>
               <div class="col-md-2">
                   <h1 class="font-weight-bold">
-                      Doctor:{{a.doctorForeignKey}}
+                     {{a.doctorName}}
                   </h1>
               </div>
               <div class="col-md-2">
@@ -150,14 +150,14 @@
             </div>
               <div class="col-md-2">
                 <h1 class="font-weight-bold">
-                  {{getAppointmentStatus(a.isCanceled, a.isFinished, a.isUpcoming)}}      
+                  {{getAppointmentStatus(a)}}      
                 </h1>
             </div>              
               <div class="col-md-2">
-                  <button class="btn btn-blue btn-rounded" (click)="cancelAppointment()" [disabled]="!isCancelValid(a.isCanceled, a.isFinished)">Cancel</button>
+                  <button class="btn btn-blue btn-rounded" (click)="cancelAppointment(a.id)" [disabled]="!isCancelValid(a)">Cancel</button>
               </div>
               <div class="col-md-2">
-                <button class="btn btn-blue btn-rounded" routerLink="/survey" [disabled]="!canSurveyBeDone(a.isCanceled, a.isUpcoming)" >Survey</button>
+                <button class="btn btn-blue btn-rounded" routerLink="/survey" [disabled]="!canSurveyBeDone(a)">Survey</button>
             </div>
              
           </div>

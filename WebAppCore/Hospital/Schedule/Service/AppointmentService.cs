@@ -134,7 +134,7 @@ namespace Hospital.Schedule.Service
                 bool overlapFound = false;
                 foreach (Appointment doctorAppointmentIterator in doctorAppointments)
                 {
-                    if (DatesOverlap(appointmentIterator.Date, appointmentIterator.Time, doctorAppointmentIterator.Date, doctorAppointmentIterator.Time))
+                    if (!doctorAppointmentIterator.IsCancelled && DatesOverlap(appointmentIterator.Date, appointmentIterator.Time, doctorAppointmentIterator.Date, doctorAppointmentIterator.Time))
                     {
                         overlapFound = true;
                         break;

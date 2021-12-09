@@ -15,11 +15,7 @@ namespace Hospital.Schedule.Model
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
 
-        public bool IsCanceled { get; set; }
-        public bool IsFinished { get; set; }
-        public bool IsUpcoming { get; set; }
-        public string DoctorName { get; set; }
-        public string DoctorSurname { get; set; }
+        public bool IsCancelled { get; set; }
 
         //public int IdSurvey {get; set;}
         public virtual ICollection<Survey> Surveys { get; set; }
@@ -30,9 +26,7 @@ namespace Hospital.Schedule.Model
             this.PatientForeignKey = patientId;
             this.DoctorForeignKey = doctorId;
             this.Date = date;
-            this.IsCanceled = false;
-            this.IsFinished = false;
-            this.IsUpcoming = false;
+            this.IsCancelled = false;
             this.Type = AppointmentType.Appointment;
 
         }

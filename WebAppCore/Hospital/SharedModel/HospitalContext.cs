@@ -58,9 +58,9 @@ namespace Hospital.SharedModel
             });
 
             modelBuilder.Entity<Appointment>().HasData(
-                new Appointment { Id = 1, DoctorForeignKey = 2, Date = DateTime.Today, PatientForeignKey = 1, IsCanceled = false, IsFinished= false, IsUpcoming=true, Type = AppointmentType.Appointment },
-                new Appointment { Id = 2, DoctorForeignKey = 2, Date = DateTime.Today, PatientForeignKey = 1, IsCanceled = true, IsFinished = false, IsUpcoming = false, Type = AppointmentType.Intervention},
-                new Appointment { Id = 3, DoctorForeignKey = 2, Date = DateTime.Today, PatientForeignKey = 1, IsCanceled = false, IsFinished = true, IsUpcoming = false, Type = AppointmentType.Operation }
+                new Appointment { Id = 1, DoctorForeignKey = 2, Date = DateTime.Today, PatientForeignKey = 1, IsCancelled = false, Type = AppointmentType.Appointment },
+                new Appointment { Id = 2, DoctorForeignKey = 2, Date = DateTime.Today, PatientForeignKey = 1, IsCancelled = true, Type = AppointmentType.Intervention},
+                new Appointment { Id = 3, DoctorForeignKey = 2, Date = DateTime.Today, PatientForeignKey = 1, IsCancelled = false, Type = AppointmentType.Operation }
 
                 );
 

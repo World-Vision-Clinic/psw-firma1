@@ -70,42 +70,27 @@ export class MedicalRecordViewComponent implements OnInit {
     return "Appointment";
   }
 
-getAppointmentStatus(isCanceled: boolean, isFinished: boolean, isUpcoming: boolean): string {
-
-   if(isCanceled === true && isFinished === false && isUpcoming === false)
-    {
-    return  "Canceled";
-    } 
-    else if(isCanceled === false && isFinished === true && isUpcoming === false)
-    {
+  getAppointmentStatus(appointment: Appointment): string {
+    if(appointment.isCancelled)
+      return "Cancelled";
+    else if(appointment.isUpcoming)
+      return "Upcoming";
     return "Finished"
   }
-  return "Upcoming"
-  
+
+  isCancelValid(appointment: Appointment): boolean{
+    if(appointment.isCancelled === true || appointment.isUpcoming === false)
+      return false;
+    return true;
   }
 
- 
-
-  isCancelValid(isCanceled: boolean, isFinished: boolean): boolean{
-    if(isCanceled === true || isFinished === true)
-      {
-        return false;
-      }
-      return true;
-    }
-
-    canSurveyBeDone(isCanceled: boolean, isUpcoming: boolean): boolean{
-      if(isCanceled === true || isUpcoming === true)
-        {
-          return false;
-        }
-        return true;
-      }
-
-  cancelAppointment() {
-    this._patientService.cancelAppointment(this.appointments).subscribe();
+  canSurveyBeDone(appointment: Appointment): boolean{
+    if(appointment.isCancelled === true || appointment.isUpcoming === true)
+      return false;
+    return true;
   }
-  
 
-
+  cancelAppointment(appointmentId: number) {
+    this._patientService.cancelAppointment(appointmentId).subscribe();
+  }
 }

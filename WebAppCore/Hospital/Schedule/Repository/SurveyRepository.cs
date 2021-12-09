@@ -45,6 +45,11 @@ namespace Hospital.Schedule.Repository
             return _context.Surveys.Find(id);
         }
 
+        public Survey FindByAppointmentId(int appointmentId)
+        {
+            return _context.Surveys.Where(s => s.IdAppointment == appointmentId).FirstOrDefault();
+        }
+
         public bool SurveyExists(int id)
         {
             return _context.Surveys.Any(s => s.IdSurvey == id);

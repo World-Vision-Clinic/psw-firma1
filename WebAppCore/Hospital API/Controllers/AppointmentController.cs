@@ -49,9 +49,16 @@ namespace Hospital_API.Controllers
         }
 
         [HttpGet("patient/{id}")]
-        public ActionResult<IEnumerable<Appointment>> GetAppointmentsByPatientId(int id)
+        public ActionResult<IEnumerable<AppointmentDTO>> GetAppointmentsByPatientId(int id)
         {
-            return _appointmentService.GetByPatientId(id);
+            List<Appointment> appointments = _appointmentService.GetByPatientId(id);
+            List<AppointmentDTO> appointmentDTOs = new List<AppointmentDTO>();
+            HospitalContext context = new HospitalContext();
+            DoctorRepository doctorRepository = new DoctorRepository(context, new PatientRepository(context));
+            SurveyRepository surveyRepository = new SurveyRepository(context);
+            foreach (Appointment appointment in appointments)
+                appointmentDTOs.Add(new AppointmentDTO(appointment, doctorRepository, surveyRepository));
+            return appointmentDTOs;
         }
 
         [HttpGet("doctor/{id}")]
@@ -78,7 +85,6 @@ namespace Hospital_API.Controllers
             if (_appointmentService.GetByDateAndDoctor(appointmentToAdd.Date, appointmentToAdd.Time, appointmentToAdd.DoctorForeignKey) != null)
                 return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest };
 
-            appointmentToAdd.IsUpcoming = true;
             _appointmentService.AddAppointment(appointmentToAdd);
             return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }
@@ -92,7 +98,7 @@ namespace Hospital_API.Controllers
                 return NotFound();
             }
 
-            appointment.IsCanceled = true;
+            appointment.IsCancelled = true;
             _appointmentService.Modify(appointment);
             return appointment;
         }

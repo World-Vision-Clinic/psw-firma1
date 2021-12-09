@@ -12,6 +12,7 @@ namespace Hospital.Schedule.Repository
         public void AddAnswer(AnsweredSurveyQuestion answer);
         public void SaveSurvey();
         public Survey FindById(int id);
+        public Survey FindByAppointmentId(int id);
         public bool SurveyExists(int id);
         public List<Survey> GetAll();
         public List<SurveyQuestion> GetAllQuestions();
