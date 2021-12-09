@@ -97,5 +97,6 @@ export class MedicalRecordViewComponent implements OnInit {
 
   cancelAppointment(appointmentId: number) {
     this._patientService.cancelAppointment(appointmentId).subscribe();
+    window.location.reload();
   }
 }
