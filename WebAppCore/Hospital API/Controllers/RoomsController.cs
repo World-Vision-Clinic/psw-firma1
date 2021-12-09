@@ -15,6 +15,7 @@ using Hospital_API.Mappers;
 using Microsoft.EntityFrameworkCore;
 using Hospital.RoomsAndEquipment.Model;
 using Hospital_API.Mapper;
+using Hospital.SharedModel;
 
 namespace Hospital_API.Controllers
 {
@@ -22,15 +23,24 @@ namespace Hospital_API.Controllers
     [ApiController]
     public class RoomsController : ControllerBase
     {
-        private RoomService roomService = new RoomService(new RoomRepository(new Hospital.SharedModel.HospitalContext()));
-        private EquipmentService equipmentService = new EquipmentService(new EquipmentRepository(new Hospital.SharedModel.HospitalContext()));
-        private BuildingService buildingService = new BuildingService(new BuildingRepository(new Hospital.SharedModel.HospitalContext()));
-        private FloorService floorService = new FloorService(new FloorRepository(new Hospital.SharedModel.HospitalContext()));
-        private FloorLabelService floorLabelService = new FloorLabelService(new FloorLabelRepository(new Hospital.SharedModel.HospitalContext()));
-        private MapPositionService mapPositionService = new MapPositionService(new MapPositionRepository(new Hospital.SharedModel.HospitalContext()));
-        private OutsideDoorService outsideDoorService = new OutsideDoorService(new OutsideDoorRepository(new Hospital.SharedModel.HospitalContext()));
+        private RoomService roomService;
+        private EquipmentService equipmentService;
 
-       
+
+        public RoomsController(HospitalContext hospitalContext)
+        {
+            roomService = new RoomService(new RoomRepository(hospitalContext));
+            equipmentService = new EquipmentService(new EquipmentRepository(hospitalContext));
+
+        }
+
+        public RoomsController()
+        {
+            roomService = new RoomService(new RoomRepository(new Hospital.SharedModel.HospitalContext()));
+            equipmentService = new EquipmentService(new EquipmentRepository(new Hospital.SharedModel.HospitalContext()));
+
+        }
+
         [HttpGet]
         public ActionResult<IEnumerable<Room>> GetRooms()
         {

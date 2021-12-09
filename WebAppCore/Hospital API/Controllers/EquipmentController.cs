@@ -25,11 +25,7 @@ namespace Hospital_API.Controllers
     {
         private RoomService roomService = new RoomService(new RoomRepository(new Hospital.SharedModel.HospitalContext()));
         private EquipmentService equipmentService = new EquipmentService(new EquipmentRepository(new Hospital.SharedModel.HospitalContext()));
-        private BuildingService buildingService = new BuildingService(new BuildingRepository(new Hospital.SharedModel.HospitalContext()));
         private FloorService floorService = new FloorService(new FloorRepository(new Hospital.SharedModel.HospitalContext()));
-        private FloorLabelService floorLabelService = new FloorLabelService(new FloorLabelRepository(new Hospital.SharedModel.HospitalContext()));
-        private MapPositionService mapPositionService = new MapPositionService(new MapPositionRepository(new Hospital.SharedModel.HospitalContext()));
-        private OutsideDoorService outsideDoorService = new OutsideDoorService(new OutsideDoorRepository(new Hospital.SharedModel.HospitalContext()));
        
 
         [HttpGet]
@@ -37,9 +33,9 @@ namespace Hospital_API.Controllers
         {
 
             List<int> roomIds = roomService.getRoomIdsForBuilding(buildingId, floorService);
-            
+
             List<Equipment> equipment = equipmentService.getUniqueInBuilding(roomIds);
-           
+
             return equipment;
         }
 
@@ -49,7 +45,7 @@ namespace Hospital_API.Controllers
         {
             List<int> roomIds = roomService.getRoomIdsForBuilding(buildingId, floorService);
             List<EquipmentRoomDTO> equipmentList = new List<EquipmentRoomDTO>();
-            foreach(Equipment eq in equipmentService.getByNameInBuilding(roomIds, equipmentName))
+            foreach (Equipment eq in equipmentService.getByNameInBuilding(roomIds, equipmentName))
             {
                 equipmentList.Add(EquipmentMapper.equipmentToEquipmentRoomDto(eq, roomService, floorService));
             }

@@ -4,6 +4,7 @@ using Hospital.GraphicalEditor.Repository.RepositoryInterfaces;
 using Hospital.GraphicalEditor.Service;
 using Hospital.RoomsAndEquipment.Repository;
 using Hospital.RoomsAndEquipment.Service;
+using Hospital.SharedModel;
 using Hospital_API.DTO;
 using Hospital_API.Mapper;
 using Microsoft.AspNetCore.Mvc;
@@ -18,14 +19,30 @@ namespace Hospital_API.Controllers
     [ApiController]
     public class FloorsController : ControllerBase
     {
-        private RoomService roomService = new RoomService(new RoomRepository(new Hospital.SharedModel.HospitalContext()));
-        private EquipmentService equipmentService = new EquipmentService(new EquipmentRepository(new Hospital.SharedModel.HospitalContext()));
-        private BuildingService buildingService = new BuildingService(new BuildingRepository(new Hospital.SharedModel.HospitalContext()));
-        private FloorService floorService = new FloorService(new FloorRepository(new Hospital.SharedModel.HospitalContext()));
-        private FloorLabelService floorLabelService = new FloorLabelService(new FloorLabelRepository(new Hospital.SharedModel.HospitalContext()));
-        private MapPositionService mapPositionService = new MapPositionService(new MapPositionRepository(new Hospital.SharedModel.HospitalContext()));
-        private OutsideDoorService outsideDoorService = new OutsideDoorService(new OutsideDoorRepository(new Hospital.SharedModel.HospitalContext()));
+        private RoomService roomService;
+        private EquipmentService equipmentService;
+        private BuildingService buildingService;
+        private FloorService floorService;
 
+
+        public FloorsController(HospitalContext hospitalContext)
+        {
+            roomService = new RoomService(new RoomRepository(hospitalContext));
+            equipmentService = new EquipmentService(new EquipmentRepository(hospitalContext));
+            buildingService = new BuildingService(new BuildingRepository(hospitalContext));
+            floorService = new FloorService(new FloorRepository(hospitalContext));
+
+
+        }
+
+        public FloorsController()
+        {
+            roomService = new RoomService(new RoomRepository(new Hospital.SharedModel.HospitalContext()));
+            equipmentService = new EquipmentService(new EquipmentRepository(new Hospital.SharedModel.HospitalContext()));
+            buildingService = new BuildingService(new BuildingRepository(new Hospital.SharedModel.HospitalContext()));
+            floorService = new FloorService(new FloorRepository(new Hospital.SharedModel.HospitalContext()));
+
+        }
 
         // GET FLOORS FOR BUILDING
         // GET: api/Floors?buildingId=3
@@ -36,7 +53,7 @@ namespace Hospital_API.Controllers
             List<FloorDTO> floors = new List<FloorDTO>();
             foreach (Floor floor in floorService.getFloorForBuilding(buildingId))
             {
-               
+
                 floors.Add(FloorMapper.floorToFloorDTO(floor, roomService, equipmentService));
             }
             return floors.OrderBy(x => x.id).ToArray();
@@ -57,7 +74,7 @@ namespace Hospital_API.Controllers
             return bdto;
         }
 
-        
+
 
 
         private bool BuildingExists(int id)

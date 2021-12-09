@@ -1,49 +1,73 @@
-﻿using Hospital.RoomsAndEquipment.Model;
+﻿using Hospital.GraphicalEditor.Model;
+using Hospital.GraphicalEditor.Repository;
+using Hospital.GraphicalEditor.Service;
+using Hospital.RepositoryInterfaces;
+using Hospital.RoomsAndEquipment.Model;
 using Hospital.RoomsAndEquipment.Repository;
+using Hospital.RoomsAndEquipment.Service;
+using Hospital.Schedule.Repository;
 using Hospital.SharedModel;
+using Hospital_API;
 using Hospital_API.Controllers;
 using Hospital_API.DTO;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace HospitalTests.EditorTests.IntegrationTests
 {
     public class RelocatingEquipmentTest
     {
-        public bool relocate(Equipment eqForTransf, RoomDTO roomFrom, RoomDTO roomTo)
+
+
+        private TestContext GetInMemoryRepository()
         {
-            foreach(Equipment equip in roomFrom.equipments)
-            {
-                if (equip.Name == eqForTransf.Name)
-                {
-                    if (equip.Amount > eqForTransf.Amount)
-                    {
-                        equip.Amount = equip.Amount - eqForTransf.Amount;
-                        roomTo.equipments.Add(eqForTransf);
-                        return true;
-                    }
-                }
-            }
-            return false;
+            DbContextOptions<TestContext> options;
+            var builder = new DbContextOptionsBuilder<TestContext>();
+            builder.UseInMemoryDatabase("TestDb");
+            options = builder.Options;
+            TestContext hospitalContext = new TestContext(options);
+            hospitalContext.Database.EnsureDeleted();
+            hospitalContext.Database.EnsureCreated();
+            return hospitalContext;
+        }
+
+        public RelocatingEquipmentTest()
+        {
+           
         }
 
         [Fact]
-        public void relocate_equipment_test()
+        public async Task Get_suggestion_for_relocation_periodAsync()
         {
-            Equipment equpmentForTransfer = new Equipment { Id = 77, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 5, RoomId = 2 };
-            
-            var roomController = new RoomsController();
-            RoomDTO roomFrom = roomController.GetRoom(2).Value;
-            RoomDTO roomTo = roomController.GetRoom(3).Value;
+            // Arrange
+            TestContext inMemoryRepo = GetInMemoryRepository();
+            EquipmentService equipmentService = new EquipmentService(new EquipmentRepository(inMemoryRepo));
+            FloorService floorService = new FloorsController(new FloorRepository(inMemoryRepo));
+            RoomService roomService = new RoomsController(new RoomRepository(inMemoryRepo));
+            DateTime startDate = new DateTime(year: 2021, month: 12, day: 4, hour: 10, minute: 30, second: 0);
+            DateTime endDate = new DateTime(year: 2021, month: 12, day: 4, hour: 14, minute: 30, second: 0);
+            int buildingId = 1;
+            int transportDurationInHours = 5;
 
-            relocate(equpmentForTransfer, roomFrom, roomTo).ShouldBeTrue();
-            //roomController.PutRooms(roomFrom.id, roomFrom);
-            //roomController.PutRooms(roomTo.id, roomTo);
+            //Act
+
+
+            DatePeriod datePeriod =  equipmentService.SuggestTransportationPeriod(startDate, endDate, buildingId, floorService, roomService, equipmentService, transportDurationInHours);
+
+            // Assert
+
+            Assert.Null(datePeriod);
 
         }
+
+     
     }
 }
