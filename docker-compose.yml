@@ -1,0 +1,31 @@
+version: '3'
+services:
+  postgres-database:
+    image: postgres
+    ports:
+      - "5555:5432"
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: postgres
+
+  pharmacy:
+    depends_on:
+      - postgres-database
+    build: ./PharmacyApplication
+    image: jelenahrnjak/pharmacy
+    environment:
+      DBServer: postgres-database
+      DBPerver: 5555
+      DBUser: postgres
+      DBPassword: admin
+      DB: PharmacyDatabase
+    ports:
+      - "8081:80"
+      
+  manager-front:
+    depends_on:
+      - pharmacy
+    build: ./ManagerFrontApp
+    image: jelenahrnjak/manager-front-app
+    ports:
+      - "4201:4200"
