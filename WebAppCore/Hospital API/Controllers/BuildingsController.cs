@@ -14,35 +14,49 @@ using Hospital.GraphicalEditor.Model;
 using Hospital_API.Mappers;
 using Microsoft.EntityFrameworkCore;
 using Hospital.RoomsAndEquipment.Model;
+using Hospital.SharedModel;
 
 namespace Hospital_API.Controllers
 {
     [Route("api/buildings")]
     [ApiController]
-    public class BuildingsController : ControllerBase
+    public class BuildingsController : ControllerBase 
     {
-        private RoomService roomService = new RoomService(new RoomRepository(new Hospital.SharedModel.HospitalContext()));
-        private EquipmentService equipmentService = new EquipmentService(new EquipmentRepository(new Hospital.SharedModel.HospitalContext()));
-        private BuildingService buildingService = new BuildingService(new BuildingRepository(new Hospital.SharedModel.HospitalContext()));
-        private FloorService floorService = new FloorService(new FloorRepository(new Hospital.SharedModel.HospitalContext()));
-        private FloorLabelService floorLabelService = new FloorLabelService(new FloorLabelRepository(new Hospital.SharedModel.HospitalContext()));
+        private RoomService roomService;
+        private EquipmentService equipmentService;
+        private BuildingService buildingService;
+       
         private MapPositionService mapPositionService = new MapPositionService(new MapPositionRepository(new Hospital.SharedModel.HospitalContext()));
-        private OutsideDoorService outsideDoorService = new OutsideDoorService(new OutsideDoorRepository(new Hospital.SharedModel.HospitalContext()));
+        
         public BuildingService buildingTestService;
 
-        // GET: api/buildings
-        [HttpGet]
+        public BuildingsController()
+        {
+            roomService = new RoomService(new RoomRepository(new Hospital.SharedModel.HospitalContext()));
+            equipmentService = new EquipmentService(new EquipmentRepository(new Hospital.SharedModel.HospitalContext()));
+            buildingService = new BuildingService(new BuildingRepository(new Hospital.SharedModel.HospitalContext()));
+            mapPositionService = new MapPositionService(new MapPositionRepository(new Hospital.SharedModel.HospitalContext()));
+
+        }
+        public BuildingsController(HospitalContext hospitalContext)
+        {
+            roomService = new RoomService(new RoomRepository(hospitalContext));
+            equipmentService = new EquipmentService(new EquipmentRepository(hospitalContext));
+            buildingService = new BuildingService(new BuildingRepository(hospitalContext));
+            mapPositionService = new MapPositionService(new MapPositionRepository(hospitalContext));
+            
+        }
+
+    // GET: api/buildings
+    [HttpGet]
         public ActionResult<IEnumerable<BuildingDTO>> GetBuildings()
         {
-            List<Equipment> eq = equipmentService.getAll();
             List<BuildingDTO> buildings = new List<BuildingDTO>();
             foreach(Building building in buildingService.GetAll())
             {
-                //building.MapPositionId = building.id;
-                //buildingService.Update(building);
                 buildings.Add(BuildingMapper.dataToBuildingSimpleDTO(building, mapPositionService, equipmentService, roomService));
             }
-            //Console.WriteLine(buildings.ToString());
+
             return buildings;
         }
 

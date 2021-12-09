@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace Hospital_API.Controllers
 {
-    [Route("api/equipment")]
+    [Route("api/equipment")] 
     [ApiController]
     public class EquimpentController : ControllerBase
     {
