@@ -37,8 +37,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          lib_path: WebAppCore\Hospital\Hospital.csproj
-          api_path: WebAppCore\Hospital API\Hospital API.csproj
+          lib_path_hospital: WebAppCore\Hospital\Hospital.csproj
+          api_path_hospital: WebAppCore\Hospital API\Hospital API.csproj
           lib_path_integration: WebAppCore\Integration\Integration.csproj
           api_path_integration: WebAppCore\Integration API\Integration API.csproj
         shell: powershell
