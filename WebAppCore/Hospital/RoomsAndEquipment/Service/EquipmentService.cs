@@ -84,6 +84,10 @@ namespace Hospital.RoomsAndEquipment.Service
             DateTime workingStartDate = startDate;
             DateTime workingEndDate = workingStartDate.AddHours(transportDurationInHours);
             List<Equipment> equipmentsInTransport = equipmentService.getAllInTransport(roomIds);
+
+            if ((endDate - startDate).TotalHours < transportDurationInHours)
+                return null;
+
             foreach (Equipment equipment in equipmentsInTransport)
             {
                 if (workingStartDate >= equipment.TransportStart && equipment.TransportEnd <= workingEndDate)
