@@ -1,27 +1,39 @@
 version: '3'
 services:
   postgres-database:
-    image: postgres
-    ports:
-      - "5555:5432"
+    image: postgres 
+    restart: always
+    networks: 
+      - database 
     environment:
       POSTGRES_PASSWORD: admin
-      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: PharmacyDatabase
+    volumes:
+      - type: volume
+        source: database-data
+        target: /var/lib/postgresql/data
+      - type: bind
+        source: ./sql/PharmacyDatabase/fill_tables.sql
+        target: /docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5555:5432"
 
   pharmacy:
     depends_on:
       - postgres-database
     build: ./PharmacyApplication
-    image: jelenahrnjak/pharmacy
-    environment:
-      DBServer: postgres-database
-      DBPerver: 5555
-      DBUser: postgres
-      DBPassword: admin
-      DB: PharmacyDatabase
+    image: jelenahrnjak/pharmacy 
+    environment: 
+      DATABASE_PASSWORD: admin
+      DATABASE_USER: postgres
     ports:
-      - "8081:80"
-      
+      - "8081:80" 
+    restart: on-failure
+    networks:
+      - application
+      - database
+
   manager-front:
     depends_on:
       - pharmacy
@@ -29,3 +41,22 @@ services:
     image: jelenahrnjak/manager-front-app
     ports:
       - "4201:4200"
+    restart: on-failure
+    networks:
+      - public
+      - application
+
+volumes:
+  database-data:
+    name: pharmacy-database
+
+networks:
+  public:
+    name: public
+    driver: bridge
+  application:
+    name: application
+    driver: bridge
+  database:
+    name: database
+    driver: bridge
