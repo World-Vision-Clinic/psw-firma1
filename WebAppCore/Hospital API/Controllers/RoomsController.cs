@@ -15,14 +15,17 @@ using Hospital_API.Mappers;
 using Microsoft.EntityFrameworkCore;
 using Hospital.RoomsAndEquipment.Model;
 using Hospital_API.Mapper;
+using System.Net.Http;
+using System.Net;
+using Microsoft.AspNetCore.Cors;
 
 namespace Hospital_API.Controllers
 {
-    [Route("api/Rooms")]
+    [Route("api/[controller]")]
     [ApiController]
     public class RoomsController : ControllerBase
     {
-        private RoomService roomService = new RoomService(new RoomRepository(new Hospital.SharedModel.HospitalContext()));
+        private RoomService roomService = new RoomService(new RoomRepository(new Hospital.SharedModel.HospitalContext()), new EquipmentRepository(new Hospital.SharedModel.HospitalContext()));
         private EquipmentService equipmentService = new EquipmentService(new EquipmentRepository(new Hospital.SharedModel.HospitalContext()));
         private BuildingService buildingService = new BuildingService(new BuildingRepository(new Hospital.SharedModel.HospitalContext()));
         private FloorService floorService = new FloorService(new FloorRepository(new Hospital.SharedModel.HospitalContext()));
@@ -85,11 +88,16 @@ namespace Hospital_API.Controllers
             return NoContent();
         }
 
-        [Route("/Merge")]
-        [HttpPost]
+        [HttpPost("proba")]
+        public IActionResult Proba(RoomMergeDTO dto)
+        {
+            return Ok();
+        }
+
+        [HttpPost("merge")]
         public IActionResult Merge(RoomMergeDTO dto)
         {
-            /*try
+            try
             {
                 roomService.mergeRooms(dto.room1, dto.room2, dto.name, dto.purpose);
                 return Ok();
@@ -98,15 +106,13 @@ namespace Hospital_API.Controllers
             {
                 return BadRequest();
             }
-            return NoContent();*/
-            return Ok();
+            return NoContent();
         }
 
-        [Route("/Split")]
-        [HttpPost]
+        [HttpPost("split")]
         public IActionResult Split(RoomSplitDTO dto)
         {
-            /*try
+            try
             {
                 roomService.splitRoom(dto.room, dto.name1, dto.purpose1, dto.name2, dto.purpose2);
                 return Ok();
@@ -115,8 +121,7 @@ namespace Hospital_API.Controllers
             {
                 return BadRequest();
             }
-            return NoContent();*/
-            return Ok();
+            return NoContent();
         }
 
 

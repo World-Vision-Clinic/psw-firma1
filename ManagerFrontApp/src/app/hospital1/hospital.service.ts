@@ -90,17 +90,16 @@ export class HospitalService {
   }
 
   mergeRooms(mergingDTO){
-    const headers = new HttpHeaders();
-    headers.set('content-type','application/json')     
-    return this.http.post<any>(`http://localhost:39901/api/Rooms/Merge`, mergingDTO,{headers: headers}).subscribe(data => {console.log(data)
+    const headers={'content-type':'application/json'};  
+    const body=JSON.stringify(mergingDTO)     
+    return this.http.post('http://localhost:39901/api/Rooms/merge', body,{headers: headers}).subscribe(data => {console.log(data)
     });
   }
 
   splitRoom(splitDTO){
-    const headers = new HttpHeaders();
-    headers.set('content-type','application/json')     
-    return this.http.post<any>(`http://localhost:39901/api/Rooms/Split`, splitDTO, {headers: headers}).subscribe(data => {console.log(data)
-  });
+    const headers={'content-type':'application/json'};  
+    const body=JSON.stringify(splitDTO)  
+    return this.http.post('http://localhost:39901/api/Rooms/split', body,{headers: headers}).subscribe(data => {console.log(data)});
   }
 
 }

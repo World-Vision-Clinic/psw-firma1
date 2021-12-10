@@ -73,8 +73,16 @@ namespace Hospital.RoomsAndEquipment.Service
             newRoom.Purpose = purpose;
             newRoom.X = room1.X < room2.X ? room1.X : room2.X;
             newRoom.Y = room1.Y < room2.Y ? room1.Y : room2.Y;
-            newRoom.Width = room1.Width + 10 + room2.Width;
-            newRoom.Height = room1.Height + 10 + room2.Height;
+            if (room1.Vertical)
+            {
+                newRoom.Width = room1.Width;
+                newRoom.Height = room1.Height + 10 + room2.Height;
+            } else
+            {
+                newRoom.Width = room1.Width + 10 + room2.Width;
+                newRoom.Height = room1.Height;
+            }
+            
             newRoom.FloorId = room1.FloorId;
             newRoom.DoorX = room1.DoorX;
             newRoom.DoorY = room1.DoorY;
@@ -111,7 +119,7 @@ namespace Hospital.RoomsAndEquipment.Service
                 }
                 newRoom1.FloorId = room.FloorId;
                 newRoom1.DoorX = room.DoorX;
-                newRoom1.DoorY = newRoom1.Y+15;
+                newRoom1.DoorY = newRoom1.Y+20;
                 newRoom1.Vertical = room.Vertical;
                 newRoom1.DoorExist = room.DoorExist;
                 newRoom1.Css = room.Css;
@@ -133,7 +141,7 @@ namespace Hospital.RoomsAndEquipment.Service
                 newRoom2.Width = room.Width;
                 newRoom2.FloorId = room.FloorId;
                 newRoom2.DoorX = room.DoorX;
-                newRoom2.DoorY = newRoom2.Y + 15;
+                newRoom2.DoorY = newRoom2.Y+20;
                 newRoom2.Vertical = room.Vertical;
                 newRoom2.DoorExist = room.DoorExist;
                 newRoom2.Css = room.Css;
@@ -153,11 +161,11 @@ namespace Hospital.RoomsAndEquipment.Service
                 }
                 else
                 {
-                    newRoom1.Width = (room.Width - 1) / 2 - 5;
+                    newRoom1.Width = (room.Width - 1) / 2 - 4;
                 }
                 newRoom1.FloorId = room.FloorId;
                 newRoom1.DoorX = newRoom1.X + 15;
-                newRoom1.DoorY = room.Y;
+                newRoom1.DoorY = room.Y-2;
                 newRoom1.Vertical = room.Vertical;
                 newRoom1.DoorExist = room.DoorExist;
                 newRoom1.Css = room.Css;
@@ -178,10 +186,10 @@ namespace Hospital.RoomsAndEquipment.Service
                     newRoom2.Width = (room.Width - 1) / 2 - 4;
                 }
 
-                newRoom2.Width = room.Width + 10 + room.Width;
+                newRoom2.Height= room.Height;
                 newRoom2.FloorId = room.FloorId;
-                newRoom2.DoorX = room.DoorX;
-                newRoom2.DoorY = newRoom2.Y + 15;
+                newRoom2.DoorX = newRoom2.X + 20;
+                newRoom2.DoorY = newRoom2.Y-2;
                 newRoom2.Vertical = room.Vertical;
                 newRoom2.DoorExist = room.DoorExist;
                 newRoom2.Css = room.Css;
