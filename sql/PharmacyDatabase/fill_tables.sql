@@ -184,7 +184,7 @@ INSERT INTO public."Medicines"(
 
 INSERT INTO public."News"(
 	"Id", "Title", "Content", "FromDate", "ToDate", "IdEncoded")
-	VALUES (1,'Maske na popustu', 'Sve maske snizene', TO_TIMESTAMP('2021-12-16 00:00:00', "YYYY-MM-DD HH24:MI:SS"), TO_TIMESTAMP('2021-12-19 00:00:00', "YYYY-MM-DD HH24:MI:SS"),'NqZuWmdjua/RgKMP4wVyMKkeRDYMSvhOYAA6PFpn6HA=');
+	VALUES (1,'Maske na popustu', 'Sve maske snizene', TO_TIMESTAMP('2021-12-16 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2021-12-19 00:00:00', 'YYYY-MM-DD HH24:MI:SS'),'NqZuWmdjua/RgKMP4wVyMKkeRDYMSvhOYAA6PFpn6HA=');
 
 
 INSERT INTO public."Objections"(
