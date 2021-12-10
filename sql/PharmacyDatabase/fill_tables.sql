@@ -172,21 +172,21 @@ DELETE FROM public."Replies";
 
 INSERT INTO public."Credentials"(
 	"Id", "HospitalName", "HospitalLocalhost", "ApiKey")
-	VALUES (1, "World Vision Clinic", "http://localhost:43818", "qvHNrR8Qy8opuGnfHBPseBzCjBPdd7oZgFL3UvKKBGo=");
+	VALUES (1, 'World Vision Clinic', 'http://localhost:43818', 'qvHNrR8Qy8opuGnfHBPseBzCjBPdd7oZgFL3UvKKBGo=');
 
 INSERT INTO public."Hospitals"(
 	"Id", "Name", "Key", "Localhost")
-	VALUES (1,"World Vision Clinic","YtmmHLff/L72Db/KxqK/xJVUMzbt5xUiGn6IHgdf13Y=","http://localhost:43818");
+	VALUES (1,'World Vision Clinic','YtmmHLff/L72Db/KxqK/xJVUMzbt5xUiGn6IHgdf13Y=','http://localhost:43818');
 
 INSERT INTO public."Medicines"(
 	"MedicineId", "MedicineName", "Manufacturer", "SideEffects", "Usage", "Weigth", "MainPrecautions", "PotentialDangers", "Quantity", "Price")
-	VALUES (5,"Aspirin","Galenika","None","3 times a day", 200.00,"None","None",21,250.00);
+	VALUES (5,'Aspirin','Galenika','None','3 times a day', 200.00,'None','None',21,250.00);
 
 INSERT INTO public."News"(
 	"Id", "Title", "Content", "FromDate", "ToDate", "IdEncoded")
-	VALUES (1,"Maske na popustu", "Sve maske snizene", TO_TIMESTAMP("2021-12-16 00:00:00", "YYYY-MM-DD HH24:MI:SS"), TO_TIMESTAMP("2021-12-19 00:00:00", "YYYY-MM-DD HH24:MI:SS"),"NqZuWmdjua/RgKMP4wVyMKkeRDYMSvhOYAA6PFpn6HA=");
+	VALUES (1,'Maske na popustu', 'Sve maske snizene', TO_TIMESTAMP('2021-12-16 00:00:00', "YYYY-MM-DD HH24:MI:SS"), TO_TIMESTAMP('2021-12-19 00:00:00', "YYYY-MM-DD HH24:MI:SS"),'NqZuWmdjua/RgKMP4wVyMKkeRDYMSvhOYAA6PFpn6HA=');
 
 
 INSERT INTO public."Objections"(
 	"Id", "HospitalId", "Content", "IdEncoded")
-	VALUES (1,"http://localhost:43818", "Radnici nisu ljubazni", "tCNbgflULFw2eCqc5zDsTTrx9YbZoYDlOZl0JAHhPEU=");
+	VALUES (1,'http://localhost:43818', 'Radnici nisu ljubazni', 'tCNbgflULFw2eCqc5zDsTTrx9YbZoYDlOZl0JAHhPEU=');
