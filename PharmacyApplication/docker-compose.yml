@@ -14,7 +14,7 @@ services:
         source: database-data
         target: /var/lib/postgresql/data
       - type: bind
-        source: ./sql/PharmacyDatabase/fill_tables.sql
+        source: ./scripts/fill_tables.sql
         target: /docker-entrypoint-initdb.d/init.sql
     ports:
       - "5555:5432"
@@ -22,7 +22,7 @@ services:
   pharmacy:
     depends_on:
       - postgres-database
-    build: ./PharmacyApplication
+    build: ../PharmacyApplication
     image: jelenahrnjak/pharmacy 
     environment: 
       DATABASE_PASSWORD: admin
@@ -37,7 +37,7 @@ services:
   manager-front:
     depends_on:
       - pharmacy
-    build: ./ManagerFrontApp
+    build: ../ManagerFrontApp
     image: jelenahrnjak/manager-front-app
     ports:
       - "4201:4200"

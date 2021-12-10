@@ -29,19 +29,7 @@ namespace PharmacyAPI.Controller
         MedicineService service = new MedicineService(new MedicineRepository());
         HospitalsService hospitalService = new HospitalsService(new HospitalsRepository());
         CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
-
-        
-        [HttpGet("dodaj")]
-        public IActionResult Dodaj(long id = 0)
-        {
-            if (service.GetById(id) == null)
-            {
-                return BadRequest();
-            }
-
-            return Ok();
-        }
-
+ 
         [HttpGet("check")]
         public IActionResult CheckMedicineAvailability(string name = "", string dosage = "", string quantity = "")
         {
