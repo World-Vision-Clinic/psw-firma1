@@ -88,18 +88,12 @@ namespace Hospital_API.Controllers
             return NoContent();
         }
 
-        [HttpPost("proba")]
-        public IActionResult Proba(RoomMergeDTO dto)
-        {
-            return Ok();
-        }
-
         [HttpPost("merge")]
         public IActionResult Merge(RoomMergeDTO dto)
         {
             try
             {
-                roomService.mergeRooms(dto.room1, dto.room2, dto.name, dto.purpose);
+                int a = roomService.mergeRooms(dto.room1, dto.room2, dto.name, dto.purpose);
                 return Ok();
             }
             catch

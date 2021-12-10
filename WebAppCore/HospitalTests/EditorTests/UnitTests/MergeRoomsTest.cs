@@ -49,7 +49,8 @@ namespace HospitalTests.EditorTests.UnitTests
 
                 roomService.mergeEquipment(r1.Id, r2.Id, newId);
 
-                Assert.Empty(eqRepository.GetRoomEquipemnts(r2.Id));
+                eqRepository.GetRoomEquipemnts(r2.Id).ShouldBeEmpty();
+                eqRepository.GetRoomEquipemnts(r1.Id).ShouldBeEmpty();
                 context.Dispose();
             }
         }
@@ -67,7 +68,7 @@ namespace HospitalTests.EditorTests.UnitTests
                 Room r2 = new Room { Id = 3999, FloorId = 1, Name = "OPERATING ROOM 2", DoctorId = -1, Purpose = "", X = 160, Y = 150, Height = 100, Width = 150, DoorX = 220, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true };
                 context.Rooms.Add(r1);
                 context.Rooms.Add(r2);
-                Equipment eq1 = new Equipment { Id = 737, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 15, RoomId = 399 };
+                Equipment eq1 = new Equipment { Id = 717, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 15, RoomId = 399 };
                 Equipment eq2 = new Equipment { Id = 738, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 4, RoomId = 3999 };
                 Equipment eq3 = new Equipment { Id = 733, Name = "Infusion", Type = EquipmentType.DYNAMIC, Amount = 7, RoomId = 399 };
                 Equipment eq4 = new Equipment { Id = 734, Name = "Syringe", Type = EquipmentType.DYNAMIC, Amount = 23, RoomId = 3999 };
@@ -128,9 +129,19 @@ namespace HospitalTests.EditorTests.UnitTests
 
 
                 roomService.mergeRooms(r1, r2, "New Room", "Room for personel rest");
+                List<Room> newRooms = roomService.getAll();
 
+                roomRepository.GetAll().Count.ShouldBeEquivalentTo(1);
 
-                Assert.Equal(1,roomRepository.GetAll().Count);
+                if (r1.Vertical)
+                {
+                    (r1.Height + r2.Height).ShouldBeLessThanOrEqualTo(newRooms[0].Height);
+                }
+                else
+                {
+                    (r1.Width + r2.Width).ShouldBeLessThanOrEqualTo(newRooms[0].Width);
+                }
+                
 
                 context.Dispose();
             }

@@ -62,7 +62,7 @@ namespace Hospital.RoomsAndEquipment.Service
 
         }
 
-        public void mergeRooms(Room room1, Room room2, String name, String purpose)
+        public int mergeRooms(Room room1, Room room2, String name, String purpose)
         {
             Room newRoom = new Room();
             int newId = repository.GetAll().Count + 150;
@@ -93,6 +93,8 @@ namespace Hospital.RoomsAndEquipment.Service
             repository.Delete(room1.Id);
             repository.Delete(room2.Id);
             repository.Save(newRoom);
+
+            return newId;
         }
 
         public void splitRoom(Room room, String name1, String purpose1, String name2, String purpose2)
