@@ -1,0 +1,59 @@
+﻿version: '3.8' 
+
+services:
+  hospital-front:
+    image: hospital-front:lastest
+    depends_on:
+      - "hospital-api"
+    build:
+      context: ../../patient-portal-front/
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks: 
+      - application
+
+  hospital-api:
+    image: darkelfff/hospital-api:latest
+    depends_on:
+      - "database"
+    #build:
+    #  context: .
+    #  dockerfile: Dockerfile
+    ports:
+      - "8081:80"     
+    environment:
+      DATABASE_HOST: database
+      DATABASE_PORT: 5432
+      DATABASE_SCHEMA: MyWebApi.Dev
+      DATABASE_USER: admin
+      DATABASE_PASSWORD: ftn
+    networks:
+      - application
+  
+  database: 
+    image: postgres:latest
+    ports:
+      - "5555:5432"
+    restart: always
+    volumes:
+      - type: volume
+        source: db_volume
+        target: /var/lib/postgresql/data
+      - type: bind
+        source: ./dbscripts/seed.sql 
+        target: /docker-entrypoint-initdb.d/seed.sql
+    environment:
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "ftn"
+      POSTGRES_DB: "MyWebApi.Dev"
+    networks:
+      - application
+volumes:
+  db_volume:
+    name: database
+
+networks:
+  application:
+    name: application
+    driver: bridge

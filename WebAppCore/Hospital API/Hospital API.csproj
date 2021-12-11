@@ -25,4 +25,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Hospital\Hospital.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="config\" />
+  </ItemGroup>
 </Project>
