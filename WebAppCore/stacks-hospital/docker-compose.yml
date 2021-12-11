@@ -55,5 +55,5 @@ volumes:
 
 networks:
   application:
-    name: application
+    #name: application
     driver: bridge
