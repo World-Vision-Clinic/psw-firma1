@@ -1,7 +1,4 @@
 using Grpc.Core;
-using Hospital.MedicalRecords.Model;
-using Hospital.MedicalRecords.Repository;
-using Hospital.MedicalRecords.Services;
 using Integration;
 using Integration.Pharmacy.Model;
 using Integration.Pharmacy.Repository;
@@ -28,12 +25,12 @@ namespace Integration_API.Controller
     {
         private PharmaciesService pharmaciesService = new PharmaciesService(new PharmaciesRepository());
         private CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
-        private MedicineService medicineService = new MedicineService(new MedicinesRepository(), new MedicalRecordsRepository(), new ExaminationRepository());
         private FilesService filesService = new FilesService(new FilesRepository());
 
         private SftpHandler sftpHandler = new SftpHandler();
         private IPharmacyConnection pharmacyConnection;
-        
+        public const string HOSPITAL_URL = "http://localhost:39901";
+
         public MedicinesController(IPharmacyConnection connection)
         {
             pharmacyConnection = connection;
@@ -42,11 +39,26 @@ namespace Integration_API.Controller
         [HttpPost("sendConsumptionNotification")]
         public IActionResult SendConsumptionNotification(MedicineConsumptionDto dto)
         {
-            medicineService.CreateConsumedMedicinesInPeriodFile(dto.Beginning, dto.End);
+            var client = new RestSharp.RestClient(HOSPITAL_URL);
+            var request = new RestRequest("/medicines/sendConsumptionNotification");
+
+            request.AddJsonBody(
+            new
+            {
+                Beginning = dto.Beginning,
+                End = dto.End
+            });
+            IRestResponse response = client.Post(request);
+            
             sftpHandler.UploadFile();
 
 
-            return Ok();
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
         [HttpGet("check")]
@@ -137,20 +149,30 @@ namespace Integration_API.Controller
         [HttpPost("ordered")]
         public IActionResult OrderedHTTP(OrderedMedicineDTO dto)
         {
-            MedicineService ms = new MedicineService(new MedicinesRepository(), new MedicalRecordsRepository(), new ExaminationRepository());
-            Medicine orderedMedicine;
-            foreach (Medicine med in ms.GetAll())
+            var client = new RestSharp.RestClient(HOSPITAL_URL);
+            var request = new RestRequest("/medicines/ordered");
+
+            request.AddJsonBody(
+            new
             {
-                if (med.Name.Equals(dto.MedicineName) && med.DosageInMg.Equals(dto.Weigth))
-                {
-                    orderedMedicine = new Medicine(med.ID, dto.MedicineName, Double.Parse(dto.Weigth), int.Parse(dto.Quantity), dto.Price, dto.MainPrecautions, null, dto.Replacements);
-                    ms.AddOrderedMedicine(orderedMedicine);
-                    return Ok();
-                }
+                MedicineName = dto.MedicineName,
+                Manufaccturer = dto.Manufacturer,
+                SideEffects = dto.SideEffects,
+                Usage = dto.Usage,
+                Weigth = dto.Weigth,
+                MainPrecautions = dto.MainPrecautions,
+                PotentialDangers = dto.PotentialDangers,
+                Quantity = dto.Quantity,
+                Replacements = dto.Replacements,
+                Price = dto.Price
+            });
+            IRestResponse response = client.Post(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return Ok();
             }
-            orderedMedicine = new Medicine(Hospital.MedicalRecords.Service.Generator.GenerateMedicineId(), dto.MedicineName, Double.Parse(dto.Weigth), int.Parse(dto.Quantity), dto.Price, dto.Usage, null, dto.Replacements);
-            ms.AddOrderedMedicine(orderedMedicine);
-            return Ok();
+
+            return BadRequest();
         }
 
         [HttpPut("OrderMedicine")]
