@@ -30,6 +30,7 @@ namespace Integration_API.Mapper
             dto.Address = pharmacy.Address;
             dto.City = pharmacy.City;
             dto.Note = pharmacy.Note;
+            dto.Protocol = pharmacy.Protocol;
             return dto;
         }
     }

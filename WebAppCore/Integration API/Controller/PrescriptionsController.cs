@@ -39,7 +39,7 @@ namespace Integration_API.Controller
             generator.GeneratePrescriptionPdf("test", dto);
             //metoda iz drugog kontrolera
             //pharmaciesWithMedicine = CheckMedicineAvailability(dto.MedicineName, dto.DosageInMg, dto.Quantity);
-            List<PharmacyDto> pharmaciesWithMedicine = GetPharmaciesWithAvailableMedicine(dto.PatientName, dto.DosageInMg, dto.Quantity);
+            List<PharmacyDto> pharmaciesWithMedicine = GetPharmaciesWithAvailableMedicine(dto.MedicineName, dto.DosageInMg, dto.Quantity);
             if (pharmaciesWithMedicine.Count == 0)
                 return Ok("No pharmacies with specified medicine found");
             bool isSend = SendPrescription(pharmaciesWithMedicine, "test.pdf");
@@ -62,7 +62,7 @@ namespace Integration_API.Controller
                 {
                     SftpHandler stfp = new SftpHandler();
                     stfp.UploadPdfFile(filename);
-                    isSend = NotifyPharmacyAboutSendFile(pharmacy,filename);
+                    //isSend = NotifyPharmacyAboutSendFile(pharmacy,filename);
                 }
                 if (isSend)
                     return true;
