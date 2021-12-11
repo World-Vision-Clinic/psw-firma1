@@ -6,7 +6,7 @@ services:
     depends_on:
       - "hospital-api"
     build:
-      context: ../../patient-portal-front/
+      context: ../patient-portal-front/
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
@@ -23,7 +23,17 @@ services:
     ports:
       - "8081:80"     
     environment:
-      DB_CONNECTION_STRING: "port=5432;database=MyWebApi.Dev;username=admin;password=ftn"
+      #DB_CONNECTION_STRING: "port=5432;database=MyWebApi.Dev;username=admin;password=ftn"
+      #STAGE: ${SMART_TUTOR_STAGE}
+      DATABASE_HOST: database
+      DATABASE_PORT: 5432
+      DATABASE_SCHEMA: MyWebApi.Dev
+      DATABASE_USER: admin
+      DATABASE_PASSWORD: ftn
+      #KEYCLOAK_ON: ${KEYCLOAK_ON}
+      #AUTHORITY: ${AUTHORITY:-}
+      #AUDIENCE: ${AUDIENCE:-}
+      #SMART_TUTOR_CORS_ORIGINS: ${SMART_TUTOR_CORS_ORIGINS}
     networks:
       - application
   
