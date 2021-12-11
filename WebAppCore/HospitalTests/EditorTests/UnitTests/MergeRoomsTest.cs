@@ -15,7 +15,7 @@ namespace HospitalTests.EditorTests.UnitTests
     public class MergeRoomsTest
     {
         [Fact]
-        public void merge_equipment_test_1()
+        public void merged_equipment_room_change()
         {
             var options = new DbContextOptionsBuilder<HospitalContext>()
                 .UseInMemoryDatabase(databaseName: "HospitalDB")
@@ -51,11 +51,12 @@ namespace HospitalTests.EditorTests.UnitTests
 
                 eqRepository.GetRoomEquipemnts(r2.Id).ShouldBeEmpty();
                 eqRepository.GetRoomEquipemnts(r1.Id).ShouldBeEmpty();
+                eqRepository.GetRoomEquipemnts(newId).Count.ShouldBeEquivalentTo(4);
                 context.Dispose();
             }
         }
         [Fact]
-        public void merge_equipment_test_2()
+        public void same_name_equipment_merging()
         {
             var options = new DbContextOptionsBuilder<HospitalContext>()
                 .UseInMemoryDatabase(databaseName: "HospitalDB")
@@ -89,14 +90,20 @@ namespace HospitalTests.EditorTests.UnitTests
                 int newId = 3499;
 
                 roomService.mergeEquipment(r1.Id, r2.Id, newId);
-
-                Assert.Equal(4, eqRepository.GetRoomEquipemnts(newId).Count);
+                foreach(Equipment e in eqRepository.GetAll())
+                {
+                    if (e.Name.Equals("Bandage"))
+                    {
+                        e.Amount.ShouldBeEquivalentTo(19);
+                    }
+                }
+               
                 context.Dispose();
             }
         }
 
         [Fact]
-        public void merge_rooms_test()
+        public void changin_total_number_of_roms_and_dimensions()
         {
             var options = new DbContextOptionsBuilder<HospitalContext>()
                 .UseInMemoryDatabase(databaseName: "HospitalDB")

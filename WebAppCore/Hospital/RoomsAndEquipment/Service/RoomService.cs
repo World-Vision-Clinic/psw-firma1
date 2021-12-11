@@ -207,6 +207,8 @@ namespace Hospital.RoomsAndEquipment.Service
         {
             List<Equipment> equipInRoom1 = equipmentRepository.GetRoomEquipemnts(room1ID);
             List<Equipment> equipInRoom2 = equipmentRepository.GetRoomEquipemnts(room2ID);
+            List<Equipment> newRoomEquipment = new List<Equipment>();
+
             if (equipInRoom1 == null) //Ukoliko u prvoj sobi nema opreme
             {
                 foreach(Equipment e in equipInRoom2)
@@ -222,34 +224,32 @@ namespace Hospital.RoomsAndEquipment.Service
                 foreach (Equipment eq2 in equipInRoom2)
                 {
                     foreach (Equipment eq1 in equipInRoom1)
-                    {                      
-                        if (eq1.Name == eq2.Name)
+                    {
+                        eq1.RoomId = newId;
+                        if (eq1.Name.Equals(eq2.Name))
                         {
                             eq1.Amount += eq2.Amount;
+                            equipmentRepository.Update(eq1);
+                            equipmentRepository.Delete(eq2.Id);
+                            break;
                         }
                         else
                         {
-                            eq2.RoomId = eq1.RoomId;
+                            eq2.RoomId = newId;
+                            equipmentRepository.Update(eq2);
                         }
                     }
-                }
-
-                foreach (Equipment eq1 in equipInRoom1)
-                {
-                    eq1.RoomId = newId;
-                    equipmentRepository.Update(eq1);
-                }
-                foreach (Equipment eq2 in equipInRoom2)
-                {
-                    eq2.RoomId = newId;
-                    equipmentRepository.Update(eq2);
                 }
                 return;
             }
 
             if (equipInRoom2 == null)
             {
-                return;
+                foreach(Equipment e in equipInRoom1)
+                {
+                    e.RoomId = newId;
+                    equipmentRepository.Update(e);
+                }
             }
         }
 

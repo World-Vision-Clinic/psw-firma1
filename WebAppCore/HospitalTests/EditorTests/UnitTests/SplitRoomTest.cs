@@ -15,7 +15,7 @@ namespace HospitalTests.EditorTests.UnitTests
     public class SplitRoomTest
     {
         [Fact]
-        public void split_room_test_1()
+        public void change_of_dimensions_and_total_number_of_rooms()
         {
             var options = new DbContextOptionsBuilder<HospitalContext>()
                 .UseInMemoryDatabase(databaseName: "HospitalDB")
