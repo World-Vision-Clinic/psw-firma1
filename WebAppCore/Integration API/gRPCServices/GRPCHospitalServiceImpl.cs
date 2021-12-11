@@ -1,12 +1,10 @@
 ﻿using Grpc.Core;
-using Hospital.MedicalRecords.Model;
-using Hospital.MedicalRecords.Repository;
-using Hospital.MedicalRecords.Services;
 using Integration.Pharmacy.Model;
 using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Service;
 using Integration_API.Mapper;
 using IntegrationAPI.Protos;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,26 +33,34 @@ namespace Integration_API.gRPCServices
         public override Task<SentOrderedMedicineResponse> addOrderedMedicine(SentOrderedMedicineRequest request, ServerCallContext context)
         {
             SentOrderedMedicineResponse response = new SentOrderedMedicineResponse();
-            MedicineService ms = new MedicineService(new MedicinesRepository(), new MedicalRecordsRepository(), new ExaminationRepository());
-            Medicine orderedMedicine;
+            var client = new RestSharp.RestClient("http://localhost:39901");
+            var requestHttp = new RestRequest("medicines/ordered");
             List<string> replacements = new List<string>();
-            foreach(String replacement in request.Replacements)
+            foreach (String replacement in request.Replacements)
             {
                 replacements.Add(replacement);
             }
-            foreach (Medicine med in ms.GetAll())
+            requestHttp.AddJsonBody(
+            new
             {
-                if (med.Name.Equals(request.MedicineName) && med.DosageInMg.Equals(request.Weight))
-                {
-                    orderedMedicine = new Medicine(med.ID, request.MedicineName, request.Weight, (int)request.Quantity, request.Price, request.MainPrecautions, null, replacements);
-                    ms.AddOrderedMedicine(orderedMedicine);
-                    response.Response = "OK";
-                    return Task.FromResult(response);
-                }
+                MedicineName = request.MedicineName,
+                Manufaccturer = request.Manufacturer,
+                SideEffects = request.SideEffects,
+                Usage = request.Usage,
+                Weigth = request.Weight,
+                MainPrecautions = request.MainPrecautions,
+                PotentialDangers = request.PotentialDangers,
+                Quantity = request.Quantity,
+                Replacements = replacements,
+                Price = request.Price
+            });
+            IRestResponse responseHttp = client.Post(requestHttp);
+            if (responseHttp.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                response.Response = "OK";
+                return Task.FromResult(response);
             }
-            orderedMedicine = new Medicine(Hospital.MedicalRecords.Service.Generator.GenerateMedicineId(), request.MedicineName, request.Weight, (int)request.Quantity, request.Price, request.Usage, null, replacements);
-            ms.AddOrderedMedicine(orderedMedicine);
-            response.Response = "OK";
+            response.Response = "BAD REQUEST";
             return Task.FromResult(response);
         }
     }

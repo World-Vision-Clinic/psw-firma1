@@ -1,9 +1,9 @@
-﻿using Hospital.MedicalRecords.Model;
-using Hospital.MedicalRecords.Repository;
-using Integration;
+﻿using Integration;
 using Integration.Pharmacy.Repository;
 using Integration_API.Controller;
 using Integration_API.Dto;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -33,32 +33,14 @@ namespace IntegrationTests.IntegrationTests
         [Fact]
         public void OrderingExistingMedicinesTest()
         {
-            OrderedMedicineDTO omd = new OrderedMedicineDTO("Brufen", "Zdravko", "none", "2 times a day", "200", "none", "none", "2", null, 200);
-            MedicinesRepository mr = new MedicinesRepository();
-            double quantity = 0;
-            foreach (Medicine med in mr.GetAll())
-            {
-                if (med.Name.Equals(omd.MedicineName))
-                {
-                    quantity = med.Quantity;
-                }
-            }
-            MedicinesController pc = new MedicinesController(new PharmacyHTTPConnection());
+            OrderedMedicineDTO omd = new OrderedMedicineDTO("Brufen", "Zdravko", "none", "2 times a day", "100", "none", "none", "2", null, 200);
+            MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection());
 
-            pc.OrderedHTTP(omd);
+            var result = mc.OrderedHTTP(omd);
 
-
-            MedicinesRepository mr1 = new MedicinesRepository();
-            double newQuantity = 0;
-            foreach (Medicine med in mr1.GetAll())
-            {
-                if (med.Name.Equals(omd.MedicineName))
-                {
-                    newQuantity = med.Quantity;
-                }
-            }
-
-            Assert.Equal(quantity + int.Parse(omd.Quantity), newQuantity);
+            var statusCodeResult = (IStatusCodeActionResult)result;
+            
+            Assert.Equal(200, statusCodeResult.StatusCode);
         }
 
         [Theory]

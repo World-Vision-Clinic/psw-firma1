@@ -9,8 +9,6 @@ using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Service;
 using Integration_API.Dto;
 using Integration.Pharmacy.Model;
-using Hospital.MedicalRecords.Services;
-using Hospital.MedicalRecords.Repository;
 using Integration_API.Mapper;
 using IntegrationAPI.Protos;
 using RestSharp;
@@ -22,7 +20,6 @@ namespace Integration_API.Controller
     public class PrescriptionsController : ControllerBase
     {
         private PharmaciesService pharmaciesService = new PharmaciesService(new PharmaciesRepository());
-        private MedicineService medicineService = new MedicineService(new MedicinesRepository(), new MedicalRecordsRepository(), new ExaminationRepository());
         private SftpHandler sftpHandler = new SftpHandler();
         private CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
         private IPharmacyConnection pharmacyConnection;

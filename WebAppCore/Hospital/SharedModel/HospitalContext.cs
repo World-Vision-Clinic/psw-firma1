@@ -180,8 +180,7 @@ namespace Hospital.SharedModel
             var pooling = Environment.GetEnvironmentVariable("DATABASE_POOLING") ?? "true";
 
             //string retVal = "Server=" + server + ";Port=" + port + ";Database=" + database + ";User ID=" + user + ";Password=" + password + ";Integrated Security=" + integratedSecurity + ";Pooling=" + pooling + ";";
-            return
-                $"Server={server};Port={port};Database={database};User ID={user};Password={password};Integrated Security={integratedSecurity};Pooling={pooling};";
+            return $"Server={server};Port={port};Database={database};User ID={user};Password={password};Integrated Security={integratedSecurity};Pooling={pooling};";
         }
     }
 }
