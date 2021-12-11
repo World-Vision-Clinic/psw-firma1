@@ -10,12 +10,13 @@ namespace Integration_API.Controller
 {
     public class SftpHandler
     {
+        const String SFTP_ADDRESS = "192.168.56.1";
         FilesRepository repository = new FilesRepository();
         public File DownloadSpecification(string fromPath, string localPath)
         {
             try
             {
-                using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.56.1", "user", "password")))
+                using (SftpClient client = new SftpClient(new PasswordConnectionInfo(SFTP_ADDRESS, "user", "password")))
                 {
                     client.Connect();
 
@@ -44,7 +45,7 @@ namespace Integration_API.Controller
 
         public void UploadFile()
         {
-            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.56.1", "user", "password")))
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo(SFTP_ADDRESS, "user", "password")))
             {
                 client.Connect();
                 string sourceFile = @"consumed-medicine.txt";
@@ -58,7 +59,7 @@ namespace Integration_API.Controller
 
         public void UploadPdfFile(String filename)
         {
-            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.56.1", "user", "password")))
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo(SFTP_ADDRESS, "user", "password")))
             {
                 client.Connect();
                 string sourceFile = filename;

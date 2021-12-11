@@ -19,7 +19,7 @@ namespace PharmacyAPI.Controller
     {
         HospitalsService hospitalService = new HospitalsService(new HospitalsRepository());
         CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
-
+        const String SFTP_ADDRESS = "192.168.56.1";
         [HttpPost("DownloadPrescription")]
         public IActionResult DownloadPrescription(NotificationPdfDownloadDto dto)
         {
@@ -40,7 +40,7 @@ namespace PharmacyAPI.Controller
 
         public void DownloadPdfFile(String filename)
         {
-            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.56.1", "user", "password")))
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo(SFTP_ADDRESS, "user", "password")))
             {
                 client.Connect();
                 string serverFile = @"\public\" + filename;
