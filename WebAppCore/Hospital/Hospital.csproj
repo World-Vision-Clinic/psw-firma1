@@ -32,5 +32,9 @@
 	  <Folder Include="Schedule\Service\" />
 	  <Folder Include="Schedule\Repository\" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Integration\Integration.csproj" />
+	</ItemGroup>
 	
 </Project>

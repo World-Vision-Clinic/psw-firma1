@@ -1,5 +1,6 @@
 ﻿using Hospital.MedicalRecords.Model;
 using Hospital.MedicalRecords.Repository;
+using Integration.Pharmacy.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,6 +12,7 @@ using System.Windows;
 
 namespace Hospital.MedicalRecords.Services
 {
+ 
     public class MedicineService
     {
         private IMedicinesRepository medicineRepository;
@@ -126,7 +128,7 @@ namespace Hospital.MedicalRecords.Services
 
         public List<Ingredient> ReadIngredients()
         {
-            string[] lines2 = File.ReadAllLines("..\\..\\Files\\ingredients.txt");
+            string[] lines2 = System.IO.File.ReadAllLines("..\\..\\Files\\ingredients.txt");
             List<Ingredient> ingredients = new List<Ingredient>();
             foreach (string line in lines2)
             {
@@ -198,5 +200,7 @@ namespace Hospital.MedicalRecords.Services
             }
             return false;
         }
+
+        
     }
 }
