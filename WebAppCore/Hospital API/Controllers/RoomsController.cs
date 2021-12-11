@@ -91,16 +91,16 @@ namespace Hospital_API.Controllers
         [HttpPost("merge")]
         public IActionResult Merge(RoomMergeDTO dto)
         {
-            try
-            {
+            //try
+            //{
                 int a = roomService.mergeRooms(dto.room1, dto.room2, dto.name, dto.purpose);
                 return Ok();
-            }
+           /* }
             catch
             {
                 return BadRequest();
             }
-            return NoContent();
+            return NoContent();*/
         }
 
         [HttpPost("split")]

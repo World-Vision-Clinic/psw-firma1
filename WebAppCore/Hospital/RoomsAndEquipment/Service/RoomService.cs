@@ -65,7 +65,8 @@ namespace Hospital.RoomsAndEquipment.Service
         public int mergeRooms(Room room1, Room room2, String name, String purpose)
         {
             Room newRoom = new Room();
-            int newId = repository.GetAll().Count + 150;
+            int newIdIndex = repository.GetAll().Count - 1;
+            int newId=repository.GetAll()[newIdIndex].Id + 97;
             mergeEquipment(room1.Id, room2.Id, newId);
 
             newRoom.Id = newId;
@@ -101,7 +102,8 @@ namespace Hospital.RoomsAndEquipment.Service
         {
             Room newRoom1 = new Room();
             Room newRoom2 = new Room();
-            int newId=repository.GetAll().Count+15;
+            int newIdIndex = repository.GetAll().Count - 1;
+            int newId = repository.GetAll()[newIdIndex].Id + 97;
             //Ukoliko je soba uspravna dijelimo je na dvije uspravno
             if (room.Vertical)
             {
@@ -219,7 +221,7 @@ namespace Hospital.RoomsAndEquipment.Service
                 return;
             }
 
-            if (equipInRoom2 != null)
+            if (equipInRoom2 != null && equipInRoom1!=null)
             {
                 foreach (Equipment eq2 in equipInRoom2)
                 {
