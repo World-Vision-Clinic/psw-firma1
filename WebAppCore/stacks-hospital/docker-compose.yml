@@ -21,7 +21,7 @@ services:
     #  context: .
     #  dockerfile: Dockerfile
     ports:
-      - "8081:80"     
+      - "8080:80"     
     environment:
       DATABASE_HOST: database
       DATABASE_PORT: 5432
@@ -34,7 +34,7 @@ services:
   database: 
     image: postgres:latest
     ports:
-      - "5555:5432"
+      - "5433:5432"
     restart: always
     volumes:
       - type: volume
@@ -51,7 +51,7 @@ services:
       - application
 volumes:
   db_volume:
-    name: database
+    #name: database
 
 networks:
   application:

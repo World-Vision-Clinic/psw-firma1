@@ -173,11 +173,8 @@ namespace Hospital.SharedModel
         {
             var server = Environment.GetEnvironmentVariable("DATABASE_HOST") ?? "localhost";
             var port = Environment.GetEnvironmentVariable("DATABASE_PORT") ?? "5432";
-            //var database = EnvironmentConnection.GetSecret("DATABASE_SCHEMA") ?? "MyWebApi.Dev";
             var database = Environment.GetEnvironmentVariable("DATABASE_SCHEMA") ?? "MyWebApi.Dev";
-            //var user = EnvironmentConnection.GetSecret("DATABASE_USERNAME") ?? "admin";
             var user = Environment.GetEnvironmentVariable("DATABASE_USERNAME") ?? "admin";
-            //var password = EnvironmentConnection.GetSecret("DATABASE_PASSWORD") ?? "ftn";
             var password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "ftn";
             var integratedSecurity = Environment.GetEnvironmentVariable("DATABASE_INTEGRATED_SECURITY") ?? "true";
             var pooling = Environment.GetEnvironmentVariable("DATABASE_POOLING") ?? "true";

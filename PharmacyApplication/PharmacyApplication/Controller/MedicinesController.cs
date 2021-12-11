@@ -29,7 +29,7 @@ namespace PharmacyAPI.Controller
         MedicineService service = new MedicineService(new MedicineRepository());
         HospitalsService hospitalService = new HospitalsService(new HospitalsRepository());
         CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
- 
+
         [HttpGet("check")]
         public IActionResult CheckMedicineAvailability(string name = "", string dosage = "", string quantity = "")
         {
@@ -120,7 +120,7 @@ namespace PharmacyAPI.Controller
             {
                 return Ok();
             }
-        }   
+        }
 
         [HttpGet("medicineConsumation")]
         public IActionResult GetMedicineCousumation()
@@ -151,7 +151,7 @@ namespace PharmacyAPI.Controller
             reader.Close();
             return consumationReport;
         }
-        
+
         [HttpGet("spec")]
         public IActionResult GetMedicineSpecification(string name = "")
         {
@@ -183,7 +183,7 @@ namespace PharmacyAPI.Controller
                 createPDFFile(service.GetSpecification(medicine), medicine.MedicineName);
                 break;
             }
-            
+
             uploadSpecification(name + ".pdf");
 
             return Ok();
@@ -224,6 +224,14 @@ namespace PharmacyAPI.Controller
                 client.Disconnect();
             }
 
+        }
+        // Za testiranje dockera
+        [HttpGet("test")]
+        public IActionResult Get()
+        {
+            Medicine medicine = service.GetById(1);
+            MedicineDto dto = new MedicineDto(medicine.MedicineName, medicine.Weigth, medicine.Quantity);
+            return Ok(dto);
         }
     }
 }
