@@ -1,4 +1,4 @@
-version: '3.2'
+version: '3.8'
 services:
   postgres-database:
     image: postgres 
@@ -20,11 +20,14 @@ services:
       - "5555:5432"
 
   pharmacy:
+    #build: ../PharmacyApplication
+    image: darkelfff/pharmacy:latest
     depends_on:
       - postgres-database
-    build: ../PharmacyApplication
-    image: jelenahrnjak/pharmacy 
     environment: 
+      DATABASE_HOST: postgres-database
+      DATABASE_PORT: 5432
+      DATABASE_SCHEMA: PharmacyDatabase
       DATABASE_PASSWORD: admin
       DATABASE_USER: postgres
     ports:
