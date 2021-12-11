@@ -27,10 +27,6 @@ namespace Integration.SharedModel
 
         protected override void OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=IntegrationDatabase;User Id=admin;Password=ftn");
-
-            //optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=IntegrationDatabase;User Id=postgres;Password=admin");
-            //optionsBuilder.UseNpgsql("Server=integrationapi;Port=5432;Database=IntegrationDatabase;User Id=postgres;Password=admin");
             optionsBuilder.UseNpgsql(CreateConnectionStringFromEnvironment());
         }
         private static string CreateConnectionStringFromEnvironment()
