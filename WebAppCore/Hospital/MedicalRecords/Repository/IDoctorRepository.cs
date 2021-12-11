@@ -17,5 +17,6 @@ namespace Hospital.MedicalRecords.Repository
         public List<Doctor> GetDoctorsFromList(List<int> doctorIds);
         public List<Doctor> GetAvailableDoctors();
         public List<Doctor> GetAll();
+        public List<Doctor> GetForSpecialty(int specialty);
     }
 }

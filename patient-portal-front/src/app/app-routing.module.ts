@@ -7,6 +7,8 @@ import { PatientCreateFeedbackComponent } from './patient-create-feedback/patien
 import { PatientFeedbackViewComponent } from './patient-feedback-view/patient-feedback-view.component';
 import { SurveyComponent } from './survey/survey/survey.component';
 import { MedicalRecordViewComponent } from './medical-record-view/medical-record-view.component';
+import { PatientAppointmentCreationComponent } from './patient-appointment-creation/patient-appointment-creation.component';
+import { Appointment4stepComponent } from './appointment4step/appointment4step.component';
 
 const routes: Routes = [
 { path: "create-feedback", component: PatientCreateFeedbackComponent },
@@ -15,6 +17,8 @@ const routes: Routes = [
 { path: "login", component: LoginComponent },
 { path: "survey", component: SurveyComponent},
 { path: "register", component: RegisterComponent },
+{ path: "create-appointment", component: PatientAppointmentCreationComponent },
+{ path: "appointment4step", component: Appointment4stepComponent },
 { path: '', component: HomePageComponent}
 ];
 

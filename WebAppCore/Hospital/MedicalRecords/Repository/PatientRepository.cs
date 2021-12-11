@@ -34,14 +34,14 @@ namespace Hospital.MedicalRecords.Repository
 
         public Patient FindByToken(string token)
         {
-            return _context.Patients.FirstOrDefault(p => p.Token == token);
+            return _context.Patients.FirstOrDefault(p => String.Equals(p.Token, token));
         }
 
         public Patient FindByUserName(string username)
         {
             try
             { 
-                return _context.Patients.FirstOrDefault(p => p.UserName == username);
+                return _context.Patients.FirstOrDefault(p => String.Equals(p.UserName, username));
             }
             catch
             {
