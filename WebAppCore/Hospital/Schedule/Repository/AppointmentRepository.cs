@@ -26,10 +26,21 @@ namespace Hospital.Schedule.Repository
         {
             return _context.Appointments.Where(f => f.PatientForeignKey == patientId).ToList();
         }
+        public List<Appointment> GetByDoctorId(int doctorId)
+        {
+            return _context.Appointments.Where(f => f.DoctorForeignKey == doctorId).ToList();
+        }
+        public List<Appointment> GetByDoctorId(int doctorId, DateTime lowerDateRange, DateTime upperDateRange)
+        {
+            return _context.Appointments.Where(f => f.DoctorForeignKey == doctorId && f.Date >= lowerDateRange && f.Date < upperDateRange).ToList();
+        }
         public void AddAppointment(Appointment newAppointment)
         {
             _context.Appointments.Add(newAppointment);
             SaveSync();
+        }
+        public List<Appointment> GetByDoctorIdAndDate(int id, DateTime date) {
+            return _context.Appointments.Where(f => f.DoctorForeignKey == id && f.Date.Date.Equals(date.Date)).ToList();
         }
 
         public Appointment FindById(int id)

@@ -22,6 +22,11 @@ namespace Hospital.MedicalRecords.Repository
             _context = context;
             _patientRepository = patientRepository;
         }
+        public DoctorRepository(HospitalContext context)
+        {
+            _context = context;
+            //_patientRepository = patientRepository;
+        }
 
         public void AddDoctor(Doctor doctor)
         {
@@ -59,6 +64,11 @@ namespace Hospital.MedicalRecords.Repository
         public List<Doctor> GetAll()
         {
             return _context.Doctors.ToList();
+        }
+
+        public List<Doctor> GetForSpecialty(int specialty)
+        {
+            return _context.Doctors.Where(d => (int)d.Specilaty == specialty).ToList();
         }
 
         public List<Doctor> GetAvailableDoctors() //TODO: Refactor

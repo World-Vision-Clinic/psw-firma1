@@ -1,0 +1,51 @@
+<div class="container-fluid">
+    <div class="row mt-3">
+      <div class="col-md-4">
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+        <!--Header-->
+            <div class="header">
+                <div class="row d-flex justify-content-center">
+                <h3 class="text-black mb-0 py-2 font-weight-bold">Register</h3>
+                </div>
+            </div>
+
+            <div style="padding: 5%; margin: auto;">
+                <form>
+                    <div>
+                        <input type="date" name="lowerDateRange [(ngModel)]="appointmentRequest.LowerDateRange style="margin-top: 10px;">
+                    </div>
+                    <div>
+                        <input type="date" name="upperDateRange [(ngModel)]="appointmentRequest.UpperDateRange style="margin-top: 10px;">
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <select name="lowerTime" id="lowerTime" [(ngModel)]="appointmentRequest.LowerTimeRange">
+                            <option *ngFor="let time of availableTimes" [value]="time">{{time}}</option>
+                        </select>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <select name="upperTime" id="upperTime" [(ngModel)]="appointmentRequest.UpperTimeRange">
+                            <option *ngFor="let time of availableTimes" [value]="time">{{time}}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select name="doctors" id="doctors" [(ngModel)]="appointmentRequest.DoctorId">
+                            <option *ngFor="let d of doctors" [value]="appointmentRequest.DoctorId">{{d.firstName}} {{d.lastName}}</option>
+                        </select>
+                    </div>
+                    <button style="margin-top: 30px;" (click)="send_request()">Search</button>
+                    <div style="margin-top: 10px;">
+                        <div *ngFor="let a of appointments">
+                            <h2>{{a.date}}</h2>
+                            <h4>{{a.time}}</h4>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+  </div>

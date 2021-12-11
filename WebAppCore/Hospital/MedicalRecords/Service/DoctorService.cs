@@ -39,6 +39,11 @@ namespace Hospital.MedicalRecords.Service
             return _repo.GetAvailableDoctors();
         }
 
+        public List<Doctor> GetForSpecialty(int specialty)
+        {
+            return _repo.GetForSpecialty(specialty);
+        }
+
         public List<Doctor> GetAll()
         {
             return _repo.GetAll();

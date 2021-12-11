@@ -8,8 +8,6 @@ namespace Hospital.Schedule.Model
 {
     public class Appointment
     {
-       // private Doctor doctor;
-       // private Room room;
         private AppointmentType type;
         public int Id { get; set; }
         public int PatientForeignKey { get; set; }
