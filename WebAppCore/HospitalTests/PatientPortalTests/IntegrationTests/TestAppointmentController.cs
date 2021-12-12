@@ -74,7 +74,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             var response = _appointmentController.GetAppointmentsByPatientId(1);
 
             Assert.NotNull(response);
-            foreach (Appointment appointmentIterator in response.Value)
+            foreach (AppointmentDTO appointmentIterator in response.Value)
             {
                 Assert.Equal(1, appointmentIterator.PatientForeignKey);
             }
@@ -248,7 +248,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
 
             Doctor doctorCardi1 = new Doctor()
             {
-                Id = 1,
+                Id = 11,
                 FirstName = "Sava",
                 LastName = "Savić",
                 Type = DoctorType.Cardiologist
@@ -257,7 +257,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
 
             Doctor doctorCardi2 = new Doctor()
             {
-                Id = 2,
+                Id = 12,
                 FirstName = "Milana",
                 LastName = "Milanović",
                 Type = DoctorType.Cardiologist
@@ -266,7 +266,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
 
             Doctor doctorOphta1 = new Doctor()
             {
-                Id = 3,
+                Id = 13,
                 FirstName = "Nikola",
                 LastName = "Marković",
                 Type = DoctorType.Ophthalmologist
@@ -275,9 +275,8 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
 
             Appointment appointment = new Appointment()
             {
-                Id = 9,
                 PatientForeignKey = 1,
-                DoctorForeignKey = 1,
+                DoctorForeignKey = 11,
                 Type = AppointmentType.Appointment,
                 Date = new DateTime(2022, 9, 9, 12, 0, 0),
                 Time = new TimeSpan(0, 0, 45, 0, 0)

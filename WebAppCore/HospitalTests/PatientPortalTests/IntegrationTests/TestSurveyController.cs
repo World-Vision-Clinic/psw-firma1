@@ -109,7 +109,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             dtos.Add(answer2);
             var controller = new SurveyController();
             controller.surveyService = new SurveyService(inMemoryRepo);
-            var response = controller.PostSurveyQuestions(dtos);
+            var response = controller.PostSurveyQuestions(dtos, 1);
             var result = response.Result as OkObjectResult;
             //Assert
             Assert.Equal(200, result.StatusCode);
@@ -140,7 +140,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             dtos.Add(answer2);
             var controller = new SurveyController();
             controller.surveyService = new SurveyService(inMemoryRepo);
-            var response = controller.PostSurveyQuestions(dtos);
+            var response = controller.PostSurveyQuestions(dtos, 1);
             var result = response.Result as BadRequestResult;
             //Assert
             Assert.Equal(400, result.StatusCode);
