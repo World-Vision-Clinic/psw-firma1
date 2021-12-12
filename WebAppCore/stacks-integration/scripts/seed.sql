@@ -17,7 +17,4 @@ ALTER TABLE public."Credentials"
     OWNER to postgres;
 
 DELETE FROM public."Credentials";
-
-INSERT INTO public."Credentials"(
-	"Id", "PharmacyName", "PharmacyLocalhost", "ApiKey")
-	VALUES (1,'Jankovic','http://localhost:34616/','KQuO1kJn189mfY30X6M1pony4sBOLPbhs0DQLt7NMeo=');
+ 
