@@ -28,6 +28,17 @@ namespace Integration_API.Controller
             }
 
             return Ok();
+        } 
+
+        [HttpGet("test")]
+        public IActionResult Test(string id = "")
+        {
+            if (service.GetByPharmacyLocalhost(id) == null)
+            {
+                return BadRequest("Doesn't work :(");
+            } 
+
+            return Ok("Works!");
         }
     }
 }
