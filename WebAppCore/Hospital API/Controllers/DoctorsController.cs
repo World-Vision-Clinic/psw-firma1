@@ -61,10 +61,10 @@ namespace Hospital_API.Controllers
 
             return doctor;
         }
-        [HttpGet("GeForSpecialty/{specialty}")]
-        public ActionResult<IEnumerable<Doctor>> GetDoctorForSpecialty(DoctorType type)
+        [HttpGet("get_by_specialty/{type}")]
+        public ActionResult<IEnumerable<Doctor>> GetDoctorForSpecialty(int type)
         {
-            List<Doctor> doctors = _doctorService.GetDoctorsByType(type);
+            List<Doctor> doctors = _doctorService.GetDoctorsByType((DoctorType)type);
 
             if (doctors.Count == 0)
             {

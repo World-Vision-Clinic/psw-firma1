@@ -24,7 +24,7 @@ export class AppointmentCreationService {
   }
 
   makeAppointment(appointment: any): Observable<any> {
-    return this.http.post<any>("/api/Appointments/add_appointment", JSON.stringify(appointment), this.httpOptions);
+    return this.http.post<any>("/api/Appointment/add_appointment", JSON.stringify(appointment), this.httpOptions);
   }
 
   getDoctors() : Observable<Doctor[]>{
@@ -32,11 +32,11 @@ export class AppointmentCreationService {
   }
 
   getDoctorsForSpecialty(specialty: any) : Observable<Doctor[]>{
-    return this.http.get<Doctor[]>("/api/Doctors/GeForSpecialty/" + specialty)
+    return this.http.get<Doctor[]>("/api/Doctors/get_by_specialty/" + specialty)
   }
 
   getAppointments4Step(doctorId: any,date: any) : Observable<Appointment[]>{
-    return this.http.get<Appointment[]>("/api/Appointments/4step/"+ doctorId + "/" + date)
+    return this.http.get<Appointment[]>("/api/Appointment/4step/"+ doctorId + "/" + date)
   }
 
   getPatientAppointments(id: number) : Observable<Appointment[]>{
