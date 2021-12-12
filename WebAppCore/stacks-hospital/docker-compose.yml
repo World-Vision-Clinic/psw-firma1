@@ -1,8 +1,8 @@
-﻿version: '3.8' 
+﻿version: '3.2' 
 
 services:
   hospital-front:
-    image: hospital-front:lastest
+    #image: darkelfff/hospital-front:latest
     depends_on:
       - "hospital-api"
     build:
@@ -55,5 +55,5 @@ volumes:
 
 networks:
   application:
-    name: application
+    #name: application
     driver: bridge

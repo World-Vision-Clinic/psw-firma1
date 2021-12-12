@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.2'
 services:
   postgres-database:
     image: postgres 
@@ -43,7 +43,7 @@ services:
     build: ../ManagerFrontApp
     image: jelenahrnjak/manager-front-app
     ports:
-      - "4201:4200"
+      - "4202:4200"
     restart: on-failure
     networks:
       - public
