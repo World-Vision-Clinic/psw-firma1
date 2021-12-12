@@ -2,7 +2,7 @@
 
 services:
   hospital-front:
-    image: darkelfff/hospital-front:latest
+    #image: darkelfff/hospital-front:latest
     depends_on:
       - "hospital-api"
     build:
