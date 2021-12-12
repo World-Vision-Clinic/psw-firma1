@@ -77,7 +77,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 Id = 2,
                 FirstName = "TestDoktorIme",
                 LastName = "TestDoktorPrezime",
-                Specilaty = DoctorSpecialty.General
+                Type = DoctorType.Ophthalmologist
             };
 
             Doctor doctor2 = new Doctor()
@@ -85,7 +85,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 Id = 3,
                 FirstName = "TestDoktorIme",
                 LastName = "TestDoktorPrezime",
-                Specilaty = DoctorSpecialty.General
+                Type = DoctorType.Ophthalmologist
 
             };
 
@@ -94,8 +94,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 Id = 4,
                 FirstName = "TestDoktorIme",
                 LastName = "TestDoktorPrezime",
-                Specilaty = DoctorSpecialty.Dentist
-
+                Type = DoctorType.Radiologist
             };
 
             _doctorRepository.AddDoctor(doctor1);
@@ -108,8 +107,8 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             Assert.Equal(200, result.StatusCode);
             Assert.NotNull(result.Value);
             Assert.Equal(2, data.Count);
+            Assert.NotNull(response);
             Assert.Contains(doctor2, data);
-
         }
     }
 }

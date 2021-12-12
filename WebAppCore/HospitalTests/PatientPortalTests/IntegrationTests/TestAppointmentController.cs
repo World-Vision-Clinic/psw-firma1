@@ -113,7 +113,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         {
             Appointment appointment = new Appointment()
             {
-                Id = 1,
+                Id = 50,
                 PatientForeignKey = 1,
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
