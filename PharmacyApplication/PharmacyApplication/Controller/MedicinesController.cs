@@ -230,7 +230,9 @@ namespace PharmacyAPI.Controller
         [HttpGet("test")]
         public IActionResult Get()
         {
-            Medicine medicine = service.GetById(1);
+            Medicine medicine = service.GetById(5);
+            if (medicine == null)
+                return BadRequest("greska");
             MedicineDto dto = new MedicineDto(medicine.MedicineName, medicine.Weigth, medicine.Quantity);
             return Ok(dto);
         }
