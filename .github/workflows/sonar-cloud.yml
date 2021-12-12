@@ -45,8 +45,8 @@ jobs:
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"World-Vision-Clinic_psw-firma1" /o:"world-vision-clinic" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           dotnet build "./PharmacyApplication/PharmacyApplication.sln"
-          dotnet build ${{ env.lib_path }}
-          dotnet build ${{ env.api_path }}
+          dotnet build ${{ env.lib_path_hospital }}
+          dotnet build ${{ env.api_path_hospital }}
           dotnet build ${{ env.lib_path_integration }}
           dotnet build ${{ env.api_path_integration }}
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
