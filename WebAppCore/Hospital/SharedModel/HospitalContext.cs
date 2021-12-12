@@ -92,6 +92,7 @@ namespace Hospital.SharedModel
                 new SurveyQuestion { Id = 15, Question = "What is your overall satisfaction with our staff?", Section = SurveySectionType.Staff, IdSurvey = 1 }
                 );
 
+            
             modelBuilder.Entity<FloorLabel>().HasData(
                new FloorLabel { id = 1, X = 50, Y = 80, Text = "ENTRANCE", FloorId = 1 }
                );

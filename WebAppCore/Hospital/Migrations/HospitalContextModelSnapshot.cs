@@ -1161,19 +1161,7 @@ namespace Hospital.Migrations
                     b.Property<int>("DoctorForeignKey")
                         .HasColumnType("integer");
 
-                    b.Property<string>("DoctorName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("DoctorSurname")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsCanceled")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsFinished")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsUpcoming")
+                    b.Property<bool>("IsCancelled")
                         .HasColumnType("boolean");
 
                     b.Property<int>("PatientForeignKey")
@@ -1193,11 +1181,9 @@ namespace Hospital.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 12, 8, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2021, 12, 11, 0, 0, 0, 0, DateTimeKind.Local),
                             DoctorForeignKey = 2,
-                            IsCanceled = false,
-                            IsFinished = false,
-                            IsUpcoming = true,
+                            IsCancelled = false,
                             PatientForeignKey = 1,
                             Time = new TimeSpan(0, 0, 0, 0, 0),
                             Type = 0
@@ -1205,11 +1191,9 @@ namespace Hospital.Migrations
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2021, 12, 8, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2021, 12, 11, 0, 0, 0, 0, DateTimeKind.Local),
                             DoctorForeignKey = 2,
-                            IsCanceled = true,
-                            IsFinished = false,
-                            IsUpcoming = false,
+                            IsCancelled = true,
                             PatientForeignKey = 1,
                             Time = new TimeSpan(0, 0, 0, 0, 0),
                             Type = 2
@@ -1217,11 +1201,9 @@ namespace Hospital.Migrations
                         new
                         {
                             Id = 3,
-                            Date = new DateTime(2021, 12, 8, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2021, 12, 11, 0, 0, 0, 0, DateTimeKind.Local),
                             DoctorForeignKey = 2,
-                            IsCanceled = false,
-                            IsFinished = true,
-                            IsUpcoming = false,
+                            IsCancelled = false,
                             PatientForeignKey = 1,
                             Time = new TimeSpan(0, 0, 0, 0, 0),
                             Type = 1
@@ -1251,7 +1233,7 @@ namespace Hospital.Migrations
                         new
                         {
                             IdSurvey = 1,
-                            CreationDate = new DateTime(2021, 12, 8, 15, 10, 54, 731, DateTimeKind.Local).AddTicks(6640),
+                            CreationDate = new DateTime(2021, 12, 11, 19, 12, 29, 920, DateTimeKind.Local).AddTicks(5596),
                             IdAppointment = 1
                         });
                 });

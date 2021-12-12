@@ -94,9 +94,9 @@ namespace Hospital_API.Controllers
         {
             var appointment = _appointmentService.FindById(id);
             if (appointment == null)
-            {
                 return NotFound();
-            }
+            if (DateTime.Now > appointment.Date.AddDays(-2) || DateTime.Now > appointment.Date)
+                return BadRequest("Cannot cancel this appointment");
 
             appointment.IsCancelled = true;
             _appointmentService.Modify(appointment);

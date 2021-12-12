@@ -39,7 +39,6 @@ export class MedicalRecordViewComponent implements OnInit {
 
   public appointments = [] as any;
   public selectedDay: string = 'Monday';
-  
 
   constructor(private router: Router, private _patientService : PatientFeedbackServiceService) { }
 

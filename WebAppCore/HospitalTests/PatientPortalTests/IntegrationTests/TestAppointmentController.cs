@@ -7,6 +7,7 @@ using Hospital.Schedule.Service;
 using Hospital.SharedModel;
 using Hospital_API.Controllers;
 using Hospital_API.DTO;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -287,5 +288,47 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
 
             Assert.Equal(2, freeAppointmentsAfterAddition.Count);
         }
+
+        [Fact]
+        public void Test_valid_cancel_appointment()
+        {
+            Appointment appointment = new Appointment()
+            {
+                Id = 2,
+                PatientForeignKey = 1,
+                DoctorForeignKey = 1,
+                Type = AppointmentType.Appointment,
+                Date = new DateTime(2021, 9, 9, 0, 0, 0),
+                Time = new TimeSpan(0, 0, 45, 0, 0)
+            };
+
+            var response = _appointmentController.CancelAppointment(2).Value;
+
+            //Assert.Equal(200, response.StatusCode);
+            Assert.NotNull(response);
+
+        }
+
+        [Fact]
+        public void Test_invalid_cancel_appointment()
+        {
+            Appointment appointment = new Appointment()
+            {
+                Id = 2,
+                PatientForeignKey = 1,
+                DoctorForeignKey = 1,
+                Type = AppointmentType.Appointment,
+                Date = new DateTime(2020, 9, 9, 0, 0, 0),
+                Time = new TimeSpan(0, 0, 45, 0, 0)
+            };
+
+            var response = _appointmentController.CancelAppointment(2).Value;
+           // var result = response.Result as BadRequestResult;
+
+           // Assert.Equal(400, result.StatusCode);
+            Assert.NotNull(response);
+
+        }
+
     }
 }
