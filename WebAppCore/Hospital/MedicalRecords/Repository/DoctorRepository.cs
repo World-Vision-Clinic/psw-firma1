@@ -73,7 +73,7 @@ namespace Hospital.MedicalRecords.Repository
 
         public List<Doctor> GetForSpecialty(int specialty)
         {
-            return _context.Doctors.Where(d => (int)d.Specilaty == specialty).ToList();
+            return _context.Doctors.Where(d => (int)d.Type == specialty).ToList();
         }
 
         public List<Doctor> GetAvailableDoctors() //TODO: Refactor
