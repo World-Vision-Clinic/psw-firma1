@@ -31,6 +31,10 @@ namespace Hospital.SharedModel
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Floor> Floors { get; set; }
         public DbSet<Building> Buildings { get; set; }
+        public DbSet<Examination> Examinations { get; set; }
+        public DbSet<Therapy> Therapies { get; set; }
+        public DbSet<MedicalRecord> MedicalRecords { get; set; }
+        public DbSet<Medicine> Medicines { get; set; }
 
 
         public HospitalContext() { }
@@ -58,14 +62,7 @@ namespace Hospital.SharedModel
             });
 
             modelBuilder.Entity<Appointment>().HasData(
-                new Appointment { Id = 1, DoctorForeignKey = 2, Date = DateTime.Today, PatientForeignKey = 1, IsCancelled = false, Type = AppointmentType.Appointment },
-                new Appointment { Id = 2, DoctorForeignKey = 2, Date = DateTime.Today, PatientForeignKey = 1, IsCancelled = true, Type = AppointmentType.Intervention},
-                new Appointment { Id = 3, DoctorForeignKey = 2, Date = DateTime.Today, PatientForeignKey = 1, IsCancelled = false, Type = AppointmentType.Operation }
-
-                );
-
-            modelBuilder.Entity<Doctor>().HasData(
-                new Doctor { Id = 2, FirstName = "Petar", LastName = "Petrovic"}
+                new Appointment { Id = 1, Surveys = new List<Survey>() }
                 );
 
             modelBuilder.Entity<Survey>().HasData(
@@ -92,7 +89,6 @@ namespace Hospital.SharedModel
                 new SurveyQuestion { Id = 15, Question = "What is your overall satisfaction with our staff?", Section = SurveySectionType.Staff, IdSurvey = 1 }
                 );
 
-            
             modelBuilder.Entity<FloorLabel>().HasData(
                new FloorLabel { id = 1, X = 50, Y = 80, Text = "ENTRANCE", FloorId = 1 }
                );
@@ -165,8 +161,26 @@ namespace Hospital.SharedModel
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql("User ID = admin;Password=ftn;Server=localhost;Port=5432;Database=MyWebApi.Dev;Integrated Security=true;Pooling=true;");
+                //optionsBuilder.UseNpgsql("User ID =admin;Password=ftn;Server=localhost;Port=5432;Database=MyWebApi.Dev;Integrated Security=true;Pooling=true;");
+                //optionsBuilder.UseNpgsql("User ID =admin;Password=ftn;Server=database;Port=5432;Database=MyWebApi.Dev;Integrated Security=true;Pooling=true;");
+                string connectionString = CreateConnectionStringFromEnvironment();
+                optionsBuilder.UseNpgsql(connectionString);
             }
+
+        }
+
+        private static string CreateConnectionStringFromEnvironment()
+        {
+            var server = Environment.GetEnvironmentVariable("DATABASE_HOST") ?? "localhost";
+            var port = Environment.GetEnvironmentVariable("DATABASE_PORT") ?? "5432";
+            var database = Environment.GetEnvironmentVariable("DATABASE_SCHEMA") ?? "MyWebApi.Dev";
+            var user = Environment.GetEnvironmentVariable("DATABASE_USERNAME") ?? "admin";
+            var password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "ftn";
+            var integratedSecurity = Environment.GetEnvironmentVariable("DATABASE_INTEGRATED_SECURITY") ?? "true";
+            var pooling = Environment.GetEnvironmentVariable("DATABASE_POOLING") ?? "true";
+
+            //string retVal = "Server=" + server + ";Port=" + port + ";Database=" + database + ";User ID=" + user + ";Password=" + password + ";Integrated Security=" + integratedSecurity + ";Pooling=" + pooling + ";";
+            return $"Server={server};Port={port};Database={database};User ID={user};Password={password};Integrated Security={integratedSecurity};Pooling={pooling};";
         }
     }
 }

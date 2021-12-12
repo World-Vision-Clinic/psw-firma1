@@ -146,6 +146,91 @@ namespace Hospital.Schedule.Service
             return freeAppointmentsFiltered;
         }
 
+        private List<Appointment> GenerateEveryAppointmentForWorkday(DateTime workdayBegin , DateTime workdayEnd, int id) 
+        {
+            TimeSpan appointmentLenght = new TimeSpan(0, 29, 59);
+            List<Appointment> appointments = new List<Appointment>();
+            DateTime appointmentBegin = workdayBegin;
+            while (appointmentBegin < workdayEnd) 
+            {
+                Appointment appointment = new Appointment();
+                appointment.Date = appointmentBegin;
+                appointment.Time = appointmentLenght;
+                appointment.PatientForeignKey = 1;
+                appointment.Type = AppointmentType.Appointment;
+                appointment.DoctorForeignKey = id;
+                appointments.Add(appointment);
+                appointmentBegin = appointmentBegin.AddMinutes(30);
+            }
+            return appointments;
+        }
+
+        private List<Appointment> GetFreeAppointments(List<Appointment> possibleAppointments, List<Appointment> takenAppointments) 
+        {
+            List<Appointment> appointments = new List<Appointment>();
+            foreach (Appointment appointment in possibleAppointments)
+            {
+                if (!OverlapsWithAppointments(appointment,takenAppointments))
+                {
+                    appointments.Add(appointment);
+                }
+            }
+            return appointments;
+        }
+
+        private bool OverlapsWithAppointments(Appointment appointment,List<Appointment> takenAppointments)
+        {
+            foreach (Appointment takenAppointment in takenAppointments)
+            {
+                if (DatesOverlap(appointment.Date, appointment.Time, takenAppointment.Date, takenAppointment.Time))
+                    return true;
+            }
+            return false;
+        }
+
+        public List<Appointment> GenerateFreeAppointments(int id, DateTime date, List<Appointment> doctorsAppointments)
+        {
+            DateTime workdayBegin = date.AddHours(9);
+            DateTime workdayEnd = date.AddHours(17);
+            List<Appointment> appointments = new List<Appointment>();
+            List<Appointment> allPossibleAppointments = GenerateEveryAppointmentForWorkday(workdayBegin,workdayEnd,id);
+
+            if (doctorsAppointments.Count != 0)
+            {
+                appointments = GetFreeAppointments(allPossibleAppointments, doctorsAppointments);
+            }
+            else 
+            {
+                appointments = allPossibleAppointments;
+            }
+            return appointments;
+        }
+
+        public List<Appointment> GetByDoctorIdAndDate(int id, DateTime date)
+        {
+            return _repo.GetByDoctorIdAndDate(id,date);
+        }
+
+        private List<Appointment> FilterFreeAppointmentsByDoctorOccupation(List<Appointment> freeAppointments, List<Appointment> doctorAppointments)
+        {
+            List<Appointment> freeAppointmentsFiltered = new List<Appointment>();
+            foreach (Appointment appointmentIterator in freeAppointments)
+            {
+                bool overlapFound = false;
+                foreach (Appointment doctorAppointmentIterator in doctorAppointments)
+                {
+                    if (DatesOverlap(appointmentIterator.Date, appointmentIterator.Time, doctorAppointmentIterator.Date, doctorAppointmentIterator.Time))
+                    {
+                        overlapFound = true;
+                        break;
+                    }
+                }
+                if (!overlapFound)
+                    freeAppointmentsFiltered.Add(appointmentIterator);
+            }
+            return freeAppointmentsFiltered;
+        }
+
         public bool DatesOverlap(DateTime firstDate, TimeSpan firstTimeSpan, DateTime secondDate, TimeSpan secondTimeSpan)
         {
             if (firstDate <= secondDate && firstDate + firstTimeSpan > secondDate)

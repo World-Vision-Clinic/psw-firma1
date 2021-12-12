@@ -24,7 +24,7 @@ namespace Integration_API.Controller
         PharmaciesService pharmaciesService = new PharmaciesService(new PharmaciesRepository());
         public const string HOSPITAL_NAME = "World Vision Clinic";
         public const string HOSPITAL_URL = "http://localhost:43818";
-        public const string HOSPITAL_PORT = "3000";
+        public const string HOSPITAL_PORT = "127.0.0.1:3000";
 
         [HttpPost("registerPharmacy")]
         public IActionResult Add(PharmacyDto dto)
@@ -42,41 +42,50 @@ namespace Integration_API.Controller
 
             if (dto.Protocol.Equals(ProtocolType.HTTP))
             {
-                var client = new RestSharp.RestClient(dto.Localhost);
-                var request = new RestRequest("/credentials");
+                return SendRegistrationRequestHttp(dto, generatedKey);
+            }
+            else
+            {
+                return SendRegistrationRequestGrpc(dto, generatedKey);
+            }
+        }
 
-                request.AddHeader("Content-Type", "application/json");
-                request.AddJsonBody(
-                new
-                {
-                    HospitalName = HOSPITAL_NAME,
-                    HospitalLocalhost = HOSPITAL_URL,
-                    ApiKey = generatedKey
-                });
+        private IActionResult SendRegistrationRequestHttp(PharmacyDto dto, String generatedKey)
+        {
+            var client = new RestSharp.RestClient(dto.Localhost);
+            var request = new RestRequest("/credentials");
 
-                IRestResponse response = client.Post(request);  // POST /credential  {"Name": "World Vision Clinic", "HospitalLocalhost": "http://localhost:43818", "ApiKey": "wqhegyqwegqyw21543"}
-                System.Diagnostics.Debug.WriteLine(response.StatusCode);
-                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                    return BadRequest();
+            request.AddHeader("Content-Type", "application/json");
+            request.AddJsonBody(
+            new
+            {
+                HospitalName = HOSPITAL_NAME,
+                HospitalLocalhost = HOSPITAL_URL,
+                ApiKey = generatedKey
+            });
+
+            IRestResponse response = client.Post(request);  // POST /credential  {"Name": "World Vision Clinic", "HospitalLocalhost": "http://localhost:43818", "ApiKey": "wqhegyqwegqyw21543"}
+            System.Diagnostics.Debug.WriteLine(response.StatusCode);
+            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                return BadRequest();
+            return Ok();
+        }
+
+        private IActionResult SendRegistrationRequestGrpc(PharmacyDto dto, String generatedKey)
+        {
+            var input = new RegisterPharmacyRequest { HospitalName = HOSPITAL_NAME, HospitalLocalhost = HOSPITAL_PORT, ApiKey = generatedKey };
+            var channel = new Channel(dto.Localhost, ChannelCredentials.Insecure);
+            var client = new gRPCService.gRPCServiceClient(channel);
+            var reply = client.registerPharmacyAsync(input);
+            if (reply.ResponseAsync.Result.Response.Equals("OK"))
+            {
                 return Ok();
             }
             else
             {
-                var input = new RegisterPharmacyRequest { HospitalName = HOSPITAL_NAME, HospitalLocalhost = HOSPITAL_PORT, ApiKey = generatedKey};
-                var channel = new Channel("127.0.0.1:" + dto.Localhost, ChannelCredentials.Insecure);
-                var client = new gRPCService.gRPCServiceClient(channel);
-                var reply = client.registerPharmacyAsync(input);
-                if (reply.ResponseAsync.Result.Response.Equals("OK"))
-                {
-                    return Ok();
-                }
-                else
-                {
-                    return BadRequest();
-                }
+                return BadRequest();
             }
         }
-
         [HttpGet]
         public IActionResult Get()
         {
@@ -105,6 +114,27 @@ namespace Integration_API.Controller
                 pharmacies = pharmaciesService.GetAll();
                 pharmacies.ForEach(pharmacy => result.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy)));
                 return Ok(result);
+            }
+        }
+
+        [HttpPut]
+        public IActionResult EditPharmacy(PharmacyDto dto)
+        {
+            if (dto.Name.Length <= 0 || dto.Localhost.Length <= 0 || dto.Address.Length <= 0 || dto.City.Length <= 0)
+            {
+                return BadRequest();
+            }
+
+            List<PharmacyProfile> pharmacies = pharmaciesService.GetAll();
+
+            PharmacyProfile pharmacy = pharmaciesService.Edit(PharmacyMapper.PharmacyDtoToPharmacy(dto));
+            if (pharmacy == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(pharmacy);
             }
         }
 

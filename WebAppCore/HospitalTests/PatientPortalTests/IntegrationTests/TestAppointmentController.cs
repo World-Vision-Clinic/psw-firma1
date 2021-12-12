@@ -22,11 +22,8 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
     public class TestAppointmentController
     {
         public AppointmentRepository _appointmentRepository;
-
         public DoctorRepository _doctorRepository;
-
         public PatientRepository _patientRepository;
-
         public AppointmentController _appointmentController;
 
         public TestAppointmentController()
@@ -57,6 +54,58 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             //Assert
             Assert.Empty(response.Value.ToList());
 
+        }
+
+        [Fact]
+        public void Test_get_appointments_4step_bad()
+        {
+            Doctor doctor = new Doctor()
+            {
+                Id = 5,
+                FirstName = "TestDoktorIme",
+                LastName = "TestDoktorPrezime",
+                Type = DoctorType.Family_physician
+
+            };
+            _doctorRepository.AddDoctor(doctor);
+
+            var controller = new AppointmentController();
+            var response = controller.GetAppointments4Step(5, "2020-12-08").Result as BadRequestObjectResult;
+
+            //Assert
+            Assert.Equal(400,response.StatusCode);
+
+        }
+
+        [Fact]
+        public void Test_get_appointments_4step_good()
+        {
+            Doctor doctor = new Doctor()
+            {
+                Id = 6,
+                FirstName = "TestDoktorIme",
+                LastName = "TestDoktorPrezime",
+                Type = DoctorType.Family_physician
+
+            };
+            _doctorRepository.AddDoctor(doctor);
+            DateTime dateForTest = DateTime.Now.Date;
+            if (dateForTest.DayOfWeek == DayOfWeek.Friday || dateForTest.DayOfWeek == DayOfWeek.Saturday || dateForTest.DayOfWeek == DayOfWeek.Sunday)
+            {
+                dateForTest = dateForTest.AddDays(3);
+            }
+            else 
+            {
+                dateForTest = dateForTest.AddDays(1);
+            }
+
+            var controller = new AppointmentController();
+            var response = (OkObjectResult) controller.GetAppointments4Step(6, dateForTest.ToString()).Result;
+            var data = response.Value as List<Appointment>;
+
+            //Assert
+            Assert.Equal(200, response.StatusCode);
+            Assert.NotEmpty(data);
         }
 
         [Fact]

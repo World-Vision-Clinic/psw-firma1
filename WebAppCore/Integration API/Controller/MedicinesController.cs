@@ -1,10 +1,11 @@
+using Grpc.Core;
 using Integration;
 using Integration.Pharmacy.Model;
 using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Service;
-using Integration.Services;
 using Integration_API.Dto;
 using Integration_API.Mapper;
+using IntegrationAPI.Protos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Renci.SshNet;
@@ -14,6 +15,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using File = Integration.Pharmacy.Model.File;
 
 namespace Integration_API.Controller
 {
@@ -23,11 +25,12 @@ namespace Integration_API.Controller
     {
         private PharmaciesService pharmaciesService = new PharmaciesService(new PharmaciesRepository());
         private CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
-        private MedicineService medicineService = new MedicineService(new MedicinesRepository(), new MedicalRecordsRepository(), new ExaminationRepository());
+        private FilesService filesService = new FilesService(new FilesRepository());
 
         private SftpHandler sftpHandler = new SftpHandler();
         private IPharmacyConnection pharmacyConnection;
-        
+        public const string HOSPITAL_URL = "http://localhost:39901";
+
         public MedicinesController(IPharmacyConnection connection)
         {
             pharmacyConnection = connection;
@@ -36,30 +39,35 @@ namespace Integration_API.Controller
         [HttpPost("sendConsumptionNotification")]
         public IActionResult SendConsumptionNotification(MedicineConsumptionDto dto)
         {
-            medicineService.CreateConsumedMedicinesInPeriodFile(dto.Beginning, dto.End);
-            UploadFile();
+            var client = new RestSharp.RestClient(HOSPITAL_URL);
+            var request = new RestRequest("/medicines/sendConsumptionNotification");
 
-
-            return Ok();
-        }
-
-        public void UploadFile()
-        {
-            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.28", "user", "password")))
+            request.AddJsonBody(
+            new
             {
-                client.Connect();
-                string sourceFile = @"consumed-medicine.txt";
-                using (Stream stream = System.IO.File.OpenRead(sourceFile))
-                {
-                    client.UploadFile(stream, @"\public\" + Path.GetFileName(sourceFile), x => { Console.WriteLine(x); });
-                }
-                client.Disconnect();
+                Beginning = dto.Beginning,
+                End = dto.End
+            });
+            IRestResponse response = client.Post(request);
+            
+            sftpHandler.UploadFile();
+
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return Ok();
             }
+
+            return BadRequest();
         }
 
         [HttpGet("check")]
         public IActionResult CheckMedicineAvailability(string name = "", string dosage = "", string quantity = "")
         {
+            if(name == null || dosage == null || quantity == null)
+            {
+                return BadRequest();
+            }
             if (name.Length <= 0 || dosage.Length <= 0 || quantity.Length <= 0)
             {
                 return BadRequest();
@@ -71,16 +79,43 @@ namespace Integration_API.Controller
 
             foreach(PharmacyProfile pharmacy in pharmaciesService.GetAll())
             {
-                if (pharmacyConnection.SendRequestToCheckAvailability(pharmacy.Localhost, medicineDto))
+                if (pharmacy.Protocol.Equals(ProtocolType.HTTP))
                 {
-                    pharmaciesWithMedicine.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
+                    if (pharmacyConnection.SendRequestToCheckAvailability(pharmacy.Localhost, medicineDto))
+                    {
+                        pharmaciesWithMedicine.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
+                    }
+                }
+                else
+                {
+                    if (SendRequestToCheckAvailabilityGrpc(pharmacy.Localhost, medicineDto))
+                    {
+                        pharmaciesWithMedicine.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
+                    }
                 }
             }
 
             return Ok(pharmaciesWithMedicine);
         }
+        public bool SendRequestToCheckAvailabilityGrpc(string pharmacyLocalhost, MedicineDto medicineDto)
+        {
+            Credential credential = credentialsService.GetByPharmacyLocalhost(pharmacyLocalhost);
 
-        public bool SendMedicineOrderingRequest(OrderingMedicineDTO dto, bool test)
+            var input = new CheckMedicineExistenceRequest { MedicineName = medicineDto.Name, MedicineDosage = medicineDto.DosageInMg, Quantity = medicineDto.Quantity, ApiKey = credential.ApiKey };
+            var channel = new Channel(pharmacyLocalhost, ChannelCredentials.Insecure);
+            var client = new gRPCService.gRPCServiceClient(channel);
+            var reply = client.checkMedicineExistenceAsync(input);
+            if (reply.ResponseAsync.Result.Response.Equals("OK"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool SendMedicineOrderingRequestHTTP(OrderingMedicineDTO dto, bool test)
         {
 
             var client = new RestSharp.RestClient(dto.Localhost);
@@ -111,34 +146,87 @@ namespace Integration_API.Controller
             return false;
         }
 
-        [HttpPut("OrderMedicine")]
-        public IActionResult Order(OrderingMedicineDTO dto)
+        [HttpPost("ordered")]
+        public IActionResult OrderedHTTP(OrderedMedicineDTO dto)
         {
-            if (SendMedicineOrderingRequest(dto, false))
+            var client = new RestSharp.RestClient(HOSPITAL_URL);
+            var request = new RestRequest("/medicines/ordered");
+
+            request.AddJsonBody(
+            new
+            {
+                MedicineName = dto.MedicineName,
+                Manufaccturer = dto.Manufacturer,
+                SideEffects = dto.SideEffects,
+                Usage = dto.Usage,
+                Weigth = dto.Weigth,
+                MainPrecautions = dto.MainPrecautions,
+                PotentialDangers = dto.PotentialDangers,
+                Quantity = dto.Quantity,
+                Replacements = dto.Replacements,
+                Price = dto.Price
+            });
+            IRestResponse response = client.Post(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 return Ok();
             }
+
             return BadRequest();
         }
 
-        [HttpPost("ordered")]
-        public IActionResult Ordered(OrderedMedicineDTO dto)
+        [HttpPut("OrderMedicine")]
+        public IActionResult Order(OrderingMedicineDTO dto)
         {
-            System.Diagnostics.Debug.WriteLine(dto.Replacements);
-            MedicineService ms = new MedicineService(new MedicinesRepository(), new MedicalRecordsRepository(), new ExaminationRepository());
-            Medicine orderedMedicine;
-            foreach (Medicine med in ms.GetAll())
+            if (pharmaciesService.Get(dto.Localhost).Protocol.Equals(ProtocolType.HTTP))
             {
-                if (med.Name.Equals(dto.MedicineName) && med.DosageInMg.Equals(dto.Weigth))
+                if (SendMedicineOrderingRequestHTTP(dto, false))
                 {
-                    orderedMedicine = new Medicine(med.ID, dto.MedicineName, Double.Parse(dto.Weigth), int.Parse(dto.Quantity), dto.Price, dto.MainPrecautions, null, dto.Replacements);
-                    ms.AddOrderedMedicine(orderedMedicine);
                     return Ok();
                 }
+                return BadRequest();
             }
-            orderedMedicine = new Medicine(Generator.GenerateMedicineId(), dto.MedicineName, Double.Parse(dto.Weigth), int.Parse(dto.Quantity), dto.Price, dto.Usage, null, dto.Replacements);
-            ms.AddOrderedMedicine(orderedMedicine);
-            return Ok();
+            else
+            {
+                if (SendMedicineOrderingRequestGRPC(dto, false))
+                {
+                    return Ok();
+                }
+                return BadRequest();
+            }
+        }
+
+        public bool SendMedicineOrderingRequestGRPC(OrderingMedicineDTO dto, bool test)
+        {
+            double medicineGrams;
+            int numOfBoxes;
+            Credential credential = credentialsService.GetByPharmacyLocalhost(dto.Localhost);
+            if (credential == null)
+                return false;
+            
+            try
+            {
+                medicineGrams = Double.Parse(dto.MedicineGrams);
+                numOfBoxes = int.Parse(dto.NumOfBoxes);
+            }
+            catch
+            {
+                return false;
+            }
+
+            var input = new MedicineOrderingRequest { MedicineName = dto.MedicineName, MedicineDosage = medicineGrams, Quantity = numOfBoxes, ApiKey = credential.ApiKey, Test = test };
+            var channel = new Channel(dto.Localhost, ChannelCredentials.Insecure);
+            var client = new gRPCService.gRPCServiceClient(channel);
+            var reply = client.orderMedicineAsync(input);
+
+            if (reply.ResponseAsync.Result.Response.Equals("OK"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         [HttpGet("spec")]
@@ -154,10 +242,14 @@ namespace Integration_API.Controller
                 return BadRequest("Specification does not exists");
             }
 
-            if (!sftpHandler.DownloadSpecification($"/public/Specification.txt"))
+            File dowloadedSpec = sftpHandler.DownloadSpecification($"/public/" + medicine + ".pdf", "Specifications/" + medicine + ".pdf");
+
+            if (dowloadedSpec == null)
             {
                 return BadRequest("Unable to download specification file");
             }
+
+            filesService.UpdateSpecification(dowloadedSpec);
 
             return Ok();
         }

@@ -1,0 +1,19 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "PharmacyAPI.Protos";
+
+message SentOrderedMedicineRequest{
+	string medicineName = 1;
+	string manufacturer = 2;
+	string sideEffects = 3;
+	string usage =  4;
+	double weight =  5;
+	string mainPrecautions =  6;
+	string potentialDangers =  7;
+	int64 quantity =  8;
+	repeated string replacements =  9;
+	double price =  10;
+}
+message SentOrderedMedicineResponse{
+	string response = 1;
+}

@@ -67,6 +67,30 @@ namespace Hospital_API.Controllers
             return _appointmentService.GetByDoctorId(id);
         }
 
+        [HttpGet("4step/{id}/{dateString}")]
+        public ActionResult<IEnumerable<Appointment>> GetAppointments4Step(int id, string dateString)
+        {
+            DateTime date = Convert.ToDateTime(dateString).Date;
+            if (date < DateTime.Now.Date.AddDays(1)) 
+            {
+                return BadRequest("Date must be tomorrow or onwards");  
+            }
+            if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+            {
+                return BadRequest("Hospital doesn't work on weekends");
+            }
+
+            List<Appointment> doctorsAppointments = _appointmentService.GetByDoctorIdAndDate(id, date);
+            List<Appointment> freeAppointments = _appointmentService.GenerateFreeAppointments(id,date,doctorsAppointments);
+
+            if (freeAppointments.Count == 0)
+            {
+                return BadRequest("Couldn't find any appointments for Your preferences");
+            }
+
+            return Ok(freeAppointments);
+        }
+
         [HttpPost("recommendation_doctor")]
         public ActionResult<IEnumerable<Appointment>> GetRecommendedAppointments([FromBody] AppointmentRecommendationRequestDTO appointmentRecommendationRequest)
         {

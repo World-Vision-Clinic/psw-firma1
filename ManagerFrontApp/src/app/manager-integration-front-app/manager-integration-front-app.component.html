@@ -41,6 +41,22 @@
                 }]"
                 class="m-1 btn btn-light btn-outline-primary" Button>Medicine consumption</button>
             </li>
+            <li class="nav-item">
+                <button [routerLink]="['/manager-front-app', {
+                    outlets:{
+                        'showObjRepl' : ['get-specification']
+                    }
+                }]"
+                class="m-1 btn btn-light btn-outline-primary" Button>Get specification</button>
+            </li>
+            <li class="nav-item">
+                <button [routerLink]="['/manager-front-app', {
+                    outlets:{
+                        'showObjRepl' : ['view-files']
+                    }
+                }]"
+                class="m-1 btn btn-light btn-outline-primary" Button>Downloads</button>
+            </li>
         </ul>
     </nav>
 <div>

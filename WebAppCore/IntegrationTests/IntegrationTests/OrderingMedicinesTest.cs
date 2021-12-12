@@ -1,8 +1,9 @@
 ﻿using Integration;
 using Integration.Pharmacy.Repository;
-using Integration.Services;
 using Integration_API.Controller;
 using Integration_API.Dto;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -32,43 +33,40 @@ namespace IntegrationTests.IntegrationTests
         [Fact]
         public void OrderingExistingMedicinesTest()
         {
-            OrderedMedicineDTO omd = new OrderedMedicineDTO("Brufen", "Zdravko", "none", "2 times a day", "200", "none", "none", "2", null, 200);
-            MedicinesRepository mr = new MedicinesRepository();
-            double quantity = 0;
-            foreach (Medicine med in mr.GetAll())
-            {
-                if (med.Name.Equals(omd.MedicineName))
-                {
-                    quantity = med.Quantity;
-                }
-            }
-            MedicinesController pc = new MedicinesController(new PharmacyHTTPConnection());
+            OrderedMedicineDTO omd = new OrderedMedicineDTO("Brufen", "Zdravko", "none", "2 times a day", "100", "none", "none", "2", null, 200);
+            MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection());
 
-            pc.Ordered(omd);
+            var result = mc.OrderedHTTP(omd);
 
-
-            MedicinesRepository mr1 = new MedicinesRepository();
-            double newQuantity = 0;
-            foreach (Medicine med in mr1.GetAll())
-            {
-                if (med.Name.Equals(omd.MedicineName))
-                {
-                    newQuantity = med.Quantity;
-                }
-            }
-
-            Assert.Equal(quantity + int.Parse(omd.Quantity), newQuantity);
+            var statusCodeResult = (IStatusCodeActionResult)result;
+            
+            Assert.Equal(200, statusCodeResult.StatusCode);
         }
 
-        [Fact]
-        public void CheckIfMedicineIsOrdered()
+        [Theory]
+        [MemberData(nameof(Data))]
+        public void CheckIf_medicine_is_ordered(OrderingMedicineDTO omd, bool isHttp)
         {
-            OrderingMedicineDTO omd = new OrderingMedicineDTO("http://localhost:34616", "Brufen", "100", "2");
             MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection());
-            
-            bool requestOk = mc.SendMedicineOrderingRequest(omd, true);
-
+            bool requestOk = false;
+            if (isHttp)
+            {
+                requestOk = mc.SendMedicineOrderingRequestHTTP(omd, true);
+            }
+            else
+            {
+                requestOk = mc.SendMedicineOrderingRequestGRPC(omd, true);
+            }
             Assert.True(requestOk);
+        }
+        public static IEnumerable<object[]> Data()
+        {
+            var retVal = new List<object[]>();
+
+            retVal.Add(new object[] { new OrderingMedicineDTO("http://localhost:34616", "Brufen", "100", "2"), true });
+            retVal.Add(new object[] { new OrderingMedicineDTO("127.0.0.1:5000", "Brufen", "100", "2"), false });
+
+            return retVal;
         }
     }
 }

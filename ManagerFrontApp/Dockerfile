@@ -5,4 +5,9 @@ RUN npm install
 RUN npm run build --prod
 
 FROM nginx:1.19.8-alpine AS gatewayWithFront
-COPY --from=frontBuild /app/dist/ManagerFrontApp /usr/share/nginx/html
+COPY --from=frontBuild /app/dist/ManagerFrontApp /usr/share/nginx/html 
+COPY nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 4200
+
+ENTRYPOINT ["nginx","-g","daemon off;"]
