@@ -21,7 +21,7 @@ services:
 
   pharmacy:
     #build: ../PharmacyApplication
-    image: darkelfff/pharmacy:latest
+    image: jelenahrnjak/pharmacy:latest
     depends_on:
       - postgres-database
     environment: 
@@ -40,8 +40,7 @@ services:
   manager-front:
     depends_on:
       - pharmacy
-    build: ../ManagerFrontApp
-    image: jelenahrnjak/manager-front-app
+    build: ../ManagerFrontApp 
     ports:
       - "4202:4200"
     restart: on-failure
