@@ -18,7 +18,7 @@ namespace HospitalTests.EditorTests.UnitTests
         {
             DbContextOptions<TestContext> options;
             var builder = new DbContextOptionsBuilder<TestContext>();
-            builder.UseInMemoryDatabase("TestDb");
+            builder.UseInMemoryDatabase("TestDbase");
             options = builder.Options;
             HospitalContext hospitalContext = new TestContext(options);
             hospitalContext.Database.EnsureDeleted();
