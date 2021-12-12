@@ -55,9 +55,10 @@ namespace HospitalTests.EditorTests.UnitTests
 
             roomService.mergeEquipment(rr1.Id, rr2.Id, newId);
 
-            eqRepository.GetRoomEquipemnts(rr2.Id).ShouldBeEmpty();
-            eqRepository.GetRoomEquipemnts(rr1.Id).ShouldBeEmpty();
-            eqRepository.GetRoomEquipemnts(newId).Count.ShouldBeEquivalentTo(3);
+            Assert.Empty(eqRepository.GetRoomEquipemnts(rr2.Id));
+            Assert.Empty(eqRepository.GetRoomEquipemnts(rr1.Id));
+            Assert.Equal(3,eqRepository.GetRoomEquipemnts(newId).Count);
+
             context.Dispose();
         }
         
