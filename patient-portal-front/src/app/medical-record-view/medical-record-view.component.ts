@@ -47,8 +47,11 @@ export class MedicalRecordViewComponent implements OnInit {
     this._patientService.getPatient(1).subscribe(data => (this.patient = data),
       error => this.errorMsg = "Couldn't load user feedback");
     
-    this._patientService.getPatientAppointments(1).subscribe(data => this.appointments = data,
-      error => this.errorMsg = "Couldn't load user appointments");
+    this._patientService.getPatientAppointments(1).subscribe(data => this.appointments = data, error => this.errorMsg = "Couldn't load user appointments");
+  }
+
+  getSortedAppointments(): any[] {
+    return this.appointments.sort((a: any, b: any) => Date.parse(b.date) - Date.parse(a.date))
   }
 
   getFormattedDay(day: string): string {
