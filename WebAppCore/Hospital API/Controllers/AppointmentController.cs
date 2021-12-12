@@ -11,10 +11,12 @@ using System.Net;
 using Hospital_API.DTO;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Hospital.SharedModel;
+using Hospital.MedicalRecords.Repository;
 
 namespace Hospital_API.Controllers
 {
-    [Route("api/Appointments")]
+    [Route("api/Appointment")]
     [ApiController]
     public class AppointmentController : ControllerBase
     {
@@ -23,7 +25,10 @@ namespace Hospital_API.Controllers
         [ActivatorUtilitiesConstructor]
         public AppointmentController()
         {
-            _appointmentService = new AppointmentService(new AppointmentRepository(new Hospital.SharedModel.HospitalContext()));
+            HospitalContext context = new HospitalContext();
+            IPatientRepository patientRepository = new PatientRepository(context);
+            IDoctorRepository doctorRepository = new DoctorRepository(context, patientRepository);
+            _appointmentService = new AppointmentService(new AppointmentRepository(context), doctorRepository);
         }
 
         public AppointmentController(AppointmentService _appointmentService)
@@ -44,9 +49,16 @@ namespace Hospital_API.Controllers
         }
 
         [HttpGet("patient/{id}")]
-        public ActionResult<IEnumerable<Appointment>> GetAppointmentsByPatientId(int id)
+        public ActionResult<IEnumerable<AppointmentDTO>> GetAppointmentsByPatientId(int id)
         {
-            return _appointmentService.GetByPatientId(id);
+            List<Appointment> appointments = _appointmentService.GetByPatientId(id);
+            List<AppointmentDTO> appointmentDTOs = new List<AppointmentDTO>();
+            HospitalContext context = new HospitalContext();
+            DoctorRepository doctorRepository = new DoctorRepository(context, new PatientRepository(context));
+            SurveyRepository surveyRepository = new SurveyRepository(context);
+            foreach (Appointment appointment in appointments)
+                appointmentDTOs.Add(new AppointmentDTO(appointment, doctorRepository, surveyRepository));
+            return appointmentDTOs;
         }
 
         [HttpGet("doctor/{id}")]
@@ -80,9 +92,12 @@ namespace Hospital_API.Controllers
         }
 
         [HttpPost("recommendation_doctor")]
-        public ActionResult<IEnumerable<Appointment>> GetRecommendedAppointmentsByDoctorPriority([FromBody] AppointmentRecommendationRequestDTO appointmentRecommendationRequest)
+        public ActionResult<IEnumerable<Appointment>> GetRecommendedAppointments([FromBody] AppointmentRecommendationRequestDTO appointmentRecommendationRequest)
         {
-            return _appointmentService.GetAvailableByDateRangeAndDoctor(appointmentRecommendationRequest.LowerDateRange, appointmentRecommendationRequest.UpperDateRange, TimeSpan.Parse(appointmentRecommendationRequest.LowerTimeRange), TimeSpan.Parse(appointmentRecommendationRequest.UpperTimeRange), appointmentRecommendationRequest.DoctorId, AppointmentSearchPriority.DOCTOR_PRIORITY);
+            if(String.Equals(appointmentRecommendationRequest.PriorityType,"DOCTOR_PRIORITY"))
+                return _appointmentService.GetAvailableByDateRangeAndDoctor(appointmentRecommendationRequest.LowerDateRange, appointmentRecommendationRequest.UpperDateRange, TimeSpan.Parse(appointmentRecommendationRequest.LowerTimeRange), TimeSpan.Parse(appointmentRecommendationRequest.UpperTimeRange), appointmentRecommendationRequest.DoctorId, AppointmentSearchPriority.DOCTOR_PRIORITY);
+            
+            return _appointmentService.GetAvailableByDateRangeAndDoctor(appointmentRecommendationRequest.LowerDateRange, appointmentRecommendationRequest.UpperDateRange, TimeSpan.Parse(appointmentRecommendationRequest.LowerTimeRange), TimeSpan.Parse(appointmentRecommendationRequest.UpperTimeRange), appointmentRecommendationRequest.DoctorId, AppointmentSearchPriority.DATE_TIME_PRIORITY);
         }
 
         [HttpPost("add_appointment")]
@@ -96,6 +111,20 @@ namespace Hospital_API.Controllers
 
             _appointmentService.AddAppointment(appointmentToAdd);
             return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult<Appointment> CancelAppointment(int id)
+        {
+            var appointment = _appointmentService.FindById(id);
+            if (appointment == null)
+                return NotFound();
+            if (DateTime.Now > appointment.Date.AddDays(-2) || DateTime.Now > appointment.Date)
+                return BadRequest("Cannot cancel this appointment");
+
+            appointment.IsCancelled = true;
+            _appointmentService.Modify(appointment);
+            return appointment;
         }
     }
 }

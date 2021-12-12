@@ -1,4 +1,5 @@
-﻿using Hospital.Schedule.Model;
+﻿using Hospital.MedicalRecords.Model;
+using Hospital.Schedule.Model;
 using Hospital.SharedModel;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,7 +12,7 @@ namespace Hospital.Schedule.Repository
     public class AppointmentRepository : IAppointmentRepository
     {
         private readonly HospitalContext _context;
-
+        
         public AppointmentRepository() {}
 
         public AppointmentRepository(HospitalContext context)
@@ -30,9 +31,23 @@ namespace Hospital.Schedule.Repository
         {
             return _context.Appointments.Where(f => f.DoctorForeignKey == doctorId).ToList();
         }
+
+        
+
         public List<Appointment> GetByDoctorId(int doctorId, DateTime lowerDateRange, DateTime upperDateRange)
         {
             return _context.Appointments.Where(f => f.DoctorForeignKey == doctorId && f.Date >= lowerDateRange && f.Date < upperDateRange).ToList();
+        }
+
+        public List<Appointment> GetByDoctorType(DoctorType type)
+        {
+            List<Doctor> matchingDoctors = _context.Doctors.Where(d => d.Type == type).ToList();
+            List<Appointment> appointments = new List<Appointment>();
+            foreach (Doctor d in matchingDoctors)
+            {
+                appointments.AddRange(GetByDoctorId(d.Id));
+            }
+            return appointments;
         }
         public void AddAppointment(Appointment newAppointment)
         {

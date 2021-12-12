@@ -3,15 +3,17 @@ using System;
 using Hospital.SharedModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Hospital.Migrations
 {
     [DbContext(typeof(HospitalContext))]
-    partial class HospitalContextModelSnapshot : ModelSnapshot
+    [Migration("20211208134135_Update")]
+    partial class Update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -312,15 +314,6 @@ namespace Hospital.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Doctors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 2,
-                            FirstName = "Petar",
-                            LastName = "Petrovic",
-                            Type = 0
-                        });
                 });
 
             modelBuilder.Entity("Hospital.MedicalRecords.Model.Feedback", b =>
@@ -1161,7 +1154,13 @@ namespace Hospital.Migrations
                     b.Property<int>("DoctorForeignKey")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("IsCancelled")
+                    b.Property<bool>("IsCanceled")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsFinished")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsUpcoming")
                         .HasColumnType("boolean");
 
                     b.Property<int>("PatientForeignKey")
@@ -1181,9 +1180,11 @@ namespace Hospital.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 12, 11, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2021, 12, 8, 0, 0, 0, 0, DateTimeKind.Local),
                             DoctorForeignKey = 2,
-                            IsCancelled = false,
+                            IsCanceled = false,
+                            IsFinished = false,
+                            IsUpcoming = true,
                             PatientForeignKey = 1,
                             Time = new TimeSpan(0, 0, 0, 0, 0),
                             Type = 0
@@ -1191,9 +1192,11 @@ namespace Hospital.Migrations
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2021, 12, 11, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2021, 12, 8, 0, 0, 0, 0, DateTimeKind.Local),
                             DoctorForeignKey = 2,
-                            IsCancelled = true,
+                            IsCanceled = true,
+                            IsFinished = false,
+                            IsUpcoming = false,
                             PatientForeignKey = 1,
                             Time = new TimeSpan(0, 0, 0, 0, 0),
                             Type = 2
@@ -1201,9 +1204,11 @@ namespace Hospital.Migrations
                         new
                         {
                             Id = 3,
-                            Date = new DateTime(2021, 12, 11, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2021, 12, 8, 0, 0, 0, 0, DateTimeKind.Local),
                             DoctorForeignKey = 2,
-                            IsCancelled = false,
+                            IsCanceled = false,
+                            IsFinished = true,
+                            IsUpcoming = false,
                             PatientForeignKey = 1,
                             Time = new TimeSpan(0, 0, 0, 0, 0),
                             Type = 1
@@ -1233,7 +1238,7 @@ namespace Hospital.Migrations
                         new
                         {
                             IdSurvey = 1,
-                            CreationDate = new DateTime(2021, 12, 11, 19, 12, 29, 920, DateTimeKind.Local).AddTicks(5596),
+                            CreationDate = new DateTime(2021, 12, 8, 14, 41, 34, 261, DateTimeKind.Local).AddTicks(1044),
                             IdAppointment = 1
                         });
                 });

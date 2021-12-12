@@ -5,6 +5,7 @@ export class AppointmentRequest {
     UpperDateRange: Date = new Date();
     LowerTimeRange: string = "08:00:00";
     UpperTimeRange: string = "20:00:00";
+    PriorityType: string = "DOCTOR_PRIORITY";
 
     DoctorId: number = 0;
 }

@@ -1,51 +1,115 @@
 <div class="container-fluid">
     <div class="row mt-3">
-      <div class="col-md-4">
-      </div>
-      <div class="col-md-4">
-        <div class="card">
-        <!--Header-->
-            <div class="header">
-                <div class="row d-flex justify-content-center">
-                <h3 class="text-black mb-0 py-2 font-weight-bold">Register</h3>
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                
+                <!-- Header -->
+                <div class="header gradient-blue">
+                    <div class="row d-flex justify-content-center">
+                        <h3 class="text-white mb-1 mt-1 font-weight-bold">Find an Appointment</h3>
+                    </div>
+                </div>
+
+                <div class="card-body mx-4 collapsible">
+                    <form>
+                        <div class="row d-flex mt-4">
+                            <div class="col-md-6">
+                                <label>
+                                    <input type="date" name="lowerDateRange" [min]="minDate" [max]="getFormattedUpperDateRange()" [(ngModel)]="appointmentRequest.LowerDateRange" class="datepicker" required="required"/>
+                                    <span>From Date</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label>
+                                    <input type="date" name="upperDateRange" [min]="getFormattedLowerDateRange()" [max]="maxDate" [(ngModel)]="appointmentRequest.UpperDateRange" class="datepicker" required="required"/>
+                                    <span>To Date</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row d-flex">
+                            <div class="col-md-6">
+                                <label>
+                                    <select name="lowerTime" id="lowerTime" [(ngModel)]="appointmentRequest.LowerTimeRange" class="datepicker" required="required">
+                                        <option *ngFor="let time of availableLowerTimes()" [value]="time">{{time}}</option>
+                                    </select>
+                                    <span>From Time</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label>
+                                    <select name="upperTime" id="upperTime" [(ngModel)]="appointmentRequest.UpperTimeRange" class="datepicker" required="required">
+                                        <option *ngFor="let time of availableUpperTimes()" [value]="time">{{time}}</option>
+                                    </select>
+                                    <span>To Time</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row d-flex">
+                            <div class="col-md-6">
+                                <label>
+                                    <select name="doctors" id="doctors" [(ngModel)]="appointmentRequest.DoctorId" class="datepicker" required="required">
+                                        <option *ngFor="let d of doctors" [value]="d.id">{{d.firstName}} {{d.lastName}}</option>
+                                    </select>
+                                    <span>Doctor</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label>
+                                    <select name="priority" id="priority" [(ngModel)]="appointmentRequest.PriorityType" class="datepicker" required="required">
+                                        <option value="DOCTOR_PRIORITY">Doctor</option>
+                                        <option value="DATE_TIME_PRIORITY">Time</option>
+                                    </select>
+                                    <span>Priority</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row d-flex">
+                            <div class="col-md-9"></div>
+                            <div class="col-md-3">
+                                <button class="btn btn-blue btn-rounded" (click)="send_request()" [disabled]="!contentIsValid()">Search</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-
-            <div style="padding: 5%; margin: auto;">
-                <form>
-                    <div>
-                        <input type="date" name="lowerDateRange [(ngModel)]="appointmentRequest.LowerDateRange style="margin-top: 10px;">
+            
+            <!-- Results -->
+            <div class="card mt-5" *ngIf="!(appointments === undefined) && appointments.length != 0">
+                <div class="header gradient-blue">
+                    <div class="row d-flex justify-content-center">
+                        <h3 class="text-white mb-1 mt-1 font-weight-bold">Results</h3>
                     </div>
-                    <div>
-                        <input type="date" name="upperDateRange [(ngModel)]="appointmentRequest.UpperDateRange style="margin-top: 10px;">
-                    </div>
-                    <div style="margin-top: 10px;">
-                        <select name="lowerTime" id="lowerTime" [(ngModel)]="appointmentRequest.LowerTimeRange">
-                            <option *ngFor="let time of availableTimes" [value]="time">{{time}}</option>
-                        </select>
-                    </div>
-                    <div style="margin-top: 10px;">
-                        <select name="upperTime" id="upperTime" [(ngModel)]="appointmentRequest.UpperTimeRange">
-                            <option *ngFor="let time of availableTimes" [value]="time">{{time}}</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select name="doctors" id="doctors" [(ngModel)]="appointmentRequest.DoctorId">
-                            <option *ngFor="let d of doctors" [value]="appointmentRequest.DoctorId">{{d.firstName}} {{d.lastName}}</option>
-                        </select>
-                    </div>
-                    <button style="margin-top: 30px;" (click)="send_request()">Search</button>
-                    <div style="margin-top: 10px;">
-                        <div *ngFor="let a of appointments">
-                            <h2>{{a.date}}</h2>
-                            <h4>{{a.time}}</h4>
+                </div>
+            
+                <div class="card-body mx-4">
+                    <div class="row d-flex mt-2" style="border-bottom: 1px solid #9e9e9e;" *ngFor = "let a of appointments">
+                        <div class="col-md-5">
+                            <div class="row d-flex">
+                                <h1 class="font-weight-bold" style="margin-bottom: 0px !important;">
+                                    {{a.date | date:'hh:mm'}}-{{getTermEnd(a.date) | date:'hh:mm'}}
+                                </h1>
+                            </div>
+                            <div class="row d-flex">
+                                <span class="font-weight-bold header-text">
+                                    {{a.date | date:'dd/MM/yyyy'}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <h1 class="font-weight-bold">
+                                {{getDoctorName(a.doctorForeignKey)}}
+                            </h1>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-blue btn-rounded" (click)="createAppointment(a)">Reserve</button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
-      </div>
-      <div class="col-md-4">
-      </div>
+        <div class="col-md-4">
+        </div>
     </div>
-  </div>
+</div>

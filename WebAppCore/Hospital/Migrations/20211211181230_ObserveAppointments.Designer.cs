@@ -3,15 +3,17 @@ using System;
 using Hospital.SharedModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Hospital.Migrations
 {
     [DbContext(typeof(HospitalContext))]
-    partial class HospitalContextModelSnapshot : ModelSnapshot
+    [Migration("20211211181230_ObserveAppointments")]
+    partial class ObserveAppointments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

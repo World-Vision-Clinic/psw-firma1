@@ -16,11 +16,15 @@ export class AppointmentCreationService {
   constructor(private http: HttpClient) { }
 
   requestAppointmentRecommendationDoctorPriority(appointmentRequest: AppointmentRequest): Observable<AppointmentRequest> {
-    return this.http.post<AppointmentRequest>("/api/Appointments/recommendation_doctor", JSON.stringify(appointmentRequest), this.httpOptions);
+    return this.http.post<AppointmentRequest>("/api/Appointment/recommendation_doctor", JSON.stringify(appointmentRequest), this.httpOptions);
+  }
+
+  createAppointment(appointmentRequest: AppointmentRequest): Observable<AppointmentRequest> {
+    return this.http.post<AppointmentRequest>("/api/Appointment/add_appointment", JSON.stringify(appointmentRequest), this.httpOptions);
   }
 
   makeAppointment(appointment: any): Observable<any> {
-    return this.http.post<any>("/api/Appointments/add_appointment", JSON.stringify(appointment), this.httpOptions);
+    return this.http.post<any>("/api/Appointment/add_appointment", JSON.stringify(appointment), this.httpOptions);
   }
 
   getDoctors() : Observable<Doctor[]>{
@@ -28,14 +32,14 @@ export class AppointmentCreationService {
   }
 
   getDoctorsForSpecialty(specialty: any) : Observable<Doctor[]>{
-    return this.http.get<Doctor[]>("/api/Doctors/GeForSpecialty/" + specialty)
+    return this.http.get<Doctor[]>("/api/Doctors/get_by_specialty/" + specialty)
   }
 
   getAppointments4Step(doctorId: any,date: any) : Observable<Appointment[]>{
-    return this.http.get<Appointment[]>("/api/Appointments/4step/"+ doctorId + "/" + date)
+    return this.http.get<Appointment[]>("/api/Appointment/4step/"+ doctorId + "/" + date)
   }
 
   getPatientAppointments(id: number) : Observable<Appointment[]>{
-    return this.http.get<Appointment[]>("/api/Appointments/patient/1")
+    return this.http.get<Appointment[]>("/api/Appointment/patient/1")
   }
 }

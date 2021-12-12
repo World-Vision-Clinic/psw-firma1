@@ -23,7 +23,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
     {
         public AppointmentRepository _appointmentRepository;
         public DoctorRepository _doctorRepository;
-
+        public PatientRepository _patientRepository;
         public AppointmentController _appointmentController;
 
         public TestAppointmentController()
@@ -40,8 +40,9 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             TestContext hospitalContext = new TestContext(options);
             hospitalContext.Database.EnsureCreated();
             _appointmentRepository = new AppointmentRepository(hospitalContext);
-            _doctorRepository = new DoctorRepository(hospitalContext);
-            _appointmentController = new AppointmentController(new AppointmentService(_appointmentRepository));
+            _patientRepository = new PatientRepository(hospitalContext);
+            _doctorRepository = new DoctorRepository(hospitalContext, _patientRepository);
+            _appointmentController = new AppointmentController(new AppointmentService(_appointmentRepository, _doctorRepository));
         }
 
         [Fact]
@@ -63,7 +64,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 Id = 5,
                 FirstName = "TestDoktorIme",
                 LastName = "TestDoktorPrezime",
-                Specilaty = DoctorSpecialty.Dentist
+                Type = DoctorType.Family_physician
 
             };
             _doctorRepository.AddDoctor(doctor);
@@ -84,7 +85,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 Id = 6,
                 FirstName = "TestDoktorIme",
                 LastName = "TestDoktorPrezime",
-                Specilaty = DoctorSpecialty.Dentist
+                Type = DoctorType.Family_physician
 
             };
             _doctorRepository.AddDoctor(doctor);
@@ -112,7 +113,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         {
             Appointment appointment = new Appointment()
             {
-                Id = 1,
+                Id = 50,
                 PatientForeignKey = 1,
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
@@ -123,7 +124,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             var response = _appointmentController.GetAppointmentsByPatientId(1);
 
             Assert.NotNull(response);
-            foreach (Appointment appointmentIterator in response.Value)
+            foreach (AppointmentDTO appointmentIterator in response.Value)
             {
                 Assert.Equal(1, appointmentIterator.PatientForeignKey);
             }
@@ -222,7 +223,8 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             appointmentRecommendationRequestDTO.LowerTimeRange = "12:00:00";
             appointmentRecommendationRequestDTO.UpperTimeRange = "14:00:00";
             appointmentRecommendationRequestDTO.DoctorId = 1;
-            List<Appointment> freeAppointmentsBeforeAddition = _appointmentController.GetRecommendedAppointmentsByDoctorPriority(appointmentRecommendationRequestDTO).Value.ToList();
+            appointmentRecommendationRequestDTO.PriorityType = "DOCTOR_PRIORITY";
+            List<Appointment> freeAppointmentsBeforeAddition = _appointmentController.GetRecommendedAppointments(appointmentRecommendationRequestDTO).Value.ToList();
 
             Assert.NotNull(freeAppointmentsBeforeAddition);
             Assert.Equal(8, freeAppointmentsBeforeAddition.Count);
@@ -238,7 +240,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             };
             _appointmentRepository.AddAppointment(appointment);
 
-            List<Appointment> freeAppointmentsAfterAddition = _appointmentController.GetRecommendedAppointmentsByDoctorPriority(appointmentRecommendationRequestDTO).Value.ToList();
+            List<Appointment> freeAppointmentsAfterAddition = _appointmentController.GetRecommendedAppointments(appointmentRecommendationRequestDTO).Value.ToList();
 
             Assert.NotNull(freeAppointmentsAfterAddition);
             Assert.Equal(7, freeAppointmentsAfterAddition.Count);
@@ -253,6 +255,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             appointmentRecommendationRequestDTO.LowerTimeRange = "12:00:00";
             appointmentRecommendationRequestDTO.UpperTimeRange = "13:00:00";
             appointmentRecommendationRequestDTO.DoctorId = 1;
+            appointmentRecommendationRequestDTO.PriorityType = "DOCTOR_PRIORITY";
 
             Appointment appointment = new Appointment()
             {
@@ -276,10 +279,105 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             };
             _appointmentRepository.AddAppointment(earlierAppointment);
 
-            List<Appointment> freeAppointmentsAfterAddition = _appointmentController.GetRecommendedAppointmentsByDoctorPriority(appointmentRecommendationRequestDTO).Value.ToList();
+            List<Appointment> freeAppointmentsAfterAddition = _appointmentController.GetRecommendedAppointments(appointmentRecommendationRequestDTO).Value.ToList();
 
             Assert.NotNull(freeAppointmentsAfterAddition);
             Assert.Equal(18, freeAppointmentsAfterAddition.Count);
         }
+
+        [Fact]
+        public void Test_get_free_doctor_appointments_in_range_with_interval_loosening_date_priority()
+        {
+            AppointmentRecommendationRequestDTO appointmentRecommendationRequestDTO = new AppointmentRecommendationRequestDTO();
+            appointmentRecommendationRequestDTO.LowerDateRange = new DateTime(2022, 9, 9, 0, 0, 0);
+            appointmentRecommendationRequestDTO.UpperDateRange = new DateTime(2022, 9, 9, 23, 59, 59);
+            appointmentRecommendationRequestDTO.LowerTimeRange = "12:00:00";
+            appointmentRecommendationRequestDTO.UpperTimeRange = "13:00:00";
+            appointmentRecommendationRequestDTO.DoctorId = 1;
+            appointmentRecommendationRequestDTO.PriorityType = "DATE_TIME_PRIORITY";
+
+            Doctor doctorCardi1 = new Doctor()
+            {
+                Id = 11,
+                FirstName = "Sava",
+                LastName = "Savić",
+                Type = DoctorType.Cardiologist
+            };
+            _doctorRepository.AddDoctor(doctorCardi1);
+
+            Doctor doctorCardi2 = new Doctor()
+            {
+                Id = 12,
+                FirstName = "Milana",
+                LastName = "Milanović",
+                Type = DoctorType.Cardiologist
+            };
+            _doctorRepository.AddDoctor(doctorCardi2);
+
+            Doctor doctorOphta1 = new Doctor()
+            {
+                Id = 13,
+                FirstName = "Nikola",
+                LastName = "Marković",
+                Type = DoctorType.Ophthalmologist
+            };
+            _doctorRepository.AddDoctor(doctorOphta1);
+
+            Appointment appointment = new Appointment()
+            {
+                PatientForeignKey = 1,
+                DoctorForeignKey = 11,
+                Type = AppointmentType.Appointment,
+                Date = new DateTime(2022, 9, 9, 12, 0, 0),
+                Time = new TimeSpan(0, 0, 45, 0, 0)
+            };
+            _appointmentRepository.AddAppointment(appointment);
+
+            List<Appointment> freeAppointmentsAfterAddition = _appointmentController.GetRecommendedAppointments(appointmentRecommendationRequestDTO).Value.ToList();
+
+            Assert.Equal(2, freeAppointmentsAfterAddition.Count);
+        }
+
+        [Fact]
+        public void Test_valid_cancel_appointment()
+        {
+            Appointment appointment = new Appointment()
+            {
+                Id = 2,
+                PatientForeignKey = 1,
+                DoctorForeignKey = 1,
+                Type = AppointmentType.Appointment,
+                Date = new DateTime(2021, 9, 9, 0, 0, 0),
+                Time = new TimeSpan(0, 0, 45, 0, 0)
+            };
+
+            var response = _appointmentController.CancelAppointment(2).Value;
+
+            //Assert.Equal(200, response.StatusCode);
+            Assert.NotNull(response);
+
+        }
+
+        [Fact]
+        public void Test_invalid_cancel_appointment()
+        {
+            Appointment appointment = new Appointment()
+            {
+                Id = 2,
+                PatientForeignKey = 1,
+                DoctorForeignKey = 1,
+                Type = AppointmentType.Appointment,
+                Date = new DateTime(2020, 9, 9, 0, 0, 0),
+                Time = new TimeSpan(0, 0, 45, 0, 0)
+            };
+
+            var response = _appointmentController.CancelAppointment(2).Value;
+           // var result = response.Result as BadRequestResult;
+
+           // Assert.Equal(400, result.StatusCode);
+            Assert.NotNull(response);
+
+        }
+
     }
 }

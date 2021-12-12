@@ -22,8 +22,8 @@ export class RegisterComponent implements OnInit {
   address: string = "";
   city: string = "";
   phoneNumber: string = "";
-  height: number = -1;
-  weight: number = -1;
+  height: string = "";
+  weight: string = "";
   allergens: number[] = [];
   preferedDoctor: string = "";
   bloodType: string = "";
@@ -61,8 +61,8 @@ export class RegisterComponent implements OnInit {
       user.Address = this.address;
       user.City = this.city;
       user.Phone = this.phoneNumber;
-      user.Height = this.height;
-      user.Weight = this.weight;
+      user.Height = parseInt(this.height);
+      user.Weight = parseInt(this.weight);
       user.Allergens = this.allergens.map(Number);
       user.PreferedDoctor = parseInt(this.preferedDoctor);
       user.BloodType = this.bloodType;
@@ -115,4 +115,23 @@ export class RegisterComponent implements OnInit {
     return true;
   }
 
+  addAllergen(id: number) {
+    this.allergens.push(id)
+  }
+
+  removeAllergen(id: number) {
+    let index = this.allergens.findIndex(a => a === id)
+    if(index >= 0) {
+      this.allergens.splice(index,1)
+    }
+  }
+
+  allergenIsPicked(id: number) {
+    for (let a of this.allergens) {
+        if (a == id) {
+          return true;
+        }
+    } 
+    return false
+  }
 }
