@@ -111,32 +111,32 @@ namespace Hospital.SharedModel
                 );
 
             modelBuilder.Entity<Room>().HasData(
-                new Room { Id = 1, FloorId = 1, Name = "OPERATING ROOM 1", DoctorId = -1, Purpose = "", X = 0, Y = 150, Height = 190, Width = 150, DoorX = 148, DoorY = 285, Vertical = true, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 2, FloorId = 1, Name = "OPERATING ROOM 2", DoctorId = -1, Purpose = "", X = 160, Y = 150, Height = 100, Width = 150, DoorX = 220, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 3, FloorId = 1, Name = "OPERATING ROOM 3", DoctorId = -1, Purpose = "", X = 320, Y = 150, Height = 100, Width = 150, DoorX = 370, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 4, FloorId = 1, Name = "ROOM 1", DoctorId = -1, Purpose = "", X = 480, Y = 150, Height = 100, Width = 170, DoorX = 520, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 5, FloorId = 1, Name = "ROOM 2", DoctorId = -1, Purpose = "", X = 660, Y = 150, Height = 100, Width = 180, DoorX = 680, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 6, FloorId = 1, Name = "OFFICE 1", DoctorId = -1, Purpose = "", X = 730, Y = 260, Height = 100, Width = 110, DoorX = 728, DoorY = 290, Vertical = true, Css = "room room-cadetblue", DoorExist = true },
+                new Room { Id = 1, FloorId = 1, Name = "OPERATING ROOM 1", DoctorId = 1, Purpose = "", X = 0, Y = 150, Height = 190, Width = 150, DoorX = 148, DoorY = 285, Vertical = true, Css = "room room-cadetblue", DoorExist = true },
+                new Room { Id = 2, FloorId = 1, Name = "OPERATING ROOM 2", DoctorId = 2, Purpose = "", X = 160, Y = 150, Height = 100, Width = 150, DoorX = 220, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
+                new Room { Id = 3, FloorId = 1, Name = "OPERATING ROOM 3", DoctorId = 3, Purpose = "", X = 320, Y = 150, Height = 100, Width = 150, DoorX = 370, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
+                new Room { Id = 4, FloorId = 1, Name = "ROOM 1", DoctorId = 4, Purpose = "", X = 480, Y = 150, Height = 100, Width = 170, DoorX = 520, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
+                new Room { Id = 5, FloorId = 1, Name = "ROOM 2", DoctorId = 5, Purpose = "", X = 660, Y = 150, Height = 100, Width = 180, DoorX = 680, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
+                new Room { Id = 6, FloorId = 1, Name = "OFFICE 1", DoctorId = 6, Purpose = "", X = 730, Y = 260, Height = 100, Width = 110, DoorX = 728, DoorY = 290, Vertical = true, Css = "room room-cadetblue", DoorExist = true },
                 new Room { Id = 7, FloorId = 1, Name = "LIFT", DoctorId = -1, Purpose = "", X = 690, Y = 370, Height = 90, Width = 150, DoorX = 728, DoorY = 290, Vertical = false, Css = "staircase", DoorExist = false },
                 new Room { Id = 8, FloorId = 1, Name = "TOILET", DoctorId = -1, Purpose = "", X = 730, Y = 470, Height = 60, Width = 110, DoorX = 728, DoorY = 485, Vertical = true, Css = "room room-cadetblue", DoorExist = true },
                 new Room { Id = 9, FloorId = 1, Name = "TOILET", DoctorId = -1, Purpose = "", X = 730, Y = 540, Height = 60, Width = 110, DoorX = 728, DoorY = 555, Vertical = true, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 10, FloorId = 1, Name = "OPERATING ROOM 4", DoctorId = -1, Purpose = "", X = 0, Y = 410, Height = 190, Width = 150, DoorX = 148, DoorY = 419, Vertical = true, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 11, FloorId = 1, Name = "ROOM 3", DoctorId = -1, Purpose = "", X = 160, Y = 500, Height = 100, Width = 100, DoorX = 200, DoorY = 498, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 12, FloorId = 1, Name = "ROOM 4", DoctorId = -1, Purpose = "", X = 270, Y = 500, Height = 100, Width = 150, DoorX = 315, DoorY = 498, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 13, FloorId = 1, Name = "ROOM 5", DoctorId = -1, Purpose = "", X = 430, Y = 500, Height = 100, Width = 150, DoorX = 475, DoorY = 498, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 14, FloorId = 2, Name = "DOCTOR'S OFFICE 1", DoctorId = -1, Purpose = "", X = 0, Y = 150, Height = 100, Width = 150, DoorX = 100, DoorY = 248, Vertical = false, Css = "room", DoorExist = true },
-                new Room { Id = 15, FloorId = 2, Name = "DOCTOR'S OFFICE 2", DoctorId = -1, Purpose = "", X = 160, Y = 150, Height = 100, Width = 150, DoorX = 260, DoorY = 248, Vertical = false, Css = "room", DoorExist = true },
-                new Room { Id = 16, FloorId = 2, Name = "DOCTOR'S OFFICE 3", DoctorId = -1, Purpose = "", X = 320, Y = 150, Height = 100, Width = 150, DoorX = 420, DoorY = 248, Vertical = false, Css = "room", DoorExist = true },
-                new Room { Id = 17, FloorId = 2, Name = "DOCTOR'S OFFICE 4", DoctorId = -1, Purpose = "", X = 480, Y = 150, Height = 100, Width = 170, DoorX = 595, DoorY = 248, Vertical = false, Css = "room", DoorExist = true },
-                new Room { Id = 18, FloorId = 2, Name = "ROOM 1", DoctorId = -1, Purpose = "", X = 660, Y = 150, Height = 100, Width = 180, DoorX = 680, DoorY = 248, Vertical = false, Css = "room", DoorExist = true },
+                new Room { Id = 10, FloorId = 1, Name = "OPERATING ROOM 4", DoctorId = 7, Purpose = "", X = 0, Y = 410, Height = 190, Width = 150, DoorX = 148, DoorY = 419, Vertical = true, Css = "room room-cadetblue", DoorExist = true },
+                new Room { Id = 11, FloorId = 1, Name = "ROOM 3", DoctorId = 8, Purpose = "", X = 160, Y = 500, Height = 100, Width = 100, DoorX = 200, DoorY = 498, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
+                new Room { Id = 12, FloorId = 1, Name = "ROOM 4", DoctorId = 9, Purpose = "", X = 270, Y = 500, Height = 100, Width = 150, DoorX = 315, DoorY = 498, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
+                new Room { Id = 13, FloorId = 1, Name = "ROOM 5", DoctorId = 10, Purpose = "", X = 430, Y = 500, Height = 100, Width = 150, DoorX = 475, DoorY = 498, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
+                new Room { Id = 14, FloorId = 2, Name = "DOCTOR'S OFFICE 1", DoctorId = 11, Purpose = "", X = 0, Y = 150, Height = 100, Width = 150, DoorX = 100, DoorY = 248, Vertical = false, Css = "room", DoorExist = true },
+                new Room { Id = 15, FloorId = 2, Name = "DOCTOR'S OFFICE 2", DoctorId = 12, Purpose = "", X = 160, Y = 150, Height = 100, Width = 150, DoorX = 260, DoorY = 248, Vertical = false, Css = "room", DoorExist = true },
+                new Room { Id = 16, FloorId = 2, Name = "DOCTOR'S OFFICE 3", DoctorId = 13, Purpose = "", X = 320, Y = 150, Height = 100, Width = 150, DoorX = 420, DoorY = 248, Vertical = false, Css = "room", DoorExist = true },
+                new Room { Id = 17, FloorId = 2, Name = "DOCTOR'S OFFICE 4", DoctorId = 14, Purpose = "", X = 480, Y = 150, Height = 100, Width = 170, DoorX = 595, DoorY = 248, Vertical = false, Css = "room", DoorExist = true },
+                new Room { Id = 18, FloorId = 2, Name = "ROOM 1", DoctorId = 15, Purpose = "", X = 660, Y = 150, Height = 100, Width = 180, DoorX = 680, DoorY = 248, Vertical = false, Css = "room", DoorExist = true },
                 new Room { Id = 19, FloorId = 2, Name = "STAIRS", DoctorId = -1, Purpose = "", X = 770, Y = 258, Height = 104, Width = 70, DoorX = 728, DoorY = 290, Vertical = true, Css = "room", DoorExist = false },
                 new Room { Id = 20, FloorId = 2, Name = "LIFT", DoctorId = -1, Purpose = "", X = 690, Y = 370, Height = 90, Width = 150, DoorX = 728, DoorY = 290, Vertical = false, Css = "staircase", DoorExist = false },
                 new Room { Id = 21, FloorId = 2, Name = "TOILET", DoctorId = -1, Purpose = "", X = 730, Y = 470, Height = 60, Width = 110, DoorX = 728, DoorY = 485, Vertical = true, Css = "room", DoorExist = true },
                 new Room { Id = 22, FloorId = 2, Name = "TOILET", DoctorId = -1, Purpose = "", X = 730, Y = 540, Height = 60, Width = 110, DoorX = 728, DoorY = 555, Vertical = true, Css = "room", DoorExist = true },
-                new Room { Id = 23, FloorId = 2, Name = "OPERATING ROOM 2", DoctorId = -1, Purpose = "", X = 0, Y = 410, Height = 190, Width = 150, DoorX = 148, DoorY = 419, Vertical = true, Css = "room", DoorExist = true },
-                new Room { Id = 24, FloorId = 2, Name = "ROOM 2", DoctorId = -1, Purpose = "", X = 160, Y = 500, Height = 100, Width = 100, DoorX = 200, DoorY = 498, Vertical = false, Css = "room", DoorExist = true },
-                new Room { Id = 25, FloorId = 2, Name = "OPERATING ROOM 3", DoctorId = -1, Purpose = "", X = 270, Y = 500, Height = 100, Width = 300, DoorX = 350, DoorY = 498, Vertical = false, Css = "room", DoorExist = true },
-                new Room { Id = 26, FloorId = 2, Name = "OPERATING ROOM 1", DoctorId = -1, Purpose = "", X = 0, Y = 300, Height = 100, Width = 580, DoorX = 400, DoorY = 398, Vertical = false, Css = "room", DoorExist = true }
+                new Room { Id = 23, FloorId = 2, Name = "OPERATING ROOM 2", DoctorId = 16, Purpose = "", X = 0, Y = 410, Height = 190, Width = 150, DoorX = 148, DoorY = 419, Vertical = true, Css = "room", DoorExist = true },
+                new Room { Id = 24, FloorId = 2, Name = "ROOM 2", DoctorId = 17, Purpose = "", X = 160, Y = 500, Height = 100, Width = 100, DoorX = 200, DoorY = 498, Vertical = false, Css = "room", DoorExist = true },
+                new Room { Id = 25, FloorId = 2, Name = "OPERATING ROOM 3", DoctorId = 18, Purpose = "", X = 270, Y = 500, Height = 100, Width = 300, DoorX = 350, DoorY = 498, Vertical = false, Css = "room", DoorExist = true },
+                new Room { Id = 26, FloorId = 2, Name = "OPERATING ROOM 1", DoctorId = 19, Purpose = "", X = 0, Y = 300, Height = 100, Width = 580, DoorX = 400, DoorY = 398, Vertical = false, Css = "room", DoorExist = true }
                 );
             modelBuilder.Entity<OutsideDoor>().HasData(
                 new OutsideDoor { id = 1, X = 545, Y = 80, IsVertical = true, MapPositionId = 1 },
@@ -154,6 +154,28 @@ namespace Hospital.SharedModel
             modelBuilder.Entity<Building>().HasData(
                 new Building { id = 1, Name = "Hospital I", Area = null, Info = "Gynecology", MapPositionId = 1 },
                 new Building { id = 2, Name = "Hospital II", Area = null, Info = "", MapPositionId = 2 });
+
+            modelBuilder.Entity<Doctor>().HasData(
+               new Doctor { Id = 1, FirstName = "Slavica", LastName = "Matic", Type = 0 },
+               new Doctor { Id = 2, FirstName = "Mirko", LastName = "Jankovic", Type = 0 },
+               new Doctor { Id = 3, FirstName = "Matija", LastName = "Popic", Type = 0 },
+               new Doctor { Id = 4, FirstName = "Sara", LastName = "Tot", Type = 0 },
+               new Doctor { Id = 5, FirstName = "Ignjat", LastName = "Jovic", Type = 0 },
+               new Doctor { Id = 6, FirstName = "Milos", LastName = "Matijevic", Type = 0 },
+               new Doctor { Id = 7, FirstName = "Elena", LastName = "Kis", Type = 0 },
+               new Doctor { Id = 8, FirstName = "Iva", LastName = "Bojanic", Type = 0 },
+               new Doctor { Id = 9, FirstName = "Bojan", LastName = "Kraljevic", Type = 0 },
+               new Doctor { Id = 10, FirstName = "Lidija", LastName = "Lakic", Type = 0 },
+               new Doctor { Id = 11, FirstName = "Momir", LastName = "Njegomir", Type = 0 },
+               new Doctor { Id = 12, FirstName = "Ivana", LastName = "Pekic", Type = 0 },
+               new Doctor { Id = 13, FirstName = "Mileva", LastName = "Nakic", Type = 0 },
+               new Doctor { Id = 14, FirstName = "Petar", LastName = "Katic", Type = 0 },
+               new Doctor { Id = 15, FirstName = "Marijana", LastName = "Pantic", Type = 0 },
+               new Doctor { Id = 16, FirstName = "Savina", LastName = "Markovic", Type = 0 },
+               new Doctor { Id = 17, FirstName = "Jelena", LastName = "Stupar", Type = 0 },
+               new Doctor { Id = 18, FirstName = "Luka", LastName = "Lisica", Type = 0 },
+               new Doctor { Id = 19, FirstName = "Vasilije", LastName = "Mit", Type = 0 }
+               );
 
         }
 

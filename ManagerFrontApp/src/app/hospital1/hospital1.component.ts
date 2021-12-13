@@ -9,7 +9,6 @@ import { Equipment } from '../data/equipment';
 import { Floor } from '../data/floor';
 import { iEquipmentRoom } from '../data/iEquipmentRoom';
 //import { BUILDINGS } from '../data/mock-buildings';
-import { ROOMS } from '../data/mock-rooms';
 import { emptyRoom, Room } from '../data/room';
 import { HospitalService } from './hospital.service';
 @Component({
@@ -26,7 +25,7 @@ export class Hospital1Component implements OnInit {
   loadingHospital = true;
   floors: Floor[] = [];
   building: Building[] = [];
-  rooms = ROOMS;
+  rooms = [];
   selectedRoom_ = null;
   selectedBuilding;
   selectedFloor;
@@ -58,7 +57,6 @@ export class Hospital1Component implements OnInit {
   buildingFormDisabled = true;
   roomName: string = '';
   doctorUsing: string = '';
-  purpose: string = '';
   selectedRoom: Room = emptyRoom();
   roomIsSelected = false;
   formDisabled: boolean = true;
@@ -233,6 +231,10 @@ export class Hospital1Component implements OnInit {
 
   equipment() {
     this.equipmentBox = true;
+  }
+
+  schedule() {
+    this.scheduleBox = true;
   }
 
   closeEquip() {

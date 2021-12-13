@@ -15,6 +15,7 @@ namespace Hospital_API.DTO
         public string name { get; set; }
         public string purpose { get; set; }
         public int doctorId { get; set; }
+        
 
         public int floorId { get; set; }
         public int x { get; set; }
@@ -32,7 +33,7 @@ namespace Hospital_API.DTO
             id = room.Id;
             name = room.Name;
             purpose = room.Purpose;
-            doctorId = -1;
+            doctorId = room.DoctorId;
             floorId = room.FloorId;
             x = room.X;
             y = room.Y;
@@ -52,7 +53,7 @@ namespace Hospital_API.DTO
             room.Id = id;
             room.Name = name;
             room.Purpose = purpose;
-            room.DoctorId = -1;
+            room.DoctorId = doctorId;
             room.FloorId =floorId;
             room.X = x;
             room.Y = y;
