@@ -10,7 +10,7 @@ namespace Integration_API.Controller
 {
     public class SftpHandler
     {
-        const String SFTP_ADDRESS = "192.168.56.1";
+        const String SFTP_ADDRESS = "192.168.0.16";
         FilesRepository repository = new FilesRepository();
         public File DownloadSpecification(string fromPath, string localPath)
         {
@@ -50,7 +50,7 @@ namespace Integration_API.Controller
             using (SftpClient client = new SftpClient(new PasswordConnectionInfo(SFTP_ADDRESS, "user", "password")))
             {
                 client.Connect();
-                string sourceFile = @"consumed-medicine.txt";
+                string sourceFile = @"Reports\ConsumedMedicineReport.pdf";
                 using (System.IO.Stream stream = System.IO.File.OpenRead(sourceFile))
                 {
                     client.UploadFile(stream, @"\public\" + System.IO.Path.GetFileName(sourceFile), x => { Console.WriteLine(x); });
