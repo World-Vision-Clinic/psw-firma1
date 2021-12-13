@@ -110,7 +110,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr></tr>
+        <tr *ngFor="let item of selectedRoom.equipments">
+          <td>{{ item.startDate }}</td>
+        </tr>
       </tbody>
     </table>
     <div class="rightbtn">

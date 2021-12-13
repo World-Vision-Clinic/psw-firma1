@@ -5,4 +5,6 @@ export interface Equipment {
   roomId: number;
   InTransport: boolean;
   id: number;
+  startDate: string;
+  endDate: string;
 }
