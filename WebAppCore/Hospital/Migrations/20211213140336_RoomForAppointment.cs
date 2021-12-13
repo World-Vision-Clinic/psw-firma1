@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Hospital.Migrations
 {
-    public partial class InsertAppointmentsMigration : Migration
+    public partial class RoomForAppointment : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,6 +68,7 @@ namespace Hospital.Migrations
                     Type = table.Column<int>(type: "integer", nullable: false),
                     Date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Time = table.Column<TimeSpan>(type: "interval", nullable: false),
+                    RoomId = table.Column<int>(type: "integer", nullable: false),
                     IsCancelled = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -478,7 +479,6 @@ namespace Hospital.Migrations
                 columns: new[] { "Id", "Amount", "InTransport", "Name", "RoomId", "TransportEnd", "TransportStart", "Type" },
                 values: new object[,]
                 {
-                    { 2, 3, true, "Operating table", 23, new DateTime(2021, 12, 15, 12, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 12, 15, 11, 0, 0, 0, DateTimeKind.Unspecified), 0 },
                     { 3, 11, true, "Infusion", 1, new DateTime(2021, 12, 16, 11, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 12, 16, 10, 0, 0, 0, DateTimeKind.Unspecified), 1 },
                     { 4, 17, true, "Bandage", 2, new DateTime(2022, 1, 14, 11, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 1, 14, 10, 0, 0, 0, DateTimeKind.Unspecified), 1 },
                     { 5, 2, true, "Operating table", 2, new DateTime(2022, 1, 17, 14, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2022, 1, 17, 13, 0, 0, 0, DateTimeKind.Unspecified), 0 },
@@ -487,24 +487,27 @@ namespace Hospital.Migrations
                     { 8, 1, false, "Operating table", 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0 },
                     { 9, 11, false, "Syringe", 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
                     { 10, 7, false, "Bed", 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0 },
-                    { 12, 11, false, "Bed", 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0 },
+                    { 2, 3, true, "Operating table", 23, new DateTime(2021, 12, 15, 12, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 12, 15, 11, 0, 0, 0, DateTimeKind.Unspecified), 0 },
+                    { 11, 4, false, "Chair", 16, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0 },
                     { 13, 6, false, "Chair", 17, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0 },
                     { 14, 25, false, "Bandage", 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
-                    { 11, 4, false, "Chair", 16, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0 },
+                    { 12, 11, false, "Bed", 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0 },
                     { 1, 15, true, "Bandage", 15, new DateTime(2021, 12, 14, 11, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 12, 14, 10, 0, 0, 0, DateTimeKind.Unspecified), 1 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Appointments",
-                columns: new[] { "Id", "Date", "DoctorForeignKey", "IsCancelled", "PatientForeignKey", "Time", "Type" },
+                columns: new[] { "Id", "Date", "DoctorForeignKey", "IsCancelled", "PatientForeignKey", "RoomId", "Time", "Type" },
                 values: new object[,]
                 {
-                    { 2, new DateTime(2022, 1, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 2, new TimeSpan(0, 16, 30, 0, 0), 1 },
-                    { 6, new DateTime(2022, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, false, 2, new TimeSpan(0, 17, 0, 0, 0), 1 },
-                    { 5, new DateTime(2021, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, false, 1, new TimeSpan(0, 14, 30, 0, 0), 1 },
-                    { 4, new DateTime(2022, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 13, false, 3, new TimeSpan(0, 11, 15, 0, 0), 2 },
-                    { 3, new DateTime(2022, 2, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, false, 1, new TimeSpan(0, 10, 10, 0, 0), 2 },
-                    { 1, new DateTime(2022, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 1, new TimeSpan(0, 14, 10, 0, 0), 1 }
+                    { 8, new DateTime(2022, 3, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), 6, false, 2, 6, new TimeSpan(0, 13, 0, 0, 0), 1 },
+                    { 7, new DateTime(2021, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, false, 1, 3, new TimeSpan(0, 17, 30, 0, 0), 1 },
+                    { 6, new DateTime(2022, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, false, 2, 4, new TimeSpan(0, 17, 0, 0, 0), 1 },
+                    { 5, new DateTime(2021, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, false, 1, 3, new TimeSpan(0, 14, 30, 0, 0), 1 },
+                    { 4, new DateTime(2022, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 13, false, 3, 13, new TimeSpan(0, 11, 15, 0, 0), 2 },
+                    { 3, new DateTime(2022, 2, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, false, 1, 2, new TimeSpan(0, 10, 10, 0, 0), 2 },
+                    { 2, new DateTime(2022, 1, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 2, 1, new TimeSpan(0, 16, 30, 0, 0), 1 },
+                    { 1, new DateTime(2022, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 1, 1, new TimeSpan(0, 14, 10, 0, 0), 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -521,7 +524,7 @@ namespace Hospital.Migrations
                 columns: new[] { "Id", "FirstName", "LastName", "Type" },
                 values: new object[,]
                 {
-                    { 9, "Bojan", "Kraljevic", 0 },
+                    { 11, "Momir", "Njegomir", 0 },
                     { 1, "Slavica", "Matic", 0 },
                     { 2, "Mirko", "Jankovic", 0 },
                     { 3, "Matija", "Popic", 0 },
@@ -529,16 +532,16 @@ namespace Hospital.Migrations
                     { 5, "Ignjat", "Jovic", 0 },
                     { 6, "Milos", "Matijevic", 0 },
                     { 7, "Elena", "Kis", 0 },
+                    { 12, "Ivana", "Pekic", 0 },
+                    { 9, "Bojan", "Kraljevic", 0 },
                     { 10, "Lidija", "Lakic", 0 },
                     { 19, "Vasilije", "Mit", 0 },
                     { 18, "Luka", "Lisica", 0 },
                     { 17, "Jelena", "Stupar", 0 },
                     { 16, "Savina", "Markovic", 0 },
                     { 15, "Marijana", "Pantic", 0 },
-                    { 14, "Petar", "Katic", 0 },
                     { 13, "Mileva", "Nakic", 0 },
-                    { 11, "Momir", "Njegomir", 0 },
-                    { 12, "Ivana", "Pekic", 0 },
+                    { 14, "Petar", "Katic", 0 },
                     { 8, "Iva", "Bojanic", 0 }
                 });
 
@@ -561,8 +564,8 @@ namespace Hospital.Migrations
                 columns: new[] { "id", "Height", "Width", "X", "Y" },
                 values: new object[,]
                 {
-                    { 2, 180, 520, 30, 460 },
-                    { 1, 180, 520, 30, 20 }
+                    { 1, 180, 520, 30, 20 },
+                    { 2, 180, 520, 30, 460 }
                 });
 
             migrationBuilder.InsertData(
@@ -581,8 +584,6 @@ namespace Hospital.Migrations
                 columns: new[] { "Id", "Answer", "IdSurvey", "Question", "Section" },
                 values: new object[,]
                 {
-                    { 10, 0, 1, "What is your overall satisfaction with our hospital?", 0 },
-                    { 9, 0, 1, "How satisfied are you with the services that the hospital provides you?", 0 },
                     { 8, 0, 1, "What is an opportunity to recommend us to your friends and family?", 0 },
                     { 7, 0, 1, "How easy it was to schedule an appointment?", 0 },
                     { 6, 0, 1, "How easy is to use our application?", 0 },
@@ -591,9 +592,11 @@ namespace Hospital.Migrations
                     { 3, 0, 1, "How clearly did the doctor explain you your condition?", 1 },
                     { 2, 0, 1, "How would you rate the professionalism of doctor?", 1 },
                     { 1, 0, 1, "Has doctor been polite to you?", 1 },
-                    { 13, 0, 1, "How clearly did the staff explain you some procedures of our hospital?", 2 },
-                    { 12, 0, 1, "How would you rate the professionalism of our staff?", 2 },
                     { 11, 0, 1, "How would you rate the kindness of our staff?", 2 },
+                    { 12, 0, 1, "How would you rate the professionalism of our staff?", 2 },
+                    { 13, 0, 1, "How clearly did the staff explain you some procedures of our hospital?", 2 },
+                    { 10, 0, 1, "What is your overall satisfaction with our hospital?", 0 },
+                    { 9, 0, 1, "How satisfied are you with the services that the hospital provides you?", 0 },
                     { 15, 0, 1, "What is your overall satisfaction with our staff?", 2 },
                     { 14, 0, 1, "How yould you rate to what extent staff was available to you during your visit to the hospital?", 2 }
                 });
@@ -603,9 +606,9 @@ namespace Hospital.Migrations
                 columns: new[] { "Id", "Css", "DoctorId", "DoorExist", "DoorX", "DoorY", "FloorId", "Height", "Name", "Purpose", "Vertical", "Width", "X", "Y" },
                 values: new object[,]
                 {
-                    { 21, "room", -1, true, 728, 485, 2, 60, "TOILET", "", true, 110, 730, 470 },
+                    { 23, "room", 16, true, 148, 419, 2, 190, "OPERATING ROOM 2", "", true, 150, 0, 410 },
                     { 1, "room room-cadetblue", 1, true, 148, 285, 1, 190, "OPERATING ROOM 1", "", true, 150, 0, 150 },
-                    { 3, "room room-cadetblue", 3, true, 370, 248, 1, 100, "OPERATING ROOM 3", "", false, 150, 320, 150 },
+                    { 2, "room room-cadetblue", 2, true, 220, 248, 1, 100, "OPERATING ROOM 2", "", false, 150, 160, 150 },
                     { 4, "room room-cadetblue", 4, true, 520, 248, 1, 100, "ROOM 1", "", false, 170, 480, 150 },
                     { 5, "room room-cadetblue", 5, true, 680, 248, 1, 100, "ROOM 2", "", false, 180, 660, 150 },
                     { 6, "room room-cadetblue", 6, true, 728, 290, 1, 100, "OFFICE 1", "", true, 110, 730, 260 },
@@ -614,7 +617,7 @@ namespace Hospital.Migrations
                     { 9, "room room-cadetblue", -1, true, 728, 555, 1, 60, "TOILET", "", true, 110, 730, 540 },
                     { 10, "room room-cadetblue", 7, true, 148, 419, 1, 190, "OPERATING ROOM 4", "", true, 150, 0, 410 },
                     { 11, "room room-cadetblue", 8, true, 200, 498, 1, 100, "ROOM 3", "", false, 100, 160, 500 },
-                    { 20, "staircase", -1, false, 728, 290, 2, 90, "LIFT", "", false, 150, 690, 370 },
+                    { 22, "room", -1, true, 728, 555, 2, 60, "TOILET", "", true, 110, 730, 540 },
                     { 12, "room room-cadetblue", 9, true, 315, 498, 1, 100, "ROOM 4", "", false, 150, 270, 500 },
                     { 14, "room", 11, true, 100, 248, 2, 100, "DOCTOR'S OFFICE 1", "", false, 150, 0, 150 },
                     { 15, "room", 12, true, 260, 248, 2, 100, "DOCTOR'S OFFICE 2", "", false, 150, 160, 150 },
@@ -622,19 +625,19 @@ namespace Hospital.Migrations
                     { 17, "room", 14, true, 595, 248, 2, 100, "DOCTOR'S OFFICE 4", "", false, 170, 480, 150 },
                     { 18, "room", 15, true, 680, 248, 2, 100, "ROOM 1", "", false, 180, 660, 150 },
                     { 19, "room", -1, false, 728, 290, 2, 104, "STAIRS", "", true, 70, 770, 258 },
+                    { 20, "staircase", -1, false, 728, 290, 2, 90, "LIFT", "", false, 150, 690, 370 },
+                    { 21, "room", -1, true, 728, 485, 2, 60, "TOILET", "", true, 110, 730, 470 },
                     { 26, "room", 19, true, 400, 398, 2, 100, "OPERATING ROOM 1", "", false, 580, 0, 300 },
                     { 25, "room", 18, true, 350, 498, 2, 100, "OPERATING ROOM 3", "", false, 300, 270, 500 },
                     { 24, "room", 17, true, 200, 498, 2, 100, "ROOM 2", "", false, 100, 160, 500 },
-                    { 23, "room", 16, true, 148, 419, 2, 190, "OPERATING ROOM 2", "", true, 150, 0, 410 },
-                    { 22, "room", -1, true, 728, 555, 2, 60, "TOILET", "", true, 110, 730, 540 },
                     { 13, "room room-cadetblue", 10, true, 475, 498, 1, 100, "ROOM 5", "", false, 150, 430, 500 },
-                    { 2, "room room-cadetblue", 2, true, 220, 248, 1, 100, "OPERATING ROOM 2", "", false, 150, 160, 150 }
+                    { 3, "room room-cadetblue", 3, true, 370, 248, 1, 100, "OPERATING ROOM 3", "", false, 150, 320, 150 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Surveys",
                 columns: new[] { "IdSurvey", "CreationDate", "IdAppointment" },
-                values: new object[] { 1, new DateTime(2021, 12, 13, 13, 30, 0, 587, DateTimeKind.Local).AddTicks(4336), 1 });
+                values: new object[] { 1, new DateTime(2021, 12, 13, 15, 3, 35, 578, DateTimeKind.Local).AddTicks(8222), 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Buildings_Areaid",

@@ -63,12 +63,14 @@ namespace Hospital.SharedModel
 
             modelBuilder.Entity<Appointment>().HasData(
                 // new Appointment { Id = 1, Surveys = new List<Survey>() }
-                new Appointment { Id = 1, PatientForeignKey = 1, DoctorForeignKey = 1, Type = (AppointmentType)1, Date = new DateTime(2022, 1, 13), Time = new TimeSpan(14, 10, 0), IsCancelled = false },
-                new Appointment { Id = 2, PatientForeignKey = 2, DoctorForeignKey = 1, Type = (AppointmentType)1, Date = new DateTime(2022, 1, 17), Time = new TimeSpan(16, 30, 0), IsCancelled = false },
-                new Appointment { Id = 3, PatientForeignKey = 1, DoctorForeignKey = 2, Type = (AppointmentType)2, Date = new DateTime(2022, 2, 13), Time = new TimeSpan(10, 10, 0), IsCancelled = false },
-                new Appointment { Id = 4, PatientForeignKey = 3, DoctorForeignKey = 13, Type = (AppointmentType)2, Date = new DateTime(2022, 1, 10), Time = new TimeSpan(11, 15, 0), IsCancelled = false },
-                new Appointment { Id = 5, PatientForeignKey = 1, DoctorForeignKey = 3, Type = (AppointmentType)1, Date = new DateTime(2021, 12, 30), Time = new TimeSpan(14, 30, 0), IsCancelled = false },
-                new Appointment { Id = 6, PatientForeignKey = 2, DoctorForeignKey = 4, Type = (AppointmentType)1, Date = new DateTime(2022, 1, 14), Time = new TimeSpan(17, 00, 0), IsCancelled = false }
+                new Appointment { Id = 1, PatientForeignKey = 1, DoctorForeignKey = 1, Type = (AppointmentType)1, Date = new DateTime(2022, 1, 13), Time = new TimeSpan(14, 10, 0), IsCancelled = false, RoomId = 1 },
+                new Appointment { Id = 2, PatientForeignKey = 2, DoctorForeignKey = 1, Type = (AppointmentType)1, Date = new DateTime(2022, 1, 17), Time = new TimeSpan(16, 30, 0), IsCancelled = false, RoomId = 1 },
+                new Appointment { Id = 3, PatientForeignKey = 1, DoctorForeignKey = 2, Type = (AppointmentType)2, Date = new DateTime(2022, 2, 13), Time = new TimeSpan(10, 10, 0), IsCancelled = false, RoomId = 2 },
+                new Appointment { Id = 4, PatientForeignKey = 3, DoctorForeignKey = 13, Type = (AppointmentType)2, Date = new DateTime(2022, 1, 10), Time = new TimeSpan(11, 15, 0), IsCancelled = false, RoomId = 13 },
+                new Appointment { Id = 5, PatientForeignKey = 1, DoctorForeignKey = 3, Type = (AppointmentType)1, Date = new DateTime(2021, 12, 30), Time = new TimeSpan(14, 30, 0), IsCancelled = false, RoomId = 3 },
+                new Appointment { Id = 6, PatientForeignKey = 2, DoctorForeignKey = 4, Type = (AppointmentType)1, Date = new DateTime(2022, 1, 14), Time = new TimeSpan(17, 00, 0), IsCancelled = false, RoomId = 4 },
+                new Appointment { Id = 7, PatientForeignKey = 1, DoctorForeignKey = 3, Type = (AppointmentType)1, Date = new DateTime(2021, 12, 29), Time = new TimeSpan(17, 30, 0), IsCancelled = false, RoomId = 3 },
+                new Appointment { Id = 8, PatientForeignKey = 2, DoctorForeignKey = 6, Type = (AppointmentType)1, Date = new DateTime(2022, 3, 14), Time = new TimeSpan(13, 00, 0), IsCancelled = false, RoomId = 6 }
                 );
 
             modelBuilder.Entity<Survey>().HasData(

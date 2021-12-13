@@ -15,12 +15,14 @@ namespace Hospital.Schedule.Model
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
 
+        public int RoomId { get; set; }
+
         public bool IsCancelled { get; set; }
 
         //public int IdSurvey {get; set;}
         public virtual ICollection<Survey> Surveys { get; set; }
 
-        public Appointment(int id, int patientId, int doctorId, DateTime date, bool isCanceled, bool isDone, bool isUpcoming, AppointmentType type)
+        public Appointment(int id, int patientId, int doctorId, DateTime date, bool isCanceled, bool isDone, bool isUpcoming, AppointmentType type, int roomId)
         {
             this.Id = id;
             this.PatientForeignKey = patientId;
@@ -28,7 +30,7 @@ namespace Hospital.Schedule.Model
             this.Date = date;
             this.IsCancelled = false;
             this.Type = AppointmentType.Appointment;
-
+            this.RoomId = roomId;
         }
 
         public Appointment() { }
