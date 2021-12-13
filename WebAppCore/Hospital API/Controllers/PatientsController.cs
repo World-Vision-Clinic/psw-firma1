@@ -14,6 +14,7 @@ using Hospital_API.DTO;
 using Hospital_API.Verification;
 using Hospital_API.Mapper;
 using Hospital.SharedModel;
+using Hospital.Schedule.Repository;
 
 namespace Hospital_API.Controllers
 {
@@ -32,7 +33,8 @@ namespace Hospital_API.Controllers
         {
             _context = new HospitalContext();
 
-            _patientService = new PatientService(new PatientRepository(new Hospital.SharedModel.HospitalContext()));
+            IAppointmentRepository appointmentRepository = new AppointmentRepository(_context);
+            _patientService = new PatientService(new PatientRepository(_context), appointmentRepository);
             _patientAllergenService = new PatientAllergenService(new PatientAllergenRepository(_context, new PatientRepository(_context), new AllergenRepository(_context)));
             _allergenService = new AllergenService(new AllergenRepository(_context));
             _doctorService = new DoctorService(new DoctorRepository(_context, new PatientRepository(_context)));
@@ -65,8 +67,25 @@ namespace Hospital_API.Controllers
         }
 
         // GET: api/Patients/activate?token=
+        [HttpGet("block/{id}")]
+        public IActionResult BlockPatient([FromQuery]string username)
+        {
+            var patient = _patientService.FindByUserName(username);
+
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            if (!_patientService.Block(patient))
+                return BadRequest();
+
+            return Ok();
+        }
+
+        // GET: api/Patients/activate?token=
         [HttpGet("activate")]
-        public IActionResult ActivatePatient([FromQuery]string token)
+        public IActionResult ActivatePatient([FromQuery] string token)
         {
             var patient = _patientService.FindByToken(token);
 

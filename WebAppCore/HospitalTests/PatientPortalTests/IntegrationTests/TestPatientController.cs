@@ -12,6 +12,8 @@ using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Model;
 using Hospital.MedicalRecords.Service;
 using Microsoft.AspNetCore.Mvc;
+using Hospital.Schedule.Repository;
+using Hospital.Schedule.Model;
 
 namespace HospitalTests.PatientPortalTests.IntegrationTests
 {
@@ -21,6 +23,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         public PatientAllergenRepository _patientAllergenRepository;
         public AllergenRepository _allergenRepository;
         public DoctorRepository _doctorRepository;
+        public AppointmentRepository _appointmentRepository;
 
         public PatientsController _patientsController;
 
@@ -40,9 +43,10 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             _allergenRepository = new AllergenRepository(hospitalContext);
             _patientAllergenRepository = new PatientAllergenRepository(hospitalContext, _patientRepository, _allergenRepository);
             _doctorRepository = new DoctorRepository(hospitalContext, _patientRepository);
+            _appointmentRepository = new AppointmentRepository(hospitalContext);
 
             _patientsController = new PatientsController();
-            _patientsController._patientService = new PatientService(_patientRepository);
+            _patientsController._patientService = new PatientService(_patientRepository, _appointmentRepository);
             _patientsController._allergenService = new AllergenService(_allergenRepository);
             _patientsController._patientAllergenService = new PatientAllergenService(_patientAllergenRepository);
             _patientsController._doctorService = new DoctorService(_doctorRepository);
@@ -150,6 +154,112 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             var response = _patientsController.GetPatient(4);
 
             Assert.Equal("MarkovDoktorIme MarkovDoktorPrezime", response.Value.PreferedDoctorName);
+        }
+
+        [Fact]
+        public void Test_block_patient_blockable()
+        {
+            Patient patient = new Patient()
+            {
+                Id = 100,
+                UserName = "branko1",
+                Password = "branko123",
+                EMail = "brankobrankovic@gmail.com",
+                PreferedDoctor = 0,
+                Token = "branko123",
+                Activated = true,
+                IsBlocked = false
+            };
+            _patientRepository.AddPatient(patient);
+
+            Appointment appointment1 = new Appointment()
+            {
+                Date = DateTime.Now.AddDays(-15),
+                Id = 100,
+                PatientForeignKey = 100,
+                DoctorForeignKey = 0,
+                IsCanceled = true,
+                Type = AppointmentType.Appointment
+            };
+
+            Appointment appointment2 = new Appointment()
+            {
+                Date = DateTime.Now.AddDays(-7),
+                Id = 101,
+                PatientForeignKey = 100,
+                DoctorForeignKey = 0,
+                IsCanceled = true,
+                Type = AppointmentType.Appointment
+            };
+
+            Appointment appointment3 = new Appointment()
+            {
+                Date = DateTime.Now.AddDays(-28),
+                Id = 102,
+                PatientForeignKey = 100,
+                DoctorForeignKey = 0,
+                IsCanceled = true,
+                Type = AppointmentType.Appointment
+            };
+            _appointmentRepository.AddAppointment(appointment1);
+            _appointmentRepository.AddAppointment(appointment2);
+            _appointmentRepository.AddAppointment(appointment3);
+
+            var response = (OkResult) _patientsController.BlockPatient("branko1");
+            Assert.Equal(200, response.StatusCode);
+        }
+
+        [Fact]
+        public void Test_block_patient_unblockable() //TODO: Reformat sve ovo
+        {
+            Patient patient = new Patient()
+            {
+                Id = 101,
+                UserName = "sima1",
+                Password = "sima123",
+                EMail = "simasimic@gmail.com",
+                PreferedDoctor = 0,
+                Token = "sima123",
+                Activated = true,
+                IsBlocked = false
+            };
+            _patientRepository.AddPatient(patient);
+
+            Appointment appointment1 = new Appointment()
+            {
+                Date = DateTime.Now.AddDays(-15),
+                Id = 200,
+                PatientForeignKey = 101,
+                DoctorForeignKey = 0,
+                IsCanceled = true,
+                Type = AppointmentType.Appointment
+            };
+
+            Appointment appointment2 = new Appointment()
+            {
+                Date = DateTime.Now.AddDays(-7),
+                Id = 201,
+                PatientForeignKey = 101,
+                DoctorForeignKey = 0,
+                IsCanceled = false,
+                Type = AppointmentType.Appointment
+            };
+
+            Appointment appointment3 = new Appointment()
+            {
+                Date = DateTime.Now.AddDays(-28),
+                Id = 202,
+                PatientForeignKey = 101,
+                DoctorForeignKey = 0,
+                IsCanceled = true,
+                Type = AppointmentType.Appointment
+            };
+            _appointmentRepository.AddAppointment(appointment1);
+            _appointmentRepository.AddAppointment(appointment2);
+            _appointmentRepository.AddAppointment(appointment3);
+
+            var response = (BadRequestResult)_patientsController.BlockPatient("sima1");
+            Assert.Equal(400, response.StatusCode);
         }
     }
 }
