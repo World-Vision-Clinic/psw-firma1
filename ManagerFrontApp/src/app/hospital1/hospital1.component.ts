@@ -3,6 +3,7 @@ import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppointmentForRoom } from '../data/appointmentForRoom';
 import { Building } from '../data/building';
 //import { Building } from '../data/building';
 import { Equipment } from '../data/equipment';
@@ -10,6 +11,7 @@ import { Floor } from '../data/floor';
 import { iEquipmentRoom } from '../data/iEquipmentRoom';
 //import { BUILDINGS } from '../data/mock-buildings';
 import { emptyRoom, Room } from '../data/room';
+import { emptyAppointment } from '../data/appointmentForRoom';
 import { HospitalService } from './hospital.service';
 @Component({
   selector: 'app-hospital1',
@@ -36,6 +38,9 @@ export class Hospital1Component implements OnInit {
   selectedEquipment: Equipment | null = null;
   roomsList: iEquipmentRoom[] = [];
   destinationRooms: Room[] | null = [];
+  appointmentsForSelectedRoom;
+  allAppointments: AppointmentForRoom[] | null = [];
+  appointment: AppointmentForRoom = emptyAppointment();
 
   constructor(
     private router: Router,
@@ -224,7 +229,9 @@ export class Hospital1Component implements OnInit {
   }
 
   selectRoom(room: Room) {
+    this.allAppointments = [];
     this.selectedRoom = { ...room };
+    this.loadAppointments(this.selectedRoom.id);
     this.roomIsSelected = true;
     this.formDisabled = true;
   }
@@ -235,6 +242,31 @@ export class Hospital1Component implements OnInit {
 
   schedule() {
     this.scheduleBox = true;
+    this.selectedRoom.equipments.forEach(element => {
+      if(element.inTransport){
+        
+        this.appointment.id =  element.id;
+        this.appointment.date = element.transportStart;
+        this.appointment.type = "TRANSPORT";
+      
+        this.allAppointments!.push(this.appointment);
+        this.appointment = emptyAppointment()
+      }
+    });
+
+    this.appointmentsForSelectedRoom.forEach(element => {
+        this.appointment.id =  element.id;
+        this.appointment.date = element.date;
+        this.appointment.type = "APPOINTMENT";
+      
+        this.allAppointments!.push(this.appointment);
+        this.appointment = emptyAppointment()
+    });
+    //console.log(this.allAppointments)
+  }
+
+  cancelAppointment(item){
+    console.log(item)
   }
 
   closeEquip() {
@@ -425,6 +457,15 @@ export class Hospital1Component implements OnInit {
     this.hospitalService.getEquipment(id).subscribe(
       (data) => {
         this.selectedRoom.equipments = data.equipments;
+      },
+      (error) => console.log(error)
+    );
+  }
+
+  async loadAppointments(id: number) {
+    this.hospitalService.getAppointments(id).subscribe(
+      (data) => {
+        this.appointmentsForSelectedRoom = data;
       },
       (error) => console.log(error)
     );

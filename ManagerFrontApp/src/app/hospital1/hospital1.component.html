@@ -110,14 +110,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of selectedRoom.equipments">
-          <td>{{ item.transportStart }}</td>
-          <td>{{ item.transportEnd }}</td>
+        <tr *ngFor="let item of allAppointments">
+          <td>{{ item.type }}</td>
+          <td>{{ item.date }}</td>
+          <td><button class="schedule-btn" *ngIf="!(item.type =='APPOINTMENT')" (click)="cancelAppointment(item)">Cancel</button></td>
         </tr>
       </tbody>
     </table>
     <div class="rightbtn">
-      <button class="schedule-btn">Delete</button>
       <button class="schedule-btn" (click)="closeSchedule()" *ngIf="formDisabled">Close</button>
     </div>
   </div>

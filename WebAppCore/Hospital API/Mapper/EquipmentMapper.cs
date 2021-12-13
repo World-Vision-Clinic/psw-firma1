@@ -23,6 +23,7 @@ namespace Hospital_API.Mapper
             eqRoomDto.roomFloor = floor.Level;
             eqRoomDto.startDate = eq.TransportStart.ToString();
             eqRoomDto.endDate = eq.TransportEnd.ToString();
+            eqRoomDto.inTransport = eq.InTransport;
 
             return eqRoomDto;
         }

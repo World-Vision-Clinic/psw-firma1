@@ -13,5 +13,7 @@ namespace Hospital_API.DTO
         public int roomId { get; set; }
         public string startDate { get; set; }
         public string endDate { get; set; }
+
+        public bool inTransport { get; set; }
     }
 }

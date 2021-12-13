@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Appointment } from '../data/appointment';
 import { Building } from '../data/building';
 import { Equipment } from '../data/equipment';
 import { Floor } from '../data/floor';
@@ -87,6 +88,10 @@ export class HospitalService {
 
   getEquipment(roomid: number): Observable<Room> {
     return this.http.get<Room>(`http://localhost:39901/api/Rooms/${roomid}`);
+  }
+
+  getAppointments(roomid: number): Observable<Appointment> {
+    return this.http.get<Appointment>(`http://localhost:39901/api/Appointment/room/${roomid}`);
   }
 
   mergeRooms(mergingDTO){
