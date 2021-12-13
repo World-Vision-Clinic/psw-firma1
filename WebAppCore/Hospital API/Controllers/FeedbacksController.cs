@@ -10,6 +10,8 @@ using Hspital_API.Mapper;
 using Hospital.MedicalRecords.Service;
 using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Model;
+using Hospital.SharedModel;
+using Hospital.Schedule.Repository;
 
 namespace Hospital_API
 {
@@ -23,8 +25,10 @@ namespace Hospital_API
 
         public FeedbacksController()
         {
-            _feedbackService = new FeedbackService(new FeedbackRepository(new Hospital.SharedModel.HospitalContext()));
-            _patientService = new PatientService(new PatientRepository(new Hospital.SharedModel.HospitalContext()));
+            HospitalContext context = new HospitalContext();
+            _feedbackService = new FeedbackService(new FeedbackRepository(context));
+            AppointmentRepository appointmentRepository = new AppointmentRepository(context);
+            _patientService = new PatientService(new PatientRepository(context), appointmentRepository);
         }
 
         // GET: api/Feedbacks

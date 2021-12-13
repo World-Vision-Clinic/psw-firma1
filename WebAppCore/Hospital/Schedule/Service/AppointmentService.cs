@@ -28,6 +28,7 @@ namespace Hospital.Schedule.Service
 
         public void AddAppointment(Appointment newAppointment)
         {
+            newAppointment.IsCancelled = false;
             _repo.AddAppointment(newAppointment);
         }
 
