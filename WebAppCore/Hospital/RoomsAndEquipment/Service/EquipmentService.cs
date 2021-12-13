@@ -65,5 +65,11 @@ namespace Hospital.RoomsAndEquipment.Service
         {
             return repository.GetByNameInBuilding(roomIds, equipmentName);
         }
+
+        public bool EquipmentExists(int id)
+        {
+            return repository.Exists(id);
+        }
+
     }
 }

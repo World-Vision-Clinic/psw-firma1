@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Appointment } from '../data/appointment';
+import { AppointmentForRoom } from '../data/appointmentForRoom';
 import { Building } from '../data/building';
 import { Equipment } from '../data/equipment';
 import { Floor } from '../data/floor';
@@ -92,6 +93,16 @@ export class HospitalService {
 
   getAppointments(roomid: number): Observable<Appointment> {
     return this.http.get<Appointment>(`http://localhost:39901/api/Appointment/room/${roomid}`);
+  }
+
+  cancelTransport(id: number, app: AppointmentForRoom): Observable<boolean>{
+ 
+    const headers = { 'content-type': 'application/json' };
+    return this.http.put<boolean>(
+      `http://localhost:39901/api/equipment/transport//${id}`,
+      app,
+      { headers }
+      );
   }
 
   mergeRooms(mergingDTO){

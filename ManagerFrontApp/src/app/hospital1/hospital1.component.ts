@@ -266,7 +266,17 @@ export class Hospital1Component implements OnInit {
   }
 
   cancelAppointment(item){
-    console.log(item)
+    
+    if(item.type == "TRANSPORT"){
+      this.hospitalService
+      .cancelTransport(item.id, item)
+      .subscribe(
+        (data) => {
+          alert("Uspesno otkazano!")
+        },
+        (error) => console.log(error)
+      );
+    }
   }
 
   closeEquip() {

@@ -12,6 +12,7 @@ using Hospital_API.Mapper;
 using Hspital_API.Dto;
 using Hspital_API.Mapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +57,42 @@ namespace Hospital_API.Controllers
 
 
             return equipmentList;
+        }
+
+        [HttpPut("/transport/{id}")]
+        public IActionResult cancelTransport(int id, TransportDTO dto)
+
+        {
+            Equipment eq = equipmentService.getById(dto.id);
+            eq.InTransport = false;
+
+            if (id != eq.Id)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                equipmentService.Update(eq);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EquipmentExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        private bool EquipmentExists(int id)
+        {
+            return equipmentService.EquipmentExists(id);
         }
 
 
