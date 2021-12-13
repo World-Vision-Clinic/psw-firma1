@@ -228,9 +228,11 @@ namespace PharmacyAPI.Controller
         }
         // Za testiranje dockera
         [HttpGet("test")]
-        public IActionResult Get()
+        public IActionResult Get(long id = 0)
         {
-            Medicine medicine = service.GetById(1);
+            Medicine medicine = service.GetById(id);
+            if (medicine == null)
+                return BadRequest("No medicine with that id");
             MedicineDto dto = new MedicineDto(medicine.MedicineName, medicine.Weigth, medicine.Quantity);
             return Ok(dto);
         }
