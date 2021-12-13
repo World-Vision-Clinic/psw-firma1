@@ -24,6 +24,12 @@ namespace Hospital.GraphicalEditor.Repository
             dbContext.SaveChanges();
         }
 
+        internal Renovation findRenovationForRoom(int roomId)
+        {
+            Renovation renovation = dbContext.Renovations.FirstOrDefault(renovation => renovation.Room1Id == roomId || renovation.Room2Id == roomId);
+            return renovation;
+        }
+
         public List<Renovation> GetAll()
         {
             List<Renovation> renovations = new List<Renovation>();
