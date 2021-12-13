@@ -25,7 +25,6 @@ namespace Hospital.MedicalRecords.Repository
         public DoctorRepository(HospitalContext context)
         {
             _context = context;
-            //_patientRepository = patientRepository;
         }
 
         public void AddDoctor(Doctor doctor)
@@ -76,9 +75,9 @@ namespace Hospital.MedicalRecords.Repository
             return _context.Doctors.Where(d => (int)d.Type == specialty).ToList();
         }
 
-        public List<Doctor> GetAvailableDoctors() //TODO: Refactor
+        public List<Doctor> GetAvailableDoctors()
         {
-            int maxDifference = 3;
+            int maxDifference = 2;
 
             var query = from p in _context.Patients
                         group p by p.PreferedDoctor into g
@@ -90,14 +89,17 @@ namespace Hospital.MedicalRecords.Repository
             List<Doctor> zeroDoctors = new List<Doctor>();
             foreach (Doctor d in GetAll())
             {
+                bool found = false;
                 foreach (var dq in query)
                 {
                     if (dq.preferedDoctor == d.Id)
                     {
+                        found = true;
                         break;
                     }
-                    zeroDoctors.Add(d);
                 }
+                if (!found)
+                    zeroDoctors.Add(d);
             }
             int minCount = -1;
             if (zeroDoctors.Count != 0)
