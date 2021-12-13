@@ -139,10 +139,12 @@ export class Hospital1Component implements OnInit {
     const data = {
       TargetRoomId: this.destinationRoom?.id,
       TargetEqupmentId: this.selectedEquipment?.id,
-      startDate: this.suggestion?.startDate,
-      endDate: this.suggestion?.endDate,
+      startDate: Date.parse(this.suggestion?.startDate) / 1000,
+      endDate: Date.parse(this.suggestion?.endDate) / 1000,
       Amount: this.movingAmount,
     };
+    console.log(data);
+    
     this.hospitalService.orderMoving(data).subscribe(
       (d) => {
         this.closeMovingContainer();
@@ -482,6 +484,7 @@ export class Hospital1Component implements OnInit {
       (error) => console.log(error)
     );
   }
+
 //RENOVATION OF ROOMS
   pickRenovationType(type){
     if(type==='merge'){

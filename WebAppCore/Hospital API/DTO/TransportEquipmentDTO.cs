@@ -9,8 +9,8 @@ namespace Hospital_API.DTO
     {
         public int TargetEqupmentId { get; set; }
         public int TargetRoomId { get; set; }
-        public DateTime startDate { get; set; }
-        public DateTime endDate { get; set; }
+        public long startDate { get; set; }
+        public long endDate { get; set; }
         public int Amount { get; set; }
     }
 }

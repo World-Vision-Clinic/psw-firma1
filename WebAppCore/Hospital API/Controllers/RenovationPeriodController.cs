@@ -18,9 +18,9 @@ using System.Threading.Tasks;
 
 namespace Hospital_API.Controllers
 {
-    [Route("api/transportPeriod")]
+    [Route("api/renovationPeriod")]
     [ApiController]
-    public class TransportPeriodController : ControllerBase
+    public class RenovationPeriodController : ControllerBase
     {
         private RoomService roomService = new RoomService(new RoomRepository(new Hospital.SharedModel.HospitalContext()));
         private EquipmentService equipmentService = new EquipmentService(new EquipmentRepository(new Hospital.SharedModel.HospitalContext()));
@@ -32,18 +32,18 @@ namespace Hospital_API.Controllers
        
 
         [HttpGet]
-        public ActionResult<TransportationPeriodDTO> GetTransportationSuggestion([FromQuery] int buildingId, [FromQuery] double transportDurationInHours, [FromQuery] long startDateTimeStamp, [FromQuery] long endDateTimeStamp)
+        public ActionResult<TransportationPeriodDTO> GetRenovationSuggestion([FromQuery] int buildingId, [FromQuery] double renovationDurationInHours, [FromQuery] long startDateTimeStamp, [FromQuery] long endDateTimeStamp)
         {
 
 
-            DateTime startDate = DateTimeOffset.FromUnixTimeSeconds(startDateTimeStamp/1000).LocalDateTime;
+            DateTime startDate = DateTimeOffset.FromUnixTimeSeconds(startDateTimeStamp / 1000).LocalDateTime;
             DateTime endDate = DateTimeOffset.FromUnixTimeSeconds(endDateTimeStamp / 1000).LocalDateTime;
             startDate = new DateTime(startDate.Year, startDate.Month, startDate.Day, 8, 0, 0);
             endDate = new DateTime(endDate.Year, endDate.Month, endDate.Day, 8, 0, 0);
             List<int> roomIds = roomService.getRoomIdsForBuilding(buildingId, floorService);
             TransportationPeriodDTO tpDto = new TransportationPeriodDTO();
             DateTime workingStartDate = startDate;
-            DateTime workingEndDate = workingStartDate.AddHours(transportDurationInHours);
+            DateTime workingEndDate = workingStartDate.AddHours(renovationDurationInHours);
             List<Equipment> equipmentsInTransport = equipmentService.getAllInTransport(roomIds);
             equipmentsInTransport = equipmentsInTransport.OrderBy(x => x.TransportStart).ToList<Equipment>();
             foreach (Equipment equipment in equipmentsInTransport)
@@ -51,7 +51,7 @@ namespace Hospital_API.Controllers
                 if(workingStartDate >= equipment.TransportStart && equipment.TransportEnd <= workingEndDate )
                 {
                     workingStartDate = equipment.TransportEnd.AddMinutes(5);
-                    workingEndDate = workingStartDate.AddHours(transportDurationInHours);
+                    workingEndDate = workingStartDate.AddHours(renovationDurationInHours);
                     if (workingEndDate > endDate)
                         return NotFound();
                 }
@@ -64,11 +64,10 @@ namespace Hospital_API.Controllers
 
 
         [HttpPost]
-        public IActionResult SetTransportation(TransportEquipmentDTO transportEquipmentDTO)
+        public IActionResult SetRenovation(TransportEquipmentDTO transportEquipmentDTO)
         {
             try
             {
-
 
                 Equipment targetEquipment = equipmentService.getById(transportEquipmentDTO.TargetEqupmentId);
                 targetEquipment.Amount -= transportEquipmentDTO.Amount;
