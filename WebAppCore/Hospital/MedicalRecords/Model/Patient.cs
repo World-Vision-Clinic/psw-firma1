@@ -38,6 +38,7 @@ namespace Hospital.MedicalRecords.Model
         public int Weight { get; set; }
         public int Height { get; set; }
         public BloodType BloodType { get; set; }
+        public bool IsBlocked { get; set; }
 
         public Patient() { }
 

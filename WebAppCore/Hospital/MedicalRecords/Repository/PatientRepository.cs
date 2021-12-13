@@ -49,6 +49,11 @@ namespace Hospital.MedicalRecords.Repository
             }
         }
 
+        public Patient FindByEmail(string email)
+        {
+            return _context.Patients.FirstOrDefault(p => String.Equals(p.EMail, email));
+        }
+
         public Patient FindById(int id)
         {
             return _context.Patients.FirstOrDefault(p => p.Id == id);

@@ -7,6 +7,8 @@ using System.Net;
 using System.Threading;
 using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Model;
+using Hospital.Schedule.Repository;
+using Hospital.Schedule.Model;
 
 namespace Hospital.MedicalRecords.Service
 {
@@ -14,10 +16,12 @@ namespace Hospital.MedicalRecords.Service
     {
 
         private readonly IPatientRepository _repo;
+        private readonly IAppointmentRepository _appointmentRepository;
 
-        public PatientService(IPatientRepository repo)
+        public PatientService(IPatientRepository repo, IAppointmentRepository appointmentRepository)
         {
             _repo = repo;
+            _appointmentRepository = appointmentRepository;
         }
 
 
@@ -53,6 +57,31 @@ namespace Hospital.MedicalRecords.Service
             }).Start();
         }
 
+        public bool IsBlockable(Patient patient)
+        {
+            List<Appointment> appointments = _appointmentRepository.GetByPatientId(patient.Id);
+            int range = 30;
+            int treshold = 3;
+            DateTime startDate = DateTime.Now.AddDays(-range);
+            int counter = 0;
+            foreach (Appointment a in appointments)
+            {
+                if (a.Date > startDate && a.IsCancelled)
+                    counter++;
+            }
+            return counter >= treshold;
+        }
+
+        public bool Block(Patient patient)
+        {
+            if (!IsBlockable(patient))
+                return false;
+            patient.IsBlocked = true;
+            _repo.Modify(patient);
+            SaveSync();
+            return true;
+        }
+
         public string TokenizeSHA256(string username) {  
   
             using (SHA256 sha256Hash = SHA256.Create())
@@ -81,6 +110,11 @@ namespace Hospital.MedicalRecords.Service
         public Patient FindByUserName(string username)
         {
             return _repo.FindByUserName(username);
+        }
+
+        public Patient FindByEmail(string email)
+        {
+            return _repo.FindByEmail(email);
         }
 
         public void SendEmail(Patient patient) {

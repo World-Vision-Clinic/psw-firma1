@@ -15,6 +15,8 @@ namespace Hospital.MedicalRecords.Repository
 
         public Patient FindByUserName(string username);
 
+        public Patient FindByEmail(string email);
+
         public Patient FindById(int id);
 
         public void Modify(Patient patient);
