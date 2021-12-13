@@ -85,7 +85,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             Assert.NotNull(result.Value);
             Assert.Equal(2, questions.Count);
         }
-        /*
+        
         [Fact]
         public void Test_post_correct_answers()
         {   
@@ -144,7 +144,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             var result = response.Result as BadRequestResult;
             //Assert
             Assert.Equal(400, result.StatusCode);
-        }*/
+        }
 
         [Fact]
         public void Test_check_survey_breakdown()
