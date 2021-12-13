@@ -62,7 +62,13 @@ namespace Hospital.SharedModel
             });
 
             modelBuilder.Entity<Appointment>().HasData(
-                new Appointment { Id = 1, Surveys = new List<Survey>() }
+                // new Appointment { Id = 1, Surveys = new List<Survey>() }
+                new Appointment { Id = 1, PatientForeignKey = 1, DoctorForeignKey = 1, Type = (AppointmentType)1, Date = new DateTime(2022, 1, 13), Time = new TimeSpan(14, 10, 0), IsCancelled = false },
+                new Appointment { Id = 2, PatientForeignKey = 2, DoctorForeignKey = 1, Type = (AppointmentType)1, Date = new DateTime(2022, 1, 17), Time = new TimeSpan(16, 30, 0), IsCancelled = false },
+                new Appointment { Id = 3, PatientForeignKey = 1, DoctorForeignKey = 2, Type = (AppointmentType)2, Date = new DateTime(2022, 2, 13), Time = new TimeSpan(10, 10, 0), IsCancelled = false },
+                new Appointment { Id = 4, PatientForeignKey = 3, DoctorForeignKey = 13, Type = (AppointmentType)2, Date = new DateTime(2022, 1, 10), Time = new TimeSpan(11, 15, 0), IsCancelled = false },
+                new Appointment { Id = 5, PatientForeignKey = 1, DoctorForeignKey = 3, Type = (AppointmentType)1, Date = new DateTime(2021, 12, 30), Time = new TimeSpan(14, 30, 0), IsCancelled = false },
+                new Appointment { Id = 6, PatientForeignKey = 2, DoctorForeignKey = 4, Type = (AppointmentType)1, Date = new DateTime(2022, 1, 14), Time = new TimeSpan(17, 00, 0), IsCancelled = false }
                 );
 
             modelBuilder.Entity<Survey>().HasData(
@@ -94,11 +100,49 @@ namespace Hospital.SharedModel
                );
             //modelbuilder.Entity<Area>().HasData();
             modelBuilder.Entity<Equipment>().HasData(
-                new Equipment { Id = 1, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 15, RoomId = 15 },
-                new Equipment { Id = 2, Name = "Operating table", Type = EquipmentType.STATIC, Amount = 3, RoomId = 23 },
-                new Equipment { Id = 3, Name = "Infusion", Type = EquipmentType.DYNAMIC, Amount = 11, RoomId = 1 },
-                new Equipment { Id = 4, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 17, RoomId = 2 },
-                new Equipment { Id = 5, Name = "Operating table", Type = EquipmentType.STATIC, Amount = 2, RoomId = 2 },
+                new Equipment
+                {
+                    Id = 1,
+                    Name = "Bandage",
+                    Type = EquipmentType.DYNAMIC,
+                    Amount = 15,
+                    RoomId = 15,
+                    InTransport = true,
+                    TransportStart = new DateTime(2021, 12, 14, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                    TransportEnd = new DateTime(2021, 12, 14, 11, 0, 0, 0, DateTimeKind.Unspecified)
+                },
+                new Equipment
+                {
+                    Id = 2,
+                    Name = "Operating table",
+                    Type = EquipmentType.STATIC,
+                    Amount = 3,
+                    RoomId = 23,
+                    InTransport = true,
+                    TransportStart = new DateTime(2021, 12, 15, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                    TransportEnd = new DateTime(2021, 12, 15, 12, 0, 0, 0, DateTimeKind.Unspecified)
+                },
+                new Equipment
+                {
+                    Id = 3,
+                    Name = "Infusion",
+                    Type = EquipmentType.DYNAMIC,
+                    Amount = 11,
+                    RoomId = 1,
+                    InTransport = true,
+                    TransportStart = new DateTime(2021, 12, 16, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                    TransportEnd = new DateTime(2021, 12, 16, 11, 0, 0, 0, DateTimeKind.Unspecified)
+                },
+                new Equipment { Id = 4, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 17, RoomId = 2,
+                    InTransport = true,
+                    TransportStart = new DateTime(2022, 1, 14, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                    TransportEnd = new DateTime(2022, 1, 14, 11, 0, 0, 0, DateTimeKind.Unspecified)
+                },
+                new Equipment { Id = 5, Name = "Operating table", Type = EquipmentType.STATIC, Amount = 2, RoomId = 2,
+                    InTransport = true,
+                    TransportStart = new DateTime(2022, 1, 17, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                    TransportEnd = new DateTime(2022, 1, 17, 14, 0, 0, 0, DateTimeKind.Unspecified)
+                },
                 new Equipment { Id = 6, Name = "Infusion", Type = EquipmentType.DYNAMIC, Amount = 23, RoomId = 23 },
                 new Equipment { Id = 7, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 15, RoomId = 3 },
                 new Equipment { Id = 8, Name = "Operating table", Type = EquipmentType.STATIC, Amount = 1, RoomId = 3 },

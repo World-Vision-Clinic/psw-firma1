@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Hospital.Migrations
 {
     [DbContext(typeof(HospitalContext))]
-    [Migration("20211213104744_UpdateDoctorsMigration")]
-    partial class UpdateDoctorsMigration
+    [Migration("20211213123001_InsertAppointmentsMigration")]
+    partial class InsertAppointmentsMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -761,55 +761,55 @@ namespace Hospital.Migrations
                         {
                             Id = 1,
                             Amount = 15,
-                            InTransport = false,
+                            InTransport = true,
                             Name = "Bandage",
                             RoomId = 15,
-                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportEnd = new DateTime(2021, 12, 14, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(2021, 12, 14, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
                         },
                         new
                         {
                             Id = 2,
                             Amount = 3,
-                            InTransport = false,
+                            InTransport = true,
                             Name = "Operating table",
                             RoomId = 23,
-                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportEnd = new DateTime(2021, 12, 15, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(2021, 12, 15, 11, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         },
                         new
                         {
                             Id = 3,
                             Amount = 11,
-                            InTransport = false,
+                            InTransport = true,
                             Name = "Infusion",
                             RoomId = 1,
-                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportEnd = new DateTime(2021, 12, 16, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(2021, 12, 16, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
                         },
                         new
                         {
                             Id = 4,
                             Amount = 17,
-                            InTransport = false,
+                            InTransport = true,
                             Name = "Bandage",
                             RoomId = 2,
-                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportEnd = new DateTime(2022, 1, 14, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(2022, 1, 14, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
                         },
                         new
                         {
                             Id = 5,
                             Amount = 2,
-                            InTransport = false,
+                            InTransport = true,
                             Name = "Operating table",
                             RoomId = 2,
-                            TransportEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TransportStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportEnd = new DateTime(2022, 1, 17, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransportStart = new DateTime(2022, 1, 17, 13, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         },
                         new
@@ -1468,12 +1468,62 @@ namespace Hospital.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorForeignKey = 0,
+                            Date = new DateTime(2022, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorForeignKey = 1,
                             IsCancelled = false,
-                            PatientForeignKey = 0,
-                            Time = new TimeSpan(0, 0, 0, 0, 0),
-                            Type = 0
+                            PatientForeignKey = 1,
+                            Time = new TimeSpan(0, 14, 10, 0, 0),
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Date = new DateTime(2022, 1, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorForeignKey = 1,
+                            IsCancelled = false,
+                            PatientForeignKey = 2,
+                            Time = new TimeSpan(0, 16, 30, 0, 0),
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Date = new DateTime(2022, 2, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorForeignKey = 2,
+                            IsCancelled = false,
+                            PatientForeignKey = 1,
+                            Time = new TimeSpan(0, 10, 10, 0, 0),
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Date = new DateTime(2022, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorForeignKey = 13,
+                            IsCancelled = false,
+                            PatientForeignKey = 3,
+                            Time = new TimeSpan(0, 11, 15, 0, 0),
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Date = new DateTime(2021, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorForeignKey = 3,
+                            IsCancelled = false,
+                            PatientForeignKey = 1,
+                            Time = new TimeSpan(0, 14, 30, 0, 0),
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Date = new DateTime(2022, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorForeignKey = 4,
+                            IsCancelled = false,
+                            PatientForeignKey = 2,
+                            Time = new TimeSpan(0, 17, 0, 0, 0),
+                            Type = 1
                         });
                 });
 
@@ -1500,7 +1550,7 @@ namespace Hospital.Migrations
                         new
                         {
                             IdSurvey = 1,
-                            CreationDate = new DateTime(2021, 12, 13, 11, 47, 43, 642, DateTimeKind.Local).AddTicks(3458),
+                            CreationDate = new DateTime(2021, 12, 13, 13, 30, 0, 587, DateTimeKind.Local).AddTicks(4336),
                             IdAppointment = 1
                         });
                 });
