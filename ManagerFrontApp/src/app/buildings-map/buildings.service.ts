@@ -10,6 +10,6 @@ export class BuildingsService {
   constructor(private http: HttpClient) {}
 
   getBuildings(): Observable<Building[]> {
-    return this.http.get<Building[]>('http://localhost:39901/api/Buildings');
+    return this.http.get<Building[]>('http://localhost:8080/api/Buildings');
   }
 }

@@ -92,7 +92,7 @@ namespace Hospital.MedicalRecords.Service
             };
 
             smtpClient.Send("PatientServicePSWFirma1@gmail.com", patient.EMail, "Account activation", "To activate your account please click the link below: \n\n" +
-                "http://localhost:39901/api/Patients/activate?token=" + patient.Token);
+                "http://localhost:8080/api/Patients/activate?token=" + patient.Token);
         }
 
         public void Activate(Patient patient) {

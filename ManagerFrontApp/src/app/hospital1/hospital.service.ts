@@ -15,14 +15,14 @@ export class HospitalService {
 
   getHospital(id: string): Observable<Building> {
     return this.http.get<Building>(
-      `http://localhost:39901/api/Buildings/${id}`
+      `http://localhost:8080/api/Buildings/${id}`
     );
   }
 
   updateHospital(id: string, hospital: Building): Observable<boolean> {
     const headers = { 'content-type': 'application/json' };
     return this.http.put<boolean>(
-      `http://localhost:39901/api/buildings/${id}`,
+      `http://localhost:8080/api/buildings/${id}`,
       hospital,
       { headers }
     );
@@ -36,7 +36,7 @@ export class HospitalService {
   }): Observable<any> {
     const headers = { 'content-type': 'application/json' };
     return this.http.post<any>(
-      `http://localhost:39901/api/transportPeriod`,
+      `http://localhost:8080/api/transportPeriod`,
       data,
       { headers: headers }
     );
@@ -49,7 +49,7 @@ export class HospitalService {
   ): Observable<any> {
     const headers = { 'content-type': 'application/json' };
     return this.http.get<any>(
-      `http://localhost:39901/api/transportPeriod?buildingId=${buildingId}&transportDurationInHours=${etimateTime}&startDateTimeStamp=${startDate.getTime()}&endDateTimeStamp=${endDate.getTime()}`
+      `http://localhost:8080/api/transportPeriod?buildingId=${buildingId}&transportDurationInHours=${etimateTime}&startDateTimeStamp=${startDate.getTime()}&endDateTimeStamp=${endDate.getTime()}`
     );
   }
 
@@ -58,7 +58,7 @@ export class HospitalService {
 
     const headers = { 'content-type': 'application/json' };
     return this.http.put<boolean>(
-      `http://localhost:39901/api/Rooms/${id}`,
+      `http://localhost:8080/api/Rooms/${id}`,
       room,
       { headers }
     );
@@ -66,13 +66,13 @@ export class HospitalService {
 
   getFloors(id: string): Observable<Floor[]> {
     return this.http.get<Floor[]>(
-      `http://localhost:39901/api/floors?buildingId=${id}`
+      `http://localhost:8080/api/floors?buildingId=${id}`
     );
   }
 
   getEquipments(id: string, searchText: string): Observable<Equipment[]> {
     return this.http.get<Equipment[]>(
-      `http://localhost:39901/api/equipment?buildingId=${id}&searchText=${searchText}`
+      `http://localhost:8080/api/equipment?buildingId=${id}&searchText=${searchText}`
     );
   }
 
@@ -81,11 +81,11 @@ export class HospitalService {
     equipmentName: string
   ): Observable<iEquipmentRoom[]> {
     return this.http.get<iEquipmentRoom[]>(
-      `http://localhost:39901/api/equipment/byRooms?buildingId=${id}&equipmentName=${equipmentName}`
+      `http://localhost:8080/api/equipment/byRooms?buildingId=${id}&equipmentName=${equipmentName}`
     );
   }
 
   getEquipment(roomid: number): Observable<Room> {
-    return this.http.get<Room>(`http://localhost:39901/api/Rooms/${roomid}`);
+    return this.http.get<Room>(`http://localhost:8080/api/Rooms/${roomid}`);
   }
 }

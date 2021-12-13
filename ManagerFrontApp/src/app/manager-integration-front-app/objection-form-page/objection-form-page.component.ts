@@ -32,7 +32,7 @@ export class ObjectionFormPageComponent implements OnInit {
   }
 
   getPharmacies(){
-    return this.http.get<any>("http://localhost:43818/Pharmacies").subscribe(data=>{
+    return this.http.get<any>("http://localhost:8083/Pharmacies").subscribe(data=>{
           this.PharmacyList=data;
           console.log(this.PharmacyList);
     });
@@ -47,7 +47,7 @@ export class ObjectionFormPageComponent implements OnInit {
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(val);
       //alert("Request sent... Please wait...");
-      return this.http.post('http://localhost:43818/objections', body,{'headers':headers}).subscribe(res => alert("Successfull "));
+      return this.http.post('http://localhost:8083/objections', body,{'headers':headers}).subscribe(res => alert("Successfull "));
   }
 
 }

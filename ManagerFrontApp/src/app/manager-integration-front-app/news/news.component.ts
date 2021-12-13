@@ -19,13 +19,13 @@ export class NewsComponent implements OnInit {
   }
 
   getNews(){
-    return this.http.get<any>("http://localhost:43818/News").subscribe(data=>{
+    return this.http.get<any>("http://localhost:8083/News").subscribe(data=>{
       this.NewsList=data;
 });
   }
 
   changeNewsView(i: any){
-    this.http.put<any>('http://localhost:43818/News', this.NewsList[i])
+    this.http.put<any>('http://localhost:8083/News', this.NewsList[i])
         .subscribe(data => this.NewsList[i] = data);
   }
 }

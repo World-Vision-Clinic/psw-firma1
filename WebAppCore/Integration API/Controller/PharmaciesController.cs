@@ -23,7 +23,7 @@ namespace Integration_API.Controller
 
         PharmaciesService pharmaciesService = new PharmaciesService(new PharmaciesRepository());
         public const string HOSPITAL_NAME = "World Vision Clinic";
-        public const string HOSPITAL_URL = "http://localhost:43818";
+        public const string HOSPITAL_URL = "http://localhost:8083";
         public const string HOSPITAL_PORT = "127.0.0.1:3000";
 
         [HttpPost("registerPharmacy")]

@@ -57,7 +57,7 @@ export class MedicineConsumptionComponent implements OnInit {
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(val);
       //alert("Request sent... Please wait...");
-      return this.http.post('http://localhost:43818/medicines/sendConsumptionNotification', body,{'headers':headers}).subscribe(res => alert("Successfull send notification to pharmacies."));
+      return this.http.post('http://localhost:8083/medicines/sendConsumptionNotification', body,{'headers':headers}).subscribe(res => alert("Successfull send notification to pharmacies."));
   }
 
 }

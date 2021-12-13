@@ -33,7 +33,7 @@ namespace Integration_API.gRPCServices
         public override Task<SentOrderedMedicineResponse> addOrderedMedicine(SentOrderedMedicineRequest request, ServerCallContext context)
         {
             SentOrderedMedicineResponse response = new SentOrderedMedicineResponse();
-            var client = new RestSharp.RestClient("http://localhost:39901");
+            var client = new RestSharp.RestClient("http://localhost:8080");
             var requestHttp = new RestRequest("medicines/ordered");
             List<string> replacements = new List<string>();
             foreach (String replacement in request.Replacements)

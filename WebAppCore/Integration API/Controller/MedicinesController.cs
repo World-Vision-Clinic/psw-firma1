@@ -29,7 +29,7 @@ namespace Integration_API.Controller
 
         private SftpHandler sftpHandler = new SftpHandler();
         private IPharmacyConnection pharmacyConnection;
-        public const string HOSPITAL_URL = "http://localhost:39901";
+        public const string HOSPITAL_URL = "http://localhost:8080";
 
         public MedicinesController(IPharmacyConnection connection)
         {

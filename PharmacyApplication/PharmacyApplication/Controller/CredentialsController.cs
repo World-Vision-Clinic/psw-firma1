@@ -21,7 +21,7 @@ namespace PharmacyAPI.Controller
         CredentialsService service = new CredentialsService(new CredentialsRepository());
         HospitalsService hospitalsService = new HospitalsService(new HospitalsRepository());
         public const string PHARMACY_NAME = "Jankovic";
-        public const string PHARMACY_URL = "http://localhost:34616";
+        public const string PHARMACY_URL = "http://localhost:8081";
 
 
         [HttpPost]

@@ -422,11 +422,11 @@ DELETE FROM public."Therapies";
 
 INSERT INTO public."Pharmacies"(
 	"Localhost", "Name", "Key", "Protocol", "Address", "City", "Note")
-	VALUES ('http://localhost:34616/', 'Jankovic', 'OrKFGLDOWKE/ZQMkvIU0bOzhQ30hmuIi5i7GxPrISI0=', 0, 'Svemirska', 'Novi Sad', '');
+	VALUES ('http://localhost:8081/', 'Jankovic', 'OrKFGLDOWKE/ZQMkvIU0bOzhQ30hmuIi5i7GxPrISI0=', 0, 'Svemirska', 'Novi Sad', '');
 
 INSERT INTO public."Credentials"(
 	"Id", "PharmacyName", "PharmacyLocalhost", "ApiKey")
-	VALUES (1, 'Jankovic', 'http://localhost:34616/', 'KQuO1kJn189mfY30X6M1pony4sBOLPbhs0DQLt7NMeo=');
+	VALUES (1, 'Jankovic', 'http://localhost:8081/', 'KQuO1kJn189mfY30X6M1pony4sBOLPbhs0DQLt7NMeo=');
 
 
 

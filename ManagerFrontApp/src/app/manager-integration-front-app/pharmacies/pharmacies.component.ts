@@ -42,7 +42,7 @@ export class PharmaciesComponent implements OnInit {
   searchPharmaciesForMedicals(){ 
     this.buttonClicked = true;
     this.searchPharmacies();
-    return this.http.get<any>('http://localhost:43818/medicines/check?name=' + this.medicineName
+    return this.http.get<any>('http://localhost:8083/medicines/check?name=' + this.medicineName
     + "&dosage=" + this.medicineGrams + "&quantity=" + this.numOfBoxes).subscribe(data=>{
       this.PharmaciesWithMedicalList=data;
       this.PharmaciesList = this.PharmaciesList.filter(o => data.some(({Localhost}) => o.Localhost === Localhost));
@@ -55,13 +55,13 @@ export class PharmaciesComponent implements OnInit {
   }
   searchPharmacies(){
     this.buttonClicked = false;
-    return this.http.get<any>("http://localhost:43818/Pharmacies/Filtered?searchFilter=" + this.searchFilter).subscribe(data=>{
+    return this.http.get<any>("http://localhost:8083/Pharmacies/Filtered?searchFilter=" + this.searchFilter).subscribe(data=>{
       this.PharmaciesList=data;
     });
   }
 
   getPharmacies(){
-    return this.http.get<any>("http://localhost:43818/Pharmacies").subscribe(data=>{
+    return this.http.get<any>("http://localhost:8083/Pharmacies").subscribe(data=>{
       this.PharmaciesList=data;
     });
   }
@@ -70,7 +70,7 @@ export class PharmaciesComponent implements OnInit {
   }
   orderMedicines(selectedPharmacy){
     const body = { Localhost: selectedPharmacy.Localhost, MedicineName: this.medicineName, MedicineGrams: this.medicineGrams, NumOfBoxes: this.numOfBoxes};
-    this.http.put<any>('http://localhost:43818/medicines/OrderMedicine', body)
+    this.http.put<any>('http://localhost:8083/medicines/OrderMedicine', body)
         .subscribe(res => alert("Medicine succesfully ordered"));
     this.buttonClicked = false;
   }
@@ -81,11 +81,11 @@ export class PharmaciesComponent implements OnInit {
     
     let httpHeaders = new HttpHeaders()
     .set('Accept', "image/webp,*/*");
-    this.http.get('http://localhost:43818/Photos/'+this.selectedProfile.Name+'.png', { headers: httpHeaders, responseType: 'blob' as 'json' }).pipe(
+    this.http.get('http://localhost:8083/Photos/'+this.selectedProfile.Name+'.png', { headers: httpHeaders, responseType: 'blob' as 'json' }).pipe(
       catchError(this.errorHandler)
   ).subscribe(data=>{
     this.isPictureRemoved = false;
-    this.setLinkPicture('http://localhost:43818/Photos/'+this.selectedProfile.Name+'.png');
+    this.setLinkPicture('http://localhost:8083/Photos/'+this.selectedProfile.Name+'.png');
     this.PhotoFileName = this.selectedProfile.Name+'.png';
   })   
   }
@@ -105,11 +105,11 @@ export class PharmaciesComponent implements OnInit {
 
   saveChanges(){
 
-    this.http.put<any>('http://localhost:43818/Pharmacies', this.selectedProfile)
+    this.http.put<any>('http://localhost:8083/Pharmacies', this.selectedProfile)
         .subscribe(data => {this.selectedProfile = data
 
           if((this.formData==null || this.formData.length == 0) && this.isPictureRemoved==true){
-            this.http.delete('http://localhost:43818/api/Photos/deletePhoto/'+this.selectedProfile.Name).subscribe((data:any)=>{
+            this.http.delete('http://localhost:8083/api/Photos/deletePhoto/'+this.selectedProfile.Name).subscribe((data:any)=>{
               this.isViewing = true;
               this.isEditing = false;
               this.isPictureRemoved=true;
@@ -118,9 +118,9 @@ export class PharmaciesComponent implements OnInit {
             })
          
           } else if(this.formData!=null && this.formData.length != 0){
-              this.http.post('http://localhost:43818/api/Photos/addPhoto/'+this.selectedProfile.Name, this.formData).subscribe((data:any)=>{
+              this.http.post('http://localhost:8083/api/Photos/addPhoto/'+this.selectedProfile.Name, this.formData).subscribe((data:any)=>{
                  this.PhotoFileName = data.toString();
-                 this.setLinkPicture('http://localhost:43818/Photos/'+this.PhotoFileName);
+                 this.setLinkPicture('http://localhost:8083/Photos/'+this.PhotoFileName);
                  this.isViewing = true;
                  this.isEditing = false;
                  this.isPictureRemoved = false;
@@ -139,7 +139,7 @@ export class PharmaciesComponent implements OnInit {
 
   discardChanges(){
     this.selectedProfile = JSON.parse(JSON.stringify(this.oldSelectedProfile))
-    this.setLinkPicture('http://localhost:43818/Photos/'+this.PhotoFileName);
+    this.setLinkPicture('http://localhost:8083/Photos/'+this.PhotoFileName);
     this.isViewing = true;
     this.isEditing = false;
     this.isPictureRemoved=this.isPictureRemovedCopy;

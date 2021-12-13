@@ -37,7 +37,7 @@ namespace PharmacyAPI.Controller
             new
             {
                 PharmacyName = "Jankovic",
-                PharmacyLocalhost = "http://localhost:34616",
+                PharmacyLocalhost = "http://localhost:8081",
                 ApiKey = generatedApiKey
             });
 

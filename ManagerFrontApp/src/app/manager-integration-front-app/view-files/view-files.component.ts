@@ -17,7 +17,7 @@ export class ViewFilesComponent implements OnInit {
   getAllFiles()
   {
     debugger
-    return this.http.get('http://localhost:43818/Files')
+    return this.http.get('http://localhost:8083/Files')
     .subscribe((result) => {
       this.files = result;
       console.log(result);
@@ -26,7 +26,7 @@ export class ViewFilesComponent implements OnInit {
 
   downloadFile(id: number, contentType: string)
   {
-    return this.http.get(`http://localhost:43818/Files/${id}`, {responseType: 'blob'})
+    return this.http.get(`http://localhost:8083/Files/${id}`, {responseType: 'blob'})
     .subscribe((result: Blob) => {
       const blob = new Blob([result], { type: contentType }); // you can change the type
       const url= window.URL.createObjectURL(blob);

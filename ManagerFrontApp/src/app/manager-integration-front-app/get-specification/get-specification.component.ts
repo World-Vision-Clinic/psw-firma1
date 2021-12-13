@@ -34,7 +34,7 @@ export class GetSpecificationComponent implements OnInit {
   }
 
   getPharmacies(){
-    return this.http.get<any>("http://localhost:43818/Pharmacies").subscribe(data=>{
+    return this.http.get<any>("http://localhost:8083/Pharmacies").subscribe(data=>{
           this.PharmacyList=data;
           console.log(this.PharmacyList);
     });
@@ -42,7 +42,7 @@ export class GetSpecificationComponent implements OnInit {
 
   GetSpecification()
   {
-    return this.http.get<any>('http://localhost:43818/medicines/spec?pharmacyLocalhost=' + this.SelectedPharmacy.Localhost
+    return this.http.get<any>('http://localhost:8083/medicines/spec?pharmacyLocalhost=' + this.SelectedPharmacy.Localhost
     + "&medicine=" + this.medicineName).subscribe(
       res => this.notifyService.showSuccess("Go to Downloads!", this.medicineName + " specification recieved"),
       error => this.notifyService.showError("From pharmacy \"" + this.SelectedPharmacy.Name + "\"", this.medicineName + " specification doesn't exist!")
