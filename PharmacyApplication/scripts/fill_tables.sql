@@ -172,11 +172,11 @@ DELETE FROM public."Replies";
 
 INSERT INTO public."Credentials"(
 	"Id", "HospitalName", "HospitalLocalhost", "ApiKey")
-	VALUES (1, 'World Vision Clinic', 'http://localhost:43818', 'qvHNrR8Qy8opuGnfHBPseBzCjBPdd7oZgFL3UvKKBGo=');
+	VALUES (1, 'World Vision Clinic', 'http://localhost:8083', 'qvHNrR8Qy8opuGnfHBPseBzCjBPdd7oZgFL3UvKKBGo=');
 
 INSERT INTO public."Hospitals"(
 	"Id", "Name", "Key", "Localhost")
-	VALUES (1,'World Vision Clinic','YtmmHLff/L72Db/KxqK/xJVUMzbt5xUiGn6IHgdf13Y=','http://localhost:43818');
+	VALUES (1,'World Vision Clinic','YtmmHLff/L72Db/KxqK/xJVUMzbt5xUiGn6IHgdf13Y=','http://localhost:8083');
 
 INSERT INTO public."Medicines"(
 	"MedicineId", "MedicineName", "Manufacturer", "SideEffects", "Usage", "Weigth", "MainPrecautions", "PotentialDangers", "Quantity", "Price")
@@ -189,4 +189,4 @@ INSERT INTO public."News"(
 
 INSERT INTO public."Objections"(
 	"Id", "HospitalId", "Content", "IdEncoded")
-	VALUES (1,'http://localhost:43818', 'Radnici nisu ljubazni', 'tCNbgflULFw2eCqc5zDsTTrx9YbZoYDlOZl0JAHhPEU=');
+	VALUES (1,'http://localhost:8083', 'Radnici nisu ljubazni', 'tCNbgflULFw2eCqc5zDsTTrx9YbZoYDlOZl0JAHhPEU=');
