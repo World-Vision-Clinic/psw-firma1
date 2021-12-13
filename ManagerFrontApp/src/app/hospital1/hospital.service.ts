@@ -95,15 +95,12 @@ export class HospitalService {
     return this.http.get<Appointment>(`http://localhost:39901/api/Appointment/room/${roomid}`);
   }
 
-  cancelTransport(id: number, app: AppointmentForRoom): Observable<boolean>{
+  cancelTransport(id: number){
  
-    const headers = { 'content-type': 'application/json' };
-    return this.http.put<boolean>(
-      `http://localhost:39901/api/equipment/transport//${id}`,
-      app,
-      { headers }
-      );
+    return this.http.get(
+      `http://localhost:39901/api/equipment/${id}`);
   }
+  
 
   mergeRooms(mergingDTO){
     const headers={'content-type':'application/json'};  

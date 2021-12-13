@@ -59,35 +59,26 @@ namespace Hospital_API.Controllers
             return equipmentList;
         }
 
-        [HttpPut("/transport/{id}")]
-        public IActionResult cancelTransport(int id, TransportDTO dto)
+        [HttpGet("{id}")]
+        public IActionResult cancelTransport(int id)
 
         {
-            Equipment eq = equipmentService.getById(dto.id);
-            eq.InTransport = false;
-
-            if (id != eq.Id)
+            try
+            {
+                if (equipmentService.canceledTransport(id))
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch
             {
                 return BadRequest();
             }
 
-            try
-            {
-                equipmentService.Update(eq);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EquipmentExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
         }
 
         private bool EquipmentExists(int id)

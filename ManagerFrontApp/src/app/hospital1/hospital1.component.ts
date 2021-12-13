@@ -242,6 +242,7 @@ export class Hospital1Component implements OnInit {
 
   schedule() {
     this.scheduleBox = true;
+    this.allAppointments = [];
     this.selectedRoom.equipments.forEach(element => {
       if(element.inTransport){
         
@@ -269,12 +270,13 @@ export class Hospital1Component implements OnInit {
     
     if(item.type == "TRANSPORT"){
       this.hospitalService
-      .cancelTransport(item.id, item)
+      .cancelTransport(item.id)
       .subscribe(
         (data) => {
-          alert("Uspesno otkazano!")
+          this.allAppointments = this.allAppointments?.filter(i => i.id != item.id) || null
+          alert("Transport canceled!")
         },
-        (error) => console.log(error)
+        (error) => alert("Failed to cancel appointment 24 hours before!")
       );
     }
   }

@@ -71,5 +71,22 @@ namespace Hospital.RoomsAndEquipment.Service
             return repository.Exists(id);
         }
 
+        public bool canceledTransport(int id)
+        {
+            Equipment eq = repository.GetByID(id);
+
+            DateTime now = DateTime.Now;
+            if (now < eq.TransportStart.AddHours(-24))
+            {
+                eq.InTransport = false;
+                repository.Update(eq);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+  
+        }
     }
 }
