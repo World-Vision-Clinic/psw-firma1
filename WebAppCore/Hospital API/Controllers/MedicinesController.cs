@@ -5,6 +5,7 @@ using Hospital_API.Dto;
 using Hospital_API.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +44,28 @@ namespace Hospital_API.Controllers
             medicineService.CreateConsumedMedicinesInPeriodFile(dto.Beginning, dto.End);
 
             return Ok();
+        }
+        [HttpPost("sendPrescriptionToPharmacy")]
+        public IActionResult SendPrescriptionToPharmacy(PrescriptionDto dto)
+        {
+            var client = new RestSharp.RestClient("http://localhost:43818");
+            var request = new RestRequest("prescriptions/sendPrescription");
+
+            request.AddHeader("Content-Type", "application/json");
+
+            //request.AddJsonBody(file);
+            //request.AddFile(filename,filename, filename);
+            request.AddJsonBody(dto);
+
+
+            IRestResponse response = client.Post(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return Ok("Prescription sent to pharmacy");
+            }
+
+
+            return BadRequest();
         }
     }
 }
