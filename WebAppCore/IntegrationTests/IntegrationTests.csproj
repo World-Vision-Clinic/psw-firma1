@@ -31,4 +31,10 @@
     <ProjectReference Include="..\Integration\Integration.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DeletedFiles\" />
+    <Folder Include="CompressFiles\" />
+    <Folder Include="TestHaveNoFiles\" />
+  </ItemGroup>
+
 </Project>

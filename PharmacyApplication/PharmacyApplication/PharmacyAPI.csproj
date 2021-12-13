@@ -38,4 +38,8 @@
 		<Protobuf Include="Protos\addOrderedMedicine.proto" GrpcServices="none" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Reports\" />
+	</ItemGroup>
+
 </Project>

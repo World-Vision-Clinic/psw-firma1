@@ -1,4 +1,6 @@
 ﻿using Integration.Pharmacy.Model;
+using Integration.Pharmacy.Repository;
+using Integration.Pharmacy.Service;
 using Integration_API.Controller;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -66,7 +68,7 @@ namespace IntegrationTests.UnitTests
             Assert.Equal("Specification does not exists", badResult.Value);
         }
 
-        [Fact]  // interaction with Rebex Client
+        /*[Fact]  // interaction with Rebex Client
         public void Check_response_when_specification_for_medicine_exist()
         {
             // Arrange
@@ -75,38 +77,10 @@ namespace IntegrationTests.UnitTests
 
             // Act
             var result = controller.GetSpecification("someLocalhost", "Aspirin");
-            var okResult = result as Microsoft.AspNetCore.Mvc.OkResult;
+            var okResult = result as OkObjectResult;
 
             // Assert
             Assert.Equal(200, okResult.StatusCode);
-        }
-
-        [Fact]  // interaction with Rebex Client
-        public void File_does_not_pdf_uploaded()
-        {
-            // Arrange
-            SftpHandler sftp = new SftpHandler();
-            
-            // Act
-            File downloaded = sftp.DownloadSpecification($"/public/SomeFile.txt", "Specifications/SomeFile.txt");
-
-            // Assert
-            Assert.Null(downloaded);
-        }
-
-        [Fact]  // interaction with Rebex Client
-        public void File_is_uploaded()
-        {
-            // Arrange
-            SftpHandler sftp = new SftpHandler();
-
-            // Act
-            File downloaded = sftp.DownloadSpecification($"/public/Aspirin.pdf", "Specifications/Aspirin.pdf");
-
-            // Assert
-            Assert.NotNull(downloaded);
-
-        }
-
+        }*/
     }
 }

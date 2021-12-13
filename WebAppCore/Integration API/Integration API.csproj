@@ -42,4 +42,11 @@
 		<Protobuf Include="Protos\addOrderedMedicine.proto" GrpcServices="none" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="TestHaveNoFiles\" />
+	  <Folder Include="TestHaveFiles\" />
+	  <Folder Include="Reports\" />
+	  <Folder Include="Prescriptions\" />
+	</ItemGroup>
+
 </Project>
