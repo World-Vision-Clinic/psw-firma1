@@ -15,14 +15,17 @@ using Hospital_API.Mappers;
 using Microsoft.EntityFrameworkCore;
 using Hospital.RoomsAndEquipment.Model;
 using Hospital_API.Mapper;
+using System.Net.Http;
+using System.Net;
+using Microsoft.AspNetCore.Cors;
 
 namespace Hospital_API.Controllers
 {
-    [Route("api/Rooms")]
+    [Route("api/[controller]")]
     [ApiController]
     public class RoomsController : ControllerBase
     {
-        private RoomService roomService = new RoomService(new RoomRepository(new Hospital.SharedModel.HospitalContext()));
+        private RoomService roomService = new RoomService(new RoomRepository(new Hospital.SharedModel.HospitalContext()), new EquipmentRepository(new Hospital.SharedModel.HospitalContext()));
         private EquipmentService equipmentService = new EquipmentService(new EquipmentRepository(new Hospital.SharedModel.HospitalContext()));
         private BuildingService buildingService = new BuildingService(new BuildingRepository(new Hospital.SharedModel.HospitalContext()));
         private FloorService floorService = new FloorService(new FloorRepository(new Hospital.SharedModel.HospitalContext()));
@@ -82,6 +85,36 @@ namespace Hospital_API.Controllers
                 }
             }
 
+            return NoContent();
+        }
+
+        [HttpPost("merge")]
+        public IActionResult Merge(RoomMergeDTO dto)
+        {
+            //try
+            //{
+                int a = roomService.mergeRooms(dto.room1, dto.room2, dto.name, dto.purpose);
+                return Ok();
+           /* }
+            catch
+            {
+                return BadRequest();
+            }
+            return NoContent();*/
+        }
+
+        [HttpPost("split")]
+        public IActionResult Split(RoomSplitDTO dto)
+        {
+            try
+            {
+                roomService.splitRoom(dto.room, dto.name1, dto.purpose1, dto.name2, dto.purpose2);
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
             return NoContent();
         }
 

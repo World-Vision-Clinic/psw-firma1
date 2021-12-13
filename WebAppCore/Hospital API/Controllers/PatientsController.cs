@@ -57,15 +57,15 @@ namespace Hospital_API.Controllers
                 if (allergen != null)
                     medicalRecordDTO.AllergenList.Add(allergen.Name);
             }
-            Doctor patientDoctor = _doctorService.FindById(patient.Id);
+            Doctor patientDoctor = _doctorService.FindById(patient.PreferedDoctor);
             if (patientDoctor != null)
                 medicalRecordDTO.PreferedDoctorName = (patientDoctor.FirstName + " " + patientDoctor.LastName);
 
             return medicalRecordDTO;
         }
 
-            // GET: api/Patients/activate?token=
-            [HttpGet("activate")]
+        // GET: api/Patients/activate?token=
+        [HttpGet("activate")]
         public IActionResult ActivatePatient([FromQuery]string token)
         {
             var patient = _patientService.FindByToken(token);

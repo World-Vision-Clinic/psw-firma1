@@ -35,7 +35,6 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             builder.UseInMemoryDatabase("TestDb");
             options = builder.Options;
             TestContext hospitalContext = new TestContext(options);
-            hospitalContext.Database.EnsureDeleted();
             hospitalContext.Database.EnsureCreated();
             _patientRepository = new PatientRepository(hospitalContext);
             _allergenRepository = new AllergenRepository(hospitalContext);
@@ -124,6 +123,33 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             //Assert
             Assert.Equal("perislav", response.Value.UserName);
             //Assert.Equal(404, result.StatusCode);
+        }
+
+        [Fact]
+        public void Test_preferred_doctor_found()
+        {
+            Patient patient = new Patient()
+            {
+                Id = 4,
+                UserName = "Marko",
+                Password = "markomarko",
+                EMail = "markomarko@gmail.com",
+                PreferedDoctor = 10,
+                Token = "marko123",
+                Activated = true
+            };
+            Doctor doctor = new Doctor()
+            {
+                Id = 10,
+                FirstName = "MarkovDoktorIme",
+                LastName = "MarkovDoktorPrezime"
+            };
+            _patientRepository.AddPatient(patient);
+            _doctorRepository.AddDoctor(doctor);
+
+            var response = _patientsController.GetPatient(4);
+
+            Assert.Equal("MarkovDoktorIme MarkovDoktorPrezime", response.Value.PreferedDoctorName);
         }
     }
 }

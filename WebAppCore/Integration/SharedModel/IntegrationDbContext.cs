@@ -27,8 +27,18 @@ namespace Integration.SharedModel
 
         protected override void OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=IntegrationDatabase;User Id=postgres;Password=admin");
-            //optionsBuilder.UseNpgsql("Server=integrationapi;Port=5432;Database=IntegrationDatabase;User Id=postgres;Password=admin");
+            optionsBuilder.UseNpgsql(CreateConnectionStringFromEnvironment());
+        }
+        private static string CreateConnectionStringFromEnvironment()
+        {
+            var server = Environment.GetEnvironmentVariable("DATABASE_HOST") ?? "localhost";
+            var port = Environment.GetEnvironmentVariable("DATABASE_PORT") ?? "5432";
+            var database = Environment.GetEnvironmentVariable("DATABASE_SCHEMA") ?? "IntegrationDatabase";
+            var user = Environment.GetEnvironmentVariable("DATABASE_USERNAME") ?? "postgres";
+            var password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "admin";
+
+            return
+                $"Server={server};Port={port};Database={database};User ID={user};Password={password};";
         }
     }
 }

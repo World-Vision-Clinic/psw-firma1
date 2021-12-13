@@ -183,9 +183,26 @@ namespace Hospital.SharedModel
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql("User ID = admin;Password=ftn;Server=localhost;Port=5432;Database=MyWebApi.Dev;Integrated Security=true;Pooling=true;");
-                //optionsBuilder.UseNpgsql("User ID = postgres;Password=admin;Server=localhost;Port=5432;Database=MyWebApi.Dev;Integrated Security=true;Pooling=true;");
+                //optionsBuilder.UseNpgsql("User ID =admin;Password=ftn;Server=localhost;Port=5432;Database=MyWebApi.Dev;Integrated Security=true;Pooling=true;");
+                //optionsBuilder.UseNpgsql("User ID =admin;Password=ftn;Server=database;Port=5432;Database=MyWebApi.Dev;Integrated Security=true;Pooling=true;");
+                string connectionString = CreateConnectionStringFromEnvironment();
+                optionsBuilder.UseNpgsql(connectionString);
             }
+
+        }
+
+        private static string CreateConnectionStringFromEnvironment()
+        {
+            var server = Environment.GetEnvironmentVariable("DATABASE_HOST") ?? "localhost";
+            var port = Environment.GetEnvironmentVariable("DATABASE_PORT") ?? "5432";
+            var database = Environment.GetEnvironmentVariable("DATABASE_SCHEMA") ?? "MyWebApi.Dev";
+            var user = Environment.GetEnvironmentVariable("DATABASE_USERNAME") ?? "admin";
+            var password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "ftn";
+            var integratedSecurity = Environment.GetEnvironmentVariable("DATABASE_INTEGRATED_SECURITY") ?? "true";
+            var pooling = Environment.GetEnvironmentVariable("DATABASE_POOLING") ?? "true";
+
+            //string retVal = "Server=" + server + ";Port=" + port + ";Database=" + database + ";User ID=" + user + ";Password=" + password + ";Integrated Security=" + integratedSecurity + ";Pooling=" + pooling + ";";
+            return $"Server={server};Port={port};Database={database};User ID={user};Password={password};Integrated Security={integratedSecurity};Pooling={pooling};";
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Hospital.RoomsAndEquipment.Repository
             dbContext.SaveChanges();
         }
 
-        internal List<Equipment> GetRoomEquipemnts(int roomId)
+        public List<Equipment> GetRoomEquipemnts(int roomId)
         {
             List<Equipment> allEq = new List<Equipment>();
             try

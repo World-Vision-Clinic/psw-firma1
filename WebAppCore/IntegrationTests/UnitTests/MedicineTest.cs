@@ -7,16 +7,13 @@ using Integration.Repositories.Interfaces;
 using Moq;
 using Integration;
 using Integration.Pharmacy.Repository;
-using Hospital.MedicalRecords.Services;
-using Hospital.MedicalRecords.Model;
-using Hospital.MedicalRecords.Repository;
 
 namespace IntegrationTests.UnitTests
 {
     public class MedicineTest
     {
 
-        [Fact]
+        /*[Fact]
         public void Find_cousumed_medicine()
         {
 
@@ -107,6 +104,6 @@ namespace IntegrationTests.UnitTests
             medicalRecords.Add(medicalRecord);
             stubMedicalRecordsRepository.Setup(m => m.GetAll()).Returns(medicalRecords);
             return stubMedicalRecordsRepository.Object;
-        }
+        }*/
     }
 }

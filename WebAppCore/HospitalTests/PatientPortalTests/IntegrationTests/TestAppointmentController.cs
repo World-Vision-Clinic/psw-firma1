@@ -1,12 +1,19 @@
-﻿using Hospital.Schedule.Model;
+﻿using Hospital.MedicalRecords.Model;
+using Hospital.MedicalRecords.Repository;
+using Hospital.MedicalRecords.Service;
+using Hospital.Schedule.Model;
 using Hospital.Schedule.Repository;
 using Hospital.Schedule.Service;
 using Hospital.SharedModel;
 using Hospital_API.Controllers;
+using Hospital_API.DTO;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using Xunit;
 
@@ -14,34 +21,34 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
 {
     public class TestAppointmentController
     {
-        public IAppointmentRepository inMemoryRepo;
+        public AppointmentRepository _appointmentRepository;
+        public DoctorRepository _doctorRepository;
+        public PatientRepository _patientRepository;
+        public AppointmentController _appointmentController;
 
         public TestAppointmentController()
         {
-
+            GetInMemoryPersonRepository();
         }
 
-        private IAppointmentRepository GetInMemoryPersonRepository()
+        private void GetInMemoryPersonRepository()
         {
             DbContextOptions<TestContext> options;
             var builder = new DbContextOptionsBuilder<TestContext>();
             builder.UseInMemoryDatabase("TestDb");
             options = builder.Options;
             TestContext hospitalContext = new TestContext(options);
-            hospitalContext.Database.EnsureDeleted();
             hospitalContext.Database.EnsureCreated();
-            return new AppointmentRepository(hospitalContext);
+            _appointmentRepository = new AppointmentRepository(hospitalContext);
+            _patientRepository = new PatientRepository(hospitalContext);
+            _doctorRepository = new DoctorRepository(hospitalContext, _patientRepository);
+            _appointmentController = new AppointmentController(new AppointmentService(_appointmentRepository, _doctorRepository));
         }
 
         [Fact]
         public void Test_appointment_by_patient_not_found()
         {
-
-            //Arrange
-            inMemoryRepo = GetInMemoryPersonRepository();
             var controller = new AppointmentController();
-
-            controller._appointmentService = new AppointmentService(inMemoryRepo);
             var response = controller.GetAppointmentsByPatientId(50);
 
             //Assert
@@ -50,29 +57,327 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         }
 
         [Fact]
+        public void Test_get_appointments_4step_bad()
+        {
+            Doctor doctor = new Doctor()
+            {
+                Id = 5,
+                FirstName = "TestDoktorIme",
+                LastName = "TestDoktorPrezime",
+                Type = DoctorType.Family_physician
+
+            };
+            _doctorRepository.AddDoctor(doctor);
+
+            var controller = new AppointmentController();
+            var response = controller.GetAppointments4Step(5, "2020-12-08").Result as BadRequestObjectResult;
+
+            //Assert
+            Assert.Equal(400,response.StatusCode);
+
+        }
+
+        [Fact]
+        public void Test_get_appointments_4step_good()
+        {
+            Doctor doctor = new Doctor()
+            {
+                Id = 6,
+                FirstName = "TestDoktorIme",
+                LastName = "TestDoktorPrezime",
+                Type = DoctorType.Family_physician
+
+            };
+            _doctorRepository.AddDoctor(doctor);
+            DateTime dateForTest = DateTime.Now.Date;
+            if (dateForTest.DayOfWeek == DayOfWeek.Friday || dateForTest.DayOfWeek == DayOfWeek.Saturday || dateForTest.DayOfWeek == DayOfWeek.Sunday)
+            {
+                dateForTest = dateForTest.AddDays(3);
+            }
+            else 
+            {
+                dateForTest = dateForTest.AddDays(1);
+            }
+
+            var controller = new AppointmentController();
+            var response = (OkObjectResult) controller.GetAppointments4Step(6, dateForTest.ToString()).Result;
+            var data = response.Value as List<Appointment>;
+
+            //Assert
+            Assert.Equal(200, response.StatusCode);
+            Assert.NotEmpty(data);
+        }
+
+        [Fact]
         public void Test_appointment_by_patient_found()
         {
-            //Arrange
-            inMemoryRepo = GetInMemoryPersonRepository();
             Appointment appointment = new Appointment()
             {
-                Id = 1,
+                Id = 50,
                 PatientForeignKey = 1,
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
                 Date = DateTime.Now,
                 Time = TimeSpan.Zero
             };
-            //Act
-            inMemoryRepo.AddAppointment(appointment);
+            _appointmentRepository.AddAppointment(appointment);
+            var response = _appointmentController.GetAppointmentsByPatientId(1);
 
-            var controller = new AppointmentController();
-
-            controller._appointmentService = new AppointmentService(inMemoryRepo);
-            var response = controller.GetAppointmentsByPatientId(1);
-
-            //Assert
-            Assert.Equal(1, response.Value.First().Id);
+            Assert.NotNull(response);
+            foreach (AppointmentDTO appointmentIterator in response.Value)
+            {
+                Assert.Equal(1, appointmentIterator.PatientForeignKey);
+            }
         }
+
+        [Fact]
+        public void Test_appointment_by_doctor_found()
+        {
+            var response = _appointmentController.GetAppointmentsByDoctorId(1);
+
+            Assert.NotNull(response);
+            foreach (Appointment appointmentIterator in response.Value)
+            {
+                Assert.Equal(1, appointmentIterator.DoctorForeignKey);
+            }
+        }
+
+        [Fact]
+        public void Test_add_valid_appointment()
+        {
+            Appointment appointment = new Appointment()
+            {
+                Id = 2,
+                PatientForeignKey = 1,
+                DoctorForeignKey = 1,
+                Type = AppointmentType.Appointment,
+                Date = new DateTime(2025, 6, 6, 12, 0, 0),
+                Time = new TimeSpan(0, 0, 45, 0, 0)
+            };
+
+            HttpResponseMessage response = _appointmentController.AddAppointment(appointment);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
+        public void Test_add_invalid_historical_appointment()
+        {
+            Appointment appointment = new Appointment()
+            {
+                Id = 3,
+                PatientForeignKey = 1,
+                DoctorForeignKey = 1,
+                Type = AppointmentType.Appointment,
+                Date = new DateTime(1990, 6, 6, 12, 0, 0),
+                Time = new TimeSpan(0, 0, 45, 0, 0)
+            };
+
+            HttpResponseMessage response = _appointmentController.AddAppointment(appointment);
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public void Test_add_invalid_overlapping_appointment()
+        {
+            Appointment validAppointment = new Appointment()
+            {
+                Id = 4,
+                PatientForeignKey = 1,
+                DoctorForeignKey = 1,
+                Type = AppointmentType.Appointment,
+                Date = new DateTime(2030, 6, 6, 12, 0, 0),
+                Time = new TimeSpan(0, 0, 45, 0, 0)
+            };
+
+            Appointment overlappingAppointment = new Appointment()
+            {
+                Id = 5,
+                PatientForeignKey = 1,
+                DoctorForeignKey = 1,
+                Type = AppointmentType.Appointment,
+                Date = new DateTime(2030, 6, 6, 11, 30, 0),
+                Time = new TimeSpan(0, 0, 45, 0, 0)
+            };
+
+            HttpResponseMessage response = _appointmentController.AddAppointment(validAppointment);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+            response = _appointmentController.AddAppointment(overlappingAppointment);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+            Appointment addedAppointment = _appointmentController.GetAppointment(4).Value;
+            Appointment notAddedAppointment = _appointmentController.GetAppointment(5).Value;
+
+            Assert.NotNull(addedAppointment);
+            Assert.Null(notAddedAppointment);
+        }
+
+        [Fact]
+        public void Test_get_free_doctor_appointments_in_range()
+        {
+            AppointmentRecommendationRequestDTO appointmentRecommendationRequestDTO = new AppointmentRecommendationRequestDTO();
+            appointmentRecommendationRequestDTO.LowerDateRange = new DateTime(2022, 6, 6, 0, 0, 0);
+            appointmentRecommendationRequestDTO.UpperDateRange = new DateTime(2022, 6, 7, 23, 59, 59);
+            appointmentRecommendationRequestDTO.LowerTimeRange = "12:00:00";
+            appointmentRecommendationRequestDTO.UpperTimeRange = "14:00:00";
+            appointmentRecommendationRequestDTO.DoctorId = 1;
+            appointmentRecommendationRequestDTO.PriorityType = "DOCTOR_PRIORITY";
+            List<Appointment> freeAppointmentsBeforeAddition = _appointmentController.GetRecommendedAppointments(appointmentRecommendationRequestDTO).Value.ToList();
+
+            Assert.NotNull(freeAppointmentsBeforeAddition);
+            Assert.Equal(8, freeAppointmentsBeforeAddition.Count);
+
+            Appointment appointment = new Appointment()
+            {
+                Id = 6,
+                PatientForeignKey = 1,
+                DoctorForeignKey = 1,
+                Type = AppointmentType.Appointment,
+                Date = new DateTime(2022, 6, 6, 12, 0, 0),
+                Time = new TimeSpan(0, 0, 30, 0, 0)
+            };
+            _appointmentRepository.AddAppointment(appointment);
+
+            List<Appointment> freeAppointmentsAfterAddition = _appointmentController.GetRecommendedAppointments(appointmentRecommendationRequestDTO).Value.ToList();
+
+            Assert.NotNull(freeAppointmentsAfterAddition);
+            Assert.Equal(7, freeAppointmentsAfterAddition.Count);
+        }
+
+        [Fact]
+        public void Test_get_free_doctor_appointments_in_range_with_interval_loosening()
+        {
+            AppointmentRecommendationRequestDTO appointmentRecommendationRequestDTO = new AppointmentRecommendationRequestDTO();
+            appointmentRecommendationRequestDTO.LowerDateRange = new DateTime(2022, 7, 7, 0, 0, 0);
+            appointmentRecommendationRequestDTO.UpperDateRange = new DateTime(2022, 7, 7, 23, 59, 59);
+            appointmentRecommendationRequestDTO.LowerTimeRange = "12:00:00";
+            appointmentRecommendationRequestDTO.UpperTimeRange = "13:00:00";
+            appointmentRecommendationRequestDTO.DoctorId = 1;
+            appointmentRecommendationRequestDTO.PriorityType = "DOCTOR_PRIORITY";
+
+            Appointment appointment = new Appointment()
+            {
+                Id = 7,
+                PatientForeignKey = 1,
+                DoctorForeignKey = 1,
+                Type = AppointmentType.Appointment,
+                Date = new DateTime(2022, 7, 7, 12, 0, 0),
+                Time = new TimeSpan(0, 0, 45, 0, 0)
+            };
+            _appointmentRepository.AddAppointment(appointment);
+
+            Appointment earlierAppointment = new Appointment()
+            {
+                Id = 8,
+                PatientForeignKey = 1,
+                DoctorForeignKey = 1,
+                Type = AppointmentType.Appointment,
+                Date = new DateTime(2022, 7, 6, 12, 0, 0),
+                Time = new TimeSpan(0, 0, 45, 0, 0)
+            };
+            _appointmentRepository.AddAppointment(earlierAppointment);
+
+            List<Appointment> freeAppointmentsAfterAddition = _appointmentController.GetRecommendedAppointments(appointmentRecommendationRequestDTO).Value.ToList();
+
+            Assert.NotNull(freeAppointmentsAfterAddition);
+            Assert.Equal(18, freeAppointmentsAfterAddition.Count);
+        }
+
+        [Fact]
+        public void Test_get_free_doctor_appointments_in_range_with_interval_loosening_date_priority()
+        {
+            AppointmentRecommendationRequestDTO appointmentRecommendationRequestDTO = new AppointmentRecommendationRequestDTO();
+            appointmentRecommendationRequestDTO.LowerDateRange = new DateTime(2022, 9, 9, 0, 0, 0);
+            appointmentRecommendationRequestDTO.UpperDateRange = new DateTime(2022, 9, 9, 23, 59, 59);
+            appointmentRecommendationRequestDTO.LowerTimeRange = "12:00:00";
+            appointmentRecommendationRequestDTO.UpperTimeRange = "13:00:00";
+            appointmentRecommendationRequestDTO.DoctorId = 1;
+            appointmentRecommendationRequestDTO.PriorityType = "DATE_TIME_PRIORITY";
+
+            Doctor doctorCardi1 = new Doctor()
+            {
+                Id = 11,
+                FirstName = "Sava",
+                LastName = "Savić",
+                Type = DoctorType.Cardiologist
+            };
+            _doctorRepository.AddDoctor(doctorCardi1);
+
+            Doctor doctorCardi2 = new Doctor()
+            {
+                Id = 12,
+                FirstName = "Milana",
+                LastName = "Milanović",
+                Type = DoctorType.Cardiologist
+            };
+            _doctorRepository.AddDoctor(doctorCardi2);
+
+            Doctor doctorOphta1 = new Doctor()
+            {
+                Id = 13,
+                FirstName = "Nikola",
+                LastName = "Marković",
+                Type = DoctorType.Ophthalmologist
+            };
+            _doctorRepository.AddDoctor(doctorOphta1);
+
+            Appointment appointment = new Appointment()
+            {
+                PatientForeignKey = 1,
+                DoctorForeignKey = 11,
+                Type = AppointmentType.Appointment,
+                Date = new DateTime(2022, 9, 9, 12, 0, 0),
+                Time = new TimeSpan(0, 0, 45, 0, 0)
+            };
+            _appointmentRepository.AddAppointment(appointment);
+
+            List<Appointment> freeAppointmentsAfterAddition = _appointmentController.GetRecommendedAppointments(appointmentRecommendationRequestDTO).Value.ToList();
+
+            Assert.Equal(2, freeAppointmentsAfterAddition.Count);
+        }
+
+        [Fact]
+        public void Test_valid_cancel_appointment()
+        {
+            Appointment appointment = new Appointment()
+            {
+                Id = 2,
+                PatientForeignKey = 1,
+                DoctorForeignKey = 1,
+                Type = AppointmentType.Appointment,
+                Date = new DateTime(2021, 9, 9, 0, 0, 0),
+                Time = new TimeSpan(0, 0, 45, 0, 0)
+            };
+
+            var response = _appointmentController.CancelAppointment(2).Value;
+
+            //Assert.Equal(200, response.StatusCode);
+            Assert.NotNull(response);
+
+        }
+
+        [Fact]
+        public void Test_invalid_cancel_appointment()
+        {
+            Appointment appointment = new Appointment()
+            {
+                Id = 2,
+                PatientForeignKey = 1,
+                DoctorForeignKey = 1,
+                Type = AppointmentType.Appointment,
+                Date = new DateTime(2020, 9, 9, 0, 0, 0),
+                Time = new TimeSpan(0, 0, 45, 0, 0)
+            };
+
+            var response = _appointmentController.CancelAppointment(2).Value;
+           // var result = response.Result as BadRequestResult;
+
+           // Assert.Equal(400, result.StatusCode);
+            Assert.NotNull(response);
+
+        }
+
     }
 }

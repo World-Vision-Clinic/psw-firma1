@@ -22,6 +22,11 @@ namespace Hospital.MedicalRecords.Repository
             _context = context;
             _patientRepository = patientRepository;
         }
+        public DoctorRepository(HospitalContext context)
+        {
+            _context = context;
+            //_patientRepository = patientRepository;
+        }
 
         public void AddDoctor(Doctor doctor)
         {
@@ -56,16 +61,25 @@ namespace Hospital.MedicalRecords.Repository
             return doctors;
         }
 
+        public List<Doctor> GetDoctorsByType(DoctorType type)
+        {
+            return _context.Doctors.Where(d => d.Type == type).ToList();
+        }
+
         public List<Doctor> GetAll()
         {
             return _context.Doctors.ToList();
         }
 
+        public List<Doctor> GetForSpecialty(int specialty)
+        {
+            return _context.Doctors.Where(d => (int)d.Type == specialty).ToList();
+        }
+
         public List<Doctor> GetAvailableDoctors() //TODO: Refactor
         {
             int maxDifference = 3;
-            return GetAll();
-            /*
+
             var query = from p in _context.Patients
                         group p by p.PreferedDoctor into g
                         select new
@@ -73,46 +87,47 @@ namespace Hospital.MedicalRecords.Repository
                             preferedDoctor = g.Key,
                             count = g.Count()
                         };
-            int minCount = -1;
-            foreach(var d in query)
+            List<Doctor> zeroDoctors = new List<Doctor>();
+            foreach (Doctor d in GetAll())
             {
-                if(minCount == -1 || d.count < minCount)
-                    minCount = d.count;
+                foreach (var dq in query)
+                {
+                    if (dq.preferedDoctor == d.Id)
+                    {
+                        break;
+                    }
+                    zeroDoctors.Add(d);
+                }
+            }
+            int minCount = -1;
+            if (zeroDoctors.Count != 0)
+            {
+                minCount = 0;
+            }
+            else
+            {
+                foreach (var d in query)
+                {
+                    if (minCount == -1 || d.count < minCount)
+                        minCount = d.count;
+                }
             }
             if (minCount == -1)
             {
                 return GetAll();
             }
-            else
-            {
-                foreach(Doctor d in GetAll())
-                {
-                    bool found = false;
-                    foreach(Patient p in _patientRepository.GetAll())
-                    {
-                        if (p.PreferedDoctor == d.Id)
-                        {
-                            found = true;
-                            break;
-                        }
-                        if (!found)
-                        {
-                            minCount = 0;
-                            break;
-                        }
-                    }
-                }
-            }
+
             List<int> availableDoctorIds = new List<int>();
             foreach (var d in query)
             {
-                if(d.count <= minCount + maxDifference)
+                if (d.count <= minCount + maxDifference)
                     availableDoctorIds.Add(d.preferedDoctor);
             }
-            
-
+            foreach (Doctor d in zeroDoctors)
+            {
+                availableDoctorIds.Add(d.Id);
+            }
             return GetDoctorsFromList(availableDoctorIds);
-            */
         }
     }
 }

@@ -78,7 +78,6 @@
       <br /><br /><br /><br />
       <button class="btn" (click)="close()" *ngIf="formDisabled">Close</button>
     </div>
-
     <div *ngIf="!!equipmentBox">
       <table class="equipment-table">
         <thead>
@@ -101,7 +100,6 @@
       </div>
     </div>
   </div>
-
   
   <div class="schedule-box" *ngIf="!!scheduleBox">
     <div class="title"><h3>Schedule</h3></div>
@@ -119,6 +117,97 @@
       <button class="schedule-btn">Delete</button>
       <button class="schedule-btn" (click)="closeSchedule()" *ngIf="formDisabled">Close</button>
     </div>
+  </div>
+
+  <div class="renovate-type-box" *ngIf="renovationTypeBox">
+      <button (click)="pickRenovationType('merge')">Merge rooms</button>
+      <button (click)="pickRenovationType('split')">Split room</button>
+      <hr>
+      <button (click)="renovationTypeBox = false">Close</button>
+  </div> 
+  
+  <div *ngIf="roomsMergeBox">
+    <table class="list-table">
+      <thead><tr><th>Room name:</th></tr></thead>
+      <tbody>
+        <tr *ngFor="let room of selectedFloor.rooms" class="equipment-table-row" (click)="selectForMerging(room)" [ngClass]="{'selected-for-merge': room.id===firstMergeSelected.id || room.id===secondMergeSelected.id}">
+          <td>{{room.name}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <hr/>
+    <button class="btn" (click)="restartSelection()">Restart selection</button>
+    <button class="btn" (click)="FillMergeInfo()">Merge</button>
+    <button class="btn" (click)="closeRenovationBoxes()">Close</button>
+  </div>
+
+  <div *ngIf="roomsSplitBox">
+    <table class="list-table">
+      <thead><tr><th>Room name:</th></tr></thead>
+      <tbody>
+        <tr *ngFor="let room of selectedFloor.rooms" class="equipment-table-row" (click)="selectForSplit(room)" [ngClass]="{'selected-for-merge': room.id===roomForSplit.id}">
+          <td>{{room.name}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <hr/>
+    <button class="btn" (click)="restartSelection()">Restart selection</button>
+    <button class="btn" (click)="FillSplitInfo()">Split</button>
+    <button class="btn" (click)="closeRenovationBoxes()">Close</button>
+  </div>
+
+  <div *ngIf="roomsSplitInfoBox">
+    <label for="">Name of first new room:</label>
+    <input
+        type="text"
+        class="form-field"
+        [(ngModel)]="roomSplitDto.name1"
+        name="input"
+      /><br /><br />
+    <label for="">Name of second new room:</label>
+    <input
+        type="text"
+        class="form-field"
+        [(ngModel)]="roomSplitDto.name2"
+        name="input"
+      /><br /><br />
+    <label for="">Purpose of first new room:</label>
+    <input
+        type="text"
+        class="form-field"
+        [(ngModel)]="roomSplitDto.purpose1"
+        name="input"
+      /><br /><br />
+    <label for="">Purpose of second new room:</label>
+    <input
+        type="text"
+        class="form-field"
+        [(ngModel)]="roomSplitDto.purpose2"
+        name="input"
+      /><br /><br />
+      <button class="btn" *ngIf="showBtns" (click)="Split()">Split</button>
+      <button class="btn" *ngIf="showBtns" (click)="BackSplit()">Back</button>
+      <button class="btn" *ngIf="!showBtns" (click)="FinishRenovation()">Finish renovation</button>
+  </div>
+
+  <div *ngIf="roomsMergeInfoBox">
+    <label for="">Name new room:</label>
+    <input
+        type="text"
+        class="form-field"
+        [(ngModel)]="roomMergeDto.name"
+        name="input"
+      /><br /><br />
+    <label for="">Purpose of new room:</label>
+    <input
+        type="text"
+        class="form-field"
+        [(ngModel)]="roomMergeDto.purpose"
+        name="input"
+      /><br /><br />
+      <button class="btn" *ngIf="showBtns" (click)="Merge()">Merge</button>
+      <button class="btn" *ngIf="showBtns" (click)="BackMerge()">Back</button>
+      <button class="btn" *ngIf="!showBtns" (click)="FinishRenovation()">Finish renovation</button>
   </div>
 
   <div class="move-box-equipment" *ngIf="!!listBoxEquipment">
@@ -415,7 +504,8 @@
   <div class="toolbar">
     <button (click)="buildingBox = true" class="toolbar-btn">Building info</button>
     <button (click)="moveEquipment()" class="toolbar-btn">Move equipment</button>
-    <button class="toolbar-btn">Renovate rooms</button>
+    <button class="toolbar-btn"  (click)="scheduleBox = true" >Schedule</button>
+    <button class="toolbar-btn" (click)="renovationTypeBox=true" >Renovate rooms</button>
   </div>
   
 </div>

@@ -9,5 +9,7 @@ namespace Integration.Pharmacy.Repository.RepositoryInterfaces
     public interface IFilesRepository : IGenericRepository<File>
     {
         File GetByName(string fileName);
+
+        void DeleteByPath(string path);
     }
 }

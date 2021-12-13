@@ -70,6 +70,32 @@ export class Hospital1Component implements OnInit {
   allEquipment: any[] = [];
   buildingBox : boolean = false;
   scheduleBox : boolean = false;
+  renovationTypeBox : boolean = false;
+  roomsMergeBox : boolean = false;
+  roomsSplitBox : boolean = false;
+  isFirstMergeSelected: boolean=false;
+  isSecondMergeSeleced : boolean = false;
+  firstMergeSelected: Room= emptyRoom();
+  secondMergeSelected : Room= emptyRoom();
+  roomForSplit: Room = emptyRoom();
+  isForSplitSelected:boolean=false;
+  roomsMergeInfoBox : boolean = false;
+  roomsSplitInfoBox : boolean = false;
+  roomSplitDto = {
+    room: emptyRoom(),
+    name1: '',
+    name2: '',
+    purpose1: '',
+    purpose2: ''
+  };
+  roomMergeDto = {
+    room1: emptyRoom(),
+    room2: emptyRoom(),
+    name: '',
+    purpose: ''
+  };
+  showBtns: boolean = true;
+
 
   currentState = {
     index: 0,
@@ -403,4 +429,125 @@ export class Hospital1Component implements OnInit {
       (error) => console.log(error)
     );
   }
+//RENOVATION OF ROOMS
+  pickRenovationType(type){
+    if(type==='merge'){
+      this.renovationTypeBox=false;
+      this.roomsMergeBox=true;
+    } else {
+      this.renovationTypeBox=false;
+      this.roomsSplitBox=true;
+    }
+  }
+
+  selectForMerging(room: Room){
+    if(!this.isFirstMergeSelected){
+      this.isFirstMergeSelected=true;
+      this.firstMergeSelected=room;
+      return;
+    }
+    if(this.isFirstMergeSelected && !this.isSecondMergeSeleced){
+      let positionXRight = this.firstMergeSelected.x+ this.firstMergeSelected.width;
+      let positionYDown= this.firstMergeSelected.y+this.firstMergeSelected.height;
+      let positionXLeft = this.firstMergeSelected.x;
+      let positionYUp= this.firstMergeSelected.y;
+      if(room.x>positionXRight && room.x===positionXRight+10){     
+        this.isSecondMergeSeleced=true;
+        this.secondMergeSelected=room;
+      } else
+      if(room.x<positionXLeft && room.x+room.width===positionXLeft-10){
+        this.isSecondMergeSeleced=true;
+        this.secondMergeSelected=room;
+      }else
+      if(room.y<positionYUp && room.y+room.height===positionYUp-10){
+        this.isSecondMergeSeleced=true;
+        this.secondMergeSelected=room;
+      }else
+      if(room.y>positionYDown && room.y===positionYDown+10){
+        this.isSecondMergeSeleced=true;
+        this.secondMergeSelected=room;
+      } else{
+        alert('You must select neighbouring rooms to merge.')
+      }
+    }
+  }
+
+  selectForSplit(room: Room){
+    if(!this.isForSplitSelected){
+      this.roomForSplit=room;
+    } else{
+      alert('You have already selected room. Please restart you selection if you want to pick another one.')
+    }
+    
+  }
+
+  closeRenovationBoxes(){
+    this.roomsSplitBox=false;
+    this.roomsMergeBox=false;
+    this.restartSelection();
+  }
+
+  restartSelection(){
+    this.isFirstMergeSelected=false;
+    this.isSecondMergeSeleced=false;
+    this.firstMergeSelected=emptyRoom();
+    this.secondMergeSelected=emptyRoom();
+    this.isForSplitSelected=false;
+    this.roomForSplit=emptyRoom();
+  }
+
+  FillMergeInfo(){
+    if(this.firstMergeSelected.id===-1 || this.secondMergeSelected.id===-1){
+      alert('You must select rooms first!')
+      return;
+    } 
+    this.roomsMergeBox=false;
+    this.roomsMergeInfoBox=true;
+  }
+
+  FillSplitInfo(){
+    if(this.roomForSplit.id===-1){
+      alert('You must select room first!')
+      return;
+    } 
+    this.roomsSplitBox=false;
+    this.roomsSplitInfoBox=true;
+  }
+  BackSplit(){
+    this.roomsSplitBox=true;
+    this.roomsSplitInfoBox=false;
+  }
+  BackMerge(){
+    this.roomsMergeBox=true;
+    this.roomsMergeInfoBox=false;
+  }
+  Merge(){
+    if(this.roomMergeDto.name==='' || this.roomMergeDto.purpose===''){
+      alert('You must type informations about new room.')
+      return;
+    }
+    this.roomMergeDto.room1=this.firstMergeSelected;
+    this.roomMergeDto.room2=this.secondMergeSelected;
+    this.hospitalService.mergeRooms(this.roomMergeDto);
+    this.showBtns=false;
+  }
+  
+  Split(){
+    if(this.roomSplitDto.name1==='' || this.roomSplitDto.purpose1==='' || this.roomSplitDto.name2==='' || this.roomSplitDto.purpose2===''){
+      alert('You must type informations about new rooms.')
+      return;
+    }
+    this.roomSplitDto.room=this.roomForSplit;
+    this.hospitalService.splitRoom(this.roomSplitDto);
+    this.showBtns=false;
+  }
+
+  FinishRenovation(){
+    this.roomsSplitInfoBox=false;
+    this.roomsMergeInfoBox=false;
+    this.showBtns=true;
+    this.loadHospital();
+    this.loadHospitalFloors();
+  }
+//END OF RENOVATIONS PART
 }

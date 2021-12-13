@@ -120,7 +120,7 @@ namespace PharmacyAPI.Controller
             {
                 return Ok();
             }
-        }   
+        }
 
         [HttpGet("medicineConsumation")]
         public IActionResult GetMedicineCousumation()
@@ -132,7 +132,7 @@ namespace PharmacyAPI.Controller
 
         public void LoadFile()
         {
-            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.16", "user", "password")))
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.116", "user", "password")))
             {
                 client.Connect();
                 string serverFile = @"\public\consumed-medicine.txt";
@@ -144,6 +144,7 @@ namespace PharmacyAPI.Controller
                 client.Disconnect();
             }
         }
+
         public String ReadConsumationReport()
         {
             StreamReader reader = new StreamReader("consumed-medicine.txt");
@@ -151,7 +152,7 @@ namespace PharmacyAPI.Controller
             reader.Close();
             return consumationReport;
         }
-        
+
         [HttpGet("spec")]
         public IActionResult GetMedicineSpecification(string name = "")
         {
@@ -183,7 +184,7 @@ namespace PharmacyAPI.Controller
                 createPDFFile(service.GetSpecification(medicine), medicine.MedicineName);
                 break;
             }
-            
+
             uploadSpecification(name + ".pdf");
 
             return Ok();
@@ -211,7 +212,7 @@ namespace PharmacyAPI.Controller
 
         private void uploadSpecification(string filePath)
         {
-            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.16", "user", "password")))
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.116", "user", "password")))
             {
                 client.Connect();
 
@@ -224,6 +225,16 @@ namespace PharmacyAPI.Controller
                 client.Disconnect();
             }
 
+        }
+        // Za testiranje dockera
+        [HttpGet("test")]
+        public IActionResult Get(long id = 0)
+        {
+            Medicine medicine = service.GetById(id);
+            if (medicine == null)
+                return BadRequest("No medicine with that id");
+            MedicineDto dto = new MedicineDto(medicine.MedicineName, medicine.Weigth, medicine.Quantity);
+            return Ok(dto);
         }
     }
 }

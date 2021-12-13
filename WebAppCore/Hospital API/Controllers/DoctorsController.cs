@@ -3,6 +3,7 @@ using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Service;
 using Hospital.SharedModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,11 +20,18 @@ namespace Hospital_API.Controllers
         private readonly HospitalContext _context;
         private readonly DoctorService _doctorService;
 
+        [ActivatorUtilitiesConstructor]
         public DoctorsController()
         {
             _context = new HospitalContext();
             PatientRepository _patientRepository = new PatientRepository(_context);
             _doctorService = new DoctorService(new DoctorRepository(_context, _patientRepository));
+        }
+
+        public DoctorsController(HospitalContext _context, DoctorService _doctorService)
+        {
+            this._context = _context;
+            this._doctorService = _doctorService;
         }
 
         // GET: api/Doctors
@@ -53,11 +61,25 @@ namespace Hospital_API.Controllers
 
             return doctor;
         }
+        [HttpGet("get_by_specialty/{type}")]
+        public ActionResult<IEnumerable<Doctor>> GetDoctorForSpecialty(int type)
+        {
+            List<Doctor> doctors = _doctorService.GetDoctorsByType((DoctorType)type);
+
+            if (doctors.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(doctors);
+        }
 
         [HttpOptions]
         public HttpResponseMessage Options()
         {
             return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }
+
+
     }
 }
