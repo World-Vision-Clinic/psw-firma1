@@ -41,7 +41,7 @@ namespace Hospital_API.Controllers
             _verification = new PatientVerification(_patientService, _doctorService, _allergenService);
         }
 
-        // GET: api/Feedbacks/5
+        // GET: api/Patients/5
         [HttpGet("{id}")]
         public ActionResult<MedicalRecordDTO> GetPatient(int id)
         {
@@ -66,9 +66,9 @@ namespace Hospital_API.Controllers
             return medicalRecordDTO;
         }
 
-        // GET: api/Patients/activate?token=
-        [HttpGet("block/{id}")]
-        public IActionResult BlockPatient([FromQuery]string username)
+        // GET: api/Patients/block/5
+        [HttpGet("block/{username}")]
+        public IActionResult BlockPatient(string username)
         {
             var patient = _patientService.FindByUserName(username);
 
@@ -97,6 +97,12 @@ namespace Hospital_API.Controllers
             _patientService.Activate(patient);
 
             return Redirect("http://localhost:4200/login");
+        }
+
+        [HttpGet("malicious")]
+        public ActionResult<IEnumerable<Patient>> GetMaliciousPatients()
+        {
+            return _patientService.GetMaliciousPatients();
         }
 
         // POST: api/Patients/register

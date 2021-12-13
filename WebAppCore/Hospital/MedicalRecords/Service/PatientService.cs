@@ -72,6 +72,18 @@ namespace Hospital.MedicalRecords.Service
             return counter >= treshold;
         }
 
+        public List<Patient> GetMaliciousPatients()
+        {
+            List<Patient> malicious = new List<Patient>();
+            List<Patient> patients = _repo.GetAll();
+            foreach (Patient p in patients)
+            {
+                if (IsBlockable(p))
+                    malicious.Add(p);
+            }
+            return malicious;
+        }
+
         public bool Block(Patient patient)
         {
             if (!IsBlockable(patient))
