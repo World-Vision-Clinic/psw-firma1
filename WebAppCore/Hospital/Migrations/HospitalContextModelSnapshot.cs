@@ -3,17 +3,15 @@ using System;
 using Hospital.SharedModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Hospital.Migrations
 {
     [DbContext(typeof(HospitalContext))]
-    [Migration("20211208134135_Update")]
-    partial class Update
+    partial class HospitalContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -314,6 +312,180 @@ namespace Hospital.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Doctors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FirstName = "Slavica",
+                            LastName = "Matic",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FirstName = "Mirko",
+                            LastName = "Jankovic",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            FirstName = "Matija",
+                            LastName = "Popic",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            FirstName = "Sara",
+                            LastName = "Tot",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 5,
+                            FirstName = "Ignjat",
+                            LastName = "Jovic",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 6,
+                            FirstName = "Milos",
+                            LastName = "Matijevic",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 7,
+                            FirstName = "Elena",
+                            LastName = "Kis",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 8,
+                            FirstName = "Iva",
+                            LastName = "Bojanic",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 9,
+                            FirstName = "Bojan",
+                            LastName = "Kraljevic",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 10,
+                            FirstName = "Lidija",
+                            LastName = "Lakic",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 11,
+                            FirstName = "Momir",
+                            LastName = "Njegomir",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 12,
+                            FirstName = "Ivana",
+                            LastName = "Pekic",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 13,
+                            FirstName = "Mileva",
+                            LastName = "Nakic",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 14,
+                            FirstName = "Petar",
+                            LastName = "Katic",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 15,
+                            FirstName = "Marijana",
+                            LastName = "Pantic",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 16,
+                            FirstName = "Savina",
+                            LastName = "Markovic",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 17,
+                            FirstName = "Jelena",
+                            LastName = "Stupar",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 18,
+                            FirstName = "Luka",
+                            LastName = "Lisica",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 19,
+                            FirstName = "Vasilije",
+                            LastName = "Mit",
+                            Type = 0
+                        });
+                });
+
+            modelBuilder.Entity("Hospital.MedicalRecords.Model.Examination", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Diagnosis")
+                        .HasColumnType("text");
+
+                    b.Property<string>("MedicalRecordId")
+                        .HasColumnType("text");
+
+                    b.Property<int>("TherapyId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("anamnesis")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("appointmentId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("dateOfExamination")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("patientVisible")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicalRecordId");
+
+                    b.HasIndex("TherapyId");
+
+                    b.HasIndex("appointmentId");
+
+                    b.ToTable("Examinations");
                 });
 
             modelBuilder.Entity("Hospital.MedicalRecords.Model.Feedback", b =>
@@ -344,6 +516,111 @@ namespace Hospital.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Feedbacks");
+                });
+
+            modelBuilder.Entity("Hospital.MedicalRecords.Model.Ingredient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("MedicineID")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicineID");
+
+                    b.ToTable("Ingredient");
+                });
+
+            modelBuilder.Entity("Hospital.MedicalRecords.Model.MedicalRecord", b =>
+                {
+                    b.Property<string>("MedicalRecordID")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("AllergenId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("HealthCardNumber")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsInsured")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ParentName")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("PatientId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("MedicalRecordID");
+
+                    b.HasIndex("AllergenId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("MedicalRecords");
+                });
+
+            modelBuilder.Entity("Hospital.MedicalRecords.Model.Medicine", b =>
+                {
+                    b.Property<string>("ID")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<double>("DosageInMg")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Medicines");
+                });
+
+            modelBuilder.Entity("Hospital.MedicalRecords.Model.MedicineTherapy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<int>("DurationInDays")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("MedicineID")
+                        .HasColumnType("text");
+
+                    b.Property<int>("TherapyId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TimesPerDay")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicineID");
+
+                    b.HasIndex("TherapyId");
+
+                    b.ToTable("MedicineTherapy");
                 });
 
             modelBuilder.Entity("Hospital.MedicalRecords.Model.Patient", b =>
@@ -428,6 +705,21 @@ namespace Hospital.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PatientAllergens");
+                });
+
+            modelBuilder.Entity("Hospital.MedicalRecords.Model.Therapy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("MedicineId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Therapies");
                 });
 
             modelBuilder.Entity("Hospital.RoomsAndEquipment.Model.Equipment", b =>
@@ -674,7 +966,7 @@ namespace Hospital.Migrations
                         {
                             Id = 1,
                             Css = "room room-cadetblue",
-                            DoctorId = -1,
+                            DoctorId = 1,
                             DoorExist = true,
                             DoorX = 148,
                             DoorY = 285,
@@ -691,7 +983,7 @@ namespace Hospital.Migrations
                         {
                             Id = 2,
                             Css = "room room-cadetblue",
-                            DoctorId = -1,
+                            DoctorId = 2,
                             DoorExist = true,
                             DoorX = 220,
                             DoorY = 248,
@@ -708,7 +1000,7 @@ namespace Hospital.Migrations
                         {
                             Id = 3,
                             Css = "room room-cadetblue",
-                            DoctorId = -1,
+                            DoctorId = 3,
                             DoorExist = true,
                             DoorX = 370,
                             DoorY = 248,
@@ -725,7 +1017,7 @@ namespace Hospital.Migrations
                         {
                             Id = 4,
                             Css = "room room-cadetblue",
-                            DoctorId = -1,
+                            DoctorId = 4,
                             DoorExist = true,
                             DoorX = 520,
                             DoorY = 248,
@@ -742,7 +1034,7 @@ namespace Hospital.Migrations
                         {
                             Id = 5,
                             Css = "room room-cadetblue",
-                            DoctorId = -1,
+                            DoctorId = 5,
                             DoorExist = true,
                             DoorX = 680,
                             DoorY = 248,
@@ -759,7 +1051,7 @@ namespace Hospital.Migrations
                         {
                             Id = 6,
                             Css = "room room-cadetblue",
-                            DoctorId = -1,
+                            DoctorId = 6,
                             DoorExist = true,
                             DoorX = 728,
                             DoorY = 290,
@@ -827,7 +1119,7 @@ namespace Hospital.Migrations
                         {
                             Id = 10,
                             Css = "room room-cadetblue",
-                            DoctorId = -1,
+                            DoctorId = 7,
                             DoorExist = true,
                             DoorX = 148,
                             DoorY = 419,
@@ -844,7 +1136,7 @@ namespace Hospital.Migrations
                         {
                             Id = 11,
                             Css = "room room-cadetblue",
-                            DoctorId = -1,
+                            DoctorId = 8,
                             DoorExist = true,
                             DoorX = 200,
                             DoorY = 498,
@@ -861,7 +1153,7 @@ namespace Hospital.Migrations
                         {
                             Id = 12,
                             Css = "room room-cadetblue",
-                            DoctorId = -1,
+                            DoctorId = 9,
                             DoorExist = true,
                             DoorX = 315,
                             DoorY = 498,
@@ -878,7 +1170,7 @@ namespace Hospital.Migrations
                         {
                             Id = 13,
                             Css = "room room-cadetblue",
-                            DoctorId = -1,
+                            DoctorId = 10,
                             DoorExist = true,
                             DoorX = 475,
                             DoorY = 498,
@@ -895,7 +1187,7 @@ namespace Hospital.Migrations
                         {
                             Id = 14,
                             Css = "room",
-                            DoctorId = -1,
+                            DoctorId = 11,
                             DoorExist = true,
                             DoorX = 100,
                             DoorY = 248,
@@ -912,7 +1204,7 @@ namespace Hospital.Migrations
                         {
                             Id = 15,
                             Css = "room",
-                            DoctorId = -1,
+                            DoctorId = 12,
                             DoorExist = true,
                             DoorX = 260,
                             DoorY = 248,
@@ -929,7 +1221,7 @@ namespace Hospital.Migrations
                         {
                             Id = 16,
                             Css = "room",
-                            DoctorId = -1,
+                            DoctorId = 13,
                             DoorExist = true,
                             DoorX = 420,
                             DoorY = 248,
@@ -946,7 +1238,7 @@ namespace Hospital.Migrations
                         {
                             Id = 17,
                             Css = "room",
-                            DoctorId = -1,
+                            DoctorId = 14,
                             DoorExist = true,
                             DoorX = 595,
                             DoorY = 248,
@@ -963,7 +1255,7 @@ namespace Hospital.Migrations
                         {
                             Id = 18,
                             Css = "room",
-                            DoctorId = -1,
+                            DoctorId = 15,
                             DoorExist = true,
                             DoorX = 680,
                             DoorY = 248,
@@ -1048,7 +1340,7 @@ namespace Hospital.Migrations
                         {
                             Id = 23,
                             Css = "room",
-                            DoctorId = -1,
+                            DoctorId = 16,
                             DoorExist = true,
                             DoorX = 148,
                             DoorY = 419,
@@ -1065,7 +1357,7 @@ namespace Hospital.Migrations
                         {
                             Id = 24,
                             Css = "room",
-                            DoctorId = -1,
+                            DoctorId = 17,
                             DoorExist = true,
                             DoorX = 200,
                             DoorY = 498,
@@ -1082,7 +1374,7 @@ namespace Hospital.Migrations
                         {
                             Id = 25,
                             Css = "room",
-                            DoctorId = -1,
+                            DoctorId = 18,
                             DoorExist = true,
                             DoorX = 350,
                             DoorY = 498,
@@ -1099,7 +1391,7 @@ namespace Hospital.Migrations
                         {
                             Id = 26,
                             Css = "room",
-                            DoctorId = -1,
+                            DoctorId = 19,
                             DoorExist = true,
                             DoorX = 400,
                             DoorY = 398,
@@ -1154,13 +1446,7 @@ namespace Hospital.Migrations
                     b.Property<int>("DoctorForeignKey")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("IsCanceled")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsFinished")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsUpcoming")
+                    b.Property<bool>("IsCancelled")
                         .HasColumnType("boolean");
 
                     b.Property<int>("PatientForeignKey")
@@ -1180,38 +1466,12 @@ namespace Hospital.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 12, 8, 0, 0, 0, 0, DateTimeKind.Local),
-                            DoctorForeignKey = 2,
-                            IsCanceled = false,
-                            IsFinished = false,
-                            IsUpcoming = true,
-                            PatientForeignKey = 1,
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorForeignKey = 0,
+                            IsCancelled = false,
+                            PatientForeignKey = 0,
                             Time = new TimeSpan(0, 0, 0, 0, 0),
                             Type = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Date = new DateTime(2021, 12, 8, 0, 0, 0, 0, DateTimeKind.Local),
-                            DoctorForeignKey = 2,
-                            IsCanceled = true,
-                            IsFinished = false,
-                            IsUpcoming = false,
-                            PatientForeignKey = 1,
-                            Time = new TimeSpan(0, 0, 0, 0, 0),
-                            Type = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Date = new DateTime(2021, 12, 8, 0, 0, 0, 0, DateTimeKind.Local),
-                            DoctorForeignKey = 2,
-                            IsCanceled = false,
-                            IsFinished = true,
-                            IsUpcoming = false,
-                            PatientForeignKey = 1,
-                            Time = new TimeSpan(0, 0, 0, 0, 0),
-                            Type = 1
                         });
                 });
 
@@ -1238,7 +1498,7 @@ namespace Hospital.Migrations
                         new
                         {
                             IdSurvey = 1,
-                            CreationDate = new DateTime(2021, 12, 8, 14, 41, 34, 261, DateTimeKind.Local).AddTicks(1044),
+                            CreationDate = new DateTime(2021, 12, 13, 11, 47, 43, 642, DateTimeKind.Local).AddTicks(3458),
                             IdAppointment = 1
                         });
                 });
@@ -1398,6 +1658,64 @@ namespace Hospital.Migrations
                     b.Navigation("Area");
                 });
 
+            modelBuilder.Entity("Hospital.MedicalRecords.Model.Examination", b =>
+                {
+                    b.HasOne("Hospital.MedicalRecords.Model.MedicalRecord", null)
+                        .WithMany("Examination")
+                        .HasForeignKey("MedicalRecordId");
+
+                    b.HasOne("Hospital.MedicalRecords.Model.Therapy", "therapy")
+                        .WithMany()
+                        .HasForeignKey("TherapyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hospital.Schedule.Model.Appointment", "appointment")
+                        .WithMany()
+                        .HasForeignKey("appointmentId");
+
+                    b.Navigation("appointment");
+
+                    b.Navigation("therapy");
+                });
+
+            modelBuilder.Entity("Hospital.MedicalRecords.Model.Ingredient", b =>
+                {
+                    b.HasOne("Hospital.MedicalRecords.Model.Medicine", null)
+                        .WithMany("Ingredient")
+                        .HasForeignKey("MedicineID");
+                });
+
+            modelBuilder.Entity("Hospital.MedicalRecords.Model.MedicalRecord", b =>
+                {
+                    b.HasOne("Hospital.MedicalRecords.Model.Allergen", "Allergen")
+                        .WithMany()
+                        .HasForeignKey("AllergenId");
+
+                    b.HasOne("Hospital.MedicalRecords.Model.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId");
+
+                    b.Navigation("Allergen");
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("Hospital.MedicalRecords.Model.MedicineTherapy", b =>
+                {
+                    b.HasOne("Hospital.MedicalRecords.Model.Medicine", "Medicine")
+                        .WithMany()
+                        .HasForeignKey("MedicineID");
+
+                    b.HasOne("Hospital.MedicalRecords.Model.Therapy", null)
+                        .WithMany("Medicine")
+                        .HasForeignKey("TherapyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Medicine");
+                });
+
             modelBuilder.Entity("Hospital.Schedule.Model.Survey", b =>
                 {
                     b.HasOne("Hospital.Schedule.Model.Appointment", "Appointment")
@@ -1407,6 +1725,21 @@ namespace Hospital.Migrations
                         .IsRequired();
 
                     b.Navigation("Appointment");
+                });
+
+            modelBuilder.Entity("Hospital.MedicalRecords.Model.MedicalRecord", b =>
+                {
+                    b.Navigation("Examination");
+                });
+
+            modelBuilder.Entity("Hospital.MedicalRecords.Model.Medicine", b =>
+                {
+                    b.Navigation("Ingredient");
+                });
+
+            modelBuilder.Entity("Hospital.MedicalRecords.Model.Therapy", b =>
+                {
+                    b.Navigation("Medicine");
                 });
 
             modelBuilder.Entity("Hospital.Schedule.Model.Appointment", b =>

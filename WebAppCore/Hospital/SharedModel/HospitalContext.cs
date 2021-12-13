@@ -156,25 +156,25 @@ namespace Hospital.SharedModel
                 new Building { id = 2, Name = "Hospital II", Area = null, Info = "", MapPositionId = 2 });
 
             modelBuilder.Entity<Doctor>().HasData(
-               new Doctor { Id = 1, FirstName = "Slavica", LastName = "Matic" },
-               new Doctor { Id = 2, FirstName = "Mirko", LastName = "Jankovic" },
-               new Doctor { Id = 3, FirstName = "Matija", LastName = "Popic" },
-               new Doctor { Id = 4, FirstName = "Sara", LastName = "Tot" },
-               new Doctor { Id = 5, FirstName = "Ignjat", LastName = "Jovic" },
-               new Doctor { Id = 6, FirstName = "Milos", LastName = "Matijevic" },
-               new Doctor { Id = 7, FirstName = "Elena", LastName = "Kis" },
-               new Doctor { Id = 8, FirstName = "Iva", LastName = "Bojanic" },
-               new Doctor { Id = 9, FirstName = "Bojan", LastName = "Kraljevic" },
-               new Doctor { Id = 10, FirstName = "Lidija", LastName = "Lakic" },
-               new Doctor { Id = 11, FirstName = "Momir", LastName = "Njegomir" },
-               new Doctor { Id = 12, FirstName = "Ivana", LastName = "Pekic" },
-               new Doctor { Id = 13, FirstName = "Mileva", LastName = "Nakic" },
-               new Doctor { Id = 14, FirstName = "Petar", LastName = "Katic" },
-               new Doctor { Id = 15, FirstName = "Marijana", LastName = "Pantic" },
-               new Doctor { Id = 16, FirstName = "Savina", LastName = "Markovic" },
-               new Doctor { Id = 17, FirstName = "Jelena", LastName = "Stupar" },
-               new Doctor { Id = 18, FirstName = "Luka", LastName = "Lisica" },
-               new Doctor { Id = 19, FirstName = "Vasilije", LastName = "Mit" }
+               new Doctor { Id = 1, FirstName = "Slavica", LastName = "Matic", Type = 0 },
+               new Doctor { Id = 2, FirstName = "Mirko", LastName = "Jankovic", Type = 0 },
+               new Doctor { Id = 3, FirstName = "Matija", LastName = "Popic", Type = 0 },
+               new Doctor { Id = 4, FirstName = "Sara", LastName = "Tot", Type = 0 },
+               new Doctor { Id = 5, FirstName = "Ignjat", LastName = "Jovic", Type = 0 },
+               new Doctor { Id = 6, FirstName = "Milos", LastName = "Matijevic", Type = 0 },
+               new Doctor { Id = 7, FirstName = "Elena", LastName = "Kis", Type = 0 },
+               new Doctor { Id = 8, FirstName = "Iva", LastName = "Bojanic", Type = 0 },
+               new Doctor { Id = 9, FirstName = "Bojan", LastName = "Kraljevic", Type = 0 },
+               new Doctor { Id = 10, FirstName = "Lidija", LastName = "Lakic", Type = 0 },
+               new Doctor { Id = 11, FirstName = "Momir", LastName = "Njegomir", Type = 0 },
+               new Doctor { Id = 12, FirstName = "Ivana", LastName = "Pekic", Type = 0 },
+               new Doctor { Id = 13, FirstName = "Mileva", LastName = "Nakic", Type = 0 },
+               new Doctor { Id = 14, FirstName = "Petar", LastName = "Katic", Type = 0 },
+               new Doctor { Id = 15, FirstName = "Marijana", LastName = "Pantic", Type = 0 },
+               new Doctor { Id = 16, FirstName = "Savina", LastName = "Markovic", Type = 0 },
+               new Doctor { Id = 17, FirstName = "Jelena", LastName = "Stupar", Type = 0 },
+               new Doctor { Id = 18, FirstName = "Luka", LastName = "Lisica", Type = 0 },
+               new Doctor { Id = 19, FirstName = "Vasilije", LastName = "Mit", Type = 0 }
                );
 
         }
