@@ -40,16 +40,7 @@ namespace HospitalTests.IntegratorsTests
             Assert.Empty(foundMedicine);
         }
 
-        [Fact]  
-        public void Create_consumed_file()
-        {
-
-            MedicineService medicineService = new MedicineService(CreateMedicinesRepository(), CreateMedicalRecordsRepository(), CreateExaminationRepository());
-            
-            medicineService.CreateConsumedMedicinesInPeriodFile(new DateTime(2021, 11, 15), new DateTime(2021, 11, 16));
-
-            Assert.NotNull(System.IO.File.OpenRead("consumed-medicine.txt"));
-        }
+        
 
         private static IMedicinesRepository CreateMedicinesRepository()
         {

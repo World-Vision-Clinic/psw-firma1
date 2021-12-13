@@ -11,5 +11,6 @@ namespace Integration_API.Controller
     {
         bool SendRequestToCheckAvailability(string pharmacyLocalhost, MedicineDto medicineDto);
         bool SendRequestForSpecification(string pharmacyLocalhost, string medicineName);
+        bool SendRequestToCheckAvailabilityGrpc(string pharmacyLocalhost, MedicineDto medicineDto);
     }
 }

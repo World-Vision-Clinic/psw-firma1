@@ -88,7 +88,7 @@ namespace Integration_API.Controller
                 }
                 else
                 {
-                    if (SendRequestToCheckAvailabilityGrpc(pharmacy.Localhost, medicineDto))
+                    if (pharmacyConnection.SendRequestToCheckAvailabilityGrpc(pharmacy.Localhost, medicineDto))
                     {
                         pharmaciesWithMedicine.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
                     }
@@ -96,23 +96,6 @@ namespace Integration_API.Controller
             }
 
             return Ok(pharmaciesWithMedicine);
-        }
-        public bool SendRequestToCheckAvailabilityGrpc(string pharmacyLocalhost, MedicineDto medicineDto)
-        {
-            Credential credential = credentialsService.GetByPharmacyLocalhost(pharmacyLocalhost);
-
-            var input = new CheckMedicineExistenceRequest { MedicineName = medicineDto.Name, MedicineDosage = medicineDto.DosageInMg, Quantity = medicineDto.Quantity, ApiKey = credential.ApiKey };
-            var channel = new Channel(pharmacyLocalhost, ChannelCredentials.Insecure);
-            var client = new gRPCService.gRPCServiceClient(channel);
-            var reply = client.checkMedicineExistenceAsync(input);
-            if (reply.ResponseAsync.Result.Response.Equals("OK"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         public bool SendMedicineOrderingRequestHTTP(OrderingMedicineDTO dto, bool test)

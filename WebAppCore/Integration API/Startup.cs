@@ -47,7 +47,7 @@ namespace Integration_API
             new MedicinesController(new PharmacyHTTPConnection()));*/
 
             // Simple example with dependency injection for a data provider.
-            services.AddSingleton<IPharmacyConnection, PharmacyHTTPConnection>();
+            services.AddSingleton<IPharmacyConnection, PharmacyConnection>();
 
             services.AddControllers();
         }

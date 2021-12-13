@@ -46,7 +46,7 @@ namespace IntegrationTests.IntegrationTests
             Assert.Single(pharmacies);
         }*/
 
-        [Fact]
+        /*[Fact]
         public async Task Check_response_when_medicine_is_not_available()
         {
             // Arrange
@@ -61,6 +61,6 @@ namespace IntegrationTests.IntegrationTests
             // Assert
             response.EnsureSuccessStatusCode();
             Assert.Empty(pharmacies);
-        }
+        }*/
     }
 }

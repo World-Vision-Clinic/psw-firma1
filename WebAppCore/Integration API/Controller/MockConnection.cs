@@ -16,7 +16,6 @@ namespace Integration_API.Controller
         {
             return medicineName.Equals("Aspirin");
         }
-
         public bool SendRequestToCheckAvailabilityGrpc(string pharmacyLocalhost, MedicineDto medicineDto)
         {
             return medicineDto.Name.Equals("Aspirin") && medicineDto.DosageInMg == 200 && medicineDto.Quantity <= 5;
