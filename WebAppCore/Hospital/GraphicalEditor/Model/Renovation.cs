@@ -4,8 +4,9 @@ using System.Text;
 
 namespace Hospital.GraphicalEditor.Model
 {
-    class Renovation
+    public class Renovation
     {
+        public int id { get; set; }
         public int Room1Id { get; set; }
         public int Room2Id { get; set; }
         public string NewRoomName1 { get; set; }
