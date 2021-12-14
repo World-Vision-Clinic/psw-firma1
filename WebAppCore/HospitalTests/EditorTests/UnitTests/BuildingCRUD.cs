@@ -21,7 +21,7 @@ using Moq;
 
 namespace HospitalTests.EditorTests
 {
-    public class BuildingFindAll
+    public class BuildingCRUD
     {
         private static IBuildingRepository CreateStubRepository()
         {
@@ -48,6 +48,28 @@ namespace HospitalTests.EditorTests
 
             BuildingService service = new BuildingService(repo);
             service.GetAll().Count.ShouldBeEquivalentTo(3);
+        }
+
+        [Fact]
+        public void building_findById_test_not_found()
+        {
+            IBuildingRepository repo = CreateStubRepository();
+
+            BuildingService service = new BuildingService(repo);
+            Building building = service.GetById(3);
+            Assert.Null(building);
+
+        }
+
+        [Fact]
+        public void building_findById_test_found()
+        {
+            IBuildingRepository repo = CreateStubRepository();
+
+            BuildingService service = new BuildingService(repo);
+            Building building = service.GetById(1);
+            Assert.NotNull(building);
+
         }
     }
 }
