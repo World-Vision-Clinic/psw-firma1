@@ -30,11 +30,12 @@ namespace HospitalTests.EditorTests
             buildings.Add(hospital2);
 
             stubRepository.Setup(m => m.GetAll()).Returns(buildings);
+            stubRepository.Setup(m => m.GetByID(1)).Returns(hospital1);
             return stubRepository.Object;
         }
 
         [Fact]
-        public void building_findById_test_1()
+        public void building_findById_test_not_found()
         {
             IBuildingRepository repo = CreateStubRepository();
 
@@ -42,6 +43,17 @@ namespace HospitalTests.EditorTests
             Building building = service.GetById(3);
             Assert.Null(building);
            
+        }
+
+        [Fact]
+        public void building_findById_test_found()
+        {
+            IBuildingRepository repo = CreateStubRepository();
+
+            BuildingService service = new BuildingService(repo);
+            Building building = service.GetById(1);
+            Assert.NotNull(building);
+
         }
 
     }
