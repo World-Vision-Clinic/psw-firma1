@@ -22,7 +22,7 @@ namespace Hospital_API.DTO
 
         public bool isMerge { get; set; }
 
-        internal Renovation toRenovation()
+        public Renovation toRenovation()
         {
             Renovation renovation = new Renovation();
             renovation.isMerge = this.isMerge;
@@ -37,10 +37,10 @@ namespace Hospital_API.DTO
             return renovation;
         }
 
-        private DateTime convertTimestampToDatetime(long timestamp)
+        public DateTime convertTimestampToDatetime(long timestamp)
         {
             System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-            dtDateTime = dtDateTime.AddSeconds(timestamp).ToLocalTime();
+            dtDateTime = dtDateTime.AddSeconds(timestamp/1000).ToLocalTime();
             return dtDateTime;
         }
     }

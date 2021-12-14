@@ -21,7 +21,7 @@ using Microsoft.AspNetCore.Cors;
 
 namespace Hospital_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Renovation")]
     [ApiController]
     public class RenovationController : ControllerBase
     {
@@ -64,7 +64,7 @@ namespace Hospital_API.Controllers
 
 
         // GET: api/Rooms/5
-        [HttpPost()]
+        [HttpPost("create")]
         public IActionResult CreateRenovation(RenovationDTO renovationDTO)
         {
             try
@@ -75,7 +75,8 @@ namespace Hospital_API.Controllers
             }
             catch
             {
-                return NotFound();
+                
+                return NoContent();
             }
         }
 

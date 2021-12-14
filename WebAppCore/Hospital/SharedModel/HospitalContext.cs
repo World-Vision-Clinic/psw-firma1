@@ -62,6 +62,9 @@ namespace Hospital.SharedModel
                 entity.HasKey(c => c.Id);      
             });
 
+            modelBuilder.Entity<Renovation>().HasData(
+                new Renovation { NewRoomName1 = "Test 123", NewRoomName2 = "", NewRoomPurpose1 = "123", NewRoomPurpose2 = "", Room1Id = 4, Room2Id = 5, StartDate = new DateTime(1640242800000), EndDate = new DateTime(1640329200000), isMerge = true, id = 1 });
+
             modelBuilder.Entity<Appointment>().HasData(
                 // new Appointment { Id = 1, Surveys = new List<Survey>() }
                 new Appointment { Id = 1, PatientForeignKey = 1, DoctorForeignKey = 1, Type = (AppointmentType)1, Date = new DateTime(2022, 1, 13), Time = new TimeSpan(14, 10, 0), IsCancelled = false, RoomId = 1 },

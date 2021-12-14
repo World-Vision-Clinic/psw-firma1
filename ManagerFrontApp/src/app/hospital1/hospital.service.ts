@@ -20,6 +20,16 @@ export class HospitalService {
       `http://localhost:39901/api/Buildings/${id}`
     );
   }
+  getRenovation(id: number): Observable<any> {
+    return this.http.get<any>(
+      `http://localhost:39901/api/renovation/room/${id}`
+    );
+  }
+  cancelRenovation(id: number): Observable<any> {
+    return this.http.delete<any>(
+      `http://localhost:39901/api/renovation/${id}`
+    );
+  }
 
   updateHospital(id: string, hospital: Building): Observable<boolean> {
     const headers = { 'content-type': 'application/json' };
@@ -113,6 +123,19 @@ export class HospitalService {
     const headers={'content-type':'application/json'};  
     const body=JSON.stringify(splitDTO)  
     return this.http.post('http://localhost:39901/api/Rooms/split', body,{headers: headers}).subscribe(data => {console.log(data)});
+  }
+  scheduleRenovation(data){
+    const headers={'content-type':'application/json'};  
+    const body=JSON.stringify(data)
+    console.log(body);
+      
+    return this.http.post('http://localhost:39901/api/Renovation', body,{headers: headers});
+  }
+
+  getSuggestionForRenovation(data): Observable<any>{
+    const headers={'content-type':'application/json'}; 
+    const body = JSON.stringify(data)
+    return this.http.post<any>('http://localhost:39901/api/renovationPeriod/suggestion', body,{headers: headers});
   }
 
 }

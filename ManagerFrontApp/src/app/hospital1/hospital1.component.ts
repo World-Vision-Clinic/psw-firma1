@@ -13,6 +13,8 @@ import { iEquipmentRoom } from '../data/iEquipmentRoom';
 import { emptyRoom, Room } from '../data/room';
 import { emptyAppointment } from '../data/appointmentForRoom';
 import { HospitalService } from './hospital.service';
+import { iRenovationRequest } from '../data/iRenovationRequest';
+import { RenovationDto } from '../data/renovationDTO';
 @Component({
   selector: 'app-hospital1',
   templateUrl: './hospital1.component.html',
@@ -265,6 +267,16 @@ export class Hospital1Component implements OnInit {
         this.allAppointments!.push(this.appointment);
         this.appointment = emptyAppointment()
     });
+    this.hospitalService.getRenovation(this.selectedRoom.id).subscribe(
+      (data) => {
+       let appointment= {} as AppointmentForRoom;
+       appointment.id = data?.id;
+       appointment.date = data?.endDate;
+       appointment.type = "RENOVATION";
+       this.allAppointments!.push(appointment);
+      },
+      (error) => alert("Failed to cancel appointment 24 hours before!")
+    );
     //console.log(this.allAppointments)
   }
 
@@ -277,6 +289,16 @@ export class Hospital1Component implements OnInit {
         (data) => {
           this.allAppointments = this.allAppointments?.filter(i => i.id != item.id) || null
           alert("Transport canceled!")
+        },
+        (error) => alert("Failed to cancel appointment 24 hours before!")
+      );
+    }else if(item.type == "RENOVATION"){
+      this.hospitalService
+      .cancelRenovation(item.id)
+      .subscribe(
+        (data) => {
+          this.allAppointments = this.allAppointments?.filter(i => i.id != item.id) || null
+          alert("Renovation canceled!")
         },
         (error) => alert("Failed to cancel appointment 24 hours before!")
       );
@@ -550,6 +572,84 @@ export class Hospital1Component implements OnInit {
     this.secondMergeSelected=emptyRoom();
     this.isForSplitSelected=false;
     this.roomForSplit=emptyRoom();
+  }
+
+  reserveRenovationInfo = false;
+  haveSuggestion = false;
+  renovationRequestDTO: iRenovationRequest = {} as iRenovationRequest;
+  selectedType = '';
+  renovationModel: RenovationDto = {} as RenovationDto
+  RenovateWithReservation(type){
+    this.selectedType = type;
+    if(type = 'merge'){
+      this.renovationRequestDTO.Room1Id = this.firstMergeSelected.id;
+      this.renovationRequestDTO.Room2Id = this.secondMergeSelected.id;
+      this.renovationModel.NewRoomName1 = this.roomMergeDto.name;
+      this.renovationModel.NewRoomName2 = '';
+      this.renovationModel.NewRoomPurpose1 = this.roomMergeDto.purpose;
+      this.renovationModel.NewRoomPurpose2 = '';
+    }else{
+      this.renovationRequestDTO.Room1Id = this.roomForSplit.id;
+      this.renovationRequestDTO.Room2Id = -1;
+      this.renovationModel.NewRoomName1 = this.roomSplitDto.name1;
+      this.renovationModel.NewRoomName2 = this.roomSplitDto.name1;
+      this.renovationModel.NewRoomPurpose1 = this.roomSplitDto.purpose1;
+      this.renovationModel.NewRoomPurpose2 = this.roomSplitDto.purpose2;
+      
+    }
+    this.roomsMergeInfoBox = false;
+    this.roomsSplitInfoBox = false;
+    this.reserveRenovationInfo = true;
+
+    this.renovationModel.Room1Id=this.renovationRequestDTO.Room1Id;
+    this.renovationModel.Room2Id=this.renovationRequestDTO.Room2Id;
+    
+  }
+
+
+  scheduleRenovation(){
+    this.renovationModel.isMerge = this.selectedType == 'merge'
+    this.renovationModel.StartDateTimestamp = (new Date(this.suggestion?.startDate)).getTime()
+    this.renovationModel.EndDateTimeStamp = (new Date(this.suggestion?.endDate)).getTime()
+    this.hospitalService
+      .scheduleRenovation(this.renovationModel)
+      .subscribe(
+        (data) => {
+          this.suggestion = null;
+          this.haveSuggestion = false;
+          this.reserveRenovationInfo = false;
+          this.FinishRenovation();
+          alert("You have scheduled room renovation!")
+        },
+        (e) => {
+          this.suggestion = null;
+          this.haveSuggestion = false;
+          this.reserveRenovationInfo = false;
+          this.FinishRenovation();
+          alert("You have scheduled room renovation!")
+        }
+        
+      );
+    
+  }
+
+  getSuggestionForRenovation(){
+    const startDate = this.interval.controls['start'].value.getTime();
+    const endDate = this.interval.controls['end'].value.getTime();
+    this.renovationRequestDTO.StartPeriodTimestamp = startDate;
+    this.renovationRequestDTO.EndPeriodTimestamp = endDate;
+
+    this.hospitalService
+      .getSuggestionForRenovation(this.renovationRequestDTO)
+      .subscribe(
+        (data) => {
+          this.suggestion = data;
+          this.haveSuggestion = true;
+          this.reserveRenovationInfo = false
+          console.log(data);
+        },
+        (e) => alert("There isn't any proper period to do a renovation...")
+      );
   }
 
   FillMergeInfo(){
