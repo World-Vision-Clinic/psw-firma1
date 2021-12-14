@@ -24,7 +24,7 @@ namespace Hospital.GraphicalEditor.Repository
             dbContext.SaveChanges();
         }
 
-        internal Renovation findRenovationForRoom(int roomId)
+        internal Renovation FindRenovationForRoom(int roomId)
         {
             Renovation renovation = dbContext.Renovations.FirstOrDefault(renovation => renovation.Room1Id == roomId || renovation.Room2Id == roomId);
             return renovation;
@@ -53,6 +53,11 @@ namespace Hospital.GraphicalEditor.Repository
         {
             dbContext.Renovations.Update(renovation);
             dbContext.SaveChanges();
+        }
+
+        internal List<Renovation> GetPassedRenovations()
+        {
+            throw new NotImplementedException();
         }
 
         public bool Exists(int id)
