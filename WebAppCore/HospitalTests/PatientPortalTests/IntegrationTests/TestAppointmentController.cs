@@ -347,14 +347,15 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 PatientForeignKey = 1,
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
-                Date = new DateTime(2021, 9, 9, 0, 0, 0),
-                Time = new TimeSpan(0, 0, 45, 0, 0)
+                Date = new DateTime(2021, 12, 17, 0, 0, 0),
+                Time = new TimeSpan(0, 11, 30, 0, 0),
+                IsCancelled = false
             };
 
-            var response = _appointmentController.CancelAppointment(2).Value;
+            var response = _appointmentController.CancelAppointment(2);
 
-            //Assert.Equal(200, response.StatusCode);
-            Assert.NotNull(response);
+            response.Equals(HttpStatusCode.OK);
+            Assert.NotNull(response.Value);
 
         }
 
@@ -368,14 +369,14 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
                 Date = new DateTime(2020, 9, 9, 0, 0, 0),
-                Time = new TimeSpan(0, 0, 45, 0, 0)
+                Time = new TimeSpan(0, 8, 30, 0, 0),
+                IsCancelled = true
             };
 
-            var response = _appointmentController.CancelAppointment(2).Value;
-           // var result = response.Result as BadRequestResult;
+            var response = _appointmentController.CancelAppointment(2);
 
-           // Assert.Equal(400, result.StatusCode);
-            Assert.NotNull(response);
+            response.Equals(HttpStatusCode.BadRequest);
+            Assert.NotNull(response.Value);
 
         }
 
