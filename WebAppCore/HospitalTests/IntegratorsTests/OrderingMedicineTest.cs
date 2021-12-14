@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace IntegrationTests.UnitTests
+namespace HospitalTests.IntegratorsTests
 {
     public class OrderingMedicineTest
     {

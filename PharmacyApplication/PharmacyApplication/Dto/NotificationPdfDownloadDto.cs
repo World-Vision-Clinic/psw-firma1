@@ -7,6 +7,6 @@ namespace PharmacyAPI.Dto
 {
     public class NotificationPdfDownloadDto
     {
-        public String FileName { get; set; }
+        public String File { get; set; }
     }
 }
