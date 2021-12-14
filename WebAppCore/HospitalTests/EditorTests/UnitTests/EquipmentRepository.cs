@@ -10,7 +10,7 @@ using Xunit;
 
 namespace HospitalTests.EditorTests
 {
-    public class EquipmentRepositoryUnitTest
+    public class EquipmentRepositoryTest
     {
         [Fact]
         public void equipment_repository_test_1()
@@ -28,7 +28,7 @@ namespace HospitalTests.EditorTests
             }
             using (var context = new HospitalContext(options))
             {
-                EquipmentRepository eqRepository = new EquipmentRepository(context);
+                Hospital.RoomsAndEquipment.Repository.EquipmentRepository eqRepository = new Hospital.RoomsAndEquipment.Repository.EquipmentRepository(context);
                 List<Equipment> eqpmnt = eqRepository.GetAll();
 
                 Assert.Equal(2, eqpmnt.Count);
@@ -47,7 +47,7 @@ namespace HospitalTests.EditorTests
                 Equipment eq1 = new Equipment { Id = 1, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 5, RoomId = 1 };
                 context.AllEquipment.Add(eq1);
                 context.SaveChanges();
-                EquipmentRepository eqRepository = new EquipmentRepository(context);
+                Hospital.RoomsAndEquipment.Repository.EquipmentRepository eqRepository = new Hospital.RoomsAndEquipment.Repository.EquipmentRepository(context);
                 Equipment eqpmntID = eqRepository.GetByID(1);
 
                 eqpmntID.Id.ShouldBeEquivalentTo(1);

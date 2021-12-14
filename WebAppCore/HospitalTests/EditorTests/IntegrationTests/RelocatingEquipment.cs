@@ -12,7 +12,7 @@ using Xunit;
 
 namespace HospitalTests.EditorTests.IntegrationTests
 {
-    public class RelocatingEquipmentTest
+    public class RelocatingEquipment
     {
         public bool relocate(Equipment eqForTransf, RoomDTO roomFrom, RoomDTO roomTo)
         {
