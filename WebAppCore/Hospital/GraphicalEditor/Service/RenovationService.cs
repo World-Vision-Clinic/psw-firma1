@@ -65,8 +65,8 @@ namespace Hospital.GraphicalEditor.Service
         {
 
             RenovationPeriod renovationPeriod = new RenovationPeriod();
-            DateTime startDate = DateTimeOffset.FromUnixTimeSeconds(startPeriodTimestamp).LocalDateTime;
-            DateTime endDate = DateTimeOffset.FromUnixTimeSeconds(endPeriodTimestamp).LocalDateTime;
+            DateTime startDate = DateTimeOffset.FromUnixTimeSeconds(startPeriodTimestamp/1000).LocalDateTime;
+            DateTime endDate = DateTimeOffset.FromUnixTimeSeconds(endPeriodTimestamp/1000).LocalDateTime;
             if (startDate.AddDays(durationInDays) > endDate)
                 return null;
             startDate = new DateTime(startDate.Year, startDate.Month, startDate.Day, 8, 0, 0);

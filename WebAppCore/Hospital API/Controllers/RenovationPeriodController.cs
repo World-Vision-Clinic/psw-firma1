@@ -1,4 +1,5 @@
-﻿using Hospital.GraphicalEditor.Repository;
+﻿using Hospital.GraphicalEditor.Model;
+using Hospital.GraphicalEditor.Repository;
 using Hospital.GraphicalEditor.Repository.RepositoryInterfaces;
 using Hospital.GraphicalEditor.Service;
 using Hospital.MedicalRecords.Model;
@@ -34,11 +35,11 @@ namespace Hospital_API.Controllers
         private RenovationService renovationService = new RenovationService(new RenovationRepository(new Hospital.SharedModel.HospitalContext()));
         private AppointmentService appointmentService = new AppointmentService(new AppointmentRepository(new Hospital.SharedModel.HospitalContext()), new DoctorRepository(new Hospital.SharedModel.HospitalContext()));
 
-        [HttpPost("/suggestion")]
-        public ActionResult<TransportationPeriodDTO> GetRenovationSuggestion(RenovationRequestDTO renovationRequestDTO)
+        [HttpPost("suggestion")]
+        public ActionResult<RenovationPeriod> GetRenovationSuggestion(RenovationRequestDTO renovationRequestDTO)
         {
             try {
-                return (TransportationPeriodDTO)renovationService.getSuggestions(roomService, appointmentService, equipmentService, renovationRequestDTO.Room1Id, renovationRequestDTO.Room2Id, renovationRequestDTO.StartPeriodTimestamp, renovationRequestDTO.EndPeriodTimestamp, renovationRequestDTO.DurationInDays);
+                return renovationService.getSuggestions(roomService, appointmentService, equipmentService, renovationRequestDTO.Room1Id, renovationRequestDTO.Room2Id, renovationRequestDTO.StartPeriodTimestamp, renovationRequestDTO.EndPeriodTimestamp, renovationRequestDTO.DurationInDays);
             }
             catch
             {
