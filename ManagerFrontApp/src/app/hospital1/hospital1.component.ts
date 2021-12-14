@@ -275,7 +275,7 @@ export class Hospital1Component implements OnInit {
        appointment.type = "RENOVATION";
        this.allAppointments!.push(appointment);
       },
-      (error) => alert("Failed to cancel appointment 24 hours before!")
+      (error) => console.log(error)
     );
     //console.log(this.allAppointments)
   }

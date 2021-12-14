@@ -63,7 +63,7 @@ namespace Hospital.SharedModel
             });
 
             modelBuilder.Entity<Renovation>().HasData(
-                new Renovation { NewRoomName1 = "Test 123", NewRoomName2 = "", NewRoomPurpose1 = "123", NewRoomPurpose2 = "", Room1Id = 4, Room2Id = 5, StartDate = new DateTime(1640242800000), EndDate = new DateTime(1640329200000), isMerge = true, id = 1 });
+                new Renovation { NewRoomName1 = "Test 123", NewRoomName2 = "", NewRoomPurpose1 = "123", NewRoomPurpose2 = "", Room1Id = 4, Room2Id = 5, StartDate = new DateTime(2021, 12, 20, 8, 0, 0, 0, DateTimeKind.Local), EndDate = new DateTime(2021, 12, 27, 8, 0, 0, 0, DateTimeKind.Local), isMerge = true, id = 1 });
 
             modelBuilder.Entity<Appointment>().HasData(
                 // new Appointment { Id = 1, Surveys = new List<Survey>() }
