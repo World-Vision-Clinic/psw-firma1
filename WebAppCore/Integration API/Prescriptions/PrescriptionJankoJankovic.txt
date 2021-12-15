@@ -1,0 +1,4 @@
+Prescription for patient Janko Jankovic
+Medicine Bromazepan
+DurationInDays 7
+TimesPerDay 1

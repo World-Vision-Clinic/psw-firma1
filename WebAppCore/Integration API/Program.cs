@@ -18,10 +18,10 @@ namespace Integration_API
     {
         public static void Main(string[] args)
         {
-            System.Timers.Timer timer = new System.Timers.Timer(TimeSpan.FromMinutes(1).TotalMilliseconds);
+           /* System.Timers.Timer timer = new System.Timers.Timer(TimeSpan.FromDays(30).TotalMinutes);
             timer.AutoReset = true;
             timer.Elapsed += new System.Timers.ElapsedEventHandler(FilesService.CompressFiles);
-            timer.Start();
+            timer.Start();*/
 
             CreateHostBuilder(args).Build().Run();
         }
