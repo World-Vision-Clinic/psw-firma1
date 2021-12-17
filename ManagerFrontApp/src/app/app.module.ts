@@ -27,6 +27,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { ToastrModule } from 'ngx-toastr';
 import { GetSpecificationComponent } from './manager-integration-front-app/get-specification/get-specification.component';
 import { ViewFilesComponent } from './manager-integration-front-app/view-files/view-files.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ViewFilesComponent } from './manager-integration-front-app/view-files/v
     MedicineConsumptionComponent,
     NewsComponent,
     GetSpecificationComponent,
-    ViewFilesComponent
+    ViewFilesComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

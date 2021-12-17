@@ -38,6 +38,20 @@ namespace Hospital.MedicalRecords.Service
 
         }
 
+        public bool LoginPatient(string username, string password)
+        {
+            Patient patient = _repo.FindByUserName(username);
+            if (patient != null)
+            {
+                if (patient.Password.Equals(password))
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return false;
+        }
+
         public void RegisterPatient(Patient patient)
         {
             if (FindByUserName(patient.UserName) != null)

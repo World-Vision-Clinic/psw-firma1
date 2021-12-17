@@ -33,7 +33,6 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             builder.UseInMemoryDatabase("TestDb");
             options = builder.Options;
             TestContext hospitalContext = new TestContext(options);
-            hospitalContext.Database.EnsureDeleted();
             hospitalContext.Database.EnsureCreated();
             _patientRepository = new PatientRepository(hospitalContext);
             _allergenRepository = new AllergenRepository(hospitalContext);
@@ -100,15 +99,15 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             _doctorRepository.AddDoctor(doctor1);
             _doctorRepository.AddDoctor(doctor2);
             _doctorRepository.AddDoctor(doctor3);
-            var response = _doctorsController.GetDoctorForSpecialty(0);
+            var response = _doctorsController.GetDoctorForSpecialty(2);
             var result = response.Result as OkObjectResult;
             var data = result.Value as List<Doctor>;
 
             Assert.Equal(200, result.StatusCode);
             Assert.NotNull(result.Value);
-            Assert.Equal(2, data.Count);
+            Assert.Single(data);
             Assert.NotNull(response);
-            Assert.Contains(doctor2, data);
+            Assert.Contains(doctor3, data);
         }
     }
 }

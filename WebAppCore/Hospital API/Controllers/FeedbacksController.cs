@@ -10,6 +10,7 @@ using Hspital_API.Mapper;
 using Hospital.MedicalRecords.Service;
 using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hospital_API
 {
@@ -28,6 +29,7 @@ namespace Hospital_API
         }
 
         // GET: api/Feedbacks
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<Feedback>> GetFeedbacks()
         {
