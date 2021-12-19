@@ -10,7 +10,7 @@ namespace Hospital.Schedule.Repository
     public class ManagerRepository
     {
 
-        private HospitalContext _context;
+        private readonly HospitalContext _context;
 
         public ManagerRepository(HospitalContext context)
         {

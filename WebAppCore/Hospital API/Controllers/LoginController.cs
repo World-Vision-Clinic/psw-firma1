@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Hospital.Schedule.Service;
 using Hospital.Schedule.Repository;
+using Hospital.Schedule.Model;
 
 namespace Hospital_API.Controllers
 {
@@ -36,46 +37,30 @@ namespace Hospital_API.Controllers
         [HttpPost]
         public IActionResult Login([FromBody] LoginDTO loginInfo)
         {
-            if (_patientService.LoginPatient(loginInfo.username,loginInfo.password)) 
+            Patient patient = _patientService.LoginPatient(loginInfo.username, loginInfo.password);
+            Manager manager = _managerService.LoginManager(loginInfo.username, loginInfo.password);
+            if (patient != null) 
             {
-                string jwt = GenerateJWTForPatient(loginInfo);
+                string jwt = GenerateJWT(patient.UserName,patient.Id,"Patient");
                 return Ok("{\"token\":\"" + jwt+ "\"}");
             }
-            else if (_managerService.LoginManager(loginInfo.username, loginInfo.password))
+            else if (manager != null)
             {
-                string jwt = GenerateJWTForManager(loginInfo);
+                string jwt = GenerateJWT(manager.UserName, manager.Id, "Manager");
                 return Ok("{\"token\":\"" + jwt + "\"}");
             }
             return Unauthorized();
         }
 
-        private string GenerateJWTForPatient(LoginDTO login) 
-        {
-            JwtSecurityToken token = new JwtSecurityToken(
-                issuer:"PSW",
-                audience: "PSW-audience",
-                claims: new[] {
-                    new Claim("username",login.username),
-                    new Claim("role","Patient")
-                },
-                expires: DateTime.UtcNow.AddMinutes(5),
-                signingCredentials: new SigningCredentials(
-                        key: new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SECRET)),
-                        algorithm: SecurityAlgorithms.HmacSha256
-                    )
-                );
-
-            return (new JwtSecurityTokenHandler()).WriteToken(token);
-        }
-
-        private string GenerateJWTForManager(LoginDTO login)
+        private string GenerateJWT(string username,int id,string role) 
         {
             JwtSecurityToken token = new JwtSecurityToken(
                 issuer: "PSW",
                 audience: "PSW-audience",
                 claims: new[] {
-                    new Claim("username",login.username),
-                    new Claim("role","Manager")
+                    new Claim("username",username),
+                    new Claim("id",id.ToString()),
+                    new Claim("role",role)
                 },
                 expires: DateTime.UtcNow.AddMinutes(5),
                 signingCredentials: new SigningCredentials(

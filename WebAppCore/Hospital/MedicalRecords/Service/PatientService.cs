@@ -38,18 +38,18 @@ namespace Hospital.MedicalRecords.Service
 
         }
 
-        public bool LoginPatient(string username, string password)
+        public Patient LoginPatient(string username, string password)
         {
-            Patient patient = _repo.FindByUserName(username);
+            Patient patient = _repo.FindActivatedByUserName(username);
             if (patient != null)
             {
                 if (patient.Password.Equals(password))
-                    return true;
+                    return patient;
                 else
-                    return false;
+                    return null;
             }
             else
-                return false;
+                return null;
         }
 
         public void RegisterPatient(Patient patient)

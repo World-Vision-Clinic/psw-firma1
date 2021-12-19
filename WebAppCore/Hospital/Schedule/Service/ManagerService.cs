@@ -15,18 +15,18 @@ namespace Hospital.Schedule.Service
             _repo = repo;
         }
 
-        public bool LoginManager(string username, string password)
+        public Manager LoginManager(string username, string password)
         {
             Manager manager = _repo.FindByUserName(username);
             if (manager != null)
             {
                 if (manager.Password.Equals(password))
-                    return true;
+                    return manager;
                 else
-                    return false;
+                    return null;
             }
             else
-                return false;
+                return null;
         }
     }
 }
