@@ -124,7 +124,7 @@ namespace Hospital_API.Controllers
 
             appointment.IsCancelled = true;
             _appointmentService.Modify(appointment);
-            return appointment;
+            return Ok(appointment);
         }
     }
 }
