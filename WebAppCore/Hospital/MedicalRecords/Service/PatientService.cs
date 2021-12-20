@@ -118,6 +118,11 @@ namespace Hospital.MedicalRecords.Service
         {
             return _repo.FindById(id);
         }
+
+        public List<Patient> GetAll()
+        {
+            return _repo.GetAll();
+        }
         
         public Patient FindByUserName(string username)
         {

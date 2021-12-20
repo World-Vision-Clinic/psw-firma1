@@ -15,6 +15,7 @@ import { ViewSurveyResultsComponent } from './view-survey-results/view-survey-re
 //import { GetSpecificationComponent } from './manager-integration-front-app/get-specification/get-specification.component';
 //import { ViewFilesComponent } from './manager-integration-front-app/view-files/view-files.component';
 import { BlockPatientsComponent } from './block-patients/block-patients.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   {path: "", component: FrontPageComponent},
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path:"hospital/:hospitalId", component: Hospital1Component},
   //{path:"pharmacy-registration", component: PharmacyRegistrationComponent},
   {path:"survey-results", component: ViewSurveyResultsComponent},
+  {path:"homepage", component: DashboardComponent},
   //{path:"manager-front-app", component: ManagerIntegrationFrontAppComponent, children: [
   //{path: "overview-objections-replies", outlet: "showObjRepl", component:OverviewObjectionsRepliesComponent},
   //{path: "overview-pharmacies", outlet: "showObjRepl", component:PharmaciesComponent},

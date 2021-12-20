@@ -41,6 +41,23 @@ namespace Hospital_API.Controllers
             _verification = new PatientVerification(_patientService, _doctorService, _allergenService);
         }
 
+        [HttpGet]
+        public ActionResult<List<MedicalRecordDTO>> GetAllPatients()
+        {
+            List<Patient> patients = _patientService.GetAll();
+            List<MedicalRecordDTO> medicalRecordDTOs = new List<MedicalRecordDTO>();
+            foreach(Patient patient in patients)
+            {
+                MedicalRecordDTO medicalRecordDTO = MedicalRecordMapper.PatientToMedicalRecordDTO(patient);
+                Doctor patientDoctor = _doctorService.FindById(patient.PreferedDoctor);
+                if (patientDoctor != null)
+                    medicalRecordDTO.PreferedDoctorName = (patientDoctor.FirstName + " " + patientDoctor.LastName);
+                medicalRecordDTOs.Add(medicalRecordDTO);
+            }
+
+            return medicalRecordDTOs;
+        }
+
         // GET: api/Patients/5
         [HttpGet("{id}")]
         public ActionResult<MedicalRecordDTO> GetPatient(int id)

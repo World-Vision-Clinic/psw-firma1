@@ -25,6 +25,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { BlockPatientsComponent } from './block-patients/block-patients.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 //import { ToastrModule } from 'ngx-toastr';
 //import { GetSpecificationComponent } from './manager-integration-front-app/get-specification/get-specification.component';
 //import { ViewFilesComponent } from './manager-integration-front-app/view-files/view-files.component';
@@ -45,6 +46,7 @@ import { BlockPatientsComponent } from './block-patients/block-patients.componen
     //PharmaciesComponent,
     ViewSurveyResultsComponent,
     BlockPatientsComponent,
+    DashboardComponent,
     //MedicineConsumptionComponent,
     //NewsComponent,
     //GetSpecificationComponent,
