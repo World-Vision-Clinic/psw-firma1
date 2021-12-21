@@ -13,6 +13,7 @@ import { Appointment4stepComponent } from './appointment4step/appointment4step.c
 const routes: Routes = [
 { path: "create-feedback", component: PatientCreateFeedbackComponent },
 { path: "view-feedback", component: PatientFeedbackViewComponent },
+{ path: "homepage", component: MedicalRecordViewComponent },
 { path: "medical-record", component: MedicalRecordViewComponent },
 { path: "login", component: LoginComponent },
 { path: "survey/:id", component: SurveyComponent},
