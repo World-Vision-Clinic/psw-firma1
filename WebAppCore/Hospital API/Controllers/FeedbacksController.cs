@@ -36,7 +36,7 @@ namespace Hospital_API
             //_patientService.AddPatient();
             return _feedbackService.GetAll();
         }
-        [Authorize(Roles = "Patient")]
+
         [HttpGet("published")]
         public ActionResult<IEnumerable<FeedbackPatientDTO>> GetFeedbacksPublished()
         {

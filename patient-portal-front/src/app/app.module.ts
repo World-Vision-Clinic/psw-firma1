@@ -29,6 +29,8 @@ import { RegisterComponent } from './register/register.component';
 import { PatientAppointmentCreationComponent } from './patient-appointment-creation/patient-appointment-creation.component';
 import { Appointment4stepComponent } from './appointment4step/appointment4step.component';
 import { AuthInterceptor } from './interceptor';
+import { AuthGuard } from './auth.guard';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -66,6 +68,9 @@ import { AuthInterceptor } from './interceptor';
     PatientCreateFeedbackService,
     PatientFeedbackServiceService,
     SurveyService,
+    AuthGuard,
+    {provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
