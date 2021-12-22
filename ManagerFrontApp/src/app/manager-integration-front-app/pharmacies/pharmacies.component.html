@@ -60,5 +60,20 @@
     <p style="margin-bottom: 2em;" (click)="saveChanges()" *ngIf="isEditing"><button class="btn btn-secondary" style="background-color: #00aced;">Save changes</button></p>
     <p style="margin-bottom: 2em;" (click)="discardChanges()" *ngIf="isEditing"><button class="btn btn-secondary" style="background-color: #00aced;">Discard changes</button></p>
     <p><button (click)="goBack()" *ngIf="isViewing" class="btn btn-secondary" style="background-color: #00aced;">Back</button></p>
+    <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+        <button>Tenders</button>
+    </a>
     </div>
 </ng-template>
+
+<div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="close-modal" data-bs-dismiss="modal"><img src="../../../assets/close-icon.svg" alt="Close modal"/></div>  
+            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+            <div class="container">
+                <div class="col-md-12">
+                    
+                </div>
+            </div>
+</div>
