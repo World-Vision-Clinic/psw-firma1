@@ -12,7 +12,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatListModule} from '@angular/material/list';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatStepperModule} from '@angular/material/stepper';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -28,6 +28,7 @@ import { MedicalRecordViewComponent } from './medical-record-view/medical-record
 import { RegisterComponent } from './register/register.component';
 import { PatientAppointmentCreationComponent } from './patient-appointment-creation/patient-appointment-creation.component';
 import { Appointment4stepComponent } from './appointment4step/appointment4step.component';
+import { AuthInterceptor } from './interceptor';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,12 @@ import { Appointment4stepComponent } from './appointment4step/appointment4step.c
   providers: [
     PatientCreateFeedbackService,
     PatientFeedbackServiceService,
-    SurveyService
+    SurveyService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
