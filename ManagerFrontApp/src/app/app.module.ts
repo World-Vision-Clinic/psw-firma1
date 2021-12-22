@@ -28,6 +28,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { GetSpecificationComponent } from './manager-integration-front-app/get-specification/get-specification.component';
 import { ViewFilesComponent } from './manager-integration-front-app/view-files/view-files.component';
 import { LoginComponent } from './login/login.component';
+import { ChartAllModule, AccumulationChartAllModule, RangeNavigatorAllModule } from '@syncfusion/ej2-angular-charts';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,9 @@ import { LoginComponent } from './login/login.component';
     HttpClientModule,
     ReactiveFormsModule,
     NgSelectModule,
+    ChartAllModule,
+    AccumulationChartAllModule,
+    RangeNavigatorAllModule,
     MatDatepickerModule,
     MatFormFieldModule,
     MatNativeDateModule,

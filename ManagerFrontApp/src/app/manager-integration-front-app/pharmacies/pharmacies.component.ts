@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http'
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-
+import { AccumulationChartComponent, AccumulationChart, IAccLoadedEventArgs, AccumulationTheme } from "@syncfusion/ej2-angular-charts";
 
 
 @Component({
@@ -32,8 +32,64 @@ export class PharmaciesComponent implements OnInit {
   timeStamp: any;
   error: any;
   isPictureRemovedCopy: boolean = false;
+  lost: number = 30;
+  won: number = 8;
+  percent: string = '';
 
   constructor(private http:HttpClient) { }
+
+  public data: Object[] = [
+    { x: "LOST", y: this.lost },
+    { x: "WON", y: this.won }
+  ];
+
+  @ViewChild("pie")
+  public pie!: AccumulationChartComponent | AccumulationChart;
+  palette = [
+    "rgba(255,0,0)",
+    "rgba(100,225,50)"
+  ];
+  public animation: Object = {
+    enable: false
+  };
+  //Initializing Legend
+  public legendSettings: Object = {
+    visible: false
+  };
+  //Initializing Datalabel
+  public dataLabel: Object = {
+    visible: true,
+    position: "Inside",
+    font: { size: "10px", color: "white" },
+    template: "<div>${point.x}: ${point.y}</div>"
+  };
+  // custom code start
+  public load(args: IAccLoadedEventArgs): void {
+    let selectedTheme: string = location.hash.split("/")[1];
+    selectedTheme = selectedTheme ? selectedTheme : "Material";
+    args.accumulation.theme = <AccumulationTheme>(
+      (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(
+        /-dark/i,
+        "Dark"
+      )
+    );
+    //dark mode
+    this.pie.background = "#FFFFFF";
+  }
+  openTendersStatistic(){
+    this.percent = (Math.round(this.won/(this.won + this.lost) * 100 * 100) / 100).toFixed(2);
+  }
+  // custom code end
+  public center: Object = { x: "50%", y: "50%" };
+  public startAngle: number = 0;
+  public endAngle: number = 360;
+  public explode: boolean = true;
+  public enableAnimation: boolean = false;
+  public tooltip: Object = {
+    enable: true,
+    format: "${point.x} : <b>${point.y}</b>"
+  };
+  public title: string = "Success statistics";
 
   ngOnInit(): void {
     this.getPharmacies();
