@@ -64,5 +64,17 @@ namespace Hospital.MedicalRecords.Repository
         {
             return _context.Patients.ToList();
         }
+
+        public Patient FindActivatedByUserName(string username) 
+        {
+            try
+            {
+                return _context.Patients.FirstOrDefault(p => String.Equals(p.UserName, username) && p.Activated);
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

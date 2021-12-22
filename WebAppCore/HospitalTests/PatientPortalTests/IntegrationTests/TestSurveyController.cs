@@ -27,7 +27,6 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             builder.UseInMemoryDatabase("TestDb");
             options = builder.Options;
             TestContext hospitalContext = new TestContext(options);
-            hospitalContext.Database.EnsureDeleted();
             hospitalContext.Database.EnsureCreated();
 
             return new SurveyRepository(hospitalContext);

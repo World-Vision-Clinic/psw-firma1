@@ -14,6 +14,7 @@ import { ViewSurveyResultsComponent } from './view-survey-results/view-survey-re
 import { MedicineConsumptionComponent } from './manager-integration-front-app/medicine-consumption/medicine-consumption.component';
 import { GetSpecificationComponent } from './manager-integration-front-app/get-specification/get-specification.component';
 import { ViewFilesComponent } from './manager-integration-front-app/view-files/view-files.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {path: "", component: FrontPageComponent},
@@ -31,7 +32,8 @@ const routes: Routes = [
   {path: "get-specification", outlet:"showObjRepl", component: GetSpecificationComponent},
   {path: "view-files", outlet:"showObjRepl", component: ViewFilesComponent}
   ]},
-  {path:"manager-feedback", component: ManagerFeedbackViewComponent}
+  {path:"manager-feedback", component: ManagerFeedbackViewComponent},
+  {path:"login", component: LoginComponent}
   ];
 
 @NgModule({

@@ -12,11 +12,16 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Hospital.SharedModel;
 using Hospital.MedicalRecords.Repository;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Hospital_API
 {
     public class Startup
     {
+        private const string SECRET = "ecc0024b9feaa167cf8c5bc4819bc03aa8ed88d86524bd647db6f3363dfabd13";
+        public static readonly SymmetricSecurityKey KEY = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SECRET));
+
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
@@ -31,8 +36,24 @@ namespace Hospital_API
         {
             services.AddMvc();
             services.AddControllers();
-            //services.AddDbContext<HospitalContext>(opt => 
-              // opt.UseNpgsql(Configuration.GetConnectionString(CreateConnectionStringFromEnvironment())));
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = "JwtBearer";
+                options.DefaultChallengeScheme = "JwtBearer";
+            }).AddJwtBearer("JwtBearer", jwtOptions => 
+            {
+                jwtOptions.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    IssuerSigningKey = KEY,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = "PSW",
+                    ValidateIssuer = true,
+                    ValidAudience = "PSW-audience",
+                    ValidateAudience = true,
+                    ValidateLifetime = true
+                };
+            });
+           //services.AddDbContext<HospitalContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString(CreateConnectionStringFromEnvironment())));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +66,7 @@ namespace Hospital_API
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

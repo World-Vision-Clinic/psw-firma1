@@ -20,5 +20,6 @@ namespace Hospital.MedicalRecords.Repository
         public void Modify(Patient patient);
 
         public List<Patient> GetAll();
+        public Patient FindActivatedByUserName(string username);
     }
 }

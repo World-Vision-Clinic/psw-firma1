@@ -325,6 +325,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
 
             Appointment appointment = new Appointment()
             {
+                Id = 9 ,
                 PatientForeignKey = 1,
                 DoctorForeignKey = 11,
                 Type = AppointmentType.Appointment,
@@ -343,19 +344,22 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         {
             Appointment appointment = new Appointment()
             {
-                Id = 2,
+                Id = 10,
                 PatientForeignKey = 1,
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
-                Date = new DateTime(2021, 12, 17, 0, 0, 0),
+                Date = DateTime.Now.AddDays(5),
                 Time = new TimeSpan(0, 11, 30, 0, 0),
                 IsCancelled = false
             };
 
-            var response = _appointmentController.CancelAppointment(2);
+            _appointmentRepository.AddAppointment(appointment);
+            var response = _appointmentController.CancelAppointment(10);
 
-            response.Equals(HttpStatusCode.OK);
-            Assert.NotNull(response.Value);
+
+            var result = response.Result as OkObjectResult;
+            Assert.Equal(200, result.StatusCode);
+            Assert.NotNull(result.Value);
 
         }
 
@@ -364,7 +368,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         {
             Appointment appointment = new Appointment()
             {
-                Id = 2,
+                Id = 11,
                 PatientForeignKey = 1,
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
@@ -373,10 +377,11 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 IsCancelled = true
             };
 
-            var response = _appointmentController.CancelAppointment(2);
+            _appointmentRepository.AddAppointment(appointment);
+            var response = _appointmentController.CancelAppointment(11);
 
-            response.Equals(HttpStatusCode.BadRequest);
-            Assert.NotNull(response.Value);
+            var result = response.Result as BadRequestObjectResult;
+            Assert.Equal(400, result.StatusCode);
 
         }
 

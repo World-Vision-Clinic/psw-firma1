@@ -1,38 +1,54 @@
 .mat-stepper-horizontal {
-    margin-top: 8px;
-    text-align: center;
-    overflow: hidden;
-    padding: 0;
-  }
-  ::ng-deep .mat-horizontal-stepper-header{
-    pointer-events: none !important;
+  margin-top: 8px;
+  text-align: center;
+  overflow: hidden;
+  padding: 0;
 }
-  .mat-form-field {
-    margin-top: 16px;
-  }
-
-  td{
-    cursor: pointer;
+::ng-deep .mat-horizontal-stepper-header{
+  pointer-events: none !important;
 }
-  tr{
-    width: 50%;
+.mat-form-field {
+  margin-top: 16px;
+}
+table{
+margin-left:auto;
+margin-right:auto;
+text-align: left;
+}
+td{
+  cursor: pointer;
+  padding: 0.5rem;
+}
+tr{
+  width: 50%;
+  font-size: large;
+}
+th{
+  width: 50%;
+  font-size: large;
+  font-weight: bold;
+  padding: 0.5rem;
+}
+p, button{
     font-size: large;
 }
-  th{
-    width: 50%;
-    font-size: large;
-    font-weight: bold;
-  }
-  p, button{
-      font-size: large;
-  }
 .error{
-  text-align : center;
-  font-size: xx-large;
-  color: red;
-  margin-top: 50px;
+text-align : center;
+font-size: xx-large;
+color: red;
+margin-top: 50px;
 }
 
 .highlighted{
-  background-color:rgb(196, 135, 237 );;
+background-color:rgb(196, 135, 237 );
+}
+
+.nextButton{
+float: right;
+width: 150px;
+}
+
+.backButton{
+float: left;
+width: 150px;
 }
