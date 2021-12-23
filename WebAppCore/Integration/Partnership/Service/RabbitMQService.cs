@@ -1,4 +1,5 @@
-﻿using Integration.Pharmacy.Model;
+﻿using Integration.Partnership.Model;
+using Integration.Pharmacy.Model;
 using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Repository.RepositoryInterfaces;
 using Microsoft.Extensions.Hosting;
@@ -36,20 +37,20 @@ namespace Integration.Pharmacy.Service
         }
         public override Task StartAsync(CancellationToken cancellationToken)
         {
-            foreach(PharmacyProfile pharmacyProfile in pharmaciesRepository.GetAll())
+            foreach (PharmacyProfile pharmacyProfile in pharmaciesRepository.GetAll())
             {
                 var factory = new ConnectionFactory() { HostName = "localhost" };
                 connection = factory.CreateConnection();
                 channel = connection.CreateModel();
 
-                channel.ExchangeDeclare(exchange: "NewsChannel", type: ExchangeType.Fanout);
+                channel.ExchangeDeclare(exchange: pharmacyProfile.Name + "NewsChannel", type: ExchangeType.Direct);
                 var queueName = channel.QueueDeclare(queue: pharmacyProfile.Name,
                                        durable: false,
                                        exclusive: false,
                                        autoDelete: false,
                                        arguments: null).QueueName;
                 channel.QueueBind(queue: queueName,
-                                    exchange: "NewsChannel",
+                                    exchange: pharmacyProfile.Name + "NewsChannel",
                                     routingKey: pharmacyProfile.Name);
 
                 var consumer = new EventingBasicConsumer(channel);
@@ -66,11 +67,54 @@ namespace Integration.Pharmacy.Service
                     news.IdEncoded = Generator.GenerateNewsId();
                     news.PharmacyName = pharmacyProfile.Name;
                     newsRepository.Save(news);
-                    
+
                 };
 
 
                 channel.BasicConsume(queue: pharmacyProfile.Name,
+                                        autoAck: true,
+                                        consumer: consumer);
+            }
+
+            foreach (PharmacyProfile pharmacyProfile in pharmaciesRepository.GetAll())
+            {
+                var factory = new ConnectionFactory() { HostName = "localhost" };
+                connection = factory.CreateConnection();
+                channel = connection.CreateModel();
+
+                channel.ExchangeDeclare(exchange: pharmacyProfile.Name + "OffersChannel", type: ExchangeType.Direct);
+                var queueName = channel.QueueDeclare(queue: pharmacyProfile.Name + "Offers",
+                                       durable: false,
+                                       exclusive: false,
+                                       autoDelete: false,
+                                       arguments: null).QueueName;
+                channel.QueueBind(queue: queueName,
+                                    exchange: pharmacyProfile.Name + "OffersChannel",
+                                    routingKey: pharmacyProfile.Name + "Offers");
+
+                var consumer = new EventingBasicConsumer(channel);
+                consumer.Received += (model, ea) =>
+                {
+                    byte[] body = ea.Body.ToArray();
+                    var jsonMessage = Encoding.UTF8.GetString(body);
+                    TenderOffer offer;
+
+                    offer = JsonConvert.DeserializeObject<TenderOffer>(jsonMessage);
+
+                    offer.PharmacyName = pharmacyProfile.Name;
+
+                    Console.WriteLine(offer.PharmacyName);
+                    foreach (OfferItem item in offer.OfferItems)
+                    {
+                        Console.WriteLine(item.MedicineName + " " + item.Quantity + " " + item.Price);
+                    }
+                    Console.WriteLine(offer.TotalPrice);
+
+
+                };
+
+
+                channel.BasicConsume(queue: pharmacyProfile.Name + "Offers",
                                         autoAck: true,
                                         consumer: consumer);
             }
