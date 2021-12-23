@@ -28,6 +28,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { GetSpecificationComponent } from './manager-integration-front-app/get-specification/get-specification.component';
 import { ViewFilesComponent } from './manager-integration-front-app/view-files/view-files.component';
 import { LoginComponent } from './login/login.component';
+import { TenderCreationComponent } from './manager-integration-front-app/tender-creation/tender-creation.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { LoginComponent } from './login/login.component';
     NewsComponent,
     GetSpecificationComponent,
     ViewFilesComponent,
-    LoginComponent
+    LoginComponent,
+    TenderCreationComponent
   ],
   imports: [
     BrowserModule,
