@@ -11,5 +11,6 @@ namespace Integration.Partnership.Model
         public string PharmacyName { get; set; }
         public double TotalPrice { get; set; }
         public ICollection<OfferItem> OfferItems { get; set; }
+        public bool Winner { get; set; }
     }
 }
