@@ -12,7 +12,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { PharmacyRegistrationComponent } from './pharmacy-registration/pharmacy-registration.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ManagerIntegrationFrontAppComponent } from './manager-integration-front-app/manager-integration-front-app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { OverviewObjectionsRepliesComponent } from './manager-integration-front-app/overview-objections-replies/overview-objections-replies.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ObjectionFormPageComponent } from './manager-integration-front-app/objection-form-page/objection-form-page.component';
@@ -28,6 +28,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { GetSpecificationComponent } from './manager-integration-front-app/get-specification/get-specification.component';
 import { ViewFilesComponent } from './manager-integration-front-app/view-files/view-files.component';
 import { LoginComponent } from './login/login.component';
+import { AuthInterceptor } from './interceptor';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
   declarations: [
@@ -67,7 +70,15 @@ import { LoginComponent } from './login/login.component';
     // MatDateRangeInput,
     // MatDateRangePicker,
   ],
-  providers: [],
+  providers: [
+    {provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    AuthGuard,
+    JwtHelperService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

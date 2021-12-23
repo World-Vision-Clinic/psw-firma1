@@ -15,13 +15,14 @@ import { MedicineConsumptionComponent } from './manager-integration-front-app/me
 import { GetSpecificationComponent } from './manager-integration-front-app/get-specification/get-specification.component';
 import { ViewFilesComponent } from './manager-integration-front-app/view-files/view-files.component';
 import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   {path: "", component: FrontPageComponent},
   {path:"buildings", component: BuildingsMapComponent},
   {path:"hospital/:hospitalId", component: Hospital1Component},
   {path:"pharmacy-registration", component: PharmacyRegistrationComponent},
-  {path:"survey-results", component: ViewSurveyResultsComponent},
+  {path:"survey-results", component: ViewSurveyResultsComponent,canActivate:[AuthGuard]},
   {path:"manager-front-app", component: ManagerIntegrationFrontAppComponent, children: [
   {path: "overview-objections-replies", outlet: "showObjRepl", component:OverviewObjectionsRepliesComponent},
   {path: "overview-pharmacies", outlet: "showObjRepl", component:PharmaciesComponent},
