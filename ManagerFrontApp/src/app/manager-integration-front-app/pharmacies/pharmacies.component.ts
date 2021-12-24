@@ -46,8 +46,8 @@ export class PharmaciesComponent implements OnInit {
   @ViewChild("pie")
   public pie!: AccumulationChartComponent | AccumulationChart;
   palette = [
-    "rgba(255,0,0)",
-    "rgba(100,225,50)"
+    "rgba(255,41,41)",
+    "rgba(102,255,102)"
   ];
   public animation: Object = {
     enable: false
