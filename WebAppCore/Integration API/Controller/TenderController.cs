@@ -50,5 +50,20 @@ namespace Integration_API.Controller
             }
             return Ok();
         }
+
+        [HttpGet("getWholeStatistic")]
+        public IActionResult GetWholeStatistic(string pharmacyName)
+        {
+            List<int> statistic = service.GetPharmacyWinningStatistic(pharmacyName);
+            return Ok(statistic);
+        }
+
+        [HttpGet("getTendersPharmacyParticipated")]
+        public IActionResult GetTendersPharmacyParticipated(string pharmacyName)
+        {
+            List<Tender> tenders = service.GetTendersPharmacyParticipated(pharmacyName);
+            return Ok(tenders);
+        }
+
     }
 }

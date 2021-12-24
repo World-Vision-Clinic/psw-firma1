@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Integration.Partnership.Model;
+using Integration.Partnership.Repository;
 using Integration.Pharmacy.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,7 +37,6 @@ namespace Integration.SharedModel
             modelbuilder.Entity<TenderOffer>()
             .HasMany(o => o.OfferItems)
             .WithOne();
-            
         }
 
         protected override void OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder optionsBuilder)
