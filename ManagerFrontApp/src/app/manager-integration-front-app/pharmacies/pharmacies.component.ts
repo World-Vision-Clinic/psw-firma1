@@ -38,29 +38,52 @@ export class PharmaciesComponent implements OnInit {
   yBarChart = [];
   tenderSelected: boolean = false;
   tendersPharmacyParticipated: any = [];
-
+  profitSelected: boolean = false;
+  selectedGraph: string = '';
+  public primaryXAxis: Object | undefined;
+  public chartData: Object[] |undefined ;
+  public titleBar: string = '';
+  public primaryYAxis: Object | undefined;
+  
   constructor(private http:HttpClient) { }
 
   public dataBarChart: Object[] = [
-    { x: 'GER', y: 172 },
-    { x: 'RUS', y: 300 },
-    { x: 'BRZ', y: 439 },
-    { x: 'IND', y: 262 },
-    { x: 'CHN', y: 721 },
+    { x: 'GER', y: 17.2 },
+    { x: 'RUS', y: 30 },
+    { x: 'BRZ', y: 43 },
+    { x: 'IND', y: 2 },
+    { x: 'CHN', y: 7 },
   ];
-
-  //Initializing Primary X Axis
-  public primaryXAxis: Object = {
-    valueType: 'Category',
-  };
 
   public data: Object[] = [
     { x: "LOST", y: this.lost },
     { x: "WON", y: this.won }
   ];
+
+  public dataProfit: Object[] = [
+  { x: 'Tender1', y: 4.2},
+  { x: 'Tender 2', y: 18.2},
+  { x: 'Tender 3', y: 46.7}]
+ 
+  //Initializing Primary X Axis
+  public primaryXAxisProfit: Object = {
+    valueType: 'Category', 
+  };
   
+  public primaryYAxisProfit: Object = {
+    minimum: 0, maximum: 100, interval: 10,
+    title: 'Profit (millions RSD)',
+  };
+
   TenderSelected(){
-    this.tenderSelected = true;
+    if(this.selectedGraph === 'profit'){
+      this.tenderSelected = false;
+      this.profitSelected = true;
+    }else{
+      this.profitSelected = false;
+      this.tenderSelected = true;
+    }
+    
   }
 
   openTendersStatistic(){
@@ -72,6 +95,7 @@ export class PharmaciesComponent implements OnInit {
       this.lost = data[0]; this.won = data[1];this.percent = (Math.round(this.won/(this.won + this.lost) * 100 * 100) / 100).toFixed(2);},
       error =>{alert("An error occured")});
   }
+ 
 
   @ViewChild("pie")
   public pie!: AccumulationChartComponent | AccumulationChart;
@@ -122,6 +146,15 @@ export class PharmaciesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPharmacies();
+    this.primaryXAxis = {
+        title: 'Offers',
+        valueType: 'Category',
+    };
+    this.primaryYAxis = {
+        minimum: 0, maximum: 100, interval: 10,
+        title: 'Offer price (millions RSD)',
+    };
+    this.title = 'Tender offers';
   }
 
   searchPharmaciesForMedicals(){ 
