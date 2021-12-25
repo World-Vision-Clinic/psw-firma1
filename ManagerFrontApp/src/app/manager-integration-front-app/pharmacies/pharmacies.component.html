@@ -85,7 +85,7 @@
             <div style="display: inline-block; margin-left: -55%;  position: absolute; margin-top: 5%;">
                 <select class="form-select" aria-label="Default select example" (change)="TenderSelected()" name="selectedGraph" [(ngModel)]="selectedGraph">
                     <option disabled selected hidden>Select tender for statistic</option>
-                    <option *ngFor="let tender of tendersPharmacyParticipated" [value]="tender.Title">
+                    <option *ngFor="let tender of tendersPharmacyParticipated" [value]="tender.TenderHash">
                         {{tender.Title}}
                     </option>
                     <option value="profit">
@@ -96,14 +96,14 @@
             <div style="position: absolute; margin-top: -36%; margin-left: 50%;" *ngIf="tenderSelected">
                 <ejs-chart style='display:block' id='chartcontainer'  [primaryXAxis]='primaryXAxis' [primaryYAxis]='primaryYAxis' [title]='title'> 
                     <e-series-collection>
-                        <e-series [dataSource]='dataBarChart' type='Bar' xName='x' yName='y'> </e-series>    
+                        <e-series [dataSource]='dataBarChart' type='Bar' xName='x' yName='y' [pointColorMapping]='pointColorMapping'> </e-series>    
                     </e-series-collection>
                 </ejs-chart>
             </div>
             <div style="position: absolute; margin-top: -36%; margin-left: 50%;" *ngIf="profitSelected">
                 <ejs-chart style='display:block' id='chartcontainer'  [primaryXAxis]='primaryXAxisProfit' [primaryYAxis]='primaryYAxisProfit'>
                     <e-series-collection>
-                        <e-series [dataSource]='dataProfit' type='Line' xName='x' yName='y'> </e-series>    
+                        <e-series [dataSource]='dataProfit' type='Line' xName='x' yName='y' [pointColorMapping]='pointColorMapping'> </e-series>    
                     </e-series-collection>
                     </ejs-chart>
             </div>

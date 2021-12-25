@@ -14,7 +14,7 @@ namespace Integration.Partnership.Service
             tenderRepository = repository;
         }
 
-        public List<int> GetPharmacyWinningStatistic(String pharmacyName)
+        public List<int> GetPharmacyWinningStatistic(string pharmacyName)
         {
             List<int> statistic = new List<int>();
 
@@ -28,7 +28,7 @@ namespace Integration.Partnership.Service
             return statistic;
         }
 
-        public List<Tender> GetTendersPharmacyParticipated(String pharmacyName)
+        public List<Tender> GetTendersPharmacyParticipated(string pharmacyName)
         {
             List<Tender> tendersPharmacyParticipated = new List<Tender>();
             foreach (Tender tender in tenderRepository.GetAll())
@@ -45,7 +45,59 @@ namespace Integration.Partnership.Service
             return tendersPharmacyParticipated;
         }
 
-        private int GetNumberOfTendersPharmacyParticipated(String pharmacyName)
+        public List<TenderOffer> GetOffersForTender(string tenderHash, string pharmacyName)
+        {
+            List<TenderOffer> offersForTender = new List<TenderOffer>();
+            foreach (Tender tender in tenderRepository.GetAll())
+            {
+                if (tender.TenderHash.Equals(tenderHash)) {
+                    foreach(TenderOffer offer in tender.TenderOffers)
+                    {
+                        if (offer.PharmacyName.Equals(pharmacyName))
+                        {
+                            offersForTender.Add(offer);
+                        }
+                    }
+                }
+            }
+            return offersForTender;
+        }
+
+        public List<TenderOffer> GetWinningOffersForPharmacy(string pharmacyName)
+        {
+            List<TenderOffer> winningOffers = new List<TenderOffer>();
+            foreach (Tender tender in tenderRepository.GetAll())
+            {
+                foreach (TenderOffer offer in tender.TenderOffers)
+                {
+                    if (offer.PharmacyName.Equals(pharmacyName) && offer.Winner)
+                    {
+                        winningOffers.Add(offer);
+                        break;
+                    }
+                }
+            }
+            
+            return winningOffers;
+        }
+
+        public string GetTenderName(string offerHash)
+        {
+            string tenderName = "";
+            foreach (Tender tender in tenderRepository.GetAll())
+            {
+                foreach (TenderOffer offer in tender.TenderOffers)
+                {
+                    if (offer.TenderOfferHash.Equals(offerHash))
+                    {
+                        return tender.Title;
+                    }
+                }
+            }
+            return tenderName;
+        }
+
+        private int GetNumberOfTendersPharmacyParticipated(string pharmacyName)
         {
             int numberOfTendersPharmacyParticipated = 0;
             foreach (Tender tender in tenderRepository.GetAll())
@@ -62,7 +114,7 @@ namespace Integration.Partnership.Service
             return numberOfTendersPharmacyParticipated;
         }
 
-        private int GetNumberOfTendersPharmacyWon(String pharmacyName)
+        private int GetNumberOfTendersPharmacyWon(string pharmacyName)
         {
             int numberOfTendersPharmacyWon = 0;
 

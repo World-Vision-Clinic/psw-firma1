@@ -47,23 +47,16 @@ export class PharmaciesComponent implements OnInit {
   
   constructor(private http:HttpClient) { }
 
-  public dataBarChart: Object[] = [
-    { x: 'GER', y: 17.2 },
-    { x: 'RUS', y: 30 },
-    { x: 'BRZ', y: 43 },
-    { x: 'IND', y: 2 },
-    { x: 'CHN', y: 7 },
-  ];
+  pointColorMapping: string = 'color';
+
+  public dataBarChart: Object[] = [];
 
   public data: Object[] = [
     { x: "LOST", y: this.lost },
     { x: "WON", y: this.won }
   ];
 
-  public dataProfit: Object[] = [
-  { x: 'Tender1', y: 4.2},
-  { x: 'Tender 2', y: 18.2},
-  { x: 'Tender 3', y: 46.7}]
+  public dataProfit: Object[] = [];
  
   //Initializing Primary X Axis
   public primaryXAxisProfit: Object = {
@@ -79,9 +72,29 @@ export class PharmaciesComponent implements OnInit {
     if(this.selectedGraph === 'profit'){
       this.tenderSelected = false;
       this.profitSelected = true;
+      this.http.get<any>('http://localhost:43818/tender/getWinningOffersForPharmacy?pharmacyName=' + this.selectedProfile.Name).subscribe(data=>{
+        this.dataProfit = [];
+        for(let i = 0; i < data.length; i++){
+          var obj = {x: data[i].TenderName, y: data[i].TotalPrice};
+          this.dataProfit.push(obj)
+        }
+        },
+        error =>{alert("An error occured")});
     }else{
       this.profitSelected = false;
       this.tenderSelected = true;
+      this.http.get<any>('http://localhost:43818/tender/getOffersForTender?tenderHash=' + this.selectedGraph + "&pharmacyName=" + this.selectedProfile.Name).subscribe(data=>{
+        this.dataBarChart = [];
+        for(let i = 0; i < data.length; i++){
+          if(data[i].Winner){
+            var obj = {x: 'Ponuda' + data[i].TenderOfferId + '(win)', y: data[i].TotalPrice,  color: 'rgba(102,255,102)'  };
+          }else{
+            var obj = {x: 'Ponuda' + data[i].TenderOfferId + '(lost)', y: data[i].TotalPrice,  color: 'rgba(255,41,41)'  };
+          }
+          this.dataBarChart.push(obj)
+        }
+        },
+        error =>{alert("An error occured")});
     }
     
   }

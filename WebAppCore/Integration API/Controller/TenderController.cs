@@ -65,5 +65,24 @@ namespace Integration_API.Controller
             return Ok(tenders);
         }
 
+        [HttpGet("getOffersForTender")]
+        public IActionResult GetOffersForTender(string tenderHash, string pharmacyName)
+        {
+            List<TenderOffer> tenderOffers = service.GetOffersForTender(tenderHash, pharmacyName);
+            return Ok(tenderOffers);
+        }
+
+        [HttpGet("getWinningOffersForPharmacy")]
+        public IActionResult GetWinningOffersForPharmacy(string pharmacyName)
+        {
+            List<TenderOffer> winningOffers = service.GetWinningOffersForPharmacy(pharmacyName);
+            List<WinningOfferDto> winningOffersDto = new List<WinningOfferDto>();
+            foreach(TenderOffer offer in winningOffers)
+            {
+                winningOffersDto.Add(OfferMapper.OfferToWinningOfferDto(offer, service.GetTenderName(offer.TenderOfferHash)));
+            }
+            return Ok(winningOffersDto);
+        }
+
     }
 }
