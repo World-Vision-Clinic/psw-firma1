@@ -12,6 +12,9 @@ import { Appointment4stepComponent } from './appointment4step/appointment4step.c
 import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
+
+
+{ path: "homepage", component: MedicalRecordViewComponent },
 { path: "create-feedback", component: PatientCreateFeedbackComponent ,canActivate:[AuthGuard]},
 { path: "view-feedback", component: PatientFeedbackViewComponent ,canActivate:[AuthGuard]},
 { path: "medical-record", component: MedicalRecordViewComponent ,canActivate:[AuthGuard]},

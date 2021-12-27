@@ -23,5 +23,29 @@
 </style>
 -->
 <body>
-    <router-outlet></router-outlet>
+  <div class="row d-flex align-items-center w-100">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8 website_name_label">
+      WORLD VISION CLINIC
+    </div>
+    <div class="col-md-2">
+    </div>
+  </div>
+  <div class="row d-flex align-items-center w-100">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">
+      <nav class="navMenu">
+        <a href="buildings" style="float:none">Home</a>
+        <a href="manager-feedback" style="float:none">Feedbacks</a>
+        <a href="survey-results" style="float:none">Surveys</a>
+        <a href="block-patients" style="float:none">Users</a>
+        <a href="buildings" style="float:none">Hospital editor</a>
+      </nav>
+    </div>
+    <div class="col-md-2">
+    </div>
+  </div>
+  <router-outlet></router-outlet>
 </body>

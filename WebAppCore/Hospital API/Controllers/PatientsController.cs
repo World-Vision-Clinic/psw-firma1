@@ -14,6 +14,7 @@ using Hospital_API.DTO;
 using Hospital_API.Verification;
 using Hospital_API.Mapper;
 using Hospital.SharedModel;
+using Hospital.Schedule.Repository;
 
 namespace Hospital_API.Controllers
 {
@@ -32,14 +33,32 @@ namespace Hospital_API.Controllers
         {
             _context = new HospitalContext();
 
-            _patientService = new PatientService(new PatientRepository(new Hospital.SharedModel.HospitalContext()));
+            IAppointmentRepository appointmentRepository = new AppointmentRepository(_context);
+            _patientService = new PatientService(new PatientRepository(_context), appointmentRepository);
             _patientAllergenService = new PatientAllergenService(new PatientAllergenRepository(_context, new PatientRepository(_context), new AllergenRepository(_context)));
             _allergenService = new AllergenService(new AllergenRepository(_context));
             _doctorService = new DoctorService(new DoctorRepository(_context, new PatientRepository(_context)));
             _verification = new PatientVerification(_patientService, _doctorService, _allergenService);
         }
 
-        // GET: api/Feedbacks/5
+        [HttpGet]
+        public ActionResult<List<MedicalRecordDTO>> GetAllPatients()
+        {
+            List<Patient> patients = _patientService.GetAll();
+            List<MedicalRecordDTO> medicalRecordDTOs = new List<MedicalRecordDTO>();
+            foreach(Patient patient in patients)
+            {
+                MedicalRecordDTO medicalRecordDTO = MedicalRecordMapper.PatientToMedicalRecordDTO(patient);
+                Doctor patientDoctor = _doctorService.FindById(patient.PreferedDoctor);
+                if (patientDoctor != null)
+                    medicalRecordDTO.PreferedDoctorName = (patientDoctor.FirstName + " " + patientDoctor.LastName);
+                medicalRecordDTOs.Add(medicalRecordDTO);
+            }
+
+            return medicalRecordDTOs;
+        }
+
+        // GET: api/Patients/5
         [HttpGet("{id}")]
         public ActionResult<MedicalRecordDTO> GetPatient(int id)
         {
@@ -64,9 +83,26 @@ namespace Hospital_API.Controllers
             return medicalRecordDTO;
         }
 
+        // GET: api/Patients/block/5
+        [HttpGet("block/{username}")]
+        public IActionResult BlockPatient(string username)
+        {
+            var patient = _patientService.FindByUserName(username);
+
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            if (!_patientService.Block(patient))
+                return BadRequest();
+
+            return Ok();
+        }
+
         // GET: api/Patients/activate?token=
         [HttpGet("activate")]
-        public IActionResult ActivatePatient([FromQuery]string token)
+        public IActionResult ActivatePatient([FromQuery] string token)
         {
             var patient = _patientService.FindByToken(token);
 
@@ -78,6 +114,12 @@ namespace Hospital_API.Controllers
             _patientService.Activate(patient);
 
             return Redirect("http://localhost:4200/login");
+        }
+
+        [HttpGet("malicious")]
+        public ActionResult<IEnumerable<Patient>> GetMaliciousPatients()
+        {
+            return _patientService.GetMaliciousPatients();
         }
 
         // POST: api/Patients/register

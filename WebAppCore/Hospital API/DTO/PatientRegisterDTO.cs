@@ -56,6 +56,7 @@ namespace Hospital_API.DTO
             patient.Weight = Weight;
             patient.Height = Height;
             patient.BloodType = (BloodType) Enum.Parse(typeof(BloodType), BloodType);
+            patient.IsBlocked = false;
 
             return patient;
         }
