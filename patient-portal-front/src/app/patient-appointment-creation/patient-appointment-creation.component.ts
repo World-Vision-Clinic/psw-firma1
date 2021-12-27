@@ -69,7 +69,7 @@ export class PatientAppointmentCreationComponent implements OnInit {
   }
 
   createAppointment(appointment: any) {
-    appointment.patientForeignKey = 1
+    appointment.patientForeignKey = 0  //1
     this._appointmentCreationService.createAppointment(appointment).subscribe();
     this.router.navigate(['/medical-record']);
   }
