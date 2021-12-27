@@ -28,8 +28,8 @@ namespace Hospital_API.DTO
         public MedicalRecordDTO(Patient patientToCopy) 
         {
             this.UserName = patientToCopy.UserName;
-            this.FirstName = patientToCopy.FirstName;
-            this.LastName = patientToCopy.LastName;
+            this.FirstName = patientToCopy.FullName.FirstName;
+            this.LastName = patientToCopy.FullName.LastName;
             this.EMail = patientToCopy.EMail;
             this.Gender = patientToCopy.Gender.ToString();
             this.Jmbg = patientToCopy.Jmbg;

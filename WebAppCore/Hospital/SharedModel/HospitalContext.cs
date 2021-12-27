@@ -177,6 +177,13 @@ namespace Hospital.SharedModel
                new Doctor { Id = 19, FirstName = "Vasilije", LastName = "Mit", Type = 0 }
                );
 
+            modelBuilder.Entity<Patient>(entity =>
+            {
+                entity.ToTable("Patients");
+                entity.HasKey(c => c.Id);
+
+                entity.OwnsOne(x => x.FullName);
+            });
         }
 
         protected override void OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder optionsBuilder)

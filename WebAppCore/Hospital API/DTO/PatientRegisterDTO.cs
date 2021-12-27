@@ -34,13 +34,13 @@ namespace Hospital_API.DTO
             patient.UserName = UserName;
             patient.Password = Password;
 
-            patient.FirstName = Char.ToUpper(FirstName[0]) + "";
+            patient.FullName.FirstName = Char.ToUpper(FirstName[0]) + "";
             if(FirstName.Length > 1)
-                patient.FirstName += FirstName.Substring(1);
+                patient.FullName.FirstName += FirstName.Substring(1);
             
-            patient.LastName = Char.ToUpper(LastName[0]) + "";
+            patient.FullName.LastName = Char.ToUpper(LastName[0]) + "";
             if (LastName.Length > 1)
-                patient.LastName += LastName.Substring(1);
+                patient.FullName.LastName += LastName.Substring(1);
 
             patient.Token = null;
             patient.Activated = false;

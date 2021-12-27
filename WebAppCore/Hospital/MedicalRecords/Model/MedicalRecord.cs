@@ -119,7 +119,7 @@ namespace Hospital.MedicalRecords.Model
         public string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder("");
-            stringBuilder.Append(this.Patient.FirstName).Append(" ").Append(this.Patient.LastName).Append(" | ").Append(this.Patient.Id);
+            stringBuilder.Append(this.Patient.FullName.FirstName).Append(" ").Append(this.Patient.FullName.LastName).Append(" | ").Append(this.Patient.Id);
 
             return stringBuilder.ToString();
         }
