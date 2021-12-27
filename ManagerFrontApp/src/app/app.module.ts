@@ -60,8 +60,8 @@ import { ChartAllModule, AccumulationChartAllModule, RangeNavigatorAllModule } f
     //NewsComponent,
     //GetSpecificationComponent,
     //ViewFilesComponent
-    MedicineConsumptionComponent,
-    NewsComponent,
+    //MedicineConsumptionComponent,
+    //NewsComponent,
     GetSpecificationComponent,
     ViewFilesComponent,
     LoginComponent,
