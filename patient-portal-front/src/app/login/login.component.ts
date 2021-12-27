@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RegisterService } from '../register.service';
+import { SurveyComponent } from '../survey/survey/survey.component';
 
 @Component({
   selector: 'app-login',
@@ -28,8 +29,10 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this._registerService.login(this.LoginDTO).subscribe(data => localStorage.setItem('PSWtoken', data.token),
-      error =>this.handleError());
+    this._registerService.login(this.LoginDTO).subscribe(
+      data => localStorage.setItem('PSWtoken', data.token),
+      error => this.handleError(),
+      () => this.router.navigate(["/medical-record"]));
   }
   verifyPassword() {
     if(this.LoginDTO.password == "")

@@ -14,11 +14,14 @@
       </div>
       <div class="col-md-4">
         <nav class="navMenu">
-          <a href="homepage" style="float:none">Home</a>
-          <a href="create-feedback" style="float:none">Feedback</a>
-          <a href="register" style="float:none">Sign up</a>
-          <a href="login" style="float:none">Sign in</a>
-          <a href="create-appointment" style="float:none">Appointment</a>
+          <a href="/" *ngIf="!isLoggedIn()" style="float:none">Home</a>
+          <a href="medical-record" *ngIf="isLoggedIn()" style="float:none">Home</a>
+          <a href="create-feedback" *ngIf="isLoggedIn()" style="float:none">Feedback</a>
+          <a href="register" *ngIf="!isLoggedIn()" style="float:none">Sign up</a>
+          <a href="login" *ngIf="!isLoggedIn()" style="float:none">Sign in</a>
+          <a href="create-appointment" *ngIf="isLoggedIn()" style="float:none">Appointment(Assisted)</a>
+          <a href="appointment4step" *ngIf="isLoggedIn()" style="float:none">Appointment(Standard)</a>
+          <a href="/" *ngIf="isLoggedIn()" (click)="logout()" style="float:none">Sign out</a>
         </nav>
       </div>
       <div class="col-md-4">
