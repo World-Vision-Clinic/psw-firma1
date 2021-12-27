@@ -10,14 +10,19 @@ namespace Hospital.MedicalRecords.Model
 {
     public class FullName : ValueObject
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
         public FullName() { }
 
         public FullName(string firstName, string lastName)
         {
-            FirstName = firstName;
-            LastName = lastName;
+            this.FirstName = Char.ToUpper(firstName[0]) + "";
+            if (firstName.Length > 1)
+                this.FirstName += firstName.Substring(1);
+
+            this.LastName = Char.ToUpper(lastName[0]) + "";
+            if (lastName.Length > 1)
+                this.LastName += lastName.Substring(1);
         }
         protected override IEnumerable<object> GetEqualityComponents()
         {

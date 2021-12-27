@@ -34,9 +34,9 @@ namespace Hospital_API.DTO
             this.Gender = patientToCopy.Gender.ToString();
             this.Jmbg = patientToCopy.Jmbg;
             this.DateOfBirth = patientToCopy.DateOfBirth;
-            this.Country = patientToCopy.Country;
-            this.Address = patientToCopy.Address;
-            this.City = patientToCopy.City;
+            this.Country = patientToCopy.Residence.Country;
+            this.Address = patientToCopy.Residence.Address;
+            this.City = patientToCopy.Residence.City;
             this.Phone = patientToCopy.Phone;
             this.PreferedDoctorName = "";
             this.Height = patientToCopy.Height;

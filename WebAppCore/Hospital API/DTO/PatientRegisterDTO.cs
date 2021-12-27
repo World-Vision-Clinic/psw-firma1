@@ -30,35 +30,8 @@ namespace Hospital_API.DTO
 
         public Patient ToPatient()
         {
-            Patient patient = new Patient();
-            patient.UserName = UserName;
-            patient.Password = Password;
-
-            patient.FullName.FirstName = Char.ToUpper(FirstName[0]) + "";
-            if(FirstName.Length > 1)
-                patient.FullName.FirstName += FirstName.Substring(1);
-            
-            patient.FullName.LastName = Char.ToUpper(LastName[0]) + "";
-            if (LastName.Length > 1)
-                patient.FullName.LastName += LastName.Substring(1);
-
-            patient.Token = null;
-            patient.Activated = false;
-            patient.Gender = (Gender) Enum.Parse(typeof(Gender), Gender);
-            patient.Jmbg = Jmbg;
-            patient.DateOfBirth = DateOfBirth;
-            patient.Country = Country;
-            patient.Address = Address;
-            patient.City = City;
-            patient.EMail = EMail;
-            patient.Phone = Phone;
-            patient.PreferedDoctor = PreferedDoctor;
-            patient.Weight = Weight;
-            patient.Height = Height;
-            patient.BloodType = (BloodType) Enum.Parse(typeof(BloodType), BloodType);
-            patient.IsBlocked = false;
-
-            return patient;
+            return new Patient(UserName, Password, new FullName(FirstName, LastName), EMail, false, (Gender)Enum.Parse(typeof(Gender), Gender),
+                Jmbg, DateOfBirth, new Residence(Country, Address, City), Phone, PreferedDoctor, Weight, Height, (BloodType)Enum.Parse(typeof(BloodType), BloodType), false);
         }
     }
 }

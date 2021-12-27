@@ -183,6 +183,7 @@ namespace Hospital.SharedModel
                 entity.HasKey(c => c.Id);
 
                 entity.OwnsOne(x => x.FullName);
+                entity.OwnsOne(x => x.Residence);
             });
         }
 

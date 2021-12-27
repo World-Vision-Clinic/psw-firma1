@@ -24,24 +24,6 @@ namespace Hospital.MedicalRecords.Service
             _appointmentRepository = appointmentRepository;
         }
 
-
-        public void AddPatient()
-        {
-            Patient newPatient = new Patient();
-            newPatient.Activated = false;
-            newPatient.Password = "123";
-            newPatient.UserName = "ajajajajja";
-            newPatient.EMail = "kedosok152@funboxcn.com";
-            newPatient.Token = TokenizeSHA256(newPatient.UserName);
-            _repo.AddPatient(newPatient);
-            new Thread(() =>
-            {
-                Thread.CurrentThread.IsBackground = true;
-                SendEmail(newPatient);
-            }).Start();
-
-        }
-
         public Patient LoginPatient(string username, string password)
         {
             Patient patient = _repo.FindActivatedByUserName(username);
@@ -61,8 +43,6 @@ namespace Hospital.MedicalRecords.Service
             if (FindByUserName(patient.UserName) != null)
                 return;
 
-            patient.Activated = false;
-            patient.Token = TokenizeSHA256(patient.UserName);
             _repo.AddPatient(patient);
             new Thread(() =>
             {
@@ -102,25 +82,11 @@ namespace Hospital.MedicalRecords.Service
         {
             if (!IsBlockable(patient))
                 return false;
-            patient.IsBlocked = true;
+            patient = new Patient(patient.Id, patient.UserName, patient.Password, patient.FullName, patient.EMail, patient.Activated, patient.Gender,
+                patient.Jmbg, patient.DateOfBirth, patient.Residence, patient.Phone, patient.PreferedDoctor, patient.Weight, patient.Height, patient.BloodType, true);
             _repo.Modify(patient);
             SaveSync();
             return true;
-        }
-
-        public string TokenizeSHA256(string username) {  
-  
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(username));
-
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
-                return builder.ToString();
-            }
         }
 
         public Patient FindByToken(string token)
@@ -161,9 +127,9 @@ namespace Hospital.MedicalRecords.Service
         }
 
         public void Activate(Patient patient) {
-            patient.Activated = true;
+            patient = new Patient(patient.Id, patient.UserName, patient.Password, patient.FullName, patient.EMail, true, patient.Gender,
+                patient.Jmbg, patient.DateOfBirth, patient.Residence, patient.Phone, patient.PreferedDoctor, patient.Weight, patient.Height, patient.BloodType, patient.IsBlocked);
             _repo.Modify(patient);
-            SaveSync();
         }
 
         public void SaveSync()

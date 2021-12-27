@@ -61,7 +61,8 @@ namespace Hospital.MedicalRecords.Repository
 
         public void Modify(Patient patient)
         {
-            _context.Entry(patient).State = EntityState.Modified;
+            _context.ChangeTracker.Clear();
+            _context.Patients.Update(patient);
             SaveSync();
         }
 
