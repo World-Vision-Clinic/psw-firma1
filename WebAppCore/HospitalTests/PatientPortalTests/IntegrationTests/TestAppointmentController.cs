@@ -286,14 +286,14 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         }
 
         [Fact]
-        public void Test_get_free_doctor_appointments_in_range_with_interval_loosening_date_priority()
+        public void Test_get_free_doctor_appointments_in_range_with_date_priority()
         {
             AppointmentRecommendationRequestDTO appointmentRecommendationRequestDTO = new AppointmentRecommendationRequestDTO();
             appointmentRecommendationRequestDTO.LowerDateRange = new DateTime(2022, 9, 9, 0, 0, 0);
             appointmentRecommendationRequestDTO.UpperDateRange = new DateTime(2022, 9, 9, 23, 59, 59);
             appointmentRecommendationRequestDTO.LowerTimeRange = "12:00:00";
             appointmentRecommendationRequestDTO.UpperTimeRange = "13:00:00";
-            appointmentRecommendationRequestDTO.DoctorId = 1;
+            appointmentRecommendationRequestDTO.DoctorId = 11;
             appointmentRecommendationRequestDTO.PriorityType = "DATE_TIME_PRIORITY";
 
             Doctor doctorCardi1 = new Doctor()

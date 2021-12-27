@@ -1,4 +1,4 @@
-﻿using Xunit;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -178,7 +178,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 Id = 100,
                 PatientForeignKey = 100,
                 DoctorForeignKey = 0,
-                IsCanceled = true,
+                IsCancelled = true,
                 Type = AppointmentType.Appointment
             };
 
@@ -188,7 +188,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 Id = 101,
                 PatientForeignKey = 100,
                 DoctorForeignKey = 0,
-                IsCanceled = true,
+                IsCancelled = true,
                 Type = AppointmentType.Appointment
             };
 
@@ -198,7 +198,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 Id = 102,
                 PatientForeignKey = 100,
                 DoctorForeignKey = 0,
-                IsCanceled = true,
+                IsCancelled = true,
                 Type = AppointmentType.Appointment
             };
             _appointmentRepository.AddAppointment(appointment1);
@@ -231,7 +231,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 Id = 200,
                 PatientForeignKey = 101,
                 DoctorForeignKey = 0,
-                IsCanceled = true,
+                IsCancelled = true,
                 Type = AppointmentType.Appointment
             };
 
@@ -241,7 +241,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 Id = 201,
                 PatientForeignKey = 101,
                 DoctorForeignKey = 0,
-                IsCanceled = false,
+                IsCancelled = false,
                 Type = AppointmentType.Appointment
             };
 
@@ -251,7 +251,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 Id = 202,
                 PatientForeignKey = 101,
                 DoctorForeignKey = 0,
-                IsCanceled = true,
+                IsCancelled = true,
                 Type = AppointmentType.Appointment
             };
             _appointmentRepository.AddAppointment(appointment1);
