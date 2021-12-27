@@ -30,8 +30,9 @@ namespace Hospital_API.Controllers
 
         public LoginController()
         {
-            _patientService = new PatientService(new PatientRepository(new Hospital.SharedModel.HospitalContext()));
-            _managerService = new ManagerService(new ManagerRepository(new Hospital.SharedModel.HospitalContext()));
+            IAppointmentRepository _appointmentRepository = new AppointmentRepository(new HospitalContext());
+            _patientService = new PatientService(new PatientRepository(new HospitalContext()), _appointmentRepository);
+            _managerService = new ManagerService(new ManagerRepository(new HospitalContext()));
         }
 
         [HttpPost]
