@@ -18,8 +18,8 @@ export class PatientFeedbackServiceService {
     return this.http.get<Feedback[]>("/api/Feedbacks/published")
   }
 
-  getPatient(id: number) : Observable<MedicalRecord>{
-    return this.http.get<MedicalRecord>("/api/Patients")
+  getPatient(id: number) : Observable<MedicalRecord>{ // Ne treba mu vise argument
+    return this.http.get<MedicalRecord>("/api/Patients/patient")
   }
 
   getPatientAppointments(id: number) : Observable<Appointment[]>{

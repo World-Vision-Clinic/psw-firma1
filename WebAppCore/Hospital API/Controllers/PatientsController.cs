@@ -15,6 +15,7 @@ using Hospital_API.Verification;
 using Hospital_API.Mapper;
 using Hospital.SharedModel;
 using Hospital.Schedule.Repository;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hospital_API.Controllers
 {
@@ -41,6 +42,7 @@ namespace Hospital_API.Controllers
             _verification = new PatientVerification(_patientService, _doctorService, _allergenService);
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpGet]
         public ActionResult<List<MedicalRecordDTO>> GetAllPatients()
         {
@@ -58,11 +60,12 @@ namespace Hospital_API.Controllers
             return medicalRecordDTOs;
         }
 
-        // GET: api/Patients/5
-        [HttpGet("{id}")]
-        public ActionResult<MedicalRecordDTO> GetPatient(int id)
+        // GET: api/Patients/patient
+        [Authorize(Roles = "Patient")]
+        [HttpGet("patient")]
+        public ActionResult<MedicalRecordDTO> GetPatient()
         {
-            Patient patient = _patientService.FindById(id);
+            Patient patient = getCurrentPatient();
 
             if (patient == null)
             {
@@ -84,6 +87,7 @@ namespace Hospital_API.Controllers
         }
 
         // GET: api/Patients/block/5
+        [Authorize(Roles = "Manager")]
         [HttpGet("block/{username}")]
         public IActionResult BlockPatient(string username)
         {
@@ -116,6 +120,7 @@ namespace Hospital_API.Controllers
             return Redirect("http://localhost:4200/login");
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpGet("malicious")]
         public ActionResult<IEnumerable<Patient>> GetMaliciousPatients()
         {
@@ -155,6 +160,11 @@ namespace Hospital_API.Controllers
 
             return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }
-
+        private Patient getCurrentPatient()
+        {
+            string username = User.FindFirst("username")?.Value;
+            Patient patient = _patientService.FindByUserName(username);
+            return patient;
+        }
     }
 }
