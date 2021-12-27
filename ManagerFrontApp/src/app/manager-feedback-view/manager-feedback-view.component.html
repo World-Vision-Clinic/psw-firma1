@@ -36,7 +36,7 @@
                     <div class="header gradient-blue">
                         <div class="row d-flex">
                             <div class="col-md-6">
-                                <p *ngIf="!f.isAnonymous" class="text-white font-weight-bold header-text">User</p>
+                                <p *ngIf="!f.isAnonymous" class="text-white font-weight-bold header-text">{{f.userName}}</p>
                                 <p *ngIf="f.isAnonymous" class="text-white font-weight-bold header-text">Anonymous</p>
                             </div>
                         </div>
