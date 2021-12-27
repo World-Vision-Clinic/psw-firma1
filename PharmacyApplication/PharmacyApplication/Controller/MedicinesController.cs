@@ -126,17 +126,17 @@ namespace PharmacyAPI.Controller
         public IActionResult GetMedicineCousumation()
         {
             LoadFile();
-            String consumationReport = ReadConsumationReport();
-            return Ok(consumationReport);
+            string consumationReport = ReadConsumationReport();
+            return Ok();
         }
 
         public void LoadFile()
         {
-            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.116", "user", "password")))
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.0.16", "user", "password")))
             {
                 client.Connect();
-                string serverFile = @"\public\consumed-medicine.txt";
-                string localFile = "consumed-medicine.txt";
+                string serverFile = @"\public\ConsumedMedicineReport.pdf";
+                string localFile = "Reports/ConsumedMedicineReport.pdf";
                 using (Stream stream = System.IO.File.OpenWrite(localFile))
                 {
                     client.DownloadFile(serverFile, stream, x => { Console.WriteLine(x); });
@@ -145,10 +145,10 @@ namespace PharmacyAPI.Controller
             }
         }
 
-        public String ReadConsumationReport()
+        public string ReadConsumationReport()
         {
-            StreamReader reader = new StreamReader("consumed-medicine.txt");
-            String consumationReport = reader.ReadToEnd();
+            StreamReader reader = new StreamReader("Reports/ConsumedMedicineReport.pdf");
+            string consumationReport = reader.ReadToEnd();
             reader.Close();
             return consumationReport;
         }
@@ -228,9 +228,11 @@ namespace PharmacyAPI.Controller
         }
         // Za testiranje dockera
         [HttpGet("test")]
-        public IActionResult Get()
+        public IActionResult Get(long id = 0)
         {
-            Medicine medicine = service.GetById(1);
+            Medicine medicine = service.GetById(id);
+            if (medicine == null)
+                return BadRequest("No medicine with that id");
             MedicineDto dto = new MedicineDto(medicine.MedicineName, medicine.Weigth, medicine.Quantity);
             return Ok(dto);
         }

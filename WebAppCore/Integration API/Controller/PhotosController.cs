@@ -31,7 +31,7 @@ namespace Integration_API.Controller
                 var httpRequest = Request.Form;
                 var postedFile = httpRequest.Files[0];
                 //string filename = postedFile.FileName;
-                var physicalPath = _env.ContentRootPath + "/../Integration" + "/Photos/" + pharmacyName + ".png";
+                var physicalPath = _env.ContentRootPath + "/Photos/" + pharmacyName + ".png";
 
                 using (var stream = new FileStream(physicalPath, FileMode.Create))
                 {
@@ -53,7 +53,7 @@ namespace Integration_API.Controller
         [HttpDelete("deletePhoto/{pharmacyName?}")]
         public IActionResult Delete(String pharmacyName)
         {
-            var physicalPath = _env.ContentRootPath + "/../Integration" + "/Photos/" + pharmacyName + ".png";
+            var physicalPath = _env.ContentRootPath + "/Photos/" + pharmacyName + ".png";
 
             if (System.IO.File.Exists(physicalPath))
             {

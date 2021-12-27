@@ -9,17 +9,20 @@ import { SurveyComponent } from './survey/survey/survey.component';
 import { MedicalRecordViewComponent } from './medical-record-view/medical-record-view.component';
 import { PatientAppointmentCreationComponent } from './patient-appointment-creation/patient-appointment-creation.component';
 import { Appointment4stepComponent } from './appointment4step/appointment4step.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
-{ path: "create-feedback", component: PatientCreateFeedbackComponent },
-{ path: "view-feedback", component: PatientFeedbackViewComponent },
+
+
 { path: "homepage", component: MedicalRecordViewComponent },
-{ path: "medical-record", component: MedicalRecordViewComponent },
+{ path: "create-feedback", component: PatientCreateFeedbackComponent ,canActivate:[AuthGuard]},
+{ path: "view-feedback", component: PatientFeedbackViewComponent ,canActivate:[AuthGuard]},
+{ path: "medical-record", component: MedicalRecordViewComponent ,canActivate:[AuthGuard]},
 { path: "login", component: LoginComponent },
-{ path: "survey/:id", component: SurveyComponent},
+{ path: "survey/:id", component: SurveyComponent,canActivate:[AuthGuard]},
 { path: "register", component: RegisterComponent },
-{ path: "create-appointment", component: PatientAppointmentCreationComponent },
-{ path: "appointment4step", component: Appointment4stepComponent },
+{ path: "create-appointment", component: PatientAppointmentCreationComponent ,canActivate:[AuthGuard]},
+{ path: "appointment4step", component: Appointment4stepComponent ,canActivate:[AuthGuard]},
 { path: '', component: HomePageComponent}
 ];
 

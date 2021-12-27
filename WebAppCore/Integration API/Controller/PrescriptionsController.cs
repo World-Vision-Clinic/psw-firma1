@@ -32,14 +32,16 @@ namespace Integration_API.Controller
         [HttpPost("sendPrescription")]
         public IActionResult SendPrescriptionToPharmacy(PrescriptionDto dto)
         {
-            PdfGenerator generator = new PdfGenerator();
-            generator.GeneratePrescriptionPdf("test", dto);
             //metoda iz drugog kontrolera
             //pharmaciesWithMedicine = CheckMedicineAvailability(dto.MedicineName, dto.DosageInMg, dto.Quantity);
+            PdfGenerator generator = new PdfGenerator();
+            String filename = "Prescription" + dto.PatientName+".pdf";
+            generator.GeneratePrescriptionPdf(filename,dto);
+            
             List<PharmacyDto> pharmaciesWithMedicine = GetPharmaciesWithAvailableMedicine(dto.MedicineName, dto.DosageInMg, dto.Quantity);
             if (pharmaciesWithMedicine.Count == 0)
                 return Ok("No pharmacies with specified medicine found");
-            bool isSend = SendPrescription(pharmaciesWithMedicine, "test.pdf");
+            bool isSend = SendPrescription(pharmaciesWithMedicine, filename);
             if (!isSend)
                 return Ok("Cannot send prescription to pharmacie, their server is not working");
 
@@ -53,13 +55,13 @@ namespace Integration_API.Controller
             {
                 if (pharmacy.Protocol == ProtocolType.HTTP)
                 {
-
+                    isSend = sendPdfFileviaHttp(filename, pharmacy);
                 }
                 else
                 {
                     SftpHandler stfp = new SftpHandler();
                     stfp.UploadPdfFile(filename);
-                    //isSend = NotifyPharmacyAboutSendFile(pharmacy,filename);
+                    isSend = true;
                 }
                 if (isSend)
                     return true;
@@ -94,6 +96,53 @@ namespace Integration_API.Controller
 
             return false;
         }
+
+        public bool sendPdfFileviaHttp(String filename, PharmacyDto dto)
+        {
+            var client = new RestSharp.RestClient(dto.Localhost);
+            var request = new RestRequest("prescriptions/DownloadQRPrescription");
+
+            Credential credential = credentialsService.GetByPharmacyLocalhost(dto.Localhost);
+
+            if (credential == null)
+            {
+                return false;
+            }
+            request.AddHeader("ApiKey", credential.ApiKey);
+            request.AddHeader("Content-Type", "application/json");
+
+            Byte[] biti = System.IO.File.ReadAllBytes(filename);
+            String file = Convert.ToBase64String(biti);
+
+            request.AddHeader("fileName", filename);
+            //request.AddJsonBody(file);
+            //request.AddFile(filename,filename, filename);
+            request.AddJsonBody(
+            new
+            {
+                File = file
+            });
+            IRestResponse response = client.Post(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /*public void SendUsingHttp(string fileName)
+        {
+            var client = new RestClient(pharmacyUrl);
+            var request = new RestRequest();
+
+            Byte[] biti = File.ReadAllBytes(fileName);
+            String file = Convert.ToBase64String(biti);
+
+            request.AddHeader("fileName", "Prescription2.pdf");
+            request.AddJsonBody(file);
+            client.Post(request);
+        }*/
 
         public List<PharmacyDto> GetPharmaciesWithAvailableMedicine(string name = "", string dosage = "", string quantity = "")
         {

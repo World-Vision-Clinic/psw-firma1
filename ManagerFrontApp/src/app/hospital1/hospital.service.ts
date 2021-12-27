@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Building } from '../data/building';
@@ -88,4 +88,18 @@ export class HospitalService {
   getEquipment(roomid: number): Observable<Room> {
     return this.http.get<Room>(`http://localhost:39901/api/Rooms/${roomid}`);
   }
+
+  mergeRooms(mergingDTO){
+    const headers={'content-type':'application/json'};  
+    const body=JSON.stringify(mergingDTO)     
+    return this.http.post('http://localhost:39901/api/Rooms/merge', body,{headers: headers}).subscribe(data => {console.log(data)
+    });
+  }
+
+  splitRoom(splitDTO){
+    const headers={'content-type':'application/json'};  
+    const body=JSON.stringify(splitDTO)  
+    return this.http.post('http://localhost:39901/api/Rooms/split', body,{headers: headers}).subscribe(data => {console.log(data)});
+  }
+
 }

@@ -1,4 +1,5 @@
-﻿using Integration.Pharmacy.Model;
+﻿using Integration.Partnership.Model;
+using Integration.Pharmacy.Model;
 using Integration.SharedModel;
 using System;
 using System.Collections.Generic;
@@ -60,6 +61,24 @@ namespace Integration.Pharmacy.Service
             } while (foundedNews != null);
 
             return newsId;
+        }
+
+        public static string GenerateTenderId()
+        {
+            IntegrationDbContext context = new IntegrationDbContext();
+            Tender foundedTender = null;
+            string tenderId = "";
+            do
+            {
+                var key = new byte[32];
+                using (var generator = RandomNumberGenerator.Create())
+                    generator.GetBytes(key);
+                tenderId = Convert.ToBase64String(key);
+                foundedTender = context.Tenders.SingleOrDefault(tender => tender.TenderHash == tenderId);
+
+            } while (foundedTender != null);
+
+            return tenderId;
         }
     }
 }

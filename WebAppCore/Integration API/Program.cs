@@ -8,6 +8,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Integration.Pharmacy.Service;
 using Microsoft.Extensions.DependencyInjection;
+using Ionic.Zip;
+using System.IO;
+using System.Timers;
 
 namespace Integration_API
 {
@@ -15,6 +18,11 @@ namespace Integration_API
     {
         public static void Main(string[] args)
         {
+           /* System.Timers.Timer timer = new System.Timers.Timer(TimeSpan.FromDays(30).TotalMinutes);
+            timer.AutoReset = true;
+            timer.Elapsed += new System.Timers.ElapsedEventHandler(FilesService.CompressFiles);
+            timer.Start();*/
+
             CreateHostBuilder(args).Build().Run();
         }
 

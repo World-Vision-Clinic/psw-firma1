@@ -12,6 +12,7 @@ using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Model;
 using Hospital.SharedModel;
 using Hospital.Schedule.Repository;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hospital_API
 {
@@ -32,6 +33,7 @@ namespace Hospital_API
         }
 
         // GET: api/Feedbacks
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<Feedback>> GetFeedbacks()
         {

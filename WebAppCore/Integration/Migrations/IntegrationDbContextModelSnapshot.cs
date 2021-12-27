@@ -19,6 +19,114 @@ namespace Integration.Migrations
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+            modelBuilder.Entity("Integration.Partnership.Model.OfferItem", b =>
+                {
+                    b.Property<int>("OfferItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<double>("Dosage")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("MedicineName")
+                        .HasColumnType("text");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("TenderOfferId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("OfferItemId");
+
+                    b.HasIndex("TenderOfferId");
+
+                    b.ToTable("OfferItems");
+                });
+
+            modelBuilder.Entity("Integration.Partnership.Model.Tender", b =>
+                {
+                    b.Property<int>("TenderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("EndTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("TenderHash")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("TenderId");
+
+                    b.ToTable("Tenders");
+                });
+
+            modelBuilder.Entity("Integration.Partnership.Model.TenderItem", b =>
+                {
+                    b.Property<int>("TenderItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<double>("Dosage")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("MedicineName")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("TenderId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("TenderItemId");
+
+                    b.HasIndex("TenderId");
+
+                    b.ToTable("TenderItems");
+                });
+
+            modelBuilder.Entity("Integration.Partnership.Model.TenderOffer", b =>
+                {
+                    b.Property<int>("TenderOfferId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("PharmacyName")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("TenderId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("TenderOfferHash")
+                        .HasColumnType("text");
+
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("double precision");
+
+                    b.Property<bool>("Winner")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("TenderOfferId");
+
+                    b.HasIndex("TenderId");
+
+                    b.ToTable("TenderOffers");
+                });
+
             modelBuilder.Entity("Integration.Pharmacy.Model.Credential", b =>
                 {
                     b.Property<int>("Id")
@@ -154,6 +262,39 @@ namespace Integration.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Replies");
+                });
+
+            modelBuilder.Entity("Integration.Partnership.Model.OfferItem", b =>
+                {
+                    b.HasOne("Integration.Partnership.Model.TenderOffer", null)
+                        .WithMany("OfferItems")
+                        .HasForeignKey("TenderOfferId");
+                });
+
+            modelBuilder.Entity("Integration.Partnership.Model.TenderItem", b =>
+                {
+                    b.HasOne("Integration.Partnership.Model.Tender", null)
+                        .WithMany("TenderItems")
+                        .HasForeignKey("TenderId");
+                });
+
+            modelBuilder.Entity("Integration.Partnership.Model.TenderOffer", b =>
+                {
+                    b.HasOne("Integration.Partnership.Model.Tender", null)
+                        .WithMany("TenderOffers")
+                        .HasForeignKey("TenderId");
+                });
+
+            modelBuilder.Entity("Integration.Partnership.Model.Tender", b =>
+                {
+                    b.Navigation("TenderItems");
+
+                    b.Navigation("TenderOffers");
+                });
+
+            modelBuilder.Entity("Integration.Partnership.Model.TenderOffer", b =>
+                {
+                    b.Navigation("OfferItems");
                 });
 #pragma warning restore 612, 618
         }

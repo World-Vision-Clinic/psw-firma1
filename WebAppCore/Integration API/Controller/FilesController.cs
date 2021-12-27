@@ -45,43 +45,5 @@ namespace Integration_API.Controller
 
             return File(memory, contentType, fileName);
         }
-
-        [HttpGet("compress")]
-        public IActionResult CompressFiles()
-        {
-
-            using (ZipFile zip = new ZipFile())
-            {
-                string[] filePaths = Directory.GetFiles(@"Specifications\", "*.pdf", SearchOption.AllDirectories);
-
-                foreach (string path in filePaths)
-                {
-                    if(System.IO.File.GetLastWriteTime(path) < DateTime.Now)
-                    {
-                        zip.AddFile(path, DateTime.Now.Month + "-" + DateTime.Now.Day + "-" + DateTime.Now.Year);
-                    }
-                }
-
-                string zipName = DateTime.Now.Month + "-" + DateTime.Now.Day + "-" + DateTime.Now.Year + ".zip";
-                zip.Save(zipName);
-                repository.Save(new File { Name = zipName.Substring(0, zipName.Length - 4), Extension = "zip", Path = zipName });
-
-                DeleteFiles(filePaths);
-            }
-
-            return Ok();
-        }
-
-        private void DeleteFiles(string[] filePaths)
-        {
-            foreach (string path in filePaths)
-            {
-                if (System.IO.File.GetLastWriteTime(path) < DateTime.Now)
-                {
-                    System.IO.File.Delete(path);
-                    repository.DeleteByPath(path.Replace("\\", "/"));
-                }
-            }
-        }
     }
 }

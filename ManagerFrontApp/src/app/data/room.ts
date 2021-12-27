@@ -5,7 +5,7 @@ export interface Room {
   name: string;
   purpose: string;
   equipments?: Equipment[];
-  doctor: string;
+  doctorId: number;
   x: number;
   y: number;
   height: number;
@@ -22,7 +22,7 @@ export function emptyRoom(): Room {
     id: -1,
     name: '',
     purpose: '',
-    doctor: '',
+    doctorId: -1,
     x: -1,
     y: -1,
     height: -1,

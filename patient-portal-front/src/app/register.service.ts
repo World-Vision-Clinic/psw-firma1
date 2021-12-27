@@ -22,6 +22,10 @@ export class RegisterService {
     return this.http.post<User>(this._url, JSON.stringify(user), this.httpOptions);
   }
 
+  login(user: any): Observable<any> {
+    return this.http.post<any>("api/Login", JSON.stringify(user), this.httpOptions);
+  }
+
   getDoctors() : Observable<Doctor[]>{
     return this.http.get<Doctor[]>("/api/Doctors/available")
   }

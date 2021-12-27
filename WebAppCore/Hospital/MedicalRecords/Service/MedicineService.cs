@@ -1,6 +1,13 @@
 ﻿using Hospital.MedicalRecords.Model;
 using Hospital.MedicalRecords.Repository;
 using Integration.Pharmacy.Model;
+using iText.Kernel.Pdf;
+using iText.IO.Font;
+using iText.Kernel.Font;
+using iText.Kernel.Pdf.Canvas.Draw;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.Layout.Properties;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -100,20 +107,42 @@ namespace Hospital.MedicalRecords.Services
 
         public void CreateConsumedMedicinesInPeriodFile(DateTime startDate, DateTime endDate)
         {
-            StreamWriter writer = new StreamWriter("consumed-medicine.txt");
-            writer.WriteLine("Medicine consumption report for World vision clinic\n\nReport for date period between " + startDate.Date.ToShortDateString()
-                + " and " + endDate.Date.ToShortDateString());
+            //StreamWriter writer = new StreamWriter("../Integration API/Reports/consumed-medicine.txt");
+            string title = "Medicine consumption report for \"World Vision Clinic\"\n\nReport for date period between " + startDate.Date.ToShortDateString()
+                + " and " + endDate.Date.ToShortDateString();
 
             List<Medicine> consumedMedicine = GetConsumedMedicineInPeriod(startDate, endDate);
+            string report = "";
             if(consumedMedicine.Count==0)
             {
-                writer.WriteLine("Between this period there were no medicine consumed.");
+                report += "Between this period there were no medicine consumed.";
             }
             foreach (Medicine medicine in consumedMedicine)
             {
-                writer.WriteLine("Name: " + medicine.Name + ", quantity: " + medicine.Quantity);
+                report +=  "Name: " + medicine.Name + ", quantity: " + medicine.Quantity;
             }
-            writer.Close();
+
+            createPDFFile(title, report, "../Integration API/Reports/ConsumedMedicineReport");
+        }
+
+        private void createPDFFile(string title, string content, string fileName)
+        {
+            PdfWriter writer = new PdfWriter(fileName + ".pdf");
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+            FontProgram fontProgram = FontProgramFactory.CreateFont();
+            PdfFont font = PdfFontFactory.CreateFont(fontProgram, "Cp1250");
+            document.SetFont(font);
+            Paragraph header = new Paragraph(title + "\n").SetTextAlignment(TextAlignment.CENTER).SetFontSize(26);
+            document.Add(header);
+            string[] paragraphs = content.Split("\n");
+            foreach (string p in paragraphs)
+            {
+                Paragraph paragraph = new Paragraph().SetTextAlignment(TextAlignment.LEFT).SetFontSize(16);
+                paragraph.Add(p);
+                document.Add(paragraph);
+            }
+            document.Close();
         }
 
         public bool IsMedicineIDUnique(string id)

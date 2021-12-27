@@ -325,6 +325,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
 
             Appointment appointment = new Appointment()
             {
+                Id = 9 ,
                 PatientForeignKey = 1,
                 DoctorForeignKey = 11,
                 Type = AppointmentType.Appointment,
@@ -343,18 +344,22 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         {
             Appointment appointment = new Appointment()
             {
-                Id = 2,
+                Id = 10,
                 PatientForeignKey = 1,
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
-                Date = new DateTime(2021, 9, 9, 0, 0, 0),
-                Time = new TimeSpan(0, 0, 45, 0, 0)
+                Date = DateTime.Now.AddDays(5),
+                Time = new TimeSpan(0, 11, 30, 0, 0),
+                IsCancelled = false
             };
 
-            var response = _appointmentController.CancelAppointment(2).Value;
+            _appointmentRepository.AddAppointment(appointment);
+            var response = _appointmentController.CancelAppointment(10);
 
-            //Assert.Equal(200, response.StatusCode);
-            Assert.NotNull(response);
+
+            var result = response.Result as OkObjectResult;
+            Assert.Equal(200, result.StatusCode);
+            Assert.NotNull(result.Value);
 
         }
 
@@ -363,19 +368,20 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         {
             Appointment appointment = new Appointment()
             {
-                Id = 2,
+                Id = 11,
                 PatientForeignKey = 1,
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
                 Date = new DateTime(2020, 9, 9, 0, 0, 0),
-                Time = new TimeSpan(0, 0, 45, 0, 0)
+                Time = new TimeSpan(0, 8, 30, 0, 0),
+                IsCancelled = true
             };
 
-            var response = _appointmentController.CancelAppointment(2).Value;
-           // var result = response.Result as BadRequestResult;
+            _appointmentRepository.AddAppointment(appointment);
+            var response = _appointmentController.CancelAppointment(11);
 
-           // Assert.Equal(400, result.StatusCode);
-            Assert.NotNull(response);
+            var result = response.Result as BadRequestObjectResult;
+            Assert.Equal(400, result.StatusCode);
 
         }
 

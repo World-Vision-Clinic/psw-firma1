@@ -16,6 +16,12 @@ import { ViewSurveyResultsComponent } from './view-survey-results/view-survey-re
 //import { ViewFilesComponent } from './manager-integration-front-app/view-files/view-files.component';
 import { BlockPatientsComponent } from './block-patients/block-patients.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MedicineConsumptionComponent } from './manager-integration-front-app/medicine-consumption/medicine-consumption.component';
+import { GetSpecificationComponent } from './manager-integration-front-app/get-specification/get-specification.component';
+import { ViewFilesComponent } from './manager-integration-front-app/view-files/view-files.component';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './auth.guard';
+import { TenderCreationComponent } from './manager-integration-front-app/tender-creation/tender-creation.component';
 
 const routes: Routes = [
   {path: "", component: FrontPageComponent},
@@ -36,6 +42,21 @@ const routes: Routes = [
   //]},
   {path:"manager-feedback", component: ManagerFeedbackViewComponent},
   {path:"block-patients", component: BlockPatientsComponent}
+  {path:"pharmacy-registration", component: PharmacyRegistrationComponent},
+  {path:"survey-results", component: ViewSurveyResultsComponent,canActivate:[AuthGuard]},
+  {path:"manager-front-app", component: ManagerIntegrationFrontAppComponent, children: [
+  {path: "overview-objections-replies", outlet: "showObjRepl", component:OverviewObjectionsRepliesComponent},
+  {path: "overview-pharmacies", outlet: "showObjRepl", component:PharmaciesComponent},
+
+  {path: "create-objection", outlet: "showObjRepl", component:ObjectionFormPageComponent},
+  {path: "news", outlet: "showObjRepl", component:NewsComponent},
+  {path: "medicine-consumption-report", outlet: "showObjRepl", component:MedicineConsumptionComponent},
+  {path: "get-specification", outlet:"showObjRepl", component: GetSpecificationComponent},
+  {path: "view-files", outlet:"showObjRepl", component: ViewFilesComponent},
+  {path: "create-tender", outlet:"showObjRepl", component:TenderCreationComponent}
+  ]},
+  {path:"manager-feedback", component: ManagerFeedbackViewComponent},
+  {path:"login", component: LoginComponent}
   ];
 
 @NgModule({
