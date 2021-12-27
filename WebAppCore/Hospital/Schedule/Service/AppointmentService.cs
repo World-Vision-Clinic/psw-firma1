@@ -47,8 +47,6 @@ namespace Hospital.Schedule.Service
             return _repo.GetByDoctorId(doctorId);
         }
 
-       
-
         public List<Appointment> GetByDoctorId(int doctorId, DateTime lowerDateRange, DateTime upperDateRange)
         {
             return _repo.GetByDoctorId(doctorId, lowerDateRange, upperDateRange);
