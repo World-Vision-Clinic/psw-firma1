@@ -148,6 +148,35 @@ namespace Pharmacy.Migrations
                     b.ToTable("Objections");
                 });
 
+            modelBuilder.Entity("Pharmacy.Model.OfferItem", b =>
+                {
+                    b.Property<int>("OfferItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<double>("Dosage")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("MedicineName")
+                        .HasColumnType("text");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("TenderOfferId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("OfferItemId");
+
+                    b.HasIndex("TenderOfferId");
+
+                    b.ToTable("OfferItems");
+                });
+
             modelBuilder.Entity("Pharmacy.Model.Reply", b =>
                 {
                     b.Property<int>("Id")
@@ -202,6 +231,92 @@ namespace Pharmacy.Migrations
                     b.ToTable("SubstituteMedicines");
                 });
 
+            modelBuilder.Entity("Pharmacy.Model.Tender", b =>
+                {
+                    b.Property<int>("TenderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("EndTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("HospitalName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("TenderHash")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("TenderId");
+
+                    b.ToTable("Tenders");
+                });
+
+            modelBuilder.Entity("Pharmacy.Model.TenderItem", b =>
+                {
+                    b.Property<int>("TenderItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<double>("Dosage")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("MedicineName")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("TenderId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("TenderItemId");
+
+                    b.HasIndex("TenderId");
+
+                    b.ToTable("TenderItems");
+                });
+
+            modelBuilder.Entity("Pharmacy.Model.TenderOffer", b =>
+                {
+                    b.Property<int>("TenderOfferId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int?>("TenderId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("TenderOfferHash")
+                        .HasColumnType("text");
+
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("double precision");
+
+                    b.Property<bool>("Winner")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("TenderOfferId");
+
+                    b.HasIndex("TenderId");
+
+                    b.ToTable("TenderOffers");
+                });
+
+            modelBuilder.Entity("Pharmacy.Model.OfferItem", b =>
+                {
+                    b.HasOne("Pharmacy.Model.TenderOffer", null)
+                        .WithMany("OfferItems")
+                        .HasForeignKey("TenderOfferId");
+                });
+
             modelBuilder.Entity("Pharmacy.Model.Substance", b =>
                 {
                     b.HasOne("Pharmacy.Model.Medicine", "Medicine")
@@ -224,6 +339,20 @@ namespace Pharmacy.Migrations
                         .HasForeignKey("SubstituteId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Pharmacy.Model.TenderItem", b =>
+                {
+                    b.HasOne("Pharmacy.Model.Tender", null)
+                        .WithMany("TenderItems")
+                        .HasForeignKey("TenderId");
+                });
+
+            modelBuilder.Entity("Pharmacy.Model.TenderOffer", b =>
+                {
+                    b.HasOne("Pharmacy.Model.Tender", null)
+                        .WithMany("TenderOffers")
+                        .HasForeignKey("TenderId");
                 });
 #pragma warning restore 612, 618
         }

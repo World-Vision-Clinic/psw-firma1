@@ -16,6 +16,8 @@ import { GetSpecificationComponent } from './manager-integration-front-app/get-s
 import { ViewFilesComponent } from './manager-integration-front-app/view-files/view-files.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
+import { TenderCreationComponent } from './manager-integration-front-app/tender-creation/tender-creation.component';
+
 
 const routes: Routes = [
   {path: "", component: FrontPageComponent},
@@ -31,7 +33,8 @@ const routes: Routes = [
   {path: "news", outlet: "showObjRepl", component:NewsComponent},
   {path: "medicine-consumption-report", outlet: "showObjRepl", component:MedicineConsumptionComponent},
   {path: "get-specification", outlet:"showObjRepl", component: GetSpecificationComponent},
-  {path: "view-files", outlet:"showObjRepl", component: ViewFilesComponent}
+  {path: "view-files", outlet:"showObjRepl", component: ViewFilesComponent},
+  {path: "create-tender", outlet:"showObjRepl", component:TenderCreationComponent}
   ]},
   {path:"manager-feedback", component: ManagerFeedbackViewComponent},
   {path:"login", component: LoginComponent}

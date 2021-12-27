@@ -31,6 +31,8 @@ import { LoginComponent } from './login/login.component';
 import { AuthInterceptor } from './interceptor';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { AuthGuard } from './auth.guard';
+import { TenderCreationComponent } from './manager-integration-front-app/tender-creation/tender-creation.component';
+import { ChartAllModule, AccumulationChartAllModule, RangeNavigatorAllModule } from '@syncfusion/ej2-angular-charts';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,8 @@ import { AuthGuard } from './auth.guard';
     NewsComponent,
     GetSpecificationComponent,
     ViewFilesComponent,
-    LoginComponent
+    LoginComponent,
+    TenderCreationComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +68,9 @@ import { AuthGuard } from './auth.guard';
     MatDatepickerModule,
     MatFormFieldModule,
     MatNativeDateModule,
+    ChartAllModule,
+    AccumulationChartAllModule,
+    RangeNavigatorAllModule,
     ToastrModule.forRoot()
     // MatDatepicker,
     // MatDateRangeInput,

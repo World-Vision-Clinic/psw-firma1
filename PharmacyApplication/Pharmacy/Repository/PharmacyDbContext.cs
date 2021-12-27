@@ -16,6 +16,10 @@ namespace Pharmacy.Repository
         public DbSet<Substance> Substances { get; set; }
         public DbSet<SubstituteMedicine> SubstituteMedicines { get; set; }
         public DbSet<News> News { get; set; }
+        public DbSet<Tender> Tenders { get; set; }
+        public DbSet<TenderItem> TenderItems { get; set; }
+        public DbSet<TenderOffer> TenderOffers { get; set; }
+        public DbSet<OfferItem> OfferItems { get; set; }
 
         public PharmacyDbContext() { }
 
@@ -35,6 +39,16 @@ namespace Pharmacy.Repository
 
             modelbuilder.Entity<Substance>()
                 .HasKey(s => new { s.SubstanceId, s.MedicineId });
+
+            modelbuilder.Entity<Tender>()
+            .HasMany(i => i.TenderItems)
+            .WithOne();
+            modelbuilder.Entity<Tender>()
+            .HasMany(i => i.TenderOffers)
+            .WithOne();
+            modelbuilder.Entity<TenderOffer>()
+            .HasMany(o => o.OfferItems)
+            .WithOne();
 
         }
 

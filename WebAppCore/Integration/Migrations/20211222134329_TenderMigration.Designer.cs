@@ -3,15 +3,17 @@ using System;
 using Integration.SharedModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Integration.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211222134329_TenderMigration")]
+    partial class TenderMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,9 +118,6 @@ namespace Integration.Migrations
 
                     b.Property<double>("TotalPrice")
                         .HasColumnType("double precision");
-
-                    b.Property<bool>("Winner")
-                        .HasColumnType("boolean");
 
                     b.HasKey("TenderOfferId");
 

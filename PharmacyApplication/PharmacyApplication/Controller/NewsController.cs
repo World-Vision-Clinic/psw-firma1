@@ -23,7 +23,7 @@ namespace PharmacyAPI.Controller
         [HttpPost("add")]
         public IActionResult Add(NewsDto dto)
         {
-            if (dto.Content.Length <= 0 || dto.Title.Length <= 0 || dto.FromDate == null || dto.ToDate ==null)
+            if (dto.Content.Length <= 0 || dto.Title.Length <= 0 || dto.FromDate == null || dto.ToDate == null)
             {
                 return BadRequest();
             }
@@ -36,7 +36,7 @@ namespace PharmacyAPI.Controller
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                channel.ExchangeDeclare(exchange: "NewsChannel", type: ExchangeType.Fanout);
+                channel.ExchangeDeclare(exchange: "JankovicNewsChannel", type: ExchangeType.Direct);
                 channel.QueueDeclare(queue: "Jankovic",
                                      durable: false,
                                      exclusive: false,
@@ -46,13 +46,13 @@ namespace PharmacyAPI.Controller
 
                 var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(dto));
 
-                channel.BasicPublish(exchange: "NewsChannel",
+                channel.BasicPublish(exchange: "JankovicNewsChannel",
                                      routingKey: "Jankovic",
                                      basicProperties: null,
                                      body: body);
 
             }
-                return Ok();
+            return Ok();
         }
     }
 }
