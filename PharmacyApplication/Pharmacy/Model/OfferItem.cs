@@ -11,5 +11,24 @@ namespace Pharmacy.Model
         public double Dosage { get; set; }
         public int Quantity { get; set; }
         public double Price { get; set; }
+
+        public OfferItem(){}
+
+        public OfferItem(int offerItemId, string medicineName, double dosage, int quantity, double price)
+        {
+            OfferItemId = offerItemId;
+            MedicineName = medicineName;
+            Dosage = dosage;
+            Quantity = quantity;
+            Price = price;
+        }
+
+        public OfferItem(string medicineName, double dosage, int quantity, double price)
+        {
+            MedicineName = medicineName;
+            Dosage = dosage;
+            Quantity = quantity;
+            Price = price;
+        }
     }
 }

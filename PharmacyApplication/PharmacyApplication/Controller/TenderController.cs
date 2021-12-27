@@ -26,34 +26,9 @@ namespace PharmacyAPI.Controller
             if (tender == null || (tender.EndTime != null && tender.EndTime< DateTime.Now))
             {
                 return NotFound();
-            }
+            } 
 
-            //Devopsi
-            OfferItem offerItem = new OfferItem();
-            OfferItem offerItem1 = new OfferItem();
-            offerItem.MedicineName = "Brufen";
-            offerItem.Dosage = 200;
-            offerItem.Quantity = 1;
-            offerItem.Price = 600;
-            offerItem1.MedicineName = "Aspirin";
-            offerItem1.Dosage = 200;
-            offerItem1.Quantity = 1;
-            offerItem1.Price = 300;
-            TenderOffer tenderOffer = new TenderOffer();
-            tenderOffer.TenderOfferHash = "1";
-            tenderOffer.OfferItems = new List<OfferItem>();
-            tenderOffer.TotalPrice = 0;
-            tenderOffer.OfferItems.Add(offerItem);
-            tenderOffer.OfferItems.Add(offerItem1);
-            foreach(OfferItem item in tenderOffer.OfferItems){
-                tenderOffer.TotalPrice += item.Price;
-            }
-
-
-
-
-
-
+            TenderOffer tenderOffer = tenderService.CreateTenderOffer(tender);
             var factory = new ConnectionFactory() { HostName = "localhost" };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())

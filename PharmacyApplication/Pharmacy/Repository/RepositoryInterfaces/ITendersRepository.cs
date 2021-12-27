@@ -10,5 +10,6 @@ namespace Pharmacy.Repository.RepositoryInterfaces
         public List<Tender> GetAll();
         public void Save(Tender tender);
         public Tender GetById(string tenderId);
+        public bool Update(Tender tender);
     }
 }
