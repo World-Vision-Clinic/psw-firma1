@@ -8,5 +8,6 @@ namespace Integration.Partnership.Repository.RepositoryInterfaces
 {
     public interface ITenderRepository : IGenericRepository<Tender>
     {
+        List<TenderOffer> GetAllTenderOffers();
     }
 }

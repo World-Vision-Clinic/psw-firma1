@@ -56,9 +56,57 @@
     <p *ngIf="isEditing" style="margin-bottom: 2em;">Adresa : <input type="text" [(ngModel)]="selectedProfile.Address" style="color: #00aced; border-color: #00aced;"/> </p>
     <textarea *ngIf="isViewing" [(ngModel)]="selectedProfile.Note" style="margin-bottom: 2em; cursor: default; pointer-events:none; color: #00aced; text-align: center; min-width: 250px; border-color: #00aced;" readonly></textarea>
     <textarea *ngIf="isEditing" [(ngModel)]="selectedProfile.Note" style="margin-bottom: 2em; color: #00aced; text-align: center; min-width: 250px; border-color: #00aced;"></textarea>
+    <div style="margin-bottom: 2%;">
+        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1"><button (click)="openTendersStatistic()" class="btn btn-secondary" style="background-color: #00aced;">Tenders</button></a>
+    </div>
     <p style="margin-bottom: 2em;" (click)="editProfile()" *ngIf="isViewing"><button class="btn btn-secondary" style="background-color: #00aced;">Edit profile</button></p>
     <p style="margin-bottom: 2em;" (click)="saveChanges()" *ngIf="isEditing"><button class="btn btn-secondary" style="background-color: #00aced;">Save changes</button></p>
     <p style="margin-bottom: 2em;" (click)="discardChanges()" *ngIf="isEditing"><button class="btn btn-secondary" style="background-color: #00aced;">Discard changes</button></p>
     <p><button (click)="goBack()" *ngIf="isViewing" class="btn btn-secondary" style="background-color: #00aced;">Back</button></p>
     </div>
 </ng-template>
+
+<div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content" style="display: inline-block;">
+            <div class="close-modal" data-bs-dismiss="modal"><img src="../../../assets/cross.svg" alt="Close modal"/></div>  
+            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+            <div>
+            <div class="container" style="margin-top: 3%; display: inline-block;">
+                    <ejs-accumulationchart id="container" #pie style='display:block;  width: 92%' [legendSettings]="legendSettings" [tooltip]="tooltip" [title]="title" (load)='load($event)' [enableAnimation]= 'enableAnimation' [center]='center'>
+                        <e-accumulation-series-collection>
+                            <e-accumulation-series name='Browser' ListenPropertyChange="True" [dataSource]='data' xName='x' yName='y' [startAngle]="startAngle" [endAngle]="endAngle" innerRadius="0%" radius="70%" [dataLabel]="dataLabel" [explode]='explode' explodeOffset='0%' [explodeIndex]='0' 
+                            [palettes]='palette'>
+                            </e-accumulation-series>
+                        </e-accumulation-series-collection>
+                    </ejs-accumulationchart>
+                    <p style="margin-left: 21%;margin-bottom: 10%;">{{percent}}%</p>
+            </div>
+            <div style="display: inline-block; margin-left: -55%;  position: absolute; margin-top: 5%;">
+                <select class="form-select" aria-label="Default select example" (change)="TenderSelected()" name="selectedGraph" [(ngModel)]="selectedGraph">
+                    <option disabled selected hidden>Select tender for statistic</option>
+                    <option *ngFor="let tender of tendersPharmacyParticipated" [value]="tender.TenderHash">
+                        {{tender.Title}}
+                    </option>
+                    <option value="profit">
+                        Profit
+                    </option>
+                  </select>
+            </div>
+            <div style="position: absolute; margin-top: -36%; margin-left: 50%;" *ngIf="tenderSelected">
+                <ejs-chart style='display:block' id='chartcontainer'  [primaryXAxis]='primaryXAxis' [primaryYAxis]='primaryYAxis' [title]='title'> 
+                    <e-series-collection>
+                        <e-series [dataSource]='dataBarChart' type='Bar' xName='x' yName='y' [pointColorMapping]='pointColorMapping'> </e-series>    
+                    </e-series-collection>
+                </ejs-chart>
+            </div>
+            <div style="position: absolute; margin-top: -36%; margin-left: 50%;" *ngIf="profitSelected">
+                <ejs-chart style='display:block' id='chartcontainer'  [primaryXAxis]='primaryXAxisProfit' [primaryYAxis]='primaryYAxisProfit'>
+                    <e-series-collection>
+                        <e-series [dataSource]='dataProfit' type='Line' xName='x' yName='y' [pointColorMapping]='pointColorMapping'> </e-series>    
+                    </e-series-collection>
+                    </ejs-chart>
+            </div>
+        </div>
+    </div>
+</div>
