@@ -14,6 +14,11 @@ namespace Integration.Partnership.Service
             tenderRepository = repository;
         }
 
+        public void SaveTender(Tender tender)
+        {
+            tenderRepository.Save(tender);
+        }
+
         public List<int> GetPharmacyWinningStatistic(string pharmacyName)
         {
             List<int> statistic = new List<int>();

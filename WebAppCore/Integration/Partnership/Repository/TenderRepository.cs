@@ -34,7 +34,8 @@ namespace Integration.Partnership.Repository
 
         public void Save(Tender parameter)
         {
-            throw new NotImplementedException();
+            dbContext.Tenders.Add(parameter);
+            dbContext.SaveChanges();
         }
     }
 }

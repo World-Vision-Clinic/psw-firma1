@@ -26,8 +26,14 @@ namespace Integration_API.Controller
         public IActionResult CreateTender(TenderCreationDto dto)
         {
             Tender tender = TenderMapper.TenderCreationDtoToTender(dto,Generator.GenerateTenderId());
-
+            service.SaveTender(tender);
             TenderDto tenderDto = TenderMapper.TenderToTenderDto(tender);
+            SendTender(tenderDto);
+            return Ok();
+        }
+
+        public void SendTender(TenderDto tenderDto)
+        {
             var factory = new ConnectionFactory() { HostName = "localhost" };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
@@ -48,7 +54,6 @@ namespace Integration_API.Controller
                                      body: body);
 
             }
-            return Ok();
         }
 
         [HttpGet("getWholeStatistic")]
