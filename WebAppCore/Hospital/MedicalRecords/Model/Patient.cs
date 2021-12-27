@@ -1,4 +1,5 @@
-﻿using Hospital.Seedwork;
+﻿using Hospital.Schedule.Model;
+using Hospital.Seedwork;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -37,11 +38,12 @@ namespace Hospital.MedicalRecords.Model
         public int Height { get; private set; }
         public BloodType BloodType { get; private set; }
         public bool IsBlocked { get; private set; }
+        public List<Appointment> Appointments { get; set; }
 
         public Patient() { }
 
         public Patient(int id, string username, string password, FullName fullName, string email, bool activated,
-            Gender gender, string jmbg, DateTime dateOfBirth, Residence residence, string phone, int preferedDoctor, int weight, int height, BloodType bloodType, bool isBlocked)
+            Gender gender, string jmbg, DateTime dateOfBirth, Residence residence, string phone, int preferedDoctor, int weight, int height, BloodType bloodType, bool isBlocked, List<Appointment> appointments)
         {
             this.Id = id;
             this.UserName = username;
@@ -60,9 +62,10 @@ namespace Hospital.MedicalRecords.Model
             this.Height = height;
             this.BloodType = bloodType;
             this.IsBlocked = isBlocked;
+            this.Appointments = appointments;
         }
         public Patient(string username, string password, FullName fullName, string email, bool activated, 
-            Gender gender, string jmbg, DateTime dateOfBirth, Residence residence, string phone, int preferedDoctor, int weight, int height, BloodType bloodType, bool isBlocked)
+            Gender gender, string jmbg, DateTime dateOfBirth, Residence residence, string phone, int preferedDoctor, int weight, int height, BloodType bloodType, bool isBlocked, List<Appointment> appointments)
         {
             this.UserName = username;
             this.Password = password;
@@ -80,6 +83,7 @@ namespace Hospital.MedicalRecords.Model
             this.Height = height;
             this.BloodType = bloodType;
             this.IsBlocked = isBlocked;
+            this.Appointments = appointments;
         }
 
         private string TokenizeSHA256(string username)

@@ -1,4 +1,5 @@
 ﻿using Hospital.MedicalRecords.Model;
+using Hospital.Schedule.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace Hospital_API.DTO
         public Patient ToPatient()
         {
             return new Patient(UserName, Password, new FullName(FirstName, LastName), EMail, false, (Gender)Enum.Parse(typeof(Gender), Gender),
-                Jmbg, DateOfBirth, new Residence(Country, Address, City), Phone, PreferedDoctor, Weight, Height, (BloodType)Enum.Parse(typeof(BloodType), BloodType), false);
+                Jmbg, DateOfBirth, new Residence(Country, Address, City), Phone, PreferedDoctor, Weight, Height, (BloodType)Enum.Parse(typeof(BloodType), BloodType), false, new List<Appointment>());
         }
     }
 }

@@ -57,9 +57,7 @@ namespace Hospital_API
         [HttpPost("{id}")]
         public ActionResult<Survey> PostSurveyQuestions([FromBody] List<QuestionDTO> questions, int id)
         {
-            Survey newSurvey = new Survey();
-            newSurvey.CreationDate = System.DateTime.Now;
-            newSurvey.IdAppointment = id;
+            Survey newSurvey = new Survey(System.DateTime.Now);
 
             foreach (QuestionDTO dtos in questions)
             {

@@ -12,14 +12,14 @@ namespace Hspital_API.Mapper
     {
         public static QuestionDTO QuestionToQuestionDTO(SurveyQuestion question)
         {
-            QuestionDTO dto = new QuestionDTO(question.Question, question.Section, 0 );            
+            QuestionDTO dto = new QuestionDTO(question.Id, question.Question, question.Section, 0 );            
 
             return dto;
         }
 
         public static AnsweredSurveyQuestion QuestionDTOToAnswer(QuestionDTO dto, int surveyKey)
         {
-            AnsweredSurveyQuestion answer = new AnsweredSurveyQuestion(surveyKey, 1, dto.Question, dto.Section, dto.Answer);
+            AnsweredSurveyQuestion answer = new AnsweredSurveyQuestion(surveyKey, dto.QuestionId, dto.Answer);
 
             return answer;
         }

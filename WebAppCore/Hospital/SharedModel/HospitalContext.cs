@@ -48,11 +48,7 @@ namespace Hospital.SharedModel
             modelBuilder.Entity<Survey>(entity =>
             {
                 entity.ToTable("Surveys");
-                entity.HasKey(c => c.IdSurvey);
-
-                entity.HasOne(d => d.Appointment)
-               .WithMany(p => p.Surveys)
-               .HasForeignKey(d => d.IdAppointment);
+                entity.HasKey(c => c.Id);
             });
 
             modelBuilder.Entity<Appointment>(entity =>
@@ -66,27 +62,27 @@ namespace Hospital.SharedModel
                 );
 
             modelBuilder.Entity<Survey>().HasData(
-                new Survey { IdAppointment = 1, CreationDate = DateTime.Now, IdSurvey = 1}
-                );
+                new Survey(1, DateTime.Now)
+            );
 
             modelBuilder.Entity<SurveyQuestion>().HasData(
-                new SurveyQuestion { Id = 1, Question = "Has doctor been polite to you?", Section = SurveySectionType.Doctor, IdSurvey = 1},
-                new SurveyQuestion { Id = 2, Question = "How would you rate the professionalism of doctor?", Section = SurveySectionType.Doctor, IdSurvey = 1 },
-                new SurveyQuestion { Id = 3, Question = "How clearly did the doctor explain you your condition?", Section = SurveySectionType.Doctor, IdSurvey = 1 },
-                new SurveyQuestion { Id = 4, Question = "How would you rate the doctor's patience with you?", Section = SurveySectionType.Doctor, IdSurvey = 1 },
-                new SurveyQuestion { Id = 5, Question = "What is your overall satisfaction with doctor?", Section = SurveySectionType.Doctor, IdSurvey = 1 },
+                new SurveyQuestion(1, "Has doctor been polite to you?", SurveySectionType.Doctor),
+                new SurveyQuestion(2, "How would you rate the professionalism of doctor?", SurveySectionType.Doctor),
+                new SurveyQuestion(3, "How clearly did the doctor explain you your condition?", SurveySectionType.Doctor),
+                new SurveyQuestion(4, "How would you rate the doctor's patience with you?", SurveySectionType.Doctor),
+                new SurveyQuestion(5, "What is your overall satisfaction with doctor?", SurveySectionType.Doctor),
 
-                new SurveyQuestion { Id = 6, Question = "How easy is to use our application?", Section = SurveySectionType.Hospital, IdSurvey = 1 },
-                new SurveyQuestion { Id = 7, Question = "How easy it was to schedule an appointment?", Section = SurveySectionType.Hospital, IdSurvey = 1 },
-                new SurveyQuestion { Id = 8, Question = "What is an opportunity to recommend us to your friends and family?", Section = SurveySectionType.Hospital, IdSurvey = 1 },
-                new SurveyQuestion { Id = 9, Question = "How satisfied are you with the services that the hospital provides you?", Section = SurveySectionType.Hospital, IdSurvey = 1 },
-                new SurveyQuestion { Id = 10, Question = "What is your overall satisfaction with our hospital?", Section = SurveySectionType.Hospital, IdSurvey = 1 },
+                new SurveyQuestion(6, "How easy is to use our application?", SurveySectionType.Hospital),
+                new SurveyQuestion(7, "How easy it was to schedule an appointment?", SurveySectionType.Hospital),
+                new SurveyQuestion(8, "What is an opportunity to recommend us to your friends and family?", SurveySectionType.Hospital),
+                new SurveyQuestion(9, "How satisfied are you with the services that the hospital provides you?", SurveySectionType.Hospital),
+                new SurveyQuestion(10, "What is your overall satisfaction with our hospital?", SurveySectionType.Hospital),
 
-                new SurveyQuestion { Id = 11, Question = "How would you rate the kindness of our staff?", Section = SurveySectionType.Staff, IdSurvey = 1 },
-                new SurveyQuestion { Id = 12, Question = "How would you rate the professionalism of our staff?", Section = SurveySectionType.Staff, IdSurvey = 1 },
-                new SurveyQuestion { Id = 13, Question = "How clearly did the staff explain you some procedures of our hospital?", Section = SurveySectionType.Staff, IdSurvey = 1 },
-                new SurveyQuestion { Id = 14, Question = "How yould you rate to what extent staff was available to you during your visit to the hospital?", Section = SurveySectionType.Staff, IdSurvey = 1 },
-                new SurveyQuestion { Id = 15, Question = "What is your overall satisfaction with our staff?", Section = SurveySectionType.Staff, IdSurvey = 1 }
+                new SurveyQuestion(11, "How would you rate the kindness of our staff?", SurveySectionType.Staff),
+                new SurveyQuestion(12, "How would you rate the professionalism of our staff?", SurveySectionType.Staff),
+                new SurveyQuestion(13, "How clearly did the staff explain you some procedures of our hospital?", SurveySectionType.Staff),
+                new SurveyQuestion(14, "How yould you rate to what extent staff was available to you during your visit to the hospital?", SurveySectionType.Staff),
+                new SurveyQuestion(15, "What is your overall satisfaction with our staff?", SurveySectionType.Staff)
                 );
 
             modelBuilder.Entity<FloorLabel>().HasData(

@@ -1,29 +1,30 @@
-﻿using System;
+﻿using Hospital.Seedwork;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Hospital.Schedule.Model
 {
-    public class AnsweredSurveyQuestion
+    public class AnsweredSurveyQuestion : Entity
     {
-        public int SurveyForeignKey { get; set; }
-        public int PatientForeignKey { get; set; }
-        public string Question { get; set; }
-        public SurveySectionType Section { get; set; }
-        public int Answer { get; set; } 
-        public int Id { get; set; }
+        public int SurveyForeignKey { get; private set; }
+        public int Question { get; private set; }
+        public int Answer { get; private set; }
 
         public AnsweredSurveyQuestion() { }
 
-        public AnsweredSurveyQuestion( int surveyKey, int patientKey, string question, SurveySectionType section, int answer)
+        public AnsweredSurveyQuestion(int id, int surveyForeignKey, int question, int answer)
         {
-            this.SurveyForeignKey = surveyKey;
-            this.PatientForeignKey = patientKey;
+            this.Id = id;
+            this.SurveyForeignKey = surveyForeignKey;
             this.Question = question;
-            this.Section = section;
             this.Answer = answer;
         }
-
-
+        public AnsweredSurveyQuestion(int surveyForeignKey, int question,  int answer)
+        {
+            this.SurveyForeignKey = surveyForeignKey;
+            this.Question = question;
+            this.Answer = answer;
+        }
     }
 }

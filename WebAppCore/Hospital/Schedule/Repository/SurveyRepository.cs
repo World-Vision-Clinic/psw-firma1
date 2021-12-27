@@ -20,7 +20,7 @@ namespace Hospital.Schedule.Repository
         {
             _context.Surveys.Add(newSurvey);
             SaveSurvey();
-            return newSurvey.IdSurvey;
+            return newSurvey.Id;
         }
 
         public void AddSurveyQuestion(SurveyQuestion newQuestion)
@@ -47,12 +47,12 @@ namespace Hospital.Schedule.Repository
 
         public Survey FindByAppointmentId(int appointmentId)
         {
-            return _context.Surveys.Where(s => s.IdAppointment == appointmentId).FirstOrDefault();
+            return null; //TODO
         }
 
         public bool SurveyExists(int id)
         {
-            return _context.Surveys.Any(s => s.IdSurvey == id);
+            return false; // TODO
         }
 
         public List<Survey> GetAll()
@@ -63,6 +63,11 @@ namespace Hospital.Schedule.Repository
         public List<SurveyQuestion> GetAllQuestions()  
         {
             return _context.Questions.ToList();
+        }
+
+        public SurveyQuestion GetQuestionById(int id)
+        {
+            return _context.Questions.Find(id);
         }
 
         public List<AnsweredSurveyQuestion> GetAllAnsweredQuestions()

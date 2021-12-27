@@ -83,7 +83,7 @@ namespace Hospital.MedicalRecords.Service
             if (!IsBlockable(patient))
                 return false;
             patient = new Patient(patient.Id, patient.UserName, patient.Password, patient.FullName, patient.EMail, patient.Activated, patient.Gender,
-                patient.Jmbg, patient.DateOfBirth, patient.Residence, patient.Phone, patient.PreferedDoctor, patient.Weight, patient.Height, patient.BloodType, true);
+                patient.Jmbg, patient.DateOfBirth, patient.Residence, patient.Phone, patient.PreferedDoctor, patient.Weight, patient.Height, patient.BloodType, true, patient.Appointments);
             _repo.Modify(patient);
             SaveSync();
             return true;
@@ -128,7 +128,7 @@ namespace Hospital.MedicalRecords.Service
 
         public void Activate(Patient patient) {
             patient = new Patient(patient.Id, patient.UserName, patient.Password, patient.FullName, patient.EMail, true, patient.Gender,
-                patient.Jmbg, patient.DateOfBirth, patient.Residence, patient.Phone, patient.PreferedDoctor, patient.Weight, patient.Height, patient.BloodType, patient.IsBlocked);
+                patient.Jmbg, patient.DateOfBirth, patient.Residence, patient.Phone, patient.PreferedDoctor, patient.Weight, patient.Height, patient.BloodType, patient.IsBlocked, patient.Appointments);
             _repo.Modify(patient);
         }
 
