@@ -13,5 +13,6 @@ namespace Pharmacy.Repository.RepositoryInterfaces
         public bool DeleteMedicine(long medicineId);
         public bool UpdateMedicine(Medicine medicine);
         public void SaveChanges();
+        List<Medicine> GetByName(string name);
     }
 }
