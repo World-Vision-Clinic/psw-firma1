@@ -23,5 +23,29 @@
            </div>
         </div>
     </div>
+
+    <div>
+      <div style="display: block">
+        <canvas style="width:100%;max-width:1000px;max-height:500px;margin-left: 25%;" baseChart
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [legend]="barChartLegend"
+                chartType='bar'>
+        </canvas>
+      </div>
+    </div>
+
+    <div>
+      <div style="display: block">
+        <canvas style="width:100%;max-width:1000px;max-height:500px;margin-left: 25%;" baseChart
+                [datasets]="barChartData1"
+                [labels]="barChartLabels1"
+                [options]="barChartOptions"
+                [legend]="barChartLegend1"
+                chartType='bar'>
+        </canvas>
+      </div>
+    </div>
     
     </div>
