@@ -68,7 +68,7 @@ import { ChartAllModule, AccumulationChartAllModule, RangeNavigatorAllModule } f
     MatNativeDateModule,
     ToastrModule.forRoot(),
     BrowserModule,
-    NgChartsModule
+    NgChartsModule,
     ChartAllModule,
     AccumulationChartAllModule,
     RangeNavigatorAllModule
