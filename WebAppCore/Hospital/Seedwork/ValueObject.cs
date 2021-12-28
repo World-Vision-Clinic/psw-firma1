@@ -8,6 +8,7 @@ namespace Hospital.Seedwork
 {
     public abstract class ValueObject
     {
+        //public Guid Id { get; set; } = Guid.NewGuid();
         protected static bool EqualOperator(ValueObject left, ValueObject right)
         {
             if (ReferenceEquals(left, null) ^ ReferenceEquals(right, null))

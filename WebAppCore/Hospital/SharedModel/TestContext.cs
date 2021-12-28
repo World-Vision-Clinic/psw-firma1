@@ -1,4 +1,5 @@
 ﻿using Hospital.MedicalRecords.Model;
+using Hospital.Schedule.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,17 +17,22 @@ namespace Hospital.SharedModel
 
         public TestContext(DbContextOptions<TestContext> options) : base(options) { }
 
-        protected override void OnModelCreating(ModelBuilder modelbuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelbuilder.Entity<FullName>().HasNoKey();
-
-            modelbuilder.Entity<Patient>(entity =>
+            /*modelBuilder.Entity<FullName>(entity =>
             {
-                entity.HasKey(c => c.Id);
-
-                entity.OwnsOne(x => x.FullName);
-                entity.OwnsOne(x => x.Residence);
+                entity.HasAlternateKey(x => x.Id);
             });
+
+            modelBuilder.Entity<Residence>(entity =>
+            {
+                entity.HasAlternateKey(x => x.Id);
+            });*/
+
+            modelBuilder.Entity<Patient>().HasData(
+                new Patient(4, "Marko123", "123", new FullName("Marko", "Markovic"), "markomarkovic@gmail.com", false, Gender.Male, "1637597",
+                    DateTime.Now, new Residence("Serbia", "TestAddress", "TestCity"), "063115111", 10, 80, 180, BloodType.A, false, new List<Appointment>())
+                );
         }
 
         protected override void OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder optionsBuilder)
