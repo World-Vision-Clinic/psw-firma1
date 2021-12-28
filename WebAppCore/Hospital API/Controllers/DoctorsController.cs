@@ -61,6 +61,7 @@ namespace Hospital_API.Controllers
 
             return doctor;
         }
+
         [HttpGet("get_by_specialty/{type}")]
         public ActionResult<IEnumerable<Doctor>> GetDoctorForSpecialty(int type)
         {

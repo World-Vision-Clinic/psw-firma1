@@ -56,7 +56,7 @@ export class PatientCreateFeedbackComponent implements OnInit {
       this.feedbackSent = true;
       this._patientCreateFeedbackService.addFeedback(feedback).subscribe(
         success => setTimeout(() => {
-          this.router.navigate(['/']);
+          this.router.navigate(['/medical-record']);
       }, 800));
     }
   }

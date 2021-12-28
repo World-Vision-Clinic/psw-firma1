@@ -16,7 +16,7 @@
         <div class="card-body mx-4 collapsible" [@collapse]="feedbackSent">
     
           <div class="md-form">
-            <textarea id="content" class="md-textarea form-control" rows="5" [(ngModel)]="content"></textarea>
+            <textarea id="content" class="md-textarea form-control" rows="5" [(ngModel)]="content" id="contentField"></textarea>
             <small id="passwordHelp" class="text-danger" *ngIf="!contentIsValid()">
               Field must not be empty.
             </small>
@@ -37,7 +37,7 @@
             </div>
             <div class="col-md-4">
               <div class="text-center">
-                <button type="button" class="btn btn-blue btn-rounded" [disabled]="!contentIsValid()" (click)="createFeedback()" >Send</button>
+                <button type="button" class="btn btn-blue btn-rounded" [disabled]="!contentIsValid()" (click)="createFeedback()" id="createBtn">Send</button>
               </div>
             </div>
           </div>

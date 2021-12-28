@@ -29,7 +29,8 @@ export class LoginComponent implements OnInit {
 
   login() {
     this._registerService.login(this.LoginDTO).subscribe(data => localStorage.setItem('PSWtoken', data.token),
-      error =>this.handleError());
+      error =>this.handleError(),
+      () => this.router.navigate(["/manager-feedback"]));
   }
   verifyPassword() {
     if(this.LoginDTO.password == "")
