@@ -1,13 +1,17 @@
 ﻿using Integration.Partnership.Model;
 using Integration.Partnership.Repository.RepositoryInterfaces;
+using Integration.SharedModel;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Integration.Partnership.Repository
 {
     public class TenderRepository : ITenderRepository
     {
+        private IntegrationDbContext dbContext = new IntegrationDbContext();
         public void Delete(string id)
         {
             throw new NotImplementedException();
@@ -15,7 +19,7 @@ namespace Integration.Partnership.Repository
 
         public List<Tender> GetAll()
         {
-            throw new NotImplementedException();
+            return dbContext.Tenders.Include("TenderOffers").ToList();
         }
 
         public Tender GetByID(string id)
