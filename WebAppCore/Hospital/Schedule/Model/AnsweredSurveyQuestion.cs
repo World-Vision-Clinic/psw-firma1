@@ -13,17 +13,13 @@ namespace Hospital.Schedule.Model
 
         public AnsweredSurveyQuestion() { }
 
-        public AnsweredSurveyQuestion(int id, int surveyForeignKey, int question, int answer)
+        public AnsweredSurveyQuestion(int surveyForeignKey, int question,  int answer, int id = 0)
         {
             this.Id = id;
             this.SurveyForeignKey = surveyForeignKey;
             this.Question = question;
-            this.Answer = answer;
-        }
-        public AnsweredSurveyQuestion(int surveyForeignKey, int question,  int answer)
-        {
-            this.SurveyForeignKey = surveyForeignKey;
-            this.Question = question;
+            if (answer < 1 || answer > 5)
+                throw new ArgumentException("Rating must be between 1 and 5");
             this.Answer = answer;
         }
     }

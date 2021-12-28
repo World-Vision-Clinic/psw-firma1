@@ -37,19 +37,18 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         {   //Arrange
             inMemoryRepo = GetInMemorySurveyRepository();
 
-            Survey survey = new Survey()
-            {
-                IdSurvey = 4,
-                CreationDate = DateTime.Now,
-                IdAppointment = 1
-            };
-            //Act
+            Survey survey = new Survey
+            (
+                4,
+                DateTime.Now
+            );
+
             inMemoryRepo.AddSurvey(survey);
             var controller = new SurveyController();
             controller.surveyService = new SurveyService(inMemoryRepo);
             var response = controller.GetSurvey(4);
-            //Assert
-            Assert.Equal(4, response.Value.IdSurvey);
+
+            Assert.Equal(4, response.Value.Id);
         }
 
         [Fact]
@@ -58,20 +57,8 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             inMemoryRepo = GetInMemorySurveyRepository();
             List<SurveyQuestion> questions = new List<SurveyQuestion>();
 
-            SurveyQuestion question1 = new SurveyQuestion()
-            {
-                Id = 1,
-                Question = "Pitanje1",
-                Section = SurveySectionType.Doctor,
-                IdSurvey = 3
-            };
-            SurveyQuestion question2 = new SurveyQuestion()
-            {
-                Id = 2,
-                Question = "Pitanje2",
-                Section = SurveySectionType.Hospital,
-                IdSurvey = 3
-            };
+            SurveyQuestion question1 = new SurveyQuestion(1, "Pitanje1", SurveySectionType.Doctor);
+            SurveyQuestion question2 = new SurveyQuestion(2, "Pitanje2", SurveySectionType.Hospital);
             //Act
             questions.Add(question1);
             questions.Add(question2);   
@@ -85,7 +72,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             Assert.Equal(2, questions.Count);
         }
         
-        /*[Fact]
+        [Fact]
         public void Test_post_correct_answers()
         {   
             inMemoryRepo = GetInMemorySurveyRepository();
@@ -93,12 +80,14 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
 
             QuestionDTO answer1 = new QuestionDTO()
             {
+                QuestionId = 1,
                 Question = "Pitanje1",
                 Section = SurveySectionType.Doctor,
                 Answer = 4
             };
             QuestionDTO answer2 = new QuestionDTO()
             {
+                QuestionId = 2,
                 Question = "Pitanje2",
                 Section = SurveySectionType.Hospital,
                 Answer = 2
@@ -115,7 +104,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             Assert.NotNull(result.Value);
             Assert.Equal(2, dtos.Count);
         }
-        */
+        
         [Fact]
         public void Test_post_wrong_answers()
         {   //Arrange
@@ -150,45 +139,13 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         {
             inMemoryRepo = GetInMemorySurveyRepository();
 
-            AnsweredSurveyQuestion question1Answer1 = new AnsweredSurveyQuestion
-            {
-                Id = 3,
-                Question = "Pitanje1",
-                Section = SurveySectionType.Hospital,
-                SurveyForeignKey = 3,
-                PatientForeignKey = 1,
-                Answer = 5
-            };
+            AnsweredSurveyQuestion question1Answer1 = new AnsweredSurveyQuestion(3, 1, 5, 3);
 
-            AnsweredSurveyQuestion question2Answer1 = new AnsweredSurveyQuestion
-            {
-                Id = 4,
-                Question = "Pitanje2",
-                Section = SurveySectionType.Hospital,
-                SurveyForeignKey = 3,
-                PatientForeignKey = 1,
-                Answer = 2
-            };
+            AnsweredSurveyQuestion question2Answer1 = new AnsweredSurveyQuestion(2, 2, 3, 4);
 
-            AnsweredSurveyQuestion question1Answer2 = new AnsweredSurveyQuestion
-            {
-                Id = 5,
-                Question = "Pitanje1",
-                Section = SurveySectionType.Hospital,
-                SurveyForeignKey = 4,
-                PatientForeignKey = 1,
-                Answer = 1
-            };
+            AnsweredSurveyQuestion question1Answer2 = new AnsweredSurveyQuestion(1, 1, 4, 5);
 
-            AnsweredSurveyQuestion question2Answer2 = new AnsweredSurveyQuestion
-            {
-                Id = 6,
-                Question = "Pitanje2",
-                Section = SurveySectionType.Hospital,
-                SurveyForeignKey = 4,
-                PatientForeignKey = 1,
-                Answer = 2
-            };
+            AnsweredSurveyQuestion question2Answer2 = new AnsweredSurveyQuestion(2, 2, 4, 6);
 
             inMemoryRepo.AddAnswer(question1Answer1);
             inMemoryRepo.AddAnswer(question2Answer1);

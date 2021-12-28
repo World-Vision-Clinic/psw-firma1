@@ -21,7 +21,6 @@ namespace HospitalTests.PatientPortalTests.UnitTests
             var stubPatientRepository = new Mock<IPatientRepository>();
             Patient nullPatient = null;
             Patient truePatient = new Patient();
-            truePatient.UserName = "branko1";
             stubPatientRepository.Setup(m => m.FindByUserName("branko")).Returns(nullPatient);
             stubPatientRepository.Setup(m => m.FindByUserName(truePatient.UserName)).Returns(truePatient);
 

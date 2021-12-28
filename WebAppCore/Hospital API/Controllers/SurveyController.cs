@@ -58,15 +58,6 @@ namespace Hospital_API
         public ActionResult<Survey> PostSurveyQuestions([FromBody] List<QuestionDTO> questions, int id)
         {
             Survey newSurvey = new Survey(System.DateTime.Now);
-
-            foreach (QuestionDTO dtos in questions)
-            {
-                if(dtos.Answer <1 || dtos.Answer >5)
-                {
-                    return BadRequest();
-                }
-            }
-
             int IdSurvey = surveyService.AddSurvey(newSurvey);
 
             foreach(QuestionDTO dtos in questions)

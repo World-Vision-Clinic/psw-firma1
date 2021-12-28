@@ -86,7 +86,7 @@ namespace Hospital.MedicalRecords.Model
             this.Appointments = appointments;
         }
 
-        private string TokenizeSHA256(string username)
+        public static string TokenizeSHA256(string username)
         {
             using (SHA256 sha256Hash = SHA256.Create())
             {
