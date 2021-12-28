@@ -32,5 +32,26 @@ namespace Pharmacy.Repository
             }
             return tender;
         }
+
+        public bool Update(Tender editedTender)
+        {
+            Tender tender = dbContext.Tenders.ToList().FirstOrDefault(tender => tender.TenderId == editedTender.TenderId);
+            if (tender == null)
+            {
+                return false;
+            }
+
+            tender.TenderHash = editedTender.TenderHash;
+            tender.HospitalName = editedTender.HospitalName;
+            tender.Title = editedTender.Title;
+            tender.Description = editedTender.Description;
+            tender.TenderItems = editedTender.TenderItems;
+            tender.EndTime = editedTender.EndTime;
+            tender.TenderOffers = editedTender.TenderOffers;
+
+            dbContext.Tenders.Update(tender);
+            dbContext.SaveChanges();
+            return true; 
+        }
     }
 }

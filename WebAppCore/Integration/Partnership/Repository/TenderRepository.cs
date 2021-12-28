@@ -21,6 +21,11 @@ namespace Integration.Partnership.Repository
         {
             return dbContext.Tenders.Include("TenderOffers").ToList();
         }
+        
+        public List<TenderOffer> GetAllTenderOffers()
+        {
+            return dbContext.TenderOffers.ToList();
+        }
 
         public Tender GetByID(string id)
         {
@@ -29,7 +34,8 @@ namespace Integration.Partnership.Repository
 
         public void Save(Tender parameter)
         {
-            throw new NotImplementedException();
+            dbContext.Tenders.Add(parameter);
+            dbContext.SaveChanges();
         }
     }
 }

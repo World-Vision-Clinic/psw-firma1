@@ -34,8 +34,14 @@ namespace Integration_API.Controller
         public IActionResult CreateTender(TenderCreationDto dto)
         {
             Tender tender = TenderMapper.TenderCreationDtoToTender(dto,Generator.GenerateTenderId());
-
+            service.SaveTender(tender);
             TenderDto tenderDto = TenderMapper.TenderToTenderDto(tender);
+            SendTender(tenderDto);
+            return Ok();
+        }
+
+        public void SendTender(TenderDto tenderDto)
+        {
             var factory = new ConnectionFactory() { HostName = "localhost" };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
@@ -56,7 +62,6 @@ namespace Integration_API.Controller
                                      body: body);
 
             }
-            return Ok();
         }
 
         [HttpGet("report")]
@@ -220,6 +225,39 @@ namespace Integration_API.Controller
             }
 
             return chart;
+        }
+
+        [HttpGet("getWholeStatistic")]
+        public IActionResult GetWholeStatistic(string pharmacyName)
+        {
+            List<int> statistic = service.GetPharmacyWinningStatistic(pharmacyName);
+            return Ok(statistic);
+        }
+
+        [HttpGet("getTendersPharmacyParticipated")]
+        public IActionResult GetTendersPharmacyParticipated(string pharmacyName)
+        {
+            List<Tender> tenders = service.GetTendersPharmacyParticipated(pharmacyName);
+            return Ok(tenders);
+        }
+
+        [HttpGet("getOffersForTender")]
+        public IActionResult GetOffersForTender(string tenderHash, string pharmacyName)
+        {
+            List<TenderOffer> tenderOffers = service.GetOffersForTender(tenderHash, pharmacyName);
+            return Ok(tenderOffers);
+        }
+
+        [HttpGet("getWinningOffersForPharmacy")]
+        public IActionResult GetWinningOffersForPharmacy(string pharmacyName)
+        {
+            List<TenderOffer> winningOffers = service.GetWinningOffersForPharmacy(pharmacyName);
+            List<WinningOfferDto> winningOffersDto = new List<WinningOfferDto>();
+            foreach(TenderOffer offer in winningOffers)
+            {
+                winningOffersDto.Add(OfferMapper.OfferToWinningOfferDto(offer, service.GetTenderName(offer.TenderOfferHash)));
+            }
+            return Ok(winningOffersDto);
         }
     }
 }

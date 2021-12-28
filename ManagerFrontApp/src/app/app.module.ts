@@ -30,6 +30,7 @@ import { ViewFilesComponent } from './manager-integration-front-app/view-files/v
 import { LoginComponent } from './login/login.component';
 import { TenderCreationComponent } from './manager-integration-front-app/tender-creation/tender-creation.component';
 import { NgChartsModule } from 'ng2-charts';
+import { ChartAllModule, AccumulationChartAllModule, RangeNavigatorAllModule } from '@syncfusion/ej2-angular-charts';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,9 @@ import { NgChartsModule } from 'ng2-charts';
     ToastrModule.forRoot(),
     BrowserModule,
     NgChartsModule
+    ChartAllModule,
+    AccumulationChartAllModule,
+    RangeNavigatorAllModule
     // MatDatepicker,
     // MatDateRangeInput,
     // MatDateRangePicker,
