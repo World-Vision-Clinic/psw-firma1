@@ -23,5 +23,41 @@
            </div>
         </div>
     </div>
+
+    <div>
+      <div style="display: block">
+        <canvas style="width:100%;max-width:700px;max-height:400px;margin-left:25%;" baseChart
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [legend]="barChartLegend"
+                chartType='bar'>
+        </canvas>
+      </div>
+    </div>
+
+    <div>
+      <div style="display: block">
+        <canvas style="width:100%;max-width:700px;max-height:400px;margin-left:25%;margin-top:5%;" baseChart
+                [datasets]="barChartDataMax"
+                [labels]="barChartLabelsMax"
+                [options]="barChartOptionsMax"
+                [legend]="barChartLegend"
+                chartType='bar'>
+        </canvas>
+      </div>
+    </div>
+
+    <div>
+      <div style="display: block">
+        <canvas style="width:100%;max-width:700px;max-height:400px;margin-left:25%;margin-top:5%;" baseChart
+                [datasets]="barChartDataMin"
+                [labels]="barChartLabelsMin"
+                [options]="barChartOptionsMin"
+                [legend]="barChartLegend"
+                chartType='bar'>
+        </canvas>
+      </div>
+    </div>
     
     </div>

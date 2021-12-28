@@ -22,6 +22,8 @@
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
     "@ng-select/ng-select": "^8.1.1",
+    "chart.js": "^3.7.0",
+    "ng2-charts": "^3.0.5",
     "@syncfusion/ej2-angular-charts": "^19.4.38",
     "ngx-toastr": "^14.2.1",
     "rxjs": "~6.6.0",

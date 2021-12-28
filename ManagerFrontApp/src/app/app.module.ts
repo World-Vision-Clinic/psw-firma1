@@ -29,6 +29,7 @@ import { GetSpecificationComponent } from './manager-integration-front-app/get-s
 import { ViewFilesComponent } from './manager-integration-front-app/view-files/view-files.component';
 import { LoginComponent } from './login/login.component';
 import { TenderCreationComponent } from './manager-integration-front-app/tender-creation/tender-creation.component';
+import { NgChartsModule } from 'ng2-charts';
 import { ChartAllModule, AccumulationChartAllModule, RangeNavigatorAllModule } from '@syncfusion/ej2-angular-charts';
 
 @NgModule({
@@ -65,10 +66,12 @@ import { ChartAllModule, AccumulationChartAllModule, RangeNavigatorAllModule } f
     MatDatepickerModule,
     MatFormFieldModule,
     MatNativeDateModule,
+    ToastrModule.forRoot(),
+    BrowserModule,
+    NgChartsModule,
     ChartAllModule,
     AccumulationChartAllModule,
-    RangeNavigatorAllModule,
-    ToastrModule.forRoot()
+    RangeNavigatorAllModule
     // MatDatepicker,
     // MatDateRangeInput,
     // MatDateRangePicker,
