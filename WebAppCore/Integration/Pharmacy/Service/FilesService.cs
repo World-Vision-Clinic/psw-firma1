@@ -20,6 +20,11 @@ namespace Integration.Pharmacy.Service
             repository = filesRepository;
         }
 
+        public void SaveFile(Model.File file)
+        {
+            repository.Save(file);
+        }
+
         public void UpdateSpecification(Model.File dowloadedSpec)
         {
             if (repository.GetByName(dowloadedSpec.Name) == null)

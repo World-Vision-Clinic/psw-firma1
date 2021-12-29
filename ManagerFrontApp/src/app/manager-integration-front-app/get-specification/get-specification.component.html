@@ -1,63 +1,30 @@
 <!-- Default form contact -->
-<div   >
+<div>
 
-    <div class="pharmaSelection">
-        <p>Choose the pharmacy from which you want to get the specification</p>
-        <div *ngIf="PharmacyList.length==0">Currently there are no registered pharmacies, so you cannot select pharmacy.</div>
-        <select (ngModelChange)="selectChange($event)" [(ngModel)]="PharmacyList.Name">
-          <option *ngFor="let pharmacy of PharmacyList" [ngValue]="pharmacy">
-            {{pharmacy.Name}}
-          </option>    
-        </select>
-      
-    
-    </div>    
-    
-    <div class="container">
-        <div class="row searchFilter" >
-           <div class="col-sm-12" >
-            <div class="input-group" >
-             <input name="medicineName" [(ngModel)]="medicineName" placeholder="Enter medicine name..." type="text" class="form-control">
-             <button type="button" (click)="GetSpecification()" class="btn btn-secondary btn-search"><span>&nbsp;</span> <span>Get</span></button>
-            </div>
-           </div>
+  <div class="pharmaSelection">
+    <p>Choose the pharmacy from which you want to get the specification</p>
+    <div *ngIf="PharmacyList.length==0">Currently there are no registered pharmacies, so you cannot select pharmacy.
+    </div>
+    <select (ngModelChange)="selectChange($event)" [(ngModel)]="PharmacyList.Name">
+      <option *ngFor="let pharmacy of PharmacyList" [ngValue]="pharmacy">
+        {{pharmacy.Name}}
+      </option>
+    </select>
+
+
+  </div>
+
+  <div class="container">
+    <div class="row searchFilter">
+      <div class="col-sm-12">
+        <div class="input-group">
+          <input name="medicineName" [(ngModel)]="medicineName" placeholder="Enter medicine name..." type="text"
+            class="form-control">
+          <button type="button" (click)="GetSpecification()" class="btn btn-secondary btn-search"><span>&nbsp;</span>
+            <span>Get</span></button>
         </div>
-    </div>
-
-    <div>
-      <div style="display: block">
-        <canvas style="width:100%;max-width:700px;max-height:400px;margin-left:25%;" baseChart
-                [datasets]="barChartData"
-                [labels]="barChartLabels"
-                [options]="barChartOptions"
-                [legend]="barChartLegend"
-                chartType='bar'>
-        </canvas>
       </div>
     </div>
+  </div>
 
-    <div>
-      <div style="display: block">
-        <canvas style="width:100%;max-width:700px;max-height:400px;margin-left:25%;margin-top:5%;" baseChart
-                [datasets]="barChartDataMax"
-                [labels]="barChartLabelsMax"
-                [options]="barChartOptionsMax"
-                [legend]="barChartLegend"
-                chartType='bar'>
-        </canvas>
-      </div>
-    </div>
-
-    <div>
-      <div style="display: block">
-        <canvas style="width:100%;max-width:700px;max-height:400px;margin-left:25%;margin-top:5%;" baseChart
-                [datasets]="barChartDataMin"
-                [labels]="barChartLabelsMin"
-                [options]="barChartOptionsMin"
-                [legend]="barChartLegend"
-                chartType='bar'>
-        </canvas>
-      </div>
-    </div>
-    
-    </div>
+</div>

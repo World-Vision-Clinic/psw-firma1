@@ -21,55 +21,8 @@ export class GetSpecificationComponent implements OnInit {
   objectionContent: any;
   medicineName: string = '';
 
-  barChartOptions : any = {
-    scaleShowVerticalLines: false,
-    responsive: true,
-    plugins: {
-      title: {
-          display: true,
-          text: 'Number of offers'
-      }
-    }
-  };
-
-  barChartOptionsMax : any = {
-    scaleShowVerticalLines: false,
-    responsive: true,
-    plugins: {
-      title: {
-          display: true,
-          text: 'Max prices in dollars'
-      }
-    }
-  };
-
-  barChartOptionsMin : any = {
-    scaleShowVerticalLines: false,
-    responsive: true,
-    plugins: {
-      title: {
-          display: true,
-          text: 'Min prices in dollars'
-      }
-    }
-  };
-
-  barChartLegend = true;
-
-  barChartLabels = [];
-  barChartData = [];
-
-  barChartLabelsMax = [];
-  barChartDataMax = [];
-
-  barChartLabelsMin = [];
-  barChartDataMin = [];
-
   ngOnInit(): void {
     this.getPharmacies();
-    this.getChartDataForNumberOfOffers();
-    this.getChartDataForMaxPrices();
-    this.getChartDataForMinPrices();
   }
 
   selectChange($event: any) {
@@ -78,42 +31,6 @@ export class GetSpecificationComponent implements OnInit {
     this.isPharmacySelectedL = true;
     this.SelectedPharmacy = $event
     //console.log(this.SelectedPharmacy);
-  }
-
-  getChartDataForNumberOfOffers() {
-    return this.http.get<any>("http://localhost:43818/tender/offers/number").subscribe(data => {
-      for (var c in data.data) {
-        this.barChartData.push({
-          label: c as never,
-          data: data.data[c] as never
-        } as never);
-      }
-      this.barChartLabels = data.tenders;
-    });
-  }
-
-  getChartDataForMaxPrices() {
-    return this.http.get<any>("http://localhost:43818/tender/prices/max").subscribe(data => {
-      for (var c in data.data) {
-        this.barChartDataMax.push({
-          label: c as never,
-          data: data.data[c] as never
-        } as never);
-      }
-      this.barChartLabelsMax = data.tenders;
-    });
-  }
-
-  getChartDataForMinPrices() {
-    return this.http.get<any>("http://localhost:43818/tender/prices/min").subscribe(data => {
-      for (var c in data.data) {
-        this.barChartDataMin.push({
-          label: c as never,
-          data: data.data[c] as never
-        } as never);
-      }
-      this.barChartLabelsMin = data.tenders;
-    });
   }
 
   getPharmacies() {

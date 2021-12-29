@@ -20,6 +20,7 @@ using System.Text;
 using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Model;
 using ceTe.DynamicPDF.PageElements;
+using System.IO;
 
 namespace Integration_API.Controller
 {
@@ -29,6 +30,7 @@ namespace Integration_API.Controller
     {
        
         TenderService service = new TenderService(new TenderRepository());
+        FilesService filesService = new FilesService(new FilesRepository());
         
         [HttpPost]
         public IActionResult CreateTender(TenderCreationDto dto)
@@ -65,34 +67,51 @@ namespace Integration_API.Controller
         }
 
         [HttpGet("report")]
-        public IActionResult GetReport()
+        public async Task<IActionResult> GetReport(DateTime start, DateTime end)
+        {
+            GenerateReport(start, end);
+            string localPath = "Reports/Tender" + start.Month + "-" + start.Day + "-" + start.Year + "to" + end.Month + "-" + end.Day + "-" + end.Year + ".pdf";
+            var memory = new System.IO.MemoryStream();
+            using (var stream = new FileStream(localPath, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+            var contentType = "APPLICATION/octet-stream";
+            var fileName = System.IO.Path.GetFileName(localPath);
+
+            return File(memory, contentType, fileName);
+        }
+
+        private void GenerateReport(DateTime start, DateTime end)
         {
             Document document = new Document();
             Page page = new Page();
             document.Pages.Add(page);
-            TextArea textArea = new TextArea("Report for 09/22/2021 - 12/22/2021", 100, 0, 400, 30, Font.HelveticaBoldOblique, 18);
+            string title = "Report for " + start.Month + "/" + start.Day + "/" + start.Year + " - " + end.Month + "/" + end.Day + "/" + end.Year;
+            TextArea textArea = new TextArea(title, 100, 0, 400, 30, Font.HelveticaBoldOblique, 18);
             page.Elements.Add(textArea);
 
-            Chart chartNumberOfOffers = getGraphForNumberOfOffers();
-            Chart chartMaxPrices = getGraphForMaxPrices();
-            Chart chartMinPrices = getGraphForMinPrices();
+            Chart chartNumberOfOffers = getGraphForNumberOfOffers(start, end);
+            Chart chartMaxPrices = getGraphForMaxPrices(start, end);
+            Chart chartMinPrices = getGraphForMinPrices(start, end);
 
             page.Elements.Add(chartNumberOfOffers);
             page.Elements.Add(chartMaxPrices);
             page.Elements.Add(chartMinPrices);
 
-            document.Draw(@"Output.pdf");
-
-            return Ok();
+            string localPath = "Reports/Tender" + start.Month + "-" + start.Day + "-" + start.Year + "to" + end.Month + "-" + end.Day + "-" + end.Year + ".pdf";
+            document.Draw(localPath);
         }
 
         [HttpGet("offers/number")]
-        public IActionResult GetNumberOfOffers()
+        public IActionResult GetNumberOfOffers(DateTime start, DateTime end)
         {
-            Dictionary<string, List<float>> data = service.GetNumberOfOffersForAllTenders();
+            Dictionary<string, List<float>> data = service.GetNumberOfOffersForAllTenders(start, end);
             List<string> tenders = new List<string>();
             foreach (Tender tender in service.GetTendersWithOffers())
-                tenders.Add(tender.Title);
+                if (tender.EndTime >= start && tender.EndTime <= end)
+                    tenders.Add(tender.Title);
 
             var statisticData = new
             {
@@ -103,14 +122,15 @@ namespace Integration_API.Controller
         }
 
         [HttpGet("prices/max")]
-        public IActionResult GetMaxPrices()
+        public IActionResult GetMaxPrices(DateTime start, DateTime end)
         {
-            Dictionary<string, List<float>> data = service.GetMaxPricesForAllTenders();
+            Dictionary<string, List<float>> data = service.GetMaxPricesForAllTenders(start, end);
             List<string> tenders = new List<string>();
             foreach (Tender tender in service.GetTendersWithOffers())
-                tenders.Add(tender.Title);
+                if (tender.EndTime >= start && tender.EndTime <= end)
+                    tenders.Add(tender.Title);
 
-            var statisticData = new
+                var statisticData = new
             {
                 data = data,
                 tenders = tenders
@@ -119,12 +139,13 @@ namespace Integration_API.Controller
         }
 
         [HttpGet("prices/min")]
-        public IActionResult GetMinPrices()
+        public IActionResult GetMinPrices(DateTime start, DateTime end)
         {
-            Dictionary<string, List<float>> data = service.GetMinPricesForAllTenders();
+            Dictionary<string, List<float>> data = service.GetMinPricesForAllTenders(start, end);
             List<string> tenders = new List<string>();
-            foreach(Tender tender in service.GetTendersWithOffers())
-                tenders.Add(tender.Title);
+            foreach (Tender tender in service.GetTendersWithOffers())
+                if (tender.EndTime >= start && tender.EndTime <= end)
+                    tenders.Add(tender.Title);
 
             var statisticData = new
             {
@@ -134,12 +155,12 @@ namespace Integration_API.Controller
             return Ok(statisticData);
         }
 
-        private Chart getGraphForNumberOfOffers()
+        private Chart getGraphForNumberOfOffers(DateTime start, DateTime end)
         {
             Chart chart = new Chart(80, 40, 400, 230);
             PlotArea plotArea = chart.PrimaryPlotArea;
 
-            Dictionary<string, List<float>> data = service.GetNumberOfOffersForAllTenders();
+            Dictionary<string, List<float>> data = service.GetNumberOfOffersForAllTenders(start, end);
 
             Title title1 = new Title("Number of Offers");
             chart.HeaderTitles.Add(title1);
@@ -156,21 +177,22 @@ namespace Integration_API.Controller
 
             Title Title = new Title("Number of offers");
             columnSeries[0].YAxis.Titles.Add(Title);
-
-            for (int t = 0; t < service.GetTendersWithOffers().Count; t++)
+            List<Tender> allTenders = service.GetTendersWithOffers();
+            for (int t = 0; t < allTenders.Count; t++)
             {
-                columnSeries[0].XAxis.Labels.Add(new IndexedXAxisLabel(service.GetTendersWithOffers().ElementAt(t).Title, t));
+                if(allTenders[t].EndTime >= start && allTenders[t].EndTime <= end)
+                    columnSeries[0].XAxis.Labels.Add(new IndexedXAxisLabel(allTenders.ElementAt(t).Title, t));
             }
 
             return chart;
         }
 
-        private Chart getGraphForMaxPrices()
+        private Chart getGraphForMaxPrices(DateTime start, DateTime end)
         {
             Chart chart = new Chart(80, 270, 400, 230);
             PlotArea plotArea = chart.PrimaryPlotArea;
 
-            Dictionary<string, List<float>> data = service.GetMaxPricesForAllTenders();
+            Dictionary<string, List<float>> data = service.GetMaxPricesForAllTenders(start, end);
 
             Title title1 = new Title("Max prices in dollars");
             chart.HeaderTitles.Add(title1);
@@ -187,21 +209,22 @@ namespace Integration_API.Controller
 
             Title Title = new Title("Price in dollars");
             columnSeries[0].YAxis.Titles.Add(Title);
-
-            for (int t = 0; t < service.GetTendersWithOffers().Count; t++)
+            List<Tender> allTenders = service.GetTendersWithOffers();
+            for (int t = 0; t < allTenders.Count; t++)
             {
-                columnSeries[0].XAxis.Labels.Add(new IndexedXAxisLabel(service.GetTendersWithOffers().ElementAt(t).Title, t));
+                if (allTenders[t].EndTime >= start && allTenders[t].EndTime <= end)
+                    columnSeries[0].XAxis.Labels.Add(new IndexedXAxisLabel(allTenders.ElementAt(t).Title, t));
             }
 
             return chart;
         }
 
-        private Chart getGraphForMinPrices()
+        private Chart getGraphForMinPrices(DateTime start, DateTime end)
         {
             Chart chart = new Chart(80, 490, 400, 230);
             PlotArea plotArea = chart.PrimaryPlotArea;
 
-            Dictionary<string, List<float>> data = service.GetMinPricesForAllTenders();
+            Dictionary<string, List<float>> data = service.GetMinPricesForAllTenders(start, end);
 
             Title title1 = new Title("Min prices in dollars");
             chart.HeaderTitles.Add(title1);
@@ -218,10 +241,11 @@ namespace Integration_API.Controller
 
             Title Title = new Title("Price in dollars");
             columnSeries[0].YAxis.Titles.Add(Title);
-
-            for (int t = 0; t < service.GetTendersWithOffers().Count; t++)
+            List<Tender> allTenders = service.GetTendersWithOffers();
+            for (int t = 0; t < allTenders.Count; t++)
             {
-                columnSeries[0].XAxis.Labels.Add(new IndexedXAxisLabel(service.GetTendersWithOffers().ElementAt(t).Title, t));
+                if (allTenders[t].EndTime >= start && allTenders[t].EndTime <= end)
+                    columnSeries[0].XAxis.Labels.Add(new IndexedXAxisLabel(allTenders.ElementAt(t).Title, t));
             }
 
             return chart;

@@ -1,0 +1,45 @@
+<h1 style="margin-left:45%;margin-top:2%;"><b>Tender statistics</b></h1>
+<div style="margin-left:40%;margin-top:2%;">
+    <div>
+        <label for="start">Select start date:</label>
+
+        <input style="margin-left:2%;" type="date" name="start-date" [(ngModel)]="startDate">
+    </div>
+    <br />
+    <div>
+        <label style="margin-left:0.75%;" for="start">Select end date:</label>
+
+        <input style="margin-left:2%;" type="date" name="end-date" [(ngModel)]="endDate">
+    </div>
+
+
+    <!-- Send button -->
+
+    <button (click)="generateStatistics()" color="info" block="true" type="submit"
+        style="margin-left:12%;margin-top: 20px; height: 30px; background-color:#33b5e5; color: white;">Generate</button>
+</div>
+<div *ngIf="buttonClicked == true">
+    <div style="display: block">
+        <canvas style="width:100%;max-width:700px;max-height:400px;margin-left:27%;margin-top:3%;" baseChart [datasets]="barChartData"
+            [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" chartType='bar'>
+        </canvas>
+    </div>
+</div>
+
+<div *ngIf="buttonClicked == true">
+    <div style="display: block">
+        <canvas style="width:100%;max-width:700px;max-height:400px;margin-left:27%;margin-top:3%;" baseChart
+            [datasets]="barChartDataMax" [labels]="barChartLabelsMax" [options]="barChartOptionsMax"
+            [legend]="barChartLegend" chartType='bar'>
+        </canvas>
+    </div>
+</div>
+
+<div *ngIf="buttonClicked == true">
+    <div style="display: block">
+        <canvas style="width:100%;max-width:700px;max-height:400px;margin-left:27%;margin-top:3%;" baseChart
+            [datasets]="barChartDataMin" [labels]="barChartLabelsMin" [options]="barChartOptionsMin"
+            [legend]="barChartLegend" chartType='bar'>
+        </canvas>
+    </div>
+</div>
