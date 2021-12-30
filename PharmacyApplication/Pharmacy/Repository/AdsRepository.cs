@@ -13,12 +13,20 @@ namespace Pharmacy.Repository
         public void AddAd(Ad ad)
         {
             dbContext.Ads.Add(ad);
+            foreach(MedicineAd medicineAd in ad.MedicinesOnPromotion)
+            {
+                dbContext.MedicineAds.Add(medicineAd);
+            }
             dbContext.SaveChanges();
         }
 
         public void DeleteAd(long adId)
         {
             Ad adToDelete = dbContext.Ads.ToList().FirstOrDefault(ad => ad.Id == adId);
+            foreach(MedicineAd medicineAd in adToDelete.MedicinesOnPromotion)
+            {
+                dbContext.MedicineAds.Remove(medicineAd);
+            }
             dbContext.Ads.Remove(adToDelete);
             dbContext.SaveChanges();
         }

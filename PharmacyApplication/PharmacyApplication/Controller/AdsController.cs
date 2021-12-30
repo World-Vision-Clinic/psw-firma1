@@ -15,6 +15,7 @@ namespace PharmacyAPI.Controller
     {
         AdsService service = new AdsService(new AdsRepository());
 
+        // za svrhe testiranja
         [HttpGet]
         public IActionResult GetAll()
         {

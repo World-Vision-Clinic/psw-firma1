@@ -24,7 +24,9 @@ namespace Pharmacy.Service
 
         public void Add(Ad ad)
         {
+
             adsRepository.AddAd(ad);
+
         }
 
         public void Delete(long adId)
