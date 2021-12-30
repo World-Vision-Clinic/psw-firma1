@@ -24,7 +24,7 @@ namespace Integration.Partnership.Service
             return tenderRepository.GetAll();
         }
 
-        public Dictionary<string, List<float>> GetNumberOfOffersForAllTenders()
+        public Dictionary<string, List<float>> GetNumberOfOffersForAllTenders(DateTime start, DateTime end)
         {
             int tenderNumber = 0;
             Dictionary<string, List<float>> data = new Dictionary<string, List<float>>();
@@ -34,6 +34,9 @@ namespace Integration.Partnership.Service
 
             foreach (Tender t in GetTendersWithOffers())
             {
+                if (t.EndTime < start || t.EndTime > end)
+                    continue;
+
                 List<string> pharmacies = new List<string>();
                 string pharmacyName = "";
                 for (int j = 0; j < t.TenderOffers.Count; j++)
@@ -60,7 +63,7 @@ namespace Integration.Partnership.Service
             return data;
         }
 
-        public Dictionary<string, List<float>> GetMaxPricesForAllTenders()
+        public Dictionary<string, List<float>> GetMaxPricesForAllTenders(DateTime start, DateTime end)
         {
             int tenderNumber = 0;
             Dictionary<string, List<float>> data = new Dictionary<string, List<float>>();
@@ -70,6 +73,9 @@ namespace Integration.Partnership.Service
 
             foreach (Tender t in GetTendersWithOffers())
             {
+                if (t.EndTime < start || t.EndTime > end)
+                    continue;
+
                 List<string> pharmacies = new List<string>();
                 string pharmacyName = "";
                 for (int j = 0; j < t.TenderOffers.Count; j++)
@@ -100,7 +106,7 @@ namespace Integration.Partnership.Service
             return data;
         }
 
-        public Dictionary<string, List<float>> GetMinPricesForAllTenders()
+        public Dictionary<string, List<float>> GetMinPricesForAllTenders(DateTime start, DateTime end)
         {
             int tenderNumber = 0;
             Dictionary<string, List<float>> data = new Dictionary<string, List<float>>();
@@ -110,6 +116,9 @@ namespace Integration.Partnership.Service
 
             foreach (Tender t in GetTendersWithOffers())
             {
+                if (t.EndTime < start || t.EndTime > end)
+                    continue;
+
                 List<string> pharmacies = new List<string>();
                 string pharmacyName = "";
                 for (int j = 0; j < t.TenderOffers.Count; j++)
