@@ -1,4 +1,5 @@
-﻿using Integration.Pharmacy.Model;
+﻿using Integration.Partnership.Repository;
+using Integration.Pharmacy.Model;
 using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Repository.RepositoryInterfaces;
 using Integration.Pharmacy.Service;
@@ -24,7 +25,7 @@ namespace IntegrationTests.IntegrationTests
             var stubRepository = new Mock<INewsRepository>();
             var news = new List<News>();
             stubRepository.Setup(m => m.GetAll()).Returns(news);    
-            RabbitMQService rabbitMQ = new RabbitMQService(stubRepository.Object, new PharmaciesRepository());
+            RabbitMQService rabbitMQ = new RabbitMQService(stubRepository.Object, new PharmaciesRepository(), new TenderRepository());
             CancellationToken token = new CancellationToken(false);
             await rabbitMQ.StartAsync(token);
 
