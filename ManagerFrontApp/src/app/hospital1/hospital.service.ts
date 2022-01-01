@@ -102,4 +102,20 @@ export class HospitalService {
     return this.http.post('http://localhost:39901/api/Rooms/split', body,{headers: headers}).subscribe(data => {console.log(data)});
   }
 
+  makeNewShift(){
+
+  }
+
+  updateShift(){
+
+  }
+
+  getAllShifts(){
+
+  }
+
+  deleteShift(){
+    
+  }
+
 }

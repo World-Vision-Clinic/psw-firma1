@@ -9,6 +9,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hospital.GraphicalEditor.Model;
 using Hospital.RoomsAndEquipment.Model;
+using Hospital.ShiftsAndVacations.Model;
+
 namespace Hospital.SharedModel
 {
     public class HospitalContext : DbContext
@@ -36,6 +38,8 @@ namespace Hospital.SharedModel
         public DbSet<MedicalRecord> MedicalRecords { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
         public DbSet<Manager> Managers { get; set; }
+
+        public DbSet<Shift> Shifts { get; set; }
 
         public HospitalContext() { }
 
@@ -87,6 +91,12 @@ namespace Hospital.SharedModel
                 new SurveyQuestion { Id = 13, Question = "How clearly did the staff explain you some procedures of our hospital?", Section = SurveySectionType.Staff, IdSurvey = 1 },
                 new SurveyQuestion { Id = 14, Question = "How yould you rate to what extent staff was available to you during your visit to the hospital?", Section = SurveySectionType.Staff, IdSurvey = 1 },
                 new SurveyQuestion { Id = 15, Question = "What is your overall satisfaction with our staff?", Section = SurveySectionType.Staff, IdSurvey = 1 }
+                );
+
+            modelBuilder.Entity<Shift>().HasData(
+                    new Shift(1, "Morning shift", 6, 15),
+                    new Shift(2, "Afternoon shift", 15, 23),
+                    new Shift(3, "Night shift", 23, 6)
                 );
 
             modelBuilder.Entity<FloorLabel>().HasData(

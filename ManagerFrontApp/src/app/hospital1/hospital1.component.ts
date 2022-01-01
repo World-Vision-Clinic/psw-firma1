@@ -37,6 +37,23 @@ export class Hospital1Component implements OnInit {
   roomsList: iEquipmentRoom[] = [];
   destinationRooms: Room[] | null = [];
 
+  shiftsBox: boolean=false;
+  createShiftBox: boolean = false;
+  updateShiftBox: boolean = false;
+  shiftInfoBox: boolean = false;
+  newShift = {
+    id:-1,
+    name:'',
+    start:-1,
+    end:-1
+  };
+  selectedShift={
+    id:-1,
+    name:'',
+    start:-1,
+    end:-1
+  };
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -95,7 +112,7 @@ export class Hospital1Component implements OnInit {
     purpose: ''
   };
   showBtns: boolean = true;
-
+  listOfShiftsBox: boolean=true;
 
   currentState = {
     index: 0,
@@ -550,4 +567,32 @@ export class Hospital1Component implements OnInit {
     this.loadHospitalFloors();
   }
 //END OF RENOVATIONS PART
+
+//SHIFTS
+createNewShiftBox(){
+  this.createShiftBox=true; 
+  this.listOfShiftsBox=false;
+  this.shiftInfoBox=false;
+  this.updateShiftBox=false;
+}
+openshiftInfoBox(){
+  if(this.selectedShift.id!=-1){
+    this.createShiftBox=false; 
+    this.listOfShiftsBox=false;
+    this.shiftInfoBox=true;
+    this.updateShiftBox=false;
+  }
+}
+openUpdateShiftBox(){
+  if(this.selectedShift.id!=-1){
+    this.createShiftBox=false; 
+    this.listOfShiftsBox=false;
+    this.shiftInfoBox=false;
+    this.updateShiftBox=true;
+  }
+}
+
+
+//END OF SHIFTS PART
+
 }

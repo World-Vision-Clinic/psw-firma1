@@ -501,10 +501,40 @@
     </div>
   </div>
 
+  <div *ngIf="shiftsBox">
+    <button (click)="createNewShiftBox()" class="btn">Create new shift</button>
+    <button (click)="openshiftInfoBox()" class="btn">Shift info</button>
+    <button class="btn">Delete shift</button>
+    <button (click)="openUpdateShiftBox()" class="btn">Change shift</button>
+    <div *ngIf="listOfShiftsBox">
+      <table class="rooms-table">
+        <thead><tr><th>Name</th><th>Start</th><th>End</th></tr></thead>
+        <tbody><tr><td></td><td></td><td></td></tr></tbody>
+      </table>
+    <button (click)="shiftsBox=false" class="btn">Close</button>
+    </div>
+    <div *ngIf="createShiftBox" class="shiftsBox">
+      <label for="">Name of shift:<input [(ngModel)]="newShift.name"  type="text"></label><br>
+      <label for="">Start of shift:<input [(ngModel)]="newShift.start"  type="number"></label><br>
+      <label for="">End of shift:<input [(ngModel)]="newShift.end"  type="number"></label><br>
+    </div>
+    <div *ngIf="shiftInfoBox" class="shiftsBox">
+      <label for="">Name of shift:<input [(ngModel)]="selectedShift.name"  type="text" disabled></label><br>
+      <label for="">Start of shift:<input [(ngModel)]="selectedShift.start"  type="text" disabled></label><br>
+      <label for="">End of shift:<input [(ngModel)]="selectedShift.end"  type="text" disabled></label><br>
+    </div>
+    <div *ngIf="updateShiftBox" class="shiftsBox">
+      <label for="">Name of shift:<input [(ngModel)]="selectedShift.name"  type="text"></label><br>
+      <label for="">Start of shift:<input [(ngModel)]="selectedShift.start"  type="number"></label><br>
+      <label for="">End of shift:<input [(ngModel)]="selectedShift.end"  type="number"></label><br>
+    </div>
+  </div>
+
   <div class="toolbar">
     <button (click)="buildingBox = true" class="toolbar-btn">Building info</button>
     <button (click)="moveEquipment()" class="toolbar-btn">Move equipment</button>
     <button class="toolbar-btn" (click)="renovationTypeBox=true" >Renovate rooms</button>
+    <button class="toolbar-btn" (click)="shiftsBox=true">Shift managment</button>
   </div>
   
 </div>

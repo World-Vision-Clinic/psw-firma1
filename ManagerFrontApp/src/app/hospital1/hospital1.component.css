@@ -591,3 +591,9 @@
 .selected-for-merge{
   background-color: rgba(160, 159, 159, 0.6);
 }
+
+.shiftsBox{
+  margin-top:70px;
+  font-size: 16px;
+  align-items: center;
+}
