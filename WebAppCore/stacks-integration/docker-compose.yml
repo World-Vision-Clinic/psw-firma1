@@ -1,0 +1,56 @@
+version: '3.2'
+
+secrets:
+  db_pass:
+    external: true
+  db_user:
+    external: true
+
+services:
+  integration-database:
+    image: postgres 
+    restart: always
+    networks: 
+      - database 
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
+      POSTGRES_USER_FILE: /run/secrets/db_user
+      POSTGRES_DB: IntegrationDatabase
+    volumes:
+      - type: volume
+        source: database-data
+        target: /var/lib/postgresql/data
+      - type: bind
+        source: ./scripts/seed.sql
+        target: /docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5557:5432"
+    secrets:
+      - db_pass
+      - db_user 
+
+  integration: 
+    image: darkelfff/integration-api-s:latest
+    depends_on:
+      - integration-database
+    environment: 
+      DATABASE_HOST: integration-database
+      DATABASE_PORT: 5432
+      DATABASE_SCHEMA: IntegrationDatabase
+      DATABASE_PASSWORD_FILE: /run/secrets/db_pass
+      DATABASE_USER_FILE: /run/secrets/db_user
+    ports:
+      - "8083:80" 
+    restart: on-failure
+    networks:  
+      - database 
+    secrets:
+      - db_pass
+      - db_user 
+
+volumes:
+  database-data:
+
+networks: 
+  database:
+    driver: overlay
