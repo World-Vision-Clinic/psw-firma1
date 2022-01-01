@@ -13,10 +13,10 @@ namespace Pharmacy.Service
     {
         ITendersRepository tenderRepository;
         IMedicineRepository medicineRepository;
-        public TenderService(ITendersRepository tendersRepository)
+        public TenderService(ITendersRepository tendersRepository, IMedicineRepository medicineRepository)
         {
             this.tenderRepository = tendersRepository;
-            this.medicineRepository = new MedicineRepository();
+            this.medicineRepository = medicineRepository;
         }
 
         public Tender GetTenderById(string id)

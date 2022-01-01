@@ -9,5 +9,6 @@ namespace Integration.Partnership.Repository.RepositoryInterfaces
     public interface ITenderRepository : IGenericRepository<Tender>
     {
         List<TenderOffer> GetAllTenderOffers();
+        public bool AddOffer(TenderOffer tenderOffer);
     }
 }

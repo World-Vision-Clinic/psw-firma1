@@ -37,5 +37,14 @@ namespace Integration.Partnership.Repository
             dbContext.Tenders.Add(parameter);
             dbContext.SaveChanges();
         }
+        public bool AddOffer(TenderOffer tenderOffer)
+        {
+            Tender tender = dbContext.Tenders.Include("TenderItems").SingleOrDefault(tender => tender.TenderHash == tenderOffer.TenderHash);
+            if (tender == null) return false;
+            if (tender.TenderOffers == null) tender.TenderOffers = new List<TenderOffer>();
+            tender.TenderOffers.Add(tenderOffer);
+            dbContext.SaveChanges();
+            return true;
+        }
     }
 }
