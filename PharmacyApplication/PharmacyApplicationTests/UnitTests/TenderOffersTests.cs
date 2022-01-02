@@ -79,7 +79,7 @@ namespace PharmacyApplicationTests.UnitTests
             Tender tender = service.GetById(1);
             TenderOffer offer = service.CreateTenderOffer(tender);
             //Assert.Contains(offer.OfferItems, item => (item.MedicineName.Trim().Equals("Brufen") && item.Dosage == 500.00 && item.Quantity == 200));
-            Assert.NotNull(offer);
+            Assert.Null(offer);
         }
 
         //[Fact]
