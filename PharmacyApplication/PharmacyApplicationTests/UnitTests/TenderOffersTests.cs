@@ -79,64 +79,62 @@ namespace PharmacyApplicationTests.UnitTests
             TenderService service = new TenderService(tenderRepository, medicineRepository);
             Tender tender = service.GetById(1);
             List<OfferItem> items = service.FillOfferItems(tender.TenderItems.ToList());
-            //TenderOffer offer = new TenderOffer(service.GenerateTenderOfferHash(), service.GetTotalPrice(items), items); 
-            //Assert.Contains(offer.OfferItems, item => (item.MedicineName.Trim().Equals("Brufen") && item.Dosage == 500.00 && item.Quantity == 200));
-            Assert.False(items.Count() == 0);
+            Assert.Contains(items, item => (item.MedicineName.Trim().Equals("Brufen") && item.Dosage == 500.00 && item.Quantity == 200));
         }
 
-        //[Fact]
-        //public void Offer_with_more_quantity()
-        //{
-        //    IMedicineRepository medicineRepository = CreateMedicineStubRepository();
-        //    ITendersRepository tenderRepository = CreateTenderStubRepository();
-        //    TenderService service = new TenderService(tenderRepository, medicineRepository);
-        //    Tender tender = service.GetById(1);
-        //    TenderOffer offer = service.CreateTenderOffer(tender);
-        //    Assert.Contains(offer.OfferItems, item => (item.MedicineName.Trim().Equals("Panadol") && item.Dosage == 400.00 && item.Quantity == 500));
-        //}
+        [Fact]
+        public void Offer_with_more_quantity()
+        {
+            IMedicineRepository medicineRepository = CreateMedicineStubRepository();
+            ITendersRepository tenderRepository = CreateTenderStubRepository();
+            TenderService service = new TenderService(tenderRepository, medicineRepository);
+            Tender tender = service.GetById(1); 
+            List<OfferItem> items = service.FillOfferItems(tender.TenderItems.ToList());
+            Assert.Contains(items, item => (item.MedicineName.Trim().Equals("Panadol") && item.Dosage == 400.00 && item.Quantity == 500));
+        }
 
-        //[Fact]
-        //public void Offer_with_zero_quantity()
-        //{
-        //    IMedicineRepository medicineRepository = CreateMedicineStubRepository();
-        //    ITendersRepository tenderRepository = CreateTenderStubRepository();
-        //    TenderService service = new TenderService(tenderRepository, medicineRepository);
-        //    Tender tender = service.GetById(1);
-        //    TenderOffer offer = service.CreateTenderOffer(tender);
-        //    Assert.DoesNotContain(offer.OfferItems, item => (item.MedicineName.Trim().Equals("Bromazepam") && item.Dosage == 1000.0));
-        //}
+        [Fact]
+        public void Offer_with_zero_quantity()
+        {
+            IMedicineRepository medicineRepository = CreateMedicineStubRepository();
+            ITendersRepository tenderRepository = CreateTenderStubRepository();
+            TenderService service = new TenderService(tenderRepository, medicineRepository);
+            Tender tender = service.GetById(1);
+            List<OfferItem> items = service.FillOfferItems(tender.TenderItems.ToList());
+            Assert.DoesNotContain(items, item => (item.MedicineName.Trim().Equals("Bromazepam") && item.Dosage == 1000.0));
+        }
 
-        //[Fact]
-        //public void Offer_with_false_dosage()
-        //{
-        //    IMedicineRepository medicineRepository = CreateMedicineStubRepository();
-        //    ITendersRepository tenderRepository = CreateTenderStubRepository();
-        //    TenderService service = new TenderService(tenderRepository, medicineRepository);
-        //    Tender tender = service.GetById(1);
-        //    TenderOffer offer = service.CreateTenderOffer(tender);
-        //    Assert.DoesNotContain(offer.OfferItems, item => (item.MedicineName.Trim().Equals("Brufen") && item.Dosage == 200.00));
-        //}
+        [Fact]
+        public void Offer_with_false_dosage()
+        {
+            IMedicineRepository medicineRepository = CreateMedicineStubRepository();
+            ITendersRepository tenderRepository = CreateTenderStubRepository();
+            TenderService service = new TenderService(tenderRepository, medicineRepository);
+            Tender tender = service.GetById(1);
+            List<OfferItem> items = service.FillOfferItems(tender.TenderItems.ToList());
+            Assert.DoesNotContain(items, item => (item.MedicineName.Trim().Equals("Brufen") && item.Dosage == 200.00));
+        }
 
-        //[Fact]
-        //public void Check_count_of_offer_items()
-        //{
-        //    IMedicineRepository medicineRepository = CreateMedicineStubRepository();
-        //    ITendersRepository tenderRepository = CreateTenderStubRepository();
-        //    TenderService service = new TenderService(tenderRepository, medicineRepository);
-        //    Tender tender = service.GetById(1);
-        //    TenderOffer offer = service.CreateTenderOffer(tender);
-        //    Assert.True(offer.OfferItems.Count == 3);
-        //}
+        [Fact]
+        public void Check_count_of_offer_items()
+        {
+            IMedicineRepository medicineRepository = CreateMedicineStubRepository();
+            ITendersRepository tenderRepository = CreateTenderStubRepository();
+            TenderService service = new TenderService(tenderRepository, medicineRepository);
+            Tender tender = service.GetById(1);
+            List<OfferItem> items = service.FillOfferItems(tender.TenderItems.ToList());
+            Assert.True(items.Count == 3);
+        }
 
-        //[Fact]
-        //public void Check_when_tender_items_are_empty()
-        //{
-        //    IMedicineRepository medicineRepository = CreateMedicineStubRepository();
-        //    ITendersRepository tenderRepository = CreateTenderStubRepository();
-        //    TenderService service = new TenderService(tenderRepository, medicineRepository);
-        //    Tender tender = service.GetById(2);
-        //    TenderOffer offer = service.CreateTenderOffer(tender);
-        //    Assert.True(offer.OfferItems.Count == 0);
-        //}
+        [Fact]
+        public void Check_when_tender_items_are_empty()
+        {
+            IMedicineRepository medicineRepository = CreateMedicineStubRepository();
+            ITendersRepository tenderRepository = CreateTenderStubRepository();
+            TenderService service = new TenderService(tenderRepository, medicineRepository);
+            Tender tender = service.GetById(2);
+            List<OfferItem> items = service.FillOfferItems(tender.TenderItems.ToList());
+            Assert.True(items.Count == 0);
+        }
     }
 }
