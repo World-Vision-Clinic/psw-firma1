@@ -83,7 +83,7 @@ namespace Pharmacy.Service
             List<OfferItem> items = FillOfferItems(tender.TenderItems.ToList());
             TenderOffer offer = new TenderOffer(GenerateTenderOfferHash(),GetTotalPrice(items),items);
             tender.TenderOffers.Add(offer);
-            //tenderRepository.Update(tender);
+            tenderRepository.Update(tender);
             return offer;
         }
 
