@@ -81,7 +81,7 @@ namespace PharmacyApplicationTests.UnitTests
             List<OfferItem> items = service.FillOfferItems(tender.TenderItems.ToList());
             //TenderOffer offer = new TenderOffer(service.GenerateTenderOfferHash(), service.GetTotalPrice(items), items); 
             //Assert.Contains(offer.OfferItems, item => (item.MedicineName.Trim().Equals("Brufen") && item.Dosage == 500.00 && item.Quantity == 200));
-            Assert.True(items.Count() == 0);
+            Assert.False(items.Count() == 0);
         }
 
         //[Fact]
