@@ -1,4 +1,4 @@
-name: Build and Test Pharmacy App With Every Push to Develop and Master
+name: Build Pharmacy App 
 
 on:
   push:
@@ -16,5 +16,4 @@ jobs:
       uses: actions/checkout@v2
     - name: Build
       run: dotnet build ${{ env.PHARMACY-PROJECT-SOLUTION }} --configuration Release
-    - name: Test
-      run: dotnet test ${{ env.PHARMACY-PROJECT-SOLUTION }} --configuration Release --no-build
+  

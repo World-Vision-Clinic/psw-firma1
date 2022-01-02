@@ -38,11 +38,10 @@ namespace Pharmacy.Service
 
         public OfferItem CheckMedicine(TenderItem item)
         {
-            List<Medicine> medicines = medicineRepository.GetByName(item.MedicineName);
 
-            foreach(Medicine medicine in medicines)
+            foreach (Medicine medicine in medicineRepository.GetAll())
             {
-                if(medicine.Weigth == item.Dosage && medicine.Quantity != 0)
+                if (medicine.MedicineName.Trim().Equals(item.MedicineName.Trim()) && medicine.Weigth == item.Dosage && medicine.Quantity != 0)
                 {
                     int quantity = GetQuantityForOfferItem(item.Quantity, medicine.Quantity);
                     return new OfferItem(medicine.MedicineName, medicine.Weigth, quantity, medicine.Price);
@@ -104,6 +103,19 @@ namespace Pharmacy.Service
             } while (foundedOffer != null);
 
             return tenderHash;
+        }
+
+        public Tender GetById(int id)
+        {
+            foreach (Tender t in tenderRepository.GetAll())
+            {
+                if (t.TenderId == id)
+                {
+                    return t;
+                }
+            }
+
+            return null;
         }
     }
 }
