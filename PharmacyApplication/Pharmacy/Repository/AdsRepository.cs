@@ -12,11 +12,16 @@ namespace Pharmacy.Repository
         private PharmacyDbContext dbContext = new PharmacyDbContext();
         public void AddAd(Ad ad)
         {
-            dbContext.Ads.Add(ad);
+            Ad newAd = dbContext.Ads.ToList().FirstOrDefault(a => a.Id == ad.Id);
+            if (newAd != null)
+            {
+                return;
+            }
             foreach(MedicineAd medicineAd in ad.MedicinesOnPromotion)
             {
                 dbContext.MedicineAds.Add(medicineAd);
             }
+            dbContext.Ads.Add(ad);
             dbContext.SaveChanges();
         }
 

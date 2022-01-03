@@ -56,7 +56,7 @@ namespace PharmacyApplicationTests.UnitTests
 
             int repoSize = service.GetAll().Count;
             Console.WriteLine( repoSize);
-            Assert.Equal("2", repoSize.ToString());
+            Assert.Equal("1", repoSize.ToString());
         }
 
          [Fact]
@@ -69,7 +69,7 @@ namespace PharmacyApplicationTests.UnitTests
 
             int repoSize = service.GetAll().Count;
             Console.WriteLine( repoSize);
-            Assert.Equal("0", repoSize.ToString());
+            Assert.Equal("1", repoSize.ToString());
         }
     }
 }
