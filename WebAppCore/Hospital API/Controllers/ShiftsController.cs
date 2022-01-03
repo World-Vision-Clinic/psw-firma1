@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Hospital.ShiftsAndVacations.Model;
 using System.Net.Http;
 using System.Net;
+using Hospital_API.DTO;
 
 namespace Hospital_API.Controllers
 {
@@ -41,16 +42,17 @@ namespace Hospital_API.Controllers
         }
 
         [HttpPost("newShift")]
-        public HttpResponseMessage addNew([FromBody] Shift shift)
+        public HttpResponseMessage addNew([FromBody] ShiftDTO shift)
         {
-            _shiftsService.addNewShift(shift);
+            _shiftsService.addNewShift(shift.Id,shift.Name,shift.Start,shift.End);
             return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }
 
         [HttpPost("update")]
-        public HttpResponseMessage updateShift([FromBody] Shift shift)
+        public HttpResponseMessage updateShift([FromBody] ShiftDTO shift)
         {
-            _shiftsService.updateShift(shift);
+            _shiftsService.deleteShift(shift.Id);
+            _shiftsService.addNewShift(shift.Id, shift.Name, shift.Start, shift.End);
             return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }
 

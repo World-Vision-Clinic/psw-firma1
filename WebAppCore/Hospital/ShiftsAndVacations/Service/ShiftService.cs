@@ -20,9 +20,10 @@ namespace Hospital.ShiftsAndVacations.Service
             return repository.GetAll();
         }
 
-        public void updateShift(Shift shift)
+        public void updateShift(int id,string name, int start,int end)
         {
-            repository.Update(shift);
+            Shift s = new Shift(id, name, start, end);
+            repository.Update(s);
         }
 
         public bool deleteShift(int id)
@@ -39,9 +40,10 @@ namespace Hospital.ShiftsAndVacations.Service
             
         }
 
-        public void addNewShift(Shift shift)
+        public void addNewShift(int id, string name, int start, int end)
         {
-            repository.Save(shift);
+            Shift s = new Shift(id, name, start, end);
+            repository.Save(s);
         }
 
         public Shift getById(int id)

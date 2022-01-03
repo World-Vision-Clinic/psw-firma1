@@ -11,6 +11,9 @@ import { iEquipmentRoom } from '../data/iEquipmentRoom';
 //import { BUILDINGS } from '../data/mock-buildings';
 import { emptyRoom, Room } from '../data/room';
 import { HospitalService } from './hospital.service';
+import {Shift} from '../data/shift';
+import {ShiftSend} from '../data/shift';
+
 @Component({
   selector: 'app-hospital1',
   templateUrl: './hospital1.component.html',
@@ -37,22 +40,26 @@ export class Hospital1Component implements OnInit {
   roomsList: iEquipmentRoom[] = [];
   destinationRooms: Room[] | null = [];
 
+  ShiftBtnsBox:boolean=false;
+  shiftsListBox:boolean=false;
+  shiftsDoctorsBox:boolean=false;
   shiftsBox: boolean=false;
   createShiftBox: boolean = false;
   updateShiftBox: boolean = false;
   shiftInfoBox: boolean = false;
-  newShift = {
-    id:-1,
-    name:'',
-    start:-1,
-    end:-1
+  newShift:ShiftSend = {
+    Id:0,
+    Name:'',
+    Start:-1,
+    End:-1
   };
-  selectedShift={
-    id:-1,
-    name:'',
-    start:-1,
-    end:-1
+  selectedShift :ShiftSend={
+    Id:-1,
+    Name:'',
+    Start:-1,
+    End:-1
   };
+  shifts:Shift[]=[];
 
   constructor(
     private router: Router,
@@ -396,6 +403,7 @@ export class Hospital1Component implements OnInit {
   ngOnInit(): void {
     this.loadHospital();
     this.loadHospitalFloors();
+    this.loadShifts();
   }
 
   async saveHospital() {
@@ -576,7 +584,7 @@ createNewShiftBox(){
   this.updateShiftBox=false;
 }
 openshiftInfoBox(){
-  if(this.selectedShift.id!=-1){
+  if(this.selectedShift){
     this.createShiftBox=false; 
     this.listOfShiftsBox=false;
     this.shiftInfoBox=true;
@@ -584,7 +592,7 @@ openshiftInfoBox(){
   }
 }
 openUpdateShiftBox(){
-  if(this.selectedShift.id!=-1){
+  if(this.selectedShift){
     this.createShiftBox=false; 
     this.listOfShiftsBox=false;
     this.shiftInfoBox=false;
@@ -592,7 +600,32 @@ openUpdateShiftBox(){
   }
 }
 
+updateShift(){
+  this.hospitalService.updateShift(this.selectedShift);
+  this.loadShifts()
+}
 
+createShift(){
+  this.hospitalService.makeNewShift(this.newShift)
+  this.loadShifts()
+}
+
+selectShift(item){
+  this.selectedShift.Id=item.id;
+  this.selectedShift.Name=item.name;
+  this.selectedShift.Start=item.start;
+  this.selectedShift.End=item.end; 
+}
+
+deleteShift(){ 
+  this.hospitalService.deleteShift(this.selectedShift.Id);
+  this.loadShifts()
+}
+
+async loadShifts(){
+  this.hospitalService.getAllShifts().subscribe((data)=>{this.shifts=data}, (error) => {console.log(error);
+  })
+}
 //END OF SHIFTS PART
 
 }
