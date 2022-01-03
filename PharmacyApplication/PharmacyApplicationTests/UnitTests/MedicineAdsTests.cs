@@ -41,7 +41,7 @@ namespace PharmacyApplicationTests.UnitTests
         }
 
         [Fact]
-        public void Find_ads_repository_size()
+        public void Find_ads_repository_size_after_add()
         {
             IAdsRepository stubRepository = CreateAdsStubRepository();
 
@@ -57,6 +57,19 @@ namespace PharmacyApplicationTests.UnitTests
             int repoSize = service.GetAll().Count;
             Console.WriteLine( repoSize);
             Assert.True(repoSize == 2);
+        }
+
+         [Fact]
+        public void Find_ads_repository_size_after_delete()
+        {
+            IAdsRepository stubRepository = CreateAdsStubRepository();
+
+            AdsService service = new AdsService(stubRepository);
+            service.Delete(1L);
+
+            int repoSize = service.GetAll().Count;
+            Console.WriteLine( repoSize);
+            Assert.True(repoSize == 0);
         }
     }
 }
