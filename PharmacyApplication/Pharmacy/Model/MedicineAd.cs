@@ -10,5 +10,12 @@ namespace Pharmacy.Model
         public long MedicineId { get; set; }
         public double PromotionPrice { get; set; }
         public MedicineAd() { }
+
+        public MedicineAd(long id, long medicineId, double promotionPrice)
+        {
+            Id = id;
+            MedicineId = medicineId;
+            PromotionPrice = promotionPrice;
+        }
     }
 }
