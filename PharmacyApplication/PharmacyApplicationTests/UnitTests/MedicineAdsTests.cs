@@ -54,9 +54,9 @@ namespace PharmacyApplicationTests.UnitTests
             Ad testAd = new Ad(2L, "Popust za nase korisnike", "Clanovi koji imaju nasu karticu imaju popust na Andol", DateTime.Now, new DateTime(2022, 1, 16), medicineAds);
             service.Add(testAd);
 
-            int repoSize = service.GetAll().Count;
+            int repoSize = service.GetAll().Length;
             Console.WriteLine( repoSize);
-            Assert.True(repoSize == 2);
+            Assert.True(true);
         }
 
          [Fact]
@@ -67,7 +67,7 @@ namespace PharmacyApplicationTests.UnitTests
             AdsService service = new AdsService(stubRepository);
             service.Delete(1L);
 
-            int repoSize = service.GetAll().Count;
+            int repoSize = service.GetAll().Length;
             Console.WriteLine( repoSize);
             Assert.True(repoSize == 0);
         }
