@@ -13,7 +13,7 @@ namespace Pharmacy.Service
 
         public AdsService(IAdsRepository repository)
         {
-            adsRepository = repository;
+            this.adsRepository = repository;
         }
         public List<Ad> GetAll()
         {
@@ -26,6 +26,10 @@ namespace Pharmacy.Service
         public void Delete(long adId)
         {
             adsRepository.DeleteAd(adId);
+        }
+        public Ad GetById(long adId)
+        {
+            return adsRepository.GetById(adId);
         }
 
     }

@@ -42,5 +42,10 @@ namespace Pharmacy.Repository
             dbContext.Ads.ToList().ForEach(ad => ads.Add(ad));
             return ads;
         }
+
+        public Ad GetById(long adId)
+        {
+            return dbContext.Ads.ToList().FirstOrDefault(ad => ad.Id == adId);
+        }
     }
 }

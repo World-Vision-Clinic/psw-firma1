@@ -10,5 +10,6 @@ namespace Pharmacy.Repository.RepositoryInterfaces
         public List<Ad> GetAll();
         public void AddAd(Ad ad);
         public void DeleteAd(long adId);
+        public Ad GetById(long adId);
     }
 }

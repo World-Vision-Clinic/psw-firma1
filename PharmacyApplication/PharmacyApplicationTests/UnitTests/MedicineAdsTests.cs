@@ -41,35 +41,34 @@ namespace PharmacyApplicationTests.UnitTests
         }
 
         [Fact]
-        public void Find_ads_repository_size_after_add()
+        public void Find_ads_repository_size_after_creating_an_ad()
         {
             IAdsRepository stubRepository = CreateAdsStubRepository();
+            AdsService service = new AdsService(stubRepository);
 
             Medicine andol = new Medicine(3L, "Andol", "Galenika", "sideEffects3", "usage3", new List<SubstituteMedicine>(), 400.00, 280.00, "mainPrecautions3", "potentialDangers3", new List<Substance>(), 300);
-            List<MedicineAd> medicineAds = new List<MedicineAd>();
+            List<MedicineAd> medicineAdsAndol = new List<MedicineAd>();
             MedicineAd medicineAdAndol = new MedicineAd(3L, andol.MedicineId, 220.00);
-            medicineAds.Add(medicineAdAndol);
-
-            AdsService service = new AdsService(stubRepository);
-            Ad testAd = new Ad(2L, "Popust za nase korisnike", "Clanovi koji imaju nasu karticu imaju popust na Andol", DateTime.Now, new DateTime(2022, 1, 16), medicineAds);
+            medicineAdsAndol.Add(medicineAdAndol);
+            Ad testAd = new Ad(2L, "Popust za nase korisnike", "Clanovi koji imaju nasu karticu imaju popust na Andol", DateTime.Now, new DateTime(2022, 1, 16), medicineAdsAndol);
             service.Add(testAd);
+            
+            List<Ad> ads = service.GetAll();
+            int repoSize = ads.Count;
 
-            int repoSize = service.GetAll().Count;
-            Console.WriteLine( repoSize);
             Assert.Equal("1", repoSize.ToString());
         }
 
          [Fact]
-        public void Find_ads_repository_size_after_delete()
+        public void Find_ads_repository_size_after_deleting_an_ad()
         {
             IAdsRepository stubRepository = CreateAdsStubRepository();
 
             AdsService service = new AdsService(stubRepository);
             service.Delete(1L);
+            Ad ad = service.GetById(1L);
 
-            int repoSize = service.GetAll().Count;
-            Console.WriteLine( repoSize);
-            Assert.Equal("1", repoSize.ToString());
+            Assert.Null(ad);
         }
     }
 }
