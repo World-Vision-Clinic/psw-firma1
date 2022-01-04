@@ -20,6 +20,8 @@ namespace Pharmacy.Repository
         public DbSet<TenderItem> TenderItems { get; set; }
         public DbSet<TenderOffer> TenderOffers { get; set; }
         public DbSet<OfferItem> OfferItems { get; set; }
+        public DbSet<Ad> Ads { get; set; }
+        public DbSet<MedicineAd> MedicineAds { get; set; }
 
         public PharmacyDbContext() { }
 
