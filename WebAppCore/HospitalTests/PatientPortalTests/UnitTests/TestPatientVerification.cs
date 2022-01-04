@@ -26,10 +26,8 @@ namespace HospitalTests.PatientPortalTests.UnitTests
 
             var stubDoctorRepository = new Mock<IDoctorRepository>();
             List<Doctor> doctors = new List<Doctor>();
-            Doctor trueDoctor1 = new Doctor();
-            trueDoctor1.Id = 0;
-            Doctor trueDoctor2 = new Doctor();
-            trueDoctor2.Id = 4;
+            Doctor trueDoctor1 = new Doctor(0);
+            Doctor trueDoctor2 = new Doctor(4);
             doctors.Add(trueDoctor1);
             doctors.Add(trueDoctor2);
             stubDoctorRepository.Setup(m => m.GetAvailableDoctors()).Returns(doctors);

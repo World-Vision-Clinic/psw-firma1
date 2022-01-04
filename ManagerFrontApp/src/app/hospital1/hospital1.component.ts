@@ -13,6 +13,7 @@ import { emptyRoom, Room } from '../data/room';
 import { HospitalService } from './hospital.service';
 import {Shift} from '../data/shift';
 import {ShiftSend} from '../data/shift';
+import {Doctor} from '../data/doctor';
 
 @Component({
   selector: 'app-hospital1',
@@ -40,13 +41,14 @@ export class Hospital1Component implements OnInit {
   roomsList: iEquipmentRoom[] = [];
   destinationRooms: Room[] | null = [];
 
-  ShiftBtnsBox:boolean=false;
+  shiftsBtnsBox:boolean=false;
   shiftsListBox:boolean=false;
   shiftsDoctorsBox:boolean=false;
   shiftsBox: boolean=false;
   createShiftBox: boolean = false;
   updateShiftBox: boolean = false;
   shiftInfoBox: boolean = false;
+  pickShiftBox:boolean=false;
   newShift:ShiftSend = {
     Id:0,
     Name:'',
@@ -60,6 +62,12 @@ export class Hospital1Component implements OnInit {
     End:-1
   };
   shifts:Shift[]=[];
+  doctors:Doctor[]=[];
+  selectedDoctor:Doctor | null = null;
+  docShiftDTO={
+    doctorId:-1,
+    shiftId:-1
+  };
 
   constructor(
     private router: Router,
@@ -404,6 +412,7 @@ export class Hospital1Component implements OnInit {
     this.loadHospital();
     this.loadHospitalFloors();
     this.loadShifts();
+    this.loadDoctors();
   }
 
   async saveHospital() {
@@ -615,6 +624,7 @@ selectShift(item){
   this.selectedShift.Name=item.name;
   this.selectedShift.Start=item.start;
   this.selectedShift.End=item.end; 
+  alert('Shift is selected.')
 }
 
 deleteShift(){ 
@@ -625,6 +635,58 @@ deleteShift(){
 async loadShifts(){
   this.hospitalService.getAllShifts().subscribe((data)=>{this.shifts=data}, (error) => {console.log(error);
   })
+}
+
+async loadDoctors(){
+  this.hospitalService.getDoctors().subscribe((data)=>{this.doctors=data}, (error)=>{console.log(error);
+  })
+}
+
+fetchDoctorsAndShifts(id){
+  for(let i=0; i<this.shifts.length;i++){
+    if(this.shifts[i].id===id){
+      return this.shifts[i].name
+    } 
+  }
+  return ''
+}
+
+selectDoctor(doctor){
+  this.selectedDoctor=doctor;
+  alert("Doctor is selected.")
+}
+
+pickShift(){
+  this.addOrChangeDocShift();
+  this.shiftsBox=false;
+  this.pickShiftBox=false;
+  this.shiftInfoBox=false;
+  this.shiftsBtnsBox=false;
+  this.shiftsListBox=false;
+  this.shiftsDoctorsBox=false;
+  this.loadDoctors;
+}
+
+addOrChangeDocShift(){
+  if(this.selectedDoctor!=null){
+    this.docShiftDTO.doctorId=this.selectedDoctor.id
+  }  else {
+    alert('Select doctor first!');
+    return;
+  }
+  this.docShiftDTO.shiftId=this.selectedShift.Id;
+  this.hospitalService.changeShift(this.docShiftDTO)
+}
+
+pickDoctor(){
+  if(this.selectedDoctor!=null){
+  this.shiftsDoctorsBox=false; 
+  this.pickShiftBox=true; 
+  this.listOfShiftsBox=true
+  this.shiftsListBox=true
+} else{
+  alert('You must pick a doctor first.')
+}
 }
 //END OF SHIFTS PART
 

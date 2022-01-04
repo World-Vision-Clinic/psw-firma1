@@ -25,7 +25,6 @@ namespace Hospital.MedicalRecords.Repository
         public DoctorRepository(HospitalContext context)
         {
             _context = context;
-            //_patientRepository = patientRepository;
         }
 
         public void AddDoctor(Doctor doctor)

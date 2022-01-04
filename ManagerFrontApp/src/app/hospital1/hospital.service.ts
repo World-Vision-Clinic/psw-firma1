@@ -7,6 +7,7 @@ import { Floor } from '../data/floor';
 import { iEquipmentRoom } from '../data/iEquipmentRoom';
 import { Room } from '../data/room';
 import {Shift, ShiftSend } from '../data/shift';
+import { Doctor } from '../data/doctor';
 
 @Injectable({
   providedIn: 'root',
@@ -124,4 +125,13 @@ export class HospitalService {
     );
   }
 
+  getDoctors(){
+    return this.http.get<Doctor[]>('http://localhost:39901/api/Doctors')
+  }
+
+  changeShift(dto){
+    const headers={'content-type':'application/json'};  
+    const body=JSON.stringify(dto) 
+    this.http.post('http://localhost:39901/api/Doctors/addShift', body,{'headers': headers}).subscribe(data => {console.log(data)});
+  }
 }

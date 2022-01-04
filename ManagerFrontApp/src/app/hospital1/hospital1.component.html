@@ -522,12 +522,23 @@
       </tbody>
       </table>
       <hr>
-    <button (click)="shiftsBox=false" class="btn">Close</button>
+      <button *ngIf="pickShiftBox" (click)="pickShift()" class="btn">Change shift</button>
+    <button (click)="shiftsBox=false; shiftsListBox=false" class="btn">Close</button>
     </div>
   </div>
 
   <div *ngIf="shiftsDoctorsBox">
-    <button (click)="shiftsBox=false" class="btn">Close</button>
+    <table class="doctor-list-table">
+      <thead><tr><th>Id</th><th>First name</th><th>Last name</th><th>Shift</th></tr></thead>
+      <tbody>
+        <tr *ngFor="let item of doctors" (click)="selectDoctor(item)">
+          <td>{{item.id}}</td><td>{{item.firstName}}</td><td>{{item.lastName}}</td><td>{{fetchDoctorsAndShifts(item.shiftId)}}</td>
+        </tr>
+    </tbody>
+    </table>
+    <hr>
+    <button (click)="pickDoctor()" class="btn">Pick Shift</button>
+    <button (click)="shiftsBox=false; shiftsDoctorsBox=false" class="btn">Close</button>
   </div>
 
     <div *ngIf="createShiftBox" class="shiftsBox">
