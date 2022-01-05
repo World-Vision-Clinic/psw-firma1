@@ -1,5 +1,7 @@
 ﻿using Hospital.MedicalRecords.Model;
 using Hospital.MedicalRecords.Repository;
+using Hospital.ShiftsAndVacations.Model;
+using Hospital.ShiftsAndVacations.Repository.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,10 +11,16 @@ namespace Hospital.MedicalRecords.Service
     public class DoctorService
     {
         private readonly IDoctorRepository _repo;
+        private readonly IShiftRepository shiftRepository;
 
         public DoctorService(IDoctorRepository repo)
         {
             _repo = repo;
+        }
+        public DoctorService(IDoctorRepository repo, IShiftRepository shiftRepo)
+        {
+            _repo = repo;
+            shiftRepository = shiftRepo;
         }
 
         public void AddDoctor(Doctor doctor)
@@ -53,5 +61,14 @@ namespace Hospital.MedicalRecords.Service
         {
             _repo.SaveSync();
         }
+
+        public void AddShiftToDoctor(int doctorID, int shiftID)
+        {
+            Doctor d = this.FindById(doctorID);
+            d.changeShift(shiftID);
+            _repo.Modify(d);
+            _repo.SaveSync();
+        }
+
     }
 }

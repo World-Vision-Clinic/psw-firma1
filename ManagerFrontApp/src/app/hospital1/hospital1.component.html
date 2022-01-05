@@ -501,10 +501,73 @@
     </div>
   </div>
 
+  <div *ngIf="shiftsBox">
+    <div *ngIf="shiftsBtnsBox">
+    <button (click)="shiftsListBox=true; shiftsBtnsBox=false;" class="btn">Shifts list</button>
+    <button (click)="shiftsDoctorsBox=true; shiftsBtnsBox=false;" class="btn">Doctors shift</button>
+    </div>
+    <div *ngIf="shiftsListBox">
+    <button (click)="createNewShiftBox()" class="btn">Create new shift</button>
+    <button (click)="openshiftInfoBox()" class="btn">Shift info</button>
+    <button (click)="deleteShift()" class="btn" >Delete shift</button>
+    <button (click)="openUpdateShiftBox()" class="btn">Change shift</button>
+    <hr>
+    <div *ngIf="listOfShiftsBox">
+      <table class="list-table">
+        <thead><tr><th>Name</th><th>Start</th><th>End</th></tr></thead>
+        <tbody>
+          <tr *ngFor="let item of shifts" (click)="selectShift(item)">
+            <td>{{item.name}}</td><td>{{item.start}} h</td><td>{{item.end}} h</td>
+          </tr>
+      </tbody>
+      </table>
+      <hr>
+      <button *ngIf="pickShiftBox" (click)="pickShift()" class="btn">Change shift</button>
+    <button (click)="shiftsBox=false; shiftsListBox=false" class="btn">Close</button>
+    </div>
+  </div>
+
+  <div *ngIf="shiftsDoctorsBox">
+    <table class="doctor-list-table">
+      <thead><tr><th>Id</th><th>First name</th><th>Last name</th><th>Shift</th></tr></thead>
+      <tbody>
+        <tr *ngFor="let item of doctors" (click)="selectDoctor(item)">
+          <td>{{item.id}}</td><td>{{item.firstName}}</td><td>{{item.lastName}}</td><td>{{fetchDoctorsAndShifts(item.shiftId)}}</td>
+        </tr>
+    </tbody>
+    </table>
+    <hr>
+    <button (click)="pickDoctor()" class="btn">Pick Shift</button>
+    <button (click)="shiftsBox=false; shiftsDoctorsBox=false" class="btn">Close</button>
+  </div>
+
+    <div *ngIf="createShiftBox" class="shiftsBox">
+      <label for="">Name of shift:<input [(ngModel)]="newShift.Name"  type="text"></label><br>
+      <label for="">Start of shift:<input [(ngModel)]="newShift.Start"  type="number"></label><br>
+      <label for="">End of shift:<input [(ngModel)]="newShift.End"  type="number"></label><br>
+      <button (click)="createShift()" class="btn">Create</button>
+      <button (click)="listOfShiftsBox=true; createShiftBox=false" class="btn">Back</button>
+    </div>
+    <div *ngIf="shiftInfoBox" class="shiftsBox">
+      <label for="">Name of shift:<input [(ngModel)]="selectedShift.Name"  type="text" disabled></label><br>
+      <label for="">Start of shift:<input [(ngModel)]="selectedShift.Start"  type="text" disabled></label><br>
+      <label for="">End of shift:<input [(ngModel)]="selectedShift.End"  type="text" disabled></label><br>
+      <button (click)="listOfShiftsBox=true;shiftInfoBox=false" class="btn">Close</button>
+    </div>
+    <div *ngIf="updateShiftBox" class="shiftsBox">
+      <label for="">Name of shift:<input [(ngModel)]="selectedShift.Name"  type="text"></label><br>
+      <label for="">Start of shift:<input [(ngModel)]="selectedShift.Start"  type="number"></label><br>
+      <label for="">End of shift:<input [(ngModel)]="selectedShift.End"  type="number"></label><br>
+      <button (click)="updateShift()" class="btn">Update</button>
+      <button (click)="listOfShiftsBox=true; updateShiftBox=false;" class="btn">Close</button>
+    </div>
+  </div>
+
   <div class="toolbar">
     <button (click)="buildingBox = true" class="toolbar-btn">Building info</button>
     <button (click)="moveEquipment()" class="toolbar-btn">Move equipment</button>
     <button class="toolbar-btn" (click)="renovationTypeBox=true" >Renovate rooms</button>
+    <button class="toolbar-btn" (click)="shiftsBox=true; shiftsBtnsBox=true">Shift managment</button>
   </div>
   
 </div>

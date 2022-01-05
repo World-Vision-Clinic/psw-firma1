@@ -99,7 +99,9 @@ namespace Hospital.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     FirstName = table.Column<string>(type: "text", nullable: true),
                     LastName = table.Column<string>(type: "text", nullable: true),
-                    Type = table.Column<int>(type: "integer", nullable: false)
+                    Type = table.Column<int>(type: "integer", nullable: false),
+                    ShiftId = table.Column<int>(type: "integer", nullable: true),
+                    RoomId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {

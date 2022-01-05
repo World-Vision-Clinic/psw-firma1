@@ -59,14 +59,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         [Fact]
         public void Test_get_appointments_4step_bad()
         {
-            Doctor doctor = new Doctor()
-            {
-                Id = 5,
-                FirstName = "TestDoktorIme",
-                LastName = "TestDoktorPrezime",
-                Type = DoctorType.Family_physician
-
-            };
+            Doctor doctor = new Doctor(5,"TestDoktorIme","TestDoktorPrezime", -1,-1, DoctorType.Family_physician);
             _doctorRepository.AddDoctor(doctor);
 
             var controller = new AppointmentController();
@@ -80,14 +73,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         [Fact]
         public void Test_get_appointments_4step_good()
         {
-            Doctor doctor = new Doctor()
-            {
-                Id = 6,
-                FirstName = "TestDoktorIme",
-                LastName = "TestDoktorPrezime",
-                Type = DoctorType.Family_physician
-
-            };
+            Doctor doctor = new Doctor(6, "TestDoktorIme", "TestDoktorPrezime", -1, -1, DoctorType.Family_physician);
             _doctorRepository.AddDoctor(doctor);
             DateTime dateForTest = DateTime.Now.Date;
             if (dateForTest.DayOfWeek == DayOfWeek.Friday || dateForTest.DayOfWeek == DayOfWeek.Saturday || dateForTest.DayOfWeek == DayOfWeek.Sunday)
@@ -296,31 +282,13 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             appointmentRecommendationRequestDTO.DoctorId = 1;
             appointmentRecommendationRequestDTO.PriorityType = "DATE_TIME_PRIORITY";
 
-            Doctor doctorCardi1 = new Doctor()
-            {
-                Id = 11,
-                FirstName = "Sava",
-                LastName = "Savić",
-                Type = DoctorType.Cardiologist
-            };
+            Doctor doctorCardi1 = new Doctor(11,"Sava","Savić", -1, -1, DoctorType.Cardiologist);
             _doctorRepository.AddDoctor(doctorCardi1);
 
-            Doctor doctorCardi2 = new Doctor()
-            {
-                Id = 12,
-                FirstName = "Milana",
-                LastName = "Milanović",
-                Type = DoctorType.Cardiologist
-            };
+            Doctor doctorCardi2 = new Doctor(12, "Milana", "Milanović", -1, -1, DoctorType.Cardiologist);
             _doctorRepository.AddDoctor(doctorCardi2);
 
-            Doctor doctorOphta1 = new Doctor()
-            {
-                Id = 13,
-                FirstName = "Nikola",
-                LastName = "Marković",
-                Type = DoctorType.Ophthalmologist
-            };
+            Doctor doctorOphta1 = new Doctor(12, "Nikola", "Marković", -1, -1, DoctorType.Ophthalmologist);
             _doctorRepository.AddDoctor(doctorOphta1);
 
             Appointment appointment = new Appointment()

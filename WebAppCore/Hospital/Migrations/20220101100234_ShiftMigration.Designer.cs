@@ -3,15 +3,17 @@ using System;
 using Hospital.SharedModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Hospital.Migrations
 {
     [DbContext(typeof(HospitalContext))]
-    partial class HospitalContextModelSnapshot : ModelSnapshot
+    [Migration("20220101100234_ShiftMigration")]
+    partial class ShiftMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -306,12 +308,6 @@ namespace Hospital.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("text");
 
-                    b.Property<int>("RoomId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ShiftId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
@@ -325,8 +321,6 @@ namespace Hospital.Migrations
                             Id = 1,
                             FirstName = "Slavica",
                             LastName = "Matic",
-                            RoomId = -1,
-                            ShiftId = 1,
                             Type = 0
                         },
                         new
@@ -334,8 +328,6 @@ namespace Hospital.Migrations
                             Id = 2,
                             FirstName = "Mirko",
                             LastName = "Jankovic",
-                            RoomId = -1,
-                            ShiftId = 1,
                             Type = 0
                         },
                         new
@@ -343,8 +335,6 @@ namespace Hospital.Migrations
                             Id = 3,
                             FirstName = "Matija",
                             LastName = "Popic",
-                            RoomId = -1,
-                            ShiftId = 2,
                             Type = 0
                         },
                         new
@@ -352,8 +342,6 @@ namespace Hospital.Migrations
                             Id = 4,
                             FirstName = "Sara",
                             LastName = "Tot",
-                            RoomId = -1,
-                            ShiftId = 1,
                             Type = 0
                         },
                         new
@@ -361,8 +349,6 @@ namespace Hospital.Migrations
                             Id = 5,
                             FirstName = "Ignjat",
                             LastName = "Jovic",
-                            RoomId = -1,
-                            ShiftId = -1,
                             Type = 0
                         },
                         new
@@ -370,8 +356,6 @@ namespace Hospital.Migrations
                             Id = 6,
                             FirstName = "Milos",
                             LastName = "Matijevic",
-                            RoomId = -1,
-                            ShiftId = -1,
                             Type = 0
                         },
                         new
@@ -379,8 +363,6 @@ namespace Hospital.Migrations
                             Id = 7,
                             FirstName = "Elena",
                             LastName = "Kis",
-                            RoomId = -1,
-                            ShiftId = -1,
                             Type = 0
                         },
                         new
@@ -388,8 +370,6 @@ namespace Hospital.Migrations
                             Id = 8,
                             FirstName = "Iva",
                             LastName = "Bojanic",
-                            RoomId = -1,
-                            ShiftId = -1,
                             Type = 0
                         },
                         new
@@ -397,8 +377,6 @@ namespace Hospital.Migrations
                             Id = 9,
                             FirstName = "Bojan",
                             LastName = "Kraljevic",
-                            RoomId = -1,
-                            ShiftId = -1,
                             Type = 0
                         },
                         new
@@ -406,8 +384,6 @@ namespace Hospital.Migrations
                             Id = 10,
                             FirstName = "Lidija",
                             LastName = "Lakic",
-                            RoomId = -1,
-                            ShiftId = -1,
                             Type = 0
                         },
                         new
@@ -415,8 +391,6 @@ namespace Hospital.Migrations
                             Id = 11,
                             FirstName = "Momir",
                             LastName = "Njegomir",
-                            RoomId = -1,
-                            ShiftId = -1,
                             Type = 0
                         },
                         new
@@ -424,8 +398,6 @@ namespace Hospital.Migrations
                             Id = 12,
                             FirstName = "Ivana",
                             LastName = "Pekic",
-                            RoomId = -1,
-                            ShiftId = -1,
                             Type = 0
                         },
                         new
@@ -433,8 +405,6 @@ namespace Hospital.Migrations
                             Id = 13,
                             FirstName = "Mileva",
                             LastName = "Nakic",
-                            RoomId = -1,
-                            ShiftId = -1,
                             Type = 0
                         },
                         new
@@ -442,8 +412,6 @@ namespace Hospital.Migrations
                             Id = 14,
                             FirstName = "Petar",
                             LastName = "Katic",
-                            RoomId = -1,
-                            ShiftId = -1,
                             Type = 0
                         },
                         new
@@ -451,8 +419,6 @@ namespace Hospital.Migrations
                             Id = 15,
                             FirstName = "Marijana",
                             LastName = "Pantic",
-                            RoomId = -1,
-                            ShiftId = -1,
                             Type = 0
                         },
                         new
@@ -460,8 +426,6 @@ namespace Hospital.Migrations
                             Id = 16,
                             FirstName = "Savina",
                             LastName = "Markovic",
-                            RoomId = -1,
-                            ShiftId = -1,
                             Type = 0
                         },
                         new
@@ -469,8 +433,6 @@ namespace Hospital.Migrations
                             Id = 17,
                             FirstName = "Jelena",
                             LastName = "Stupar",
-                            RoomId = -1,
-                            ShiftId = -1,
                             Type = 0
                         },
                         new
@@ -478,8 +440,6 @@ namespace Hospital.Migrations
                             Id = 18,
                             FirstName = "Luka",
                             LastName = "Lisica",
-                            RoomId = -1,
-                            ShiftId = -1,
                             Type = 0
                         },
                         new
@@ -487,8 +447,6 @@ namespace Hospital.Migrations
                             Id = 19,
                             FirstName = "Vasilije",
                             LastName = "Mit",
-                            RoomId = -1,
-                            ShiftId = -1,
                             Type = 0
                         });
                 });
@@ -1560,7 +1518,7 @@ namespace Hospital.Migrations
                         new
                         {
                             IdSurvey = 1,
-                            CreationDate = new DateTime(2022, 1, 4, 9, 55, 56, 753, DateTimeKind.Local).AddTicks(1268),
+                            CreationDate = new DateTime(2022, 1, 1, 11, 2, 33, 834, DateTimeKind.Local).AddTicks(5288),
                             IdAppointment = 1
                         });
                 });

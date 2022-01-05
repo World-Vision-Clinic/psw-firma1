@@ -138,12 +138,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 Token = "marko123",
                 Activated = true
             };
-            Doctor doctor = new Doctor()
-            {
-                Id = 10,
-                FirstName = "MarkovDoktorIme",
-                LastName = "MarkovDoktorPrezime"
-            };
+            Doctor doctor = new Doctor(10, "MarkovDoktorIme", "MarkovDoktorPrezime");
             _patientRepository.AddPatient(patient);
             _doctorRepository.AddDoctor(doctor);
 

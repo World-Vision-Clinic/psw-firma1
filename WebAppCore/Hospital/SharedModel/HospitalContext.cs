@@ -9,6 +9,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hospital.GraphicalEditor.Model;
 using Hospital.RoomsAndEquipment.Model;
+using Hospital.ShiftsAndVacations.Model;
+
 namespace Hospital.SharedModel
 {
     public class HospitalContext : DbContext
@@ -16,10 +18,10 @@ namespace Hospital.SharedModel
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Survey> Surveys { get; set; }
+        public DbSet<Shift> Shifts { get; set; }
         public DbSet<SurveyQuestion> Questions { get; set; }
         public DbSet<AnsweredSurveyQuestion> AnsweredQuestions { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-        public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Allergen> Allergens { get; set; }
         public DbSet<PatientAllergen> PatientAllergens { get; set; }
         public DbSet<Area> Areas { get; set; }
@@ -29,6 +31,7 @@ namespace Hospital.SharedModel
         public DbSet<FloorLabel> FloorLabels { get; set; }
         public DbSet<Equipment> AllEquipment { get; set; }
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Floor> Floors { get; set; }
         public DbSet<Building> Buildings { get; set; }
         public DbSet<Examination> Examinations { get; set; }
@@ -36,6 +39,8 @@ namespace Hospital.SharedModel
         public DbSet<MedicalRecord> MedicalRecords { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
         public DbSet<Manager> Managers { get; set; }
+        
+        
 
         public HospitalContext() { }
 
@@ -87,6 +92,12 @@ namespace Hospital.SharedModel
                 new SurveyQuestion { Id = 13, Question = "How clearly did the staff explain you some procedures of our hospital?", Section = SurveySectionType.Staff, IdSurvey = 1 },
                 new SurveyQuestion { Id = 14, Question = "How yould you rate to what extent staff was available to you during your visit to the hospital?", Section = SurveySectionType.Staff, IdSurvey = 1 },
                 new SurveyQuestion { Id = 15, Question = "What is your overall satisfaction with our staff?", Section = SurveySectionType.Staff, IdSurvey = 1 }
+                );
+
+            modelBuilder.Entity<Shift>().HasData(
+                    new Shift(1, "Morning shift", 6, 15),
+                    new Shift(2, "Afternoon shift", 15, 23),
+                    new Shift(3, "Night shift", 23, 6)
                 );
 
             modelBuilder.Entity<FloorLabel>().HasData(
@@ -156,25 +167,25 @@ namespace Hospital.SharedModel
                 new Building { id = 2, Name = "Hospital II", Area = null, Info = "", MapPositionId = 2 });
 
             modelBuilder.Entity<Doctor>().HasData(
-               new Doctor { Id = 1, FirstName = "Slavica", LastName = "Matic", Type = 0 },
-               new Doctor { Id = 2, FirstName = "Mirko", LastName = "Jankovic", Type = 0 },
-               new Doctor { Id = 3, FirstName = "Matija", LastName = "Popic", Type = 0 },
-               new Doctor { Id = 4, FirstName = "Sara", LastName = "Tot", Type = 0 },
-               new Doctor { Id = 5, FirstName = "Ignjat", LastName = "Jovic", Type = 0 },
-               new Doctor { Id = 6, FirstName = "Milos", LastName = "Matijevic", Type = 0 },
-               new Doctor { Id = 7, FirstName = "Elena", LastName = "Kis", Type = 0 },
-               new Doctor { Id = 8, FirstName = "Iva", LastName = "Bojanic", Type = 0 },
-               new Doctor { Id = 9, FirstName = "Bojan", LastName = "Kraljevic", Type = 0 },
-               new Doctor { Id = 10, FirstName = "Lidija", LastName = "Lakic", Type = 0 },
-               new Doctor { Id = 11, FirstName = "Momir", LastName = "Njegomir", Type = 0 },
-               new Doctor { Id = 12, FirstName = "Ivana", LastName = "Pekic", Type = 0 },
-               new Doctor { Id = 13, FirstName = "Mileva", LastName = "Nakic", Type = 0 },
-               new Doctor { Id = 14, FirstName = "Petar", LastName = "Katic", Type = 0 },
-               new Doctor { Id = 15, FirstName = "Marijana", LastName = "Pantic", Type = 0 },
-               new Doctor { Id = 16, FirstName = "Savina", LastName = "Markovic", Type = 0 },
-               new Doctor { Id = 17, FirstName = "Jelena", LastName = "Stupar", Type = 0 },
-               new Doctor { Id = 18, FirstName = "Luka", LastName = "Lisica", Type = 0 },
-               new Doctor { Id = 19, FirstName = "Vasilije", LastName = "Mit", Type = 0 }
+               new Doctor (1,"Slavica", "Matic", 1,-1, 0),
+               new Doctor (2, "Mirko", "Jankovic", 1, -1, 0 ),
+               new Doctor (3, "Matija", "Popic", 2, -1, 0 ),
+               new Doctor ( 4, "Sara", "Tot", 1, -1, 0 ),
+               new Doctor ( 5, "Ignjat", "Jovic", -1, -1, 0 ),
+               new Doctor ( 6, "Milos", "Matijevic", -1, -1, 0 ),
+               new Doctor ( 7, "Elena", "Kis", -1, -1, 0 ),
+               new Doctor ( 8, "Iva", "Bojanic", -1, -1, 0 ),
+               new Doctor ( 9, "Bojan", "Kraljevic", -1, -1, 0 ),
+               new Doctor ( 10, "Lidija", "Lakic", -1, -1, 0 ),
+               new Doctor ( 11, "Momir", "Njegomir", -1, -1, 0 ),
+               new Doctor ( 12, "Ivana", "Pekic", -1, -1, 0 ),
+               new Doctor ( 13, "Mileva", "Nakic", -1, -1, 0 ),
+               new Doctor ( 14, "Petar", "Katic", -1, -1, 0 ),
+               new Doctor ( 15, "Marijana", "Pantic", -1, -1, 0 ),
+               new Doctor ( 16, "Savina", "Markovic", -1, -1, 0 ),
+               new Doctor ( 17, "Jelena", "Stupar", -1, -1, 0 ),
+               new Doctor ( 18, "Luka", "Lisica", -1, -1, 0 ),
+               new Doctor ( 19, "Vasilije", "Mit", -1, -1, 0 )
                );
 
         }
