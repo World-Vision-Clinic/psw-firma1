@@ -32,6 +32,7 @@ namespace Hospital.SharedModel
         public DbSet<Equipment> AllEquipment { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Vacation> Vacations { get; set; }
         public DbSet<Floor> Floors { get; set; }
         public DbSet<Building> Buildings { get; set; }
         public DbSet<Examination> Examinations { get; set; }
@@ -99,6 +100,8 @@ namespace Hospital.SharedModel
                     new Shift(2, "Afternoon shift", 15, 23),
                     new Shift(3, "Night shift", 23, 6)
                 );
+
+           
 
             modelBuilder.Entity<FloorLabel>().HasData(
                new FloorLabel { id = 1, X = 50, Y = 80, Text = "ENTRANCE", FloorId = 1 }
@@ -186,6 +189,12 @@ namespace Hospital.SharedModel
                new Doctor ( 17, "Jelena", "Stupar", -1, -1, 0 ),
                new Doctor ( 18, "Luka", "Lisica", -1, -1, 0 ),
                new Doctor ( 19, "Vasilije", "Mit", -1, -1, 0 )
+               );
+
+            modelBuilder.Entity<Vacation>().HasData(
+                   new Vacation(1, "aaaa", new DateTime(2022, 1, 21), new DateTime(2022, 1, 31), 1),
+                   new Vacation(2, "aaaa", new DateTime(2022, 2, 21), new DateTime(2022, 2, 25), 2),
+                   new Vacation(3, "aaaa", new DateTime(2022, 3, 21), new DateTime(2022, 3, 30), 3)
                );
 
         }
