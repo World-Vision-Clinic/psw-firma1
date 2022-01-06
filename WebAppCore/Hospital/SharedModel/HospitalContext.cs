@@ -170,25 +170,25 @@ namespace Hospital.SharedModel
                 new Building { id = 2, Name = "Hospital II", Area = null, Info = "", MapPositionId = 2 });
 
             modelBuilder.Entity<Doctor>().HasData(
-               new Doctor (1,"Slavica", "Matic", 1,-1, 0),
-               new Doctor (2, "Mirko", "Jankovic", 1, -1, 0 ),
-               new Doctor (3, "Matija", "Popic", 2, -1, 0 ),
-               new Doctor ( 4, "Sara", "Tot", 1, -1, 0 ),
-               new Doctor ( 5, "Ignjat", "Jovic", -1, -1, 0 ),
-               new Doctor ( 6, "Milos", "Matijevic", -1, -1, 0 ),
-               new Doctor ( 7, "Elena", "Kis", -1, -1, 0 ),
-               new Doctor ( 8, "Iva", "Bojanic", -1, -1, 0 ),
-               new Doctor ( 9, "Bojan", "Kraljevic", -1, -1, 0 ),
-               new Doctor ( 10, "Lidija", "Lakic", -1, -1, 0 ),
-               new Doctor ( 11, "Momir", "Njegomir", -1, -1, 0 ),
-               new Doctor ( 12, "Ivana", "Pekic", -1, -1, 0 ),
-               new Doctor ( 13, "Mileva", "Nakic", -1, -1, 0 ),
-               new Doctor ( 14, "Petar", "Katic", -1, -1, 0 ),
-               new Doctor ( 15, "Marijana", "Pantic", -1, -1, 0 ),
-               new Doctor ( 16, "Savina", "Markovic", -1, -1, 0 ),
-               new Doctor ( 17, "Jelena", "Stupar", -1, -1, 0 ),
-               new Doctor ( 18, "Luka", "Lisica", -1, -1, 0 ),
-               new Doctor ( 19, "Vasilije", "Mit", -1, -1, 0 )
+               new Doctor (1,"Slavica", "Matic", 1,-1, 0, false),
+               new Doctor (2, "Mirko", "Jankovic", 1, -1, 0, false),
+               new Doctor (3, "Matija", "Popic", 2, -1, 0, false),
+               new Doctor ( 4, "Sara", "Tot", 1, -1, 0, false),
+               new Doctor ( 5, "Ignjat", "Jovic", -1, -1, 0, false),
+               new Doctor ( 6, "Milos", "Matijevic", -1, -1, 0, false),
+               new Doctor ( 7, "Elena", "Kis", -1, -1, 0, false),
+               new Doctor ( 8, "Iva", "Bojanic", -1, -1, 0, false),
+               new Doctor ( 9, "Bojan", "Kraljevic", -1, -1, 0, false),
+               new Doctor ( 10, "Lidija", "Lakic", -1, -1, 0, false),
+               new Doctor ( 11, "Momir", "Njegomir", -1, -1, 0, false),
+               new Doctor ( 12, "Ivana", "Pekic", -1, -1, 0, false),
+               new Doctor ( 13, "Mileva", "Nakic", -1, -1, 0, false),
+               new Doctor ( 14, "Petar", "Katic", -1, -1, 0, false),
+               new Doctor ( 15, "Marijana", "Pantic", -1, -1, 0, false),
+               new Doctor ( 16, "Savina", "Markovic", -1, -1, 0, false),
+               new Doctor ( 17, "Jelena", "Stupar", -1, -1, 0, false),
+               new Doctor ( 18, "Luka", "Lisica", -1, -1, 0, false),
+               new Doctor ( 19, "Vasilije", "Mit", -1, -1, 0, false)
                );
 
             modelBuilder.Entity<Vacation>().HasData(
