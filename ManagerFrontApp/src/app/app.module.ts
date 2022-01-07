@@ -32,6 +32,7 @@ import { TenderCreationComponent } from './manager-integration-front-app/tender-
 import { NgChartsModule } from 'ng2-charts';
 import { ChartAllModule, AccumulationChartAllModule, RangeNavigatorAllModule } from '@syncfusion/ej2-angular-charts';
 import { StatisticsComponent } from './manager-integration-front-app/statistics/statistics.component';
+import { DoctorsManagementComponent } from './doctors-management/doctors-management.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { StatisticsComponent } from './manager-integration-front-app/statistics/
     ViewFilesComponent,
     LoginComponent,
     TenderCreationComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    DoctorsManagementComponent
   ],
   imports: [
     BrowserModule,
