@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DoctorsManagementComponent implements OnInit {
 
+  initialTableBox = true;
+  vacationTableBox = false;
+  
   constructor() { }
 
   ngOnInit(): void {
