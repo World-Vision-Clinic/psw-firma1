@@ -1,0 +1,29 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches: 
+      # - 'master'
+      - 'develop'
+      - 'feat/deploy-script'
+
+jobs:
+  deploy:
+    runs-on : ubuntu-latest
+    steps:
+      - name: multiple command
+        uses: appleboy/ssh-action@master
+        with:
+          command_timeout: 200m
+          host: 79.101.34.218 
+          username: 'student'
+          key: ${{ secrets.SSH_KEY }}
+          port: 22202
+          script: |
+            cd psw-firma1
+            git checkout develop
+            git pull origin develop
+            cd PharmacyApplication/
+            docker-compose build --no-cache
+            docker-compose up -d
