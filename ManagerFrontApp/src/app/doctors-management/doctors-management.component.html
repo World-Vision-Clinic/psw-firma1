@@ -57,7 +57,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor= "let vacation of vacations">
+                  <tr *ngFor= "let vacation of vacations" (click)="selectVacation(vacation)" [ngClass]="{'vacation-selected': selectedRowIndex == vacation.id}">
                     <td style="width: 200px;">{{vacation.fullName}}</td>
                     <td style="width: 120px;">{{vacation.start | date: "dd.MM.yyyy"}}</td>
                     <td style="width: 120px;">{{vacation.end | date: "dd.MM.yyyy"}}</td>
@@ -81,7 +81,9 @@
               <div style="display: flex; flex-direction: column;" *ngIf="addVacationBox">
                   <h3 style="color: cadetblue;">Add new vacation</h3>
                   <label>Doctor: </label>
-                 <select class="form-field" style="height: 38px; margin-bottom: 8%;" [(ngModel)]="vacation.doctorId" ng-model="selectedName" ng-options="x for x in names">
+                 <select class="form-field" style="height: 38px; margin-bottom: 8%;" [(ngModel)]="selectedDoctor">
+                  <option></option>
+                  <option  *ngFor="let dr of doctors" [ngValue]="dr">{{dr.firstName}} {{dr.lastName}}</option>
                  </select>
                   <label>Date: </label>
                   <mat-form-field appearance="outline">

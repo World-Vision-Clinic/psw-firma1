@@ -285,3 +285,6 @@
     font-size: 16px;
     align-items: center;
   }
+  .vacation-selected{
+    background-color: rgba(160, 159, 159, 0.6);
+  }

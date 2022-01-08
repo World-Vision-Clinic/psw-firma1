@@ -23,6 +23,7 @@ export class DoctorsManagementComponent implements OnInit {
   doctors:Doctor[]=[];
   vacations: Vacation[] = [];
   selectedVacation: Vacation | null = null;
+  selectedRowIndex = -1;
   vacation: Vacation = {
     id: -1,
     description: "",
@@ -62,6 +63,15 @@ export class DoctorsManagementComponent implements OnInit {
     shiftId:-1
   };
 
+  selectedDoctorV: Doctor = {
+    id:-1,
+    firstName:'',
+    lastName:'',
+    shiftId:-1,
+    roomId:-1,
+    type:''
+  }
+
 
   constructor(
     private router: Router,
@@ -88,13 +98,16 @@ export class DoctorsManagementComponent implements OnInit {
   }
 
   deleteVacation(){
-    this.doctorsManagementService.deleteVacation(2);
-    
+    this.doctorsManagementService.deleteVacation(this.selectedVacation?.id!);
     this.loadVacations();
-    console.log(this.vacations)
+    alert("Vacation deleted!")
   }
 
+
   addNewVacation(){
+    this.vacation.doctorId = this.selectedDoctor?.id!;
+    this.vacation.fullName = this.selectedDoctor?.firstName + " " + this.selectedDoctor?.lastName;
+    console.log(this.vacation)
     this.doctorsManagementService.addVacation(this.vacation);
     this.loadVacations();
   } 
@@ -123,22 +136,18 @@ openUpdateShiftBox(){
   }
 }
 
-<<<<<<< Updated upstream
-  selectVacation(id){
-    
+  selectVacation(vacation){
+    this.selectedVacation = vacation
+    this.selectedRowIndex = vacation.id;
   }
 
-  async loadShifts(){
-    this.doctorsManagementService.getAllShifts().subscribe((data)=>{this.shifts=data}, (error) => {console.log(error);
-    })
-=======
 updateShift(){
   this.doctorsManagementService.updateShift(this.selectedShift);
   this.loadShifts()
 }
 
 createShift(){
-  this.doctorsManagementService.makeNewShift(this.newShift)
+  this.doctorsManagementService.makeNewShift(this.newShift);
   this.loadShifts()
 }
 
@@ -165,7 +174,6 @@ fetchDoctorsAndShifts(id){
     if(this.shifts[i].id===id){
       return this.shifts[i].name
     } 
->>>>>>> Stashed changes
   }
   return ''
 }
