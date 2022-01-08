@@ -14,14 +14,17 @@ namespace Hospital_API.DTO
 
         public int DoctorId { get; set; }
 
+        public string FullName { get; set; }
+
         public VacationDTO() { }
-        public VacationDTO(int id, String desc, DateTime start, DateTime end, int doctorId)
+        public VacationDTO(int id, String desc, DateTime start, DateTime end, int doctorId, string fullName)
         {
             Id = id;
             Description = desc;
             Start = start;
             End = end;
             DoctorId = doctorId;
+            FullName = fullName;
         }
     }
 }

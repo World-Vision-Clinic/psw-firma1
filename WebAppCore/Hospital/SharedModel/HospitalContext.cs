@@ -192,9 +192,9 @@ namespace Hospital.SharedModel
                );
 
             modelBuilder.Entity<Vacation>().HasData(
-                   new Vacation(1, "aaaa", new DateTime(2022, 1, 21), new DateTime(2022, 1, 31), 1),
-                   new Vacation(2, "aaaa", new DateTime(2022, 2, 21), new DateTime(2022, 2, 25), 2),
-                   new Vacation(3, "aaaa", new DateTime(2022, 3, 21), new DateTime(2022, 3, 30), 3)
+                   new Vacation(1, "aaaa", new DateTime(2022, 1, 21), new DateTime(2022, 1, 31), 1, "Slavica Matic"),
+                   new Vacation(2, "aaaa", new DateTime(2022, 2, 21), new DateTime(2022, 2, 25), 2, "Mirko Jankovic"),
+                   new Vacation(3, "aaaa", new DateTime(2022, 3, 21), new DateTime(2022, 3, 30), 3, "Matija Popic")
                );
 
         }

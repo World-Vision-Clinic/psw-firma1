@@ -52,7 +52,7 @@ namespace Hospital_API.Controllers
         public HttpResponseMessage addNew([FromBody] VacationDTO v)
         {
             //Doctor doctor = doctorService.FindById(v.DoctorId);
-            vacationService.addNewVacation(v.Id, v.Description, v.Start, v.End, v.DoctorId);
+            vacationService.addNewVacation(v.Id, v.Description, v.Start, v.End, v.DoctorId, v.FullName);
             return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }
 
@@ -61,7 +61,7 @@ namespace Hospital_API.Controllers
         {
             vacationService.deleteVacation(v.Id);
             //Doctor doctor = doctorService.FindById(v.DoctorId);
-            vacationService.addNewVacation(v.Id, v.Description, v.Start, v.End,v.DoctorId);
+            vacationService.addNewVacation(v.Id, v.Description, v.Start, v.End,v.DoctorId, v.FullName);
             return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }
 

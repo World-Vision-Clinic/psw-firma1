@@ -25,9 +25,9 @@ namespace Hospital.ShiftsAndVacations.Service
             return repository.GetAll();
         }
 
-        public void updateVacation(int id,string desc, DateTime start,DateTime end, int doctor)
+        public void updateVacation(int id,string desc, DateTime start,DateTime end, int doctorId, string fullName)
         {
-            Vacation v = new Vacation(id, desc, start, end, doctor);
+            Vacation v = new Vacation(id, desc, start, end, doctorId, fullName);
             repository.Update(v);
         }
 
@@ -51,9 +51,9 @@ namespace Hospital.ShiftsAndVacations.Service
             
         }
 
-        public void addNewVacation(int id, string desc, DateTime start, DateTime end, int doctorId)
+        public void addNewVacation(int id, string desc, DateTime start, DateTime end, int doctorId, string fullName)
         {
-            Vacation v = new Vacation(id, desc, start, end, doctorId);
+            Vacation v = new Vacation(id, desc, start, end, doctorId, fullName);
             //now doctor is on vacation
             Doctor d = doctorRepository.GetByID(doctorId);
             Doctor newDoctor = new Doctor(d.Id, d.FirstName, d.LastName, d.ShiftId, d.RoomId, d.Type, true);

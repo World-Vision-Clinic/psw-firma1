@@ -14,14 +14,17 @@ namespace Hospital.ShiftsAndVacations.Model
 
         public int DoctorId { get; private set; }
 
+        public string FullName { get; private set; }
+
         public Vacation() { }
-        public Vacation(int id, string description, DateTime start, DateTime end, int doctor)
+        public Vacation(int id, string description, DateTime start, DateTime end, int doctor, string fullName)
         {
             Id = id;
             Description = description;
             Start = start;
             End = end;
             DoctorId = doctor;
+            FullName = fullName;
         }
     }
 
