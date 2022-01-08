@@ -3,15 +3,17 @@ using System;
 using Hospital.SharedModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Hospital.Migrations
 {
     [DbContext(typeof(HospitalContext))]
-    partial class HospitalContextModelSnapshot : ModelSnapshot
+    [Migration("20220106102212_VacationMigration")]
+    partial class VacationMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -315,9 +317,6 @@ namespace Hospital.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("onVacation")
-                        .HasColumnType("boolean");
-
                     b.HasKey("Id");
 
                     b.ToTable("Doctors");
@@ -330,8 +329,7 @@ namespace Hospital.Migrations
                             LastName = "Matic",
                             RoomId = -1,
                             ShiftId = 1,
-                            Type = 0,
-                            onVacation = false
+                            Type = 0
                         },
                         new
                         {
@@ -340,8 +338,7 @@ namespace Hospital.Migrations
                             LastName = "Jankovic",
                             RoomId = -1,
                             ShiftId = 1,
-                            Type = 0,
-                            onVacation = false
+                            Type = 0
                         },
                         new
                         {
@@ -350,8 +347,7 @@ namespace Hospital.Migrations
                             LastName = "Popic",
                             RoomId = -1,
                             ShiftId = 2,
-                            Type = 0,
-                            onVacation = false
+                            Type = 0
                         },
                         new
                         {
@@ -360,8 +356,7 @@ namespace Hospital.Migrations
                             LastName = "Tot",
                             RoomId = -1,
                             ShiftId = 1,
-                            Type = 0,
-                            onVacation = false
+                            Type = 0
                         },
                         new
                         {
@@ -370,8 +365,7 @@ namespace Hospital.Migrations
                             LastName = "Jovic",
                             RoomId = -1,
                             ShiftId = -1,
-                            Type = 0,
-                            onVacation = false
+                            Type = 0
                         },
                         new
                         {
@@ -380,8 +374,7 @@ namespace Hospital.Migrations
                             LastName = "Matijevic",
                             RoomId = -1,
                             ShiftId = -1,
-                            Type = 0,
-                            onVacation = false
+                            Type = 0
                         },
                         new
                         {
@@ -390,8 +383,7 @@ namespace Hospital.Migrations
                             LastName = "Kis",
                             RoomId = -1,
                             ShiftId = -1,
-                            Type = 0,
-                            onVacation = false
+                            Type = 0
                         },
                         new
                         {
@@ -400,8 +392,7 @@ namespace Hospital.Migrations
                             LastName = "Bojanic",
                             RoomId = -1,
                             ShiftId = -1,
-                            Type = 0,
-                            onVacation = false
+                            Type = 0
                         },
                         new
                         {
@@ -410,8 +401,7 @@ namespace Hospital.Migrations
                             LastName = "Kraljevic",
                             RoomId = -1,
                             ShiftId = -1,
-                            Type = 0,
-                            onVacation = false
+                            Type = 0
                         },
                         new
                         {
@@ -420,8 +410,7 @@ namespace Hospital.Migrations
                             LastName = "Lakic",
                             RoomId = -1,
                             ShiftId = -1,
-                            Type = 0,
-                            onVacation = false
+                            Type = 0
                         },
                         new
                         {
@@ -430,8 +419,7 @@ namespace Hospital.Migrations
                             LastName = "Njegomir",
                             RoomId = -1,
                             ShiftId = -1,
-                            Type = 0,
-                            onVacation = false
+                            Type = 0
                         },
                         new
                         {
@@ -440,8 +428,7 @@ namespace Hospital.Migrations
                             LastName = "Pekic",
                             RoomId = -1,
                             ShiftId = -1,
-                            Type = 0,
-                            onVacation = false
+                            Type = 0
                         },
                         new
                         {
@@ -450,8 +437,7 @@ namespace Hospital.Migrations
                             LastName = "Nakic",
                             RoomId = -1,
                             ShiftId = -1,
-                            Type = 0,
-                            onVacation = false
+                            Type = 0
                         },
                         new
                         {
@@ -460,8 +446,7 @@ namespace Hospital.Migrations
                             LastName = "Katic",
                             RoomId = -1,
                             ShiftId = -1,
-                            Type = 0,
-                            onVacation = false
+                            Type = 0
                         },
                         new
                         {
@@ -470,8 +455,7 @@ namespace Hospital.Migrations
                             LastName = "Pantic",
                             RoomId = -1,
                             ShiftId = -1,
-                            Type = 0,
-                            onVacation = false
+                            Type = 0
                         },
                         new
                         {
@@ -480,8 +464,7 @@ namespace Hospital.Migrations
                             LastName = "Markovic",
                             RoomId = -1,
                             ShiftId = -1,
-                            Type = 0,
-                            onVacation = false
+                            Type = 0
                         },
                         new
                         {
@@ -490,8 +473,7 @@ namespace Hospital.Migrations
                             LastName = "Stupar",
                             RoomId = -1,
                             ShiftId = -1,
-                            Type = 0,
-                            onVacation = false
+                            Type = 0
                         },
                         new
                         {
@@ -500,8 +482,7 @@ namespace Hospital.Migrations
                             LastName = "Lisica",
                             RoomId = -1,
                             ShiftId = -1,
-                            Type = 0,
-                            onVacation = false
+                            Type = 0
                         },
                         new
                         {
@@ -510,8 +491,7 @@ namespace Hospital.Migrations
                             LastName = "Mit",
                             RoomId = -1,
                             ShiftId = -1,
-                            Type = 0,
-                            onVacation = false
+                            Type = 0
                         });
                 });
 
@@ -1582,7 +1562,7 @@ namespace Hospital.Migrations
                         new
                         {
                             IdSurvey = 1,
-                            CreationDate = new DateTime(2022, 1, 8, 19, 38, 47, 89, DateTimeKind.Local).AddTicks(1070),
+                            CreationDate = new DateTime(2022, 1, 6, 11, 22, 11, 303, DateTimeKind.Local).AddTicks(8887),
                             IdAppointment = 1
                         });
                 });
@@ -1793,9 +1773,6 @@ namespace Hospital.Migrations
                     b.Property<DateTime>("End")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("FullName")
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("Start")
                         .HasColumnType("timestamp without time zone");
 
@@ -1810,7 +1787,6 @@ namespace Hospital.Migrations
                             Description = "aaaa",
                             DoctorId = 1,
                             End = new DateTime(2022, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FullName = "Slavica Matic",
                             Start = new DateTime(2022, 1, 21, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1819,7 +1795,6 @@ namespace Hospital.Migrations
                             Description = "aaaa",
                             DoctorId = 2,
                             End = new DateTime(2022, 2, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FullName = "Mirko Jankovic",
                             Start = new DateTime(2022, 2, 21, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1828,7 +1803,6 @@ namespace Hospital.Migrations
                             Description = "aaaa",
                             DoctorId = 3,
                             End = new DateTime(2022, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FullName = "Matija Popic",
                             Start = new DateTime(2022, 3, 21, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });

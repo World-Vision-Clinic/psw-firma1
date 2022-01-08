@@ -3,15 +3,17 @@ using System;
 using Hospital.SharedModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Hospital.Migrations
 {
     [DbContext(typeof(HospitalContext))]
-    partial class HospitalContextModelSnapshot : ModelSnapshot
+    [Migration("20220106104517_DoctorVacationMigration")]
+    partial class DoctorVacationMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1582,7 +1584,7 @@ namespace Hospital.Migrations
                         new
                         {
                             IdSurvey = 1,
-                            CreationDate = new DateTime(2022, 1, 8, 19, 38, 47, 89, DateTimeKind.Local).AddTicks(1070),
+                            CreationDate = new DateTime(2022, 1, 6, 11, 45, 16, 65, DateTimeKind.Local).AddTicks(5315),
                             IdAppointment = 1
                         });
                 });
@@ -1793,9 +1795,6 @@ namespace Hospital.Migrations
                     b.Property<DateTime>("End")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("FullName")
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("Start")
                         .HasColumnType("timestamp without time zone");
 
@@ -1810,7 +1809,6 @@ namespace Hospital.Migrations
                             Description = "aaaa",
                             DoctorId = 1,
                             End = new DateTime(2022, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FullName = "Slavica Matic",
                             Start = new DateTime(2022, 1, 21, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1819,7 +1817,6 @@ namespace Hospital.Migrations
                             Description = "aaaa",
                             DoctorId = 2,
                             End = new DateTime(2022, 2, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FullName = "Mirko Jankovic",
                             Start = new DateTime(2022, 2, 21, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1828,7 +1825,6 @@ namespace Hospital.Migrations
                             Description = "aaaa",
                             DoctorId = 3,
                             End = new DateTime(2022, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FullName = "Matija Popic",
                             Start = new DateTime(2022, 3, 21, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });

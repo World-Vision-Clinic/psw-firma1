@@ -232,8 +232,8 @@
 
 .search-radio-buttons {
   position: absolute;
-  top: 2%;
-  right: 3%;
+  top: 10%;
+  right: 1%;
   color: cadetblue;
 }
 
@@ -244,8 +244,8 @@
 
 .search-box-rooms {
   position: absolute;
-  top: 6%;
-  right: 2%;
+  top: 13%;
+  right: 1%;
   background: cadetblue;
   height: 40px;
   border-radius: 40px;
@@ -299,8 +299,8 @@
 
 .search-list-box-equipment {
   position: absolute;
-  top: 17%;
-  right: 2%;
+  top: 25%;
+  right: 1%;
   width: 320px;
   height: 550px;
   border: 2px solid cadetblue;
@@ -474,7 +474,7 @@
 
 .toolbar {
   position: absolute;
-  top: 18%;
+  top: 26%;
   left: 8.5%;
   border: 2px;
   border-radius: 15px;
@@ -490,7 +490,7 @@
   height: 38px;
   font-size: 17px;
   margin-left: 1.5%;
-  width: 134px;
+  width: 140px;
   margin-top: 1.2%;
   border-radius: 10px;
 }
@@ -640,4 +640,18 @@
   color: white;
   background: cadetblue;
   flex: 1;
+}
+
+.big-toolbar {
+  border: 2px;
+  height: 60px;
+  background-color: rgba(224, 223, 223, 0.991);
+}
+
+.big-toolbar-btn {
+  color: cadetblue;
+  background-color: rgba(224, 223, 223, 0.911);;
+  height: 58px;
+  font-size: 17px;
+  width: 120px;
 }

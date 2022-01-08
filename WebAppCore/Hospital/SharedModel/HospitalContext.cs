@@ -32,6 +32,7 @@ namespace Hospital.SharedModel
         public DbSet<Equipment> AllEquipment { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Vacation> Vacations { get; set; }
         public DbSet<Floor> Floors { get; set; }
         public DbSet<Building> Buildings { get; set; }
         public DbSet<Examination> Examinations { get; set; }
@@ -100,6 +101,8 @@ namespace Hospital.SharedModel
                     new Shift(3, "Night shift", 23, 6)
                 );
 
+           
+
             modelBuilder.Entity<FloorLabel>().HasData(
                new FloorLabel { id = 1, X = 50, Y = 80, Text = "ENTRANCE", FloorId = 1 }
                );
@@ -167,25 +170,31 @@ namespace Hospital.SharedModel
                 new Building { id = 2, Name = "Hospital II", Area = null, Info = "", MapPositionId = 2 });
 
             modelBuilder.Entity<Doctor>().HasData(
-               new Doctor (1,"Slavica", "Matic", 1,-1, 0),
-               new Doctor (2, "Mirko", "Jankovic", 1, -1, 0 ),
-               new Doctor (3, "Matija", "Popic", 2, -1, 0 ),
-               new Doctor ( 4, "Sara", "Tot", 1, -1, 0 ),
-               new Doctor ( 5, "Ignjat", "Jovic", -1, -1, 0 ),
-               new Doctor ( 6, "Milos", "Matijevic", -1, -1, 0 ),
-               new Doctor ( 7, "Elena", "Kis", -1, -1, 0 ),
-               new Doctor ( 8, "Iva", "Bojanic", -1, -1, 0 ),
-               new Doctor ( 9, "Bojan", "Kraljevic", -1, -1, 0 ),
-               new Doctor ( 10, "Lidija", "Lakic", -1, -1, 0 ),
-               new Doctor ( 11, "Momir", "Njegomir", -1, -1, 0 ),
-               new Doctor ( 12, "Ivana", "Pekic", -1, -1, 0 ),
-               new Doctor ( 13, "Mileva", "Nakic", -1, -1, 0 ),
-               new Doctor ( 14, "Petar", "Katic", -1, -1, 0 ),
-               new Doctor ( 15, "Marijana", "Pantic", -1, -1, 0 ),
-               new Doctor ( 16, "Savina", "Markovic", -1, -1, 0 ),
-               new Doctor ( 17, "Jelena", "Stupar", -1, -1, 0 ),
-               new Doctor ( 18, "Luka", "Lisica", -1, -1, 0 ),
-               new Doctor ( 19, "Vasilije", "Mit", -1, -1, 0 )
+               new Doctor (1,"Slavica", "Matic", 1,-1, 0, false),
+               new Doctor (2, "Mirko", "Jankovic", 1, -1, 0, false),
+               new Doctor (3, "Matija", "Popic", 2, -1, 0, false),
+               new Doctor ( 4, "Sara", "Tot", 1, -1, 0, false),
+               new Doctor ( 5, "Ignjat", "Jovic", -1, -1, 0, false),
+               new Doctor ( 6, "Milos", "Matijevic", -1, -1, 0, false),
+               new Doctor ( 7, "Elena", "Kis", -1, -1, 0, false),
+               new Doctor ( 8, "Iva", "Bojanic", -1, -1, 0, false),
+               new Doctor ( 9, "Bojan", "Kraljevic", -1, -1, 0, false),
+               new Doctor ( 10, "Lidija", "Lakic", -1, -1, 0, false),
+               new Doctor ( 11, "Momir", "Njegomir", -1, -1, 0, false),
+               new Doctor ( 12, "Ivana", "Pekic", -1, -1, 0, false),
+               new Doctor ( 13, "Mileva", "Nakic", -1, -1, 0, false),
+               new Doctor ( 14, "Petar", "Katic", -1, -1, 0, false),
+               new Doctor ( 15, "Marijana", "Pantic", -1, -1, 0, false),
+               new Doctor ( 16, "Savina", "Markovic", -1, -1, 0, false),
+               new Doctor ( 17, "Jelena", "Stupar", -1, -1, 0, false),
+               new Doctor ( 18, "Luka", "Lisica", -1, -1, 0, false),
+               new Doctor ( 19, "Vasilije", "Mit", -1, -1, 0, false)
+               );
+
+            modelBuilder.Entity<Vacation>().HasData(
+                   new Vacation(1, "aaaa", new DateTime(2022, 1, 21), new DateTime(2022, 1, 31), 1, "Slavica Matic"),
+                   new Vacation(2, "aaaa", new DateTime(2022, 2, 21), new DateTime(2022, 2, 25), 2, "Mirko Jankovic"),
+                   new Vacation(3, "aaaa", new DateTime(2022, 3, 21), new DateTime(2022, 3, 30), 3, "Matija Popic")
                );
 
         }
