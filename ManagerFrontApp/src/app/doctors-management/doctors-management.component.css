@@ -108,7 +108,7 @@
   }
   .doctors-table td {
     padding: 10px;
-    text-align: center;
+    text-align: left;
     vertical-align: middle;
     font-size: 16px;
     color: #000;
@@ -133,8 +133,8 @@
   
   .vacation-table th {
     display: inline-block;
-    padding: 10px 64px;
-    text-align: left;
+    padding: 10px 12px;
+    text-align: middle;
     font-weight: bold;
     font-size: 15px;
     color: white;
@@ -157,13 +157,12 @@
   }
   .vacation-table td {
     padding: 10px;
-    text-align: center;
+    text-align: start;
     vertical-align: middle;
     font-size: 16px;
     color: #000;
     word-wrap: break-word;
     height: 50%;
-    width: 50%;
   }
   .vacation-table tbody {
     display: inline-block;

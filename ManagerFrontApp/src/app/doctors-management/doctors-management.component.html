@@ -48,18 +48,18 @@
             <table class="vacation-table">
                 <thead>
                   <tr>
-                    <th style="width: 190px;">Doctor</th>
-                    <th style="width: 190px;">Description</th>
-                    <th style="width: 160px;">Start</th>
-                    <th style="width: 160px;">End</th>
+                    <th style="width: 200px;">Doctor</th>
+                    <th style="width: 120px;">Start</th>
+                    <th style="width: 120px;">End</th>
+                    <th style="width: 260px;">Description</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor= "let vacation of vacations">
-                    <td>{{vacation.doctorId}}</td>
-                    <td>{{vacation.description}}</td>
-                    <td>{{vacation.start | date: "dd.MM.yyyy"}}</td>
-                    <td>{{vacation.end | date: "dd.MM.yyyy"}}</td>
+                    <td style="width: 200px;">{{vacation.doctorId}}</td>
+                    <td style="width: 120px;">{{vacation.start | date: "dd.MM.yyyy"}}</td>
+                    <td style="width: 120px;">{{vacation.end | date: "dd.MM.yyyy"}}</td>
+                    <td style="width: 260px;">{{vacation.description}}</td>
                   </tr>
                 </tbody>
             </table>
