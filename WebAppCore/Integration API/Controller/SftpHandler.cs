@@ -10,7 +10,7 @@ namespace Integration_API.Controller
 {
     public class SftpHandler
     {
-        const String SFTP_ADDRESS = "192.168.0.16";
+        const String SFTP_ADDRESS = "192.168.56.1";
         FilesRepository repository = new FilesRepository();
         public File DownloadSpecification(string fromPath, string localPath)
         {

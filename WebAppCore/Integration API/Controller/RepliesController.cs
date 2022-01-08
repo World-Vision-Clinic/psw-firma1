@@ -31,7 +31,7 @@ namespace Integration_API.Controller
             PharmacyProfile foundedPharmacy = null;
             foreach (PharmacyProfile pharmacy in pharmaciesService.GetAll())
             {
-                if (extractedApiKey.Equals(pharmacy.Key))
+                if (extractedApiKey.Equals(pharmacy.ConnectionInfo.Key))
                 {
                     foundedPharmacy = pharmacy;
                     break;

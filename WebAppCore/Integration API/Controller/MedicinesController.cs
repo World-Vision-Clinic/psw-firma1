@@ -79,16 +79,16 @@ namespace Integration_API.Controller
 
             foreach(PharmacyProfile pharmacy in pharmaciesService.GetAll())
             {
-                if (pharmacy.Protocol.Equals(ProtocolType.HTTP))
+                if (pharmacy.ConnectionInfo.Protocol.Equals(ProtocolType.HTTP))
                 {
-                    if (pharmacyConnection.SendRequestToCheckAvailability(pharmacy.Localhost, medicineDto))
+                    if (pharmacyConnection.SendRequestToCheckAvailability(pharmacy.ConnectionInfo.Domain, medicineDto))
                     {
                         pharmaciesWithMedicine.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
                     }
                 }
                 else
                 {
-                    if (SendRequestToCheckAvailabilityGrpc(pharmacy.Localhost, medicineDto))
+                    if (SendRequestToCheckAvailabilityGrpc(pharmacy.ConnectionInfo.Domain, medicineDto))
                     {
                         pharmaciesWithMedicine.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
                     }
@@ -178,7 +178,7 @@ namespace Integration_API.Controller
         [HttpPut("OrderMedicine")]
         public IActionResult Order(OrderingMedicineDTO dto)
         {
-            if (pharmaciesService.Get(dto.Localhost).Protocol.Equals(ProtocolType.HTTP))
+            if (pharmaciesService.Get(dto.Localhost).ConnectionInfo.Protocol.Equals(ProtocolType.HTTP))
             {
                 if (SendMedicineOrderingRequestHTTP(dto, false))
                 {
