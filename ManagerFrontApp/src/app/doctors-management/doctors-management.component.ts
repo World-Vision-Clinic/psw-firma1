@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { DoctorsManagementService } from './doctors-management.service';
 import {Doctor} from '../data/doctor';
+import { Vacation } from '../data/vacation';
 
 @Component({
   selector: 'app-doctors-management',
@@ -18,6 +19,7 @@ export class DoctorsManagementComponent implements OnInit {
   buttonsBox = false;
   
   doctors:Doctor[]=[];
+  vacations: Vacation[] = [];
 
   constructor(
     private router: Router,
@@ -34,6 +36,16 @@ export class DoctorsManagementComponent implements OnInit {
   async loadDoctors(){
     this.doctorsManagementService.getDoctors().subscribe((data)=>{this.doctors=data}, (error)=>{console.log(error);
     })
+  }
+
+  loadVacations(){
+    this.doctorsManagementService.getVacations().subscribe((data)=>{this.vacations=data}, (error)=>{console.log(error);
+    })
+  }
+
+  deleteVacation(){
+    this.doctorsManagementService.deleteVacation(4)
+    this.loadVacations()
   }
 
 }

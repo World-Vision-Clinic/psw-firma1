@@ -13,7 +13,7 @@
 <div *ngIf="initialTableBox">
     <div class="toolbar">
         <button class="toolbar-btn">Shifts</button>
-        <button class="toolbar-btn" (click)="vacationTableBox=true; initialTableBox=false;">Vacations</button>
+        <button class="toolbar-btn" (click)="vacationTableBox=true; initialTableBox=false; loadVacations()">Vacations</button>
         <button class="toolbar-btn">On duty</button>
         <button class="toolbar-btn">Charts</button>
     </div>
@@ -55,8 +55,11 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td></td>
+                  <tr *ngFor= "let vacation of vacations">
+                    <td>{{vacation.doctorId}}</td>
+                    <td>{{vacation.description}}</td>
+                    <td>{{vacation.start | date: "dd.MM.yyyy"}}</td>
+                    <td>{{vacation.end | date: "dd.MM.yyyy"}}</td>
                   </tr>
                 </tbody>
             </table>
@@ -68,7 +71,7 @@
                 <button class="icon-btn" (click)="editVacationBox = true; buttonsBox = true;">
                     <i style="width: 40px;" class="fas fa-edit"></i>
                 </button>
-                <button class="icon-btn">
+                <button class="icon-btn" (click)="deleteVacation()">
                     <i style="width: 40px;" class="fas fa-trash"></i>
                 </button>
               </div>
