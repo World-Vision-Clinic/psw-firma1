@@ -1,11 +1,9 @@
 ﻿using Hospital.ShiftsAndVacations.Model;
-using Hospital.ShiftsAndVacations.Repository;
 using Hospital.ShiftsAndVacations.Repository.RepositoryInterfaces;
 using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Model;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Hospital.ShiftsAndVacations.Service
 {
@@ -53,7 +51,8 @@ namespace Hospital.ShiftsAndVacations.Service
 
         public void addNewVacation(int id, string desc, DateTime start, DateTime end, int doctorId, string fullName)
         {
-            Vacation v = new Vacation(id, desc, start, end, doctorId, fullName);
+            Random random = new Random();
+            Vacation v = new Vacation(random.Next(1000), desc, start, end, doctorId, fullName);
             //now doctor is on vacation
             Doctor d = doctorRepository.GetByID(doctorId);
             Doctor newDoctor = new Doctor(d.Id, d.FirstName, d.LastName, d.ShiftId, d.RoomId, d.Type, true);
