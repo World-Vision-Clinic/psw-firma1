@@ -1,0 +1,101 @@
+<div class="big-toolbar">
+    <button class="big-toolbar-btn" routerLink="/">Front page</button>
+    <button class="big-toolbar-btn"  routerLink="/buildings">Buildings map</button>
+    <button class="big-toolbar-btn"  routerLink="/hospital/1">Rooms map</button>
+    <button style="width: 160px;" class="big-toolbar-btn"  routerLink="/doctors-management">Doctors management</button>
+</div>
+
+<div class="title">
+    <h2>WORLD VISION CLINIC</h2>
+    <h3>Doctors management</h3>
+</div>
+
+<div *ngIf="initialTableBox">
+    <div class="toolbar">
+        <button class="toolbar-btn">Shifts</button>
+        <button class="toolbar-btn" (click)="vacationTableBox=true; initialTableBox=false;">Vacations</button>
+        <button class="toolbar-btn">On duty</button>
+        <button class="toolbar-btn">Charts</button>
+    </div>
+    <div class="doctors-page" *ngIf="initialTableBox">
+        <table class="doctors-table">
+            <thead>
+              <tr>
+                <th style="width: 280px;">Doctor</th>
+                <th style="width: 220px;">Shift</th>
+                <th style="width: 200px;">Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+              </tr>
+            </tbody>
+        </table>
+    </div>    
+</div>
+
+
+<div *ngIf="vacationTableBox">
+    <div class="toolbar" style=" margin-left: 27.8%;">
+        <button class="toolbar-btn">Shifts</button>
+        <button class="toolbar-btn">On duty</button>
+        <button class="toolbar-btn">Charts</button>
+    </div>
+    <div class="doctors-page">
+        <div style="display: flex; flex-direction: row;">
+            <table class="vacation-table">
+                <thead>
+                  <tr>
+                    <th style="width: 190px;">Doctor</th>
+                    <th style="width: 190px;">Description</th>
+                    <th style="width: 160px;">Start</th>
+                    <th style="width: 160px;">End</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td>
+                  </tr>
+                </tbody>
+            </table>
+            <div>
+                <div *ngIf="!buttonsBox" style="display: flex; flex-direction: column;">
+                  <button class="icon-btn" (click)="addVacationBox = true; buttonsBox = true;">
+                    <i style="width: 40px;" class="fas fa-plus-circle"></i>
+                </button>
+                <button class="icon-btn">
+                    <i style="width: 40px;" class="fas fa-edit"></i>
+                </button>
+                <button class="icon-btn">
+                    <i style="width: 40px;" class="fas fa-trash"></i>
+                </button>
+                </div>
+                <div style="display: flex; flex-direction: column;" *ngIf="addVacationBox">
+                  <h3 style="color: cadetblue;">Add new vacation</h3>
+
+                  <label>Doctor: </label>
+                 <select class="form-field" style="height: 38px; margin-bottom: 8%;"  ng-model="selectedName" ng-options="x for x in names">
+                 </select>
+
+                  <label>Date: </label>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Enter a date range</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                      <input matStartDate placeholder="Start date">
+                      <input matEndDate placeholder="End date">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                 </mat-form-field>
+
+                 <label>Description: </label>
+                 <input type="text" class="form-field" name="input"/>
+
+                 <button class="toolbar-btn" style="margin-top: 20px; margin-left: 27%;">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="toolbar-btn" style="margin-left: 28.5%; margin-top: -3%;" (click)="vacationTableBox=false; addVacationBox=false; buttonsBox=false; initialTableBox=true;">Close</button>    
+</div>
