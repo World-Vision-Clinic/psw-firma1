@@ -60,7 +60,7 @@ namespace HospitalTests.EditorTests
             Assert.Null(building);
 
         }
-
+        /*
         [Fact]
         public void building_findById_test_found()
         {
@@ -70,6 +70,6 @@ namespace HospitalTests.EditorTests
             Building building = service.GetById(1);
             Assert.NotNull(building);
 
-        }
+        }*/ 
     }
 }
