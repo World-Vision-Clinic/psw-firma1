@@ -20,6 +20,14 @@ export class DoctorsManagementComponent implements OnInit {
   
   doctors:Doctor[]=[];
   vacations: Vacation[] = [];
+  vacation: Vacation = {
+    id: -1,
+    description: "",
+    start: -1,
+    end: -1,
+    doctorId: -1
+
+  };
 
   constructor(
     private router: Router,
@@ -44,8 +52,13 @@ export class DoctorsManagementComponent implements OnInit {
   }
 
   deleteVacation(){
-    this.doctorsManagementService.deleteVacation(4)
-    this.loadVacations()
+    this.doctorsManagementService.deleteVacation(2);
+    this.loadVacations();
+  }
+
+  addNewVacation(){
+    this.doctorsManagementService.addVacation(this.vacation);
+    this.loadVacations();
   }
 
 }
