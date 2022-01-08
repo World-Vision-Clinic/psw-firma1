@@ -1,6 +1,7 @@
 ﻿using Hospital.ShiftsAndVacations.Model;
 using Hospital.ShiftsAndVacations.Repository;
 using Hospital.ShiftsAndVacations.Repository.RepositoryInterfaces;
+using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Model;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,12 @@ namespace Hospital.ShiftsAndVacations.Service
     public class VacationService
     {
         IVacationRepository repository;
-        public VacationService(IVacationRepository repository)
+        IDoctorRepository doctorRepository;
+
+        public VacationService(IVacationRepository repository, IDoctorRepository drRepo)
         {
             this.repository = repository;
+            this.doctorRepository = drRepo;
         }
 
         public List<Vacation> getAll()
@@ -29,9 +33,15 @@ namespace Hospital.ShiftsAndVacations.Service
 
         public bool deleteVacation(int id)
         {
+            Vacation v = repository.GetByID(id);
             try
             {
                 repository.Delete(id);
+                //now doctor is not on vacation
+                Doctor d = doctorRepository.FindById(v.DoctorId);
+                Doctor newDoctor = new Doctor(d.Id, d.FirstName, d.LastName, d.ShiftId, d.RoomId, d.Type, false);
+                doctorRepository.Delete(d.Id);
+                doctorRepository.AddDoctor(newDoctor);
                 return true;
             }
             catch
@@ -41,10 +51,16 @@ namespace Hospital.ShiftsAndVacations.Service
             
         }
 
-        public void addNewVacation(int id, string desc, DateTime start, DateTime end, int doctor)
+        public void addNewVacation(int id, string desc, DateTime start, DateTime end, int doctorId)
         {
-            Vacation v = new Vacation(id, desc, start, end, doctor);
+            Vacation v = new Vacation(id, desc, start, end, doctorId);
+            //now doctor is on vacation
+            Doctor d = doctorRepository.GetByID(doctorId);
+            Doctor newDoctor = new Doctor(d.Id, d.FirstName, d.LastName, d.ShiftId, d.RoomId, d.Type, true);
+            doctorRepository.Delete(d.Id);
+            doctorRepository.AddDoctor(newDoctor);
             repository.Save(v);
+
         }
 
         public Vacation getById(int id)

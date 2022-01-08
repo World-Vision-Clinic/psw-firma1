@@ -97,5 +97,12 @@ namespace Hospital_API.Controllers
             }
         }
 
+        [HttpPost]
+        public HttpResponseMessage addNew([FromBody] DoctorDTO d)
+        {
+            _doctorService.addNewDoctor(d.Id, d.FirstName, d.LastName, d.ShiftId, d.RoomId, (DoctorType)d.Type, d.onVacation);
+            return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
+        }
+
     }
 }

@@ -31,8 +31,8 @@ namespace Hospital_API.Controllers
         {
             HospitalContext context = new HospitalContext();
             IVacationRepository vacationRepository = new VacationRepository(context);
-            vacationService = new VacationService(vacationRepository);
-            //IDoctorRepository doctorRepository = new DoctorRepository(context);
+            IDoctorRepository doctorRepository = new DoctorRepository(context);
+            vacationService = new VacationService(vacationRepository, doctorRepository);
             //doctorService = new DoctorService(doctorRepository);
         }
 
