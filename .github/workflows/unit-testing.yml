@@ -29,12 +29,12 @@ jobs:
       - name: Build hospital
         run: dotnet build ${HOSPITAL_PROJECT_SOLUTION} --configuration Release --no-restore
       - name: Test hospital
-        run: dotnet test ${HOSPITAL_PROJECT_SOLUTION} --no-restore --verbosity quiet --filter FullyQualifiedName!~IntegrationTests
+        run: dotnet test ${HOSPITAL_PROJECT_SOLUTION} --no-restore --verbosity quiet #--filter FullyQualifiedName!~IntegrationTests
 
 
       - name: Install dependencies integration
         run: dotnet restore ${INTEGRATION_PROJECT_SOLUTION}
       - name: Build integration
         run: dotnet build ${INTEGRATION_PROJECT_SOLUTION} --configuration Release --no-restore
-      # - name: Test integration
-      #   run: dotnet test ${INTEGRATION_PROJECT_SOLUTION} --no-restore --verbosity quiet --filter FullyQualifiedName!~IntegrationTests
+      - name: Test integration
+        run: dotnet test ${INTEGRATION_PROJECT_SOLUTION} --no-restore --verbosity quiet #--filter FullyQualifiedName!~IntegrationTests
