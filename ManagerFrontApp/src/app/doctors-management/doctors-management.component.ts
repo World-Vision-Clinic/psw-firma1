@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DoctorsManagementService } from './doctors-management.service';
 import {Doctor} from '../data/doctor';
 import { Vacation } from '../data/vacation';
+import { Shift } from '../data/shift';
 
 @Component({
   selector: 'app-doctors-management',
@@ -18,6 +19,7 @@ export class DoctorsManagementComponent implements OnInit {
   editVacationBox = false;
   buttonsBox = false;
   
+  shifts:Shift[]=[];
   doctors:Doctor[]=[];
   vacations: Vacation[] = [];
   vacation: Vacation = {
@@ -59,6 +61,20 @@ export class DoctorsManagementComponent implements OnInit {
   addNewVacation(){
     this.doctorsManagementService.addVacation(this.vacation);
     this.loadVacations();
+  }
+
+  async loadShifts(){
+    this.doctorsManagementService.getAllShifts().subscribe((data)=>{this.shifts=data}, (error) => {console.log(error);
+    })
+  }
+
+  fetchDoctorsAndShifts(id){
+    for(let i=0; i<this.shifts.length;i++){
+      if(this.shifts[i].id===id){
+        return this.shifts[i].name
+      } 
+    }
+    return ''
   }
 
 }

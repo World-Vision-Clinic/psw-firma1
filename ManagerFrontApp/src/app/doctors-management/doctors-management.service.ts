@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Doctor } from '../data/doctor';
 import { Vacation } from '../data/vacation';
+import { Shift } from '../data/shift';
 import { ThumbSettings } from '@syncfusion/ej2-angular-charts';
 
 @Injectable({
@@ -34,6 +35,10 @@ import { ThumbSettings } from '@syncfusion/ej2-angular-charts';
         const headers={'content-type':'application/json'};  
         const body=JSON.stringify(vacation) 
         return this.http.post('http://localhost:39901/api/vacations/update', body,{'headers': headers}).subscribe(data => {console.log(data)});
+      }
+
+      getAllShifts(){
+        return this.http.get<Shift[]>('http://localhost:39901/api/shifts/getAll');
       }
 
   }
