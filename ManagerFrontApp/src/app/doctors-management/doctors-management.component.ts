@@ -99,8 +99,8 @@ export class DoctorsManagementComponent implements OnInit {
 
   deleteVacation(){
     this.doctorsManagementService.deleteVacation(this.selectedVacation?.id!);
-    this.loadVacations();
     alert("Vacation deleted!")
+    this.loadVacations();
   }
 
 
@@ -109,6 +109,9 @@ export class DoctorsManagementComponent implements OnInit {
     this.vacation.fullName = this.selectedDoctor?.firstName + " " + this.selectedDoctor?.lastName;
     console.log(this.vacation)
     this.doctorsManagementService.addVacation(this.vacation);
+    alert("Vacation added!")
+    this.addVacationBox = false;
+    this.buttonsBox = false;
     this.loadVacations();
   } 
 
