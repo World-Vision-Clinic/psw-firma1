@@ -31,7 +31,19 @@ namespace Integration_API.Controller
        
         TenderService service = new TenderService(new TenderRepository());
         FilesService filesService = new FilesService(new FilesRepository());
-        
+
+        [HttpGet]
+        public IActionResult GetTenders()
+        {
+            List<Tender> tenders = service.GetTenders();
+            List<TenderDto> tendersDto = new List<TenderDto>();
+            foreach (Tender t in tenders)
+            {
+                tendersDto.Add(TenderMapper.TenderToTenderDto(t));
+            }
+            return Ok(tendersDto);
+        }
+
         [HttpPost]
         public IActionResult CreateTender(TenderCreationDto dto)
         {

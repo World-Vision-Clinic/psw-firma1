@@ -24,6 +24,11 @@ namespace Integration.Partnership.Service
             return tenderRepository.GetAll();
         }
 
+        public List<Tender> GetTenders()
+        {
+            return tenderRepository.GetAll();
+        }
+
         public Dictionary<string, List<float>> GetNumberOfOffersForAllTenders(DateTime start, DateTime end)
         {
             int tenderNumber = 0;
