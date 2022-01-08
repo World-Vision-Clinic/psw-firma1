@@ -123,15 +123,10 @@ openUpdateShiftBox(){
   }
 }
 
-<<<<<<< Updated upstream
   selectVacation(id){
     
   }
 
-  async loadShifts(){
-    this.doctorsManagementService.getAllShifts().subscribe((data)=>{this.shifts=data}, (error) => {console.log(error);
-    })
-=======
 updateShift(){
   this.doctorsManagementService.updateShift(this.selectedShift);
   this.loadShifts()
@@ -165,7 +160,6 @@ fetchDoctorsAndShifts(id){
     if(this.shifts[i].id===id){
       return this.shifts[i].name
     } 
->>>>>>> Stashed changes
   }
   return ''
 }
