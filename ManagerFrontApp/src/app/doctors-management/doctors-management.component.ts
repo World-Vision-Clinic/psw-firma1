@@ -103,7 +103,6 @@ export class DoctorsManagementComponent implements OnInit {
     this.loadVacations();
   }
 
-
   addNewVacation(){
     this.vacation.doctorId = this.selectedDoctor?.id!;
     this.vacation.fullName = this.selectedDoctor?.firstName + " " + this.selectedDoctor?.lastName;
@@ -114,6 +113,16 @@ export class DoctorsManagementComponent implements OnInit {
     this.buttonsBox = false;
     this.loadVacations();
   } 
+
+  editVacation(){
+    this.vacation.doctorId = this.selectedDoctor?.id!;
+    this.vacation.fullName = this.selectedDoctor?.firstName + " " + this.selectedDoctor?.lastName;
+    this.doctorsManagementService.updateVacation(this.selectedVacation!);
+    alert("Vacation edited!")
+    this.editVacationBox = false;
+    this.buttonsBox = false;
+    this.loadVacations()
+  }
 
   //SHIFTS
 createNewShiftBox(){
@@ -139,7 +148,7 @@ openUpdateShiftBox(){
   }
 }
 
-  selectVacation(vacation){
+selectVacation(vacation){
     this.selectedVacation = vacation
     this.selectedRowIndex = vacation.id;
   }

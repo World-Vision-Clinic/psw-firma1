@@ -103,21 +103,23 @@
               <div style="display: flex; flex-direction: column;" *ngIf="editVacationBox">
                 <h3 style="color: cadetblue;">Edit vacation</h3>
                 <label>Doctor: </label>
-               <select class="form-field" style="height: 38px; margin-bottom: 8%;"  ng-model="selectedName" ng-options="x for x in names">
+               <select class="form-field" style="height: 38px; margin-bottom: 8%;"  [(ngModel)]="selectedDoctor">
+                <option></option>
+                  <option  *ngFor="let dr of doctors" [ngValue]="dr">{{dr.firstName}} {{dr.lastName}}</option>
                </select>
                 <label>Date: </label>
                 <mat-form-field appearance="outline">
                   <mat-label>Enter a date range</mat-label>
                   <mat-date-range-input [rangePicker]="picker">
-                    <input matStartDate placeholder="Start date">
-                    <input matEndDate placeholder="End date">
+                    <input matStartDate placeholder="Start date" [(ngModel)]="vacation.start">
+                    <input matEndDate placeholder="End date" [(ngModel)]="vacation.end">
                   </mat-date-range-input>
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-date-range-picker #picker></mat-date-range-picker>
                </mat-form-field>
                <label>Description: </label>
-               <input type="text" class="form-field" name="input"/>
-               <button class="toolbar-btn" style="margin-top: 20px; margin-left: 27%;">Save</button>
+               <input type="text" class="form-field" name="input" [(ngModel)]="vacation.description"/>
+               <button class="toolbar-btn" style="margin-top: 20px; margin-left: 27%;" (click) = "editVacation()">Save</button>
             </div>
           
         </div>
