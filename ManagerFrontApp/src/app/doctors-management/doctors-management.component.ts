@@ -22,12 +22,14 @@ export class DoctorsManagementComponent implements OnInit {
   shifts:Shift[]=[];
   doctors:Doctor[]=[];
   vacations: Vacation[] = [];
+  selectedVacation: Vacation | null = null;
   vacation: Vacation = {
     id: -1,
     description: "",
     start: -1,
     end: -1,
-    doctorId: -1
+    doctorId: -1,
+    fullName: ""
 
   };
 
@@ -55,12 +57,18 @@ export class DoctorsManagementComponent implements OnInit {
 
   deleteVacation(){
     this.doctorsManagementService.deleteVacation(2);
+    
     this.loadVacations();
+    console.log(this.vacations)
   }
 
   addNewVacation(){
     this.doctorsManagementService.addVacation(this.vacation);
     this.loadVacations();
+  }
+
+  selectVacation(id){
+    
   }
 
   async loadShifts(){

@@ -58,7 +58,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor= "let vacation of vacations">
-                    <td style="width: 200px;">{{vacation.doctorId}}</td>
+                    <td style="width: 200px;">{{vacation.fullName}}</td>
                     <td style="width: 120px;">{{vacation.start | date: "dd.MM.yyyy"}}</td>
                     <td style="width: 120px;">{{vacation.end | date: "dd.MM.yyyy"}}</td>
                     <td style="width: 260px;">{{vacation.description}}</td>

@@ -3,5 +3,6 @@ export interface Vacation{
     description: string,
     start:number,
     end:number,
-    doctorId: number
+    doctorId: number,
+    fullName: string
 }
