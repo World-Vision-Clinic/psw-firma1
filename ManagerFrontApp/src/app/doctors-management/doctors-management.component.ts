@@ -117,6 +117,7 @@ export class DoctorsManagementComponent implements OnInit {
   editVacation(){
     this.vacation.doctorId = this.selectedDoctor?.id!;
     this.vacation.fullName = this.selectedDoctor?.firstName + " " + this.selectedDoctor?.lastName;
+    this.vacation.id = this.selectedVacation?.id!;
     this.doctorsManagementService.updateVacation(this.vacation);
     alert("Vacation edited!")
     this.editVacationBox = false;

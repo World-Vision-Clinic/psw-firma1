@@ -103,10 +103,10 @@
               <div style="display: flex; flex-direction: column;" *ngIf="editVacationBox">
                 <h3 style="color: cadetblue;">Edit vacation</h3>
                 <label>Doctor: </label>
-               <select class="form-field" style="height: 38px; margin-bottom: 8%;"  [(ngModel)]="selectedDoctor">
-                <option></option>
+                <select class="form-field" style="height: 38px; margin-bottom: 8%;" [(ngModel)]="selectedDoctor">
+                  <option></option>
                   <option  *ngFor="let dr of doctors" [ngValue]="dr">{{dr.firstName}} {{dr.lastName}}</option>
-               </select>
+                 </select>
                 <label>Date: </label>
                 <mat-form-field appearance="outline">
                   <mat-label>Enter a date range</mat-label>
@@ -119,7 +119,7 @@
                </mat-form-field>
                <label>Description: </label>
                <input type="text" class="form-field" name="input" [(ngModel)]="vacation.description"/>
-               <button class="toolbar-btn" style="margin-top: 20px; margin-left: 27%;" (click) = "editVacation()">Save</button>
+               <button class="toolbar-btn" style="margin-top: 20px; margin-left: 27%;" (click)=" editVacation()">Save</button>
             </div>
           
         </div>
