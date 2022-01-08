@@ -10,6 +10,7 @@ export class DoctorsManagementComponent implements OnInit {
   initialTableBox = true;
   vacationTableBox = false;
   addVacationBox = false;
+  editVacationBox = false;
   buttonsBox = false;
   
   constructor() { }
