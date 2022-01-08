@@ -1,12 +1,16 @@
 ﻿using Hospital.Seedwork;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Hospital.MedicalRecords.Model
 {
+    [Keyless]
+    [NotMapped]
     public class Residence : ValueObject
     {
         public string Country { get; private set; }

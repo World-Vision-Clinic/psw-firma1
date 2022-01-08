@@ -2,12 +2,15 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Hospital.MedicalRecords.Model
 {
+    [Keyless]
+    [NotMapped]
     public class FullName : ValueObject
     {
         public string FirstName { get; private set; }
