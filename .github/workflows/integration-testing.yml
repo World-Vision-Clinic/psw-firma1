@@ -51,17 +51,16 @@ jobs:
           POSTGRES_PASSWORD: admin
 
 
-
-      # - name: Install dependencies integration
-      #   run: dotnet restore ${SOLUTION_DIRECTORY_INTEGRATION}
-      # - name: Create Migrations integration
-      #   run:
-      #     dotnet ef migrations add InitialCreate --project ${SOLUTION_DIRECTORY_INTEGRATION}\/${PROJECT_DIRECTORY_INTEGRATION};
-      # - name: Update Database integration
-      #   run: dotnet ef database update --project ${SOLUTION_DIRECTORY_INTEGRATION}\/${PROJECT_DIRECTORY_INTEGRATION};
-      # - name: Test integration
-      #   run: dotnet test ${SOLUTION_DIRECTORY_INTEGRATION} --no-restore --verbosity quiet --filter FullyQualifiedName\!~UnitTests
-      #   env:
-      #     POSTGRES_HOST: localhost
-      #     POSTGRES_PORT: 5432
-      #     POSTGRES_PASSWORD: admin
+      - name: Install dependencies integration
+        run: dotnet restore ${SOLUTION_DIRECTORY_INTEGRATION}
+      - name: Create Migrations integration
+        run:
+          dotnet ef migrations add InitialCreate --project ${SOLUTION_DIRECTORY_INTEGRATION}\/${PROJECT_DIRECTORY_INTEGRATION};
+      - name: Update Database integration
+        run: dotnet ef database update --project ${SOLUTION_DIRECTORY_INTEGRATION}\/${PROJECT_DIRECTORY_INTEGRATION};
+      - name: Test integration
+        run: dotnet test ${SOLUTION_DIRECTORY_INTEGRATION} --no-restore --verbosity quiet --filter FullyQualifiedName\!~UnitTests
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_PASSWORD: admin
