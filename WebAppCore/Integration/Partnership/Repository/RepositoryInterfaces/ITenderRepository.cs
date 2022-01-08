@@ -10,5 +10,7 @@ namespace Integration.Partnership.Repository.RepositoryInterfaces
     {
         List<TenderOffer> GetAllTenderOffers();
         public bool AddOffer(TenderOffer tenderOffer);
+        public void EditTenderByHash(Tender tender);
+        public void EditTenderOfferById(TenderOffer offer);
     }
 }

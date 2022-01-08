@@ -19,13 +19,72 @@ namespace Integration.Partnership.Repository
 
         public List<Tender> GetAll()
         {
-            return dbContext.Tenders.Include("TenderOffers").ToList();
+
+            List<Tender> allTenders = dbContext.Tenders.Include("TenderOffers").Include("TenderItems").ToList();
+            List<TenderOffer> allOffers = GetAllTenderOffersWithOfferItems();
+            foreach(Tender tender in allTenders)
+            {
+                if(tender.TenderOffers.Count!=0)
+                {
+                    //int id = tender.TenderOffers.ToList()[0].TenderOfferId;
+                    foreach(TenderOffer offer in tender.TenderOffers)
+                    {
+                        int id = offer.TenderOfferId;
+                        foreach (TenderOffer ofer in allOffers)
+                        {
+                            if (id == ofer.TenderOfferId)
+                            {
+                                offer.OfferItems = ofer.OfferItems;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return allTenders;
         }
-        
+
+        public void EditTenderByHash(Tender tender)
+        {
+            List<Tender> allTenders = dbContext.Tenders.ToList();
+            foreach(Tender t in allTenders)
+            {
+                if(t.TenderHash==tender.TenderHash)
+                {
+                    t.EndTime = tender.EndTime;
+                    break;
+                }
+            }
+            dbContext.SaveChanges();
+        }
+        public void EditTenderOfferById(TenderOffer offer)
+        {
+            List<TenderOffer> allOffers = dbContext.TenderOffers.ToList();
+            foreach (TenderOffer o in allOffers)
+            {
+                if (o.TenderOfferId == offer.TenderOfferId)
+                {
+                    o.Winner = offer.Winner;
+                    break;
+                }
+            }
+            dbContext.SaveChanges();
+
+        }
+
         public List<TenderOffer> GetAllTenderOffers()
         {
             return dbContext.TenderOffers.ToList();
         }
+        public List<OfferItem> GetAllOfferItems()
+        {
+            return dbContext.OfferItems.ToList();
+        }
+        public List<TenderOffer> GetAllTenderOffersWithOfferItems()
+        {
+            return dbContext.TenderOffers.Include("OfferItems").ToList();
+        }
+
 
         public Tender GetByID(string id)
         {

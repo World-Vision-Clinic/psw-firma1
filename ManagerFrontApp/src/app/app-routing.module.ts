@@ -17,6 +17,7 @@ import { ViewFilesComponent } from './manager-integration-front-app/view-files/v
 import { LoginComponent } from './login/login.component';
 import { TenderCreationComponent } from './manager-integration-front-app/tender-creation/tender-creation.component';
 import { StatisticsComponent } from './manager-integration-front-app/statistics/statistics.component';
+import { TenderSelectionComponent } from './manager-integration-front-app/tender-selection/tender-selection.component';
 
 const routes: Routes = [
   {path: "", component: FrontPageComponent},
@@ -34,6 +35,7 @@ const routes: Routes = [
   {path: "get-specification", outlet:"showObjRepl", component: GetSpecificationComponent},
   {path: "view-files", outlet:"showObjRepl", component: ViewFilesComponent},
   {path: "create-tender", outlet:"showObjRepl", component:TenderCreationComponent},
+  {path: "select-tender", outlet:"showObjRepl", component:TenderSelectionComponent},
   {path: "statistics", outlet:"showObjRepl", component:StatisticsComponent}
   ]},
   {path:"manager-feedback", component: ManagerFeedbackViewComponent},
