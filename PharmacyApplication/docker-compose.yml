@@ -20,16 +20,18 @@ services:
       - "5555:5432"
 
   pharmacy:
-    build: ../PharmacyApplication
     image: jelenahrnjak/pharmacy:latest
     depends_on:
       - postgres-database
+      - rabbitmq
     environment: 
       DATABASE_HOST: postgres-database
       DATABASE_PORT: 5432
       DATABASE_SCHEMA: PharmacyDatabase
       DATABASE_PASSWORD: admin
       DATABASE_USER: postgres
+      RABBITMQ_HOST: "rabbitmq" 
+      
     ports:
       - "8081:80" 
     restart: on-failure
@@ -40,7 +42,8 @@ services:
   manager-front:
     depends_on:
       - pharmacy
-    build: ../ManagerFrontApp 
+    #build: ../ManagerFrontApp 
+    image: jelenahrnjak/manager-front-app:latest
     ports:
       - "4202:4200"
     restart: on-failure
@@ -48,6 +51,12 @@ services:
       - public
       - application
 
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
 volumes:
   database-data:
 
