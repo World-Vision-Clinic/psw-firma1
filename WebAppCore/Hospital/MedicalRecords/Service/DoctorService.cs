@@ -70,5 +70,16 @@ namespace Hospital.MedicalRecords.Service
             _repo.SaveSync();
         }
 
+        public void updateDoctor(Doctor doctor)
+        {
+            _repo.Update(doctor);
+        }
+
+        public void addNewDoctor(int id, string firstName, string lastName,int shiftId, int roomId, DoctorType type, bool onVacation)
+        {
+            Doctor d = new Doctor(id, firstName, lastName, shiftId, roomId, type, false);
+            _repo.Save(d);
+        }
+
     }
 }

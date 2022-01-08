@@ -18,6 +18,8 @@ import { LoginComponent } from './login/login.component';
 import { TenderCreationComponent } from './manager-integration-front-app/tender-creation/tender-creation.component';
 import { StatisticsComponent } from './manager-integration-front-app/statistics/statistics.component';
 import { TenderSelectionComponent } from './manager-integration-front-app/tender-selection/tender-selection.component';
+import { DoctorsManagementComponent } from './doctors-management/doctors-management.component';
+
 
 const routes: Routes = [
   {path: "", component: FrontPageComponent},
@@ -25,10 +27,12 @@ const routes: Routes = [
   {path:"hospital/:hospitalId", component: Hospital1Component},
   {path:"pharmacy-registration", component: PharmacyRegistrationComponent},
   {path:"survey-results", component: ViewSurveyResultsComponent},
+  {path:"hospital1", component: Hospital1Component},
+  {path: "doctors-management", component: DoctorsManagementComponent},
   {path:"manager-front-app", component: ManagerIntegrationFrontAppComponent, children: [
   {path: "overview-objections-replies", outlet: "showObjRepl", component:OverviewObjectionsRepliesComponent},
   {path: "overview-pharmacies", outlet: "showObjRepl", component:PharmaciesComponent},
-
+  
   {path: "create-objection", outlet: "showObjRepl", component:ObjectionFormPageComponent},
   {path: "news", outlet: "showObjRepl", component:NewsComponent},
   {path: "medicine-consumption-report", outlet: "showObjRepl", component:MedicineConsumptionComponent},
