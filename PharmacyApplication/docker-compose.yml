@@ -43,7 +43,7 @@ services:
     depends_on:
       - pharmacy
     #build: ../ManagerFrontApp 
-    image: jelenahrnjak/manager-front-app:latest
+    image: jelenahrnjak/manager-front:latest
     ports:
       - "4202:4200"
     restart: on-failure
