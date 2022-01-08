@@ -14,9 +14,10 @@ namespace Integration.Pharmacy.Repository
 
         public PharmacyProfile Get(string id)
         {
-            PharmacyProfile foundedPharmacy = dbContext.Pharmacies.SingleOrDefault(pharmacy => pharmacy.Localhost == id);
+            PharmacyProfile foundedPharmacy = dbContext.Pharmacies.SingleOrDefault(pharmacy => pharmacy.ConnectionInfo.Domain == id);
             return foundedPharmacy;
         }
+
 
         public void Save(PharmacyProfile pharmacy)
         {

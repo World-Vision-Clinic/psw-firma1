@@ -22,7 +22,7 @@ namespace Integration.Pharmacy.Service
 
         public void Update(News pieceOfNews)
         {
-            pieceOfNews.Posted = !pieceOfNews.Posted;
+            pieceOfNews.ChangeStatus();
             newsRepository.Update();
         }
     }

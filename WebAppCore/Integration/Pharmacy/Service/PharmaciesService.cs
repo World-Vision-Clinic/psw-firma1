@@ -21,8 +21,8 @@ namespace Integration.Pharmacy.Service
         public bool AddNewPharmacy(PharmacyProfile newPharmacy, out string generatedKey)
         {
             generatedKey = Generator.GenerateApiKey();
-            newPharmacy.Key = generatedKey;
-            PharmacyProfile foundedPharmacy = pharmaciesRepository.Get(newPharmacy.Localhost);
+            newPharmacy.ConnectionInfo = new ConnectionInfo(generatedKey, newPharmacy.ConnectionInfo.Domain, newPharmacy.ConnectionInfo.Protocol);
+            PharmacyProfile foundedPharmacy = pharmaciesRepository.Get(newPharmacy.ConnectionInfo.Domain);
             if (foundedPharmacy != null)
             {
                 return false;
@@ -37,6 +37,7 @@ namespace Integration.Pharmacy.Service
             return pharmaciesRepository.Get(id);
         }
 
+
         public List<PharmacyProfile> GetAll()
         {
             return pharmaciesRepository.GetAll();
@@ -47,7 +48,7 @@ namespace Integration.Pharmacy.Service
             List<PharmacyProfile> pharmacies = new List<PharmacyProfile>();
             foreach (PharmacyProfile pp in GetAll())
             {
-                if (pp.Address.ToLower().Contains(searchFilter.ToLower()) || pp.City.ToLower().Contains(searchFilter.ToLower()))
+                if (pp.Address.Street.ToLower().Contains(searchFilter.ToLower()) || pp.Address.City.ToLower().Contains(searchFilter.ToLower()))
                 {
                     pharmacies.Add(pp);
                 }
@@ -58,11 +59,11 @@ namespace Integration.Pharmacy.Service
         public PharmacyProfile Edit(PharmacyProfile editedPharmacy)
         {
             List<PharmacyProfile> pharmacies = GetAll();
-            PharmacyProfile pharmacy = pharmacies.Find(pharmacy => pharmacy.Localhost == editedPharmacy.Localhost);
+            PharmacyProfile pharmacy = pharmacies.Find(pharmacy => pharmacy.ConnectionInfo.Domain== editedPharmacy.ConnectionInfo.Domain);
 
             if (pharmacy == null) return null;
 
-            pharmacy.City = editedPharmacy.City;
+            
             pharmacy.Address = editedPharmacy.Address;
             pharmacy.Note = editedPharmacy.Note;
 

@@ -35,8 +35,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DeletedFiles\" />
     <Folder Include="CompressFiles\" />
+    <Folder Include="DeletedFiles\" />
     <Folder Include="TestHaveNoFiles\" />
   </ItemGroup>
 
