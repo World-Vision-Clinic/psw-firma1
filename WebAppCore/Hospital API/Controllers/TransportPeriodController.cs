@@ -51,10 +51,12 @@ namespace Hospital_API.Controllers
 
                 equipmentService.reduceAmount(transportEquipmentDTO.TargetEqupmentId, transportEquipmentDTO.Amount);
                 Equipment equipmentInTransport = transportEquipmentDTO.getEquipment(equipmentService);
+                equipmentInTransport.Id = equipmentService.generateId();
                 equipmentService.Create(equipmentInTransport);
             }
-            catch
+            catch(Exception e)
             {
+                Console.WriteLine(e);
                 throw;
             }
             return Ok();

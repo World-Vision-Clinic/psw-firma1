@@ -97,6 +97,11 @@ namespace Hospital.RoomsAndEquipment.Service
             return datePeriod;
         }
 
+        public int generateId()
+        {
+            return repository.generateId();
+        }
+
         public bool EquipmentExists(int id)
         {
             return repository.Exists(id);

@@ -31,14 +31,17 @@ export class HospitalService {
     );
   }
 
-  updateHospital(id: string, hospital: Building): Observable<boolean> {
-    const headers = { 'content-type': 'application/json' };
-    return this.http.put<boolean>(
+  updateHospital(id: string, hospital: any): Observable<any> {
+    const headers = { 'Content-Type': 'application/json' };
+    const body = JSON.stringify(hospital);
+    console.log(body);
+    return this.http.put<any>(
       `http://localhost:39901/api/buildings/${id}`,
-      hospital,
-      { headers }
+      body,
+      { 'headers':headers }
     );
   }
+
   orderMoving(data: {
     TargetRoomId: number | undefined;
     TargetEqupmentId: number | undefined;
@@ -46,11 +49,11 @@ export class HospitalService {
     endDate: any;
     Amount: number | null;
   }): Observable<any> {
-    const headers = { 'content-type': 'application/json' };
+    const headers = { 'Content-Type': 'application/json' };
     return this.http.post<any>(
       `http://localhost:39901/api/transportPeriod`,
       data,
-      { headers: headers }
+      { 'headers': headers }
     );
   }
   getSuggestionForPeriod(
@@ -59,7 +62,7 @@ export class HospitalService {
     endDate: Date,
     etimateTime: number
   ): Observable<any> {
-    const headers = { 'content-type': 'application/json' };
+    const headers = { 'Content-Type': 'application/json' };
     return this.http.get<any>(
       `http://localhost:39901/api/transportPeriod?buildingId=${buildingId}&transportDurationInHours=${etimateTime}&startDateTimeStamp=${startDate.getTime()}&endDateTimeStamp=${endDate.getTime()}`
     );
@@ -68,7 +71,7 @@ export class HospitalService {
   updateRoom(id: string, room: Room): Observable<boolean> {
     console.log(room);
 
-    const headers = { 'content-type': 'application/json' };
+    const headers = { 'Content-Type': 'application/json' };
     return this.http.put<boolean>(
       `http://localhost:39901/api/Rooms/${id}`,
       room,
@@ -113,19 +116,19 @@ export class HospitalService {
   
 
   mergeRooms(mergingDTO){
-    const headers={'content-type':'application/json'};  
+    const headers={'Content-Type':'application/json'};  
     const body=JSON.stringify(mergingDTO)     
     return this.http.post('http://localhost:39901/api/Rooms/merge', body,{headers: headers}).subscribe(data => {console.log(data)
     });
   }
 
   splitRoom(splitDTO){
-    const headers={'content-type':'application/json'};  
+    const headers={'Content-Type':'application/json'};  
     const body=JSON.stringify(splitDTO)  
     return this.http.post('http://localhost:39901/api/Rooms/split', body,{headers: headers}).subscribe(data => {console.log(data)});
   }
   scheduleRenovation(data){
-    const headers={'content-type':'application/json'};  
+    const headers={'Content-Type':'application/json'};  
     const body=JSON.stringify(data)
     console.log(body);
       
@@ -133,7 +136,7 @@ export class HospitalService {
   }
 
   getSuggestionForRenovation(data): Observable<any>{
-    const headers={'content-type':'application/json'}; 
+    const headers={'Content-Type':'application/json'}; 
     const body = JSON.stringify(data)
     return this.http.post<any>('http://localhost:39901/api/renovationPeriod/suggestion', body,{headers: headers});
   }
