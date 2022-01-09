@@ -33,7 +33,7 @@ services:
       RABBITMQ_HOST: "rabbitmq" 
       
     ports:
-      - "8081:80" 
+      - "8081:1026" 
     restart: on-failure
     networks:
       - application
@@ -43,7 +43,7 @@ services:
     depends_on:
       - pharmacy
     #build: ../ManagerFrontApp 
-    image: jelenahrnjak/manager-front:latest
+    image: jelenahrnjak/managerfrontapp:latest
     ports:
       - "4202:4200"
     restart: on-failure

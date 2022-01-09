@@ -2,12 +2,12 @@
 
 services:
   hospital-front:
-    #image: darkelfff/hospital-front:latest
+    image: darkelfff/hospital-front:latest
     depends_on:
       - "hospital-api"
-    build:
-      context: ../../patient-portal-front/
-      dockerfile: Dockerfile
+    # build:
+    #   context: ../../patient-portal-front/
+    #   dockerfile: Dockerfile
     ports:
       - "3000:3000"
     networks: 
@@ -21,7 +21,7 @@ services:
     #  context: .
     #  dockerfile: Dockerfile
     ports:
-      - "8080:80"     
+      - "8080:1025"     
     environment:
       DATABASE_HOST: database
       DATABASE_PORT: 5432
