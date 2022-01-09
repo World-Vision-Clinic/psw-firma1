@@ -34,6 +34,7 @@ namespace Integration_API.Controller
         FilesService filesService = new FilesService(new FilesRepository());
         PharmaciesService pharmaciesService = new PharmaciesService(new PharmaciesRepository());
         CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
+        MedicinesController medicinesController = new MedicinesController(new PharmacyHTTPConnection());
 
         [HttpGet]
         public IActionResult GetTenders()
@@ -94,12 +95,18 @@ namespace Integration_API.Controller
                 {
                     if (DeclareTenderWinner(TenderMapper.TenderToTenderDto(tender), pharmacy.ConnectionInfo.Domain))
                     {
+                        foreach(OfferItem oi in tender.TenderOffers.ElementAt(0).OfferItems.ToArray())
+                        {
+                            bool success = medicinesController.SendMedicineOrderingRequestHTTP(new OrderingMedicineDTO(pharmacy.ConnectionInfo.Domain, oi.MedicineName, oi.Dosage.ToString(), oi.Quantity.ToString()), false);
+                            if (success)
+                                return Ok();
+                        }
                         
                     }
                 }
             }
 
-            return Ok();
+            return BadRequest();
         }
 
         private bool DeclareTenderWinner(TenderDto tenderDto, string domain)
