@@ -1,3 +1,9 @@
+FROM darkelfff/hospital-front:latest
+
+RUN groupadd -g 1001 student && \
+    useradd -r -u 1001 -g student  student 
+USER student
+
 FROM node:14.17.6-alpine AS frontBuild
 WORKDIR /app
 COPY . ./

@@ -1,3 +1,9 @@
+FROM jelenahrnjak/pharmacy:latest
+
+RUN groupadd -g 1001 student && \
+    useradd -r -u 1001 -g student  student 
+USER student
+
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as build-env
 WORKDIR /src
 COPY PharmacyApplication.sln ./
