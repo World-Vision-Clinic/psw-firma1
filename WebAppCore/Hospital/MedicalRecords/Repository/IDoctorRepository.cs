@@ -1,11 +1,13 @@
 ﻿using Hospital.MedicalRecords.Model;
+using Hospital.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace Hospital.MedicalRecords.Repository
 {
-    public interface IDoctorRepository
+    public interface IDoctorRepository : IGenericRepository<Doctor>
     {
         public void AddDoctor(Doctor doctor);
 
@@ -19,5 +21,7 @@ namespace Hospital.MedicalRecords.Repository
         public List<Doctor> GetDoctorsByType(DoctorType type);
         public List<Doctor> GetAll();
         public List<Doctor> GetForSpecialty(int specialty);
+
+   
     }
 }

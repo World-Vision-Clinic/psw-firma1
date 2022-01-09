@@ -153,16 +153,16 @@ namespace Integration_API.Controller
 
             foreach (PharmacyProfile pharmacy in pharmaciesService.GetAll())
             {
-                if (pharmacy.Protocol.Equals(ProtocolType.HTTP))
+                if (pharmacy.ConnectionInfo.Protocol.Equals(ProtocolType.HTTP))
                 {
-                    if (pharmacyConnection.SendRequestToCheckAvailability(pharmacy.Localhost, medicineDto))
+                    if (pharmacyConnection.SendRequestToCheckAvailability(pharmacy.ConnectionInfo.Domain, medicineDto))
                     {
                         pharmaciesWithMedicine.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
                     }
                 }
                 else
                 {
-                    if (SendRequestToCheckAvailabilityGrpc(pharmacy.Localhost, medicineDto))
+                    if (SendRequestToCheckAvailabilityGrpc(pharmacy.ConnectionInfo.Domain, medicineDto))
                     {
                         pharmaciesWithMedicine.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
                     }

@@ -306,8 +306,17 @@ namespace Hospital.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("text");
 
+                    b.Property<int>("RoomId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ShiftId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("Type")
                         .HasColumnType("integer");
+
+                    b.Property<bool>("onVacation")
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
@@ -319,133 +328,190 @@ namespace Hospital.Migrations
                             Id = 1,
                             FirstName = "Slavica",
                             LastName = "Matic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = 1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 2,
                             FirstName = "Mirko",
                             LastName = "Jankovic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = 1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 3,
                             FirstName = "Matija",
                             LastName = "Popic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = 2,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 4,
                             FirstName = "Sara",
                             LastName = "Tot",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = 1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 5,
                             FirstName = "Ignjat",
                             LastName = "Jovic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 6,
                             FirstName = "Milos",
                             LastName = "Matijevic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 7,
                             FirstName = "Elena",
                             LastName = "Kis",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 8,
                             FirstName = "Iva",
                             LastName = "Bojanic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 9,
                             FirstName = "Bojan",
                             LastName = "Kraljevic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 10,
                             FirstName = "Lidija",
                             LastName = "Lakic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 11,
                             FirstName = "Momir",
                             LastName = "Njegomir",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 12,
                             FirstName = "Ivana",
                             LastName = "Pekic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 13,
                             FirstName = "Mileva",
                             LastName = "Nakic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 14,
                             FirstName = "Petar",
                             LastName = "Katic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 15,
                             FirstName = "Marijana",
                             LastName = "Pantic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 16,
                             FirstName = "Savina",
                             LastName = "Markovic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 17,
                             FirstName = "Jelena",
                             LastName = "Stupar",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 18,
                             FirstName = "Luka",
                             LastName = "Lisica",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 19,
                             FirstName = "Vasilije",
                             LastName = "Mit",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         });
                 });
 
@@ -1519,7 +1585,7 @@ namespace Hospital.Migrations
                         new
                         {
                             IdSurvey = 1,
-                            CreationDate = new DateTime(2021, 12, 27, 19, 11, 27, 3, DateTimeKind.Local).AddTicks(9053),
+                            CreationDate = new DateTime(2022, 1, 8, 19, 38, 47, 89, DateTimeKind.Local).AddTicks(1070),
                             IdAppointment = 1
                         });
                 });
@@ -1667,6 +1733,106 @@ namespace Hospital.Migrations
                             IdSurvey = 1,
                             Question = "What is your overall satisfaction with our staff?",
                             Section = 2
+                        });
+                });
+
+            modelBuilder.Entity("Hospital.ShiftsAndVacations.Model.Shift", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("End")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Start")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Shifts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            End = 15,
+                            Name = "Morning shift",
+                            Start = 6
+                        },
+                        new
+                        {
+                            Id = 2,
+                            End = 23,
+                            Name = "Afternoon shift",
+                            Start = 15
+                        },
+                        new
+                        {
+                            Id = 3,
+                            End = 6,
+                            Name = "Night shift",
+                            Start = 23
+                        });
+                });
+
+            modelBuilder.Entity("Hospital.ShiftsAndVacations.Model.Vacation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vacations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "aaaa",
+                            DoctorId = 1,
+                            End = new DateTime(2022, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FullName = "Slavica Matic",
+                            Start = new DateTime(2022, 1, 21, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "aaaa",
+                            DoctorId = 2,
+                            End = new DateTime(2022, 2, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FullName = "Mirko Jankovic",
+                            Start = new DateTime(2022, 2, 21, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "aaaa",
+                            DoctorId = 3,
+                            End = new DateTime(2022, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FullName = "Matija Popic",
+                            Start = new DateTime(2022, 3, 21, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 

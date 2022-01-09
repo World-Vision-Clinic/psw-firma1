@@ -2,6 +2,8 @@
 using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Service;
 using Hospital.SharedModel;
+using Hospital.ShiftsAndVacations.Repository;
+using Hospital_API.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -26,7 +28,8 @@ namespace Hospital_API.Controllers
         {
             _context = new HospitalContext();
             PatientRepository _patientRepository = new PatientRepository(_context);
-            _doctorService = new DoctorService(new DoctorRepository(_context, _patientRepository));
+            ShiftRepository _shiftRepository = new ShiftRepository(_context);
+            _doctorService = new DoctorService(new DoctorRepository(_context, _patientRepository), _shiftRepository);
         }
 
         public DoctorsController(HospitalContext _context, DoctorService _doctorService)
@@ -82,6 +85,26 @@ namespace Hospital_API.Controllers
             return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }
 
+        [HttpPost("addShift")]
+        public ActionResult<string> addShiftToDoctor([FromBody] DoctorShiftDTO dto)
+        {
+            try
+            {
+                _doctorService.AddShiftToDoctor(dto.doctorId, dto.shiftId);
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        public HttpResponseMessage addNew([FromBody] DoctorDTO d)
+        {
+            _doctorService.addNewDoctor(d.Id, d.FirstName, d.LastName, d.ShiftId, d.RoomId, (DoctorType)d.Type, d.onVacation);
+            return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
+        }
 
     }
 }

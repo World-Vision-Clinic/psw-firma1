@@ -65,8 +65,25 @@
                 }]"
                 class="m-1 btn btn-light btn-outline-primary" Button>Create tender</button>
             </li>
+            <li class="nav-item">
+                <button [routerLink]="['/manager-front-app', {
+                    outlets:{
+                        'showObjRepl' : ['select-tender']
+                    }
+                }]"
+                class="m-1 btn btn-light btn-outline-primary" Button>All tenders</button>
+            </li>
+            <li class="nav-item">
+                <button [routerLink]="['/manager-front-app', {
+                    outlets:{
+                        'showObjRepl' : ['statistics']
+                    }
+                }]"
+                class="m-1 btn btn-light btn-outline-primary" Button>Statistics</button>
+            </li>
         </ul>
     </nav>
 <div>
 
 <router-outlet name="showObjRepl"></router-outlet>
+<script src="node_modules/chart.js/src/chart.js"></script>

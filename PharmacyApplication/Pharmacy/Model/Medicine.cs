@@ -40,5 +40,21 @@ namespace Pharmacy.Model
             Substances = substances;
             Quantity = quantity;
         }
+
+        public Medicine(long id, string medicineName, string manufacturer, string sideEffects, string usage, List<SubstituteMedicine> substituteMedicines, double weigth, double price, string mainPrecautions, string potentialDangers, List<Substance> substances, int quantity)
+        {
+            MedicineId = id;
+            MedicineName = medicineName;
+            Manufacturer = manufacturer;
+            SideEffects = sideEffects;
+            Usage = usage;
+            SubstituteMedicines = substituteMedicines;
+            Weigth = weigth;
+            Price = Price;
+            MainPrecautions = mainPrecautions;
+            PotentialDangers = potentialDangers;
+            Substances = substances;
+            Quantity = quantity;
+        }
     }
 }

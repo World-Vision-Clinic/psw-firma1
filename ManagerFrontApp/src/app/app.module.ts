@@ -37,7 +37,11 @@ import { AuthInterceptor } from './interceptor';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { AuthGuard } from './auth.guard';
 import { TenderCreationComponent } from './manager-integration-front-app/tender-creation/tender-creation.component';
+import { NgChartsModule } from 'ng2-charts';
 import { ChartAllModule, AccumulationChartAllModule, RangeNavigatorAllModule } from '@syncfusion/ej2-angular-charts';
+import { StatisticsComponent } from './manager-integration-front-app/statistics/statistics.component';
+import { TenderSelectionComponent } from './manager-integration-front-app/tender-selection/tender-selection.component';
+import { DoctorsManagementComponent } from './doctors-management/doctors-management.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +69,10 @@ import { ChartAllModule, AccumulationChartAllModule, RangeNavigatorAllModule } f
     GetSpecificationComponent,
     ViewFilesComponent,
     LoginComponent,
-    TenderCreationComponent
+    TenderCreationComponent,
+    StatisticsComponent,
+    TenderSelectionComponent,
+    DoctorsManagementComponent
   ],
   imports: [
     BrowserModule,
@@ -80,10 +87,12 @@ import { ChartAllModule, AccumulationChartAllModule, RangeNavigatorAllModule } f
     MatFormFieldModule,
     MatNativeDateModule,
     //ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    BrowserModule,
+    NgChartsModule,
     ChartAllModule,
     AccumulationChartAllModule,
-    RangeNavigatorAllModule,
-    ToastrModule.forRoot()
+    RangeNavigatorAllModule
     // MatDatepicker,
     // MatDateRangeInput,
     // MatDateRangePicker,

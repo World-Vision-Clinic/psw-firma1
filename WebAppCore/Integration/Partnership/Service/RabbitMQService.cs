@@ -1,4 +1,6 @@
 ﻿using Integration.Partnership.Model;
+using Integration.Partnership.Repository;
+using Integration.Partnership.Repository.RepositoryInterfaces;
 using Integration.Pharmacy.Model;
 using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Repository.RepositoryInterfaces;
@@ -20,12 +22,14 @@ namespace Integration.Pharmacy.Service
         IModel channel;
         INewsRepository newsRepository;
         IPharmaciesRepository pharmaciesRepository;
+        ITenderRepository tenderRepository;
         Boolean isTest;
 
-        public RabbitMQService(INewsRepository newsRepository, IPharmaciesRepository pharmaciesRepository)
+        public RabbitMQService(INewsRepository newsRepository, IPharmaciesRepository pharmaciesRepository, ITenderRepository tenderRepository)
         {
             this.newsRepository = newsRepository;
             this.pharmaciesRepository = pharmaciesRepository;
+            this.tenderRepository = tenderRepository;
             isTest = true;
         }
 
@@ -33,6 +37,7 @@ namespace Integration.Pharmacy.Service
         {
             newsRepository = new NewsRepository();
             pharmaciesRepository = new PharmaciesRepository();
+            tenderRepository = new TenderRepository();
             isTest = false;
         }
         public override Task StartAsync(CancellationToken cancellationToken)
@@ -103,12 +108,14 @@ namespace Integration.Pharmacy.Service
 
                     offer.PharmacyName = pharmacyProfile.Name;
 
-                    Console.WriteLine(offer.PharmacyName);
+                    tenderRepository.AddOffer(offer);
+
+                   /* Console.WriteLine(offer.PharmacyName);
                     foreach (OfferItem item in offer.OfferItems)
                     {
                         Console.WriteLine(item.MedicineName + " " + item.Quantity + " " + item.Price);
                     }
-                    Console.WriteLine(offer.TotalPrice);
+                    Console.WriteLine(offer.TotalPrice);*/
 
 
                 };

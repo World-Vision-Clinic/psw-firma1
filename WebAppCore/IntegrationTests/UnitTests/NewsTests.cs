@@ -1,4 +1,5 @@
-﻿using Integration.Pharmacy.Model;
+﻿using Integration.Partnership.Model;
+using Integration.Pharmacy.Model;
 using Integration.Pharmacy.Repository.RepositoryInterfaces;
 using Integration.Pharmacy.Service;
 using Moq;
@@ -27,8 +28,8 @@ namespace IntegrationTests.UnitTests
         {
             var retVal = new List<object[]>();
 
-            retVal.Add(new object[] { new News(1, "Naslov1", "Sadrzaj1", DateTime.Now, DateTime.Now.AddDays(1), "1111", false, "Jankovic"), true });
-            retVal.Add(new object[] { new News(2, "Naslov2", "Sadrzaj2", DateTime.Now, DateTime.Now.AddDays(1), "2222", true, "Jankovic"), false });
+            retVal.Add(new object[] { new News(1, "Naslov1", "Sadrzaj1", new DateRange(DateTime.Now, DateTime.Now.AddDays(1)), "1111", false, "Jankovic"), true });
+            retVal.Add(new object[] { new News(2, "Naslov2", "Sadrzaj2", new DateRange(DateTime.Now, DateTime.Now.AddDays(1)), "2222", true, "Jankovic"), false });
 
             return retVal;
         }
@@ -38,8 +39,8 @@ namespace IntegrationTests.UnitTests
             var stubRepository = new Mock<INewsRepository>();
             var news = new List<News>();
             
-            news.Add(new News(1,"Naslov1","Sadrzaj1",DateTime.Now,DateTime.Now.AddDays(1),"1111",false,"Jankovic"));
-            news.Add(new News(2, "Naslov2", "Sadrzaj2", DateTime.Now, DateTime.Now.AddDays(1), "2222", true, "Jankovic"));
+            news.Add(new News(1,"Naslov1","Sadrzaj1", new DateRange(DateTime.Now,DateTime.Now.AddDays(1)),"1111",false,"Jankovic"));
+            news.Add(new News(2, "Naslov2", "Sadrzaj2", new DateRange(DateTime.Now, DateTime.Now.AddDays(1)), "2222", true, "Jankovic"));
             stubRepository.Setup(m => m.GetAll()).Returns(news);
 
             return stubRepository.Object;

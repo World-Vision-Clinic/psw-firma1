@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using Pharmacy.Model;
 using Pharmacy.Repository;
 using Pharmacy.Service;
+using PharmacyAPI.Dto;
+using PharmacyAPI.Mapper;
 using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
@@ -13,47 +15,22 @@ using System.Threading.Tasks;
 
 namespace PharmacyAPI.Controller
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class TenderController : ControllerBase
     {
-        TenderService tenderService = new TenderService(new TendersRepository());
+        TenderService tenderService = new TenderService(new TendersRepository(), new MedicineRepository());
 
-        [HttpGet("{id?}")]      
-        public IActionResult Get(string id)
+        [HttpPost]
+        public IActionResult SendOffer(TenderDto tenderDto)
         {
-            Tender tender = tenderService.GetTenderById(id);
+            Tender tender = tenderService.GetTenderById(tenderDto.Id);
             if (tender == null || (tender.EndTime != null && tender.EndTime< DateTime.Now))
             {
                 return NotFound();
-            }
+            } 
 
-            //Devopsi
-            OfferItem offerItem = new OfferItem();
-            OfferItem offerItem1 = new OfferItem();
-            offerItem.MedicineName = "Brufen";
-            offerItem.Dosage = 200;
-            offerItem.Quantity = 1;
-            offerItem.Price = 600;
-            offerItem1.MedicineName = "Aspirin";
-            offerItem1.Dosage = 200;
-            offerItem1.Quantity = 1;
-            offerItem1.Price = 300;
-            TenderOffer tenderOffer = new TenderOffer();
-            tenderOffer.TenderOfferHash = "1";
-            tenderOffer.OfferItems = new List<OfferItem>();
-            tenderOffer.TotalPrice = 0;
-            tenderOffer.OfferItems.Add(offerItem);
-            tenderOffer.OfferItems.Add(offerItem1);
-            foreach(OfferItem item in tenderOffer.OfferItems){
-                tenderOffer.TotalPrice += item.Price;
-            }
-
-
-
-
-
-
+            TenderOffer tenderOffer = tenderService.CreateTenderOffer(tender);
             var factory = new ConnectionFactory() { HostName = "localhost" };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
@@ -66,7 +43,7 @@ namespace PharmacyAPI.Controller
                                      arguments: null);
 
 
-                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(tenderOffer));
+                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(TenderOfferMapper.TenderOfferToTenderOfferDto(tenderOffer, tender.TenderHash)));
 
                 channel.BasicPublish(exchange: "JankovicOffersChannel",
                                      routingKey: "JankovicOffers",

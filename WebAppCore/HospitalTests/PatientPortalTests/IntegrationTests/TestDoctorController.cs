@@ -54,12 +54,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         [Fact]
         public void Test_doctor_found()
         {
-            Doctor doctor = new Doctor()
-            {
-                Id = 1,
-                FirstName = "TestDoktorIme",
-                LastName = "TestDoktorPrezime"
-            };
+            Doctor doctor = new Doctor(1,"TestDoktorIme","TestDoktorPrezime");
 
             _doctorRepository.AddDoctor(doctor);
             var response = _doctorsController.GetDoctor(1);
@@ -71,30 +66,11 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         [Fact]
         public void Test_get_docotrs_for_specialty()
         {
-            Doctor doctor1 = new Doctor()
-            {
-                Id = 2,
-                FirstName = "TestDoktorIme",
-                LastName = "TestDoktorPrezime",
-                Type = DoctorType.Ophthalmologist
-            };
+            Doctor doctor1 = new Doctor(2, "TestDoktorIme", "TestDoktorPrezime", DoctorType.Ophthalmologist);
 
-            Doctor doctor2 = new Doctor()
-            {
-                Id = 3,
-                FirstName = "TestDoktorIme",
-                LastName = "TestDoktorPrezime",
-                Type = DoctorType.Ophthalmologist
+            Doctor doctor2 = new Doctor(3, "TestDoktorIme", "TestDoktorPrezime", DoctorType.Ophthalmologist);
 
-            };
-
-            Doctor doctor3 = new Doctor()
-            {
-                Id = 4,
-                FirstName = "TestDoktorIme",
-                LastName = "TestDoktorPrezime",
-                Type = DoctorType.Radiologist
-            };
+            Doctor doctor3 = new Doctor(4, "TestDoktorIme", "TestDoktorPrezime", DoctorType.Radiologist);
 
             _doctorRepository.AddDoctor(doctor1);
             _doctorRepository.AddDoctor(doctor2);

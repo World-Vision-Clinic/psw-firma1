@@ -7,35 +7,27 @@ namespace Integration.Pharmacy.Model
 {
     public class PharmacyProfile
     {
+        public int Id { get; set; }
         public string Name { get; set; }
-        public string Key { get; set; }
-        [Key]
-        public string Localhost { get; set; }
-        public ProtocolType Protocol { set; get; }
-        public string Address { set; get; }
-        public string City { get; set; }
+        public ConnectionInfo ConnectionInfo { get; set; }
+        
+        public Address Address { get; set; }
 
         public string Note { get; set; }
 
-        public PharmacyProfile(string name, string key, string localhost, ProtocolType protocol, string address, string city, string note)
+        public PharmacyProfile(string name, string key, string localhost, ProtocolType protocol, string street, string city, string note)
         {
             Name = name;
-            Key = key;
-            Localhost = localhost;
-            Protocol = protocol;
-            Address = address;
-            City = city;
+            ConnectionInfo = new ConnectionInfo(key, localhost, protocol);
+            Address = new Address(street, city);
             Note = note;
         }
 
-        public PharmacyProfile(string name, string key, string localhost, ProtocolType protocol, string address, string city)
+        public PharmacyProfile(string name, string key, string localhost, ProtocolType protocol, string street, string city)
         {
             Name = name;
-            Key = key;
-            Localhost = localhost;
-            Protocol = protocol;
-            Address = address;
-            City = city;
+            ConnectionInfo = new ConnectionInfo(key, localhost, protocol);
+            Address = new Address(street, city);
             Note = "";
         }
 

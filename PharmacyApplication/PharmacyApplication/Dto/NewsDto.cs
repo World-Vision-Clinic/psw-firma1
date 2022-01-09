@@ -13,7 +13,7 @@ namespace PharmacyAPI.Dto
         public DateTime ToDate { get; set; }
 
         public NewsDto()
-        {    }
+        { }
 
         public NewsDto(string title, string content, DateTime fromDate, DateTime toDate)
         {

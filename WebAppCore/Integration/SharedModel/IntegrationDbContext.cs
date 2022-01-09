@@ -37,6 +37,18 @@ namespace Integration.SharedModel
             modelbuilder.Entity<TenderOffer>()
             .HasMany(o => o.OfferItems)
             .WithOne();
+
+            modelbuilder.Entity<News>()
+            .OwnsOne(n => n.DateRange)
+            .WithOwner();
+            modelbuilder.Entity<PharmacyProfile>()
+            .OwnsOne(n => n.ConnectionInfo)
+            .WithOwner();
+            modelbuilder.Entity<PharmacyProfile>()
+            .OwnsOne(n => n.Address)
+            .WithOwner();
+            //modelBuilder.Entity<News>().OwnsOne(typeof(DateRange), "DateRange");
+
         }
 
         protected override void OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder optionsBuilder)

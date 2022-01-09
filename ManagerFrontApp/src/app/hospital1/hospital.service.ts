@@ -6,6 +6,8 @@ import { Equipment } from '../data/equipment';
 import { Floor } from '../data/floor';
 import { iEquipmentRoom } from '../data/iEquipmentRoom';
 import { Room } from '../data/room';
+import {Shift, ShiftSend } from '../data/shift';
+import { Doctor } from '../data/doctor';
 
 @Injectable({
   providedIn: 'root',
@@ -92,14 +94,44 @@ export class HospitalService {
   mergeRooms(mergingDTO){
     const headers={'content-type':'application/json'};  
     const body=JSON.stringify(mergingDTO)     
-    return this.http.post('http://localhost:39901/api/Rooms/merge', body,{headers: headers}).subscribe(data => {console.log(data)
+    return this.http.post('http://localhost:39901/api/Rooms/merge', body,{'headers': headers}).subscribe(data => {console.log(data)
     });
   }
 
   splitRoom(splitDTO){
     const headers={'content-type':'application/json'};  
     const body=JSON.stringify(splitDTO)  
-    return this.http.post('http://localhost:39901/api/Rooms/split', body,{headers: headers}).subscribe(data => {console.log(data)});
+    return this.http.post('http://localhost:39901/api/Rooms/split', body,{'headers': headers}).subscribe(data => {console.log(data)});
   }
 
+  makeNewShift(shift:ShiftSend){
+    const headers={'content-type':'application/json'};  
+    const body=JSON.stringify(shift) 
+    return this.http.post('http://localhost:39901/api/shifts/newShift', body,{'headers': headers}).subscribe(data => {console.log(data)});
+  }
+
+  updateShift(shift:ShiftSend){
+    const headers={'content-type':'application/json'};  
+    const body=JSON.stringify(shift) 
+    return this.http.post('http://localhost:39901/api/shifts/update', body,{'headers': headers}).subscribe(data => {console.log(data)});
+  }
+
+  getAllShifts(){
+    return this.http.get<Shift[]>('http://localhost:39901/api/shifts/getAll')
+  }
+
+  deleteShift(id:number){
+    this.http.delete('http://localhost:39901/api/shifts/'+id).subscribe(data=>console.log(data)
+    );
+  }
+
+  getDoctors(){
+    return this.http.get<Doctor[]>('http://localhost:39901/api/Doctors')
+  }
+
+  changeShift(dto){
+    const headers={'content-type':'application/json'};  
+    const body=JSON.stringify(dto) 
+    this.http.post('http://localhost:39901/api/Doctors/addShift', body,{'headers': headers}).subscribe(data => {console.log(data)});
+  }
 }

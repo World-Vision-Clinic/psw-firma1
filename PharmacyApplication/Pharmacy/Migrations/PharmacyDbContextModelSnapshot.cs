@@ -19,6 +19,30 @@ namespace Pharmacy.Migrations
                 .HasAnnotation("ProductVersion", "3.1.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            modelBuilder.Entity("Pharmacy.Model.Ad", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreationDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("PromotionEndTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ads");
+                });
+
             modelBuilder.Entity("Pharmacy.Model.Credential", b =>
                 {
                     b.Property<int>("Id")
@@ -98,6 +122,29 @@ namespace Pharmacy.Migrations
                     b.HasKey("MedicineId");
 
                     b.ToTable("Medicines");
+                });
+
+            modelBuilder.Entity("Pharmacy.Model.MedicineAd", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int?>("AdId")
+                        .HasColumnType("integer");
+
+                    b.Property<long>("MedicineId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("PromotionPrice")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdId");
+
+                    b.ToTable("MedicineAds");
                 });
 
             modelBuilder.Entity("Pharmacy.Model.News", b =>
@@ -308,6 +355,13 @@ namespace Pharmacy.Migrations
                     b.HasIndex("TenderId");
 
                     b.ToTable("TenderOffers");
+                });
+
+            modelBuilder.Entity("Pharmacy.Model.MedicineAd", b =>
+                {
+                    b.HasOne("Pharmacy.Model.Ad", null)
+                        .WithMany("MedicinesOnPromotion")
+                        .HasForeignKey("AdId");
                 });
 
             modelBuilder.Entity("Pharmacy.Model.OfferItem", b =>

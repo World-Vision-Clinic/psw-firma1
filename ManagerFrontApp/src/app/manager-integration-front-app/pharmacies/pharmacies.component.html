@@ -12,9 +12,9 @@
         <div class="row searchFilter" >
         <div class="col-sm-12" >
             <div class="input-group" >
-            <input id="table_filter" name="medicineName" [(ngModel)]="medicineName" placeholder="Enter medicine name..." type="text" class="form-control" (input)="disableButtons()">
-            <input id="table_filter" name="medicineGrams" [(ngModel)]="medicineGrams" placeholder="Enter grams(mg)..." type="number" class="form-control" (input)="disableButtons()">
-            <input id="table_filter" name="numOfBoxes" [(ngModel)]="numOfBoxes" placeholder="Enter number of boxes..." type="number" class="form-control" (input)="disableButtons()">
+            <input id="medicine_name" name="medicineName" [(ngModel)]="medicineName" placeholder="Enter medicine name..." type="text" class="form-control" (input)="disableButtons()">
+            <input id="medicine_weight" name="medicineGrams" [(ngModel)]="medicineGrams" placeholder="Enter grams(mg)..." type="number" class="form-control" (input)="disableButtons()">
+            <input id="medicine_quantity" name="numOfBoxes" [(ngModel)]="numOfBoxes" placeholder="Enter number of boxes..." type="number" class="form-control" (input)="disableButtons()">
             <button id="searchBtn" type="button" class="btn btn-secondary btn-search" (click)="searchPharmaciesForMedicals()"><span class="glyphicon glyphicon-search" >&nbsp;</span> <span class="label-icon" >Search</span></button>
             </div>
         </div>

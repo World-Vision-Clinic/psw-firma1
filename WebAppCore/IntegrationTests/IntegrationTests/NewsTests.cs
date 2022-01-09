@@ -1,4 +1,6 @@
-﻿using Integration.Pharmacy.Model;
+﻿using Integration.Partnership.Model;
+using Integration.Partnership.Repository;
+using Integration.Pharmacy.Model;
 using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Repository.RepositoryInterfaces;
 using Integration.Pharmacy.Service;
@@ -24,7 +26,7 @@ namespace IntegrationTests.IntegrationTests
             var stubRepository = new Mock<INewsRepository>();
             var news = new List<News>();
             stubRepository.Setup(m => m.GetAll()).Returns(news);    
-            RabbitMQService rabbitMQ = new RabbitMQService(stubRepository.Object, new PharmaciesRepository());
+            RabbitMQService rabbitMQ = new RabbitMQService(stubRepository.Object, new PharmaciesRepository(), new TenderRepository());
             CancellationToken token = new CancellationToken(false);
             await rabbitMQ.StartAsync(token);
 
@@ -43,8 +45,8 @@ namespace IntegrationTests.IntegrationTests
         {
             var retVal = new List<object[]>();
 
-            retVal.Add(new object[] { new News(1, "Naslov1", "Sadrzaj1", DateTime.Now, DateTime.Now.AddDays(1), "1111", false, "Jankovic"), true });
-            retVal.Add(new object[] { new News(2, "Naslov2", "Sadrzaj2", DateTime.Now, DateTime.Now.AddDays(1), "2222", true, "Jankovic"), false });
+            retVal.Add(new object[] { new News(1, "Naslov1", "Sadrzaj1", new DateRange(DateTime.Now, DateTime.Now.AddDays(1)), "1111", false, "Jankovic"), true });
+            retVal.Add(new object[] { new News(2, "Naslov2", "Sadrzaj2", new DateRange(DateTime.Now, DateTime.Now.AddDays(1)), "2222", true, "Jankovic"), false });
 
             return retVal;
         }
@@ -57,7 +59,7 @@ namespace IntegrationTests.IntegrationTests
             {
                 if (isFirst)
                 {
-                    channel.ExchangeDeclare(exchange: "NewsChannel", type: ExchangeType.Fanout);
+                    channel.ExchangeDeclare(exchange: "JankovicNewsChannel", type: ExchangeType.Direct);
                     channel.QueueDeclare(queue: "Jankovic",
                                          durable: false,
                                          exclusive: false,
@@ -67,7 +69,7 @@ namespace IntegrationTests.IntegrationTests
 
                     var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(pieceOfNews));
 
-                    channel.BasicPublish(exchange: "NewsChannel",
+                    channel.BasicPublish(exchange: "JankovicNewsChannel",
                                          routingKey: "Jankovic",
                                          basicProperties: null,
                                          body: body);

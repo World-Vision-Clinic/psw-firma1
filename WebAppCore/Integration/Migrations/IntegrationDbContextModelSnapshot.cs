@@ -179,9 +179,6 @@ namespace Integration.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("FromDate")
-                        .HasColumnType("timestamp without time zone");
-
                     b.Property<string>("IdEncoded")
                         .HasColumnType("text");
 
@@ -193,9 +190,6 @@ namespace Integration.Migrations
 
                     b.Property<string>("Title")
                         .HasColumnType("text");
-
-                    b.Property<DateTime>("ToDate")
-                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -220,17 +214,10 @@ namespace Integration.Migrations
 
             modelBuilder.Entity("Integration.Pharmacy.Model.PharmacyProfile", b =>
                 {
-                    b.Property<string>("Localhost")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("text");
-
-                    b.Property<string>("City")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Key")
-                        .HasColumnType("text");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -238,10 +225,7 @@ namespace Integration.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("text");
 
-                    b.Property<int>("Protocol")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Localhost");
+                    b.HasKey("Id");
 
                     b.ToTable("Pharmacies");
                 });
@@ -283,6 +267,84 @@ namespace Integration.Migrations
                     b.HasOne("Integration.Partnership.Model.Tender", null)
                         .WithMany("TenderOffers")
                         .HasForeignKey("TenderId");
+                });
+
+            modelBuilder.Entity("Integration.Pharmacy.Model.News", b =>
+                {
+                    b.OwnsOne("Integration.Partnership.Model.DateRange", "DateRange", b1 =>
+                        {
+                            b1.Property<int>("NewsId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                            b1.Property<DateTime>("FromDate")
+                                .HasColumnType("timestamp without time zone");
+
+                            b1.Property<DateTime>("ToDate")
+                                .HasColumnType("timestamp without time zone");
+
+                            b1.HasKey("NewsId");
+
+                            b1.ToTable("News");
+
+                            b1.WithOwner()
+                                .HasForeignKey("NewsId");
+                        });
+
+                    b.Navigation("DateRange");
+                });
+
+            modelBuilder.Entity("Integration.Pharmacy.Model.PharmacyProfile", b =>
+                {
+                    b.OwnsOne("Integration.Pharmacy.Model.Address", "Address", b1 =>
+                        {
+                            b1.Property<int>("PharmacyProfileId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                            b1.Property<string>("City")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Street")
+                                .HasColumnType("text");
+
+                            b1.HasKey("PharmacyProfileId");
+
+                            b1.ToTable("Pharmacies");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PharmacyProfileId");
+                        });
+
+                    b.OwnsOne("Integration.Pharmacy.Model.ConnectionInfo", "ConnectionInfo", b1 =>
+                        {
+                            b1.Property<int>("PharmacyProfileId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                            b1.Property<string>("Domain")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Key")
+                                .HasColumnType("text");
+
+                            b1.Property<int>("Protocol")
+                                .HasColumnType("integer");
+
+                            b1.HasKey("PharmacyProfileId");
+
+                            b1.ToTable("Pharmacies");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PharmacyProfileId");
+                        });
+
+                    b.Navigation("Address");
+
+                    b.Navigation("ConnectionInfo");
                 });
 
             modelBuilder.Entity("Integration.Partnership.Model.Tender", b =>

@@ -125,7 +125,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 IsCancelled = true,
                 Type = AppointmentType.Appointment
             };
-
+          
             Appointment appointment2 = new Appointment()
             {
                 Date = DateTime.Now.AddDays(-7),

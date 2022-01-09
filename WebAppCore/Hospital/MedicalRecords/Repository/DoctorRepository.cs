@@ -131,5 +131,34 @@ namespace Hospital.MedicalRecords.Repository
             }
             return GetDoctorsFromList(availableDoctorIds);
         }
+
+        public void Save(Doctor parameter)
+        {
+            _context.Doctors.Add(parameter);
+            _context.SaveChanges();
+        }
+
+        public void Update(Doctor parameter)
+        {
+            _context.Doctors.Update(parameter);
+            _context.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            Doctor d = _context.Doctors.FirstOrDefault(v => v.Id == id);
+            _context.Doctors.Remove(d);
+            _context.SaveChanges();
+        }
+
+        public Doctor GetByID(int id)
+        {
+            return _context.Doctors.FirstOrDefault(sh => sh.Id == id);
+        }
+
+        public bool Exists(int parameter)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

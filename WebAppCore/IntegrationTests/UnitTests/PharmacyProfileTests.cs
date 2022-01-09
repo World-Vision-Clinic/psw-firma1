@@ -23,8 +23,8 @@ namespace IntegrationTests.UnitTests
 
             if (exists)
             {
-                Assert.Equal(newPharmacy.Address, editedPharmacy.Address);
-                Assert.Equal(newPharmacy.City, editedPharmacy.City);
+                Assert.Equal(newPharmacy.Address.Street, editedPharmacy.Address.Street);
+                Assert.Equal(newPharmacy.Address.City, editedPharmacy.Address.City);
             }
             else
             {

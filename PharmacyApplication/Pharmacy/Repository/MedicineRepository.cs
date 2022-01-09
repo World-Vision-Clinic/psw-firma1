@@ -82,7 +82,20 @@ namespace Pharmacy.Repository
             return true;
         }
 
+        public List<Medicine> GetByName(string name)
+        {
+            List<Medicine> ret = new List<Medicine>(); 
 
-        
+            foreach (Medicine medicine in GetAll())
+            {
+                if (medicine.MedicineName.Trim().Equals(name.Trim()))
+                {
+                    ret.Add(medicine);
+                }
+            }
+             
+            return ret;
+        }
+
     }
 }

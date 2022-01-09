@@ -50,7 +50,7 @@ namespace IntegrationTests.IntegrationTests
         public async Task Check_response_when_medicine_is_not_available()
         {
             // Arrange
-            var request = new HttpRequestMessage(new HttpMethod("GET"), "/medicines/check?name=Aspirin&dosage=500&quantity=2");
+            var request = new HttpRequestMessage(new HttpMethod("GET"), "/medicines/check?name=Andol&dosage=2000&quantity=2");
 
             // Act
             var response = await _client.SendAsync(request);

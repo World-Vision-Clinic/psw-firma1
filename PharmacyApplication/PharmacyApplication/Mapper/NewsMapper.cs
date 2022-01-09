@@ -19,5 +19,17 @@ namespace PharmacyAPI.Mapper
             news.IdEncoded = generatedId;
             return news;
         }
+
+        public static NewsToSendDto NewsToNewsToSendDto(News news)
+        {
+            NewsToSendDto dto = new NewsToSendDto();
+            dto.Content = news.Content;
+            dto.DateRange = new DateRange(news.FromDate, news.ToDate);
+            dto.IdEncoded = news.IdEncoded;
+            dto.Title = news.Title;
+
+            return dto;
+        }
+
     }
 }

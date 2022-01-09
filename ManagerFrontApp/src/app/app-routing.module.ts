@@ -23,6 +23,10 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
 import { TenderCreationComponent } from './manager-integration-front-app/tender-creation/tender-creation.component';
 import { ManagerIntegrationFrontAppComponent } from './manager-integration-front-app/manager-integration-front-app.component';
+import { StatisticsComponent } from './manager-integration-front-app/statistics/statistics.component';
+import { TenderSelectionComponent } from './manager-integration-front-app/tender-selection/tender-selection.component';
+import { DoctorsManagementComponent } from './doctors-management/doctors-management.component';
+
 
 const routes: Routes = [
   {path: "", component: FrontPageComponent},
@@ -52,9 +56,21 @@ const routes: Routes = [
   //{path: "create-objection", outlet: "showObjRepl", component:ObjectionFormPageComponent},
   //{path: "news", outlet: "showObjRepl", component:NewsComponent},
   //{path: "medicine-consumption-report", outlet: "showObjRepl", component:MedicineConsumptionComponent},
+  {path:"pharmacy-registration", component: PharmacyRegistrationComponent},
+  {path:"hospital1", component: Hospital1Component},
+  {path: "doctors-management", component: DoctorsManagementComponent},
+  {path:"manager-front-app", component: ManagerIntegrationFrontAppComponent, children: [
+  {path: "overview-objections-replies", outlet: "showObjRepl", component:OverviewObjectionsRepliesComponent},
+  {path: "overview-pharmacies", outlet: "showObjRepl", component:PharmaciesComponent},
+  
+  {path: "create-objection", outlet: "showObjRepl", component:ObjectionFormPageComponent},
+  {path: "news", outlet: "showObjRepl", component:NewsComponent},
+  {path: "medicine-consumption-report", outlet: "showObjRepl", component:MedicineConsumptionComponent},
   {path: "get-specification", outlet:"showObjRepl", component: GetSpecificationComponent},
   {path: "view-files", outlet:"showObjRepl", component: ViewFilesComponent},
-  {path: "create-tender", outlet:"showObjRepl", component:TenderCreationComponent}
+  {path: "create-tender", outlet:"showObjRepl", component:TenderCreationComponent},
+  {path: "select-tender", outlet:"showObjRepl", component:TenderSelectionComponent},
+  {path: "statistics", outlet:"showObjRepl", component:StatisticsComponent}
   ]},
   {path:"manager-feedback", component: ManagerFeedbackViewComponent, canActivate:[AuthGuard]},
   {path:"login", component: LoginComponent}
