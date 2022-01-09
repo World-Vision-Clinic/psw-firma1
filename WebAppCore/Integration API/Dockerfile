@@ -1,12 +1,11 @@
-FROM jelenahrnjak/integration:latest
+
+FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
+WORKDIR /app
+EXPOSE 1027
 
 RUN groupadd -g 1001 student && \
     useradd -r -u 1001 -g student  student 
 USER student
-
-FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
-WORKDIR /app
-EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src

@@ -1,9 +1,3 @@
-FROM jelenahrnjak/managerfrontapp:latest
-
-RUN groupadd -g 1001 student && \
-    useradd -r -u 1001 -g student  student 
-USER student
-
 FROM node:14.17.6-alpine AS frontBuild
 WORKDIR /app
 COPY . .
@@ -15,5 +9,7 @@ COPY --from=frontBuild /app/dist/ManagerFrontApp /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 4200
-
+RUN groupadd -g 1001 student && \
+    useradd -r -u 1001 -g student  student 
+USER student
 ENTRYPOINT ["nginx","-g","daemon off;"]

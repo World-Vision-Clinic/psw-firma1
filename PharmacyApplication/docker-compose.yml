@@ -33,7 +33,7 @@ services:
       RABBITMQ_HOST: "rabbitmq" 
       
     ports:
-      - "8081:80" 
+      - "8081:1026" 
     restart: on-failure
     networks:
       - application
