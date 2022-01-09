@@ -2,12 +2,12 @@
 
 services:
   hospital-front:
-    #image: darkelfff/hospital-front:latest
+    image: darkelfff/hospital-front:latest
     depends_on:
       - "hospital-api"
-    build:
-      context: ../../patient-portal-front/
-      dockerfile: Dockerfile
+    # build:
+    #   context: ../../patient-portal-front/
+    #   dockerfile: Dockerfile
     ports:
       - "3000:3000"
     networks: 

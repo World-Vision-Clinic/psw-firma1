@@ -38,9 +38,9 @@ services:
       - database
 
   manager-front:
+    image: jelenahrnjak/managerfrontapp:latest
     depends_on:
-      - pharmacy
-    build: ../ManagerFrontApp 
+      - pharmacy 
     ports:
       - "4202:4200"
     restart: on-failure
