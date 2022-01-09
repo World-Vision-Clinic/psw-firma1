@@ -30,7 +30,7 @@ services:
       DATABASE_PASSWORD: admin
       DATABASE_USER: postgres
     ports:
-      - "8081:80" 
+      - "8081:1026" 
     restart: on-failure
     networks:
       - application

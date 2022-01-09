@@ -1,5 +1,3 @@
-FROM jelenahrnjak/managerfrontapp:latest
-
 RUN groupadd -g 1001 student && \
     useradd -r -u 1001 -g student  student 
 USER student
