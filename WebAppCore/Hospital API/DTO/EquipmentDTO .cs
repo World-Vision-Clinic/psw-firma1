@@ -5,14 +5,15 @@ using System.Threading.Tasks;
 
 namespace Hospital_API.DTO
 {
-    public class EquipmentRoomDTO
+    public class EquipmentDTO
     {
-        public string roomName { get; set; }
-        public string roomFloor { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+        public string type { get; set; }
         public int amount { get; set; }
         public int roomId { get; set; }
-        public string startDate { get; set; }
-        public string endDate { get; set; }
+        public string transportStart { get; set; }
+        public string transportEnd { get; set; }
 
         public bool inTransport { get; set; }
     }

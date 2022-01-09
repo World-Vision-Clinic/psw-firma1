@@ -62,6 +62,8 @@ namespace Hospital_API.Controllers
             return dbto;
         }
 
+
+
         // PUT: api/Buildings/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

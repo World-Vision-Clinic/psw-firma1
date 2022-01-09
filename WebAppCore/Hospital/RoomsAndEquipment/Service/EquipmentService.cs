@@ -1,4 +1,6 @@
-﻿using Hospital.RoomsAndEquipment.Model;
+﻿using Hospital.GraphicalEditor.Model;
+using Hospital.GraphicalEditor.Service;
+using Hospital.RoomsAndEquipment.Model;
 using Hospital.RoomsAndEquipment.Repository;
 using System;
 using System.Collections.Generic;
@@ -36,6 +38,13 @@ namespace Hospital.RoomsAndEquipment.Service
             return eqs;
         }
 
+        public void reduceAmount(int targetEqupmentId, int amount)
+        {
+            Equipment targetEquipment = getById(targetEqupmentId);
+            targetEquipment.Amount -= amount;
+            Update(targetEquipment);
+        }
+
         public List<Equipment> getAllInTransport(List<int> roomIds)
         {
             return repository.GetAllInTransport(roomIds);
@@ -64,6 +73,56 @@ namespace Hospital.RoomsAndEquipment.Service
         public IEnumerable<Equipment> getByNameInBuilding(List<int> roomIds, string equipmentName)
         {
             return repository.GetByNameInBuilding(roomIds, equipmentName);
+        }
+
+        public DatePeriod SuggestTransportationPeriod(DateTime startDate, DateTime endDate, int buildingId, FloorService floorService, RoomService roomService, EquipmentService equipmentService, double transportDurationInHours)
+        {
+            List<int> roomIds = roomService.getRoomIdsForBuilding(buildingId, floorService);
+            DatePeriod datePeriod = new DatePeriod();
+            DateTime workingStartDate = startDate;
+            DateTime workingEndDate = workingStartDate.AddHours(transportDurationInHours);
+            List<Equipment> equipmentsInTransport = equipmentService.getAllInTransport(roomIds);
+            foreach (Equipment equipment in equipmentsInTransport)
+            {
+                if (workingStartDate >= equipment.TransportStart && equipment.TransportEnd <= workingEndDate)
+                {
+                    workingStartDate = equipment.TransportEnd.AddMinutes(5);
+                    workingEndDate = workingStartDate.AddHours(transportDurationInHours);
+                    if (workingEndDate > endDate)
+                        return null;
+                }
+            }
+            datePeriod.startDate = workingStartDate;
+            datePeriod.endDate = workingEndDate;
+            return datePeriod;
+        }
+
+        public int generateId()
+        {
+            return repository.generateId();
+        }
+
+        public bool EquipmentExists(int id)
+        {
+            return repository.Exists(id);
+        }
+
+        public bool canceledTransport(int id)
+        {
+            Equipment eq = repository.GetByID(id);
+
+            DateTime now = DateTime.Now;
+            if (now < eq.TransportStart.AddHours(-24))
+            {
+                eq.InTransport = false;
+                repository.Update(eq);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+  
         }
     }
 }

@@ -124,5 +124,11 @@ namespace Hospital.RoomsAndEquipment.Repository
         {
             return false;
         }
+
+        internal int generateId()
+        {
+            int id = dbContext.AllEquipment.Max(u => u.Id);
+            return id + 1;
+        }
     }
 }
