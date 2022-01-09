@@ -290,5 +290,10 @@ namespace Integration.Partnership.Service
         {
             return tenderRepository.GetByTenderHash(id);
         }
+
+        public TenderOffer GetTenderOfferWithOfferItems(string pharmacyName, string offerHash)
+        {
+            return tenderRepository.GetTenderOfferWithOfferItems(pharmacyName, offerHash);
+        }
     }
 }

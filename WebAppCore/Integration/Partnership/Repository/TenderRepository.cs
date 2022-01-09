@@ -110,5 +110,22 @@ namespace Integration.Partnership.Repository
         {
             return dbContext.Tenders.Include("TenderItems").SingleOrDefault(tender => tender.TenderHash == id);
         }
+
+        public TenderOffer GetTenderOfferWithOfferItems(string pharmacyName, string offerHash)
+        {
+            List<TenderOffer> offers = GetAllTenderOffersWithOfferItems();
+            TenderOffer offer=new TenderOffer();
+            foreach(TenderOffer o in offers)
+            {
+                if(o.PharmacyName == pharmacyName && o.TenderOfferHash == offerHash)
+                {
+                    offer = o;
+                    break;
+                }
+            }
+
+            return offer;
+        }
+
     }
 }

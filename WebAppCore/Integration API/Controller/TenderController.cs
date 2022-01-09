@@ -95,7 +95,8 @@ namespace Integration_API.Controller
                 {
                     if (DeclareTenderWinner(TenderMapper.TenderToTenderDto(tender), pharmacy.ConnectionInfo.Domain))
                     {
-                        foreach(OfferItem oi in tender.TenderOffers.ElementAt(0).OfferItems.ToArray())
+                        TenderOffer offerForOrdering = service.GetTenderOfferWithOfferItems(offer.PharmacyName, offer.TenderOfferHash);
+                        foreach(OfferItem oi in offerForOrdering.OfferItems.ToArray())
                         {
                             bool success = medicinesController.SendMedicineOrderingRequestHTTP(new OrderingMedicineDTO(pharmacy.ConnectionInfo.Domain, oi.MedicineName, oi.Dosage.ToString(), oi.Quantity.ToString()), false);
                             if (success)
