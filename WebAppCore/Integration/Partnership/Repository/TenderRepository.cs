@@ -44,7 +44,7 @@ namespace Integration.Partnership.Repository
             return allTenders;
         }
 
-        public void EditTenderByHash(Tender tender)
+        public void EditTenderEndTimeByHash(Tender tender)
         {
             List<Tender> allTenders = dbContext.Tenders.ToList();
             foreach(Tender t in allTenders)
@@ -104,6 +104,11 @@ namespace Integration.Partnership.Repository
             tender.TenderOffers.Add(tenderOffer);
             dbContext.SaveChanges();
             return true;
+        }
+
+        public Tender GetByTenderHash(string id)
+        {
+            return dbContext.Tenders.Include("TenderItems").SingleOrDefault(tender => tender.TenderHash == id);
         }
     }
 }

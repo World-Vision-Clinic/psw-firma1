@@ -3,7 +3,7 @@
     <div *ngFor="let dataItem of TenderList; let i = index" class="list-group">
         <li  class="list-group-item list-group-item-action flex-column align-items-start">
           <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">Tender information:</h5>
+            <h2><b>Tender information:</b></h2>
           </div>
           <label>Title: {{dataItem.Title}},</label>
           <label>Description: {{dataItem.Description}},</label>
@@ -19,7 +19,7 @@
           <br>
           
   
-          <h3>Tender offers: </h3>
+          <h2 style= "margin-top: 1%;"><b>Tender offers: </b></h2>
           <label *ngIf="dataItem.TenderOffers.length==0">There are no offers</label>
           <div  *ngFor="let data of dataItem.TenderOffers">
             <label>Pharmacy name: {{data.PharmacyName}},Total price: {{data.TotalPrice}}</label>

@@ -28,9 +28,9 @@ namespace Integration.Partnership.Service
             return tenderRepository.GetAll();
         }
 
-        public void EditTenderByHash(Tender tender)
+        public void EditTenderEndTimeByHash(Tender tender)
         {
-            tenderRepository.EditTenderByHash(tender);
+            tenderRepository.EditTenderEndTimeByHash(tender);
         }
 
         public void EditTenderOfferById(TenderOffer offer)
@@ -284,6 +284,11 @@ namespace Integration.Partnership.Service
             }
 
             return numberOfTendersPharmacyWon;
+        }
+
+        public Tender GetByTenderHash(string id)
+        {
+            return tenderRepository.GetByTenderHash(id);
         }
     }
 }

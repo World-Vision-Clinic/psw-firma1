@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Pharmacy.Model
@@ -12,6 +13,9 @@ namespace Pharmacy.Model
         public virtual ICollection<OfferItem> OfferItems { get; set; }
         public bool Winner { get; set; }
 
+        [NotMapped]
+        public string PharmacyName { get; set; }
+
         public TenderOffer(){}
 
         public TenderOffer(string tenderOfferHash, double totalPrice, ICollection<OfferItem> offerItems)
@@ -20,6 +24,16 @@ namespace Pharmacy.Model
             TotalPrice = totalPrice;
             OfferItems = offerItems;
             Winner = false;
+        }
+
+        public TenderOffer(int tenderOfferId, string tenderOfferHash, double totalPrice, ICollection<OfferItem> offerItems, bool winner, string pharmacyName)
+        {
+            TenderOfferId = tenderOfferId;
+            TenderOfferHash = tenderOfferHash;
+            TotalPrice = totalPrice;
+            OfferItems = offerItems;
+            Winner = winner;
+            PharmacyName = pharmacyName;
         }
     }
 }

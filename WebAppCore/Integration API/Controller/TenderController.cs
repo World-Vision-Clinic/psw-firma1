@@ -62,8 +62,9 @@ namespace Integration_API.Controller
 
             Tender tender = TenderMapper.TenderDtoToTender(dto);
             tender.EndTime = DateTime.Now;
-
-            service.EditTenderByHash(tender);
+            service.EditTenderEndTimeByHash(tender);
+            TenderDto tenderDto = TenderMapper.TenderToTenderCloseDto(tender);
+            SendTender(tenderDto);
             return Ok();
         }
 
@@ -74,7 +75,17 @@ namespace Integration_API.Controller
             TenderOffer offer = TenderMapper.TenderOfferDtoToTenderOffer(dto);
             offer.Winner = true;
 
-            service.EditTenderOfferById(offer); 
+            service.EditTenderOfferById(offer);
+
+            Tender tender =service.GetByTenderHash(dto.TenderHash);
+            
+            tender.EndTime = DateTime.Now;
+            service.EditTenderEndTimeByHash(tender);
+
+            tender.TenderOffers = new List<TenderOffer>();
+            tender.TenderOffers.Add(offer);
+
+            SendTender(TenderMapper.TenderToTenderDto(tender));
             return Ok();
         }
 

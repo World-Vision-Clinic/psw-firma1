@@ -7,6 +7,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace Pharmacy.Service
         IModel channel;    
         IHospitalsRepository hospitalsRepository;
         ITendersRepository tendersRepository;
+        const string PHARMACY_NAME = "Jankovic";
 
       
         public RabbitMQService()
@@ -55,7 +57,27 @@ namespace Pharmacy.Service
 
                     tender.HospitalName = hospital.Name;
 
-                    tendersRepository.Save(tender);
+                    if (tendersRepository.GetById(tender.TenderHash) != null)
+                    {
+                        
+                        if (tender.TenderOffers != null)
+                        {
+                            foreach(TenderOffer offer in tender.TenderOffers)
+                            {
+                               if(offer.PharmacyName == PHARMACY_NAME)
+                                {
+                                    Tender activeTender = tendersRepository.GetById(tender.TenderHash);
+                                    TenderOffer tenderOffer = activeTender.TenderOffers.SingleOrDefault(o => o.TenderOfferHash == offer.TenderOfferHash);
+                                    tenderOffer.Winner = true;
+                                    tendersRepository.Update(activeTender);
+                                }
+                            }
+                        }
+
+                        tendersRepository.CloseTender(tender);
+                    }
+
+                    else tendersRepository.Save(tender);
 
                 };
 
