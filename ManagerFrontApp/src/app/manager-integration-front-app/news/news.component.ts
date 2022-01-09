@@ -26,6 +26,8 @@ export class NewsComponent implements OnInit {
 
   changeNewsView(i: any){
     this.http.put<any>('http://localhost:43818/News', this.NewsList[i])
-        .subscribe(data => this.NewsList[i] = data);
+        .subscribe(data => {this.NewsList[i] = data
+            alert("You've successfully changed news publish status.")
+        },error =>{alert("An error occured")});
   }
 }

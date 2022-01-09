@@ -25,12 +25,13 @@ namespace Integration.Pharmacy.Service
         ITenderRepository tenderRepository;
         Boolean isTest;
 
-        public RabbitMQService(INewsRepository newsRepository, IPharmaciesRepository pharmaciesRepository, ITenderRepository tenderRepository)
+
+        public RabbitMQService(INewsRepository newsRepository, IPharmaciesRepository pharmaciesRepository, ITenderRepository tenderRepository, Boolean isTest)
         {
             this.newsRepository = newsRepository;
             this.pharmaciesRepository = pharmaciesRepository;
             this.tenderRepository = tenderRepository;
-            isTest = true;
+            this.isTest = isTest;
         }
 
         public RabbitMQService()
@@ -109,14 +110,6 @@ namespace Integration.Pharmacy.Service
                     offer.PharmacyName = pharmacyProfile.Name;
 
                     tenderRepository.AddOffer(offer);
-
-                   /* Console.WriteLine(offer.PharmacyName);
-                    foreach (OfferItem item in offer.OfferItems)
-                    {
-                        Console.WriteLine(item.MedicineName + " " + item.Quantity + " " + item.Price);
-                    }
-                    Console.WriteLine(offer.TotalPrice);*/
-
 
                 };
 

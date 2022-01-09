@@ -57,25 +57,7 @@ namespace Pharmacy.Service
 
                     tender.HospitalName = hospital.Name;
 
-                    if (tendersRepository.GetById(tender.TenderHash) != null)
-                    {
-                        
-                        if (tender.TenderOffers != null)
-                        {
-                            foreach(TenderOffer offer in tender.TenderOffers)
-                            {
-                               if(offer.PharmacyName == PHARMACY_NAME)
-                                {
-                                    Tender activeTender = tendersRepository.GetById(tender.TenderHash);
-                                    TenderOffer tenderOffer = activeTender.TenderOffers.SingleOrDefault(o => o.TenderOfferHash == offer.TenderOfferHash);
-                                    tenderOffer.Winner = true;
-                                    tendersRepository.Update(activeTender);
-                                }
-                            }
-                        }
-
-                        tendersRepository.CloseTender(tender);
-                    }
+                    if (tendersRepository.GetById(tender.TenderHash) != null) tendersRepository.CloseTender(tender);
 
                     else tendersRepository.Save(tender);
 
