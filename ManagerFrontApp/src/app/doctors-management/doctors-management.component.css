@@ -9,282 +9,288 @@
 }
 
 .title {
-    margin-top: 6px;
-    text-align: center;
-    color: cadetblue;
-  }
+  margin-top: 6px;
+  text-align: center;
+  color: cadetblue;
+}
 
-  .toolbar {
-    margin-left: 28.2%;
-    margin-top: 3%;
-    margin-bottom: -2.5%;
-    border: 2px;
-    border-radius: 15px;
-    width: 710px;
-    height: 60px;
-    background-color: rgba(224, 223, 223, 0.911);
-  }
-  
-  .toolbar-btn {
-    color: white;
-    background-color: cadetblue;
-    border-radius: 3px;
-    height: 38px;
-    font-size: 17px;
-    margin-left: 1.5%;
-    width: 110px;
-    margin-top: 1.2%;
-    border-radius: 10px;
-  }
+.doctor-managment-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .icon-btn {
-    color: white;
-    background-color: cadetblue;
-    height: 40px;
-    font-size: 17px;
-    width: 40px;
-    border-radius: 50%;
-    margin-bottom: 20%;
-  }
-
-  .big-toolbar {
-    border: 2px;
-    height: 60px;
-    background-color: rgba(224, 223, 223, 0.991);
-  }
-  
-  .big-toolbar-btn {
-    color: cadetblue;
-    background-color: rgba(224, 223, 223, 0.911);;
-    height: 58px;
-    font-size: 17px;
-    width: 120px;
-  }
-
-  .doctors-page{
-    margin-top: 60px;
-    margin-left: 26%;
-    margin-right: 25%;
-    position: relative;
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
-    display: flex;
+.toolbar {
+  border: 2px;
+  border-radius: 15px;
+  background-color: rgba(224, 223, 223, 0.911);
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
-  }
+}
 
-  .doctors-table {
-    display: block;
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-bottom: 20px;
-    background-color: white;
-  }
-  
-  .doctors-table th {
-    display: inline-block;
-    padding: 10px 84px;
-    text-align: left;
-    font-weight: bold;
-    font-size: 15px;
-    color: white;
-    text-transform: uppercase;
-    background: cadetblue;
-  }
-  
-  .doctors-table tbody {
-    display: inline-block;
-    height: 400px;
-    overflow-y: scroll;
-    scrollbar-color: rgb(248, 246, 246);
-    width: 700px; 
-  }
-  .doctors-table thead {
-    width: 250px;
-  }
-  .doctors-table tbody tr {
-    height: 15px;
-  }
-  .doctors-table td {
-    padding: 10px;
-    text-align: left;
-    vertical-align: left;
-    font-size: 16px;
-    color: #000;
-    word-wrap: break-word;
-    height: 50%;
-    width: 50%;
-  }
-  .doctors-table tbody {
-    display: inline-block;
-    overflow-y: scroll;
-    scrollbar-color: rgb(248, 246, 246);
-    background-color: rgba(224, 223, 223, 0.911);
-  }
+.toolbar-btn {
+  color: white;
+  background-color: cadetblue;
+  border-radius: 3px;
+  height: 38px;
+  font-size: 17px;
+  width: 110px;
+  border-radius: 10px;
+  margin: 5px;
+}
 
-  .vacation-table {
-    display: block;
-    margin-left: 5%;
-    margin-right: 2%;
-    margin-bottom: 20px;
-    background-color: white;
-  }
-  
-  .vacation-table th {
-    display: inline-block;
-    padding: 10px 12px;
-    text-align: middle;
-    font-weight: bold;
-    font-size: 15px;
-    color: white;
-    text-transform: uppercase;
-    background: cadetblue;
-  }
-  
-  .vacation-table tbody {
-    display: inline-block;
-    height: 400px;
-    overflow-y: scroll;
-    scrollbar-color: rgb(248, 246, 246);
-    width: 700px; 
-  }
-  .vacation-table thead {
-    width: 250px;
-  }
-  .vacation-table tbody tr {
-    height: 15px;
-  }
-  .vacation-table td {
-    padding: 10px;
-    text-align: start;
-    vertical-align: middle;
-    font-size: 16px;
-    color: #000;
-    word-wrap: break-word;
-    height: 50%;
-  }
-  .vacation-table tbody {
-    display: inline-block;
-    overflow-y: scroll;
-    scrollbar-color: rgb(248, 246, 246);
-    background-color: rgba(224, 223, 223, 0.911);
-  }
+.selected-toolbar {
+  font-weight: bold;
+  background-color: cornsilk;
+  color: cadetblue;
+}
 
-  .form-field {
-    width: 100%;
-    height: 60px;
-    border: 2px solid rgba(224, 223, 223, 0.911);
-    background: transparent;
-    transition: border-color 0.2s;
-    border-radius: 3%;
-  }
+.icon-btn {
+  color: white;
+  background-color: cadetblue;
+  height: 40px;
+  font-size: 17px;
+  width: 40px;
+  border-radius: 50%;
+  margin-bottom: 20%;
+}
 
-  /* Bojan */
-  .btn {
-    color: white;
-    background-color: cadetblue;
-    border-radius: 8px;
-    min-width: 100px;
-    height: 28px;
-    font-size: 18px;
-    transition: 0.7s;
-    margin: 0 5px;
-    width: max-content;
-    padding: 0 10px;
-  }
+.big-toolbar {
+  border: 2px;
+  height: 60px;
+  background-color: rgba(224, 223, 223, 0.991);
+}
 
-  .list-table {
-    display: block;
-    margin-left: 2%;
-    margin-right: 2%;
-    background-color: rgba(224, 223, 223, 0.911);
-  }
-  .list-table thead {
-    display: flex;
-    width: 100%;
-  }
-  .list-table tbody {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-  .list-table thead > tr {
-    display: flex;
-    flex: 1;
-  }
-  .list-table tbody > tr {
-    display: flex;
-    flex: 1;
-  }
-  .list-table tbody > tr > td {
-    display: inline-block;
-    padding: 8px;
-    text-align: left;
-    font-size: 14px;
-    color: #000;
-    flex: 1;
-  }
-  .list-table th {
-    display: inline-block;
-    padding: 8px;
-    text-align: left;
-    font-size: 14px;
-    text-align: center;
-    color: white;
-    background: cadetblue;
-    flex: 1;
-  }
+.big-toolbar-btn {
+  color: cadetblue;
+  background-color: rgba(224, 223, 223, 0.911);
+  height: 58px;
+  font-size: 17px;
+  width: 120px;
+}
 
-  .doctor-list-table {
-    display: block;
-    margin-left: 2%;
-    margin-right: 2%;
-    background-color: rgba(224, 223, 223, 0.911);
-    max-height: 300px;
-    overflow-y: scroll;
-  }
-  .doctor-list-table thead {
-    display: flex;
-    width: 100%;
-  }
-  .doctor-list-table tbody {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-  .doctor-list-table thead > tr {
-    display: flex;
-    flex: 1;
-  }
-  .doctor-list-table tbody > tr {
-    display: flex;
-    flex: 1;
-  }
-  .doctor-list-table tbody > tr > td {
-    display: inline-block;
-    padding: 8px;
-    text-align: left;
-    font-size: 14px;
-    color: #000;
-    flex: 1;
-  }
-  .doctor-list-table th {
-    display: inline-block;
-    padding: 8px;
-    text-align: left;
-    font-size: 14px;
-    text-align: center;
-    color: white;
-    background: cadetblue;
-    flex: 1;
-  }
+.doctors-page {
+  margin-top: 20px;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
-  .shiftsBox{
-    margin-top:70px;
-    font-size: 16px;
-    align-items: center;
-  }
-  .vacation-selected{
-    background-color: rgba(160, 159, 159, 0.6);
-  }
+.doctors-table {
+  display: block;
+  /* margin-left: 5%; */
+  /* margin-right: 5%; */
+  margin-bottom: 20px;
+  background-color: white;
+}
+
+.doctors-table th {
+  display: inline-block;
+  padding: 10px 84px;
+  text-align: left;
+  font-weight: bold;
+  font-size: 15px;
+  color: white;
+  text-transform: uppercase;
+  background: cadetblue;
+}
+
+.doctors-table tbody {
+  display: inline-block;
+  height: 400px;
+  overflow-y: scroll;
+  scrollbar-color: rgb(248, 246, 246);
+  width: 700px;
+}
+.doctors-table thead {
+  width: 250px;
+}
+.doctors-table tbody tr {
+  height: 15px;
+}
+.doctors-table td {
+  padding: 10px;
+  text-align: left;
+  vertical-align: left;
+  font-size: 16px;
+  color: #000;
+  word-wrap: break-word;
+  height: 50%;
+  width: 50%;
+}
+.doctors-table tbody {
+  display: inline-block;
+  overflow-y: scroll;
+  scrollbar-color: rgb(248, 246, 246);
+  background-color: rgba(224, 223, 223, 0.911);
+}
+
+.vacation-table {
+  display: block;
+  margin-left: 5%;
+  margin-right: 2%;
+  margin-bottom: 20px;
+  background-color: white;
+}
+
+.vacation-table th {
+  display: inline-block;
+  padding: 10px 12px;
+  text-align: middle;
+  font-weight: bold;
+  font-size: 15px;
+  color: white;
+  text-transform: uppercase;
+  background: cadetblue;
+}
+
+.vacation-table tbody {
+  display: inline-block;
+  height: 400px;
+  overflow-y: scroll;
+  scrollbar-color: rgb(248, 246, 246);
+  width: 700px;
+}
+.vacation-table thead {
+  width: 250px;
+}
+.vacation-table tbody tr {
+  height: 15px;
+}
+.vacation-table td {
+  padding: 10px;
+  text-align: start;
+  vertical-align: middle;
+  font-size: 16px;
+  color: #000;
+  word-wrap: break-word;
+  height: 50%;
+}
+.vacation-table tbody {
+  display: inline-block;
+  overflow-y: scroll;
+  scrollbar-color: rgb(248, 246, 246);
+  background-color: rgba(224, 223, 223, 0.911);
+}
+
+.form-field {
+  width: 100%;
+  height: 60px;
+  border: 2px solid rgba(224, 223, 223, 0.911);
+  background: transparent;
+  transition: border-color 0.2s;
+  border-radius: 3%;
+}
+
+/* Bojan */
+.btn {
+  color: white;
+  background-color: cadetblue;
+  border-radius: 8px;
+  min-width: 100px;
+  height: 28px;
+  font-size: 18px;
+  transition: 0.7s;
+  margin: 0 5px;
+  width: max-content;
+  padding: 0 10px;
+}
+
+.list-table {
+  display: block;
+  margin-left: 2%;
+  margin-right: 2%;
+  background-color: rgba(224, 223, 223, 0.911);
+}
+.list-table thead {
+  display: flex;
+  width: 100%;
+}
+.list-table tbody {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.list-table thead > tr {
+  display: flex;
+  flex: 1;
+}
+.list-table tbody > tr {
+  display: flex;
+  flex: 1;
+}
+.list-table tbody > tr > td {
+  display: inline-block;
+  padding: 8px;
+  text-align: left;
+  font-size: 14px;
+  color: #000;
+  flex: 1;
+}
+.list-table th {
+  display: inline-block;
+  padding: 8px;
+  text-align: left;
+  font-size: 14px;
+  text-align: center;
+  color: white;
+  background: cadetblue;
+  flex: 1;
+}
+
+.doctor-list-table {
+  display: block;
+  margin-left: 2%;
+  margin-right: 2%;
+  background-color: rgba(224, 223, 223, 0.911);
+  max-height: 300px;
+  overflow-y: scroll;
+}
+.doctor-list-table thead {
+  display: flex;
+  width: 100%;
+}
+.doctor-list-table tbody {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.doctor-list-table thead > tr {
+  display: flex;
+  flex: 1;
+}
+.doctor-list-table tbody > tr {
+  display: flex;
+  flex: 1;
+}
+.doctor-list-table tbody > tr > td {
+  display: inline-block;
+  padding: 8px;
+  text-align: left;
+  font-size: 14px;
+  color: #000;
+  flex: 1;
+}
+.doctor-list-table th {
+  display: inline-block;
+  padding: 8px;
+  text-align: left;
+  font-size: 14px;
+  text-align: center;
+  color: white;
+  background: cadetblue;
+  flex: 1;
+}
+
+.shiftsBox {
+  margin-top: 70px;
+  font-size: 16px;
+  align-items: center;
+}
+.vacation-selected {
+  background-color: rgba(160, 159, 159, 0.6);
+}

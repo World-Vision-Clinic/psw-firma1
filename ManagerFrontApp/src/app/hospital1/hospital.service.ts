@@ -14,6 +14,8 @@ import { Doctor } from '../data/doctor';
 @Injectable({
   providedIn: 'root',
 })
+
+
 export class HospitalService {
   constructor(private http: HttpClient) {}
 

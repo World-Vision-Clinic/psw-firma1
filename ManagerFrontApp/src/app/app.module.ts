@@ -33,6 +33,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { ChartAllModule, AccumulationChartAllModule, RangeNavigatorAllModule } from '@syncfusion/ej2-angular-charts';
 import { StatisticsComponent } from './manager-integration-front-app/statistics/statistics.component';
 import { DoctorsManagementComponent } from './doctors-management/doctors-management.component';
+import { DoctorOnDutyContainerComponent } from './doctor-on-duty-container/doctor-on-duty-container.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { DoctorsManagementComponent } from './doctors-management/doctors-managem
     LoginComponent,
     TenderCreationComponent,
     StatisticsComponent,
-    DoctorsManagementComponent
+    DoctorsManagementComponent,
+    DoctorOnDutyContainerComponent
   ],
   imports: [
     BrowserModule,
