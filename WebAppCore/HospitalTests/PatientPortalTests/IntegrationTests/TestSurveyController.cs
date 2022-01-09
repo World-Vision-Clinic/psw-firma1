@@ -157,8 +157,8 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
 
             var response = controller.GetAnsweredQuestionsBreakdown();
             Assert.Equal(2, response.Value.Count());
-            Assert.Equal(3, response.Value.ElementAt(0).Average);
-            Assert.Equal(2, response.Value.ElementAt(1).Average);
+            Assert.Equal(4.5, response.Value.ElementAt(0).Average);
+            Assert.Equal(3.5, response.Value.ElementAt(1).Average);
         }
     }
 }
