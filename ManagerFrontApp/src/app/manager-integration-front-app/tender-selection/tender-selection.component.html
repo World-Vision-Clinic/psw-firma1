@@ -15,7 +15,7 @@
             <label *ngFor="let data of dataItem.TenderItems">Item:{{data.MedicineName}},Dosage:{{data.Dosage}},Quantity:{{data.Quantity}}</label>
 
           </div>
-          <button (click)="closeTender(dataItem)" type="button" class="btn btn-primary">Close tender</button>
+          <button *ngIf="dataItem.EndTime == null || dataItem.EndTime> currentTime" (click)="closeTender(dataItem)" type="button" class="btn btn-primary">Close tender</button>
           <br>
           
   
@@ -28,7 +28,7 @@
                 <label *ngFor="let data2 of data.OfferItems">Item:{{data2.MedicineName}},Dosage:{{data2.Dosage}},Quantity:{{data2.Quantity}},Price:{{data2.Price}}</label>
     
               </div>
-              <button (click)="chooseTenderWinner(dataItem,data)" type="button" class="btn btn-primary">Choose tender winner</button>
+              <button *ngIf="dataItem.EndTime == null || dataItem.EndTime> currentTime" (click)="chooseTenderWinner(dataItem,data)" type="button" class="btn btn-primary">Choose tender winner</button>
           </div>
 
        
