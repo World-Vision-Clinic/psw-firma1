@@ -54,7 +54,7 @@ namespace PharmacyAPI.Controller
             return Ok();
         }
 
-        [HttpPost("/result")]
+        [HttpPost("result")]
         public IActionResult reciveTenderResults(TenderWinnerDto dto)
         {
             if (!Request.Headers.TryGetValue("ApiKey", out var extractedApiKey))
@@ -84,7 +84,7 @@ namespace PharmacyAPI.Controller
                     tenderService.Update(activeTender);
                 }
             }
-
+            activeTender.EndTime = DateTime.Now;
             tenderService.CloseTender(activeTender);
 
 

@@ -105,7 +105,7 @@ namespace Integration_API.Controller
         private bool DeclareTenderWinner(TenderDto tenderDto, string domain)
         {
             var client = new RestSharp.RestClient(domain);
-            var request = new RestRequest("medicines/OrderMedicine");
+            var request = new RestRequest("/tender/result");
 
             Credential credential = credentialsService.GetByPharmacyLocalhost(domain);
 
