@@ -24,13 +24,16 @@ namespace Hospital_API
         public SurveyService surveyService { get; set; }
         public AppointmentService _appointmentService { get; set; }
         public PatientService _patientService { get; set; }
+        public bool test = false;
 
         public SurveyController()
         {
             surveyService = new SurveyService(new SurveyRepository(new HospitalContext()));
             IAppointmentRepository appointmentRepository = new AppointmentRepository(new HospitalContext());
             IPatientRepository patientRepository = new PatientRepository(new HospitalContext());
+            IDoctorRepository doctorRepository = new DoctorRepository(new HospitalContext());
             _patientService = new PatientService(patientRepository, appointmentRepository);
+            _appointmentService = new AppointmentService(appointmentRepository, doctorRepository);
         }
 
         [Authorize(Roles = "Manager")]
@@ -100,9 +103,17 @@ namespace Hospital_API
 
         private Patient getCurrentPatient()
         {
-            string username = User.FindFirst("username")?.Value;
-            Patient patient = _patientService.FindByUserName(username);
-            return patient;
+            if (test)
+            {
+                Patient patient = _patientService.FindByUserName("Marko123");
+                return patient;
+            }
+            else
+            {
+                string username = User.FindFirst("username")?.Value;
+                Patient patient = _patientService.FindByUserName(username);
+                return patient;
+            }
         }
     }
 }

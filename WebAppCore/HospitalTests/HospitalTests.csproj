@@ -7,6 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="PatientPortalTests\End2End\**" />
+    <EmbeddedResource Remove="PatientPortalTests\End2End\**" />
+    <None Remove="PatientPortalTests\End2End\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="PatientPortalTests\CreateFeedbackE2ETest.cs" />
+    <Compile Remove="PatientPortalTests\CreateFeedbackPage.cs" />
+    <Compile Remove="PatientPortalTests\HomePage.cs" />
+    <Compile Remove="PatientPortalTests\LandingPage.cs" />
+    <Compile Remove="PatientPortalTests\LoginPage.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.21" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />

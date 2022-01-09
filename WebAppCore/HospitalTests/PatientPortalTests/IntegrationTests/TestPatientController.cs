@@ -50,6 +50,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             _patientsController._allergenService = new AllergenService(_allergenRepository);
             _patientsController._patientAllergenService = new PatientAllergenService(_patientAllergenRepository);
             _patientsController._doctorService = new DoctorService(_doctorRepository);
+            _patientsController.test = true;
         }
 
         [Fact]
@@ -59,7 +60,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 DateTime.Now, new Residence("Serbia", "TestAddress", "TestCity"), "063111111", 0, 80, 180, BloodType.A, false, new List<Appointment>());
             _patientRepository.AddPatient(patient);
 
-            var response = (NotFoundResult) _patientsController.ActivatePatient(Patient.TokenizeSHA256("mihajlo"));
+            var response = (NotFoundResult) _patientsController.ActivatePatient("mihajlo");
             Assert.Equal(404,response.StatusCode);
 
         }
@@ -71,7 +72,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 DateTime.Now, new Residence("Serbia", "TestAddress", "TestCity"), "063115111", 0, 80, 180, BloodType.A, false, new List<Appointment>());
             _patientRepository.AddPatient(patient);
 
-            var response = (RedirectResult)_patientsController.ActivatePatient("petar");
+            var response = (RedirectResult)_patientsController.ActivatePatient("9d6245d7fb961b620b28c91d22e1a585413743388dc1833e678129f1751d94ae");
             Assert.Equal("http://localhost:4200/login", response.Url);
         }
 

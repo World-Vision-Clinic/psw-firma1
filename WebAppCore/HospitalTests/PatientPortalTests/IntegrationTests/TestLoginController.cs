@@ -38,6 +38,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             _appointmentRepository = new AppointmentRepository(hospitalContext);
             _loginController._patientService = new PatientService(_patientRepository, _appointmentRepository);
             _loginController._managerService = new ManagerService(_managerRepository);
+            _loginController.test = true;
         }
         public TestLoginController()
         {

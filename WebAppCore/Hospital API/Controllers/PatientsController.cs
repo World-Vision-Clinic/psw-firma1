@@ -30,6 +30,7 @@ namespace Hospital_API.Controllers
         public AllergenService _allergenService;
         public DoctorService _doctorService;
         private PatientVerification _verification;
+        public bool test = false;
         public PatientsController()
         {
             _context = new HospitalContext();
@@ -162,9 +163,17 @@ namespace Hospital_API.Controllers
         }
         private Patient getCurrentPatient()
         {
-            string username = User.FindFirst("username")?.Value;
-            Patient patient = _patientService.FindByUserName(username);
-            return patient;
+            if (test)
+            {
+                Patient patient = _patientService.FindByUserName("Marko123");
+                return patient;
+            }
+            else
+            {
+                string username = User.FindFirst("username")?.Value;
+                Patient patient = _patientService.FindByUserName(username);
+                return patient;
+            }
         }
     }
 }

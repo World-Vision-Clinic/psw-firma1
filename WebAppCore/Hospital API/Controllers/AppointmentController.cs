@@ -26,6 +26,7 @@ namespace Hospital_API.Controllers
     {
         public PatientService _patientService { get; set; }
         public AppointmentService _appointmentService { get; set; }
+        public bool test = false;
 
         [ActivatorUtilitiesConstructor]
         public AppointmentController()
@@ -152,9 +153,18 @@ namespace Hospital_API.Controllers
 
         private Patient getCurrentPatient()
         {
-            string username = User.FindFirst("username")?.Value;
-            Patient patient = _patientService.FindByUserName(username);
-            return patient;
+            if (test)
+            {
+                Patient patient = _patientService.FindByUserName("Marko123");
+                return patient;
+            }
+            else
+            {
+                string username = User.FindFirst("username")?.Value;
+                Patient patient = _patientService.FindByUserName(username);
+                return patient;
+            }
+
         }
     }
 }

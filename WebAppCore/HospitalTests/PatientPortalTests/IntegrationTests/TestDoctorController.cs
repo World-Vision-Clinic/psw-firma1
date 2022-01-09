@@ -38,8 +38,8 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             _allergenRepository = new AllergenRepository(hospitalContext);
             _patientAllergenRepository = new PatientAllergenRepository(hospitalContext, _patientRepository, _allergenRepository);
             _doctorRepository = new DoctorRepository(hospitalContext, _patientRepository);
-
             _doctorsController = new DoctorsController(hospitalContext, new DoctorService(_doctorRepository));
+            _doctorsController.test = true;
         }
 
         [Fact]

@@ -43,6 +43,8 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             _patientRepository = new PatientRepository(hospitalContext);
             _doctorRepository = new DoctorRepository(hospitalContext, _patientRepository);
             _appointmentController = new AppointmentController(new AppointmentService(_appointmentRepository, _doctorRepository));
+            _appointmentController._patientService = new PatientService(_patientRepository, _appointmentRepository);
+            _appointmentController.test = true;
         }
 
         [Fact]
@@ -99,8 +101,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 dateForTest = dateForTest.AddDays(1);
             }
 
-            var controller = new AppointmentController();
-            var response = (OkObjectResult) controller.GetAppointments4Step(6, dateForTest.ToString()).Result;
+            var response = (OkObjectResult) _appointmentController.GetAppointments4Step(6, dateForTest.ToString()).Result;
             var data = response.Value as List<Appointment>;
 
             //Assert
@@ -148,7 +149,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             Appointment appointment = new Appointment()
             {
                 Id = 2,
-                PatientForeignKey = 1,
+                PatientForeignKey = 4,
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
                 Date = new DateTime(2025, 6, 6, 12, 0, 0),
@@ -184,7 +185,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             Appointment validAppointment = new Appointment()
             {
                 Id = 4,
-                PatientForeignKey = 1,
+                PatientForeignKey = 4,
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
                 Date = new DateTime(2030, 6, 6, 12, 0, 0),
@@ -194,7 +195,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             Appointment overlappingAppointment = new Appointment()
             {
                 Id = 5,
-                PatientForeignKey = 1,
+                PatientForeignKey = 4,
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
                 Date = new DateTime(2030, 6, 6, 11, 30, 0),
@@ -345,7 +346,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             Appointment appointment = new Appointment()
             {
                 Id = 10,
-                PatientForeignKey = 1,
+                PatientForeignKey = 4,
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
                 Date = DateTime.Now.AddDays(5),
@@ -369,7 +370,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             Appointment appointment = new Appointment()
             {
                 Id = 11,
-                PatientForeignKey = 1,
+                PatientForeignKey = 4,
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
                 Date = new DateTime(2020, 9, 9, 0, 0, 0),

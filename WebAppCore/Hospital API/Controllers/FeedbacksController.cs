@@ -23,6 +23,7 @@ namespace Hospital_API
         //private readonly HospitalContext _context;
         private readonly FeedbackService _feedbackService;
         private readonly PatientService _patientService;
+        public bool test = false;
 
         public FeedbacksController()
         {
@@ -160,9 +161,17 @@ namespace Hospital_API
         }
         private Patient getCurrentPatient()
         {
-            string username = User.FindFirst("username")?.Value;
-            Patient patient = _patientService.FindByUserName(username);
-            return patient;
+            if (test)
+            {
+                Patient patient = _patientService.FindByUserName("Marko123");
+                return patient;
+            }
+            else
+            {
+                string username = User.FindFirst("username")?.Value;
+                Patient patient = _patientService.FindByUserName(username);
+                return patient;
+            }
         }
     }
 }

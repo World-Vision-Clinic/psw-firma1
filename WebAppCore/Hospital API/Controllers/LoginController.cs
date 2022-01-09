@@ -27,6 +27,7 @@ namespace Hospital_API.Controllers
         private string SECRET = "ecc0024b9feaa167cf8c5bc4819bc03aa8ed88d86524bd647db6f3363dfabd13";
         public PatientService _patientService;
         public ManagerService _managerService;
+        public bool test = false;
 
         public LoginController()
         {

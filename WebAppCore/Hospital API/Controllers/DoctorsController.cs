@@ -19,6 +19,7 @@ namespace Hospital_API.Controllers
     {
         private readonly HospitalContext _context;
         private readonly DoctorService _doctorService;
+        public bool test = false;
 
         [ActivatorUtilitiesConstructor]
         public DoctorsController()

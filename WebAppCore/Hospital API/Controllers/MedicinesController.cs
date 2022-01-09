@@ -18,6 +18,8 @@ namespace Hospital_API.Controllers
     public class MedicinesController : ControllerBase
     {
         private MedicineService medicineService = new MedicineService(new MedicinesRepository(), new MedicalRecordsRepository(), new ExaminationRepository());
+        public bool test = false;
+
         [HttpPost("ordered")]
         public IActionResult OrderedHTTP(OrderedMedicineDTO dto)
         {
