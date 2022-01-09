@@ -31,7 +31,21 @@ namespace Integration_API.Controller
        
         TenderService service = new TenderService(new TenderRepository());
         FilesService filesService = new FilesService(new FilesRepository());
-        
+
+        [HttpGet]
+        public IActionResult GetTenders()
+        {
+            List<Tender> tenders = service.GetTenders();
+            List<TenderDto> tendersDto = new List<TenderDto>();
+            foreach (Tender t in tenders)
+            {
+                TenderDto dto = TenderMapper.TenderToTenderDto(t);
+                tendersDto.Add(dto);
+            }
+            
+            return Ok(tendersDto);
+        }
+
         [HttpPost]
         public IActionResult CreateTender(TenderCreationDto dto)
         {
@@ -39,6 +53,28 @@ namespace Integration_API.Controller
             service.SaveTender(tender);
             TenderDto tenderDto = TenderMapper.TenderToTenderDto(tender);
             SendTender(tenderDto);
+            return Ok();
+        }
+
+        [HttpPost("closeTender")]
+        public IActionResult CloseTender(TenderDto dto)
+        {
+
+            Tender tender = TenderMapper.TenderDtoToTender(dto);
+            tender.EndTime = DateTime.Now;
+
+            service.EditTenderByHash(tender);
+            return Ok();
+        }
+
+        [HttpPost("chooseTenderWinner")]
+        public IActionResult ChooseTenderWinner(TenderOfferDto dto)
+        {
+
+            TenderOffer offer = TenderMapper.TenderOfferDtoToTenderOffer(dto);
+            offer.Winner = true;
+
+            service.EditTenderOfferById(offer); 
             return Ok();
         }
 

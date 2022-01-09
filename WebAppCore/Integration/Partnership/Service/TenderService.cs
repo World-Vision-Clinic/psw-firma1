@@ -23,6 +23,21 @@ namespace Integration.Partnership.Service
         {
             return tenderRepository.GetAll();
         }
+        public List<Tender> GetTenders()
+        {
+            return tenderRepository.GetAll();
+        }
+
+        public void EditTenderByHash(Tender tender)
+        {
+            tenderRepository.EditTenderByHash(tender);
+        }
+
+        public void EditTenderOfferById(TenderOffer offer)
+        {
+            tenderRepository.EditTenderOfferById(offer);
+        }
+
 
         public Dictionary<string, List<float>> GetNumberOfOffersForAllTenders(DateTime start, DateTime end)
         {
