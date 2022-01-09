@@ -63,8 +63,6 @@ export class StatisticsComponent implements OnInit {
   barChartDataMin = [];
 
   ngOnInit(): void {
-    alert(this.startDate)
-    alert(this.endDate)
   }
 
   getChartDataForNumberOfOffers() {
@@ -132,7 +130,7 @@ export class StatisticsComponent implements OnInit {
     .subscribe((result: Blob) => {
       const blob = new Blob([result], { type:'application/pdf' }); // you can change the type
       const url= window.URL.createObjectURL(blob);
-      window.open(url);
+      window.open(url, 'title');
   });
   }
 
