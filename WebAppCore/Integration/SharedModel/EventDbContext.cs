@@ -1,22 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Pharmacy.Model;
+﻿using Integration.Pharmacy.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pharmacy.Repository
+namespace Integration.SharedModel
 {
-    public class EventsDbContext : DbContext
+    public class EventDbContext : DbContext
     {
-        public DbSet<Event> EventsPharmacy { get; set; }
+        public DbSet<Event> EventsIntegration { get; set; }
 
-        public EventsDbContext()
+        public EventDbContext()
         {
         }
+        public EventDbContext(DbContextOptions<EventDbContext> options) : base(options) { }
 
-        public EventsDbContext(DbSet<Event> events)
+        public EventDbContext(DbSet<Event> events)
         {
-            EventsPharmacy = events;
+            EventsIntegration = events;
         }
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
@@ -28,7 +29,12 @@ namespace Pharmacy.Repository
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(CreateConnectionStringFromEnvironment()).UseLazyLoadingProxies();
+
+            if (!optionsBuilder.IsConfigured)
+            {
+                string connectionString = CreateConnectionStringFromEnvironment();
+                optionsBuilder.UseNpgsql(connectionString);
+            }
         }
 
         private string CreateConnectionStringFromEnvironment()
@@ -45,3 +51,4 @@ namespace Pharmacy.Repository
         }
     }
 }
+

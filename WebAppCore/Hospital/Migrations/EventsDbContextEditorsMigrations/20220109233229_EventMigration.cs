@@ -2,36 +2,36 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace Pharmacy.Migrations.EventsDb
+namespace Hospital.Migrations.EventsDbContextEditorsMigrations
 {
-    public partial class EventMigration2 : Migration
+    public partial class EventMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Events",
+                name: "EventsEditors",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(nullable: true),
-                    EventTime = table.Column<DateTime>(nullable: false)
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    EventTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Events", x => x.Id);
+                    table.PrimaryKey("PK_EventsEditors", x => x.Id);
                 });
 
             migrationBuilder.InsertData(
-                table: "Events",
+                table: "EventsEditors",
                 columns: new[] { "Id", "EventTime", "Name" },
-                values: new object[] { 1, new DateTime(2022, 1, 9, 23, 7, 2, 289, DateTimeKind.Local).AddTicks(5442), "Klik" });
+                values: new object[] { 1, new DateTime(2022, 1, 10, 0, 32, 28, 861, DateTimeKind.Local).AddTicks(9666), "Klik" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Events");
+                name: "EventsEditors");
         }
     }
 }

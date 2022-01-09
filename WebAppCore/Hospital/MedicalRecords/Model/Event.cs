@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace PharmacyAPI.Dto
+namespace Hospital.MedicalRecords.Model
 {
-    public class EventDto
+    public class Event
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime EventTime { get; set; }
-        public EventDto()
+
+
+        public Event()
         {
         }
 
-        public EventDto(int id, string name, DateTime eventTime)
+        public Event(int id, string name, DateTime eventTime)
         {
             Id = id;
             Name = name;

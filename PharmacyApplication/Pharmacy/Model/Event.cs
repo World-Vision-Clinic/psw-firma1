@@ -10,6 +10,7 @@ namespace Pharmacy.Model
         public string Name { get; set; }
         public DateTime EventTime { get; set; }
 
+
         public Event()
         {
         }

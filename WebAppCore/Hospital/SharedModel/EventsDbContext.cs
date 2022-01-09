@@ -1,22 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Pharmacy.Model;
+﻿using Hospital.MedicalRecords.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pharmacy.Repository
+namespace Hospital.SharedModel
 {
     public class EventsDbContext : DbContext
     {
-        public DbSet<Event> EventsPharmacy { get; set; }
+        public DbSet<Event> EventsHospital{ get; set; }
 
         public EventsDbContext()
         {
         }
+        public EventsDbContext(DbContextOptions<EventsDbContext> options) : base(options) { }
 
         public EventsDbContext(DbSet<Event> events)
         {
-            EventsPharmacy = events;
+            EventsHospital = events;
         }
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
@@ -28,7 +29,12 @@ namespace Pharmacy.Repository
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(CreateConnectionStringFromEnvironment()).UseLazyLoadingProxies();
+
+            if (!optionsBuilder.IsConfigured)
+            {
+                string connectionString = CreateConnectionStringFromEnvironment();
+                optionsBuilder.UseNpgsql(connectionString);
+            }
         }
 
         private string CreateConnectionStringFromEnvironment()

@@ -1,18 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Pharmacy.Model;
-using Pharmacy.Repository;
-using Pharmacy.Service;
-using PharmacyAPI.Dto;
+﻿using Hospital.GraphicalEditor.Model;
+using Hospital.GraphicalEditor.Repository;
+using Hospital.GraphicalEditor.Service;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PharmacyAPI.Controller
+namespace Hospital_API.Controllers
 {
-    [Route("[controller]")]
-    [ApiController]
-    public class EventController : ControllerBase
+    public class EventEditorsController : ControllerBase
     {
         EventService service = new EventService(new EventRepository());
 
@@ -29,8 +26,8 @@ namespace PharmacyAPI.Controller
             Event ev = service.GetById(eventId);
             if (ev == null)
                 return BadRequest("No event with that id");
-            EventDto dto = new EventDto(ev.Id, ev.Name, ev.EventTime);
-            return Ok(dto);
+            Event e = new Event(ev.Id, ev.Name, ev.EventTime);
+            return Ok(e);
         }
 
         [HttpPost]
@@ -39,6 +36,5 @@ namespace PharmacyAPI.Controller
             service.Save(newEvent);
             return Ok();
         }
-
     }
 }

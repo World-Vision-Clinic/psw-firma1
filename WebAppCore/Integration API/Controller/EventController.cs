@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Pharmacy.Model;
-using Pharmacy.Repository;
-using Pharmacy.Service;
-using PharmacyAPI.Dto;
+﻿using Integration.Pharmacy.Model;
+using Integration.Pharmacy.Repository;
+using Integration.Pharmacy.Service;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PharmacyAPI.Controller
+namespace Integration_API.Controller
 {
     [Route("[controller]")]
     [ApiController]
@@ -29,8 +28,8 @@ namespace PharmacyAPI.Controller
             Event ev = service.GetById(eventId);
             if (ev == null)
                 return BadRequest("No event with that id");
-            EventDto dto = new EventDto(ev.Id, ev.Name, ev.EventTime);
-            return Ok(dto);
+            Event e = new Event(ev.Id, ev.Name, ev.EventTime);
+            return Ok(e);
         }
 
         [HttpPost]
@@ -39,6 +38,5 @@ namespace PharmacyAPI.Controller
             service.Save(newEvent);
             return Ok();
         }
-
     }
 }
