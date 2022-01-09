@@ -55,9 +55,8 @@ export class PatientCreateFeedbackComponent implements OnInit {
       let feedback = new Feedback(this.content,this.isPublic,this.isPublishable,this.isAnonymous, this.UserName);
       this.feedbackSent = true;
       this._patientCreateFeedbackService.addFeedback(feedback).subscribe(
-        success => setTimeout(() => {
-          this.router.navigate(['/medical-record']);
-      }, 800));
+        success => this.router.navigate(['/medical-record'])
+        );
     }
   }
 
