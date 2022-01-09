@@ -9,7 +9,7 @@ namespace Pharmacy.Model
 {
     public class EventRepository: IEventRepository
     {
-        private PharmacyDbContext dbContext = new PharmacyDbContext();
+        private EventsDbContext dbContext = new EventsDbContext();
 
         public List<Event> GetAll()
         {

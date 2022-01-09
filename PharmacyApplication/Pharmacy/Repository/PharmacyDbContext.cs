@@ -22,18 +22,13 @@ namespace Pharmacy.Repository
         public DbSet<OfferItem> OfferItems { get; set; }
         public DbSet<Ad> Ads { get; set; }
         public DbSet<MedicineAd> MedicineAds { get; set; }
-        public DbSet<Event> Events { get; set; }
 
 
         public PharmacyDbContext() { }
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
-            modelbuilder.Entity<Event>().HasData(
-               new Event(1, "Klik", DateTime.Now)
-            );
-
-
+            
             modelbuilder.Entity<SubstituteMedicine>().HasKey(sm => new { sm.MedicineId, sm.SubstituteId });
             modelbuilder.Entity<SubstituteMedicine>()
                 .HasOne(pt => pt.Substitute)
