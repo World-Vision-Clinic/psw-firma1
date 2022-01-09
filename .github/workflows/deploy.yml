@@ -14,9 +14,6 @@ jobs:
     steps:
       - name: Install SSH Key
         uses: appleboy/ssh-action@master
-      #   uses: shimataro/ssh-key-action@v2
-      # - name: Adding Known Hosts
-      #   run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
         with:
           # host: ${{ secrets.SSH_HOST }} 
           host: 79.101.34.218 
