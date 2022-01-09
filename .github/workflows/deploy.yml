@@ -15,7 +15,6 @@ jobs:
       - name: Install SSH Key
         uses: appleboy/ssh-action@master
         with:
-          # host: ${{ secrets.SSH_HOST }} 
           host: 79.101.34.218 
           username: 'student'
           key: ${{ secrets.SSH_KEY }}
