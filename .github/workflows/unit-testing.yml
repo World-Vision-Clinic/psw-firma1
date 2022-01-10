@@ -12,7 +12,7 @@ jobs:
       PHARMACY_PROJECT_SOLUTION: PharmacyApplication
       HOSPITAL_PROJECT_SOLUTION: WebAppCore/HospitalTests/HospitalTests.csproj
       INTEGRATION_PROJECT_SOLUTION: WebAppCore/IntegrationTests/IntegrationTests.csproj
-
+    # mm
 
     steps:
       - name: Checkout
@@ -22,14 +22,15 @@ jobs:
       - name: Build pharmacy
         run: dotnet build ${PHARMACY_PROJECT_SOLUTION} --configuration Release --no-restore
       - name: Test pharmacy
-        run: dotnet test ${PHARMACY_PROJECT_SOLUTION} --no-restore --verbosity quiet --filter FullyQualifiedName!~IntegrationTests
+        run: dotnet test ${PHARMACY_PROJECT_SOLUTION} --no-restore --verbosity quiet --filter FullyQualifiedName~UnitTests
+
 
       - name: Install dependencies hospital
         run: dotnet restore ${HOSPITAL_PROJECT_SOLUTION}
       - name: Build hospital
         run: dotnet build ${HOSPITAL_PROJECT_SOLUTION} --configuration Release --no-restore
       - name: Test hospital
-        run: dotnet test ${HOSPITAL_PROJECT_SOLUTION} --no-restore --verbosity quiet --filter FullyQualifiedName!~IntegrationTests
+        run: dotnet test ${HOSPITAL_PROJECT_SOLUTION} --no-restore --verbosity quiet --filter FullyQualifiedName~UnitTests
 
 
       - name: Install dependencies integration
