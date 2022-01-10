@@ -12,7 +12,6 @@ jobs:
       PHARMACY_PROJECT_SOLUTION: PharmacyApplication
       HOSPITAL_PROJECT_SOLUTION: WebAppCore/HospitalTests/HospitalTests.csproj
       INTEGRATION_PROJECT_SOLUTION: WebAppCore/IntegrationTests/IntegrationTests.csproj
-    # mm
 
     steps:
       - name: Checkout

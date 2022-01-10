@@ -14,6 +14,9 @@ jobs:
       SOLUTION_DIRECTORY_INTEGRATION: WebAppCore
       PROJECT_DIRECTORY_INTEGRATION: Integration
 
+      SOLUTION_DIRECTORY_HOSPITAL: WebAppCore
+      PROJECT_DIRECTORY_HOSPITAL: Hospital
+
     services:
       postgres:
         image: postgres
@@ -35,10 +38,9 @@ jobs:
       - name: Install dotnet ef
         run: dotnet tool install --global dotnet-ef
 
-      - name: Install dependencies
+      - name: Install dependencies pharmacy
         run: dotnet restore ${SOLUTION_DIRECTORY}
-
-      - name: Create Migrations
+      - name: Create Migrations phramacy
         run:
           dotnet ef migrations add InitialCreate --project ${SOLUTION_DIRECTORY}\/${PROJECT_DIRECTORY};
       - name: Update Database
@@ -50,6 +52,20 @@ jobs:
           POSTGRES_PORT: 5432
           POSTGRES_PASSWORD: admin
 
+
+      - name: Install dependencies hospital
+        run: dotnet restore ${SOLUTION_DIRECTORY_HOSPITAL:}
+      - name: Create Migrations hospital
+        run:
+          dotnet ef migrations add InitialCreate --project ${SOLUTION_DIRECTORY_HOSPITAL:}\/${PROJECT_DIRECTORY_HOSPITAL:};
+      - name: Update Database
+        run: dotnet ef database update --project ${SOLUTION_DIRECTORY_HOSPITAL:}\/${PROJECT_DIRECTORY_HOSPITAL:};
+      - name: Test
+        run: dotnet test ${SOLUTION_DIRECTORY_HOSPITAL:} --no-restore --verbosity quiet --filter FullyQualifiedName\~IntegrationTests
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_PASSWORD: admin
 
 
       # - name: Install dependencies integration
