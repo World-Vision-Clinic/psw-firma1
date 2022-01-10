@@ -48,7 +48,7 @@ jobs:
       - name: Update Database
         run: dotnet ef database update --context HospitalContext --project ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL};
       - name: Test
-        run: dotnet test ${SOLUTION_DIRECTORY_HOSPITAL} --no-restore --verbosity quiet --filter FullyQualifiedName\~HospitalTests\EditorTests\IntegrationTests
+        run: dotnet test ${SOLUTION_DIRECTORY_HOSPITAL} --no-restore --verbosity quiet --filter FullyQualifiedName\!~E2ETests
         env:
           POSTGRES_USER: admin
           POSTGRES_HOST: localhost
