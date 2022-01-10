@@ -1,0 +1,67 @@
+name: integration-testing
+on:
+  push:
+  pull_request:
+
+
+jobs:
+  Run-Integration-Tests:
+    runs-on: ubuntu-latest
+    env:
+      SOLUTION_DIRECTORY: PharmacyApplication
+      PROJECT_DIRECTORY: Pharmacy
+
+      SOLUTION_DIRECTORY_INTEGRATION: WebAppCore
+      PROJECT_DIRECTORY_INTEGRATION: Integration
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_PASSWORD: admin
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Install dotnet ef
+        run: dotnet tool install --global dotnet-ef
+
+      - name: Install dependencies pharmacy
+        run: dotnet restore ${SOLUTION_DIRECTORY}
+      - name: Create Migrations phramacy
+        run:
+          dotnet ef migrations add InitialCreate --project ${SOLUTION_DIRECTORY}\/${PROJECT_DIRECTORY};
+      - name: Update Database
+        run: dotnet ef database update --project ${SOLUTION_DIRECTORY}\/${PROJECT_DIRECTORY};
+      - name: Test
+        run: dotnet test ${SOLUTION_DIRECTORY} --no-restore --verbosity quiet --filter FullyQualifiedName\!~UnitTests
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_PASSWORD: admin
+
+
+      # - name: Install dependencies integration
+      #   run: dotnet restore ${SOLUTION_DIRECTORY_INTEGRATION}
+      # - name: Create Migrations integration
+      #   run:
+      #     dotnet ef migrations add InitialCreate --project ${SOLUTION_DIRECTORY_INTEGRATION}\/${PROJECT_DIRECTORY_INTEGRATION};
+      # - name: Update Database integration
+      #   run: dotnet ef database update --project ${SOLUTION_DIRECTORY_INTEGRATION}\/${PROJECT_DIRECTORY_INTEGRATION};
+      # - name: Test integration
+      #   run: dotnet test ${SOLUTION_DIRECTORY_INTEGRATION} --no-restore --verbosity quiet --filter FullyQualifiedName\!~UnitTests
+      #   env:
+      #     POSTGRES_HOST: localhost
+      #     POSTGRES_PORT: 5432
+      #     POSTGRES_PASSWORD: admin
