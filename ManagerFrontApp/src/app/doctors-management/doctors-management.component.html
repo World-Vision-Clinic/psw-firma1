@@ -59,11 +59,11 @@
     </table>
 
     <div *ngIf="additionalBox">
-      <h3 style="margin-bottom: 30px;" class="title">Doctor's schedule</h3>
+      <h3 style="margin-bottom: 10px;" class="title">Doctor's schedule</h3>
 
-      <div style="display: flex; flex-direction: row; margin-bottom: 2%;" >
-          <label style="margin-right: 20%;" for="">Shift time: {{ doctorsShift.start }}h - {{doctorsShift.end}}h </label><br />
-          <label for="">Shift name: {{ doctorsShift.name }}</label><br />
+      <div style="display: flex; flex-direction: column;" >
+          <label style="margin-bottom: -2%;" for="">Shift time: {{ doctorsShift.start }}h - {{doctorsShift.end}}h </label><br />
+          <label  style="margin-bottom: -2%;" for="">Shift name: {{ doctorsShift.name }}</label><br />
       </div>
       <div style="display: flex; flex-direction: row">
         <table class="on-table">
@@ -97,7 +97,7 @@
           </tbody>
         </table>
       </div>
-      <button style="margin-left: 44%;" class="toolbar-btn" (click)="additionalBox = false">Close</button>
+      <button style="margin-left: 44%; margin-bottom: 10%;" class="toolbar-btn" (click)="additionalBox = false">Close</button>
     </div>
   </div>
 
@@ -199,14 +199,17 @@
             name="input"
             [(ngModel)]="vacation.description"
           />
-          <button
+          <div style="display: flex; flex-direction: row;">
+            <button
             class="toolbar-btn"
             (click)="addNewVacation()"
-            style="margin-top: 20px; margin-left: 27%"
+            style="margin-top: 20px; margin-left: 6%;"
           >
             Add
           </button>
+          <button class="toolbar-btn" style="margin-top: 20px;"  (click)="buttonsBox = false; addVacationBox = false; vacationTableBox = true;">Close</button>
         </div>
+          </div>
 
         <div
           style="display: flex; flex-direction: column"
@@ -245,13 +248,17 @@
             [value]="selectedVacation.description"
             [(ngModel)]="vacation.description"
           />
-          <button
+          <div style="display: flex; flex-direction: row;">
+            <button
             class="toolbar-btn"
-            style="margin-top: 20px; margin-left: 27%"
+            style="margin-top: 20px; margin-left: 6%"
             (click)="editVacation()"
           >
             Save
           </button>
+          <button class="toolbar-btn" style="margin-top: 20px;"  (click)="buttonsBox = false; editVacationBox = false; vacationTableBox = true;">Close</button>
+          </div>
+          
         </div>
       </div>
     </div>
@@ -289,7 +296,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of shifts" (click)="selectShift(item)">
-              <td>{{ item.name }}</td>
+              <td style="width:200px;">{{ item.name }}</td>
               <td>{{ item.start }} h</td>
               <td>{{ item.end }} h</td>
             </tr>
@@ -301,7 +308,7 @@
         </button>
         <button
           (click)="
-            shiftsBox = false; shiftsListBox = false; initialTableBox = true
+            shiftsBox = false; shiftsListBox = false; initialTableBox = true;
           "
           routerLink="/doctors-management"
           class="btn"
@@ -315,7 +322,6 @@
       <table class="doctor-list-table">
         <thead>
           <tr>
-            <th>Id</th>
             <th>First name</th>
             <th>Last name</th>
             <th>Shift</th>
@@ -323,21 +329,20 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of doctors" (click)="selectDoctor(item)">
-            <td>{{ item.id }}</td>
             <td>{{ item.firstName }}</td>
             <td>{{ item.lastName }}</td>
             <td>{{ fetchDoctorsAndShifts(item.shiftId) }}</td>
           </tr>
         </tbody>
       </table>
-      <hr />
-      <button (click)="pickDoctor()" class="btn">Pick Shift</button>
+      <button style="margin-top: 20px;" (click)="pickDoctor()" class="btn">Pick Shift</button>
       <button
         (click)="
           shiftsBox = false; shiftsDoctorsBox = false; initialTableBox = true
         "
         routerLink="/doctors-management"
         class="btn"
+        style="margin-top: 20px;"
       >
         Close
       </button>

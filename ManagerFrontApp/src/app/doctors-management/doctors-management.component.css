@@ -137,7 +137,7 @@
 
 .vacation-table {
   display: block;
-  margin-left: 5%;
+  margin-left: 3%;
   margin-right: 2%;
   margin-bottom: 20px;
   background-color: white;
@@ -242,7 +242,7 @@
 .list-table tbody > tr > td {
   display: inline-block;
   padding: 8px;
-  text-align: left;
+  text-align: center;
   font-size: 14px;
   color: #000;
   flex: 1;
@@ -250,7 +250,7 @@
 .list-table th {
   display: inline-block;
   padding: 8px;
-  text-align: left;
+  text-align: center;
   font-size: 14px;
   text-align: center;
   color: white;
@@ -260,12 +260,12 @@
 
 .doctor-list-table {
   display: block;
-  margin-left: 2%;
+  margin-left: 1%;
   margin-right: 2%;
   background-color: rgba(224, 223, 223, 0.911);
   max-height: 300px;
   overflow-y: scroll;
-  width: 100%;
+  width: 99%;
 }
 .doctor-list-table thead {
   display: flex;
@@ -287,7 +287,7 @@
 .doctor-list-table tbody > tr > td {
   display: inline-block;
   padding: 8px;
-  text-align: left;
+  text-align: center;
   font-size: 14px;
   color: #000;
   flex: 1;
@@ -295,7 +295,6 @@
 .doctor-list-table th {
   display: inline-block;
   padding: 8px;
-  text-align: left;
   font-size: 14px;
   text-align: center;
   color: white;
