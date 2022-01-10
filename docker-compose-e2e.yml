@@ -71,7 +71,7 @@ services:
         source: db_volume
         target: /var/lib/postgresql/data
       - type: bind
-        source: ./dbscripts/seed.sql 
+        source: ./WebAppCore/stacks-hospital/dbscripts/seed.sql 
         target: /docker-entrypoint-initdb.d/seed.sql
     container_name: database
     networks:
