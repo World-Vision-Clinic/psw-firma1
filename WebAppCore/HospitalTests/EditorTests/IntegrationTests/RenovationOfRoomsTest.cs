@@ -27,8 +27,8 @@ namespace HospitalTests.EditorTests.IntegrationTests
         {
             //Arrange
             RoomService service = new RoomService(new RoomRepository(new HospitalContext()), new EquipmentRepository(new HospitalContext()));
-            Room r1 = service.GetById(176);
-            Room r2 = service.GetById(40);
+            Room r1 = service.GetById(8);
+            Room r2 = service.GetById(9);
             int numOfRooms = service.getAll().Count;
             //Act
             roomId = service.mergeRooms(r1, r2, "MERGED ROOM 1", "For doctors rest.");
@@ -43,7 +43,7 @@ namespace HospitalTests.EditorTests.IntegrationTests
         {
             //Arrange
             RoomService service = new RoomService(new RoomRepository(new HospitalContext()), new EquipmentRepository(new HospitalContext()));
-            Room room = service.GetById(176);
+            Room room = service.GetById(10);
             int numOfRooms = service.getAll().Count;
 
             //Act

@@ -30,7 +30,7 @@ namespace HospitalTests.EditorTests.UnitTests
         public void change_of_dimensions_and_total_number_of_rooms()
         {
             HospitalContext context = GetInMemoryRepository();
-                Room r1 = new Room { Id = 88, FloorId = 1, Name = "OPERATING ROOM 1", DoctorId = -1, Purpose = "", X = 0, Y = 150, Height = 190, Width = 150, DoorX = 148, DoorY = 285, Vertical = true, Css = "room room-cadetblue", DoorExist = true };
+                Room r1 = new Room (88, "OPERATING ROOM 1","",-1, 1, 0, 150, 190, 150, 148, 285, true, "room room-cadetblue", true );
                 context.Rooms.Add(r1);
                 context.SaveChanges();
 

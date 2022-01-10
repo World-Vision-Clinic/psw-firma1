@@ -64,33 +64,31 @@ namespace Hospital.RoomsAndEquipment.Service
 
         public int mergeRooms(Room room1, Room room2, String name, String purpose)
         {
-            Room newRoom = new Room();
             int newIdIndex = repository.GetAll().Count - 1;
             int newId=repository.GetAll()[newIdIndex].Id + 97;
             mergeEquipment(room1.Id, room2.Id, newId);
-
-            newRoom.Id = newId;
-            newRoom.Name = name;
-            newRoom.Purpose = purpose;
-            newRoom.X = room1.X < room2.X ? room1.X : room2.X;
-            newRoom.Y = room1.Y < room2.Y ? room1.Y : room2.Y;
+            int Height;
+            int Width;
+            int X = room1.X < room2.X ? room1.X : room2.X;
+            int Y = room1.Y < room2.Y ? room1.Y : room2.Y;
             if (room1.Vertical)
             {
-                newRoom.Width = room1.Width;
-                newRoom.Height = room1.Height + 10 + room2.Height;
+                Width = room1.Width;
+                Height = room1.Height + 10 + room2.Height;
             } else
             {
-                newRoom.Width = room1.Width + 10 + room2.Width;
-                newRoom.Height = room1.Height;
+                Width = room1.Width + 10 + room2.Width;
+                Height = room1.Height;
             }
             
-            newRoom.FloorId = room1.FloorId;
-            newRoom.DoorX = room1.DoorX;
-            newRoom.DoorY = room1.DoorY;
-            newRoom.Vertical = room1.Vertical;
-            newRoom.DoorExist = room1.DoorExist;
-            newRoom.Css = room1.Css;
-            newRoom.DoctorId = -1;
+            int FloorId = room1.FloorId;
+            int DoorX = room1.DoorX;
+            int DoorY = room1.DoorY;
+            bool Vertical = room1.Vertical;
+            bool DoorExist = room1.DoorExist;
+            string Css = room1.Css;
+
+            Room newRoom = new Room(newId, name, purpose, -1, FloorId, X, Y, Height, Width, DoorX, DoorY, Vertical, Css, DoorExist);
             repository.Delete(room1.Id);
             repository.Delete(room2.Id);
             repository.Save(newRoom);
@@ -100,105 +98,116 @@ namespace Hospital.RoomsAndEquipment.Service
 
         public void splitRoom(Room room, String name1, String purpose1, String name2, String purpose2)
         {
-            Room newRoom1 = new Room();
-            Room newRoom2 = new Room();
+
             int newIdIndex = repository.GetAll().Count - 1;
             int newId = repository.GetAll()[newIdIndex].Id + 97;
+            int newRoom1Id, newRoom2Id;
+            string newRoom1Name, newRoom2Name;
+            string newRoom1Purpose, newRoom2Purpose;
+            int newRoom1X, newRoom2X;
+            int newRoom1Y, newRoom2Y;
+            int newRoom1Width, newRoom2Width;
+            int newRoom1Height, newRoom2Height;
+            int newRoom1FloorId, newRoom2FloorId;
+            int newRoom1DoorX, newRoom2DoorX;
+            int newRoom1DoorY, newRoom2DoorY;
+            bool newRoom1Vertical, newRoom2Vertical;
+            bool newRoom1DoorExist, newRoom2DoorExist;
+            string newRoom1Css, newRoom2Css; 
             //Ukoliko je soba uspravna dijelimo je na dvije uspravno
             if (room.Vertical)
             {
-                newRoom1.Id = room.Id;
-                newRoom1.Name = name1;
-                newRoom1.Purpose = purpose1;
-                newRoom1.X = room.X;
-                newRoom1.Y = room.Y;
-                newRoom1.Width = room.Width;
+                newRoom1Id = room.Id;
+                newRoom1Name = name1;
+                newRoom1Purpose = purpose1;
+                newRoom1X = room.X;
+                newRoom1Y = room.Y;
+                newRoom1Width = room.Width;
                 if (room.Height % 2 == 0)
                 {
-                    newRoom1.Height = room.Height / 2 - 5;
+                    newRoom1Height = room.Height / 2 - 5;
                 }
                 else
                 {
-                    newRoom1.Height = (room.Height-1) / 2 - 5;
+                    newRoom1Height = (room.Height-1) / 2 - 5;
                 }
-                newRoom1.FloorId = room.FloorId;
-                newRoom1.DoorX = room.DoorX;
-                newRoom1.DoorY = newRoom1.Y+20;
-                newRoom1.Vertical = room.Vertical;
-                newRoom1.DoorExist = room.DoorExist;
-                newRoom1.Css = room.Css;
-                newRoom1.DoctorId = -1;
+                newRoom1FloorId = room.FloorId;
+                newRoom1DoorX = room.DoorX;
+                newRoom1DoorY = newRoom1Y+20;
+                newRoom1Vertical = room.Vertical;
+                newRoom1DoorExist = room.DoorExist;
+                newRoom1Css = room.Css;
 
-                newRoom2.Id = newId;
-                newRoom2.Name = name2;
-                newRoom2.Purpose = purpose2;
-                newRoom2.X = room.X;
+                newRoom2Id = newId;
+                newRoom2Name = name2;
+                newRoom2Purpose = purpose2;
+                newRoom2X = room.X;
                 if (room.Height % 2 == 0)
                 {
-                    newRoom2.Y = room.Y + room.Height / 2 + 5;
-                    newRoom2.Height = room.Height / 2 - 5;
+                    newRoom2Y = room.Y + room.Height / 2 + 5;
+                    newRoom2Height = room.Height / 2 - 5;
                 } else
                 {
-                    newRoom2.Y = room.Y + (room.Height-1) / 2 + 5;
-                    newRoom2.Height = (room.Height-1) / 2 - 4;
+                    newRoom2Y = room.Y + (room.Height-1) / 2 + 5;
+                    newRoom2Height = (room.Height-1) / 2 - 4;
                 }               
-                newRoom2.Width = room.Width;
-                newRoom2.FloorId = room.FloorId;
-                newRoom2.DoorX = room.DoorX;
-                newRoom2.DoorY = newRoom2.Y+20;
-                newRoom2.Vertical = room.Vertical;
-                newRoom2.DoorExist = room.DoorExist;
-                newRoom2.Css = room.Css;
-                newRoom2.DoctorId = -1;
+                newRoom2Width = room.Width;
+                newRoom2FloorId = room.FloorId;
+                newRoom2DoorX = room.DoorX;
+                newRoom2DoorY = newRoom2Y+20;
+                newRoom2Vertical = room.Vertical;
+                newRoom2DoorExist = room.DoorExist;
+                newRoom2Css = room.Css;
             }
             else //Ukoliko je vodoravna
             {
-                newRoom1.Id = room.Id;
-                newRoom1.Name = name1;
-                newRoom1.Purpose = purpose1;
-                newRoom1.X = room.X;
-                newRoom1.Y = room.Y;
-                newRoom1.Height = room.Height;
+                newRoom1Id = room.Id;
+                newRoom1Name = name1;
+                newRoom1Purpose = purpose1;
+                newRoom1X = room.X;
+                newRoom1Y = room.Y;
+                newRoom1Height = room.Height;
                 if (room.Width % 2 == 0)
                 {
-                    newRoom1.Width = room.Width / 2 - 5;
+                    newRoom1Width = room.Width / 2 - 5;
                 }
                 else
                 {
-                    newRoom1.Width = (room.Width - 1) / 2 - 4;
+                    newRoom1Width = (room.Width - 1) / 2 - 4;
                 }
-                newRoom1.FloorId = room.FloorId;
-                newRoom1.DoorX = newRoom1.X + 15;
-                newRoom1.DoorY = room.Y-2;
-                newRoom1.Vertical = room.Vertical;
-                newRoom1.DoorExist = room.DoorExist;
-                newRoom1.Css = room.Css;
-                newRoom1.DoctorId = -1;
+                newRoom1FloorId = room.FloorId;
+                newRoom1DoorX = newRoom1X + 15;
+                newRoom1DoorY = room.Y-2;
+                newRoom1Vertical = room.Vertical;
+                newRoom1DoorExist = room.DoorExist;
+                newRoom1Css = room.Css;
 
-                newRoom2.Id = newId;
-                newRoom2.Name = name2;
-                newRoom2.Purpose = purpose2;
-                newRoom2.Y = room.Y;
+                newRoom2Id = newId;
+                newRoom2Name = name2;
+                newRoom2Purpose = purpose2;
+                newRoom2Y = room.Y;
                 if (room.Width % 2 == 0)
                 {
-                    newRoom2.X = room.X + room.Width / 2 + 5;
-                    newRoom2.Width= room.Width / 2 - 5;
+                    newRoom2X = room.X + room.Width / 2 + 5;
+                    newRoom2Width= room.Width / 2 - 5;
                 }
                 else
                 {
-                    newRoom2.X = room.X + (room.Width - 1) / 2 + 5;
-                    newRoom2.Width = (room.Width - 1) / 2 - 4;
+                    newRoom2X = room.X + (room.Width - 1) / 2 + 5;
+                    newRoom2Width = (room.Width - 1) / 2 - 4;
                 }
 
-                newRoom2.Height= room.Height;
-                newRoom2.FloorId = room.FloorId;
-                newRoom2.DoorX = newRoom2.X + 20;
-                newRoom2.DoorY = newRoom2.Y-2;
-                newRoom2.Vertical = room.Vertical;
-                newRoom2.DoorExist = room.DoorExist;
-                newRoom2.Css = room.Css;
-                newRoom2.DoctorId = -1;
+                newRoom2Height= room.Height;
+                newRoom2FloorId = room.FloorId;
+                newRoom2DoorX = newRoom2X + 20;
+                newRoom2DoorY = newRoom2Y-2;
+                newRoom2Vertical = room.Vertical;
+                newRoom2DoorExist = room.DoorExist;
+                newRoom2Css = room.Css;
+
             }
+            Room newRoom1 = new Room(newRoom1Id, newRoom1Name, newRoom1Purpose, -1, newRoom1FloorId, newRoom1X, newRoom1Y, newRoom1Height, newRoom1Width, newRoom1DoorX, newRoom1DoorY, newRoom1Vertical, newRoom1Css, newRoom1DoorExist);
+            Room newRoom2 = new Room(newRoom2Id, newRoom2Name, newRoom2Purpose, -1, newRoom2FloorId, newRoom2X, newRoom2Y, newRoom2Height, newRoom2Width, newRoom2DoorX, newRoom2DoorY, newRoom2Vertical, newRoom2Css, newRoom2DoorExist);
             repository.Delete(room.Id);
             repository.Save(newRoom1);
             repository.Save(newRoom2);
@@ -210,13 +219,14 @@ namespace Hospital.RoomsAndEquipment.Service
             List<Equipment> equipInRoom1 = equipmentRepository.GetRoomEquipemnts(room1ID);
             List<Equipment> equipInRoom2 = equipmentRepository.GetRoomEquipemnts(room2ID);
             List<Equipment> newRoomEquipment = new List<Equipment>();
-
+            string nameEq = "";
             if (equipInRoom1 == null) //Ukoliko u prvoj sobi nema opreme
             {
                 foreach(Equipment e in equipInRoom2)
                 {
-                    e.RoomId = newId;
-                    equipmentRepository.Update(e);
+                    Equipment eq = new Equipment(e.Id, e.Name, e.Type, e.Amount, newId);
+                    equipmentRepository.Delete(e.Id);
+                    equipmentRepository.Save(eq);
                 }
                 return;
             }
@@ -227,18 +237,27 @@ namespace Hospital.RoomsAndEquipment.Service
                 {
                     foreach (Equipment eq1 in equipInRoom1)
                     {
-                        eq1.RoomId = newId;
                         if (eq1.Name.Equals(eq2.Name))
                         {
-                            eq1.Amount += eq2.Amount;
-                            equipmentRepository.Update(eq1);
+                            int sameName = eq1.Amount + eq2.Amount;
+                            nameEq = eq1.Name;
+                            Equipment e = new Equipment(eq1.Id, eq1.Name, eq1.Type, sameName, newId);                           
+                            equipmentRepository.Delete(eq1.Id);
+                            equipmentRepository.Save(e);
                             equipmentRepository.Delete(eq2.Id);
                             break;
                         }
                         else
                         {
-                            eq2.RoomId = newId;
-                            equipmentRepository.Update(eq2);
+                            if (nameEq != eq1.Name)
+                            {
+                                Equipment e1 = new Equipment(eq1.Id, eq1.Name, eq1.Type, eq1.Amount, newId);
+                                equipmentRepository.Delete(eq1.Id);
+                                equipmentRepository.Save(e1);
+                            }
+                            Equipment e = new Equipment(eq2.Id, eq2.Name, eq2.Type, eq2.Amount, newId);
+                            equipmentRepository.Delete(eq2.Id);
+                            equipmentRepository.Save(e);
                         }
                     }
                 }
@@ -249,8 +268,9 @@ namespace Hospital.RoomsAndEquipment.Service
             {
                 foreach(Equipment e in equipInRoom1)
                 {
-                    e.RoomId = newId;
-                    equipmentRepository.Update(e);
+                    Equipment eq = new Equipment(e.Id, e.Name, e.Type, e.Amount, newId);
+                    equipmentRepository.Delete(e.Id);
+                    equipmentRepository.Save(eq);
                 }
             }
         }

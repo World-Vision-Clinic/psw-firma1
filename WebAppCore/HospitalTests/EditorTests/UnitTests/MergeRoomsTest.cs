@@ -31,14 +31,14 @@ namespace HospitalTests.EditorTests.UnitTests
         {
             HospitalContext context = GetInMemoryRepository();
 
-            Room r1 = new Room { Id = 88, FloorId = 1, Name = "OPERATING ROOM 1", DoctorId = -1, Purpose = "", X = 0, Y = 150, Height = 190, Width = 150, DoorX = 148, DoorY = 285, Vertical = true, Css = "room room-cadetblue", DoorExist = true };
-            Room r2 = new Room { Id = 888, FloorId = 1, Name = "OPERATING ROOM 2", DoctorId = -1, Purpose = "", X = 160, Y = 150, Height = 100, Width = 150, DoorX = 220, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true };
+            Room r1 = new Room (88, "OPERATING ROOM 1", "", -1, 1, 0, 150, 190, 150, 148, 285, true, "room room-cadetblue", true);
+            Room r2 = new Room (888, "OPERATING ROOM 2", "",-1, 1, 160, 150, 100, 150, 220, 248, false, "room room-cadetblue", true );
             context.Rooms.Add(r1);
             context.Rooms.Add(r2);
-            Equipment eq1 = new Equipment { Id = 871, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 15, RoomId = 88 };
-            Equipment eq2 = new Equipment { Id = 872, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 4, RoomId = 888 };
-            Equipment eq3 = new Equipment { Id = 873, Name = "Infusion", Type = EquipmentType.DYNAMIC, Amount = 7, RoomId = 88 };
-            Equipment eq4 = new Equipment { Id = 874, Name = "Syringe", Type = EquipmentType.DYNAMIC, Amount = 23, RoomId = 888 };
+            Equipment eq1 = new Equipment(871, "Bandage", EquipmentType.DYNAMIC, 15, 88);
+            Equipment eq2 = new Equipment(872, "Bandage", EquipmentType.DYNAMIC, 4, 888);
+            Equipment eq3 = new Equipment(873, "Infusion", EquipmentType.DYNAMIC, 7, 88);
+            Equipment eq4 = new Equipment(874, "Syringe", EquipmentType.DYNAMIC, 23, 888);
             context.AllEquipment.Add(eq1);
             context.AllEquipment.Add(eq2);
             context.AllEquipment.Add(eq3);
@@ -67,14 +67,14 @@ namespace HospitalTests.EditorTests.UnitTests
         {
             HospitalContext context = GetInMemoryRepository();
 
-                Room r1 = new Room { Id = 399, FloorId = 1, Name = "OPERATING ROOM 1", DoctorId = -1, Purpose = "", X = 0, Y = 150, Height = 190, Width = 150, DoorX = 148, DoorY = 285, Vertical = true, Css = "room room-cadetblue", DoorExist = true };
-                Room r2 = new Room { Id = 3999, FloorId = 1, Name = "OPERATING ROOM 2", DoctorId = -1, Purpose = "", X = 160, Y = 150, Height = 100, Width = 150, DoorX = 220, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true };
+                Room r1 = new Room(399, "OPERATING ROOM 1", "", -1, 1, 0, 150, 190, 150, 148, 285, true, "room room-cadetblue", true);
+                Room r2 = new Room(3999, "OPERATING ROOM 2", "", -1, 1, 160, 150, 100, 150, 220, 248, false, "room room-cadetblue", true);
                 context.Rooms.Add(r1);
                 context.Rooms.Add(r2);
-                Equipment eq1 = new Equipment { Id = 717, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 15, RoomId = 399 };
-                Equipment eq2 = new Equipment { Id = 738, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 4, RoomId = 3999 };
-                Equipment eq3 = new Equipment { Id = 733, Name = "Infusion", Type = EquipmentType.DYNAMIC, Amount = 7, RoomId = 399 };
-                Equipment eq4 = new Equipment { Id = 734, Name = "Syringe", Type = EquipmentType.DYNAMIC, Amount = 23, RoomId = 3999 };
+                Equipment eq1 = new Equipment(717, "Bandage", EquipmentType.DYNAMIC, 15, 399);
+                Equipment eq2 = new Equipment(738, "Bandage", EquipmentType.DYNAMIC, 4, 3999);
+                Equipment eq3 = new Equipment(733, "Infusion", EquipmentType.DYNAMIC, 7, 399);
+                Equipment eq4 = new Equipment(734, "Syringe", EquipmentType.DYNAMIC, 23, 3999);
                 context.AllEquipment.Add(eq1);
                 context.AllEquipment.Add(eq2);
                 context.AllEquipment.Add(eq3);
@@ -90,6 +90,7 @@ namespace HospitalTests.EditorTests.UnitTests
                 int newId = 3499;
 
                 roomService.mergeEquipment(rr1.Id, rr2.Id, newId);
+            List<Equipment> list = eqRepository.GetAll();
                 foreach(Equipment e in eqRepository.GetAll())
                 {
                     if (e.Name.Equals("Bandage"))
@@ -105,14 +106,14 @@ namespace HospitalTests.EditorTests.UnitTests
         public void changin_total_number_of_roms_and_dimensions()
         {
             HospitalContext context = GetInMemoryRepository();
-            Room r1 = new Room { Id = 399, FloorId = 1, Name = "OPERATING ROOM 1", DoctorId = -1, Purpose = "", X = 0, Y = 150, Height = 190, Width = 150, DoorX = 148, DoorY = 285, Vertical = true, Css = "room room-cadetblue", DoorExist = true };
-                Room r2 = new Room { Id = 3999, FloorId = 1, Name = "OPERATING ROOM 2", DoctorId = -1, Purpose = "", X = 160, Y = 150, Height = 100, Width = 150, DoorX = 220, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true };
-                context.Rooms.Add(r1);
+            Room r1 = new Room(399, "OPERATING ROOM 1", "", -1, 1, 0, 150, 190, 150, 148, 285, true, "room room-cadetblue", true);
+            Room r2 = new Room(3999, "OPERATING ROOM 2", "", -1, 1, 160, 150, 100, 150, 220, 248, false, "room room-cadetblue", true);
+            context.Rooms.Add(r1);
                 context.Rooms.Add(r2);
-                Equipment eq1 = new Equipment { Id = 737, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 15, RoomId = 399 };
-                Equipment eq2 = new Equipment { Id = 738, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 4, RoomId = 3999 };
-                Equipment eq3 = new Equipment { Id = 733, Name = "Infusion", Type = EquipmentType.DYNAMIC, Amount = 7, RoomId = 399 };
-                Equipment eq4 = new Equipment { Id = 734, Name = "Syringe", Type = EquipmentType.DYNAMIC, Amount = 23, RoomId = 3999 };
+                Equipment eq1 = new Equipment ( 7379, "Bandage", EquipmentType.DYNAMIC, 15, 399 );
+                Equipment eq2 = new Equipment ( 7389, "Bandage", EquipmentType.DYNAMIC, 4, 3999 );
+                Equipment eq3 = new Equipment ( 7339, "Infusion", EquipmentType.DYNAMIC, 7, 399 );
+                Equipment eq4 = new Equipment ( 7349, "Syringe", EquipmentType.DYNAMIC, 23, 3999 );
                 context.AllEquipment.Add(eq1);
                 context.AllEquipment.Add(eq2);
                 context.AllEquipment.Add(eq3);
