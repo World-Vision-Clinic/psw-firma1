@@ -39,9 +39,9 @@ jobs:
 
       - name: Install dependencies pharmacy
         run: dotnet restore ${SOLUTION_DIRECTORY}
-      - name: Create Migrations pharmacy
-        run:
-          dotnet ef migrations add InitialCreate --project ${SOLUTION_DIRECTORY}\/${PROJECT_DIRECTORY};
+      # - name: Create Migrations pharmacy
+      #   run:
+      #     dotnet ef migrations add InitialCreate --project ${SOLUTION_DIRECTORY}\/${PROJECT_DIRECTORY};
       - name: Update Database
         run: dotnet ef database update --project ${SOLUTION_DIRECTORY}\/${PROJECT_DIRECTORY};
       - name: Test
