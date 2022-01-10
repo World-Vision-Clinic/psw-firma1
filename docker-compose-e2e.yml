@@ -3,9 +3,6 @@ version: "3.2"
 services:     
   patient-front:
     image: jelenahrnjak/hospital-front:latest
-    # build:
-    #   context: ./
-    #   dockerfile: stacks/build/manager-gateway/Dockerfile
     ports:
       - "3000:3000"
     networks:
@@ -71,7 +68,7 @@ services:
         source: db_volume
         target: /var/lib/postgresql/data
       - type: bind
-        source: ./stacks-hospital/dbscripts/seed.sql 
+        source: ./WebAppCore/stacks-hospital/dbscripts/seed.sql 
         target: /docker-entrypoint-initdb.d/seed.sql
     container_name: database
     networks:
