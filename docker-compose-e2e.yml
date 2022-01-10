@@ -63,13 +63,13 @@ services:
   database:
     image: postgres:latest
     restart: always
-    volumes:
-      - type: volume
-        source: db_volume
-        target: /var/lib/postgresql/data
-      - type: bind
-        source: ./WebAppCore/stacks-hospital/dbscripts/seed.sql 
-        target: /docker-entrypoint-initdb.d/seed.sql
+    # volumes:
+    #   - type: volume
+    #     source: db_volume
+    #     target: /var/lib/postgresql/data
+    #   - type: bind
+    #     source: ./WebAppCore/stacks-hospital/dbscripts/seed.sql 
+    #     target: /docker-entrypoint-initdb.d/seed.sql
     container_name: database
     networks:
       - database
