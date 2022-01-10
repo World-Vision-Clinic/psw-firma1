@@ -28,7 +28,7 @@ export class DoctorsManagementComponent implements OnInit {
   selectedRowIndex = -1;
   vacation: Vacation = {} as Vacation;
   selectedDoctorV: Doctor = {} as Doctor;
-
+  selectedModule: string = 'charts';
   toolbarButtons = [
     {
       name: 'Init table',
@@ -271,7 +271,6 @@ export class DoctorsManagementComponent implements OnInit {
     this.onDutyTableBox = true;
   };
 
-  selectedModule: string = 'onDuty';
   openModule = (module: string) => {
     if (module == 'vacations') {
       this.buttonsBox = false;
@@ -327,7 +326,7 @@ export class DoctorsManagementComponent implements OnInit {
         this.doctorsShift = data;
       },
       (error) => {
-        console.log(error)
+        console.log(error);
       }
     );
   };
