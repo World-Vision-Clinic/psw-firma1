@@ -16,6 +16,7 @@ namespace Hospital.MedicalRecords.Service
         }
         public Allergen FindById(int id)
         {
+            int i = 1;
             return _repo.FindById(id);
         }
         public List<Allergen> GetAllergens()

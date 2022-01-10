@@ -20,7 +20,7 @@ services:
       - "5555:5432"
 
   pharmacy:
-    image: jelenahrnjak/pharmacy:latest
+    image: jelenahrnjak/pharmacy-api:latest
     depends_on:
       - postgres-database
     environment: 
@@ -37,7 +37,7 @@ services:
       - database
 
   manager-front:
-    image: jelenahrnjak/managerfrontapp:latest
+    image: jelenahrnjak/manager-front:latest
     depends_on:
       - pharmacy 
     ports:
