@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hospital.Seedwork;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace Hospital.MedicalRecords.Model
 {
-    public class Feedback
+    public class Feedback : Entity
     {
-        public int Id { get; private set; }
         public string Content { get; private set; }
         public bool IsPublic { get; private set; }
         public bool IsPublishable { get; private set; }
