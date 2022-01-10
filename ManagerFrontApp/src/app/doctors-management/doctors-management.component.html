@@ -50,7 +50,7 @@
           </td>
           <td style="width: 120px"></td>
           <td>
-            <button class="search-btn">
+            <button class="search-btn" (click)="loadDoctorsData(doctor)">
               <i class="fas fa-search"></i>
             </button>
           </td>
@@ -59,33 +59,46 @@
     </table>
 
     <div>
-      <h2 class="title">Doctor's schedule</h2><br>
+      <h2 class="title">Doctor's schedule</h2>
+      <br />
 
-      <div style="display: flex; flex-direction: row; margin-bottom: 1%;">
-        <div style="margin-right: 6%;">
-          <label style="color: cadetblue;" for="">Shift time: </label><br>
-          <input style="width: 200px;" type="text" class="input-field" name="input"/>
+      <div style="display: flex; flex-direction: row; margin-bottom: 1%">
+        <div style="margin-right: 6%">
+          <label style="color: cadetblue" for="">Shift time: </label><br />
+          <input
+            style="width: 200px"
+            type="text"
+            class="input-field"
+            name="input"
+          />
         </div>
         <div>
-          <label style="color: cadetblue;" for="">Shift name: </label><br>
-          <input style="width: 370px;" type="text" class="input-field" name="input"/>
+          <label style="color: cadetblue" for="">Shift name: </label><br />
+          <input
+            style="width: 370px"
+            type="text"
+            class="input-field"
+            name="input"
+          />
         </div>
       </div>
-      <div style="display: flex; flex-direction: row;">
-        <table class= "on-table">
+      <div style="display: flex; flex-direction: row">
+        <table class="on-table">
           <thead>
             <tr>
               <th style="width: 240px">Duty date</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td style="width: 100px"></td>
+            <tr *ngFor="let onCallShift of doctorsOnCallShifts">
+              <td style="width: 100px">
+                {{ onCallShift.date | date: "dd.MM.yyyy" }}
+              </td>
             </tr>
           </tbody>
         </table>
-  
-        <table class= "vac-table">
+
+        <table class="vac-table">
           <thead>
             <tr>
               <th style="width: 460px">Vacation</th>
@@ -98,14 +111,13 @@
               <td style="width: 200px"></td>
             </tr>
           </tbody>
-        </table>  
+        </table>
       </div>
-
     </div>
   </div>
 
   <div *ngIf="selectedModule == 'onDuty'">
-    <app-doctor-on-duty-container > </app-doctor-on-duty-container>
+    <app-doctor-on-duty-container> </app-doctor-on-duty-container>
   </div>
   <!-- VACATIONS -->
   <div *ngIf="selectedModule == 'vacations'">
@@ -216,7 +228,7 @@
           *ngIf="editVacationBox"
         >
           <h3 style="color: cadetblue">Edit vacation</h3>
-          
+
           <label>Date: </label>
           <mat-form-field appearance="outline">
             <mat-label>Enter a date range</mat-label>
@@ -224,13 +236,13 @@
               <input
                 matStartDate
                 placeholder="Start date"
-                [value]= "selectedVacation.start"
+                [value]="selectedVacation.start"
                 [(ngModel)]="vacation.start"
               />
               <input
                 matEndDate
                 placeholder="End date"
-                [value]= "selectedVacation.end"
+                [value]="selectedVacation.end"
                 [(ngModel)]="vacation.end"
               />
             </mat-date-range-input>
@@ -245,7 +257,7 @@
             type="text"
             class="form-field"
             name="input"
-            [value]= "selectedVacation.description"
+            [value]="selectedVacation.description"
             [(ngModel)]="vacation.description"
           />
           <button

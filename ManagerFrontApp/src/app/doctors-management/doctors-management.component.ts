@@ -6,6 +6,7 @@ import { Doctor } from '../data/doctor';
 import { Vacation } from '../data/vacation';
 import { Shift } from '../data/shift';
 import { ShiftSend } from '../data/shift';
+import { OnCallShift } from '../data/onCallShift';
 
 @Component({
   selector: 'app-doctors-management',
@@ -24,7 +25,7 @@ export class DoctorsManagementComponent implements OnInit {
   selectedVacation: Vacation = {} as Vacation;
   selectedRowIndex = -1;
   vacation: Vacation = {} as Vacation;
-  selectedDoctorV: Doctor ={} as Doctor;
+  selectedDoctorV: Doctor = {} as Doctor;
 
   toolbarButtons = [
     {
@@ -79,7 +80,6 @@ export class DoctorsManagementComponent implements OnInit {
     doctorId: -1,
     shiftId: -1,
   };
-
 
   constructor(
     private router: Router,
@@ -144,7 +144,7 @@ export class DoctorsManagementComponent implements OnInit {
     this.vacation.doctorId = this.selectedVacation.doctorId;
     this.vacation.fullName = this.selectedVacation.fullName;
     this.vacation.id = this.selectedVacation.id;
-    console.log(this.vacation)
+    console.log(this.vacation);
     this.doctorsManagementService.updateVacation(this.vacation);
     alert('Vacation edited!');
     this.editVacationBox = false;
@@ -179,7 +179,6 @@ export class DoctorsManagementComponent implements OnInit {
   selectVacation(vacation) {
     this.selectedVacation = vacation;
     this.selectedRowIndex = vacation.id;
-    
   }
 
   updateShift() {
@@ -284,5 +283,22 @@ export class DoctorsManagementComponent implements OnInit {
       this.shiftsDoctorsBox = false;
     }
     this.selectedModule = module;
+  };
+  doctorsOnCallShifts: OnCallShift[] = [];
+  loadDoctorsData = (doctor: Doctor) => {
+    this.loadDoctorsOnCallShifts(doctor.id);
+    // TODO: Vacations
+    // TODO: Shifts
+  };
+
+  loadDoctorsOnCallShifts = (doctorId: number) => {
+    this.doctorsManagementService.getOnCallShiftsForDoctor(doctorId).subscribe(
+      (data) => {
+        this.doctorsOnCallShifts = data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   };
 }

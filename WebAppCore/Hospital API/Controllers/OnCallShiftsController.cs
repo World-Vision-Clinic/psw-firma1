@@ -30,7 +30,7 @@ namespace Hospital_API.Controllers
         public OnCallShiftsController()
         {
             HospitalContext context = new HospitalContext();
-            IOnCallShiftRepository shiftRepository = new OnCallShiftRepository(context);
+            OnCallShiftRepository shiftRepository = new OnCallShiftRepository(context);
             _shiftsService = new OnCallShiftService(shiftRepository);
             _doctorService = new DoctorService(new DoctorRepository(context));
         }
@@ -45,6 +45,17 @@ namespace Hospital_API.Controllers
         {
             List<OnCallShiftDTO> list = new List<OnCallShiftDTO>();
             foreach(OnCallShift shift in _shiftsService.getAll().OrderBy(x => x.Id).ToList<OnCallShift>())
+            {
+                list.Add(OnCallShiftsMapper.onCallShiftToDTO(shift, _doctorService));
+            }
+            return list;
+        }
+
+        [HttpGet("doctorsDuty/{doctorId}")]
+        public ActionResult<List<OnCallShiftDTO>> getDoctorsDuty(int doctorId)
+        {
+            List<OnCallShiftDTO> list = new List<OnCallShiftDTO>();
+            foreach (OnCallShift shift in _shiftsService.getDoctorsDuty(doctorId).OrderBy(x => x.Id).ToList<OnCallShift>())
             {
                 list.Add(OnCallShiftsMapper.onCallShiftToDTO(shift, _doctorService));
             }

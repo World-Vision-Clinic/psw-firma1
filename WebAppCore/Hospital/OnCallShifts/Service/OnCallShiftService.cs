@@ -9,8 +9,8 @@ namespace Hospital.ShiftsAndVacations.Service
 {
     public class OnCallShiftService
     {
-        IOnCallShiftRepository repository;
-        public OnCallShiftService(IOnCallShiftRepository repository)
+        OnCallShiftRepository repository;
+        public OnCallShiftService(OnCallShiftRepository repository)
         {
             this.repository = repository;
         }
@@ -59,6 +59,11 @@ namespace Hospital.ShiftsAndVacations.Service
         {
             OnCallShift obj = new OnCallShift(id, doctorId, date);
             repository.Update(obj);
+        }
+
+        public List<OnCallShift> getDoctorsDuty(int doctorId)
+        {
+            return repository.getDoctorsDuty(doctorId);
         }
     }
 }
