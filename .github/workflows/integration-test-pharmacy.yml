@@ -1,4 +1,4 @@
-name: integration-testing
+name: integration-testing-pharmacy
 on:
   push:
   pull_request:

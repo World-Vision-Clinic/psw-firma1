@@ -1,4 +1,4 @@
-name: integration-testing
+name: integration-testing-hospital
 on:
   push:
   pull_request:
@@ -8,12 +8,6 @@ jobs:
   Run-Integration-Tests:
     runs-on: ubuntu-latest
     env:
-      SOLUTION_DIRECTORY: PharmacyApplication
-      PROJECT_DIRECTORY: Pharmacy
-
-      SOLUTION_DIRECTORY_INTEGRATION: WebAppCore
-      PROJECT_DIRECTORY_INTEGRATION: Integration
-
       SOLUTION_DIRECTORY_HOSPITAL: WebAppCore
       PROJECT_DIRECTORY_HOSPITAL: Hospital
 
@@ -25,8 +19,8 @@ jobs:
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
           POSTGRES_DB: "MyWebApi.Dev"
-          # POSTGRES_USER_PASSWORD: ftn
           POSTGRES_PASSWORD: ftn
+          # POSTGRES_PASSWORD: ftn
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -43,26 +37,11 @@ jobs:
       - name: Install dotnet ef
         run: dotnet tool install --global dotnet-ef
 
-      # - name: Install dependencies pharmacy
-      #   run: dotnet restore ${SOLUTION_DIRECTORY}
-      # - name: Create Migrations phramacy
-      #   run:
-      #     dotnet ef migrations add InitialCreate --project ${SOLUTION_DIRECTORY}\/${PROJECT_DIRECTORY};
-      # - name: Update Database
-      #   run: dotnet ef database update --project ${SOLUTION_DIRECTORY}\/${PROJECT_DIRECTORY};
-      # - name: Test
-      #   run: dotnet test ${SOLUTION_DIRECTORY} --no-restore --verbosity quiet --filter FullyQualifiedName\!~UnitTests
-      #   env:
-      #     POSTGRES_HOST: localhost
-      #     POSTGRES_PORT: 5432
-      #     POSTGRES_PASSWORD: admin
-
-
       - name: Install dependencies hospital
         run: dotnet restore ${SOLUTION_DIRECTORY_HOSPITAL}
-      - name: Create Migrations hospital
-        run:
-          dotnet ef migrations add InitialCreate --context HospitalContext --project ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL};
+      # - name: Create Migrations hospital
+      #   run:
+      #     dotnet ef migrations add InitialCreate --context HospitalContext --project ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL};
       - name: Update Database
         run: dotnet ef database update --context HospitalContext --project ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL};
       - name: Test
@@ -74,18 +53,3 @@ jobs:
           POSTGRES_DB: "MyWebApi.Dev"
           POSTGRES_USER_PASSWORD: ftn
           POSTGRES_PASSWORD: admin
-
-
-      # - name: Install dependencies integration
-      #   run: dotnet restore ${SOLUTION_DIRECTORY_INTEGRATION}
-      # - name: Create Migrations integration
-      #   run:
-      #     dotnet ef migrations add InitialCreate --project ${SOLUTION_DIRECTORY_INTEGRATION}\/${PROJECT_DIRECTORY_INTEGRATION};
-      # - name: Update Database integration
-      #   run: dotnet ef database update --project ${SOLUTION_DIRECTORY_INTEGRATION}\/${PROJECT_DIRECTORY_INTEGRATION};
-      # - name: Test integration
-      #   run: dotnet test ${SOLUTION_DIRECTORY_INTEGRATION} --no-restore --verbosity quiet --filter FullyQualifiedName\!~UnitTests
-      #   env:
-      #     POSTGRES_HOST: localhost
-      #     POSTGRES_PORT: 5432
-      #     POSTGRES_PASSWORD: admin
