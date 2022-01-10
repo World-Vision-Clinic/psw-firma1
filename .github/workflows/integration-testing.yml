@@ -63,10 +63,11 @@ jobs:
       - name: Test
         run: dotnet test ${SOLUTION_DIRECTORY_HOSPITAL} --no-restore --verbosity quiet --filter FullyQualifiedName\~IntegrationTests
         env:
-          POSTGRES_USER: admin
+          DATABASE_USERNAME: admin
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
-          POSTGRES_PASSWORD: ftn
+          DATABASE_PASSWORD: ftn
+          POSTGRES_PASSWORD: admin
 
 
       # - name: Install dependencies integration
