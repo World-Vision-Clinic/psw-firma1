@@ -16,25 +16,40 @@ namespace HospitalTests.EditorTests.IntegrationTests
     {
         public bool relocate(Equipment eqForTransf, RoomDTO roomFrom, RoomDTO roomTo)
         {
+            Equipment eqOld = new Equipment();
+            Equipment eq = new Equipment();
+            bool flag = false;
             foreach(Equipment equip in roomFrom.equipments)
             {
                 if (equip.Name == eqForTransf.Name)
                 {
                     if (equip.Amount > eqForTransf.Amount)
                     {
-                        equip.Amount = equip.Amount - eqForTransf.Amount;
+                        flag = true;
+                        eqOld = equip;
+                        eq = new Equipment(equip.Id, equip.Name, equip.Type, equip.Amount - eqForTransf.Amount, equip.RoomId);
                         roomTo.equipments.Add(eqForTransf);
-                        return true;
+                        break;
                     }
                 }
             }
-            return false;
+            if(flag == true)
+            {
+                roomFrom.equipments.Remove(eqOld);
+                roomFrom.equipments.Add(eq);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
 
         [Fact]
         public void relocate_equipment_test()
         {
-            Equipment equpmentForTransfer = new Equipment { Id = 77, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 5, RoomId = 2 };
+            Equipment equpmentForTransfer = new Equipment (77, "Bandage", EquipmentType.DYNAMIC, 5, 2 );
             
             var roomController = new RoomsController();
             RoomDTO roomFrom = roomController.GetRoom(2).Value;
