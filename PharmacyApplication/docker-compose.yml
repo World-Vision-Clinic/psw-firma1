@@ -1,13 +1,20 @@
 version: '3.2'
+
+secrets:
+  db_pass:
+    external: true
+  db_user:
+    external: true
+
 services:
   postgres-database:
-    image: postgres 
+    image: postgres:latest 
     restart: always
     networks: 
-      - database 
+      - application 
     environment:
-      POSTGRES_PASSWORD: admin
-      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
+      POSTGRES_USER_FILE: /run/secrets/db_user
       POSTGRES_DB: PharmacyDatabase
     volumes:
       - type: volume
@@ -18,26 +25,32 @@ services:
         target: /docker-entrypoint-initdb.d/init.sql
     ports:
       - "5555:5432"
+    secrets:
+      - db_pass
+      - db_user 
 
   pharmacy:
-    build: ../PharmacyApplication
-    image: jelenahrnjak/pharmacy:latest
+    #build: ../PharmacyApplication
+    image: darkelfff/pharmacy-api-s:latest
     depends_on:
       - postgres-database
     environment: 
       DATABASE_HOST: postgres-database
       DATABASE_PORT: 5432
       DATABASE_SCHEMA: PharmacyDatabase
-      DATABASE_PASSWORD: admin
-      DATABASE_USER: postgres
+      DATABASE_PASSWORD_FILE: /run/secrets/db_pass
+      DATABASE_USER_FILE: /run/secrets/db_user
     ports:
       - "8081:80" 
     restart: on-failure
     networks:
       - application
-      - database
+    secrets:
+      - db_user
+      - db_pass 
 
   manager-front:
+    image: darkelfff/manager-front-s:latest
     depends_on:
       - pharmacy
     build: ../ManagerFrontApp 
@@ -45,16 +58,12 @@ services:
       - "4202:4200"
     restart: on-failure
     networks:
-      - public
       - application
 
 volumes:
   database-data:
 
 networks:
-  public:
-    driver: bridge
   application:
-    driver: bridge
-  database:
-    driver: bridge
+    #name: application
+    driver: overlay
