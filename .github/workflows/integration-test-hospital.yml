@@ -34,6 +34,9 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
 
+      - name: Build
+        run: dotnet build ${ SOLUTION_DIRECTORY_HOSPITAL/PROJECT_DIRECTORY_HOSPITAL } --configuration Release
+
       - name: Install dotnet ef
         run: dotnet tool install --global dotnet-ef
 
@@ -48,6 +51,8 @@ jobs:
 
       - name: Update Database
         run: dotnet ef database update --context HospitalContext --project ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL};
+     
+     
       - name: Test
         # run: dotnet test ${SOLUTION_DIRECTORY_HOSPITAL} --no-restore --verbosity quiet --filter FullyQualifiedName\!~E2ETests\!~EndToEndTests\!~End2End
         env:
