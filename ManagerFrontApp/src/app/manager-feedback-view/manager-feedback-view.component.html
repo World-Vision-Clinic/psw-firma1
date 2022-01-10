@@ -54,10 +54,10 @@
                               </div>
                               <div class="col-md-3">
                                 <div *ngIf="!f.isPublic && f.isPublishable">
-                                    <button class="btn-rounded btn-blue" (click)="publishFeedback(i)">Publish</button>
+                                    <button [attr.id]="'publish' + i" class="btn-rounded btn-blue" (click)="publishFeedback(i)">Publish</button>
                                 </div>
                                 <div *ngIf="f.isPublic">
-                                    <button class="btn-rounded btn-blue" (click)="unpublishFeedback(i)">Unpublish</button>
+                                    <button [attr.id]="'unpublish' + i"class="btn-rounded btn-blue" (click)="unpublishFeedback(i)">Unpublish</button>
                                 </div>
                               </div>
                             </div>

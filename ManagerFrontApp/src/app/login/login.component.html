@@ -15,13 +15,13 @@
             <div style="padding: 5%; margin: auto;">
                         <div class="col-md-2">
                             <label>
-                                <input type="text" name="username" [(ngModel)]="LoginDTO.username" required="required">
+                                <input id="username" type="text" name="username" [(ngModel)]="LoginDTO.username" required="required">
                                 <span class="keep_hovered">Username</span>
                             </label>
                         </div>
                         <div class="col-md-2">
                             <label>
-                                <input type="password" name="password" [(ngModel)]="LoginDTO.password" required="required">
+                                <input id="pass" type="password" name="password" [(ngModel)]="LoginDTO.password" required="required">
                                 <span class="keep_hovered">Password</span>
                             </label>
                         </div>
@@ -29,7 +29,7 @@
                     <div class="row d-flex">
                         <div class="col-md-8"></div>
                         <div class="col-md-4">
-                            <button (click)="login()" [disabled]="!contentIsValid()" class="btn btn-blue btn-rounded" style="width: 100%;">Login</button>
+                            <button id="loginBtn" (click)="login()" [disabled]="!contentIsValid()" class="btn btn-blue btn-rounded" style="width: 100%;">Login</button>
                         </div>
                     </div>
             </div>

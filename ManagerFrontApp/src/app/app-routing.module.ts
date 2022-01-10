@@ -49,23 +49,23 @@ const routes: Routes = [
   {path:"block-patients", component: BlockPatientsComponent, canActivate:[AuthGuard]},
   //{path:"pharmacy-registration", component: PharmacyRegistrationComponent},
   //{path:"survey-results", component: ViewSurveyResultsComponent,canActivate:[AuthGuard]},
-  {path:"manager-front-app", component: ManagerIntegrationFrontAppComponent, children: [
+ // {path:"manager-front-app", component: ManagerIntegrationFrontAppComponent, children: [
   //{path: "overview-objections-replies", outlet: "showObjRepl", component:OverviewObjectionsRepliesComponent},
   //{path: "overview-pharmacies", outlet: "showObjRepl", component:PharmaciesComponent},
 
   //{path: "create-objection", outlet: "showObjRepl", component:ObjectionFormPageComponent},
   //{path: "news", outlet: "showObjRepl", component:NewsComponent},
   //{path: "medicine-consumption-report", outlet: "showObjRepl", component:MedicineConsumptionComponent},
-  {path:"pharmacy-registration", component: PharmacyRegistrationComponent},
+  //{path:"pharmacy-registration", component: PharmacyRegistrationComponent},
   {path:"hospital1", component: Hospital1Component},
   {path: "doctors-management", component: DoctorsManagementComponent},
   {path:"manager-front-app", component: ManagerIntegrationFrontAppComponent, children: [
-  {path: "overview-objections-replies", outlet: "showObjRepl", component:OverviewObjectionsRepliesComponent},
-  {path: "overview-pharmacies", outlet: "showObjRepl", component:PharmaciesComponent},
+ // {path: "overview-objections-replies", outlet: "showObjRepl", component:OverviewObjectionsRepliesComponent},
+ // {path: "overview-pharmacies", outlet: "showObjRepl", component:PharmaciesComponent},
   
-  {path: "create-objection", outlet: "showObjRepl", component:ObjectionFormPageComponent},
-  {path: "news", outlet: "showObjRepl", component:NewsComponent},
-  {path: "medicine-consumption-report", outlet: "showObjRepl", component:MedicineConsumptionComponent},
+ // {path: "create-objection", outlet: "showObjRepl", component:ObjectionFormPageComponent},
+ // {path: "news", outlet: "showObjRepl", component:NewsComponent},
+ // {path: "medicine-consumption-report", outlet: "showObjRepl", component:MedicineConsumptionComponent},
   {path: "get-specification", outlet:"showObjRepl", component: GetSpecificationComponent},
   {path: "view-files", outlet:"showObjRepl", component: ViewFilesComponent},
   {path: "create-tender", outlet:"showObjRepl", component:TenderCreationComponent},
