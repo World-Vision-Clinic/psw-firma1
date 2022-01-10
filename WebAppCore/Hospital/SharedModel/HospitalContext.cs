@@ -19,6 +19,7 @@ namespace Hospital.SharedModel
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Survey> Surveys { get; set; }
         public DbSet<Shift> Shifts { get; set; }
+        public DbSet<OnCallShift> OnCallShifts { get; set; }
         public DbSet<Renovation> Renovations { get; set; }
         public DbSet<SurveyQuestion> Questions { get; set; }
         public DbSet<AnsweredSurveyQuestion> AnsweredQuestions { get; set; }
