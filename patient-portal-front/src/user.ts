@@ -18,7 +18,7 @@ export class User {
     Weight: number = -1;
     Height: number = -1;
     BloodType: string = "";
-    
+    ProfileImage: string = "";
     constructor()
     {
     }

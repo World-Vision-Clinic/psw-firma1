@@ -289,7 +289,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             Doctor doctorCardi2 = new Doctor(12, "Milana", "Milanović", -1, -1, DoctorType.Cardiologist, false);
             _doctorRepository.AddDoctor(doctorCardi2);
 
-            Doctor doctorOphta1 = new Doctor(12, "Nikola", "Marković", -1, -1, DoctorType.Ophthalmologist, false);
+            Doctor doctorOphta1 = new Doctor(13, "Nikola", "Marković", -1, -1, DoctorType.Ophthalmologist, false);
             _doctorRepository.AddDoctor(doctorOphta1);
 
             Appointment appointment = new Appointment()

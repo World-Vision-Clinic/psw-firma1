@@ -1,10 +1,15 @@
 <div class="row d-flex whitesmoke_background">
+
   <div class="col-md-3">
       <div class="card">
         <div class="header basic-info-header">
           <h2 class="text-black" style="font-weight: bolder; font-size: 26px;" id="patientName">{{patient.firstName}} {{patient.lastName}} ({{patient.userName}})</h2>
           <div class="row d-flex" style="margin-left: inherit;"><h4 class="text-black" style="font-weight: bolder">{{patient.dateOfBirth | date:'dd/MM/yyyy'}}</h4><h4 class="text-black" style="font-style: italic;">(DOB)</h4></div>
         </div>
+       
+        <div style=" height: 400px;">
+          <img style="height: 400px;width: 380px; object-fit: cover;" src="{{patient.profileImage}}">       
+      </div>
       
         <div class="card-body">
             <div class="row d-flex">
@@ -58,6 +63,8 @@
         </div>
       </div>
 
+    
+
       <div class="card" style="margin-top: 50px;">
         <div class="header basic-info-header">
           <h2 class="text-black" style="font-weight: bolder; font-size: 22px;">Physical Information</h2>
@@ -90,6 +97,7 @@
             </div>
         </div>
       </div>
+
 
       <div class="card" style="margin-top: 50px;">
         <div class="header basic-info-header">
@@ -164,4 +172,6 @@
       </div> 
   </div>
   </div>
+
+
 </div>

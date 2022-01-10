@@ -24,6 +24,7 @@ namespace Hospital_API.DTO
         public int Height { get; set; }
         public string BloodType { get; set; }
         public List<string> AllergenList { get; set; }
+        public string ProfileImage { get; set; }
 
         public MedicalRecordDTO(Patient patientToCopy) 
         {
@@ -43,6 +44,7 @@ namespace Hospital_API.DTO
             this.Weight = patientToCopy.Weight;
             this.BloodType = patientToCopy.BloodType.ToString();
             this.AllergenList = new List<string>();
+            this.ProfileImage = patientToCopy.ProfileImage;
         }
         public MedicalRecordDTO() { }
     }

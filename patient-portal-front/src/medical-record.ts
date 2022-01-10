@@ -12,6 +12,7 @@ export class MedicalRecord {
     phone: string = "";
     bloodType: string = "";
     preferedDoctorName: string = "";
+    profileImage:string ="";
 
     dateOfBirth: Date = new Date();
 

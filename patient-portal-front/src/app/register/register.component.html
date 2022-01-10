@@ -128,6 +128,12 @@
                                 <span class="keep_hovered">Weight</span>
                             </label>
                         </div>
+                        <div>
+                            <label for="file">Profile picture </label>
+                            <input name="profileImage" [(ngModel)]="ProfileImage" type="file"
+                                   id="file"
+                                   (change)="handleProfileImage($event)">
+                        </div>
                         <div class="col-md-2">
                             <label>
                                 <select name="bloodtype" id="bloodtype" [(ngModel)]="bloodType" required="required">

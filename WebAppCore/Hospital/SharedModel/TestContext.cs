@@ -31,7 +31,7 @@ namespace Hospital.SharedModel
 
             modelBuilder.Entity<Patient>().HasData(
                 new Patient(4, "Marko123", "123", new FullName("Marko", "Markovic"), "markomarkovic@gmail.com", true, Gender.Male, "1637597",
-                    DateTime.Now, new Residence("Serbia", "TestAddress", "TestCity"), "063115111", 10, 80, 180, BloodType.A, false, new List<Appointment>())
+                    DateTime.Now, new Residence("Serbia", "TestAddress", "TestCity"), "063115111", 10, 80, 180, BloodType.A, false, new List<Appointment>(), "")
                 );
             modelBuilder.Entity<Appointment>().HasData(
             new Appointment(199, 4, 10, DateTime.Now.AddDays(-1), false, true, false, AppointmentType.Appointment)

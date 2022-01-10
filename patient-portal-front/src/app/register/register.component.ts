@@ -29,11 +29,13 @@ export class RegisterComponent implements OnInit {
   bloodType: string = "";
   password: string = "";
   confirmPassword: string = "";
+  ProfileImage:string = "";
   
   maxDate: string = ""
 
   feedbackSent: boolean = false;
   errorMsg: string = "";
+  image:any;
   
   public doctors = [] as any;
   public allAllergens = [] as any;
@@ -76,6 +78,7 @@ export class RegisterComponent implements OnInit {
       user.PreferedDoctor = parseInt(this.preferedDoctor);
       user.BloodType = this.bloodType;
       user.Password = this.password;
+      user.ProfileImage = this.ProfileImage;
 
       console.log(user);
 
@@ -308,4 +311,31 @@ export class RegisterComponent implements OnInit {
     } 
     return false
   }
+
+  handleProfileImage(event: any) {
+
+    if(!event || !event.target || !event.target.files) {
+      return;
+    }
+
+    this.getBase64(event, 'ProfileImage');
+  }
+
+  getBase64(event:any, name: any) {
+    let me = this;
+    let file = event.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    var self = this;
+
+    if(!this.image) {
+      this.image = {};
+    }
+
+    reader.onload = function () {
+      self.image[name] = reader.result;
+    }
+    reader.onerror = function (error) {
+    };
+ }
 }
