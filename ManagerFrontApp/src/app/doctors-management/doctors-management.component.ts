@@ -289,11 +289,13 @@ export class DoctorsManagementComponent implements OnInit {
 
   doctorsOnCallShifts: OnCallShift[] = [];
   doctorsVacations: Vacation[] = [];
+  doctorsShift: Shift = {} as Shift;
 
   loadDoctorsData = (doctor: Doctor) => {
     this.loadDoctorsOnCallShifts(doctor.id);
     this.loadDoctorsVacations(doctor.id);
     // TODO: Shifts
+    this.loadDoctorsShift(doctor.shiftId);
     this.additionalBox = true;
   };
 
@@ -315,6 +317,17 @@ export class DoctorsManagementComponent implements OnInit {
       },
       (error) => {
         console.log(error);
+      }
+    );
+  };
+
+  loadDoctorsShift = (shiftId: number) => {
+    this.doctorsManagementService.getShiftById(shiftId).subscribe(
+      (data) => {
+        this.doctorsShift = data;
+      },
+      (error) => {
+        console.log(error)
       }
     );
   };

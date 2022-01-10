@@ -62,8 +62,8 @@
       <h3 style="margin-bottom: 30px;" class="title">Doctor's schedule</h3>
 
       <div style="display: flex; flex-direction: row; margin-bottom: 2%;" >
-          <label style="margin-right: 20%;" for="">Shift time: {{ doctor.shiftId }} </label><br />
-          <label for="">Shift name: </label><br />
+          <label style="margin-right: 20%;" for="">Shift time: {{ doctorsShift.start }}h - {{doctorsShift.end}}h </label><br />
+          <label for="">Shift name: {{ doctorsShift.name }}</label><br />
       </div>
       <div style="display: flex; flex-direction: row">
         <table class="on-table">

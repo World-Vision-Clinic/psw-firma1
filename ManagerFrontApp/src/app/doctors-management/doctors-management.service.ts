@@ -103,4 +103,10 @@ export class DoctorsManagementService {
       `http://localhost:39901/api/vacations/doctorsVacations/${doctorId}`
     );
   }
+
+  getShiftById(shiftId: number) {
+    return this.http.get<Shift>(
+      `http://localhost:39901/api/shifts/${shiftId}`
+    );
+  }
 }
