@@ -57,6 +57,51 @@
         </tr>
       </tbody>
     </table>
+
+    <div>
+      <h2 class="title">Doctor's schedule</h2><br>
+
+      <div style="display: flex; flex-direction: row; margin-bottom: 1%;">
+        <div style="margin-right: 6%;">
+          <label style="color: cadetblue;" for="">Shift time: </label><br>
+          <input style="width: 200px;" type="text" class="input-field" name="input"/>
+        </div>
+        <div>
+          <label style="color: cadetblue;" for="">Shift name: </label><br>
+          <input style="width: 370px;" type="text" class="input-field" name="input"/>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: row;">
+        <table class= "on-table">
+          <thead>
+            <tr>
+              <th style="width: 240px">Duty date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 100px"></td>
+            </tr>
+          </tbody>
+        </table>
+  
+        <table class= "vac-table">
+          <thead>
+            <tr>
+              <th style="width: 460px">Vacation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 100px"></td>
+              <td style="width: 100px"></td>
+              <td style="width: 200px"></td>
+            </tr>
+          </tbody>
+        </table>  
+      </div>
+
+    </div>
   </div>
 
   <div *ngIf="selectedModule == 'onDuty'">

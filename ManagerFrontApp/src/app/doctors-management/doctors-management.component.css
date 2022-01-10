@@ -81,17 +81,14 @@
 
 .doctors-page {
   margin-top: 20px;
-  justify-content: center;
-  justify-items: center;
-  align-items: center;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
 }
 
 .doctors-table {
   display: block;
-  /* margin-left: 5%; */
+  /* margin-left: 6%; */
   /* margin-right: 5%; */
   margin-bottom: 20px;
   background-color: white;
@@ -194,6 +191,16 @@
   transition: border-color 0.2s;
   border-radius: 3%;
 }
+
+.input-field {
+  width: 200px;
+  height: 40px;
+  border: 2px solid rgba(224, 223, 223, 0.911);
+  background: transparent;
+  transition: border-color 0.2s;
+  margin-bottom: 5%;
+}
+
 
 /* Bojan */
 .btn {
@@ -308,4 +315,127 @@
 .shifts-container {
   width: 710px;
   margin-top: 20px;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: cadetblue!important;
+  font-weight: bold;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: cadetblue!important;
+  font-weight: bold;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+color: cadetblue!important;
+font-weight: bold;
+}
+
+.input-box-small {
+  width: 250px;
+  color: cadetblue;
+  align-items: center;
+  height: 38px;
+  margin-bottom: 5px;
+  border-radius: 15px;
+  margin-inline: 5px;
+  font-weight: bold;
+}
+
+.vac-table {
+  display: block;
+  /* margin-left: 6%; */
+  /* margin-right: 5%; */
+  margin-bottom: 20px;
+  background-color: white;
+}
+
+.vac-table th {
+  display: inline-block;
+  padding: 10px 154px;
+  text-align: left;
+  font-weight: bold;
+  font-size: 15px;
+  color: white;
+  text-transform: uppercase;
+  background: cadetblue;
+}
+
+.vac-table tbody {
+  display: inline-block;
+  height: 200px;
+  overflow-y: scroll;
+  scrollbar-color: rgb(248, 246, 246);
+  width: 460px;
+}
+.vac-table thead {
+  width: 250px;
+}
+.vac-table tbody tr {
+  height: 15px;
+}
+.vac-table td {
+  padding: 10px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 16px;
+  color: #000;
+  height: 50%;
+  width: 50%;
+}
+.vac-table tbody {
+  display: inline-block;
+  overflow-y: scroll;
+  scrollbar-color: rgb(248, 246, 246);
+  background-color: rgba(224, 223, 223, 0.911);
+}
+
+.on-table {
+  display: block;
+  /* margin-left: 6%; */
+  /* margin-right: 5%; */
+  margin-bottom: 20px;
+  background-color: white;
+}
+
+.on-table th {
+  display: inline-block;
+  padding: 10px 84px;
+  text-align: left;
+  font-weight: bold;
+  font-size: 15px;
+  color: white;
+  text-transform: uppercase;
+  background: cadetblue;
+}
+
+.on-table tbody {
+  display: inline-block;
+  height: 200px;
+  overflow-y: scroll;
+  scrollbar-color: rgb(248, 246, 246);
+  width: 240px;
+}
+.on-table thead {
+  width: 250px;
+}
+.on-table tbody tr {
+  height: 15px;
+}
+.on-table td {
+  padding: 10px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 16px;
+  color: #000;
+  word-wrap: break-word;
+  height: 50%;
+  width: 50%;
+}
+.on-table tbody {
+  display: inline-block;
+  overflow-y: scroll;
+  scrollbar-color: rgb(248, 246, 246);
+  background-color: rgba(224, 223, 223, 0.911);
 }
