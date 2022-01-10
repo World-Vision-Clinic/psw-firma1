@@ -13,14 +13,18 @@ using Hospital.ShiftsAndVacations.Model;
 using System.Net.Http;
 using System.Net;
 using Hospital_API.DTO;
+using Hospital_API.Mapper;
+using Hospital.MedicalRecords.Service;
+using Hospital.MedicalRecords.Repository;
 
 namespace Hospital_API.Controllers
 {
-    [Route("api/shifts")]
+    [Route("api/onCallShifts")]
     [ApiController]
     public class OnCallShiftsController : ControllerBase
     {
         public OnCallShiftService _shiftsService { get; set; }
+        public DoctorService _doctorService { get; set; }
 
         [ActivatorUtilitiesConstructor]
         public OnCallShiftsController()
@@ -28,6 +32,7 @@ namespace Hospital_API.Controllers
             HospitalContext context = new HospitalContext();
             IOnCallShiftRepository shiftRepository = new OnCallShiftRepository(context);
             _shiftsService = new OnCallShiftService(shiftRepository);
+            _doctorService = new DoctorService(new DoctorRepository(context));
         }
 
         public OnCallShiftsController(OnCallShiftService service)
@@ -35,13 +40,18 @@ namespace Hospital_API.Controllers
             _shiftsService = service;
         }
 
-        [HttpGet("getAll")]
-        public ActionResult<List<OnCallShift>> getAll()
+        [HttpGet("")]
+        public ActionResult<List<OnCallShiftDTO>> getAll()
         {
-            return _shiftsService.getAll();
+            List<OnCallShiftDTO> list = new List<OnCallShiftDTO>();
+            foreach(OnCallShift shift in _shiftsService.getAll())
+            {
+                list.Add(OnCallShiftsMapper.onCallShiftToDTO(shift, _doctorService));
+            }
+            return list;
         }
 
-        [HttpPost("newShift")]
+        [HttpPost("")]
         public HttpResponseMessage addNew([FromBody] OnCallShiftDTO shift)
         {
             _shiftsService.addNewOnCallShift(shift.Id,shift.Doctor.Id,shift.Date);
