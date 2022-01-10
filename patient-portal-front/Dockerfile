@@ -11,4 +11,8 @@ COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 3000
 
+RUN groupadd -g 1001 student && \
+    useradd -r -u 1001 -g student  student 
+USER student
+
 ENTRYPOINT ["nginx","-g","daemon off;"]

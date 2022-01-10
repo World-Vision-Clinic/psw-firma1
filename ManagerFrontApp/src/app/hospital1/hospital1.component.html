@@ -1,5 +1,12 @@
+<div class="big-toolbar">
+  <button class="big-toolbar-btn" routerLink="/">Front page</button>
+  <button class="big-toolbar-btn"  routerLink="/buildings">Buildings map</button>
+  <button class="big-toolbar-btn"  routerLink="/hospital/1">Rooms map</button>
+  <button style="width: 160px;" class="big-toolbar-btn"  routerLink="/doctors-management">Doctors management</button>
+</div>
+
 <div class="title">
-  <h1></h1><h2>ROOMS MAP</h2>
+  <h1></h1><h2>WORLD VISION CLINIC</h2><h3>Rooms map</h3>
 </div>
 
 <div class="page-nav">
@@ -11,7 +18,7 @@
     <button (click)="takeOut()" class="floor-button">🚪 Exit</button>
   </div>
 
-  <div style="margin: 0 10px; position: relative">
+  <div style="margin: -40px 10px; position: relative">
     <svg width="850" height="700" *ngIf="!loadingFloors">
       <rect x="0" y="150" width="841" height="451" class="floor" />
       <g *ngFor="let room of selectedFloor.rooms">

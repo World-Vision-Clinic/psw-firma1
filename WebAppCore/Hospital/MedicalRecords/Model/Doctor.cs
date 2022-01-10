@@ -25,8 +25,10 @@ namespace Hospital.MedicalRecords.Model
         public Doctor() { }
         public DoctorType Type { get; private set; }
 
+        public bool onVacation { get; private set; }
 
-        public Doctor(int id, string name, string surname, int s, int r, DoctorType type)
+
+        public Doctor(int id, string name, string surname, int s, int r, DoctorType type, bool vacation)
         {
             this.Validate();
             this.Id = id;
@@ -35,6 +37,7 @@ namespace Hospital.MedicalRecords.Model
             this.ShiftId = s;
             this.RoomId = r;
             this.Type = type;
+            this.onVacation = vacation;
         }
 
         public Doctor(int id, string name, string surn)

@@ -46,6 +46,11 @@ namespace Hospital.MedicalRecords.Model
             DosageInMg = dosageInMg;
             Quantity = quantity;
         }
+
+        public void increaseQuantity(int quantity)
+        {
+            Quantity += quantity;
+        }
         public System.Collections.Generic.List<Ingredient> Ingredient
         {
             get
@@ -135,6 +140,8 @@ namespace Hospital.MedicalRecords.Model
             if (ReplacementMedicineIDs != null)
                 ReplacementMedicineIDs.Clear();
         }
+
+        
     }
 }
 

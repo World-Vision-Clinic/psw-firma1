@@ -21,7 +21,7 @@ namespace Integration.Pharmacy.Service
                 using (var generator = RandomNumberGenerator.Create())
                     generator.GetBytes(key);
                 apiKey = Convert.ToBase64String(key);
-                foundedPharmacy = context.Pharmacies.SingleOrDefault(pharmacy => pharmacy.Key == apiKey);
+                foundedPharmacy = context.Pharmacies.SingleOrDefault(pharmacy => pharmacy.ConnectionInfo.Key == apiKey);
 
             } while (foundedPharmacy != null);
 

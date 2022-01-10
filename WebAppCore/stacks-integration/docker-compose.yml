@@ -1,0 +1,43 @@
+version: '3.2'
+services:
+  integration-database:
+    image: postgres 
+    restart: always
+    networks: 
+      - database 
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: postgres
+      POSTGRES_DB: IntegrationDatabase
+    volumes:
+      - type: volume
+        source: database-data
+        target: /var/lib/postgresql/data
+      - type: bind
+        source: ./scripts/seed.sql
+        target: /docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5557:5432"
+
+  integration: 
+    image: jelenahrnjak/integration:latest
+    depends_on:
+      - integration-database
+    environment: 
+      DATABASE_HOST: integration-database
+      DATABASE_PORT: 5432
+      DATABASE_SCHEMA: IntegrationDatabase
+      DATABASE_PASSWORD: admin
+      DATABASE_USER: postgres
+    ports:
+      - "8083:1027" 
+    restart: on-failure
+    networks:  
+      - database 
+
+volumes:
+  database-data:
+
+networks: 
+  database:
+    driver: bridge

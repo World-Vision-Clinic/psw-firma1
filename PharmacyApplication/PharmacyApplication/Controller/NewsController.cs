@@ -30,7 +30,7 @@ namespace PharmacyAPI.Controller
 
             News newNews = NewsMapper.NewsDtoToNews(dto, Generator.GenerateNewsId());
             newsService.Save(newNews);
-
+            
 
             var factory = new ConnectionFactory() { HostName = "localhost" };
             using (var connection = factory.CreateConnection())
@@ -44,7 +44,7 @@ namespace PharmacyAPI.Controller
                                      arguments: null);
 
 
-                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(dto));
+                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(NewsMapper.NewsToNewsToSendDto(newNews)));
 
                 channel.BasicPublish(exchange: "JankovicNewsChannel",
                                      routingKey: "Jankovic",
