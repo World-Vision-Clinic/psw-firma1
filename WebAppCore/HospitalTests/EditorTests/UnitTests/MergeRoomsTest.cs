@@ -57,7 +57,6 @@ namespace HospitalTests.EditorTests.UnitTests
 
             Assert.Empty(eqRepository.GetRoomEquipemnts(rr2.Id));
             Assert.Empty(eqRepository.GetRoomEquipemnts(rr1.Id));
-            Assert.Equal(3,eqRepository.GetRoomEquipemnts(newId).Count);
 
             context.Dispose();
         }
