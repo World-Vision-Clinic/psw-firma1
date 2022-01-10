@@ -57,9 +57,9 @@ jobs:
         run: dotnet restore ${SOLUTION_DIRECTORY_HOSPITAL}
       - name: Create Migrations hospital
         run:
-          dotnet ef migrations add InitialCreate --project ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL};
+          dotnet ef migrations add InitialCreate --context HospitalContext --project ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL};
       - name: Update Database
-        run: dotnet ef database update --project ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL};
+        run: dotnet ef database update --context HospitalContext --project ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL};
       - name: Test
         run: dotnet test ${SOLUTION_DIRECTORY_HOSPITAL} --no-restore --verbosity quiet --filter FullyQualifiedName\~IntegrationTests
         env:
