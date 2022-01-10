@@ -13,6 +13,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Hospital.SharedModel;
 using Hospital.MedicalRecords.Repository;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Hospital.MedicalRecords.Model;
+using Hospital.MedicalRecords.Service;
 
 namespace Hospital_API.Controllers
 {
@@ -20,7 +24,9 @@ namespace Hospital_API.Controllers
     [ApiController]
     public class AppointmentController : ControllerBase
     {
+        public PatientService _patientService { get; set; }
         public AppointmentService _appointmentService { get; set; }
+        public bool test = false;
 
         [ActivatorUtilitiesConstructor]
         public AppointmentController()
@@ -28,7 +34,9 @@ namespace Hospital_API.Controllers
             HospitalContext context = new HospitalContext();
             IPatientRepository patientRepository = new PatientRepository(context);
             IDoctorRepository doctorRepository = new DoctorRepository(context, patientRepository);
-            _appointmentService = new AppointmentService(new AppointmentRepository(context), doctorRepository);
+            IAppointmentRepository appointmentRepository = new AppointmentRepository(context);
+            _appointmentService = new AppointmentService(appointmentRepository, doctorRepository);
+            _patientService = new PatientService(patientRepository, appointmentRepository);
         }
 
         public AppointmentController(AppointmentService _appointmentService)
@@ -36,22 +44,26 @@ namespace Hospital_API.Controllers
             this._appointmentService = _appointmentService;
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpGet]
         public ActionResult<IEnumerable<Appointment>> GetAppointments()
         {
             return _appointmentService.GetAll();
         }
 
+        [Authorize(Roles = "Manager")] //gde se ovo koristi?
         [HttpGet("{id}")]
         public ActionResult<Appointment> GetAppointment(int id)
         {
             return _appointmentService.FindById(id);
         }
 
-        [HttpGet("patient/{id}")]
-        public ActionResult<IEnumerable<AppointmentDTO>> GetAppointmentsByPatientId(int id)
+        [Authorize(Roles = "Patient")]
+        [HttpGet("patient")]
+        public ActionResult<IEnumerable<AppointmentDTO>> GetAppointmentsByPatientId()
         {
-            List<Appointment> appointments = _appointmentService.GetByPatientId(id);
+            Patient patient = getCurrentPatient();
+            List<Appointment> appointments = _appointmentService.GetByPatientId(patient.Id);
             List<AppointmentDTO> appointmentDTOs = new List<AppointmentDTO>();
             HospitalContext context = new HospitalContext();
             DoctorRepository doctorRepository = new DoctorRepository(context, new PatientRepository(context));
@@ -61,12 +73,14 @@ namespace Hospital_API.Controllers
             return appointmentDTOs;
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpGet("doctor/{id}")]
         public ActionResult<IEnumerable<Appointment>> GetAppointmentsByDoctorId(int id)
         {
             return _appointmentService.GetByDoctorId(id);
         }
 
+        [Authorize(Roles = "Patient")]
         [HttpGet("4step/{id}/{dateString}")]
         public ActionResult<IEnumerable<Appointment>> GetAppointments4Step(int id, string dateString)
         {
@@ -91,6 +105,7 @@ namespace Hospital_API.Controllers
             return Ok(freeAppointments);
         }
 
+        [Authorize(Roles = "Patient")]
         [HttpPost("recommendation_doctor")]
         public ActionResult<IEnumerable<Appointment>> GetRecommendedAppointments([FromBody] AppointmentRecommendationRequestDTO appointmentRecommendationRequest)
         {
@@ -100,31 +115,56 @@ namespace Hospital_API.Controllers
             return _appointmentService.GetAvailableByDateRangeAndDoctor(appointmentRecommendationRequest.LowerDateRange, appointmentRecommendationRequest.UpperDateRange, TimeSpan.Parse(appointmentRecommendationRequest.LowerTimeRange), TimeSpan.Parse(appointmentRecommendationRequest.UpperTimeRange), appointmentRecommendationRequest.DoctorId, AppointmentSearchPriority.DATE_TIME_PRIORITY);
         }
 
+        [Authorize(Roles = "Patient")]
         [HttpPost("add_appointment")]
         public HttpResponseMessage AddAppointment([FromBody] Appointment appointmentToAdd)
         {
+            Patient patient = getCurrentPatient();
+            if (patient == null || !patient.Activated)
+                return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest }; // Mozda nepotrebno
             if (appointmentToAdd.Date < DateTime.Now)
                 return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest };
 
             if (_appointmentService.GetByDateAndDoctor(appointmentToAdd.Date, appointmentToAdd.Time, appointmentToAdd.DoctorForeignKey) != null)
                 return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest };
 
+            appointmentToAdd.PatientForeignKey = patient.Id;
             _appointmentService.AddAppointment(appointmentToAdd);
             return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }
 
+        [Authorize(Roles = "Patient")]
         [HttpDelete("{id}")]
         public ActionResult<Appointment> CancelAppointment(int id)
         {
             var appointment = _appointmentService.FindById(id);
+            Patient patient = getCurrentPatient();
             if (appointment == null)
                 return NotFound();
+            if (appointment.PatientForeignKey != patient.Id)
+                return Unauthorized();
             if (DateTime.Now > appointment.Date.AddDays(-2) || DateTime.Now > appointment.Date)
                 return BadRequest("Cannot cancel this appointment");
 
             appointment.IsCancelled = true;
             _appointmentService.Modify(appointment);
             return Ok(appointment);
+        }
+
+        private Patient getCurrentPatient()
+        {
+            if (test)
+            {
+                Patient patient = _patientService.FindByUserName("Marko123");
+                return patient;
+            }
+            else
+            {
+                string username = User.FindFirst("username")?.Value;
+                Patient patient = _patientService.FindByUserName(username);
+                return patient;
+            }
+
         }
     }
 }

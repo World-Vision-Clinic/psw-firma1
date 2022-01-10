@@ -7,6 +7,8 @@ using System.Net;
 using System.Threading;
 using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Model;
+using Hospital.Schedule.Repository;
+using Hospital.Schedule.Model;
 
 namespace Hospital.MedicalRecords.Service
 {
@@ -14,28 +16,12 @@ namespace Hospital.MedicalRecords.Service
     {
 
         private readonly IPatientRepository _repo;
+        private readonly IAppointmentRepository _appointmentRepository;
 
-        public PatientService(IPatientRepository repo)
+        public PatientService(IPatientRepository repo, IAppointmentRepository appointmentRepository)
         {
             _repo = repo;
-        }
-
-
-        public void AddPatient()
-        {
-            Patient newPatient = new Patient();
-            newPatient.Activated = false;
-            newPatient.Password = "123";
-            newPatient.UserName = "ajajajajja";
-            newPatient.EMail = "kedosok152@funboxcn.com";
-            newPatient.Token = TokenizeSHA256(newPatient.UserName);
-            _repo.AddPatient(newPatient);
-            new Thread(() =>
-            {
-                Thread.CurrentThread.IsBackground = true;
-                SendEmail(newPatient);
-            }).Start();
-
+            _appointmentRepository = appointmentRepository;
         }
 
         public Patient LoginPatient(string username, string password)
@@ -57,8 +43,6 @@ namespace Hospital.MedicalRecords.Service
             if (FindByUserName(patient.UserName) != null)
                 return;
 
-            patient.Activated = false;
-            patient.Token = TokenizeSHA256(patient.UserName);
             _repo.AddPatient(patient);
             new Thread(() =>
             {
@@ -67,19 +51,42 @@ namespace Hospital.MedicalRecords.Service
             }).Start();
         }
 
-        public string TokenizeSHA256(string username) {  
-  
-            using (SHA256 sha256Hash = SHA256.Create())
+        public bool IsBlockable(Patient patient)
+        {
+            List<Appointment> appointments = _appointmentRepository.GetByPatientId(patient.Id);
+            int range = 30;
+            int treshold = 3;
+            DateTime startDate = DateTime.Now.AddDays(-range);
+            int counter = 0;
+            foreach (Appointment a in appointments)
             {
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(username));
-
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
-                return builder.ToString();
+                if (a.Date > startDate && a.IsCancelled)
+                    counter++;
             }
+            return counter >= treshold;
+        }
+
+        public List<Patient> GetMaliciousPatients()
+        {
+            List<Patient> malicious = new List<Patient>();
+            List<Patient> patients = _repo.GetAll();
+            foreach (Patient p in patients)
+            {
+                if (IsBlockable(p))
+                    malicious.Add(p);
+            }
+            return malicious;
+        }
+
+        public bool Block(Patient patient)
+        {
+            if (!IsBlockable(patient))
+                return false;
+            patient = new Patient(patient.Id, patient.UserName, patient.Password, patient.FullName, patient.EMail, patient.Activated, patient.Gender,
+                patient.Jmbg, patient.DateOfBirth, patient.Residence, patient.Phone, patient.PreferedDoctor, patient.Weight, patient.Height, patient.BloodType, true, patient.Appointments);
+            _repo.Modify(patient);
+            SaveSync();
+            return true;
         }
 
         public Patient FindByToken(string token)
@@ -91,10 +98,20 @@ namespace Hospital.MedicalRecords.Service
         {
             return _repo.FindById(id);
         }
+
+        public List<Patient> GetAll()
+        {
+            return _repo.GetAll();
+        }
         
         public Patient FindByUserName(string username)
         {
             return _repo.FindByUserName(username);
+        }
+
+        public Patient FindByEmail(string email)
+        {
+            return _repo.FindByEmail(email);
         }
 
         public void SendEmail(Patient patient) {
@@ -110,9 +127,9 @@ namespace Hospital.MedicalRecords.Service
         }
 
         public void Activate(Patient patient) {
-            patient.Activated = true;
+            patient = new Patient(patient.Id, patient.UserName, patient.Password, patient.FullName, patient.EMail, true, patient.Gender,
+                patient.Jmbg, patient.DateOfBirth, patient.Residence, patient.Phone, patient.PreferedDoctor, patient.Weight, patient.Height, patient.BloodType, patient.IsBlocked, patient.Appointments);
             _repo.Modify(patient);
-            SaveSync();
         }
 
         public void SaveSync()

@@ -49,6 +49,11 @@ namespace Hospital.MedicalRecords.Repository
             }
         }
 
+        public Patient FindByEmail(string email)
+        {
+            return _context.Patients.FirstOrDefault(p => String.Equals(p.EMail, email));
+        }
+
         public Patient FindById(int id)
         {
             return _context.Patients.FirstOrDefault(p => p.Id == id);
@@ -56,7 +61,8 @@ namespace Hospital.MedicalRecords.Repository
 
         public void Modify(Patient patient)
         {
-            _context.Entry(patient).State = EntityState.Modified;
+            _context.ChangeTracker.Clear();
+            _context.Patients.Update(patient);
             SaveSync();
         }
 

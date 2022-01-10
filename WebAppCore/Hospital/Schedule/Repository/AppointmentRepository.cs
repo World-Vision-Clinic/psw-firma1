@@ -32,8 +32,6 @@ namespace Hospital.Schedule.Repository
             return _context.Appointments.Where(f => f.DoctorForeignKey == doctorId).ToList();
         }
 
-        
-
         public List<Appointment> GetByDoctorId(int doctorId, DateTime lowerDateRange, DateTime upperDateRange)
         {
             return _context.Appointments.Where(f => f.DoctorForeignKey == doctorId && f.Date >= lowerDateRange && f.Date < upperDateRange).ToList();

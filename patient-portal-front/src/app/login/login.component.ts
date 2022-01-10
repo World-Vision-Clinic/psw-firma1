@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RegisterService } from '../register.service';
+import { SurveyComponent } from '../survey/survey/survey.component';
 
 @Component({
   selector: 'app-login',
@@ -21,10 +22,17 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  handleError(){
+    this.LoginDTO.username = ""
+    this.LoginDTO.password = ""
+    alert("Failed to login please try again")
+  }
+
   login() {
-    this._registerService.login(this.LoginDTO).subscribe(data => localStorage.setItem('PSWtoken', data.token),
-      error =>console.log(error),
-      () => console.log(localStorage.getItem('PSWtoken')));
+    this._registerService.login(this.LoginDTO).subscribe(
+      data => localStorage.setItem('PSWtoken', data.token),
+      error => this.handleError(),
+      () => this.router.navigate(["/medical-record"]));
   }
   verifyPassword() {
     if(this.LoginDTO.password == "")

@@ -76,7 +76,7 @@
                         </div>
                         <div class="col-md-4">
                             <label>
-                                <input type="date" name="birthdate" [(ngModel)]="dateOfBirth" required="required">
+                                <input type="date" name="birthdate" [(ngModel)]="dateOfBirth" required="required" [max]="maxDate">
                                 <span class="keep_hovered">Date of Birth</span>
                             </label>
                         </div>

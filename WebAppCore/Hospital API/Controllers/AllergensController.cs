@@ -18,6 +18,7 @@ namespace Hospital_API.Controllers
     {
         private readonly HospitalContext _context;
         private readonly AllergenService _allergenService;
+        public bool test = false;
 
         public AllergensController()
         {

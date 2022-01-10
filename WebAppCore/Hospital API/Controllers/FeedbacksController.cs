@@ -10,6 +10,8 @@ using Hspital_API.Mapper;
 using Hospital.MedicalRecords.Service;
 using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Model;
+using Hospital.SharedModel;
+using Hospital.Schedule.Repository;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Hospital_API
@@ -21,15 +23,18 @@ namespace Hospital_API
         //private readonly HospitalContext _context;
         private readonly FeedbackService _feedbackService;
         private readonly PatientService _patientService;
+        public bool test = false;
 
         public FeedbacksController()
         {
-            _feedbackService = new FeedbackService(new FeedbackRepository(new Hospital.SharedModel.HospitalContext()));
-            _patientService = new PatientService(new PatientRepository(new Hospital.SharedModel.HospitalContext()));
+            HospitalContext context = new HospitalContext();
+            _feedbackService = new FeedbackService(new FeedbackRepository(context));
+            AppointmentRepository appointmentRepository = new AppointmentRepository(context);
+            _patientService = new PatientService(new PatientRepository(context), appointmentRepository);
         }
 
         // GET: api/Feedbacks
-        [Authorize]
+        [Authorize(Roles = "Manager")]
         [HttpGet]
         public ActionResult<IEnumerable<Feedback>> GetFeedbacks()
         {
@@ -49,10 +54,16 @@ namespace Hospital_API
         }
 
         // GET: api/Feedbacks/5
+        [Authorize(Roles = "Manager")]
         [HttpGet("{id}")]
         public ActionResult<Feedback> GetFeedback(int id)
         {
             var feedback = _feedbackService.FindById(id);
+            Patient patient = getCurrentPatient();
+            if (feedback.UserName != patient.UserName)
+            {
+                return Unauthorized();
+            }
 
             if (feedback == null)
             {
@@ -65,6 +76,7 @@ namespace Hospital_API
         // PUT: api/Feedbacks/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Authorize(Roles = "Manager")]
         [HttpPut("{id}")]
         public IActionResult PutFeedback(int id, Feedback feedback)
         {
@@ -97,10 +109,13 @@ namespace Hospital_API
         // POST: api/Feedbacks
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Authorize(Roles = "Patient")]
         [HttpPost]
         public ActionResult<Feedback> PostFeedback([FromBody] Feedback feedback)
         {
             Feedback newFeedback = feedback;
+            Patient patient = getCurrentPatient();
+            newFeedback.UserName = patient.UserName;
 
             _feedbackService.AddFeedback(newFeedback);
 
@@ -108,13 +123,19 @@ namespace Hospital_API
         }
 
         // DELETE: api/Feedbacks/5
+        [Authorize(Roles = "Patient")]
         [HttpDelete("{id}")]
         public ActionResult<Feedback> DeleteFeedback(int id)
         {
             var feedback = _feedbackService.FindById(id);
+            Patient patient = getCurrentPatient();
             if (feedback == null)
             {
                 return NotFound();
+            }
+            if (feedback.UserName != patient.UserName)
+            {
+                return Unauthorized();
             }
 
             _feedbackService.Delete(feedback);
@@ -137,6 +158,20 @@ namespace Hospital_API
         public ActionResult TestingController()
         {
             return Ok("Hello from Feedbacks controller");
+        }
+        private Patient getCurrentPatient()
+        {
+            if (test)
+            {
+                Patient patient = _patientService.FindByUserName("Marko123");
+                return patient;
+            }
+            else
+            {
+                string username = User.FindFirst("username")?.Value;
+                Patient patient = _patientService.FindByUserName(username);
+                return patient;
+            }
         }
     }
 }

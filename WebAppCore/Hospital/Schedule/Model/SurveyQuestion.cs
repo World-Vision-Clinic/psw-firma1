@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hospital.Seedwork;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,34 +7,18 @@ using System.Text;
 
 namespace Hospital.Schedule.Model
 {
-    public class SurveyQuestion
+    public class SurveyQuestion : Entity
     {
-        [Key]
-        private int id;
-        private string question; 
-        private SurveySectionType section; 
-        public int Answer { get; set; } 
-        public int IdSurvey { get; set; }
+        public string Question { get; private set; }
+        public SurveySectionType Section { get; private set; }
 
         public SurveyQuestion() { }
 
-        public int Id
+        public SurveyQuestion(int id, string question, SurveySectionType section) 
         {
-            get { return id; }
-            set { id = value; }
+            this.Id = id;
+            this.Question = question;
+            this.Section = section;
         }
-
-        public string Question
-        {
-            get { return question; }
-            set { question = value; }
-        }
-        
-       public SurveySectionType Section
-       {
-           get { return section; }
-           set { section = value; }
-       }
-
     }
 }

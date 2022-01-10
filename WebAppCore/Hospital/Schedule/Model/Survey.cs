@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hospital.Seedwork;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,25 +7,19 @@ using System.Text;
 
 namespace Hospital.Schedule.Model
 {
-    public class Survey 
+    public class Survey : Entity
     {
-        [Key]
-        public int IdSurvey { get; set; }
-        public DateTime CreationDate { get; set; }
-        public int IdAppointment { get; set; }
+        public DateTime CreationDate { get; private set; }
 
-        [ForeignKey("IdAppointment")]
-        public virtual Appointment Appointment { get; set; }
-
-        public Survey()
+        public Survey() { }
+        public Survey(int id, DateTime creationDate)
         {
-            IdAppointment = 1;
+            this.Id = id;
+            this.CreationDate = creationDate;
         }
-
-        public Survey(int id, int idAppointment)
+        public Survey(DateTime creationDate)
         {
-            this.IdSurvey = id;
-            this.IdAppointment = idAppointment;
-        }    
+            this.CreationDate = creationDate;
+        }
     }
 }

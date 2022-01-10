@@ -726,6 +726,9 @@ namespace Hospital.Migrations
                     b.Property<int>("Height")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("IsBlocked")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Jmbg")
                         .HasColumnType("text");
 

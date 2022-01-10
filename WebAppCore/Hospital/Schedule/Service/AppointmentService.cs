@@ -28,6 +28,7 @@ namespace Hospital.Schedule.Service
 
         public void AddAppointment(Appointment newAppointment)
         {
+            newAppointment.IsCancelled = false;
             _repo.AddAppointment(newAppointment);
         }
 
@@ -45,8 +46,6 @@ namespace Hospital.Schedule.Service
         {
             return _repo.GetByDoctorId(doctorId);
         }
-
-       
 
         public List<Appointment> GetByDoctorId(int doctorId, DateTime lowerDateRange, DateTime upperDateRange)
         {
@@ -67,6 +66,10 @@ namespace Hospital.Schedule.Service
 
         public List<Appointment> GetAvailableByDateRangeAndDoctor(DateTime lowerDateRange, DateTime upperDateRange, TimeSpan lowerTimeRange, TimeSpan upperTimeRange, int doctorId, AppointmentSearchPriority priority = AppointmentSearchPriority.NO_PRIORITY)
         {
+            lowerDateRange = new DateTime(lowerDateRange.Year, lowerDateRange.Month, lowerDateRange.Day, 0, 0, 0);
+            upperDateRange = new DateTime(upperDateRange.Year, upperDateRange.Month, upperDateRange.Day, 0, 0, 0);
+            upperDateRange = upperDateRange.AddHours(23);
+            upperDateRange = upperDateRange.AddMinutes(59);
             List<Appointment> doctorAppointments = GetByDoctorId(doctorId, lowerDateRange, upperDateRange);
             List<Appointment> freeAppointments = GenerateFreeAppointmentList(lowerDateRange, upperDateRange, lowerTimeRange, upperTimeRange, new TimeSpan(0, 30, 0), doctorId);
 
@@ -79,16 +82,16 @@ namespace Hospital.Schedule.Service
                 {
                     int range = 5;
                     int minimumDaysCount = 2;
-                    DateTime minimumDate = DateTime.Now.AddDays(minimumDaysCount);
+                    DateTime minimumDate = DateTime.Now.Date.AddDays(minimumDaysCount);
                     DateTime extendedLowerDate = lowerDateRange.AddDays(-range);
                     DateTime extendedUpperRange = upperDateRange.AddDays(range);
-                    List<Appointment> freeAppointmentsBefore = GenerateFreeAppointmentList((extendedLowerDate > minimumDate ? extendedLowerDate : minimumDate),
+                    List<Appointment> freeAppointmentsBefore = GenerateFreeAppointmentList((extendedLowerDate > minimumDate ? extendedLowerDate : minimumDate), //Refaktorisati sve ovo
                         lowerDateRange, lowerTimeRange, upperTimeRange, new TimeSpan(0, 30, 0), doctorId);
                     List<Appointment> doctorAppointmentsBefore = GetByDoctorId(doctorId, (extendedLowerDate > minimumDate ? extendedLowerDate : minimumDate),
-                        lowerDateRange);
+                        lowerDateRange.AddHours(23).AddMinutes(59));
                     List<Appointment> freeAppointmentsFilteredBefore = FilterFreeAppointmentsByDoctorAvailability(freeAppointmentsBefore, doctorAppointmentsBefore);
 
-                    List<Appointment> freeAppointmentsAfter = GenerateFreeAppointmentList(upperDateRange.Date, extendedUpperRange.Date, lowerTimeRange, upperTimeRange, new TimeSpan(0, 30, 0), doctorId);
+                    List<Appointment> freeAppointmentsAfter = GenerateFreeAppointmentList(upperDateRange.Date.AddDays(1), extendedUpperRange.Date, lowerTimeRange, upperTimeRange, new TimeSpan(0, 30, 0), doctorId);
                     List<Appointment> doctorAppointmentsAfter = GetByDoctorId(doctorId, upperDateRange, extendedUpperRange);
                     List<Appointment> freeAppointmentsFilteredAfter = FilterFreeAppointmentsByDoctorAvailability(freeAppointmentsAfter, doctorAppointmentsAfter);
 
@@ -190,6 +193,7 @@ namespace Hospital.Schedule.Service
 
         public List<Appointment> GenerateFreeAppointments(int id, DateTime date, List<Appointment> doctorsAppointments)
         {
+            date = new DateTime(date.Year, date.Month, date.Day, 0, 0, 0);
             DateTime workdayBegin = date.AddHours(9);
             DateTime workdayEnd = date.AddHours(17);
             List<Appointment> appointments = new List<Appointment>();
@@ -248,7 +252,7 @@ namespace Hospital.Schedule.Service
         {
             List<Appointment> freeAppointmentList = new List<Appointment>();
             DateTime dayIterator = lowerDateRange;
-            while (dayIterator < upperDateRange)
+            while (dayIterator <= upperDateRange) // <
             {
                 DateTime timeIterator = dayIterator;
                 while (timeIterator.Day == dayIterator.Day)

@@ -19,6 +19,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
     {
         public PatientRepository _patientRepository;
         public ManagerRepository _managerRepository;
+        public AppointmentRepository _appointmentRepository;
 
         public LoginController _loginController;
         private void GetInMemoryPersonRepository()
@@ -34,8 +35,10 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             _managerRepository = new ManagerRepository(hospitalContext);
 
             _loginController = new LoginController();
-            _loginController._patientService = new PatientService(_patientRepository);
+            _appointmentRepository = new AppointmentRepository(hospitalContext);
+            _loginController._patientService = new PatientService(_patientRepository, _appointmentRepository);
             _loginController._managerService = new ManagerService(_managerRepository);
+            _loginController.test = true;
         }
         public TestLoginController()
         {

@@ -27,11 +27,13 @@ namespace Hospital_API.Controllers
         private string SECRET = "ecc0024b9feaa167cf8c5bc4819bc03aa8ed88d86524bd647db6f3363dfabd13";
         public PatientService _patientService;
         public ManagerService _managerService;
+        public bool test = false;
 
         public LoginController()
         {
-            _patientService = new PatientService(new PatientRepository(new Hospital.SharedModel.HospitalContext()));
-            _managerService = new ManagerService(new ManagerRepository(new Hospital.SharedModel.HospitalContext()));
+            IAppointmentRepository _appointmentRepository = new AppointmentRepository(new HospitalContext());
+            _patientService = new PatientService(new PatientRepository(new HospitalContext()), _appointmentRepository);
+            _managerService = new ManagerService(new ManagerRepository(new HospitalContext()));
         }
 
         [HttpPost]
