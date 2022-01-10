@@ -21,6 +21,11 @@ jobs:
       postgres:
         image: postgres
         env:
+          POSTGRES_USER: admin
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_DB: "MyWebApi.Dev"
+          # POSTGRES_USER_PASSWORD: ftn
           POSTGRES_PASSWORD: ftn
         # Set health checks to wait until postgres has started
         options: >-
