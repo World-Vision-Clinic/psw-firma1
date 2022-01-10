@@ -18,8 +18,8 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 WORKDIR /app 
 EXPOSE 1026
 COPY --from=build-env /app .
-ENTRYPOINT [ "dotnet","PharmacyAPI.dll" ]
 
-RUN groupadd -g 1001 student && \
-    useradd -r -u 1001 -g student  student 
-USER student
+RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
+USER appuser
+ 
+ENTRYPOINT [ "dotnet","PharmacyAPI.dll" ]
