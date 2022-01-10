@@ -39,18 +39,21 @@
     <table class="doctors-table">
       <thead>
         <tr>
-          <th style="width: 290px">Doctor</th>
-          <th style="width: 220px">Shift</th>
-          <th style="width: 190px">Time</th>
+          <th style="width: 380px">Doctor</th>
+          <th style="width: 320px">Info</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let doctor of doctors">
-          <td style="width: 290px">
+          <td style="width: 600px">
             {{ doctor.firstName }} {{ doctor.lastName }}
           </td>
-          <td style="width: 220px"></td>
-          <td style="width: 190px"></td>
+          <td style="width: 120px"></td>
+          <td>
+            <button class="search-btn">
+              <i class="fas fa-search"></i>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
