@@ -6,16 +6,16 @@ using System.Text;
 
 namespace HospitalTests.PatientPortalTests.E2ETests
 {
-   public  class HomePageManager
+   public  class FeedbackPage
     {
         private IWebDriver driver;
         public const string URI = "http://localhost:4200/manager-feedback";
 
-        private IWebElement Publish => driver.FindElement(By.Id("publish0"));
-        private IWebElement Unpublish => driver.FindElement(By.Id("unpublish0"));        
+        private IWebElement Publish => driver.FindElement(By.Id("publish1"));
+        private IWebElement Unpublish => driver.FindElement(By.Id("unpublish1"));        
         public string Title => driver.Title;
 
-        public HomePageManager(IWebDriver driver)
+        public FeedbackPage(IWebDriver driver)
         {
             this.driver = driver;
         }
