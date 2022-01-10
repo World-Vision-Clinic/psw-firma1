@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Hospital.Migrations
 {
     [DbContext(typeof(HospitalContext))]
-    [Migration("20220110014834_AddedOnCallShifts")]
+    [Migration("20220110102923_AddedOnCallShifts")]
     partial class AddedOnCallShifts
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1719,7 +1719,7 @@ namespace Hospital.Migrations
                         new
                         {
                             IdSurvey = 1,
-                            CreationDate = new DateTime(2022, 1, 10, 2, 48, 32, 601, DateTimeKind.Local).AddTicks(1002),
+                            CreationDate = new DateTime(2022, 1, 10, 11, 29, 21, 448, DateTimeKind.Local).AddTicks(4774),
                             IdAppointment = 1
                         });
                 });
