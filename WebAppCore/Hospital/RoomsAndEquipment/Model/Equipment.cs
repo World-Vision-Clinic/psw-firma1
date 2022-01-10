@@ -38,6 +38,7 @@ namespace Hospital.RoomsAndEquipment.Model
             this.InTransport = inTransport;
             this.TransportStart = start;
             this.TransportEnd = end;
+            Validate();
         }
 
         public Equipment(int id, string name, EquipmentType type, int amount, int roomId)
@@ -47,7 +48,16 @@ namespace Hospital.RoomsAndEquipment.Model
             this.Type = type;
             this.Amount = amount;
             this.RoomId = roomId;
-            this.InTransport = false; 
+            this.InTransport = false;
+            Validate();
+        }
+
+        public void Validate()
+        {
+            if (this.Amount < 0)
+            {
+                throw new Exception();
+            }
         }
 
     }

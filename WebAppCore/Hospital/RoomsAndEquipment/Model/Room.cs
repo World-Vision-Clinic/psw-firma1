@@ -41,6 +41,16 @@ namespace Hospital.RoomsAndEquipment.Model
             this.Vertical = vertical;
             this.Css = css;
             this.DoorExist = dexist;
+            Validate();            
+        }
+
+        public void Validate()
+        {
+            if(this.X <= 0 || this.Y <= 0 || this.Height <= 0 || this.Width <= 0 )
+            {
+                throw new Exception();
+            }
+
         }
 
     }
