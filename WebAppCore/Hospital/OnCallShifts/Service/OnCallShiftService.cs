@@ -49,5 +49,16 @@ namespace Hospital.ShiftsAndVacations.Service
             return repository.GetByID(id);
         }
 
+        public void addNewOnCallShift(int id, int doctorId, DateTime date)
+        {
+            OnCallShift obj = new OnCallShift(id, doctorId, date);
+            repository.Save(obj);
+        }
+
+        public void updateShift(int id, int doctorId, DateTime date)
+        {
+            OnCallShift obj = new OnCallShift(id, doctorId, date);
+            repository.Update(obj);
+        }
     }
 }
