@@ -19,7 +19,7 @@ namespace Pharmacy.Service
             this.medicineRepository = medicineRepository;
         }
 
-        public Tender GetTenderById(string id)
+        public Tender GetByTenderHash(string id)
         {
             return tenderRepository.GetById(id);
         }
@@ -103,6 +103,16 @@ namespace Pharmacy.Service
             } while (foundedOffer != null);
 
             return tenderHash;
+        }
+
+        public void CloseTender(Tender tender)
+        {
+            tenderRepository.CloseTender(tender);
+        }
+
+        public void Update(Tender activeTender)
+        {
+            tenderRepository.Update(activeTender);
         }
 
         public Tender GetById(int id)

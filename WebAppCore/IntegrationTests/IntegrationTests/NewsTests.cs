@@ -16,7 +16,7 @@ using Xunit;
 
 namespace IntegrationTests.IntegrationTests
 {
-    
+
     public class NewsTests
     {
         [Theory]
@@ -25,17 +25,17 @@ namespace IntegrationTests.IntegrationTests
         {
             var stubRepository = new Mock<INewsRepository>();
             var news = new List<News>();
-            stubRepository.Setup(m => m.GetAll()).Returns(news);    
-            RabbitMQService rabbitMQ = new RabbitMQService(stubRepository.Object, new PharmaciesRepository(), new TenderRepository());
+            stubRepository.Setup(m => m.GetAll()).Returns(news);
+            RabbitMQService rabbitMQ = new RabbitMQService(stubRepository.Object, new PharmaciesRepository(), new TenderRepository(), true);
             CancellationToken token = new CancellationToken(false);
             await rabbitMQ.StartAsync(token);
 
-      
+
             sendMessage(pieceOfNews, isFirst);
             await Task.Delay(3000);
 
 
-            
+
             if (isFirst) stubRepository.Verify(rep => rep.GetAll(), Times.Once);
             else stubRepository.Verify(rep => rep.GetAll(), Times.Never);
 
@@ -96,7 +96,7 @@ namespace IntegrationTests.IntegrationTests
             }
         }
 
-       
+
 
     }
 }

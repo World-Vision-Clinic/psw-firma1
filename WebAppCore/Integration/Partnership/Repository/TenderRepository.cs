@@ -44,7 +44,7 @@ namespace Integration.Partnership.Repository
             return allTenders;
         }
 
-        public void EditTenderByHash(Tender tender)
+        public void EditTenderEndTimeByHash(Tender tender)
         {
             List<Tender> allTenders = dbContext.Tenders.ToList();
             foreach(Tender t in allTenders)
@@ -105,5 +105,27 @@ namespace Integration.Partnership.Repository
             dbContext.SaveChanges();
             return true;
         }
+
+        public Tender GetByTenderHash(string id)
+        {
+            return dbContext.Tenders.Include("TenderItems").SingleOrDefault(tender => tender.TenderHash == id);
+        }
+
+        public TenderOffer GetTenderOfferWithOfferItems(string pharmacyName, string offerHash)
+        {
+            List<TenderOffer> offers = GetAllTenderOffersWithOfferItems();
+            TenderOffer offer=new TenderOffer();
+            foreach(TenderOffer o in offers)
+            {
+                if(o.PharmacyName == pharmacyName && o.TenderOfferHash == offerHash)
+                {
+                    offer = o;
+                    break;
+                }
+            }
+
+            return offer;
+        }
+
     }
 }

@@ -57,5 +57,13 @@ namespace Integration_API.Mapper
 
             return offer;
         }
+
+        public static TenderDto TenderToTenderCloseDto(Tender tender)
+        {
+            TenderDto dto = new TenderDto();
+            dto.TenderHash = tender.TenderHash;
+            dto.EndTime = tender.EndTime;
+            return dto;
+        }
     }
 }

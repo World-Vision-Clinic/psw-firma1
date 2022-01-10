@@ -11,6 +11,7 @@ import { Injectable } from '@angular/core';
 @Injectable({providedIn:'root'})
 export class TenderSelectionComponent implements OnInit {
 
+  currentTime = Date.now();
   constructor(private http:HttpClient) { }
 
   TenderList:any=[];
@@ -39,7 +40,9 @@ export class TenderSelectionComponent implements OnInit {
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(tender);
       //alert("Sending tender information...");
-      this.http.post('http://localhost:43818/Tender/closeTender', body,{'headers':headers}).subscribe(res => alert("Successfull."));
+      this.http.post('http://localhost:43818/Tender/closeTender', body,{'headers':headers}).subscribe(res => {
+        window.location.reload()
+      alert("Successfull.")});
 
     } 
   }
@@ -52,7 +55,9 @@ export class TenderSelectionComponent implements OnInit {
       tenderOffer.TenderHash = tender.TenderHash;  
       const body=JSON.stringify(tenderOffer);
       //alert("Sending tender information...");
-      this.http.post('http://localhost:43818/Tender/chooseTenderWinner', body,{'headers':headers}).subscribe(res => alert("Successfull."));
+      this.http.post('http://localhost:43818/Tender/chooseTenderWinner', body,{'headers':headers}).subscribe(res => {
+      alert("Successfull.")
+      window.location.reload()});
     }
   }
 
