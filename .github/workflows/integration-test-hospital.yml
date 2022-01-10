@@ -1,0 +1,61 @@
+name: integration-testing-hospital
+on:
+  push:
+  pull_request:
+
+
+jobs:
+  Run-Integration-Tests:
+    runs-on: ubuntu-latest
+    env:
+      SOLUTION_DIRECTORY_HOSPITAL: WebAppCore
+      PROJECT_DIRECTORY_HOSPITAL: Hospital
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: admin
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_DB: "MyWebApi.Dev"
+          POSTGRES_PASSWORD: ftn
+          # POSTGRES_PASSWORD: ftn
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Install dotnet ef
+        run: dotnet tool install --global dotnet-ef
+
+      - name: Install dependencies hospital
+        run: dotnet restore ${SOLUTION_DIRECTORY_HOSPITAL}
+      # - name: Create Migrations hospital
+      #   run:
+      #     dotnet ef migrations add InitialCreate --context HospitalContext --project ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL};
+
+      # putanje do integracionih testova
+      # WebAppCore\HospitalTests\EditorTests\IntegrationTests
+      # WebAppCore\HospitalTests\PatientPortalTests\IntegrationTests
+
+      - name: Update Database
+        run: dotnet ef database update --context HospitalContext --project ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL};
+     
+      - name: Test
+        # run: dotnet test ${SOLUTION_DIRECTORY_HOSPITAL} --no-restore --verbosity quiet --filter FullyQualifiedName\!~E2ETests\!~EndToEndTests\!~End2End
+        env:
+          POSTGRES_USER: admin
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_DB: "MyWebApi.Dev"
+          POSTGRES_USER_PASSWORD: ftn
+          POSTGRES_PASSWORD: admin
