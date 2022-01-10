@@ -2,7 +2,7 @@
 
 services:
   hospital-front:
-    image: jelenahrnjak/hospital-front:latest
+    image: jelenah/hospital-front:latest
     depends_on:
       - "hospital-api" 
     ports:
@@ -11,7 +11,7 @@ services:
       - application
 
   hospital-api:
-    image: jelenahrnjak/hospital-api:latest
+    image: jelenah/hospital-api:latest
     depends_on:
       - "database"
     #build:
