@@ -40,6 +40,7 @@ import { StatisticsComponent } from './manager-integration-front-app/statistics/
 import { DoctorsManagementComponent } from './doctors-management/doctors-management.component';
 import { DoctorOnDutyContainerComponent } from './doctor-on-duty-container/doctor-on-duty-container.component';
 import { DatePipe } from '@angular/common';
+import { ChartsContainerComponent } from './charts-container/charts-container.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { DatePipe } from '@angular/common';
     StatisticsComponent,
     DoctorsManagementComponent,
     DoctorOnDutyContainerComponent,
+    ChartsContainerComponent,
   ],
   imports: [
     BrowserModule,
