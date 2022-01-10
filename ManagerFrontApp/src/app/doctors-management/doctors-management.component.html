@@ -56,7 +56,9 @@
     </table>
   </div>
 
-  <div *ngIf="selectedModule == 'onDuty'"></div>
+  <div *ngIf="selectedModule == 'onDuty'">
+    <app-doctor-on-duty-container > </app-doctor-on-duty-container>
+  </div>
   <!-- VACATIONS -->
   <div *ngIf="selectedModule == 'vacations'">
     <div class="doctors-page">
@@ -218,7 +220,7 @@
   </div>
 
   <!-- SHIFTS -->
-  <div *ngIf="selectedModule == 'shifts'">
+  <div *ngIf="selectedModule == 'shifts'" class="shifts-container">
     <div *ngIf="shiftsBtnsBox">
       <button (click)="shiftsListBox = true; shiftsBtnsBox = false" class="btn">
         Shifts list

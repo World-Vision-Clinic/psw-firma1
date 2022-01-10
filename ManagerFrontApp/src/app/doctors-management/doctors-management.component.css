@@ -24,9 +24,10 @@
   border: 2px;
   border-radius: 15px;
   background-color: rgba(224, 223, 223, 0.911);
+  width: 710px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 .toolbar-btn {
@@ -249,6 +250,7 @@
   background-color: rgba(224, 223, 223, 0.911);
   max-height: 300px;
   overflow-y: scroll;
+  width: 100%;
 }
 .doctor-list-table thead {
   display: flex;
@@ -293,4 +295,9 @@
 }
 .vacation-selected {
   background-color: rgba(160, 159, 159, 0.6);
+}
+
+.shifts-container {
+  width: 710px;
+  margin-top: 20px;
 }

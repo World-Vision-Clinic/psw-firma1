@@ -8,6 +8,7 @@ import { Hospital1Component } from './hospital1/hospital1.component';
 import { FrontPageComponent } from './front-page/front-page.component';
 import { RoomComponent } from './room/room.component';
 import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PharmacyRegistrationComponent } from './pharmacy-registration/pharmacy-registration.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -30,10 +31,15 @@ import { ViewFilesComponent } from './manager-integration-front-app/view-files/v
 import { LoginComponent } from './login/login.component';
 import { TenderCreationComponent } from './manager-integration-front-app/tender-creation/tender-creation.component';
 import { NgChartsModule } from 'ng2-charts';
-import { ChartAllModule, AccumulationChartAllModule, RangeNavigatorAllModule } from '@syncfusion/ej2-angular-charts';
+import {
+  ChartAllModule,
+  AccumulationChartAllModule,
+  RangeNavigatorAllModule,
+} from '@syncfusion/ej2-angular-charts';
 import { StatisticsComponent } from './manager-integration-front-app/statistics/statistics.component';
 import { DoctorsManagementComponent } from './doctors-management/doctors-management.component';
 import { DoctorOnDutyContainerComponent } from './doctor-on-duty-container/doctor-on-duty-container.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -58,7 +64,7 @@ import { DoctorOnDutyContainerComponent } from './doctor-on-duty-container/docto
     TenderCreationComponent,
     StatisticsComponent,
     DoctorsManagementComponent,
-    DoctorOnDutyContainerComponent
+    DoctorOnDutyContainerComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,20 +75,21 @@ import { DoctorOnDutyContainerComponent } from './doctor-on-duty-container/docto
     HttpClientModule,
     ReactiveFormsModule,
     NgSelectModule,
-    MatDatepickerModule,
     MatFormFieldModule,
+    MatDatepickerModule,
     MatNativeDateModule,
     ToastrModule.forRoot(),
     BrowserModule,
     NgChartsModule,
     ChartAllModule,
     AccumulationChartAllModule,
-    RangeNavigatorAllModule
+    RangeNavigatorAllModule,
+    MatInputModule,
     // MatDatepicker,
     // MatDateRangeInput,
     // MatDateRangePicker,
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -283,14 +283,18 @@ export class DoctorsManagementComponent implements OnInit {
     this.onDutyTableBox = true;
   };
 
-  selectedModule: string = 'initTable';
+  selectedModule: string = 'onDuty';
   openModule = (module: string) => {
     if (module == 'vacations') {
       this.buttonsBox = false;
       this.addVacationBox = false;
       this.editVacationBox = false;
-
       this.loadVacations();
+    } else if (module == 'shifts') {
+      this.shiftsBox = true;
+      this.shiftsBtnsBox = true;
+      this.shiftsListBox = false;
+      this.shiftsDoctorsBox = false;
     }
     this.selectedModule = module;
   };
