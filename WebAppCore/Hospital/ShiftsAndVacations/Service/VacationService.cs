@@ -10,12 +10,10 @@ namespace Hospital.ShiftsAndVacations.Service
     public class VacationService
     {
         IVacationRepository repository;
-        IDoctorRepository doctorRepository;
 
-        public VacationService(IVacationRepository repository, IDoctorRepository drRepo)
+        public VacationService(IVacationRepository repository)
         {
             this.repository = repository;
-            this.doctorRepository = drRepo;
         }
 
         public List<Vacation> getAll()
@@ -29,17 +27,17 @@ namespace Hospital.ShiftsAndVacations.Service
             repository.Update(v);
         }
 
+        public void updateVacation(Vacation v)
+        {
+            repository.Update(v);
+        }
+
         public bool deleteVacation(int id)
         {
             Vacation v = repository.GetByID(id);
             try
             {
                 repository.Delete(id);
-                //now doctor is not on vacation
-                Doctor d = doctorRepository.FindById(v.DoctorId);
-                Doctor newDoctor = new Doctor(d.Id, d.FirstName, d.LastName, d.ShiftId, d.RoomId, d.Type, false);
-                doctorRepository.Delete(d.Id);
-                doctorRepository.AddDoctor(newDoctor);
                 return true;
             }
             catch
@@ -51,13 +49,13 @@ namespace Hospital.ShiftsAndVacations.Service
 
         public void addNewVacation(int id, string desc, DateTime start, DateTime end, int doctorId, string fullName)
         {
-            Random random = new Random();
-            Vacation v = new Vacation(random.Next(1000), desc, start, end, doctorId, fullName);
-            //now doctor is on vacation
-            Doctor d = doctorRepository.GetByID(doctorId);
-            Doctor newDoctor = new Doctor(d.Id, d.FirstName, d.LastName, d.ShiftId, d.RoomId, d.Type, true);
-            doctorRepository.Delete(d.Id);
-            doctorRepository.AddDoctor(newDoctor);
+            Vacation v = new Vacation(id, desc, start, end, doctorId, fullName);
+            repository.Save(v);
+
+        }
+
+        public void addNewVacation(Vacation v)
+        {
             repository.Save(v);
 
         }

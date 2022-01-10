@@ -167,7 +167,7 @@
           <select
             class="form-field"
             style="height: 38px; margin-bottom: 8%"
-            [(ngModel)]="selectedDoctor"
+            [(ngModel)]="selectedDoctorV"
           >
             <option></option>
             <option *ngFor="let dr of doctors" [ngValue]="dr">
@@ -216,17 +216,7 @@
           *ngIf="editVacationBox"
         >
           <h3 style="color: cadetblue">Edit vacation</h3>
-          <label>Doctor: </label>
-          <select
-            class="form-field"
-            style="height: 38px; margin-bottom: 8%"
-            [(ngModel)]="selectedDoctor"
-          >
-            <option></option>
-            <option *ngFor="let dr of doctors" [ngValue]="dr">
-              {{ dr.firstName }} {{ dr.lastName }}
-            </option>
-          </select>
+          
           <label>Date: </label>
           <mat-form-field appearance="outline">
             <mat-label>Enter a date range</mat-label>
@@ -234,11 +224,13 @@
               <input
                 matStartDate
                 placeholder="Start date"
+                [value]= "selectedVacation.start"
                 [(ngModel)]="vacation.start"
               />
               <input
                 matEndDate
                 placeholder="End date"
+                [value]= "selectedVacation.end"
                 [(ngModel)]="vacation.end"
               />
             </mat-date-range-input>
@@ -253,6 +245,7 @@
             type="text"
             class="form-field"
             name="input"
+            [value]= "selectedVacation.description"
             [(ngModel)]="vacation.description"
           />
           <button

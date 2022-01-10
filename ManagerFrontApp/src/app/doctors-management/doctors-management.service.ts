@@ -34,7 +34,7 @@ import { ThumbSettings } from '@syncfusion/ej2-angular-charts';
     updateVacation(vacation:Vacation){
         const headers={'content-type':'application/json'};  
         const body=JSON.stringify(vacation) 
-        return this.http.post('http://localhost:39901/api/vacations/update', body,{'headers': headers}).subscribe(data => {console.log(data)});
+        return this.http.put('http://localhost:39901/api/vacations', body,{'headers': headers}).subscribe(data => {console.log(data)});
       }
 
       makeNewShift(shift:ShiftSend){
