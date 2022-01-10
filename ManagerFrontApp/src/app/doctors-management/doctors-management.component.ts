@@ -19,6 +19,7 @@ export class DoctorsManagementComponent implements OnInit {
   addVacationBox = false;
   editVacationBox = false;
   buttonsBox = false;
+  additionalBox = false;
 
   doctors: Doctor[] = [];
   vacations: Vacation[] = [];
@@ -284,17 +285,32 @@ export class DoctorsManagementComponent implements OnInit {
     }
     this.selectedModule = module;
   };
+
   doctorsOnCallShifts: OnCallShift[] = [];
+  doctorsVacations: Vacation[] = [];
+
   loadDoctorsData = (doctor: Doctor) => {
     this.loadDoctorsOnCallShifts(doctor.id);
-    // TODO: Vacations
+    this.loadDoctorsVacations(doctor.id);
     // TODO: Shifts
+    this.additionalBox = true;
   };
 
   loadDoctorsOnCallShifts = (doctorId: number) => {
     this.doctorsManagementService.getOnCallShiftsForDoctor(doctorId).subscribe(
       (data) => {
         this.doctorsOnCallShifts = data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
+  loadDoctorsVacations = (doctorId: number) => {
+    this.doctorsManagementService.getVacationsForDoctor(doctorId).subscribe(
+      (data) => {
+        this.doctorsVacations = data;
       },
       (error) => {
         console.log(error);

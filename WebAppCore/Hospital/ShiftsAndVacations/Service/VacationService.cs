@@ -4,14 +4,15 @@ using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Model;
 using System;
 using System.Collections.Generic;
+using Hospital.ShiftsAndVacations.Repository;
 
 namespace Hospital.ShiftsAndVacations.Service
 {
     public class VacationService
     {
-        IVacationRepository repository;
+        VacationRepository repository;
 
-        public VacationService(IVacationRepository repository)
+        public VacationService(VacationRepository repository)
         {
             this.repository = repository;
         }
@@ -63,6 +64,11 @@ namespace Hospital.ShiftsAndVacations.Service
         public Vacation getById(int id)
         {
             return repository.GetByID(id);
+        }
+
+        public List<Vacation> getDoctorsVacations(int doctorId)
+        {
+            return repository.getDoctorsVacations(doctorId);
         }
 
     }

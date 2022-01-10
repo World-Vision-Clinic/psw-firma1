@@ -31,7 +31,7 @@ namespace Hospital_API.Controllers
         public VacationsController()
         {
             HospitalContext context = new HospitalContext();
-            IVacationRepository vacationRepository = new VacationRepository(context);
+            VacationRepository vacationRepository = new VacationRepository(context);
             IDoctorRepository doctorRepository = new DoctorRepository(context);
             vacationService = new VacationService(vacationRepository);
             doctorService = new DoctorService(doctorRepository);
@@ -80,6 +80,17 @@ namespace Hospital_API.Controllers
                 return NotFound(); 
             }
             
+        }
+
+        [HttpGet("doctorsVacations/{doctorId}")]
+        public ActionResult<List<VacationDTO>> getDoctorsVacations(int doctorId)
+        {
+            List<VacationDTO> list = new List<VacationDTO>();
+            foreach (Vacation vacation in vacationService.getDoctorsVacations(doctorId).OrderBy(x => x.Id).ToList<Vacation>())
+            {
+                list.Add(VacationsMapper.vacationToDTO(vacation, doctorService));
+            }
+            return list;
         }
     }
 }

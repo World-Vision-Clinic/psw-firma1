@@ -97,4 +97,10 @@ export class DoctorsManagementService {
       `http://localhost:39901/api/onCallShifts/doctorsDuty/${doctorId}`
     );
   }
+
+  getVacationsForDoctor(doctorId: number) {
+    return this.http.get<Vacation[]>(
+      `http://localhost:39901/api/vacations/doctorsVacations/${doctorId}`
+    );
+  }
 }

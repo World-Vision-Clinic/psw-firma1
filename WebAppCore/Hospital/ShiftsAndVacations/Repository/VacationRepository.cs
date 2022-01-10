@@ -53,5 +53,17 @@ namespace Hospital.ShiftsAndVacations.Repository
         {
             throw new NotImplementedException();
         }
+
+        internal List<Vacation> getDoctorsVacations(int doctorId)
+        {
+            List<Vacation> doctorsVacations = new List<Vacation>();
+            dbContext.Vacations.ToList().ForEach(v => { if (v.DoctorId == doctorId) doctorsVacations.Add(v); });
+            return doctorsVacations;
+        }
+
+        List<Vacation> IVacationRepository.getDoctorsVacations(int doctorId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
