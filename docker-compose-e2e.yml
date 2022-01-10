@@ -2,7 +2,7 @@ version: "3.2"
 
 services:     
   patient-front:
-    image: jelenahrnjak/hospital-front:latest
+    image: jelenah/hospital-front:latest
     ports:
       - "3000:3000"
     networks:
@@ -80,9 +80,9 @@ services:
     ports:
       - "5433:5432"
 
-volumes:
-  db_volume:
-    #name: database
+# volumes:
+#   db_volume:
+#     #name: database
 
 networks:
   hospital_api:
