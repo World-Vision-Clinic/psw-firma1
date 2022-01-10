@@ -21,24 +21,16 @@ export class OnDutyService {
   addOnCallShift(vacation: OnCallShift | null) {
     const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(vacation);
-    return this.http
-      .post('http://localhost:39901/api/onCallShifts', body, {
-        headers: headers,
-      })
-      .subscribe((data) => {
-        console.log(data);
-      });
+    return this.http.post('http://localhost:39901/api/onCallShifts', body, {
+      headers: headers,
+    });
   }
 
   updateOnCallShift(shift: OnCallShift | null) {
     const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(shift);
-    return this.http
-      .post('http://localhost:39901/api/onCallShifts/update', body, {
-        headers: headers,
-      })
-      .subscribe((data) => {
-        console.log(data);
-      });
+    return this.http.put('http://localhost:39901/api/onCallShifts', body, {
+      headers: headers,
+    });
   }
 }

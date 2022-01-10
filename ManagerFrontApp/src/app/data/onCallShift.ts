@@ -6,4 +6,5 @@ export interface OnCallShift {
   doctor: Doctor;
   date: Date;
   new?: boolean;
+  doctorId?: number;
 }

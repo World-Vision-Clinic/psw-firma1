@@ -44,7 +44,7 @@ namespace Hospital_API.Controllers
         public ActionResult<List<OnCallShiftDTO>> getAll()
         {
             List<OnCallShiftDTO> list = new List<OnCallShiftDTO>();
-            foreach(OnCallShift shift in _shiftsService.getAll())
+            foreach(OnCallShift shift in _shiftsService.getAll().OrderBy(x => x.Id).ToList<OnCallShift>())
             {
                 list.Add(OnCallShiftsMapper.onCallShiftToDTO(shift, _doctorService));
             }
@@ -54,15 +54,15 @@ namespace Hospital_API.Controllers
         [HttpPost("")]
         public HttpResponseMessage addNew([FromBody] OnCallShiftDTO shift)
         {
-            _shiftsService.addNewOnCallShift(shift.Id,shift.Doctor.Id,shift.Date);
+            _shiftsService.addNewOnCallShift(shift.Id,shift.DoctorId,shift.Date);
             return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }
 
-        [HttpPost("update")]
+        [HttpPut("")]
         public HttpResponseMessage updateShift([FromBody] OnCallShiftDTO shift)
         {
            // _shiftsService.deleteShift(shift.Id);
-            _shiftsService.updateShift(shift.Id, shift.Doctor.Id, shift.Date);
+            _shiftsService.updateShift(shift.Id, shift.DoctorId, shift.Date);
             return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }
 

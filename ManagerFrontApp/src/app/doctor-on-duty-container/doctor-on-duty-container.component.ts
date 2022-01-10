@@ -23,7 +23,7 @@ export class DoctorOnDutyContainerComponent implements OnInit {
   onDutyContainerVisible: boolean = false;
   selectedDoctor: Doctor = {} as Doctor;
   doctors: Doctor[] = [];
-
+  selectedDoctorsId: number = -1;
   picker: any;
 
   ngOnInit(): void {
@@ -47,6 +47,8 @@ export class DoctorOnDutyContainerComponent implements OnInit {
   loadDoctors = async () => {
     this.doctorsManagementService.getDoctors().subscribe(
       (data) => {
+        console.log(data);
+
         this.doctors = data;
       },
       (error) => {
@@ -59,6 +61,7 @@ export class DoctorOnDutyContainerComponent implements OnInit {
     this.onDutyContainerVisible = false;
     this.buttonsBox = true;
     this.selectedOnDuty = {} as OnCallShift;
+    this.selectedDoctorsId = -1;
   };
 
   convertDateToString = (date: Date): string => {
@@ -68,31 +71,47 @@ export class DoctorOnDutyContainerComponent implements OnInit {
   };
 
   save = () => {
-    if (this.selectedOnDuty?.doctor == null || this.selectedOnDuty.date == null)
+    if (this.selectedDoctorsId == -1 || this.selectedOnDuty.date == null)
       return;
-    // this.selectedOnDuty.date = this.convertDateToString(
-    //   this.selectedOnDuty.date
-    // );
+    const index = this.doctors.findIndex((e) => e.id == this.selectedDoctorsId);
+    this.selectedOnDuty.doctor = this.doctors[index];
+    this.selectedOnDuty.doctorId = this.selectedDoctorsId;
+    this.selectedOnDuty.date.setHours(this.selectedOnDuty.date.getHours() + 4);
+    console.log(this.selectedOnDuty);
+    this.selectedDoctorsId = -1;
 
     if (this.selectedOnDuty.new) this.createNewOnDuty();
     else this.updateOnDuty();
   };
 
-  createNewOnDuty = async () => {
+  createNewOnDuty = () => {
     delete this.selectedOnDuty?.new;
-    await this.onDutyService.addOnCallShift(this.selectedOnDuty);
-    await this.loadOnCallDuties();
-    this.close();
+    this.onDutyService.addOnCallShift(this.selectedOnDuty).subscribe(
+      (data) => {
+        this.loadOnCallDuties();
+        this.close();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   };
   updateOnDuty = async () => {
     delete this.selectedOnDuty?.new;
-    await this.onDutyService.updateOnCallShift(this.selectedOnDuty);
-    await this.loadOnCallDuties();
-    this.close();
+    await this.onDutyService.updateOnCallShift(this.selectedOnDuty).subscribe(
+      (data) => {
+        this.loadOnCallDuties();
+        this.close();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   };
 
   selectOnDuty = (onDuty) => {
     this.selectedOnDuty = onDuty;
+    this.selectedDoctorsId = onDuty.doctor.id;
   };
 
   openNewOnDuty = () => {
@@ -105,5 +124,6 @@ export class DoctorOnDutyContainerComponent implements OnInit {
     if (this.selectedOnDuty == ({} as OnCallShift)) return;
     this.onDutyContainerVisible = true;
     this.buttonsBox = false;
+    console.log(this.selectedOnDuty);
   };
 }

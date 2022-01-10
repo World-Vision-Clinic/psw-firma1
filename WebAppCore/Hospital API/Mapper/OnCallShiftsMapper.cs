@@ -1,5 +1,6 @@
 ﻿using Hospital.GraphicalEditor.Model;
 using Hospital.GraphicalEditor.Service;
+using Hospital.MedicalRecords.Model;
 using Hospital.MedicalRecords.Service;
 using Hospital.RoomsAndEquipment.Model;
 using Hospital.RoomsAndEquipment.Service;
@@ -16,7 +17,8 @@ namespace Hospital_API.Mapper
     {
         internal static OnCallShiftDTO onCallShiftToDTO(OnCallShift shift, DoctorService doctorService)
         {
-            OnCallShiftDTO obj = new OnCallShiftDTO(shift.Id, doctorService.FindById(shift.DoctorId), shift.Date);
+            Doctor d = doctorService.FindById(shift.DoctorId);
+            OnCallShiftDTO obj = new OnCallShiftDTO(shift.Id, d, shift.Date);
            
 
             return obj;
