@@ -41,7 +41,7 @@ namespace HospitalTests.PatientPortalTests.End2End
             Assert.True(loginPage.UsernameDisplayed());
             Assert.True(loginPage.PasswordDisplayed());
 
-            loginPage.InsertUsername("mihajlo");
+            loginPage.InsertUsername("marko");
             loginPage.InsertPassword("123");
             loginPage.ClickLogin();
 

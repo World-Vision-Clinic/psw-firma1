@@ -11,7 +11,8 @@ namespace HospitalTests.PatientPortalTests.E2ETests
     {
         private readonly IWebDriver driver;
         private LoginPageManager loginPage;
-        private HomePageManager homePage; //fedback page
+        private FeedbackPage feedbackPage;
+        private HomePageManager homePage;
 
         public PublishFeedbackE2ETest()
         {
@@ -34,13 +35,17 @@ namespace HospitalTests.PatientPortalTests.E2ETests
             Assert.True(loginPage.UsernameDisplayed());
             Assert.True(loginPage.PasswordDisplayed());
 
-            loginPage.InsertUsername("dunja");
+            loginPage.InsertUsername("pera");
             loginPage.InsertPassword("123");
             loginPage.ClickLogin();
 
             homePage = new HomePageManager(driver);
             homePage.EnsurePageIsDisplayed();
-            Assert.True(homePage.PublishDisplayed());
+
+            feedbackPage = new FeedbackPage(driver);
+            feedbackPage.Navigate();
+            feedbackPage.EnsurePageIsDisplayed();
+            Assert.True(feedbackPage.PublishDisplayed());
 
         }
 
@@ -51,12 +56,11 @@ namespace HospitalTests.PatientPortalTests.E2ETests
         }
 
         [Fact]
-        public void TestCreateFeedback()
+        public void TestPublishFeedback()
         {
-            homePage.ClickPublish();
-            homePage.Navigate();
-            homePage.EnsureUnpublishedIsDisplayed();
-            Assert.True(homePage.UnpublishDisplayed());
+            feedbackPage.ClickPublish();
+            feedbackPage.EnsureUnpublishedIsDisplayed();
+            Assert.True(feedbackPage.UnpublishDisplayed());
         }
     }
 }

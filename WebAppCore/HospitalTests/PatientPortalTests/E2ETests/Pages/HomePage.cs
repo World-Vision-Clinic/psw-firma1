@@ -44,6 +44,27 @@ namespace HospitalTests.PatientPortalTests.End2End
             });
         }
 
+        public void EnsureCanceledIsDisplayed()
+        {
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
+            wait.Until(condition =>
+            {
+                try
+                {
+                    return CancelButton.Displayed;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    return false;
+                }
+                catch (NoSuchElementException)
+                {
+                    return false;
+                }
+
+            });
+        }
+
         public bool SignOutDisplayed()
         {
             return SignOut.Displayed;

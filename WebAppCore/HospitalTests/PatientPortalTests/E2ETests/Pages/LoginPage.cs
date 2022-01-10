@@ -9,7 +9,7 @@ namespace HospitalTests.PatientPortalTests.End2End
     public class LoginPage
     {
         private IWebDriver driver;
-        public const string URI = "http://localhost:4200/login";
+        public const string URI = "http://localhost:13101/login";
 
         private IWebElement Username => driver.FindElement(By.Id("username"));
         private IWebElement Password => driver.FindElement(By.Id("pass"));

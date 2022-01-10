@@ -1,23 +1,20 @@
-﻿using HospitalTests.PatientPortalTests.End2End;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace HospitalTests.PatientPortalTests.E2ETests
 {
-    public class CancelAppointmentE2ETest : IDisposable
+    public class BlockPatientE2ETest
     {
         private readonly IWebDriver driver;
-        private LandingPage landingPage;
-        private LoginPage loginPage;
-        private HomePage homePage;
+        private LoginPageManager loginPage;
+        private UsersPage usersPage;
+        private HomePageManager homePage;
 
-        public CancelAppointmentE2ETest()
+        public BlockPatientE2ETest()
         {
             ChromeOptions options = new ChromeOptions();
             options.AddArgument("start-maximized");
@@ -30,23 +27,28 @@ namespace HospitalTests.PatientPortalTests.E2ETests
 
             driver = new ChromeDriver(options);
 
-            loginPage = new LoginPage(driver);
+
+            loginPage = new LoginPageManager(driver);
             loginPage.Navigate();
             loginPage.EnsurePageIsDisplayed();
             Assert.True(loginPage.LogInDisplayed());
             Assert.True(loginPage.UsernameDisplayed());
             Assert.True(loginPage.PasswordDisplayed());
 
-            loginPage.InsertUsername("marko");
+            loginPage.InsertUsername("pera");
             loginPage.InsertPassword("123");
             loginPage.ClickLogin();
 
-            homePage = new HomePage(driver);
+            homePage = new HomePageManager(driver);
             homePage.EnsurePageIsDisplayed();
-            homePage.EnsureCanceledIsDisplayed();
-            Assert.True(homePage.CancelDisplayed());
-            Assert.True(homePage.SignOutDisplayed());
+
+            usersPage = new UsersPage(driver);
+            usersPage.Navigate();
+            usersPage.EnsurePageIsDisplayed();
+            Assert.True(usersPage.BlockDisplayed());
+
         }
+
         public void Dispose()
         {
             driver.Quit();
@@ -54,11 +56,13 @@ namespace HospitalTests.PatientPortalTests.E2ETests
         }
 
         [Fact]
-        public void TestCancelAppointment()
+        public void TestBlockUser()
         {
-            homePage.ClickCancel();
-            homePage.EnsurePageIsDisplayed();
-            homePage.CancelDisabled();
+            usersPage.ClickBlock();
+            usersPage.Navigate();
+            usersPage.EnsureUserDisplayed();
+            Assert.False(usersPage.BlockDisplayed());
+            Assert.True(usersPage.UserDisplayed());
         }
     }
 }
