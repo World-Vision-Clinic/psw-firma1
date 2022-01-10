@@ -42,10 +42,13 @@ jobs:
       # - name: Create Migrations hospital
       #   run:
       #     dotnet ef migrations add InitialCreate --context HospitalContext --project ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL};
+
+#d:\Documents\Teodora\FAKS\7. semestar\Projektovanje softvera\psw-projekat\WebAppCore\HospitalTests\EditorTests\IntegrationTests
+#d:\Documents\Teodora\FAKS\7. semestar\Projektovanje softvera\psw-projekat\WebAppCore\HospitalTests\PatientPortalTests\IntegrationTests
       - name: Update Database
         run: dotnet ef database update --context HospitalContext --project ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL};
       - name: Test
-        run: dotnet test ${SOLUTION_DIRECTORY_HOSPITAL} --no-restore --verbosity quiet --filter FullyQualifiedName\~IntegrationTests
+        run: dotnet test ${SOLUTION_DIRECTORY_HOSPITAL} --no-restore --verbosity quiet --filter FullyQualifiedName\~HospitalTests\EditorTests\IntegrationTests
         env:
           POSTGRES_USER: admin
           POSTGRES_HOST: localhost
