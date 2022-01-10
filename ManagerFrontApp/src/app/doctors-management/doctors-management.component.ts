@@ -21,16 +21,10 @@ export class DoctorsManagementComponent implements OnInit {
 
   doctors: Doctor[] = [];
   vacations: Vacation[] = [];
-  selectedVacation: Vacation | null = null;
+  selectedVacation: Vacation = {} as Vacation;
   selectedRowIndex = -1;
-  vacation: Vacation = {
-    id: -1,
-    description: '',
-    start: -1,
-    end: -1,
-    doctorId: -1,
-    fullName: '',
-  };
+  vacation: Vacation = {} as Vacation;
+  selectedDoctorV: Doctor ={} as Doctor;
 
   toolbarButtons = [
     {
@@ -86,14 +80,6 @@ export class DoctorsManagementComponent implements OnInit {
     shiftId: -1,
   };
 
-  selectedDoctorV: Doctor = {
-    id: -1,
-    firstName: '',
-    lastName: '',
-    shiftId: -1,
-    roomId: -1,
-    type: '',
-  };
 
   constructor(
     private router: Router,
@@ -143,9 +129,9 @@ export class DoctorsManagementComponent implements OnInit {
   }
 
   addNewVacation() {
-    this.vacation.doctorId = this.selectedDoctor?.id!;
+    this.vacation.doctorId = this.selectedDoctorV?.id!;
     this.vacation.fullName =
-      this.selectedDoctor?.firstName + ' ' + this.selectedDoctor?.lastName;
+      this.selectedDoctorV?.firstName + ' ' + this.selectedDoctorV?.lastName;
     console.log(this.vacation);
     this.doctorsManagementService.addVacation(this.vacation);
     alert('Vacation added!');
@@ -155,10 +141,10 @@ export class DoctorsManagementComponent implements OnInit {
   }
 
   editVacation() {
-    this.vacation.doctorId = this.selectedDoctor?.id!;
-    this.vacation.fullName =
-      this.selectedDoctor?.firstName + ' ' + this.selectedDoctor?.lastName;
-    this.vacation.id = this.selectedVacation?.id!;
+    this.vacation.doctorId = this.selectedVacation.doctorId;
+    this.vacation.fullName = this.selectedVacation.fullName;
+    this.vacation.id = this.selectedVacation.id;
+    console.log(this.vacation)
     this.doctorsManagementService.updateVacation(this.vacation);
     alert('Vacation edited!');
     this.editVacationBox = false;
@@ -193,6 +179,7 @@ export class DoctorsManagementComponent implements OnInit {
   selectVacation(vacation) {
     this.selectedVacation = vacation;
     this.selectedRowIndex = vacation.id;
+    
   }
 
   updateShift() {
