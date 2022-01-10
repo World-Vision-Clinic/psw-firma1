@@ -21,6 +21,7 @@ export class DoctorsManagementComponent implements OnInit {
   buttonsBox = false;
   additionalBox = false;
 
+  doctor: Doctor = {} as Doctor;
   doctors: Doctor[] = [];
   vacations: Vacation[] = [];
   selectedVacation: Vacation = {} as Vacation;

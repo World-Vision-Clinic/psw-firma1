@@ -52,5 +52,6 @@ namespace Hospital.ShiftsAndVacations.Repository
             dbContext.Shifts.Update(parameter);
             dbContext.SaveChanges();
         }
+
     }
 }

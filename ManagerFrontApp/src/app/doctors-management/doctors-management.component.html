@@ -59,28 +59,11 @@
     </table>
 
     <div *ngIf="additionalBox">
-      <h2 class="title">Doctor's schedule</h2>
-      <br />
+      <h3 style="margin-bottom: 30px;" class="title">Doctor's schedule</h3>
 
-      <div style="display: flex; flex-direction: row; margin-bottom: 1%">
-        <div style="margin-right: 6%">
-          <label style="color: cadetblue" for="">Shift time: </label><br />
-          <input
-            style="width: 200px"
-            type="text"
-            class="input-field"
-            name="input"
-          />
-        </div>
-        <div>
-          <label style="color: cadetblue" for="">Shift name: </label><br />
-          <input
-            style="width: 370px"
-            type="text"
-            class="input-field"
-            name="input"
-          />
-        </div>
+      <div style="display: flex; flex-direction: row; margin-bottom: 2%;" >
+          <label style="margin-right: 20%;" for="">Shift time: {{ doctor.shiftId }} </label><br />
+          <label for="">Shift name: </label><br />
       </div>
       <div style="display: flex; flex-direction: row">
         <table class="on-table">

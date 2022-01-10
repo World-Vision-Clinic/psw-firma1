@@ -107,7 +107,7 @@
 
 .doctors-table tbody {
   display: inline-block;
-  height: 300px;
+  height: 260px;
   overflow-y: scroll;
   scrollbar-color: rgb(248, 246, 246);
   width: 700px;
