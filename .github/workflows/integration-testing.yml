@@ -67,7 +67,7 @@ jobs:
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
           PGPASSWORD: ftn
-          POSTGRES_PASSWORD: admin
+          # POSTGRES_PASSWORD: admin
 
 
       # - name: Install dependencies integration
