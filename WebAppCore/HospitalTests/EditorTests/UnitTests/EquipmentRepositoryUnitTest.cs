@@ -38,7 +38,7 @@ namespace HospitalTests.EditorTests
             EquipmentRepository eqRepository = new EquipmentRepository(context);
             List<Equipment> eqpmnt = eqRepository.GetAll();
 
-            Assert.Equal(1, eqpmnt.Count);
+            eqpmnt.Count.ShouldBe(1);
             
         }
 
