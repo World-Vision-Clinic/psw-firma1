@@ -78,7 +78,7 @@ export class RegisterComponent implements OnInit {
       user.PreferedDoctor = parseInt(this.preferedDoctor);
       user.BloodType = this.bloodType;
       user.Password = this.password;
-      user.ProfileImage = this.ProfileImage;
+      user.ProfileImage = this.image['profileImage']
 
       console.log(user);
 
@@ -318,7 +318,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    this.getBase64(event, 'ProfileImage');
+    this.getBase64(event, 'profileImage');
   }
 
   getBase64(event:any, name: any) {
