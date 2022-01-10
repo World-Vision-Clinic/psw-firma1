@@ -19,7 +19,7 @@ namespace Hospital.SharedModel
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Survey> Surveys { get; set; }
         public DbSet<Shift> Shifts { get; set; }
-        public DbSet<OnCallShift> OnCallShifts { get; set; }
+       
         public DbSet<Renovation> Renovations { get; set; }
         public DbSet<SurveyQuestion> Questions { get; set; }
         public DbSet<AnsweredSurveyQuestion> AnsweredQuestions { get; set; }
@@ -42,8 +42,9 @@ namespace Hospital.SharedModel
         public DbSet<MedicalRecord> MedicalRecords { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
         public DbSet<Manager> Managers { get; set; }
-        
-        
+
+        public DbSet<OnCallShift> OnCallShifts { get; set; }
+
 
         public HospitalContext() { }
 
@@ -68,6 +69,8 @@ namespace Hospital.SharedModel
                 entity.ToTable("Appointments");
                 entity.HasKey(c => c.Id);      
             });
+
+           
 
 
             modelBuilder.Entity<Renovation>().HasData(
@@ -248,6 +251,10 @@ namespace Hospital.SharedModel
                    new Vacation(2, "aaaa", new DateTime(2022, 2, 21), new DateTime(2022, 2, 25), 2, "Mirko Jankovic"),
                    new Vacation(3, "aaaa", new DateTime(2022, 3, 21), new DateTime(2022, 3, 30), 3, "Matija Popic")
                );
+
+            modelBuilder.Entity<OnCallShift>().HasData(
+              new OnCallShift(1, 1, new DateTime(2022, 1, 15))
+             );
 
         }
 
