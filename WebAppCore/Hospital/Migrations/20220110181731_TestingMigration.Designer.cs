@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Hospital.Migrations
 {
     [DbContext(typeof(HospitalContext))]
-    [Migration("20211213104744_UpdateDoctorsMigration")]
-    partial class UpdateDoctorsMigration
+    [Migration("20220110181731_TestingMigration")]
+    partial class TestingMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -308,8 +308,17 @@ namespace Hospital.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("text");
 
+                    b.Property<int>("RoomId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ShiftId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("Type")
                         .HasColumnType("integer");
+
+                    b.Property<bool>("onVacation")
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
@@ -321,133 +330,190 @@ namespace Hospital.Migrations
                             Id = 1,
                             FirstName = "Slavica",
                             LastName = "Matic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = 1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 2,
                             FirstName = "Mirko",
                             LastName = "Jankovic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = 1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 3,
                             FirstName = "Matija",
                             LastName = "Popic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = 2,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 4,
                             FirstName = "Sara",
                             LastName = "Tot",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = 1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 5,
                             FirstName = "Ignjat",
                             LastName = "Jovic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 6,
                             FirstName = "Milos",
                             LastName = "Matijevic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 7,
                             FirstName = "Elena",
                             LastName = "Kis",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 8,
                             FirstName = "Iva",
                             LastName = "Bojanic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 9,
                             FirstName = "Bojan",
                             LastName = "Kraljevic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 10,
                             FirstName = "Lidija",
                             LastName = "Lakic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 11,
                             FirstName = "Momir",
                             LastName = "Njegomir",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 12,
                             FirstName = "Ivana",
                             LastName = "Pekic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 13,
                             FirstName = "Mileva",
                             LastName = "Nakic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 14,
                             FirstName = "Petar",
                             LastName = "Katic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 15,
                             FirstName = "Marijana",
                             LastName = "Pantic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 16,
                             FirstName = "Savina",
                             LastName = "Markovic",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 17,
                             FirstName = "Jelena",
                             LastName = "Stupar",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 18,
                             FirstName = "Luka",
                             LastName = "Lisica",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         },
                         new
                         {
                             Id = 19,
                             FirstName = "Vasilije",
                             LastName = "Mit",
-                            Type = 0
+                            RoomId = -1,
+                            ShiftId = -1,
+                            Type = 0,
+                            onVacation = false
                         });
                 });
 
@@ -635,25 +701,13 @@ namespace Hospital.Migrations
                     b.Property<bool>("Activated")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Address")
-                        .HasColumnType("text");
-
                     b.Property<int>("BloodType")
                         .HasColumnType("integer");
-
-                    b.Property<string>("City")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Country")
-                        .HasColumnType("text");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("EMail")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FirstName")
                         .HasColumnType("text");
 
                     b.Property<int>("Gender")
@@ -662,10 +716,10 @@ namespace Hospital.Migrations
                     b.Property<int>("Height")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Jmbg")
-                        .HasColumnType("text");
+                    b.Property<bool>("IsBlocked")
+                        .HasColumnType("boolean");
 
-                    b.Property<string>("LastName")
+                    b.Property<string>("Jmbg")
                         .HasColumnType("text");
 
                     b.Property<string>("Password")
@@ -1418,13 +1472,7 @@ namespace Hospital.Migrations
                     b.Property<int>("Answer")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PatientForeignKey")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Question")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Section")
+                    b.Property<int>("Question")
                         .HasColumnType("integer");
 
                     b.Property<int>("SurveyForeignKey")
@@ -1454,6 +1502,9 @@ namespace Hospital.Migrations
                     b.Property<int>("PatientForeignKey")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("PatientId")
+                        .HasColumnType("integer");
+
                     b.Property<TimeSpan>("Time")
                         .HasColumnType("interval");
 
@@ -1461,6 +1512,8 @@ namespace Hospital.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PatientId");
 
                     b.ToTable("Appointments");
 
@@ -1477,31 +1530,48 @@ namespace Hospital.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Hospital.Schedule.Model.Survey", b =>
+            modelBuilder.Entity("Hospital.Schedule.Model.Manager", b =>
                 {
-                    b.Property<int>("IdSurvey")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<string>("Password")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Managers");
+                });
+
+            modelBuilder.Entity("Hospital.Schedule.Model.Survey", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int?>("AppointmentId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("IdAppointment")
-                        .HasColumnType("integer");
+                    b.HasKey("Id");
 
-                    b.HasKey("IdSurvey");
-
-                    b.HasIndex("IdAppointment");
+                    b.HasIndex("AppointmentId");
 
                     b.ToTable("Surveys");
 
                     b.HasData(
                         new
                         {
-                            IdSurvey = 1,
-                            CreationDate = new DateTime(2021, 12, 13, 11, 47, 43, 642, DateTimeKind.Local).AddTicks(3458),
-                            IdAppointment = 1
+                            Id = 1,
+                            CreationDate = new DateTime(2022, 1, 10, 18, 17, 30, 969, DateTimeKind.Local).AddTicks(472)
                         });
                 });
 
@@ -1511,12 +1581,6 @@ namespace Hospital.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int>("Answer")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("IdSurvey")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Question")
                         .HasColumnType("text");
@@ -1532,122 +1596,192 @@ namespace Hospital.Migrations
                         new
                         {
                             Id = 1,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "Has doctor been polite to you?",
                             Section = 1
                         },
                         new
                         {
                             Id = 2,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "How would you rate the professionalism of doctor?",
                             Section = 1
                         },
                         new
                         {
                             Id = 3,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "How clearly did the doctor explain you your condition?",
                             Section = 1
                         },
                         new
                         {
                             Id = 4,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "How would you rate the doctor's patience with you?",
                             Section = 1
                         },
                         new
                         {
                             Id = 5,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "What is your overall satisfaction with doctor?",
                             Section = 1
                         },
                         new
                         {
                             Id = 6,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "How easy is to use our application?",
                             Section = 0
                         },
                         new
                         {
                             Id = 7,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "How easy it was to schedule an appointment?",
                             Section = 0
                         },
                         new
                         {
                             Id = 8,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "What is an opportunity to recommend us to your friends and family?",
                             Section = 0
                         },
                         new
                         {
                             Id = 9,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "How satisfied are you with the services that the hospital provides you?",
                             Section = 0
                         },
                         new
                         {
                             Id = 10,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "What is your overall satisfaction with our hospital?",
                             Section = 0
                         },
                         new
                         {
                             Id = 11,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "How would you rate the kindness of our staff?",
                             Section = 2
                         },
                         new
                         {
                             Id = 12,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "How would you rate the professionalism of our staff?",
                             Section = 2
                         },
                         new
                         {
                             Id = 13,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "How clearly did the staff explain you some procedures of our hospital?",
                             Section = 2
                         },
                         new
                         {
                             Id = 14,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "How yould you rate to what extent staff was available to you during your visit to the hospital?",
                             Section = 2
                         },
                         new
                         {
                             Id = 15,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "What is your overall satisfaction with our staff?",
                             Section = 2
+                        });
+                });
+
+            modelBuilder.Entity("Hospital.ShiftsAndVacations.Model.Shift", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("End")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Start")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Shifts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            End = 15,
+                            Name = "Morning shift",
+                            Start = 6
+                        },
+                        new
+                        {
+                            Id = 2,
+                            End = 23,
+                            Name = "Afternoon shift",
+                            Start = 15
+                        },
+                        new
+                        {
+                            Id = 3,
+                            End = 6,
+                            Name = "Night shift",
+                            Start = 23
+                        });
+                });
+
+            modelBuilder.Entity("Hospital.ShiftsAndVacations.Model.Vacation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vacations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "aaaa",
+                            DoctorId = 1,
+                            End = new DateTime(2022, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FullName = "Slavica Matic",
+                            Start = new DateTime(2022, 1, 21, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "aaaa",
+                            DoctorId = 2,
+                            End = new DateTime(2022, 2, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FullName = "Mirko Jankovic",
+                            Start = new DateTime(2022, 2, 21, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "aaaa",
+                            DoctorId = 3,
+                            End = new DateTime(2022, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FullName = "Matija Popic",
+                            Start = new DateTime(2022, 3, 21, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -1718,15 +1852,70 @@ namespace Hospital.Migrations
                     b.Navigation("Medicine");
                 });
 
+            modelBuilder.Entity("Hospital.MedicalRecords.Model.Patient", b =>
+                {
+                    b.OwnsOne("Hospital.MedicalRecords.Model.FullName", "FullName", b1 =>
+                        {
+                            b1.Property<int>("PatientId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                            b1.Property<string>("FirstName")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("LastName")
+                                .HasColumnType("text");
+
+                            b1.HasKey("PatientId");
+
+                            b1.ToTable("Patients");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PatientId");
+                        });
+
+                    b.OwnsOne("Hospital.MedicalRecords.Model.Residence", "Residence", b1 =>
+                        {
+                            b1.Property<int>("PatientId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                            b1.Property<string>("Address")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("City")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Country")
+                                .HasColumnType("text");
+
+                            b1.HasKey("PatientId");
+
+                            b1.ToTable("Patients");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PatientId");
+                        });
+
+                    b.Navigation("FullName");
+
+                    b.Navigation("Residence");
+                });
+
+            modelBuilder.Entity("Hospital.Schedule.Model.Appointment", b =>
+                {
+                    b.HasOne("Hospital.MedicalRecords.Model.Patient", null)
+                        .WithMany("Appointments")
+                        .HasForeignKey("PatientId");
+                });
+
             modelBuilder.Entity("Hospital.Schedule.Model.Survey", b =>
                 {
-                    b.HasOne("Hospital.Schedule.Model.Appointment", "Appointment")
+                    b.HasOne("Hospital.Schedule.Model.Appointment", null)
                         .WithMany("Surveys")
-                        .HasForeignKey("IdAppointment")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Appointment");
+                        .HasForeignKey("AppointmentId");
                 });
 
             modelBuilder.Entity("Hospital.MedicalRecords.Model.MedicalRecord", b =>
@@ -1737,6 +1926,11 @@ namespace Hospital.Migrations
             modelBuilder.Entity("Hospital.MedicalRecords.Model.Medicine", b =>
                 {
                     b.Navigation("Ingredient");
+                });
+
+            modelBuilder.Entity("Hospital.MedicalRecords.Model.Patient", b =>
+                {
+                    b.Navigation("Appointments");
                 });
 
             modelBuilder.Entity("Hospital.MedicalRecords.Model.Therapy", b =>

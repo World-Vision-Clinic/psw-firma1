@@ -2,7 +2,7 @@
 
 services:
   hospital-front:
-    image: darkelfff/hospital-front:latest
+    image: jelenahrnjak/hospital-front:latest
     depends_on:
       - "hospital-api"
     # build:
@@ -14,7 +14,7 @@ services:
       - application
 
   hospital-api:
-    image: darkelfff/hospital-api:latest
+    image: jelenahrnjak/hospital-api:latest
     depends_on:
       - "database"
     #build:

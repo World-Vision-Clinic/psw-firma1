@@ -699,25 +699,13 @@ namespace Hospital.Migrations
                     b.Property<bool>("Activated")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Address")
-                        .HasColumnType("text");
-
                     b.Property<int>("BloodType")
                         .HasColumnType("integer");
-
-                    b.Property<string>("City")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Country")
-                        .HasColumnType("text");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("EMail")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FirstName")
                         .HasColumnType("text");
 
                     b.Property<int>("Gender")
@@ -730,9 +718,6 @@ namespace Hospital.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("Jmbg")
-                        .HasColumnType("text");
-
-                    b.Property<string>("LastName")
                         .HasColumnType("text");
 
                     b.Property<string>("Password")
@@ -1485,13 +1470,7 @@ namespace Hospital.Migrations
                     b.Property<int>("Answer")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PatientForeignKey")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Question")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Section")
+                    b.Property<int>("Question")
                         .HasColumnType("integer");
 
                     b.Property<int>("SurveyForeignKey")
@@ -1521,6 +1500,9 @@ namespace Hospital.Migrations
                     b.Property<int>("PatientForeignKey")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("PatientId")
+                        .HasColumnType("integer");
+
                     b.Property<TimeSpan>("Time")
                         .HasColumnType("interval");
 
@@ -1528,6 +1510,8 @@ namespace Hospital.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PatientId");
 
                     b.ToTable("Appointments");
 
@@ -1564,29 +1548,28 @@ namespace Hospital.Migrations
 
             modelBuilder.Entity("Hospital.Schedule.Model.Survey", b =>
                 {
-                    b.Property<int>("IdSurvey")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<int?>("AppointmentId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("IdAppointment")
-                        .HasColumnType("integer");
+                    b.HasKey("Id");
 
-                    b.HasKey("IdSurvey");
-
-                    b.HasIndex("IdAppointment");
+                    b.HasIndex("AppointmentId");
 
                     b.ToTable("Surveys");
 
                     b.HasData(
                         new
                         {
-                            IdSurvey = 1,
-                            CreationDate = new DateTime(2022, 1, 8, 19, 38, 47, 89, DateTimeKind.Local).AddTicks(1070),
-                            IdAppointment = 1
+                            Id = 1,
+                            CreationDate = new DateTime(2022, 1, 10, 18, 17, 30, 969, DateTimeKind.Local).AddTicks(472)
                         });
                 });
 
@@ -1596,12 +1579,6 @@ namespace Hospital.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int>("Answer")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("IdSurvey")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Question")
                         .HasColumnType("text");
@@ -1617,120 +1594,90 @@ namespace Hospital.Migrations
                         new
                         {
                             Id = 1,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "Has doctor been polite to you?",
                             Section = 1
                         },
                         new
                         {
                             Id = 2,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "How would you rate the professionalism of doctor?",
                             Section = 1
                         },
                         new
                         {
                             Id = 3,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "How clearly did the doctor explain you your condition?",
                             Section = 1
                         },
                         new
                         {
                             Id = 4,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "How would you rate the doctor's patience with you?",
                             Section = 1
                         },
                         new
                         {
                             Id = 5,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "What is your overall satisfaction with doctor?",
                             Section = 1
                         },
                         new
                         {
                             Id = 6,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "How easy is to use our application?",
                             Section = 0
                         },
                         new
                         {
                             Id = 7,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "How easy it was to schedule an appointment?",
                             Section = 0
                         },
                         new
                         {
                             Id = 8,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "What is an opportunity to recommend us to your friends and family?",
                             Section = 0
                         },
                         new
                         {
                             Id = 9,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "How satisfied are you with the services that the hospital provides you?",
                             Section = 0
                         },
                         new
                         {
                             Id = 10,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "What is your overall satisfaction with our hospital?",
                             Section = 0
                         },
                         new
                         {
                             Id = 11,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "How would you rate the kindness of our staff?",
                             Section = 2
                         },
                         new
                         {
                             Id = 12,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "How would you rate the professionalism of our staff?",
                             Section = 2
                         },
                         new
                         {
                             Id = 13,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "How clearly did the staff explain you some procedures of our hospital?",
                             Section = 2
                         },
                         new
                         {
                             Id = 14,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "How yould you rate to what extent staff was available to you during your visit to the hospital?",
                             Section = 2
                         },
                         new
                         {
                             Id = 15,
-                            Answer = 0,
-                            IdSurvey = 1,
                             Question = "What is your overall satisfaction with our staff?",
                             Section = 2
                         });
@@ -1903,15 +1850,70 @@ namespace Hospital.Migrations
                     b.Navigation("Medicine");
                 });
 
+            modelBuilder.Entity("Hospital.MedicalRecords.Model.Patient", b =>
+                {
+                    b.OwnsOne("Hospital.MedicalRecords.Model.FullName", "FullName", b1 =>
+                        {
+                            b1.Property<int>("PatientId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                            b1.Property<string>("FirstName")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("LastName")
+                                .HasColumnType("text");
+
+                            b1.HasKey("PatientId");
+
+                            b1.ToTable("Patients");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PatientId");
+                        });
+
+                    b.OwnsOne("Hospital.MedicalRecords.Model.Residence", "Residence", b1 =>
+                        {
+                            b1.Property<int>("PatientId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                            b1.Property<string>("Address")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("City")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Country")
+                                .HasColumnType("text");
+
+                            b1.HasKey("PatientId");
+
+                            b1.ToTable("Patients");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PatientId");
+                        });
+
+                    b.Navigation("FullName");
+
+                    b.Navigation("Residence");
+                });
+
+            modelBuilder.Entity("Hospital.Schedule.Model.Appointment", b =>
+                {
+                    b.HasOne("Hospital.MedicalRecords.Model.Patient", null)
+                        .WithMany("Appointments")
+                        .HasForeignKey("PatientId");
+                });
+
             modelBuilder.Entity("Hospital.Schedule.Model.Survey", b =>
                 {
-                    b.HasOne("Hospital.Schedule.Model.Appointment", "Appointment")
+                    b.HasOne("Hospital.Schedule.Model.Appointment", null)
                         .WithMany("Surveys")
-                        .HasForeignKey("IdAppointment")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Appointment");
+                        .HasForeignKey("AppointmentId");
                 });
 
             modelBuilder.Entity("Hospital.MedicalRecords.Model.MedicalRecord", b =>
@@ -1922,6 +1924,11 @@ namespace Hospital.Migrations
             modelBuilder.Entity("Hospital.MedicalRecords.Model.Medicine", b =>
                 {
                     b.Navigation("Ingredient");
+                });
+
+            modelBuilder.Entity("Hospital.MedicalRecords.Model.Patient", b =>
+                {
+                    b.Navigation("Appointments");
                 });
 
             modelBuilder.Entity("Hospital.MedicalRecords.Model.Therapy", b =>
