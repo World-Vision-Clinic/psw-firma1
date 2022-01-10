@@ -1,0 +1,37 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches: 
+      # - 'master'
+      - 'develop'
+      - 'feat/deploy-script'
+
+jobs:
+  deploy:
+    runs-on : ubuntu-latest
+    steps:
+      - name: Install SSH Key
+        uses: appleboy/ssh-action@master
+        with:
+          host: 79.101.34.218 
+          username: 'student'
+          key: ${{ secrets.SSH_KEY }}
+          port: 22202
+          script: |
+            cd psw-firma1
+            git checkout develop
+            git pull origin develop
+            cd PharmacyApplication/
+            docker-compose build --no-cache
+            docker-compose up -d
+            cd ..
+            cd WebAppCore/
+            cd stacks-hospital/
+            docker-compose build --no-cache
+            docker-compose up -d
+            
+
+            
+           
