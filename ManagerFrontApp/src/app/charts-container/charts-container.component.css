@@ -50,3 +50,7 @@
   margin: 35px auto;
   padding: 0;
 }
+
+.stat-selected {
+  background-color: rgba(160, 159, 159, 0.6);
+}

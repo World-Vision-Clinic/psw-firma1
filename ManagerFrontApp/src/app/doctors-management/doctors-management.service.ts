@@ -49,25 +49,17 @@ export class DoctorsManagementService {
   makeNewShift(shift: ShiftSend) {
     const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(shift);
-    return this.http
-      .post('http://localhost:39901/api/shifts/newShift', body, {
-        headers: headers,
-      })
-      .subscribe((data) => {
-        console.log(data);
-      });
+    return this.http.post('http://localhost:39901/api/shifts/newShift', body, {
+      headers: headers,
+    });
   }
 
   updateShift(shift: ShiftSend) {
     const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(shift);
-    return this.http
-      .post('http://localhost:39901/api/shifts/update', body, {
-        headers: headers,
-      })
-      .subscribe((data) => {
-        console.log(data);
-      });
+    return this.http.post('http://localhost:39901/api/shifts/update', body, {
+      headers: headers,
+    });
   }
 
   getAllShifts() {
@@ -75,21 +67,15 @@ export class DoctorsManagementService {
   }
 
   deleteShift(id: number) {
-    this.http
-      .delete('http://localhost:39901/api/shifts/' + id)
-      .subscribe((data) => console.log(data));
+    return this.http.delete('http://localhost:39901/api/shifts/' + id);
   }
 
   changeShift(dto) {
     const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(dto);
-    this.http
-      .post('http://localhost:39901/api/Doctors/addShift', body, {
-        headers: headers,
-      })
-      .subscribe((data) => {
-        console.log(data);
-      });
+    return this.http.post('http://localhost:39901/api/Doctors/addShift', body, {
+      headers: headers,
+    });
   }
 
   getOnCallShiftsForDoctor(doctorId: number) {
@@ -105,8 +91,6 @@ export class DoctorsManagementService {
   }
 
   getShiftById(shiftId: number) {
-    return this.http.get<Shift>(
-      `http://localhost:39901/api/shifts/${shiftId}`
-    );
+    return this.http.get<Shift>(`http://localhost:39901/api/shifts/${shiftId}`);
   }
 }

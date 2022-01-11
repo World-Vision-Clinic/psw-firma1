@@ -33,8 +33,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let stat of stats" (click)="selectStat(stat)">
-        <td style="width: 350px">
+      <tr
+        *ngFor="let stat of stats"
+        (click)="selectStat(stat)"
+        [ngClass]="{
+          'stat-selected': selectedStats?.doctor?.id == stat?.doctor?.id
+        }"
+      >
+        <td style="width: 250px">
           {{ stat.doctor.firstName }} {{ stat.doctor.lastName }}
         </td>
         <td style="width: 100px">{{ stat.numberOfPatients }}</td>

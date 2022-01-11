@@ -8,14 +8,12 @@ import { Equipment } from '../data/equipment';
 import { Floor } from '../data/floor';
 import { iEquipmentRoom } from '../data/iEquipmentRoom';
 import { Room } from '../data/room';
-import {Shift, ShiftSend } from '../data/shift';
+import { Shift, ShiftSend } from '../data/shift';
 import { Doctor } from '../data/doctor';
 
 @Injectable({
   providedIn: 'root',
 })
-
-
 export class HospitalService {
   constructor(private http: HttpClient) {}
 
@@ -30,9 +28,7 @@ export class HospitalService {
     );
   }
   cancelRenovation(id: number): Observable<any> {
-    return this.http.delete<any>(
-      `http://localhost:39901/api/renovation/${id}`
-    );
+    return this.http.delete<any>(`http://localhost:39901/api/renovation/${id}`);
   }
 
   updateHospital(id: string, hospital: any): Observable<any> {
@@ -42,7 +38,7 @@ export class HospitalService {
     return this.http.put<any>(
       `http://localhost:39901/api/buildings/${id}`,
       body,
-      { 'headers':headers }
+      { headers: headers }
     );
   }
 
@@ -57,7 +53,7 @@ export class HospitalService {
     return this.http.post<any>(
       `http://localhost:39901/api/transportPeriod`,
       data,
-      { 'headers': headers }
+      { headers: headers }
     );
   }
   getSuggestionForPeriod(
@@ -109,70 +105,105 @@ export class HospitalService {
   }
 
   getAppointments(roomid: number): Observable<Appointment> {
-    return this.http.get<Appointment>(`http://localhost:39901/api/Appointment/room/${roomid}`);
-  }
-
-  cancelTransport(id: number){
- 
-    return this.http.get(
-      `http://localhost:39901/api/equipment/${id}`);
-  }
-  
-
-  mergeRooms(mergingDTO){
-    const headers={'Content-Type':'application/json'};  
-    const body=JSON.stringify(mergingDTO)     
-    return this.http.post('http://localhost:39901/api/Rooms/merge', body,{'headers': headers}).subscribe(data => {console.log(data)
-    });
-  }
-
-  splitRoom(splitDTO){
-    const headers={'Content-Type':'application/json'};  
-    const body=JSON.stringify(splitDTO)  
-    return this.http.post('http://localhost:39901/api/Rooms/split', body,{'headers': headers}).subscribe(data => {console.log(data)});
-  }
-  scheduleRenovation(data){
-    const headers={'Content-Type':'application/json'};  
-    const body=JSON.stringify(data)
-    console.log(body);
-      
-    return this.http.post('http://localhost:39901/api/Renovation', body,{headers: headers});
-  }
-
-  getSuggestionForRenovation(data): Observable<any>{
-    const headers={'Content-Type':'application/json'}; 
-    const body = JSON.stringify(data)
-    return this.http.post<any>('http://localhost:39901/api/renovationPeriod/suggestion', body,{headers: headers});
-  }
-
-  makeNewShift(shift:ShiftSend){
-    const headers={'content-type':'application/json'};  
-    const body=JSON.stringify(shift) 
-    return this.http.post('http://localhost:39901/api/shifts/newShift', body,{'headers': headers}).subscribe(data => {console.log(data)});
-  }
-
-  updateShift(shift:ShiftSend){
-    const headers={'content-type':'application/json'};  
-    const body=JSON.stringify(shift) 
-    return this.http.post('http://localhost:39901/api/shifts/update', body,{'headers': headers}).subscribe(data => {console.log(data)});
-  }
-
-  getAllShifts(){
-    return this.http.get<Shift[]>('http://localhost:39901/api/shifts/getAll')
-  }
-
-  deleteShift(id:number){
-    this.http.delete('http://localhost:39901/api/shifts/'+id).subscribe(data=>console.log(data)
+    return this.http.get<Appointment>(
+      `http://localhost:39901/api/Appointment/room/${roomid}`
     );
   }
 
-  getDoctors(){
-    return this.http.get<Doctor[]>('http://localhost:39901/api/Doctors')
+  cancelTransport(id: number) {
+    return this.http.get(`http://localhost:39901/api/equipment/${id}`);
   }
 
-  changeShift(dto){
-    const headers={'content-type':'application/json'};  
-    const body=JSON.stringify(dto) 
-    this.http.post('http://localhost:39901/api/Doctors/addShift', body,{'headers': headers}).subscribe(data => {console.log(data)});
+  mergeRooms(mergingDTO) {
+    const headers = { 'Content-Type': 'application/json' };
+    const body = JSON.stringify(mergingDTO);
+    return this.http
+      .post('http://localhost:39901/api/Rooms/merge', body, {
+        headers: headers,
+      })
+      .subscribe((data) => {
+        console.log(data);
+      });
+  }
+
+  splitRoom(splitDTO) {
+    const headers = { 'Content-Type': 'application/json' };
+    const body = JSON.stringify(splitDTO);
+    return this.http
+      .post('http://localhost:39901/api/Rooms/split', body, {
+        headers: headers,
+      })
+      .subscribe((data) => {
+        console.log(data);
+      });
+  }
+  scheduleRenovation(data) {
+    const headers = { 'Content-Type': 'application/json' };
+    const body = JSON.stringify(data);
+    console.log(body);
+
+    return this.http.post('http://localhost:39901/api/Renovation', body, {
+      headers: headers,
+    });
+  }
+
+  getSuggestionForRenovation(data): Observable<any> {
+    const headers = { 'Content-Type': 'application/json' };
+    const body = JSON.stringify(data);
+    return this.http.post<any>(
+      'http://localhost:39901/api/renovationPeriod/suggestion',
+      body,
+      { headers: headers }
+    );
+  }
+
+  makeNewShift(shift: ShiftSend) {
+    const headers = { 'content-type': 'application/json' };
+    const body = JSON.stringify(shift);
+    return this.http
+      .post('http://localhost:39901/api/shifts/newShift', body, {
+        headers: headers,
+      })
+      .subscribe((data) => {
+        console.log(data);
+      });
+  }
+
+  updateShift(shift: ShiftSend) {
+    const headers = { 'content-type': 'application/json' };
+    const body = JSON.stringify(shift);
+    return this.http
+      .post('http://localhost:39901/api/shifts/update', body, {
+        headers: headers,
+      })
+      .subscribe((data) => {
+        console.log(data);
+      });
+  }
+
+  getAllShifts() {
+    return this.http.get<Shift[]>('http://localhost:39901/api/shifts/getAll');
+  }
+
+  deleteShift(id: number) {
+    this.http
+      .delete('http://localhost:39901/api/shifts/' + id)
+      .subscribe((data) => console.log(data));
+  }
+
+  getDoctors() {
+    return this.http.get<Doctor[]>('http://localhost:39901/api/Doctors');
+  }
+
+  changeShift(dto) {
+    const headers = { 'content-type': 'application/json' };
+    const body = JSON.stringify(dto);
+    this.http
+      .post('http://localhost:39901/api/Doctors/addShift', body, {
+        headers: headers,
+      })
+      .subscribe((data) => {
+        console.log(data);
+      });
   }
 }

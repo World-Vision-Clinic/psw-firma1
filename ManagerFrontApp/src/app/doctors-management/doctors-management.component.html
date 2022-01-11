@@ -59,11 +59,16 @@
     </table>
 
     <div *ngIf="additionalBox">
-      <h3 style="margin-bottom: 10px;" class="title">Doctor's schedule</h3>
+      <h3 style="margin-bottom: 10px" class="title">Doctor's schedule</h3>
 
-      <div style="display: flex; flex-direction: column;" >
-          <label style="margin-bottom: -2%;" for="">Shift time: {{ doctorsShift.start }}h - {{doctorsShift.end}}h </label><br />
-          <label  style="margin-bottom: -2%;" for="">Shift name: {{ doctorsShift.name }}</label><br />
+      <div style="display: flex; flex-direction: column">
+        <label style="margin-bottom: -2%" for=""
+          >Shift time: {{ doctorsShift.start }}h -
+          {{ doctorsShift.end }}h </label
+        ><br />
+        <label style="margin-bottom: -2%" for=""
+          >Shift name: {{ doctorsShift.name }}</label
+        ><br />
       </div>
       <div style="display: flex; flex-direction: row">
         <table class="on-table">
@@ -89,15 +94,25 @@
           </thead>
           <tbody>
             <tr *ngFor="let doctorsVacation of doctorsVacations">
-              <td style="width: 100px">{{ doctorsVacation.start | date: "dd.MM.yyyy" }}</td>
-              <td style="width: 2px;">-</td>
-              <td style="width: 100px">{{ doctorsVacation.end | date: "dd.MM.yyyy" }}</td>
+              <td style="width: 100px">
+                {{ doctorsVacation.start | date: "dd.MM.yyyy" }}
+              </td>
+              <td style="width: 2px">-</td>
+              <td style="width: 100px">
+                {{ doctorsVacation.end | date: "dd.MM.yyyy" }}
+              </td>
               <td style="width: 200px">{{ doctorsVacation.description }}</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <button style="margin-left: 44%; margin-bottom: 10%;" class="toolbar-btn" (click)="additionalBox = false">Close</button>
+      <button
+        style="margin-left: 44%; margin-bottom: 10%"
+        class="toolbar-btn"
+        (click)="additionalBox = false"
+      >
+        Close
+      </button>
     </div>
   </div>
 
@@ -130,7 +145,7 @@
             >
               <td style="width: 200px">{{ vacation.fullName }}</td>
               <td style="width: 120px">
-                {{ vacation.start | date: "dd.MM.yyyy" }}  
+                {{ vacation.start | date: "dd.MM.yyyy" }}
               </td>
               <td style="width: 120px">
                 {{ vacation.end | date: "dd.MM.yyyy" }}
@@ -202,17 +217,27 @@
             name="input"
             [(ngModel)]="vacation.description"
           />
-          <div style="display: flex; flex-direction: row;">
+          <div style="display: flex; flex-direction: row">
             <button
-            class="toolbar-btn"
-            (click)="addNewVacation()"
-            style="margin-top: 20px; margin-left: 6%;"
-          >
-            Add
-          </button>
-          <button class="toolbar-btn" style="margin-top: 20px;"  (click)="buttonsBox = false; addVacationBox = false; vacationTableBox = true;">Close</button>
-        </div>
+              class="toolbar-btn"
+              (click)="addNewVacation()"
+              style="margin-top: 20px; margin-left: 6%"
+            >
+              Add
+            </button>
+            <button
+              class="toolbar-btn"
+              style="margin-top: 20px"
+              (click)="
+                buttonsBox = false;
+                addVacationBox = false;
+                vacationTableBox = true
+              "
+            >
+              Close
+            </button>
           </div>
+        </div>
 
         <div
           style="display: flex; flex-direction: column"
@@ -251,17 +276,26 @@
             [value]="selectedVacation.description"
             [(ngModel)]="vacation.description"
           />
-          <div style="display: flex; flex-direction: row;">
+          <div style="display: flex; flex-direction: row">
             <button
-            class="toolbar-btn"
-            style="margin-top: 20px; margin-left: 6%"
-            (click)="editVacation()"
-          >
-            Save
-          </button>
-          <button class="toolbar-btn" style="margin-top: 20px;"  (click)="buttonsBox = false; editVacationBox = false; vacationTableBox = true;">Close</button>
+              class="toolbar-btn"
+              style="margin-top: 20px; margin-left: 6%"
+              (click)="editVacation()"
+            >
+              Save
+            </button>
+            <button
+              class="toolbar-btn"
+              style="margin-top: 20px"
+              (click)="
+                buttonsBox = false;
+                editVacationBox = false;
+                vacationTableBox = true
+              "
+            >
+              Close
+            </button>
           </div>
-          
         </div>
       </div>
     </div>
@@ -299,7 +333,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of shifts" (click)="selectShift(item)">
-              <td style="width:200px;">{{ item.name }}</td>
+              <td style="width: 200px">{{ item.name }}</td>
               <td>{{ item.start }} h</td>
               <td>{{ item.end }} h</td>
             </tr>
@@ -310,9 +344,7 @@
           Change shift
         </button>
         <button
-          (click)="
-            shiftsBox = false; shiftsListBox = false; initialTableBox = true;
-          "
+          (click)="closeShifts()"
           routerLink="/doctors-management"
           class="btn"
         >
@@ -338,14 +370,14 @@
           </tr>
         </tbody>
       </table>
-      <button style="margin-top: 20px;" (click)="pickDoctor()" class="btn">Pick Shift</button>
+      <button style="margin-top: 20px" (click)="pickDoctor()" class="btn">
+        Pick Shift
+      </button>
       <button
-        (click)="
-          shiftsBox = false; shiftsDoctorsBox = false; initialTableBox = true
-        "
+        (click)="closeShifts()"
         routerLink="/doctors-management"
         class="btn"
-        style="margin-top: 20px;"
+        style="margin-top: 20px"
       >
         Close
       </button>
@@ -394,7 +426,7 @@
         (click)="listOfShiftsBox = true; shiftInfoBox = false"
         class="btn"
       >
-        Close
+        Back
       </button>
     </div>
     <div *ngIf="updateShiftBox" class="shiftsBox">
@@ -418,7 +450,7 @@
         (click)="listOfShiftsBox = true; updateShiftBox = false"
         class="btn"
       >
-        Close
+        Back
       </button>
     </div>
   </div>

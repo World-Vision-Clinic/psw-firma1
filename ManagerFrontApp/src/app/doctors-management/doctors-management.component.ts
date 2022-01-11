@@ -28,7 +28,7 @@ export class DoctorsManagementComponent implements OnInit {
   selectedRowIndex = -1;
   vacation: Vacation = {} as Vacation;
   selectedDoctorV: Doctor = {} as Doctor;
-  selectedModule: string = 'charts';
+  selectedModule: string = 'initTable';
   toolbarButtons = [
     {
       name: 'Init table',
@@ -102,7 +102,7 @@ export class DoctorsManagementComponent implements OnInit {
     this.loadDoctors();
   }
 
-  async loadDoctors() {
+  loadDoctors() {
     this.doctorsManagementService.getDoctors().subscribe(
       (data) => {
         this.doctors = data;
@@ -184,13 +184,21 @@ export class DoctorsManagementComponent implements OnInit {
   }
 
   updateShift() {
-    this.doctorsManagementService.updateShift(this.selectedShift);
-    this.loadShifts();
+    this.doctorsManagementService
+      .updateShift(this.selectedShift)
+      .subscribe((data) => {
+        this.loadShifts();
+      });
   }
 
   createShift() {
-    this.doctorsManagementService.makeNewShift(this.newShift);
-    this.loadShifts();
+    this.doctorsManagementService
+      .makeNewShift(this.newShift)
+      .subscribe((data) => {
+        this.loadShifts();
+        this.listOfShiftsBox = true;
+        this.createShiftBox = false;
+      });
   }
 
   selectShift(item) {
@@ -202,14 +210,19 @@ export class DoctorsManagementComponent implements OnInit {
   }
 
   deleteShift() {
-    this.doctorsManagementService.deleteShift(this.selectedShift.Id);
-    this.loadShifts();
+    this.doctorsManagementService
+      .deleteShift(this.selectedShift.Id)
+      .subscribe((data) => {
+        console.log('Finished');
+        this.loadShifts();
+      });
   }
 
   async loadShifts() {
     this.doctorsManagementService.getAllShifts().subscribe(
       (data) => {
         this.shifts = data;
+        console.log(data);
       },
       (error) => {
         console.log(error);
@@ -231,18 +244,15 @@ export class DoctorsManagementComponent implements OnInit {
     alert('Doctor is selected.');
   }
 
-  pickShift() {
+  pickShift = async () => {
     this.addOrChangeDocShift();
-    this.shiftsBox = false;
-    this.pickShiftBox = false;
-    this.shiftInfoBox = false;
-    this.shiftsBtnsBox = false;
-    this.shiftsListBox = false;
-    this.shiftsDoctorsBox = false;
-    this.loadDoctors;
-  }
+    // this.loadDoctors();
+    // this.closeShifts();
+    // this.shiftsDoctorsBox = true;
+    // this.shiftsBtnsBox = false;
+  };
 
-  addOrChangeDocShift() {
+  addOrChangeDocShift = () => {
     if (this.selectedDoctor != null) {
       this.docShiftDTO.doctorId = this.selectedDoctor.id;
     } else {
@@ -250,8 +260,17 @@ export class DoctorsManagementComponent implements OnInit {
       return;
     }
     this.docShiftDTO.shiftId = this.selectedShift.Id;
-    this.doctorsManagementService.changeShift(this.docShiftDTO);
-  }
+    console.log(this.docShiftDTO);
+
+    this.doctorsManagementService
+      .changeShift(this.docShiftDTO)
+      .subscribe((data) => {
+        this.loadDoctors();
+        this.closeShifts();
+        this.shiftsDoctorsBox = true;
+        this.shiftsBtnsBox = false;
+      });
+  };
 
   pickDoctor() {
     if (this.selectedDoctor != null) {
@@ -284,6 +303,13 @@ export class DoctorsManagementComponent implements OnInit {
       this.shiftsDoctorsBox = false;
     }
     this.selectedModule = module;
+  };
+
+  closeShifts = () => {
+    this.shiftsBox = true;
+    this.shiftsBtnsBox = true;
+    this.shiftsListBox = false;
+    this.shiftsDoctorsBox = false;
   };
 
   doctorsOnCallShifts: OnCallShift[] = [];
