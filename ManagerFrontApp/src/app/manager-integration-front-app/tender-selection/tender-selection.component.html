@@ -22,13 +22,16 @@
           <h2 style= "margin-top: 1%;"><b>Tender offers: </b></h2>
           <label *ngIf="dataItem.TenderOffers.length==0">There are no offers</label>
           <div  *ngFor="let data of dataItem.TenderOffers">
+
             <label>Pharmacy name: {{data.PharmacyName}},Total price: {{data.TotalPrice}}</label>
+            <label *ngIf="data.Winner" style="margin-left:3%;"><b>Winner offer</b></label>
             <div>Offer items:
                 <br>
                 <label *ngFor="let data2 of data.OfferItems">Item:{{data2.MedicineName}},Dosage:{{data2.Dosage}},Quantity:{{data2.Quantity}},Price:{{data2.Price}}</label>
     
               </div>
               <button *ngIf="dataItem.EndTime == null || dataItem.EndTime> currentTime" (click)="chooseTenderWinner(dataItem,data)" type="button" class="btn btn-primary">Choose tender winner</button>
+              <hr>
           </div>
 
        
