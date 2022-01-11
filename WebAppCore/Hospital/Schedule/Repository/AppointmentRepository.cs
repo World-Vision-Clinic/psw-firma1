@@ -32,9 +32,9 @@ namespace Hospital.Schedule.Repository
             return _context.Appointments.Where(f => f.DoctorForeignKey == doctorId).ToList();
         }
 
-        public List<Appointment> GetByDoctorId(int doctorId, DateTime lowerDateRange, DateTime upperDateRange)
+        public List<Appointment> GetByDoctorId(int doctorId, DateRange dateRange)
         {
-            return _context.Appointments.Where(f => f.DoctorForeignKey == doctorId && f.Date >= lowerDateRange && f.Date < upperDateRange).ToList();
+            return _context.Appointments.Where(f => f.DoctorForeignKey == doctorId && f.Date >= dateRange.From && f.Date < dateRange.To).ToList();
         }
 
         public List<Appointment> GetByDoctorType(DoctorType type)

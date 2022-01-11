@@ -17,14 +17,14 @@ namespace Hospital.MedicalRecords.Model
         public DateTime Date { get; private set; }
         public string UserName { get; set; }
 
-        public Feedback(string content, bool isPublic, bool isPublishable, bool isAnonymous, DateTime date, string username)
+        public Feedback(string content, bool isPublic, bool isPublishable, bool isAnonymous, DateTime date, string userName)
         {
             this.Content = content;
             this.IsPublic = isPublic;
             this.IsPublishable = isPublishable;
             this.IsAnonymous = isAnonymous;
             this.Date = date;
-            this.UserName = username;
+            this.UserName = userName;
         }
     }
 }

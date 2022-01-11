@@ -105,7 +105,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
                 Date = DateTime.Now,
-                Time = TimeSpan.Zero
+                Length = TimeSpan.Zero
             };
             _appointmentRepository.AddAppointment(appointment);
             /*var response = _appointmentController.GetAppointmentsByPatientId(1);
@@ -139,7 +139,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
                 Date = new DateTime(2025, 6, 6, 12, 0, 0),
-                Time = new TimeSpan(0, 0, 45, 0, 0)
+                Length = new TimeSpan(0, 0, 45, 0, 0)
             };
 
             HttpResponseMessage response = _appointmentController.AddAppointment(appointment);
@@ -157,7 +157,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
                 Date = new DateTime(1990, 6, 6, 12, 0, 0),
-                Time = new TimeSpan(0, 0, 45, 0, 0)
+                Length = new TimeSpan(0, 0, 45, 0, 0)
             };
 
             HttpResponseMessage response = _appointmentController.AddAppointment(appointment);
@@ -175,7 +175,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
                 Date = new DateTime(2030, 6, 6, 12, 0, 0),
-                Time = new TimeSpan(0, 0, 45, 0, 0)
+                Length = new TimeSpan(0, 0, 45, 0, 0)
             };
 
             Appointment overlappingAppointment = new Appointment()
@@ -185,7 +185,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
                 Date = new DateTime(2030, 6, 6, 11, 30, 0),
-                Time = new TimeSpan(0, 0, 45, 0, 0)
+                Length = new TimeSpan(0, 0, 45, 0, 0)
             };
 
             HttpResponseMessage response = _appointmentController.AddAppointment(validAppointment);
@@ -223,7 +223,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
                 Date = new DateTime(2022, 6, 6, 12, 0, 0),
-                Time = new TimeSpan(0, 0, 30, 0, 0)
+                Length = new TimeSpan(0, 0, 30, 0, 0)
             };
             _appointmentRepository.AddAppointment(appointment);
 
@@ -251,7 +251,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
                 Date = new DateTime(2022, 7, 7, 12, 0, 0),
-                Time = new TimeSpan(0, 0, 45, 0, 0)
+                Length = new TimeSpan(0, 0, 45, 0, 0)
             };
             _appointmentRepository.AddAppointment(appointment);
 
@@ -262,7 +262,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
                 Date = new DateTime(2022, 7, 6, 12, 0, 0),
-                Time = new TimeSpan(0, 0, 45, 0, 0)
+                Length = new TimeSpan(0, 0, 45, 0, 0)
             };
             _appointmentRepository.AddAppointment(earlierAppointment);
 
@@ -299,7 +299,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 DoctorForeignKey = 11,
                 Type = AppointmentType.Appointment,
                 Date = new DateTime(2022, 9, 9, 12, 0, 0),
-                Time = new TimeSpan(0, 0, 45, 0, 0)
+                Length = new TimeSpan(0, 0, 45, 0, 0)
             };
             _appointmentRepository.AddAppointment(appointment);
 
@@ -318,7 +318,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
                 Date = DateTime.Now.AddDays(5),
-                Time = new TimeSpan(0, 11, 30, 0, 0),
+                Length = new TimeSpan(0, 11, 30, 0, 0),
                 IsCancelled = false
             };
 
@@ -342,7 +342,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 DoctorForeignKey = 1,
                 Type = AppointmentType.Appointment,
                 Date = new DateTime(2020, 9, 9, 0, 0, 0),
-                Time = new TimeSpan(0, 8, 30, 0, 0),
+                Length = new TimeSpan(0, 8, 30, 0, 0),
                 IsCancelled = true
             };
 
