@@ -45,6 +45,7 @@ namespace Hospital.GraphicalEditor.Service
         {
             Room room1 = roomService.GetById(renovation.Room1Id);
             Room room2 = roomService.GetById(renovation.Room2Id);
+            Save(renovation);
             return roomService.mergeRooms(room1, room2, renovation.NewRoomName1, renovation.NewRoomPurpose1);
         }
 
@@ -54,12 +55,20 @@ namespace Hospital.GraphicalEditor.Service
             return repository.GetPassedRenovations();
         }
 
-        public Room GetById(int id)
+        public Renovation GetById(int id)
         {
-            throw new NotImplementedException();
+            return repository.GetByID(id);
         }
 
-        
+        public bool cancelRenovation(int id)
+        {
+            Renovation r = GetById(id);
+            if (r == null)
+                return false;
+            return r.StartDate.AddHours(-24) >= new DateTime();
+        }
+
+
 
         public RenovationPeriod getSuggestions(RoomService roomService, AppointmentService appointmentService, EquipmentService equipmentService, int room1Id, int room2Id, long startPeriodTimestamp, long endPeriodTimestamp, int durationInDays)
         {

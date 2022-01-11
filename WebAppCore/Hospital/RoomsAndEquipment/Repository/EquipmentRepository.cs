@@ -35,7 +35,7 @@ namespace Hospital.RoomsAndEquipment.Repository
                         allEq.Add(eq);
                 });
             }
-            catch
+            catch(Exception e)
             {
 
             }
