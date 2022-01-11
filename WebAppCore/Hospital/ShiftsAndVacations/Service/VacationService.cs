@@ -48,6 +48,21 @@ namespace Hospital.ShiftsAndVacations.Service
             
         }
 
+        public int getNumberOfVacationDays(Doctor doctor, DateTime startDate, DateTime endDate)
+        {
+            int numberOfVacationDays = 0;
+            List<Vacation> vacations = repository.GetAll();
+            foreach (Vacation v in vacations)
+            {
+                if (v.DoctorId == doctor.Id && startDate <= v.Start && v.End < endDate) { 
+                    
+                    numberOfVacationDays += (int)Math.Floor((v.End - v.Start).TotalDays);
+                }
+            }
+
+            return numberOfVacationDays;
+        }
+
         public void addNewVacation(int id, string desc, DateTime start, DateTime end, int doctorId, string fullName)
         {
             Vacation v = new Vacation(id, desc, start, end, doctorId, fullName);

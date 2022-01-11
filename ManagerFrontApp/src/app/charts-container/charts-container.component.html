@@ -44,15 +44,21 @@
       </tr>
     </tbody>
   </table>
+  <div *ngIf="showChart && emptyData">
+    {{ selectedStats.doctor.firstName }}
+    {{ selectedStats.doctor.lastName }} doesn't have any data
+  </div>
   <div
     style="text-align: center; width: 650px; height: 200px"
-    *ngIf="showChart"
+    *ngIf="showChart && !emptyData"
   >
     <ejs-accumulationchart
       id="chart-container"
       [legendSettings]="legendSettings"
       width="300"
       height="200"
+      [enableSmartLabels]="true"
+      [tooltip]="tooltip"
     >
       <e-accumulation-series-collection>
         <e-accumulation-series
@@ -61,6 +67,7 @@
           yName="y"
           [pointColorMapping]="map"
           [dataLabel]="datalabel"
+          tooltipMappingName="text"
         ></e-accumulation-series>
       </e-accumulation-series-collection>
     </ejs-accumulationchart>

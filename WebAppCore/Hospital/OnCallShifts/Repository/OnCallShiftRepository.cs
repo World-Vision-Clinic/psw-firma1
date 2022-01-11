@@ -47,6 +47,13 @@ namespace Hospital.ShiftsAndVacations.Repository
             dbContext.SaveChanges();
         }
 
+        internal List<OnCallShift> GetByDoctorId(int id)
+        {
+            List<OnCallShift> allShifts = new List<OnCallShift>();
+            dbContext.OnCallShifts.ToList().ForEach(sh => { if(sh.DoctorId == id) allShifts.Add(sh); });
+            return allShifts;
+        }
+
         public void Update(OnCallShift parameter)
         {
             dbContext.OnCallShifts.Update(parameter);

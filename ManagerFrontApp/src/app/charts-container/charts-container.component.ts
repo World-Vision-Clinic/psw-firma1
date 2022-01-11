@@ -10,6 +10,7 @@ import {
   ApexResponsive,
   ApexChart,
 } from 'ng-apexcharts';
+import { IAccTooltipRenderEventArgs } from '@syncfusion/ej2-charts';
 
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -27,10 +28,14 @@ export type ChartOptions = {
 })
 export class ChartsContainerComponent implements OnInit {
   stats: DoctorStat[] = [];
+  today = new Date();
+  public tooltip: Object = {} as Object;
+  public ontooltipRender: Function = () => {};
   requestData: DoctorStatsRequest = {
-    endDate: null,
-    startDate: null,
+    startDate: new Date(),
+    endDate: new Date(this.today.setHours(this.today.getHours() + 24)),
   };
+
   showTable: boolean = false;
   public piedata: Object[] = [];
   public map: Object = 'fill';
@@ -38,9 +43,12 @@ export class ChartsContainerComponent implements OnInit {
   public legendSettings: Object = {};
   selectedStats: DoctorStat = {} as DoctorStat;
   showChart = false;
+  emptyData = false;
+
   constructor(private chartsService: ChartsService) {}
 
   ngOnInit(): void {
+    console.log(this.requestData);
     this.piedata = [
       { x: 'Patients', y: 10, text: 'Patients' },
       { x: 'Appointments', y: 20, text: 'Appointments' },
@@ -70,14 +78,36 @@ export class ChartsContainerComponent implements OnInit {
         text: 'Vacation days',
       },
     ];
+    this.tooltip = {
+      enable: true,
+    };
+    this.ontooltipRender = (args: IAccTooltipRenderEventArgs): void => {
+      if (args.point.index === 3) {
+        args.text =
+          args.point.x + '' + ':' + args.point.y + '' + ' ' + 'customtext';
+        args.textStyle!.color = '#f48042';
+      }
+    };
     this.showChart = true;
+    this.emptyData = !(
+      stat.numberOfVacationDays ||
+      stat.numberOfOnCallShifts ||
+      stat.numberOfAppointments ||
+      stat.numberOfPatients
+    );
   };
 
   apply = () => {
-    if (this.requestData.endDate == null || this.requestData.endDate == null)
+    if (this.requestData.startDate == null || this.requestData.endDate == null)
       return;
+    this.requestData.startDate = new Date(this.requestData.startDate);
+    this.requestData.endDate = new Date(this.requestData.endDate);
+    console.log(this.requestData);
+
     this.chartsService.getStats(this.requestData).subscribe(
       (data) => {
+        console.log(data);
+
         this.stats = data;
         this.showTable = true;
       },

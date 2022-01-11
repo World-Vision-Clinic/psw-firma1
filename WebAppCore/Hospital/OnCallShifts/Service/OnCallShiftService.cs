@@ -1,4 +1,5 @@
-﻿using Hospital.ShiftsAndVacations.Model;
+﻿using Hospital.MedicalRecords.Model;
+using Hospital.ShiftsAndVacations.Model;
 using Hospital.ShiftsAndVacations.Repository;
 using Hospital.ShiftsAndVacations.Repository.RepositoryInterfaces;
 using System;
@@ -42,6 +43,19 @@ namespace Hospital.ShiftsAndVacations.Service
         public void addNewOnCallShift(OnCallShift obj)
         {
             repository.Save(obj);
+        }
+
+        public int getNumberOfOnCallShifts(Doctor doctor, DateTime startDate, DateTime endDate)
+        {
+            int numberOfOnCallShifts = 0;
+            List<OnCallShift> shifts = repository.GetByDoctorId(doctor.Id);
+            foreach (OnCallShift a in shifts)
+            {
+                if ( startDate <= a.Date && a.Date < endDate)
+                    numberOfOnCallShifts++;
+            }
+
+            return numberOfOnCallShifts;
         }
 
         public OnCallShift getById(int id)
