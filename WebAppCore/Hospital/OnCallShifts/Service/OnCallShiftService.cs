@@ -66,7 +66,12 @@ namespace Hospital.ShiftsAndVacations.Service
         public void addNewOnCallShift(int id, int doctorId, DateTime date)
         {
             List<OnCallShift> onCallDuties = repository.getDoctorsDuty(doctorId);
-            if (onCallDuties.Count > 0) throw new Exception("Already has");
+            int count = 0;
+            foreach(OnCallShift c in onCallDuties)
+            {
+                if (c.Date.Year == date.Year && c.Date.Day == date.Day && c.Date.Month == date.Month) ++count;
+            }
+            if (count > 0) throw new Exception("Already has");
             OnCallShift obj = new OnCallShift(id, doctorId, date);
             repository.Save(obj);
         }
@@ -74,7 +79,12 @@ namespace Hospital.ShiftsAndVacations.Service
         public void updateShift(int id, int doctorId, DateTime date)
         {
             List<OnCallShift> onCallDuties = repository.getDoctorsDuty(doctorId);
-            if (onCallDuties.Count > 1) throw new Exception("Already has");
+            int count = 0;
+            foreach (OnCallShift c in onCallDuties)
+            {
+                if (c.Date.Year == date.Year && c.Date.Day == date.Day && c.Date.Month == date.Month) ++count;
+            }
+            if (count > 1) throw new Exception("Already has");
             OnCallShift obj = new OnCallShift(id, doctorId, date);
             repository.Update(obj);
         }
