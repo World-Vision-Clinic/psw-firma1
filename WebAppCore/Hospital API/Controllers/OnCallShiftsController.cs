@@ -65,31 +65,28 @@ namespace Hospital_API.Controllers
         [HttpPost("")]
         public HttpResponseMessage addNew([FromBody] OnCallShiftDTO shift)
         {
-            try
-            {
-                 _shiftsService.addNewOnCallShift(shift.Id,shift.DoctorId,shift.Date);
-                return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
-            }
-            catch
-            {
+           
+                bool success =  _shiftsService.addNewOnCallShift(shift.Id,shift.DoctorId,shift.Date);
+                
+                if (success)
+                    return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
+
                 return new HttpResponseMessage { StatusCode = HttpStatusCode.Conflict };
+
             }
-            
-        }
 
         [HttpPut("")]
         public HttpResponseMessage updateShift([FromBody] OnCallShiftDTO shift)
         {
-            try
-            {
-                // _shiftsService.deleteShift(shift.Id);
-                _shiftsService.updateShift(shift.Id, shift.DoctorId, shift.Date);
-            return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
-                }
-            catch(Exception e)            {
-                return new HttpResponseMessage { StatusCode = HttpStatusCode.Conflict
-            };
-}
+            
+            // _shiftsService.deleteShift(shift.Id);
+            bool success = _shiftsService.updateShift(shift.Id, shift.DoctorId, shift.Date);
+            if(success)
+                return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
+
+            return new HttpResponseMessage { StatusCode = HttpStatusCode.Conflict };
+            
+            
         }
 
         [HttpDelete("{id}")]

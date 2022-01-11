@@ -165,8 +165,8 @@ namespace Hospital.SharedModel
                 },
                 new Equipment { Id = 5, Name = "Operating table", Type = EquipmentType.STATIC, Amount = 2, RoomId = 2,
                     InTransport = true,
-                    TransportStart = new DateTime(2022, 1, 17, 13, 0, 0, 0, DateTimeKind.Unspecified),
-                    TransportEnd = new DateTime(2022, 1, 17, 14, 0, 0, 0, DateTimeKind.Unspecified)
+                    TransportStart = new DateTime(2022, 1, 11, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                    TransportEnd = new DateTime(2022, 1, 11, 14, 0, 0, 0, DateTimeKind.Unspecified)
                 },
                 new Equipment { Id = 6, Name = "Infusion", Type = EquipmentType.DYNAMIC, Amount = 23, RoomId = 23 },
                 new Equipment { Id = 7, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 15, RoomId = 3 },

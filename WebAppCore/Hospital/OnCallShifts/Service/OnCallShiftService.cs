@@ -45,6 +45,7 @@ namespace Hospital.ShiftsAndVacations.Service
             repository.Save(obj);
         }
 
+
         public int getNumberOfOnCallShifts(Doctor doctor, DateTime startDate, DateTime endDate)
         {
             int numberOfOnCallShifts = 0;
@@ -63,7 +64,7 @@ namespace Hospital.ShiftsAndVacations.Service
             return repository.GetByID(id);
         }
 
-        public void addNewOnCallShift(int id, int doctorId, DateTime date)
+        public bool addNewOnCallShift(int id, int doctorId, DateTime date)
         {
             List<OnCallShift> onCallDuties = repository.getDoctorsDuty(doctorId);
             int count = 0;
@@ -71,12 +72,13 @@ namespace Hospital.ShiftsAndVacations.Service
             {
                 if (c.Date.Year == date.Year && c.Date.Day == date.Day && c.Date.Month == date.Month) ++count;
             }
-            if (count > 0) throw new Exception("Already has");
+            if (count > 0) return false;
             OnCallShift obj = new OnCallShift(id, doctorId, date);
             repository.Save(obj);
+            return true;
         }
 
-        public void updateShift(int id, int doctorId, DateTime date)
+        public bool updateShift(int id, int doctorId, DateTime date)
         {
             List<OnCallShift> onCallDuties = repository.getDoctorsDuty(doctorId);
             int count = 0;
@@ -84,9 +86,10 @@ namespace Hospital.ShiftsAndVacations.Service
             {
                 if (c.Date.Year == date.Year && c.Date.Day == date.Day && c.Date.Month == date.Month) ++count;
             }
-            if (count > 1) throw new Exception("Already has");
+            if (count > 1) return false;
             OnCallShift obj = new OnCallShift(id, doctorId, date);
             repository.Update(obj);
+            return true;
         }
 
         public List<OnCallShift> getDoctorsDuty(int doctorId)

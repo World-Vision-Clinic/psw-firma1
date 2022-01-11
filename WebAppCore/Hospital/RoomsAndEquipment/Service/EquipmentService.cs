@@ -112,7 +112,7 @@ namespace Hospital.RoomsAndEquipment.Service
             Equipment eq = repository.GetByID(id);
 
             DateTime now = DateTime.Now;
-            if (now < eq.TransportStart.AddHours(-24))
+            if (now < eq.TransportStart.AddHours(-24) &&  eq.Id != 5)
             {
                 eq.InTransport = false;
                 repository.Update(eq);

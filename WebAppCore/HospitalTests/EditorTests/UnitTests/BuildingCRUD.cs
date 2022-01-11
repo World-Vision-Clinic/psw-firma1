@@ -18,46 +18,50 @@ using Hospital.GraphicalEditor.Model;
 using Hospital.GraphicalEditor.Service;
 using Shouldly;
 using Moq;
+using Hospital.ShiftsAndVacations.Repository.RepositoryInterfaces;
+using Hospital.ShiftsAndVacations.Model;
+using Hospital.ShiftsAndVacations.Service;
+using Hospital.ShiftsAndVacations.Repository;
 
 namespace HospitalTests.EditorTests
 {
-    public class BuildingCRUD
+    public class OnCallShiftCRUD
     {
-        private static IBuildingRepository CreateStubRepository()
+        private static OnCallShiftRepository CreateStubRepository()
         {
-            var stubRepository = new Mock<IBuildingRepository>();
-            var buildings = new List<Building>();
+            var stubRepository = new Mock<OnCallShiftRepository>();
+            var shifts = new List<OnCallShift>();
 
 
-            Building hospital1 = new Building { id = 1, Name = "Hospital I", Area = null, Info = "Gynecology", MapPositionId = 1 };
-            Building hospital2 = new Building { id = 2, Name = "Hospital II", Area = null, Info = "Oncology", MapPositionId = 2 };
-            Building hospital3 = new Building { id = 3, Name = "Hospital III", Area = null, Info = "Dermatology", MapPositionId = 3 };
+            OnCallShift shift1 = new OnCallShift(0, 1, new DateTime(2022, 01,02));
+            OnCallShift shift2 = new OnCallShift(0, 4, new DateTime(2022, 01, 12));
+            OnCallShift shift3 = new OnCallShift(0, 4, new DateTime(2022, 01, 15));
 
-            buildings.Add(hospital1);
-            buildings.Add(hospital2);
-            buildings.Add(hospital3);
+            shifts.Add(shift1);
+            shifts.Add(shift2);
+            shifts.Add(shift3);
 
-            stubRepository.Setup(m => m.GetAll()).Returns(buildings);
+            stubRepository.Setup(m => m.GetAll()).Returns(shifts);
             return stubRepository.Object;
         }
 
         [Fact]
-        public void building_service_test_1()
+        public void building_service_test()
         {
-            IBuildingRepository repo = CreateStubRepository();
+            OnCallShiftRepository repo = CreateStubRepository();
 
-            BuildingService service = new BuildingService(repo);
-            service.GetAll().Count.ShouldBeEquivalentTo(3);
+            OnCallShiftService service = new OnCallShiftService(repo);
+            service.getAll().Count.ShouldBeEquivalentTo(3);
         }
 
         [Fact]
         public void building_findById_test_not_found()
         {
-            IBuildingRepository repo = CreateStubRepository();
+            OnCallShiftRepository repo = CreateStubRepository();
 
-            BuildingService service = new BuildingService(repo);
-            Building building = service.GetById(3);
-            Assert.Null(building);
+            OnCallShiftService service = new OnCallShiftService(repo);
+            OnCallShift shift = service.getById(3);
+            Assert.Null(shift);
 
         }
         /*
