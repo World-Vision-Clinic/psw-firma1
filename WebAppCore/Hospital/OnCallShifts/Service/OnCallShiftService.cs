@@ -65,12 +65,16 @@ namespace Hospital.ShiftsAndVacations.Service
 
         public void addNewOnCallShift(int id, int doctorId, DateTime date)
         {
+            List<OnCallShift> onCallDuties = repository.getDoctorsDuty(doctorId);
+            if (onCallDuties.Count > 0) throw new Exception("Already has");
             OnCallShift obj = new OnCallShift(id, doctorId, date);
             repository.Save(obj);
         }
 
         public void updateShift(int id, int doctorId, DateTime date)
         {
+            List<OnCallShift> onCallDuties = repository.getDoctorsDuty(doctorId);
+            if (onCallDuties.Count > 1) throw new Exception("Already has");
             OnCallShift obj = new OnCallShift(id, doctorId, date);
             repository.Update(obj);
         }

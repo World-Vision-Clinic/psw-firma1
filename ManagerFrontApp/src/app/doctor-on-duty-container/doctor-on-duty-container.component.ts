@@ -77,8 +77,6 @@ export class DoctorOnDutyContainerComponent implements OnInit {
     this.selectedOnDuty.doctor = this.doctors[index];
     this.selectedOnDuty.doctorId = this.selectedDoctorsId;
     this.selectedOnDuty.date.setHours(this.selectedOnDuty.date.getHours() + 4);
-    console.log(this.selectedOnDuty);
-    this.selectedDoctorsId = -1;
 
     if (this.selectedOnDuty.new) this.createNewOnDuty();
     else this.updateOnDuty();
@@ -87,23 +85,45 @@ export class DoctorOnDutyContainerComponent implements OnInit {
   createNewOnDuty = () => {
     delete this.selectedOnDuty?.new;
     this.onDutyService.addOnCallShift(this.selectedOnDuty).subscribe(
-      (data) => {
+      (data: any) => {
+        if (data.statusCode == 409) {
+          alert(
+            `${this.selectedOnDuty.doctor.firstName} already has On-call shift on that day!`
+          );
+          return;
+        }
+
+        this.selectedDoctorsId = -1;
         this.loadOnCallDuties();
         this.close();
       },
       (error) => {
         console.log(error);
+
+        alert(
+          `${this.selectedOnDuty.doctor.firstName} already has On-call shift on that day!`
+        );
       }
     );
   };
   updateOnDuty = async () => {
     delete this.selectedOnDuty?.new;
     await this.onDutyService.updateOnCallShift(this.selectedOnDuty).subscribe(
-      (data) => {
+      (data: any) => {
+        if (data.statusCode == 409) {
+          alert(
+            `${this.selectedOnDuty.doctor.firstName} already has On-call shift on that day!`
+          );
+          return;
+        }
+        console.log(data);
         this.loadOnCallDuties();
         this.close();
       },
       (error) => {
+        alert(
+          `${this.selectedDoctor.firstName} already has On-call shift on that day!`
+        );
         console.log(error);
       }
     );
