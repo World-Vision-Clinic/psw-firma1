@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Integration.Partnership.Model
 {
-    public class Tender : Entity
+    public class Tender 
     {
         public int TenderId { get; set; }
         public string TenderHash { get; set; }

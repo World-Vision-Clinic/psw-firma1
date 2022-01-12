@@ -20,28 +20,7 @@ namespace Integration.Partnership.Repository
         public List<Tender> GetAll()
         {
 
-            List<Tender> allTenders = dbContext.Tenders.Include("TenderOffers").Include("TenderItems").ToList();
-            List<TenderOffer> allOffers = GetAllTenderOffersWithOfferItems();
-            foreach(Tender tender in allTenders)
-            {
-                if(tender.TenderOffers.Count!=0)
-                {
-                    //int id = tender.TenderOffers.ToList()[0].TenderOfferId;
-                    foreach(TenderOffer offer in tender.TenderOffers)
-                    {
-                        int id = offer.TenderOfferId;
-                        foreach (TenderOffer ofer in allOffers)
-                        {
-                            if (id == ofer.TenderOfferId)
-                            {
-                                offer.OfferItems = ofer.OfferItems;
-                            }
-                        }
-                    }
-                }
-            }
-
-            return allTenders;
+            return dbContext.Tenders.Include("TenderItems").Include("TenderOffers").Include("TenderOffers.OfferItems").ToList();
         }
 
         public void EditTenderEndTimeByHash(Tender tender)
@@ -72,17 +51,19 @@ namespace Integration.Partnership.Repository
 
         }
 
-        public List<TenderOffer> GetAllTenderOffers()
-        {
-            return dbContext.TenderOffers.ToList();
-        }
-        public List<OfferItem> GetAllOfferItems()
-        {
-            return dbContext.OfferItems.ToList();
-        }
+       
+      
         public List<TenderOffer> GetAllTenderOffersWithOfferItems()
         {
-            return dbContext.TenderOffers.Include("OfferItems").ToList();
+            List<TenderOffer> offers = new List<TenderOffer>();
+            foreach(Tender tender in GetAll())
+            {
+                foreach(TenderOffer offer in tender.TenderOffers)
+                {
+                    offers.Add(offer);
+                }
+            }
+            return offers;
         }
 
 
