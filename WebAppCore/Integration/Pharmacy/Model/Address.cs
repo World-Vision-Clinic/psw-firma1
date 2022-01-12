@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Integration.SharedModel;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Text;
 namespace Integration.Pharmacy.Model
 {
     [Owned]
-    public class Address
+    public class Address : ValueObject
     {
         public string Street { get; private set; }
         public string City { get; private set; }
@@ -25,6 +26,12 @@ namespace Integration.Pharmacy.Model
             {
                 throw new Exception("Invalid address info");
             }
+        }
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Street;
+            yield return City;
         }
     }
 }

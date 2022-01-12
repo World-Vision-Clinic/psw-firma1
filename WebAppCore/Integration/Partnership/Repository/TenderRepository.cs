@@ -100,8 +100,7 @@ namespace Integration.Partnership.Repository
         {
             Tender tender = dbContext.Tenders.Include("TenderItems").SingleOrDefault(tender => tender.TenderHash == tenderOffer.TenderHash);
             if (tender == null) return false;
-            if (tender.TenderOffers == null) tender.TenderOffers = new List<TenderOffer>();
-            tender.TenderOffers.Add(tenderOffer);
+            tender.AddTenderOffer(tenderOffer.TenderOfferHash, tenderOffer.TenderHash, tenderOffer.PharmacyName, tenderOffer.TotalPrice, tenderOffer.OfferItems, tenderOffer.Winner);
             dbContext.SaveChanges();
             return true;
         }
@@ -114,7 +113,7 @@ namespace Integration.Partnership.Repository
         public TenderOffer GetTenderOfferWithOfferItems(string pharmacyName, string offerHash)
         {
             List<TenderOffer> offers = GetAllTenderOffersWithOfferItems();
-            TenderOffer offer=new TenderOffer();
+            TenderOffer offer = new TenderOffer();
             foreach(TenderOffer o in offers)
             {
                 if(o.PharmacyName == pharmacyName && o.TenderOfferHash == offerHash)
