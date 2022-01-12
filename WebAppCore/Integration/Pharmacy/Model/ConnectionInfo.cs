@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Integration.SharedModel;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Text;
 namespace Integration.Pharmacy.Model
 {
     [Owned]
-    public class ConnectionInfo
+    public class ConnectionInfo : ValueObject
     {
         public string Key { get; private set; }
         public string Domain { get; private set; }
@@ -29,5 +30,11 @@ namespace Integration.Pharmacy.Model
             }
         }
 
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Key;
+            yield return Domain;
+            yield return Protocol;
+        }
     }
 }

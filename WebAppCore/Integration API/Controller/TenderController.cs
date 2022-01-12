@@ -86,8 +86,8 @@ namespace Integration_API.Controller
             tender.EndTime = DateTime.Now;
             service.EditTenderEndTimeByHash(tender);
 
-            tender.TenderOffers = new List<TenderOffer>();
-            tender.TenderOffers.Add(offer);
+            
+            tender.AddTenderOffer(offer.TenderOfferHash, offer.TenderHash, offer.PharmacyName, offer.TotalPrice, offer.OfferItems, offer.Winner);
 
             foreach (PharmacyProfile pharmacy in pharmaciesService.GetAll())
             {
