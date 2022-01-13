@@ -17,6 +17,8 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -90,6 +92,8 @@ namespace PharmacyAPI.Controller
                 Medicine med = service.FoundOrderedMedicine(medicine);
                 service.OrderMedicine(medicine);
 
+                SendMailToHospital(dto);
+
                 var client = new RestSharp.RestClient(hospital.Localhost);
                 var request = new RestRequest("/medicines/ordered");
                 request.AddHeader("Content-Type", "application/json");
@@ -119,6 +123,37 @@ namespace PharmacyAPI.Controller
             else
             {
                 return Ok();
+            }
+        }
+
+        private void SendMailToHospital(OrderingMedicineDto dto)
+        {
+            MailMessage mm = new MailMessage();
+            mm.To.Add(new MailAddress("katarinazer6@gmail.com", "Medicine procurement confirmation"));
+            mm.From = new MailAddress("fishingrod.team9@gmail.com");
+            mm.Body = @"<!DOCTYPE html>
+                <html>
+                    <head></head>
+                    <body>
+                        <p>You ordered successfully " + dto.NumOfBoxes + " boxes of " + dto.MedicineName + " " + dto.MedicineGrams + @"</p>
+                    </body>
+                </html>
+            ";
+            mm.IsBodyHtml = true;
+            mm.Subject = "Medicine procurement confirmation";
+            SmtpClient smcl = new SmtpClient();
+            smcl.Host = "smtp.gmail.com";
+            smcl.Port = 587;
+            smcl.Credentials = new NetworkCredential("fishingrod.team9@gmail.com", "isaprojekat.tim9");
+            smcl.EnableSsl = true;
+            smcl.DeliveryMethod = SmtpDeliveryMethod.Network;
+            try
+            {
+                smcl.Send(mm);
+            }
+            catch (SmtpException e)
+            {
+                Console.WriteLine("Error: {0}", e.StatusCode);
             }
         }
 
