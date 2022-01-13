@@ -144,7 +144,7 @@ namespace PharmacyAPI.Controller
             SmtpClient smcl = new SmtpClient();
             smcl.Host = "smtp.gmail.com";
             smcl.Port = 587;
-            smcl.Credentials = new NetworkCredential("fishingrod.team9@gmail.com", "isaprojekat.tim9");
+            smcl.Credentials = new NetworkCredential("mejl@gmail.com", "lozinka");
             smcl.EnableSsl = true;
             smcl.DeliveryMethod = SmtpDeliveryMethod.Network;
             try
