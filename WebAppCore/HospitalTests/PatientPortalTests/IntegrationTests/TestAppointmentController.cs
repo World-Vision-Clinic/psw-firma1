@@ -148,24 +148,6 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         }
 
         [Fact]
-        public void Test_add_invalid_historical_appointment()
-        {
-            Appointment appointment = new Appointment()
-            {
-                Id = 3,
-                PatientForeignKey = 1,
-                DoctorForeignKey = 1,
-                Type = AppointmentType.Appointment,
-                Date = new DateTime(1990, 6, 6, 12, 0, 0),
-                Length = new TimeSpan(0, 0, 45, 0, 0)
-            };
-
-            HttpResponseMessage response = _appointmentController.AddAppointment(appointment);
-
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-        }
-
-        [Fact]
         public void Test_add_invalid_overlapping_appointment()
         {
             Appointment validAppointment = new Appointment()

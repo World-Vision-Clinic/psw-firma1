@@ -52,7 +52,7 @@ namespace Hospital.Schedule.Model
             return false;
         }
 
-        public bool OverlapsWith(Appointment appointment, DateTime otherDate, TimeSpan otherLength)
+        public bool OverlapsWith(DateTime otherDate, TimeSpan otherLength)
         {
             if (Date.Date.Equals(otherDate))
             {

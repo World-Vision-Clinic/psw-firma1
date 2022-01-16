@@ -77,7 +77,7 @@ namespace Hospital.Schedule.Service
         {
             List<Appointment> allAppointments = GetAll();
             return allAppointments
-                   .Where(g => g.OverlapsWith(g, date, time)).ToList().FirstOrDefault();
+                   .Where(g => g.OverlapsWith(date, time)).ToList().FirstOrDefault();
         }
 
         public List<Appointment> GetAvailableByDateRangeAndDoctor(DateRange dateRange, TimeRange timeRange, int doctorId, AppointmentSearchPriority priority = AppointmentSearchPriority.NO_PRIORITY)
