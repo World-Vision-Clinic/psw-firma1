@@ -133,13 +133,14 @@ namespace Hospital_API.Controllers
             if (appointmentToAdd.Date < DateTime.Now)
                 return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest };
 
-            if (_appointmentService.GetByDateAndDoctor(appointmentToAdd.Date, appointmentToAdd.Length, appointmentToAdd.DoctorForeignKey) != null)
-                return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest };
-
             int appointmentLength = 30;
 
             appointmentToAdd.PatientForeignKey = patient.Id;
             appointmentToAdd.Length = new TimeSpan(0, appointmentLength, 0);
+
+            if (_appointmentService.GetByDateAndDoctor(appointmentToAdd.Date, appointmentToAdd.Length, appointmentToAdd.DoctorForeignKey) != null)
+                return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest };
+
             _appointmentService.AddAppointment(appointmentToAdd);
             return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }

@@ -54,7 +54,9 @@ namespace Hospital.Schedule.Model
 
         public bool OverlapsWith(DateTime otherDate, TimeSpan otherLength)
         {
-            if (Date.Date.Equals(otherDate))
+            DateTime rawDate1 = Date.Date;
+            DateTime rawDate2 = otherDate.Date;
+            if (rawDate1.Equals(rawDate2))
             {
                 TimeRange timeRange = new TimeRange(Date.TimeOfDay, Date.TimeOfDay + Length);
                 TimeRange otherTimeRange = new TimeRange(otherDate.TimeOfDay, otherDate.TimeOfDay + otherLength);
