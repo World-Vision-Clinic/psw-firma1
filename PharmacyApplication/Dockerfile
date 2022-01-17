@@ -15,7 +15,11 @@ FROM build-env as publish
 RUN dotnet publish -c Release -o /app
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
-WORKDIR /app
-EXPOSE 80
+WORKDIR /app 
+EXPOSE 1026
 COPY --from=build-env /app .
+
+RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
+USER appuser
+ 
 ENTRYPOINT [ "dotnet","PharmacyAPI.dll" ]

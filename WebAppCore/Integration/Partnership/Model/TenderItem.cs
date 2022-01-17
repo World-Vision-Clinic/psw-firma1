@@ -11,5 +11,11 @@ namespace Integration.Partnership.Model
         public double Dosage { get; set; }
         public int Quantity { get; set; }
 
+        public TenderItem(string medicineName, double dosage, int quantity)
+        {
+            MedicineName = medicineName;
+            Dosage = dosage;
+            Quantity = quantity;
+        }
     }
 }

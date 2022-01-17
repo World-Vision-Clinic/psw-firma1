@@ -20,31 +20,10 @@ namespace Integration.Partnership.Repository
         public List<Tender> GetAll()
         {
 
-            List<Tender> allTenders = dbContext.Tenders.Include("TenderOffers").Include("TenderItems").ToList();
-            List<TenderOffer> allOffers = GetAllTenderOffersWithOfferItems();
-            foreach(Tender tender in allTenders)
-            {
-                if(tender.TenderOffers.Count!=0)
-                {
-                    //int id = tender.TenderOffers.ToList()[0].TenderOfferId;
-                    foreach(TenderOffer offer in tender.TenderOffers)
-                    {
-                        int id = offer.TenderOfferId;
-                        foreach (TenderOffer ofer in allOffers)
-                        {
-                            if (id == ofer.TenderOfferId)
-                            {
-                                offer.OfferItems = ofer.OfferItems;
-                            }
-                        }
-                    }
-                }
-            }
-
-            return allTenders;
+            return dbContext.Tenders.Include("TenderItems").Include("TenderOffers").Include("TenderOffers.OfferItems").ToList();
         }
 
-        public void EditTenderByHash(Tender tender)
+        public void EditTenderEndTimeByHash(Tender tender)
         {
             List<Tender> allTenders = dbContext.Tenders.ToList();
             foreach(Tender t in allTenders)
@@ -72,17 +51,19 @@ namespace Integration.Partnership.Repository
 
         }
 
-        public List<TenderOffer> GetAllTenderOffers()
-        {
-            return dbContext.TenderOffers.ToList();
-        }
-        public List<OfferItem> GetAllOfferItems()
-        {
-            return dbContext.OfferItems.ToList();
-        }
+       
+      
         public List<TenderOffer> GetAllTenderOffersWithOfferItems()
         {
-            return dbContext.TenderOffers.Include("OfferItems").ToList();
+            List<TenderOffer> offers = new List<TenderOffer>();
+            foreach(Tender tender in GetAll())
+            {
+                foreach(TenderOffer offer in tender.TenderOffers)
+                {
+                    offers.Add(offer);
+                }
+            }
+            return offers;
         }
 
 
@@ -100,10 +81,31 @@ namespace Integration.Partnership.Repository
         {
             Tender tender = dbContext.Tenders.Include("TenderItems").SingleOrDefault(tender => tender.TenderHash == tenderOffer.TenderHash);
             if (tender == null) return false;
-            if (tender.TenderOffers == null) tender.TenderOffers = new List<TenderOffer>();
-            tender.TenderOffers.Add(tenderOffer);
+            tender.AddTenderOffer(tenderOffer.TenderOfferHash, tenderOffer.TenderHash, tenderOffer.PharmacyName, tenderOffer.TotalPrice, tenderOffer.OfferItems, tenderOffer.Winner);
             dbContext.SaveChanges();
             return true;
         }
+
+        public Tender GetByTenderHash(string id)
+        {
+            return dbContext.Tenders.Include("TenderItems").SingleOrDefault(tender => tender.TenderHash == id);
+        }
+
+        public TenderOffer GetTenderOfferWithOfferItems(string pharmacyName, string offerHash)
+        {
+            List<TenderOffer> offers = GetAllTenderOffersWithOfferItems();
+            TenderOffer offer = new TenderOffer();
+            foreach(TenderOffer o in offers)
+            {
+                if(o.PharmacyName == pharmacyName && o.TenderOfferHash == offerHash)
+                {
+                    offer = o;
+                    break;
+                }
+            }
+
+            return offer;
+        }
+
     }
 }

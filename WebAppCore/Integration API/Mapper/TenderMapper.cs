@@ -15,7 +15,10 @@ namespace Integration_API.Mapper
             newTender.TenderHash = generatedId;
             newTender.Title = dto.Title;
             newTender.Description = dto.Description;
-            newTender.TenderItems = dto.TenderItems;
+            foreach(TenderItem tenderItem in dto.TenderItems)
+            {
+                newTender.AddTenderItem(tenderItem.MedicineName, tenderItem.Dosage, tenderItem.Quantity);
+            }
             newTender.EndTime = dto.EndTime;
             return newTender;
         }
@@ -26,8 +29,8 @@ namespace Integration_API.Mapper
             dto.TenderHash = tender.TenderHash;
             dto.Title = tender.Title;
             dto.Description = tender.Description;
-            dto.TenderItems = tender.TenderItems;
-            dto.TenderOffers = tender.TenderOffers;
+            dto.TenderItems = (ICollection<TenderItem>)tender.TenderItems;
+            dto.TenderOffers = (ICollection<TenderOffer>)tender.TenderOffers;
             dto.EndTime = tender.EndTime;
             return dto;
         }
@@ -56,6 +59,14 @@ namespace Integration_API.Mapper
             offer.TenderHash = dto.TenderHash;
 
             return offer;
+        }
+
+        public static TenderDto TenderToTenderCloseDto(Tender tender)
+        {
+            TenderDto dto = new TenderDto();
+            dto.TenderHash = tender.TenderHash;
+            dto.EndTime = tender.EndTime;
+            return dto;
         }
     }
 }

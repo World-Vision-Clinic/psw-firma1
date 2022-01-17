@@ -5,7 +5,7 @@
         
         <label for="title">Title: </label>
       
-        <input type="text"  name="tenderTitle" placeholder="Tender title" [(ngModel)]="tenderTitle">
+        <input type="text"  name="tender-title" placeholder="Tender title" [(ngModel)]="tenderTitle">
         <br>
         <label for="start">End date(optional): </label>
       
@@ -15,11 +15,11 @@
         <label for="description">Description: </label>
         <br>
         <div class="form-group">
-            <textarea name="objContent" class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="Tender description" [(ngModel)]="tenderDescription" name="tenderDescription"></textarea>
+            <textarea name="tender-description" class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="Tender description" [(ngModel)]="tenderDescription" ></textarea>
         </div>
         <hr>
         <label for="MedicineNamel">Medicine name: </label>
-        <input name="medicineName" type="text"  [(ngModel)]="medicineName">
+        <input name="medicine-name" type="text"  [(ngModel)]="medicineName">
         <br>
         <label for="Dosagel">Dosage: </label>
         <input name="dosage" type="text" [(ngModel)]="dosage">
@@ -27,7 +27,7 @@
         <label for="Quantityl">Quantity: </label>
         <input name="quantity" type="text" [(ngModel)]="quantity">
         <br>
-        <button color="info" (click)="addMedicine()" block="true" style="width: auto;margin-top: 20px; height: 30px; background-color:#33b5e5; color: white;">Add medicine</button>
+        <button id="add-medicine" color="info" (click)="addMedicine()" block="true" style="width: auto;margin-top: 20px; height: 30px; background-color:#33b5e5; color: white;">Add medicine</button>
         <hr>
         <label for="MedicineNames">List of medicines: </label>
         <div *ngIf="medicineList.length===0">There are no added medicines. Add some to create tender.</div>
@@ -39,7 +39,7 @@
         </div>
 
         <hr>
-        <button color="info" (click)="sendTender()" block="true" type="submit"  style="width: auto;margin-top: 20px; height: 30px; background-color:#33b5e5; color: white;">Create tender</button>
+        <button id="create-tender" color="info" (click)="sendTender()" block="true" type="submit"  style="width: auto;margin-top: 20px; height: 30px; background-color:#33b5e5; color: white;">Create tender</button>
       
       </form>
       <!-- Default form contact -->

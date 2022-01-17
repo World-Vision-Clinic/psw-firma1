@@ -71,15 +71,10 @@ namespace Hospital_API.Controllers
             {
 
                 Equipment targetEquipment = equipmentService.getById(transportEquipmentDTO.TargetEqupmentId);
-                targetEquipment.Amount -= transportEquipmentDTO.Amount;
-                equipmentService.Update(targetEquipment);
-                Equipment equipmentInTransport = new Equipment();
-                equipmentInTransport.Name = targetEquipment.Name;
-                equipmentInTransport.InTransport = true;
-                equipmentInTransport.Amount = transportEquipmentDTO.Amount;
-                equipmentInTransport.TransportStart = transportEquipmentDTO.startDate;
-                equipmentInTransport.TransportEnd = transportEquipmentDTO.endDate;
-                equipmentInTransport.RoomId = transportEquipmentDTO.TargetRoomId;
+                Equipment newTargetEq = new Equipment(targetEquipment.Id,targetEquipment.Name,targetEquipment.Type, targetEquipment.Amount-transportEquipmentDTO.Amount,targetEquipment.RoomId);
+                equipmentService.Update(newTargetEq);
+
+                Equipment equipmentInTransport = new Equipment(-1,targetEquipment.Name, targetEquipment.Type, transportEquipmentDTO.Amount, transportEquipmentDTO.TargetRoomId, true, transportEquipmentDTO.startDate, transportEquipmentDTO.endDate);              
                 equipmentService.Create(equipmentInTransport);
             }
             catch

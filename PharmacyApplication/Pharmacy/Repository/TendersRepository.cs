@@ -53,5 +53,14 @@ namespace Pharmacy.Repository
             dbContext.SaveChanges();
             return true; 
         }
+
+        public void CloseTender(Tender arrivedTender)
+        {
+            Tender tender = dbContext.Tenders.ToList().FirstOrDefault(tender => tender.TenderHash == arrivedTender.TenderHash);
+            tender.EndTime = arrivedTender.EndTime;
+            dbContext.SaveChanges();
+        }
+
+
     }
 }

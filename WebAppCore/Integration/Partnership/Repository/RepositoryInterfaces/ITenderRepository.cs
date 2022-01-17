@@ -8,9 +8,10 @@ namespace Integration.Partnership.Repository.RepositoryInterfaces
 {
     public interface ITenderRepository : IGenericRepository<Tender>
     {
-        List<TenderOffer> GetAllTenderOffers();
         public bool AddOffer(TenderOffer tenderOffer);
-        public void EditTenderByHash(Tender tender);
+        public void EditTenderEndTimeByHash(Tender tender);
         public void EditTenderOfferById(TenderOffer offer);
+        public Tender GetByTenderHash(string id);
+        public TenderOffer GetTenderOfferWithOfferItems(string tenderHash, string offerHash);
     }
 }

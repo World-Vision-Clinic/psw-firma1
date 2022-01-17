@@ -1,0 +1,91 @@
+version: "3.2"
+
+services:     
+  patient-front:
+    image: jelenah/hospital-front:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - hospital_api
+  
+  e2e-testing-hospital:
+    container_name: e2e-testing-hospital
+    environment:
+      DATABASE_HOST: database
+      DATABASE_PORT: 5432
+      DATABASE_SCHEMA: MyWebApi.Dev
+      DATABASE_USER: admin
+      DATABASE_PASSWORD: ftn
+    image: mcr.microsoft.com/dotnet/sdk:3.1
+    working_dir: /WebAppCore
+    volumes:
+    - .:/WebAppCore
+    entrypoint: ["/bin/sh","-c"]
+    command:
+    - |
+      dotnet new tool-manifest --force
+      dotnet tool install --local dotnet-ef --version 5.0.11
+      dotnet restore "WebAppCore/Hospital API/Hospital API.csproj"
+      cd WebAppCore/Hospital
+      rm -r Migrations 
+      cd ../ 
+      cd ../ 
+      dotnet dotnet-ef migrations add TestingMigration --project "WebAppCore/Hospital/Hospital.csproj" --startup-project "WebAppCore/Hospital API/Hospital API.csproj" --context HospitalContext
+      dotnet dotnet-ef database update --project "WebAppCore/Hospital/Hospital.csproj" --startup-project "WebAppCore/Hospital API/Hospital API.csproj" --context HospitalContext
+      dotnet test "WebAppCore/HospitalTests/HospitalTests.csproj"
+    depends_on:
+      - database
+      - chrome
+    links:
+      - chrome
+    networks:
+      - database
+      - hospital_api
+  
+  chrome:
+    image: selenium/node-chrome:4.1.1-20211217
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+  
+  selenium-hub:
+    image: selenium/hub:4.1.1-20211217
+    container_name: selenium-hub
+    ports:
+      - "4442:4442"
+      - "4443:4443"
+      - "4444:4444"
+
+  database:
+    image: postgres:latest
+    restart: always
+    # volumes:
+    #   - type: volume
+    #     source: db_volume
+    #     target: /var/lib/postgresql/data
+    #   - type: bind
+    #     source: ./WebAppCore/stacks-hospital/dbscripts/seed.sql 
+    #     target: /docker-entrypoint-initdb.d/seed.sql
+    container_name: database
+    networks:
+      - database
+    environment:
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "ftn"
+      POSTGRES_DB: "MyWebApi.Dev"
+    ports:
+      - "5433:5432"
+
+# volumes:
+#   db_volume:
+#     #name: database
+
+networks:
+  hospital_api:
+    driver: bridge
+  database:
+    driver: bridge

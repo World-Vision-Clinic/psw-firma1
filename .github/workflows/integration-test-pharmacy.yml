@@ -1,4 +1,4 @@
-name: integration-testing
+name: integration-testing-pharmacy
 on:
   push:
   pull_request:
@@ -18,6 +18,8 @@ jobs:
       postgres:
         image: postgres
         env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
           POSTGRES_PASSWORD: admin
         # Set health checks to wait until postgres has started
         options: >-
@@ -35,21 +37,19 @@ jobs:
       - name: Install dotnet ef
         run: dotnet tool install --global dotnet-ef
 
-      - name: Install dependencies
+      - name: Install dependencies pharmacy
         run: dotnet restore ${SOLUTION_DIRECTORY}
-
-      - name: Create Migrations
-        run:
-          dotnet ef migrations add InitialCreate --project ${SOLUTION_DIRECTORY}\/${PROJECT_DIRECTORY};
-      - name: Update Database
-        run: dotnet ef database update --project ${SOLUTION_DIRECTORY}\/${PROJECT_DIRECTORY};
-      - name: Test
-        run: dotnet test ${SOLUTION_DIRECTORY} --no-restore --verbosity quiet --filter FullyQualifiedName\!~UnitTests
-        env:
-          POSTGRES_HOST: localhost
-          POSTGRES_PORT: 5432
-          POSTGRES_PASSWORD: admin
-
+      # - name: Create Migrations pharmacy
+      #   run:
+      #     dotnet ef migrations add InitialCreate --project ${SOLUTION_DIRECTORY}\/${PROJECT_DIRECTORY};
+      # - name: Update Database
+      #   run: dotnet ef database update --project ${SOLUTION_DIRECTORY}\/${PROJECT_DIRECTORY};
+      # - name: Test
+      #   run: dotnet test ${SOLUTION_DIRECTORY} --no-restore --verbosity quiet --filter FullyQualifiedName\!~UnitTests
+      #   env:
+      #     POSTGRES_HOST: localhost
+      #     POSTGRES_PORT: 5432
+      #     POSTGRES_PASSWORD: admin
 
 
       # - name: Install dependencies integration

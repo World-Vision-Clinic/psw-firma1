@@ -15,5 +15,17 @@ namespace Integration.Partnership.Model
         public double TotalPrice { get; set; }
         public ICollection<OfferItem> OfferItems { get; set; }
         public bool Winner { get; set; }
+
+        public TenderOffer() { }
+
+        public TenderOffer(string tenderOfferHash, string tenderHash, string pharmacyName, double totalPrice, ICollection<OfferItem> offerItems, bool winner)
+        {
+            TenderOfferHash = tenderOfferHash;
+            TenderHash = tenderHash;
+            PharmacyName = pharmacyName;
+            TotalPrice = totalPrice;
+            OfferItems = offerItems;
+            Winner = winner;
+        }
     }
 }
