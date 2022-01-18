@@ -22,6 +22,8 @@ using Integration.Pharmacy.Model;
 using ceTe.DynamicPDF.PageElements;
 using System.IO;
 using RestSharp;
+using System.Net.Mail;
+using System.Net;
 
 namespace Integration_API.Controller
 {
@@ -91,6 +93,12 @@ namespace Integration_API.Controller
 
             foreach (PharmacyProfile pharmacy in pharmaciesService.GetAll())
             {
+                if (!pharmacy.Name.Equals(offer.PharmacyName)) 
+                {
+                 SendMailToLosingPharmacy(pharmacy.Email,tender);
+                 continue; 
+                }
+                SendMailToWinningPharmacy(pharmacy.Email,tender);
                 if (pharmacy.ConnectionInfo.Protocol.Equals(ProtocolType.HTTP))
                 {
                     if (DeclareTenderWinner(TenderMapper.TenderToTenderDto(tender), pharmacy.ConnectionInfo.Domain))
@@ -130,6 +138,84 @@ namespace Integration_API.Controller
                 return true;
             }
             return false;
+        }
+
+        private void SendMailToWinningPharmacy(String pharmacyEmail,Tender tender)
+        {
+            TenderOffer offer = tender.TenderOffers.ElementAt(0);
+            offer = service.GetTenderOfferWithOfferItems(offer.PharmacyName, offer.TenderOfferHash);
+            MailMessage mm = new MailMessage();
+            mm.To.Add(new MailAddress(pharmacyEmail, "Tender results"));
+            mm.From = new MailAddress("pswklinika2022@gmail.com");
+            StringBuilder builder = new StringBuilder();
+            builder.Append(@"<!DOCTYPE html>
+                <html>
+                    <head></head>
+                    <body>
+                        <p>You have successfully won " + tender.Title + " with offer: <br>");
+            mm.Body = @"<!DOCTYPE html>
+                <html>
+                    <head></head>
+                    <body>
+                        <p>You have successfully won " + tender.Title + "with offer: <br>";
+                        foreach(OfferItem item in offer.OfferItems){
+                builder.Append(item.MedicineName + " " + item.Dosage + "mg, " + item.Quantity + "x " + item.Price + " RSD");
+                       }
+            builder.Append(@"</p>
+                         </body>
+                             </html>");
+
+            mm.Body = builder.ToString();
+            mm.IsBodyHtml = true;
+            mm.Subject = "Tender results";
+            SmtpClient smcl = new SmtpClient();
+            smcl.Host = "smtp.gmail.com";
+            smcl.Port = 587;
+            smcl.Credentials = new NetworkCredential("pswklinika2022@gmail.com", "srbija123!");
+            smcl.EnableSsl = true;
+            smcl.DeliveryMethod = SmtpDeliveryMethod.Network;
+            try
+            {
+                smcl.Send(mm);
+            }
+            catch (SmtpException e)
+            {
+                Console.WriteLine("Error: {0}", e.StatusCode);
+            }
+        }
+
+        private void SendMailToLosingPharmacy(String pharmacyEmail, Tender tender)
+        {
+            TenderOffer offer = tender.TenderOffers.ElementAt(0);
+            offer = service.GetTenderOfferWithOfferItems(offer.PharmacyName, offer.TenderOfferHash);
+            MailMessage mm = new MailMessage();
+            mm.To.Add(new MailAddress(pharmacyEmail, "Tender results"));
+            mm.From = new MailAddress("pswklinika2022@gmail.com");
+            
+            mm.Body = @"<!DOCTYPE html>
+                <html>
+                    <head></head>
+                    <body>
+                        <p>You have lost " + tender.Title + @"</p>
+                    </body>
+                </html>
+            ";
+            mm.IsBodyHtml = true;
+            mm.Subject = "Tender results";
+            SmtpClient smcl = new SmtpClient();
+            smcl.Host = "smtp.gmail.com";
+            smcl.Port = 587;
+            smcl.Credentials = new NetworkCredential("pswklinika2022@gmail.com", "srbija123!");
+            smcl.EnableSsl = true;
+            smcl.DeliveryMethod = SmtpDeliveryMethod.Network;
+            try
+            {
+                smcl.Send(mm);
+            }
+            catch (SmtpException e)
+            {
+                Console.WriteLine("Error: {0}", e.StatusCode);
+            }
         }
 
         public void SendTender(TenderDto tenderDto)
