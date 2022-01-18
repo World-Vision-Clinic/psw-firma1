@@ -7,7 +7,7 @@ using Xunit;
 
 namespace HospitalTests.PatientPortalTests.E2ETests
 {
-    public class BlockPatientE2ETest
+    public class BlockPatientE2ETest : IDisposable
     {
         private readonly IWebDriver driver;
         private LoginPageManager loginPage;
