@@ -24,10 +24,14 @@ export class Appointment4stepComponent implements OnInit {
     date : "",
     doctorId : ""
   }
+  public event = {
+    name : ""
+  }
 
   constructor(private router: Router, private _appointmentCreationService: AppointmentCreationService,private _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.logStart();
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required],
     });
@@ -54,12 +58,50 @@ export class Appointment4stepComponent implements OnInit {
     this.selectedAppointment = a;
   }
 
+  logStart() { 
+    this.event.name = "START" 
+    this._appointmentCreationService.logEvent(this.event).subscribe(); 
+  }
+  logDateNext() { 
+    this.event.name = "DATE-NEXT" 
+    this._appointmentCreationService.logEvent(this.event).subscribe(); 
+  }
+
+  logSpecNext() { 
+    this.event.name = "SPEC-NEXT" 
+    this._appointmentCreationService.logEvent(this.event).subscribe(); 
+  }
+  logSpecBack() { 
+    this.event.name = "SPEC-BACK" 
+    this._appointmentCreationService.logEvent(this.event).subscribe(); 
+  }
+  logDoctorNext() { 
+    this.event.name = "DOC-NEXT" 
+    this._appointmentCreationService.logEvent(this.event).subscribe(); 
+  }
+  logDoctorBack() { 
+    this.event.name = "DOC-BACK" 
+    this._appointmentCreationService.logEvent(this.event).subscribe(); 
+  }
+  logAppoBack() { 
+    this.event.name = "APPO-BACK" 
+    this._appointmentCreationService.logEvent(this.event).subscribe(); 
+  }
+  logEnd() { 
+    this.event.name = "END" 
+    this._appointmentCreationService.logEvent(this.event).subscribe(); 
+  }
+  appointmentMade() { 
+    this.logEnd();
+    this.router.navigate(['/medical-record']);
+  }
+
   tryAppointmentError(){
     alert("Couldn't reserve that appointment please choose another one!")
     this.getAppointments();
   }
   tryAppointment() {  
-    this._appointmentCreationService.makeAppointment(this.selectedAppointment).subscribe(success => this.router.navigate(['/medical-record']),
+    this._appointmentCreationService.makeAppointment(this.selectedAppointment).subscribe(success => this.appointmentMade(),
       error => this.tryAppointmentError()); 
   }
 

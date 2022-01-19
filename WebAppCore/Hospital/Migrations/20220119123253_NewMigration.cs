@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Hospital.Migrations
 {
-    public partial class TestingMigration : Migration
+    public partial class NewMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -254,7 +254,8 @@ namespace Hospital.Migrations
                     Weight = table.Column<int>(type: "integer", nullable: false),
                     Height = table.Column<int>(type: "integer", nullable: false),
                     BloodType = table.Column<int>(type: "integer", nullable: false),
-                    IsBlocked = table.Column<bool>(type: "boolean", nullable: false)
+                    IsBlocked = table.Column<bool>(type: "boolean", nullable: false),
+                    ProfileImage = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -397,7 +398,7 @@ namespace Hospital.Migrations
                     DoctorForeignKey = table.Column<int>(type: "integer", nullable: false),
                     Type = table.Column<int>(type: "integer", nullable: false),
                     Date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    Time = table.Column<TimeSpan>(type: "interval", nullable: false),
+                    Length = table.Column<TimeSpan>(type: "interval", nullable: false),
                     IsCancelled = table.Column<bool>(type: "boolean", nullable: false),
                     PatientId = table.Column<int>(type: "integer", nullable: true)
                 },
@@ -549,8 +550,8 @@ namespace Hospital.Migrations
 
             migrationBuilder.InsertData(
                 table: "Appointments",
-                columns: new[] { "Id", "Date", "DoctorForeignKey", "IsCancelled", "PatientForeignKey", "PatientId", "Time", "Type" },
-                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, false, 0, null, new TimeSpan(0, 0, 0, 0, 0), 0 });
+                columns: new[] { "Id", "Date", "DoctorForeignKey", "IsCancelled", "Length", "PatientForeignKey", "PatientId", "Type" },
+                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, false, new TimeSpan(0, 0, 0, 0, 0), 0, null, 0 });
 
             migrationBuilder.InsertData(
                 table: "Buildings",
@@ -689,7 +690,7 @@ namespace Hospital.Migrations
             migrationBuilder.InsertData(
                 table: "Surveys",
                 columns: new[] { "Id", "AppointmentId", "CreationDate" },
-                values: new object[] { 1, null, new DateTime(2022, 1, 10, 18, 17, 30, 969, DateTimeKind.Local).AddTicks(472) });
+                values: new object[] { 1, null, new DateTime(2022, 1, 19, 13, 32, 51, 835, DateTimeKind.Local).AddTicks(7684) });
 
             migrationBuilder.InsertData(
                 table: "Vacations",

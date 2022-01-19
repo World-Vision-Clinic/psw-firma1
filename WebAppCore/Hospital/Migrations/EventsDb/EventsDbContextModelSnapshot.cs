@@ -32,17 +32,12 @@ namespace Hospital.Migrations.EventsDb
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<TimeSpan>("TimeDifference")
+                        .HasColumnType("interval");
+
                     b.HasKey("Id");
 
                     b.ToTable("EventsHospital");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            EventTime = new DateTime(2022, 1, 10, 0, 43, 6, 759, DateTimeKind.Local).AddTicks(8106),
-                            Name = "Klik"
-                        });
                 });
 #pragma warning restore 612, 618
         }

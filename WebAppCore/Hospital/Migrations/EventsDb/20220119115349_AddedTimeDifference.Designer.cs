@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Hospital.Migrations.EventsDb
 {
     [DbContext(typeof(EventsDbContext))]
-    [Migration("20220109234307_EventMigration4")]
-    partial class EventMigration4
+    [Migration("20220119115349_AddedTimeDifference")]
+    partial class AddedTimeDifference
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,17 +34,12 @@ namespace Hospital.Migrations.EventsDb
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<TimeSpan>("TimeDifference")
+                        .HasColumnType("interval");
+
                     b.HasKey("Id");
 
                     b.ToTable("EventsHospital");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            EventTime = new DateTime(2022, 1, 10, 0, 43, 6, 759, DateTimeKind.Local).AddTicks(8106),
-                            Name = "Klik"
-                        });
                 });
 #pragma warning restore 612, 618
         }

@@ -22,6 +22,15 @@ namespace Hospital.MedicalRecords.Service
 
         public void Save(Event newEvent)
         {
+            Event lastEvent = eventRepository.getLastEvent();
+            if (lastEvent != null)
+            {
+                newEvent.TimeDifference = newEvent.EventTime - lastEvent.EventTime;
+            }
+            else 
+            {
+                newEvent.TimeDifference = new TimeSpan(0);
+            }
             eventRepository.Save(newEvent);
         }
 

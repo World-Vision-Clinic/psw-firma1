@@ -3,7 +3,7 @@
     <form [formGroup]="firstFormGroup">
         <p>Pick a date: <input matInput [(ngModel)]="selectedParameters.date" type="date" name="dateOfAppointment" formControlName="firstCtrl" required></p>
         <div>
-          <button mat-button matStepperNext class="nextButton" [disabled]="firstFormGroup.invalid">Next</button>
+          <button mat-button matStepperNext class="nextButton" [disabled]="firstFormGroup.invalid" (click)="logDateNext()">Next</button>
         </div>
       </form>
   </mat-step>
@@ -18,8 +18,8 @@
         <option [value]='3'>Gynecologists</option>
       </select></p>
       <div>
-        <button mat-button matStepperPrevious (click)="removeError()" class="backButton">Back</button>
-        <button type="button" mat-button matStepperNext (click)="getDoctors()" class="nextButton" [disabled]="secondFormGroup.invalid">Next</button>
+        <button mat-button matStepperPrevious (click)="removeError(); logSpecBack()" class="backButton">Back</button>
+        <button type="button" mat-button matStepperNext (click)="getDoctors(); logSpecNext()" class="nextButton" [disabled]="secondFormGroup.invalid">Next</button>
       </div>
     </form>
   </mat-step>
@@ -41,8 +41,8 @@
       <p class="error" *ngIf = "errorMsg">{{errorMsg}} 
       </p>
         <div>
-          <button mat-button matStepperPrevious (click)="removeError()" class="backButton">Back</button>
-          <button mat-button matStepperNext (click)="getAppointments()" class="nextButton" [disabled]="thirdFormGroup.invalid">Next</button>
+          <button mat-button matStepperPrevious (click)="removeError(); logDoctorBack()" class="backButton">Back</button>
+          <button mat-button matStepperNext (click)="getAppointments(); logDoctorNext()" class="nextButton" [disabled]="thirdFormGroup.invalid">Next</button>
         </div>
       </form>
   </mat-step>
@@ -62,7 +62,7 @@
     <p class="error" *ngIf = "errorMsg">{{errorMsg}} 
     </p>
       <div>
-        <button mat-button matStepperPrevious (click)="removeError()" class="backButton">Back</button>
+        <button mat-button matStepperPrevious (click)="removeError(); logAppoBack()" class="backButton">Back</button>
         <button mat-button matStepperNext (click)="tryAppointment()" class="nextButton" [disabled]="fourthFormGroup.invalid">Finish</button>
       </div>
     </form>

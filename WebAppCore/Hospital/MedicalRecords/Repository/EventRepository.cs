@@ -29,5 +29,10 @@ namespace Hospital.MedicalRecords.Repository
             return dbContext.EventsHospital.ToList().FirstOrDefault(e => e.Id == eventId);
         }
 
+        public Event getLastEvent()
+        {
+            return dbContext.EventsHospital.OrderByDescending(p => p.Id).FirstOrDefault();
+        }
+
     }
 }

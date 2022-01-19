@@ -64,7 +64,7 @@ namespace Hospital_API.Controllers
                     new Claim("id",id.ToString()),
                     new Claim("role",role)
                 },
-                expires: DateTime.UtcNow.AddMinutes(5),
+                expires: DateTime.UtcNow.AddMinutes(45),
                 signingCredentials: new SigningCredentials(
                         key: new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SECRET)),
                         algorithm: SecurityAlgorithms.HmacSha256

@@ -1500,14 +1500,14 @@ namespace Hospital.Migrations
                     b.Property<bool>("IsCancelled")
                         .HasColumnType("boolean");
 
+                    b.Property<TimeSpan>("Length")
+                        .HasColumnType("interval");
+
                     b.Property<int>("PatientForeignKey")
                         .HasColumnType("integer");
 
                     b.Property<int?>("PatientId")
                         .HasColumnType("integer");
-
-                    b.Property<TimeSpan>("Time")
-                        .HasColumnType("interval");
 
                     b.Property<int>("Type")
                         .HasColumnType("integer");
@@ -1525,8 +1525,8 @@ namespace Hospital.Migrations
                             Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DoctorForeignKey = 0,
                             IsCancelled = false,
+                            Length = new TimeSpan(0, 0, 0, 0, 0),
                             PatientForeignKey = 0,
-                            Time = new TimeSpan(0, 0, 0, 0, 0),
                             Type = 0
                         });
                 });
@@ -1572,7 +1572,7 @@ namespace Hospital.Migrations
                         new
                         {
                             Id = 1,
-                            CreationDate = new DateTime(2022, 1, 10, 19, 52, 38, 458, DateTimeKind.Local).AddTicks(2874)
+                            CreationDate = new DateTime(2022, 1, 19, 13, 32, 51, 835, DateTimeKind.Local).AddTicks(7684)
                         });
                 });
 

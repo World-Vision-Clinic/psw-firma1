@@ -10,5 +10,6 @@ namespace Hospital.MedicalRecords.Repository
         public List<Event> GetAll();
         public Event GetById(int eventId);
         public void Save(Event newEvent);
+        public Event getLastEvent();
     }
 }
