@@ -16,6 +16,7 @@ namespace Integration_API.Mapper
             pharmacy.Address = new Address(dto.Address, dto.City);
             pharmacy.ConnectionInfo = new ConnectionInfo("key", dto.Localhost, dto.Protocol);
             pharmacy.Note = dto.Note;
+            pharmacy.Email = dto.Email;
             return pharmacy;
         }
 
