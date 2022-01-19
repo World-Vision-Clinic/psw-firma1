@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { EventStatistic } from './event-statistic';
 import { IFeedback } from './feedback';
 import { SurveyBreakdown } from './survey-breakdown';
 
@@ -28,7 +29,11 @@ export class ManagerFeedbackService {
     return this.http.put<IFeedback>("/api/Feedbacks/"+feedback.id, feedback); //TODO Errorcheck
   }
 
-  getSurveyBreakdown() : Observable<SurveyBreakdown[]>{  // TODO: Move to a separate file
+  getSurveyBreakdown() : Observable<SurveyBreakdown[]>{
     return this.http.get<SurveyBreakdown[]>("/api/Survey/answered_questions_breakdown")
+  }
+
+  getEventStatistics() : Observable<EventStatistic[]>{ 
+    return this.http.get<EventStatistic[]>("/api/Event/statistics")
   }
 }

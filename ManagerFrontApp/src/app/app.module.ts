@@ -38,6 +38,7 @@ import { ChartAllModule, AccumulationChartAllModule, RangeNavigatorAllModule } f
 import { StatisticsComponent } from './manager-integration-front-app/statistics/statistics.component';
 import { TenderSelectionComponent } from './manager-integration-front-app/tender-selection/tender-selection.component';
 import { DoctorsManagementComponent } from './doctors-management/doctors-management.component';
+import { EventStatisticsComponent } from './event-statistics/event-statistics.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { DoctorsManagementComponent } from './doctors-management/doctors-managem
     TenderCreationComponent,
     StatisticsComponent,
     TenderSelectionComponent,
-    DoctorsManagementComponent
+    DoctorsManagementComponent,
+    EventStatisticsComponent
   ],
   imports: [
     BrowserModule,
