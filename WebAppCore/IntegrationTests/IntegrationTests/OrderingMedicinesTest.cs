@@ -30,9 +30,12 @@ namespace IntegrationTests.IntegrationTests
             Assert.Equal(mr.GetAll().Count, oldCount + 1);
         }*/
 
-        [Fact]
+
+        bool isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+        [SkippableFact]
         public void OrderingExistingMedicinesTest()
         {
+            Skip.If(isDevelopment);
             OrderedMedicineDTO omd = new OrderedMedicineDTO("Brufen", "Zdravko", "none", "2 times a day", "100", "none", "none", "2", null, 200);
             MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection());
 
