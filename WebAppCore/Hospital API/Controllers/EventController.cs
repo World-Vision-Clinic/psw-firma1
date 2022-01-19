@@ -1,6 +1,8 @@
 ﻿using Hospital.MedicalRecords.Model;
 using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Service;
+using Hospital_API.DTO;
+using Hospital_API.Mapper;
 using Hspital_API.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +35,13 @@ namespace Hospital_API.Controllers
             Event e = new Event(ev.Id, ev.Name, ev.EventTime);
             return Ok(e);
         }*/
+
+        [HttpGet("statistics")]
+        public ActionResult<IEnumerable<EventStatisticDTO>> GetEventStatistics()
+        {
+            return EventStatisticMapper.GetAllEventStatistics();
+        }
+
         [Authorize(Roles = "Patient")]
         [HttpPost]
         public IActionResult Save(Event newEvent)
