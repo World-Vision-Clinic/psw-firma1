@@ -39,11 +39,12 @@ namespace Hospital.MedicalRecords.Model
         public BloodType BloodType { get; private set; }
         public bool IsBlocked { get; private set; }
         public List<Appointment> Appointments { get; set; }
+        public string ProfileImage { get; set; }
 
         public Patient() { }
 
         public Patient(int id, string username, string password, FullName fullName, string email, bool activated,
-            Gender gender, string jmbg, DateTime dateOfBirth, Residence residence, string phone, int preferedDoctor, int weight, int height, BloodType bloodType, bool isBlocked, List<Appointment> appointments)
+            Gender gender, string jmbg, DateTime dateOfBirth, Residence residence, string phone, int preferedDoctor, int weight, int height, BloodType bloodType, bool isBlocked, List<Appointment> appointments, string profileImage)
         {
             this.Id = id;
             this.UserName = username;
@@ -63,9 +64,10 @@ namespace Hospital.MedicalRecords.Model
             this.BloodType = bloodType;
             this.IsBlocked = isBlocked;
             this.Appointments = appointments;
+            this.ProfileImage = profileImage;
         }
         public Patient(string username, string password, FullName fullName, string email, bool activated, 
-            Gender gender, string jmbg, DateTime dateOfBirth, Residence residence, string phone, int preferedDoctor, int weight, int height, BloodType bloodType, bool isBlocked, List<Appointment> appointments)
+            Gender gender, string jmbg, DateTime dateOfBirth, Residence residence, string phone, int preferedDoctor, int weight, int height, BloodType bloodType, bool isBlocked, List<Appointment> appointments, string profileImage)
         {
             this.UserName = username;
             this.Password = password;
@@ -84,6 +86,7 @@ namespace Hospital.MedicalRecords.Model
             this.BloodType = bloodType;
             this.IsBlocked = isBlocked;
             this.Appointments = appointments;
+            this.ProfileImage = profileImage;
         }
 
         public static string TokenizeSHA256(string username)

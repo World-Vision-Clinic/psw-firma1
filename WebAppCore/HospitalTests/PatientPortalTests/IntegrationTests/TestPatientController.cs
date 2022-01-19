@@ -57,7 +57,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         public void Test_token_not_found()
         {
             Patient patient = new Patient(1, "mihajlo", "123", new FullName("Mihajlo", "Mihajlovic"), "ja@ja.com", false, Gender.Male, "1234567",
-                DateTime.Now, new Residence("Serbia", "TestAddress", "TestCity"), "063111111", 0, 80, 180, BloodType.A, false, new List<Appointment>());
+                DateTime.Now, new Residence("Serbia", "TestAddress", "TestCity"), "063111111", 0, 80, 180, BloodType.A, false, new List<Appointment>(), " ");
             _patientRepository.AddPatient(patient);
 
             var response = (NotFoundResult) _patientsController.ActivatePatient("mihajlo");
@@ -69,7 +69,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         public void Test_token_found()
         {
             Patient patient = new Patient(2, "petar", "123", new FullName("Petar", "Petrovic"), "pera@gmail.com", false, Gender.Male, "1237567",
-                DateTime.Now, new Residence("Serbia", "TestAddress", "TestCity"), "063115111", 0, 80, 180, BloodType.A, false, new List<Appointment>());
+                DateTime.Now, new Residence("Serbia", "TestAddress", "TestCity"), "063115111", 0, 80, 180, BloodType.A, false, new List<Appointment>(), " ");
             _patientRepository.AddPatient(patient);
 
             var response = (RedirectResult)_patientsController.ActivatePatient("9d6245d7fb961b620b28c91d22e1a585413743388dc1833e678129f1751d94ae");
@@ -87,7 +87,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         public void Test_patient_found()
         {
             Patient patient = new Patient(3, "perislav", "123", new FullName("Pera", "Peric"), "perislav@gmail.com", false, Gender.Male, "1637567",
-                DateTime.Now, new Residence("Serbia", "TestAddress", "TestCity"), "063115111", 0, 80, 180, BloodType.A, false, new List<Appointment>());
+                DateTime.Now, new Residence("Serbia", "TestAddress", "TestCity"), "063115111", 0, 80, 180, BloodType.A, false, new List<Appointment>(), " ");
             _patientRepository.AddPatient(patient);
             /*var response = _patientsController.GetPatient(3);
             Assert.Equal("perislav", response.Value.UserName);*/
@@ -113,7 +113,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         public void Test_block_patient_blockable()
         {
             Patient patient = new Patient(100, "branko1", "123", new FullName("Branko", "Brankovic"), "brankobrankovic@gmail.com", true, Gender.Male, "1677597",
-                DateTime.Now, new Residence("Serbia", "TestAddress", "TestCity"), "063115111", 10, 80, 180, BloodType.A, false, new List<Appointment>());
+                DateTime.Now, new Residence("Serbia", "TestAddress", "TestCity"), "063115111", 10, 80, 180, BloodType.A, false, new List<Appointment>(), " ");
             _patientRepository.AddPatient(patient);
 
             Appointment appointment1 = new Appointment()
@@ -157,7 +157,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         public void Test_block_patient_unblockable() //TODO: Reformat sve ovo
         {
             Patient patient = new Patient(101, "sima1", "sima123", new FullName("Sima", "Simovic"), "simasimic@gmail.com", true, Gender.Male, "2677597",
-                DateTime.Now, new Residence("Serbia", "TestAddress", "TestCity"), "063115111", 10, 80, 180, BloodType.A, false, new List<Appointment>());
+                DateTime.Now, new Residence("Serbia", "TestAddress", "TestCity"), "063115111", 10, 80, 180, BloodType.A, false, new List<Appointment>(), " ");
             _patientRepository.AddPatient(patient);
 
             Appointment appointment1 = new Appointment()

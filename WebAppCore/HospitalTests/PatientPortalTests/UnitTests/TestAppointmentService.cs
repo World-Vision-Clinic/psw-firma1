@@ -15,22 +15,25 @@ namespace HospitalTests.PatientPortalTests.UnitTests
         public void TestTermsOverlap()
         {
             AppointmentService _service = new AppointmentService(new AppointmentRepository(), new DoctorRepository());
-            DateTime firstDate = new DateTime(2021, 6, 6, 12, 0, 0);
-            TimeSpan firstTimeSpan = new TimeSpan(0, 0, 45, 0, 0);
-            DateTime secondDate = new DateTime(2021, 6, 6, 11, 30, 0);
+            TimeSpan firstTimeSpan = new TimeSpan(0, 0, 50, 0, 0);
             TimeSpan secondTimeSpan = new TimeSpan(0, 1, 30, 0, 0);
-            Assert.True(_service.DatesOverlap(firstDate, firstTimeSpan, secondDate, secondTimeSpan));
+
+            TimeRange timeRange1 = new TimeRange(firstTimeSpan, firstTimeSpan.Add(new TimeSpan(0, 0, 45, 0, 0)));
+            TimeRange timeRange2 = new TimeRange(secondTimeSpan, secondTimeSpan.Add(new TimeSpan(0, 0, 30, 0, 0)));
+
+            Assert.True(timeRange1.OverlapsWith(timeRange2));
         }
 
         [Fact]
         public void TestTermsDoNotOverlap()
         {
             AppointmentService _service = new AppointmentService(new AppointmentRepository(), new DoctorRepository());
-            DateTime firstDate = new DateTime(2021, 6, 6, 17, 0, 0);
-            TimeSpan firstTimeSpan = new TimeSpan(0, 0, 45, 0, 0);
-            DateTime secondDate = new DateTime(2021, 6, 6, 11, 30, 0);
-            TimeSpan secondTimeSpan = new TimeSpan(0, 1, 30, 0, 0);
-            Assert.False(_service.DatesOverlap(firstDate, firstTimeSpan, secondDate, secondTimeSpan));
+            TimeSpan firstTimeSpan = new TimeSpan(0, 0, 50, 0, 0);
+            TimeSpan secondTimeSpan = new TimeSpan(0, 5, 30, 0, 0);
+
+            TimeRange timeRange1 = new TimeRange(firstTimeSpan, firstTimeSpan.Add(new TimeSpan(0, 0, 45, 0, 0)));
+            TimeRange timeRange2 = new TimeRange(secondTimeSpan, secondTimeSpan.Add(new TimeSpan(0, 0, 30, 0, 0)));
+            Assert.False(timeRange1.OverlapsWith(timeRange2));
         }
 
         [Fact]
@@ -39,7 +42,11 @@ namespace HospitalTests.PatientPortalTests.UnitTests
             AppointmentService _service = new AppointmentService(new AppointmentRepository(), new DoctorRepository());
             DateTime firstDate = new DateTime(2021, 6, 6, 0, 0, 0);
             DateTime secondDate = new DateTime(2021, 6, 8, 23, 59, 59);
-            List<Appointment> freeAppointmentList = _service.GenerateFreeAppointmentList(firstDate, secondDate, new TimeSpan(12, 0, 0), new TimeSpan(14, 0, 0), new TimeSpan(1, 0, 0));
+            DateRange range = new DateRange(firstDate, secondDate);
+            TimeSpan firstTime = new TimeSpan(0, 12, 0, 0, 0);
+            TimeSpan secondTime = new TimeSpan(0, 14, 0, 0, 0);
+            TimeRange timeRange = new TimeRange(firstTime, secondTime);
+            List<Appointment> freeAppointmentList = _service.GenerateFreeAppointmentList(range, timeRange, new TimeSpan(1, 30, 0));
             Assert.NotNull(freeAppointmentList);
             Assert.Equal(6, freeAppointmentList.Count);
         }

@@ -26,13 +26,14 @@ namespace Hospital_API.DTO
         public int Weight { get; set; }
         public int Height { get; set; }
         public string BloodType { get; set; }
+        public string ProfileImage { get; set; }
 
         public PatientRegisterDTO() { }
 
         public Patient ToPatient()
         {
             return new Patient(UserName, Password, new FullName(FirstName, LastName), EMail, false, (Gender)Enum.Parse(typeof(Gender), Gender),
-                Jmbg, DateOfBirth, new Residence(Country, Address, City), Phone, PreferedDoctor, Weight, Height, (BloodType)Enum.Parse(typeof(BloodType), BloodType), false, new List<Appointment>());
+                Jmbg, DateOfBirth, new Residence(Country, Address, City), Phone, PreferedDoctor, Weight, Height, (BloodType)Enum.Parse(typeof(BloodType), BloodType), false, new List<Appointment>(), ProfileImage);
         }
     }
 }

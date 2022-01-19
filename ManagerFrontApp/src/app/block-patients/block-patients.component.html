@@ -45,7 +45,7 @@
                         <div class="col-md-12">
                             <div class="row d-flex">
                               <div class="md-form">
-                              <p id="content" rows="5" disabled="true">{{p.firstName}} {{p.lastName}}</p>
+                              <p [attr.id]="'user' + p.id" id="content" rows="5" disabled="true">{{p.firstName}} {{p.lastName}}</p>
                               </div>
                             </div>
                             <div class="row d-flex">
@@ -53,7 +53,7 @@
                               </div>
                               <div class="col-md-3">
                                 <div *ngIf="!p.isBlocked">
-                                    <button class="btn-rounded btn-blue" (click)="blockPatient(i)">Block</button>
+                                    <button class="btn-rounded btn-blue" [attr.id]="'block' + i" (click)="blockPatient(i)">Block</button>
                                 </div>
                               </div>
                             </div>

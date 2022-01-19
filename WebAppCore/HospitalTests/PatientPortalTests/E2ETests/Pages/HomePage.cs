@@ -15,6 +15,7 @@ namespace HospitalTests.PatientPortalTests.End2End
         private IWebElement MedicalRecord => driver.FindElement(By.Id("medicalrecord"));
         private IWebElement SignOut => driver.FindElement(By.Id("signout"));
         private IWebElement PatientName => driver.FindElement(By.Id("patientName"));
+        private IWebElement CancelButton => driver.FindElement(By.XPath(".//button[text()='Cancel']"));
         public string Title => driver.Title;
 
         public HomePage(IWebDriver driver)
@@ -30,6 +31,27 @@ namespace HospitalTests.PatientPortalTests.End2End
                 try
                 {
                     return Feedback.Displayed && MedicalRecord.Displayed && SignOut.Displayed && PatientName.Displayed;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    return false;
+                }
+                catch (NoSuchElementException)
+                {
+                    return false;
+                }
+
+            });
+        }
+
+        public void EnsureCanceledIsDisplayed()
+        {
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
+            wait.Until(condition =>
+            {
+                try
+                {
+                    return CancelButton.Displayed;
                 }
                 catch (StaleElementReferenceException)
                 {
@@ -59,9 +81,21 @@ namespace HospitalTests.PatientPortalTests.End2End
         {
             return PatientName.Displayed;
         }
+        public bool CancelDisplayed()
+        {
+            return CancelButton.Displayed;
+        }
+        public bool CancelDisabled()
+        {
+            return !CancelButton.Enabled;
+        }
         public void ClickFeedback()
         {
             Feedback.Click();
+        }
+        public void ClickCancel()
+        {
+            CancelButton.Click();
         }
 
         public void Navigate()

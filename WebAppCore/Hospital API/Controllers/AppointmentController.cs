@@ -95,7 +95,7 @@ namespace Hospital_API.Controllers
             }
 
             List<Appointment> doctorsAppointments = _appointmentService.GetByDoctorIdAndDate(id, date);
-            List<Appointment> freeAppointments = _appointmentService.GenerateFreeAppointments(id,date,doctorsAppointments);
+            List<Appointment> freeAppointments = _appointmentService.GenerateFreeAppointments(id, date, doctorsAppointments);
 
             if (freeAppointments.Count == 0)
             {
@@ -109,10 +109,18 @@ namespace Hospital_API.Controllers
         [HttpPost("recommendation_doctor")]
         public ActionResult<IEnumerable<Appointment>> GetRecommendedAppointments([FromBody] AppointmentRecommendationRequestDTO appointmentRecommendationRequest)
         {
-            if(String.Equals(appointmentRecommendationRequest.PriorityType,"DOCTOR_PRIORITY"))
-                return _appointmentService.GetAvailableByDateRangeAndDoctor(appointmentRecommendationRequest.LowerDateRange, appointmentRecommendationRequest.UpperDateRange, TimeSpan.Parse(appointmentRecommendationRequest.LowerTimeRange), TimeSpan.Parse(appointmentRecommendationRequest.UpperTimeRange), appointmentRecommendationRequest.DoctorId, AppointmentSearchPriority.DOCTOR_PRIORITY);
+            DateRange dateRange = new DateRange(appointmentRecommendationRequest.LowerDateRange, appointmentRecommendationRequest.UpperDateRange);
+            TimeSpan lowerTime = TimeSpan.Parse(appointmentRecommendationRequest.LowerTimeRange);
+            TimeSpan upperTime = TimeSpan.Parse(appointmentRecommendationRequest.UpperTimeRange);
+            TimeRange timeRange = new TimeRange(lowerTime, upperTime);
+            AppointmentSearchPriority priorityType;
+
+            if (String.Equals(appointmentRecommendationRequest.PriorityType, "DOCTOR_PRIORITY")) //TODO: Automatska konverzija?
+                priorityType = AppointmentSearchPriority.DOCTOR_PRIORITY;
+            else
+                priorityType = AppointmentSearchPriority.DATE_TIME_PRIORITY;
             
-            return _appointmentService.GetAvailableByDateRangeAndDoctor(appointmentRecommendationRequest.LowerDateRange, appointmentRecommendationRequest.UpperDateRange, TimeSpan.Parse(appointmentRecommendationRequest.LowerTimeRange), TimeSpan.Parse(appointmentRecommendationRequest.UpperTimeRange), appointmentRecommendationRequest.DoctorId, AppointmentSearchPriority.DATE_TIME_PRIORITY);
+            return _appointmentService.GetAvailableByDateRangeAndDoctor(dateRange, timeRange, appointmentRecommendationRequest.DoctorId, priorityType);
         }
 
         [Authorize(Roles = "Patient")]
@@ -125,10 +133,14 @@ namespace Hospital_API.Controllers
             if (appointmentToAdd.Date < DateTime.Now)
                 return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest };
 
-            if (_appointmentService.GetByDateAndDoctor(appointmentToAdd.Date, appointmentToAdd.Time, appointmentToAdd.DoctorForeignKey) != null)
-                return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest };
+            int appointmentLength = 30;
 
             appointmentToAdd.PatientForeignKey = patient.Id;
+            appointmentToAdd.Length = new TimeSpan(0, appointmentLength, 0);
+
+            if (_appointmentService.GetByDateAndDoctor(appointmentToAdd.Date, appointmentToAdd.Length, appointmentToAdd.DoctorForeignKey) != null)
+                return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest };
+
             _appointmentService.AddAppointment(appointmentToAdd);
             return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }

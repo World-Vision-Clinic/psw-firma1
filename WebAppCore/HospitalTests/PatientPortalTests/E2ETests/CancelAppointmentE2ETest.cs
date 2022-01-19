@@ -1,21 +1,23 @@
-﻿using OpenQA.Selenium;
+﻿using HospitalTests.PatientPortalTests.End2End;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
-namespace HospitalTests.PatientPortalTests.End2End
+namespace HospitalTests.PatientPortalTests.E2ETests
 {
-    public class CreateFeedbackE2ETest : IDisposable
+    public class CancelAppointmentE2ETest : IDisposable
     {
         private readonly IWebDriver driver;
         private LandingPage landingPage;
         private LoginPage loginPage;
         private HomePage homePage;
-        private CreateFeedbackPage createFeedbackPage;
 
-        public CreateFeedbackE2ETest()
+        public CancelAppointmentE2ETest()
         {
             ChromeOptions options = new ChromeOptions();
             options.AddArgument("start-maximized");
@@ -27,12 +29,6 @@ namespace HospitalTests.PatientPortalTests.End2End
             options.AddArgument("--dsiable-notifications");
 
             driver = new ChromeDriver(options);
-            /*
-            landingPage = new LandingPage(driver);
-            landingPage.Navigate();
-            landingPage.EnsurePageIsDisplayed();
-            Assert.True(landingPage.SignInDisplayer());
-            landingPage.ClickSignIn();*/
 
             loginPage = new LoginPage(driver);
             loginPage.Navigate();
@@ -47,17 +43,10 @@ namespace HospitalTests.PatientPortalTests.End2End
 
             homePage = new HomePage(driver);
             homePage.EnsurePageIsDisplayed();
-            Assert.True(homePage.FeedbackDisplayed());
+            homePage.EnsureCanceledIsDisplayed();
+            Assert.True(homePage.CancelDisplayed());
             Assert.True(homePage.SignOutDisplayed());
-
-            homePage.ClickFeedback();
-
-            createFeedbackPage = new CreateFeedbackPage(driver);
-            createFeedbackPage.EnsurePageIsDisplayed();
-            Assert.True(createFeedbackPage.FeedbackBtnDisplayed());
-            Assert.True(createFeedbackPage.ContentFieldDisplayed());
         }
-
         public void Dispose()
         {
             driver.Quit();
@@ -65,14 +54,11 @@ namespace HospitalTests.PatientPortalTests.End2End
         }
 
         [Fact]
-        public void TestCreateFeedback() 
+        public void TestCancelAppointment()
         {
-            createFeedbackPage.InsertContent("komentar");
-            createFeedbackPage.ClickCreateFeedback();
+            homePage.ClickCancel();
             homePage.EnsurePageIsDisplayed();
-            Assert.True(homePage.FeedbackDisplayed());
-            Assert.True(homePage.SignOutDisplayed());
-            Assert.True(homePage.PatientNameDisplayed());
+            homePage.CancelDisabled();
         }
     }
 }
