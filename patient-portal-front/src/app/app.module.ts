@@ -31,6 +31,7 @@ import { Appointment4stepComponent } from './appointment4step/appointment4step.c
 import { AuthInterceptor } from './interceptor';
 import { AuthGuard } from './auth.guard';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { ReportComponent } from './report/report.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
     MedicalRecordViewComponent,
     RegisterComponent,
     PatientAppointmentCreationComponent,
-    Appointment4stepComponent
+    Appointment4stepComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,

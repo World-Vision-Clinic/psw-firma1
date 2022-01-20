@@ -1,0 +1,37 @@
+<div style="margin-top: 5%; margin-bottom: 100px;">
+      <mat-card style="width: 750px; margin-bottom: 100px;  margin-left: 27%; margin-right: 27%;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+        <mat-card-title  style="font-size: 26px; margin-top: 4%; font-weight: bold;"></mat-card-title>
+        <mat-card-subtitle style="font-weight: bold; font-size: 16px; margin-top: 2%; text-transform: uppercase;">{{date | date:'dd/MM/yyyy'}}</mat-card-subtitle>
+        <hr>
+        <br>
+        <mat-card-title style="font-weight: bold; text-transform: uppercase; font-size: 16px; margin-top: 2%;">Report from appointment</mat-card-title>
+        <hr>
+        <br>
+        <mat-card-content>
+          <div>
+            <p style="text-transform: uppercase; font-weight: bold;">Doctor</p>
+            <p style="font-weight: bolder;">{{doctor}}</p>
+          </div>
+          <br>
+          <div>
+            <p style="text-transform: uppercase; font-weight: bold;">Date</p>
+            <p style="font-weight: bolder;">{{date | date:'dd/MM/yyyy'}}</p>
+          </div>
+          <br>
+  
+          <br>
+         
+          <mat-card-title style="font-weight: bold; text-transform: uppercase; font-size: 16px; margin-top: 2%;">Report</mat-card-title>
+        <hr>        
+    <p style="font-weight: bold;">
+        Piti lekove dva puta dnevno, povremne glavobolje, izrazena nesanica, bla bla bla
+    </p>
+       <div>
+         <div style="display: flex; flex-direction: row;">
+          <button [routerLink]="['/medical-record']"  class="book-btn">Close</button>
+         </div>
+      </div>
+        </mat-card-content>       
+      </mat-card>
+    </div>
+  

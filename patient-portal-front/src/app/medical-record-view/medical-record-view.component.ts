@@ -93,6 +93,12 @@ export class MedicalRecordViewComponent implements OnInit {
     return true;
   }
 
+  canSeeReport(appointment: Appointment): boolean {
+    if(appointment.isCancelled === true || appointment.isUpcoming === true)
+      return false;
+    return true;
+  }
+
   doSurveyForAppointment(appointmentId: number) {
     this.router.navigate(['/survey/' + appointmentId]);
   }

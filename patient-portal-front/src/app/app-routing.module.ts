@@ -9,6 +9,7 @@ import { SurveyComponent } from './survey/survey/survey.component';
 import { MedicalRecordViewComponent } from './medical-record-view/medical-record-view.component';
 import { PatientAppointmentCreationComponent } from './patient-appointment-creation/patient-appointment-creation.component';
 import { Appointment4stepComponent } from './appointment4step/appointment4step.component';
+import { ReportComponent } from './report/report.component';
 import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
@@ -23,7 +24,8 @@ const routes: Routes = [
 { path: "register", component: RegisterComponent },
 { path: "create-appointment", component: PatientAppointmentCreationComponent ,canActivate:[AuthGuard]},
 { path: "appointment4step", component: Appointment4stepComponent ,canActivate:[AuthGuard]},
-{ path: '', component: HomePageComponent}
+{ path: '', component: HomePageComponent},
+{ path: 'report', component: ReportComponent, canActivate:[AuthGuard]}
 ];
 
 @NgModule({
