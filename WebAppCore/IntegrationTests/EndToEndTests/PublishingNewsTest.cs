@@ -37,9 +37,13 @@ namespace IntegrationTests.EndToEndTests
            
         }
 
-        [Fact]
+        bool development = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+
+        [SkippableFact]
         public async void PublishingRecievedNewsTest()
         {
+            Skip.IfNot(development);
+
             RabbitMQService rabbitMQ = new RabbitMQService(new NewsRepository(), new PharmaciesRepository(), new TenderRepository(), false);
             CancellationToken token = new CancellationToken(false);
             rabbitMQ.StartAsync(token);

@@ -74,7 +74,7 @@ export class TenderCreationComponent implements OnInit {
   {
 
     if(!this.validateTender()){
-      this.notifyService.showError("Please fill all fields", "Error");
+      alert("Please fill all fields");
       return;
     }
       var val = {
