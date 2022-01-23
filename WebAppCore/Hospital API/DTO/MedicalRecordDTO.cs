@@ -24,25 +24,27 @@ namespace Hospital_API.DTO
         public int Height { get; set; }
         public string BloodType { get; set; }
         public List<string> AllergenList { get; set; }
+        public string ProfileImage { get; set; }
 
         public MedicalRecordDTO(Patient patientToCopy) 
         {
             this.UserName = patientToCopy.UserName;
-            this.FirstName = patientToCopy.FirstName;
-            this.LastName = patientToCopy.LastName;
+            this.FirstName = patientToCopy.FullName.FirstName;
+            this.LastName = patientToCopy.FullName.LastName;
             this.EMail = patientToCopy.EMail;
             this.Gender = patientToCopy.Gender.ToString();
             this.Jmbg = patientToCopy.Jmbg;
             this.DateOfBirth = patientToCopy.DateOfBirth;
-            this.Country = patientToCopy.Country;
-            this.Address = patientToCopy.Address;
-            this.City = patientToCopy.City;
+            this.Country = patientToCopy.Residence.Country;
+            this.Address = patientToCopy.Residence.Address;
+            this.City = patientToCopy.Residence.City;
             this.Phone = patientToCopy.Phone;
             this.PreferedDoctorName = "";
             this.Height = patientToCopy.Height;
             this.Weight = patientToCopy.Weight;
             this.BloodType = patientToCopy.BloodType.ToString();
             this.AllergenList = new List<string>();
+            this.ProfileImage = patientToCopy.ProfileImage;
         }
         public MedicalRecordDTO() { }
     }

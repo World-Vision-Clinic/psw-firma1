@@ -21,9 +21,9 @@ namespace Pharmacy.Migrations
 
             modelBuilder.Entity("Pharmacy.Model.Ad", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Content")
@@ -62,6 +62,32 @@ namespace Pharmacy.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Credentials");
+                });
+
+            modelBuilder.Entity("Pharmacy.Model.Event", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("EventTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Events");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EventTime = new DateTime(2022, 1, 7, 17, 8, 13, 730, DateTimeKind.Local).AddTicks(7320),
+                            Name = "Klik"
+                        });
                 });
 
             modelBuilder.Entity("Pharmacy.Model.Hospital", b =>
@@ -131,8 +157,8 @@ namespace Pharmacy.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("AdId")
-                        .HasColumnType("integer");
+                    b.Property<long?>("AdId")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("MedicineId")
                         .HasColumnType("bigint");

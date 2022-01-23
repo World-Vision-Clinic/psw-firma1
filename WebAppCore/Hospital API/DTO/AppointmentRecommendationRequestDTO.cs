@@ -11,9 +11,7 @@ namespace Hospital_API.DTO
         public DateTime UpperDateRange { get; set; }
         public string LowerTimeRange { get; set; }
         public string UpperTimeRange { get; set; }
-
         public string PriorityType { get; set; }
-
         public int DoctorId { get; set; }
     }
 }

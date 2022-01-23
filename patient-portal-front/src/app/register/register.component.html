@@ -76,7 +76,7 @@
                         </div>
                         <div class="col-md-4">
                             <label>
-                                <input type="date" name="birthdate" [(ngModel)]="dateOfBirth" required="required">
+                                <input type="date" name="birthdate" [(ngModel)]="dateOfBirth" required="required" [max]="maxDate">
                                 <span class="keep_hovered">Date of Birth</span>
                             </label>
                         </div>
@@ -127,6 +127,12 @@
                                 <input type="text" name="weight" [(ngModel)]="weight" min="0" required="required">
                                 <span class="keep_hovered">Weight</span>
                             </label>
+                        </div>
+                        <div>
+                            <label for="file">Profile picture </label>
+                            <input name="profileImage" [(ngModel)]="ProfileImage" type="file"
+                                   id="file"
+                                   (change)="handleProfileImage($event)">
                         </div>
                         <div class="col-md-2">
                             <label>

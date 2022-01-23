@@ -21,6 +21,9 @@ using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Model;
 using ceTe.DynamicPDF.PageElements;
 using System.IO;
+using RestSharp;
+using System.Net.Mail;
+using System.Net;
 
 namespace Integration_API.Controller
 {
@@ -31,7 +34,24 @@ namespace Integration_API.Controller
        
         TenderService service = new TenderService(new TenderRepository());
         FilesService filesService = new FilesService(new FilesRepository());
-        
+        PharmaciesService pharmaciesService = new PharmaciesService(new PharmaciesRepository());
+        CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
+        MedicinesController medicinesController = new MedicinesController(new PharmacyHTTPConnection());
+
+        [HttpGet]
+        public IActionResult GetTenders()
+        {
+            List<Tender> tenders = service.GetTenders();
+            List<TenderDto> tendersDto = new List<TenderDto>();
+            foreach (Tender t in tenders)
+            {
+                TenderDto dto = TenderMapper.TenderToTenderDto(t);
+                tendersDto.Add(dto);
+            }
+            
+            return Ok(tendersDto);
+        }
+
         [HttpPost]
         public IActionResult CreateTender(TenderCreationDto dto)
         {
@@ -40,6 +60,162 @@ namespace Integration_API.Controller
             TenderDto tenderDto = TenderMapper.TenderToTenderDto(tender);
             SendTender(tenderDto);
             return Ok();
+        }
+
+        [HttpPost("closeTender")]
+        public IActionResult CloseTender(TenderDto dto)
+        {
+
+            Tender tender = TenderMapper.TenderDtoToTender(dto);
+            tender.EndTime = DateTime.Now;
+            service.EditTenderEndTimeByHash(tender);
+            TenderDto tenderDto = TenderMapper.TenderToTenderCloseDto(tender);
+            SendTender(tenderDto);
+            return Ok();
+        }
+
+        [HttpPost("chooseTenderWinner")]
+        public IActionResult ChooseTenderWinner(TenderOfferDto dto)
+        {
+
+            TenderOffer offer = TenderMapper.TenderOfferDtoToTenderOffer(dto);
+            offer.Winner = true;
+
+            service.EditTenderOfferById(offer);
+
+            Tender tender = service.GetByTenderHash(dto.TenderHash);
+            
+            tender.EndTime = DateTime.Now;
+            service.EditTenderEndTimeByHash(tender);
+
+            
+            tender.AddTenderOffer(offer.TenderOfferHash, offer.TenderHash, offer.PharmacyName, offer.TotalPrice, offer.OfferItems, offer.Winner);
+
+            foreach (PharmacyProfile pharmacy in pharmaciesService.GetAll())
+            {
+                if (!pharmacy.Name.Equals(offer.PharmacyName)) 
+                {
+                 SendMailToLosingPharmacy(pharmacy.Email,tender);
+                 continue; 
+                }
+                SendMailToWinningPharmacy(pharmacy.Email,tender);
+                if (pharmacy.ConnectionInfo.Protocol.Equals(ProtocolType.HTTP))
+                {
+                    if (DeclareTenderWinner(TenderMapper.TenderToTenderDto(tender), pharmacy.ConnectionInfo.Domain))
+                    {
+                        TenderOffer offerForOrdering = service.GetTenderOfferWithOfferItems(offer.PharmacyName, offer.TenderOfferHash);
+                        foreach(OfferItem oi in offerForOrdering.OfferItems.ToArray())
+                        {
+                            bool success = medicinesController.SendMedicineOrderingRequestHTTP(new OrderingMedicineDTO(pharmacy.ConnectionInfo.Domain, oi.MedicineName, oi.Dosage.ToString(), oi.Quantity.ToString()), false);
+                            if (success)
+                                return Ok();
+                        }
+                        
+                    }
+                }
+            }
+
+            return BadRequest();
+        }
+
+        private bool DeclareTenderWinner(TenderDto tenderDto, string domain)
+        {
+            var client = new RestSharp.RestClient(domain);
+            var request = new RestRequest("/tender/result");
+
+            Credential credential = credentialsService.GetByPharmacyLocalhost(domain);
+
+            if (credential == null)
+            {
+                return false;
+            }
+            request.AddHeader("ApiKey", credential.ApiKey);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddJsonBody(tenderDto);
+            IRestResponse response = client.Post(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void SendMailToWinningPharmacy(String pharmacyEmail,Tender tender)
+        {
+            TenderOffer offer = tender.TenderOffers.ElementAt(0);
+            offer = service.GetTenderOfferWithOfferItems(offer.PharmacyName, offer.TenderOfferHash);
+            MailMessage mm = new MailMessage();
+            mm.To.Add(new MailAddress(pharmacyEmail, "Tender results"));
+            mm.From = new MailAddress("pswklinika2022@gmail.com");
+            StringBuilder builder = new StringBuilder();
+            builder.Append(@"<!DOCTYPE html>
+                <html>
+                    <head></head>
+                    <body>
+                        <p>You have successfully won " + tender.Title + " with offer: <br>");
+            mm.Body = @"<!DOCTYPE html>
+                <html>
+                    <head></head>
+                    <body>
+                        <p>You have successfully won " + tender.Title + "with offer: <br>";
+                        foreach(OfferItem item in offer.OfferItems){
+                builder.Append(item.MedicineName + " " + item.Dosage + "mg, " + item.Quantity + "x " + item.Price + " RSD");
+                       }
+            builder.Append(@"</p>
+                         </body>
+                             </html>");
+
+            mm.Body = builder.ToString();
+            mm.IsBodyHtml = true;
+            mm.Subject = "Tender results";
+            SmtpClient smcl = new SmtpClient();
+            smcl.Host = "smtp.gmail.com";
+            smcl.Port = 587;
+            smcl.Credentials = new NetworkCredential("pswklinika2022@gmail.com", "srbija123!");
+            smcl.EnableSsl = true;
+            smcl.DeliveryMethod = SmtpDeliveryMethod.Network;
+            try
+            {
+                smcl.Send(mm);
+            }
+            catch (SmtpException e)
+            {
+                Console.WriteLine("Error: {0}", e.StatusCode);
+            }
+        }
+
+        private void SendMailToLosingPharmacy(String pharmacyEmail, Tender tender)
+        {
+            TenderOffer offer = tender.TenderOffers.ElementAt(0);
+            offer = service.GetTenderOfferWithOfferItems(offer.PharmacyName, offer.TenderOfferHash);
+            MailMessage mm = new MailMessage();
+            mm.To.Add(new MailAddress(pharmacyEmail, "Tender results"));
+            mm.From = new MailAddress("pswklinika2022@gmail.com");
+            
+            mm.Body = @"<!DOCTYPE html>
+                <html>
+                    <head></head>
+                    <body>
+                        <p>You have lost " + tender.Title + @"</p>
+                    </body>
+                </html>
+            ";
+            mm.IsBodyHtml = true;
+            mm.Subject = "Tender results";
+            SmtpClient smcl = new SmtpClient();
+            smcl.Host = "smtp.gmail.com";
+            smcl.Port = 587;
+            smcl.Credentials = new NetworkCredential("pswklinika2022@gmail.com", "srbija123!");
+            smcl.EnableSsl = true;
+            smcl.DeliveryMethod = SmtpDeliveryMethod.Network;
+            try
+            {
+                smcl.Send(mm);
+            }
+            catch (SmtpException e)
+            {
+                Console.WriteLine("Error: {0}", e.StatusCode);
+            }
         }
 
         public void SendTender(TenderDto tenderDto)

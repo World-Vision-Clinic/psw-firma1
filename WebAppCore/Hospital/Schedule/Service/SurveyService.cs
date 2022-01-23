@@ -40,6 +40,11 @@ namespace Hospital.Schedule.Service
             _repo.AddAnswer(answer);
         }
 
+        public SurveyQuestion GetQuestionById(int id)
+        {
+            return _repo.GetQuestionById(id);
+        }
+
         public Survey FindById(int id)
         {
             return _repo.FindById(id);

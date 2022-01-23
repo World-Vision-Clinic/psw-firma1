@@ -14,5 +14,7 @@ namespace Integration_API.Dto
         public string City { get; set; }
         public ProtocolType Protocol { get; set; }
         public string Note { get; set; }
+
+        public string Email { get; set; }
     }
 }

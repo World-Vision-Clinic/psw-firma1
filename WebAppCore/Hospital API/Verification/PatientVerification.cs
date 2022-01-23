@@ -1,6 +1,7 @@
 ﻿using Hospital.MedicalRecords.Model;
 using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Service;
+using Hospital.Schedule.Repository;
 using Hospital.SharedModel;
 using Hospital_API.DTO;
 using System;
@@ -27,7 +28,8 @@ namespace Hospital_API.Verification
         public PatientVerification(HospitalContext context)
         {
             PatientRepository patientRepository = new PatientRepository(context);
-            patientService = new PatientService(patientRepository);
+            AppointmentRepository appointmentRepository = new AppointmentRepository(context);
+            patientService = new PatientService(patientRepository, appointmentRepository);
             doctorService = new DoctorService(new DoctorRepository(context, patientRepository));
             allergenService = new AllergenService(new AllergenRepository(context));
         }
@@ -39,7 +41,7 @@ namespace Hospital_API.Verification
                 return false;
             if (!regex.IsMatch(patient.UserName))
                 return false;
-            if (patientService.FindByUserName(patient.UserName) != null) //Treba negde prijaviti username taken
+            if (patientService.FindByUserName(patient.UserName) != null)
                 return false;
             return true;
         }
@@ -82,6 +84,8 @@ namespace Hospital_API.Verification
             if(patient.EMail.Length > maxLength)
                 return false;
             if (!regex.IsMatch(patient.EMail))
+                return false;
+            if (patientService.FindByEmail(patient.EMail) != null)
                 return false;
             return true;
         }
@@ -129,7 +133,7 @@ namespace Hospital_API.Verification
 
         private bool VerifyAddress()
         {
-            Regex regex = new Regex("\\A[a-zA-Z0-9čćžšđČĆŽŠĐ ]{1,30}\\z"); //Mozda nije sjajan regex
+            Regex regex = new Regex("\\A[a-zA-Z0-9čćžšđČĆŽŠĐ ]{1,30}\\z");
             if (patient.Address == null)
                 return false;
             if (!regex.IsMatch(patient.Address))
@@ -183,12 +187,12 @@ namespace Hospital_API.Verification
         {
             if (patient.PreferedDoctor < 0)
                 return false;
-            /*List<Doctor> availableDoctors = doctorService.GetAll();
+            List<Doctor> availableDoctors = doctorService.GetAvailableDoctors();
             foreach(Doctor d in availableDoctors)
             {
                 if (d.Id == patient.PreferedDoctor)
                     return true;
-            }*/
+            }
             return true;
         }
 

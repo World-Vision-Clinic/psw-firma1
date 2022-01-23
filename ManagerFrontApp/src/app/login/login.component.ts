@@ -21,10 +21,16 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  handleError(){
+    this.LoginDTO.username = ""
+    this.LoginDTO.password = ""
+    alert("Failed to login please try again")
+  }
+
   login() {
     this._registerService.login(this.LoginDTO).subscribe(data => localStorage.setItem('PSWtoken', data.token),
-      error =>console.log(error),
-      () => console.log(localStorage.getItem('PSWtoken')));
+      error =>this.handleError(),
+      () => this.router.navigate(["/manager-feedback"]));
   }
   verifyPassword() {
     if(this.LoginDTO.password == "")

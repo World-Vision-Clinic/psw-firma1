@@ -18,7 +18,7 @@ namespace Hospital_API.DTO
         public string DoctorName { get; set; }
         public AppointmentType Type { get; set; }
         public DateTime Date { get; set; }
-        public TimeSpan Time { get; set; }
+        public TimeSpan Time { get; set; } //TODO: Rename to Length
 
         public int RoomId { get; set; }
 
@@ -36,7 +36,7 @@ namespace Hospital_API.DTO
             this.DoctorName = GetDoctorName(doctorRepository);
             this.Type = appointment.Type;
             this.Date = appointment.Date;
-            this.Time = appointment.Time;
+            this.Time = appointment.Length;
             this.IsCancelled = appointment.IsCancelled;
             this.IsUpcoming = IsAppointmentUpcoming();
             this.HasCompletedSurvey = HasAppointmentCompletedSurvey(appointment, surveyRepository);

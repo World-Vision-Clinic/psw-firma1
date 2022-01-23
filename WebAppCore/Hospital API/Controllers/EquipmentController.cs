@@ -31,7 +31,8 @@ namespace Hospital_API.Controllers
         private FloorLabelService floorLabelService = new FloorLabelService(new FloorLabelRepository(new Hospital.SharedModel.HospitalContext()));
         private MapPositionService mapPositionService = new MapPositionService(new MapPositionRepository(new Hospital.SharedModel.HospitalContext()));
         private OutsideDoorService outsideDoorService = new OutsideDoorService(new OutsideDoorRepository(new Hospital.SharedModel.HospitalContext()));
-       
+        public bool test = false;
+
 
         [HttpGet]
         public ActionResult<IEnumerable<Equipment>> GetEquipment([FromQuery] int buildingId, [FromQuery] string searchText)

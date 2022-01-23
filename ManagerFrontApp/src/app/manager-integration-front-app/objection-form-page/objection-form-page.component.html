@@ -4,8 +4,8 @@
     <div class="pharmaSelection">
         <p>Choose pharmacy to which objection will be send</p>
         <div *ngIf="PharmacyList.length==0">Currently there are no registered pharmacies, so you cannot select pharmacy.</div>
-        <select (ngModelChange)="selectChange($event)" [(ngModel)]="PharmacyList.Name">
-          <option *ngFor="let pharmacy of PharmacyList" [ngValue]="pharmacy">
+        <select id="pharmacySelection" (ngModelChange)="selectChange($event)" [(ngModel)]="PharmacyList.Name">
+          <option  *ngFor="let pharmacy of PharmacyList" [ngValue]="pharmacy" id={{pharmacy.Name}}>
             {{pharmacy.Name}}
           </option>    
         </select>
@@ -30,7 +30,7 @@
     
         <!-- Send button -->
       
-        <button [disabled]="!isPharmacySelectedL"  (click)="sendObjection()" color="info" block="true" type="submit"  style="width: 100%;margin-top: 20px; height: 30px; background-color:#33b5e5; color: white;">Send</button>
+        <button id="sendButton" [disabled]="!isPharmacySelectedL"  (click)="sendObjection()" color="info" block="true" type="submit"  style="width: 100%;margin-top: 20px; height: 30px; background-color:#33b5e5; color: white;">Send</button>
       
       </form>
       <!-- Default form contact -->

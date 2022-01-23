@@ -14,6 +14,7 @@ export class PatientAppointmentCreationComponent implements OnInit {
   errorMsg: string = "";
 
   public appointmentRequest: AppointmentRequest = new AppointmentRequest();
+  public requestDoctorId: string = "";
 
   public availableTimes: string[] = [
     "08:00:00",
@@ -65,11 +66,12 @@ export class PatientAppointmentCreationComponent implements OnInit {
   }
 
   send_request() {
+    this.appointmentRequest.DoctorId = parseInt(this.requestDoctorId);
     this._appointmentCreationService.requestAppointmentRecommendationDoctorPriority(this.appointmentRequest).subscribe(data => this.appointments = data);
   }
 
   createAppointment(appointment: any) {
-    appointment.patientForeignKey = 1
+    appointment.patientForeignKey = 1;
     this._appointmentCreationService.createAppointment(appointment).subscribe();
     this.router.navigate(['/medical-record']);
   }

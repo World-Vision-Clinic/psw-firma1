@@ -57,11 +57,7 @@ namespace Hospital.SharedModel
             modelBuilder.Entity<Survey>(entity =>
             {
                 entity.ToTable("Surveys");
-                entity.HasKey(c => c.IdSurvey);
-
-                entity.HasOne(d => d.Appointment)
-               .WithMany(p => p.Surveys)
-               .HasForeignKey(d => d.IdAppointment);
+                entity.HasKey(c => c.Id);
             });
 
             modelBuilder.Entity<Appointment>(entity =>
@@ -78,38 +74,38 @@ namespace Hospital.SharedModel
 
             modelBuilder.Entity<Appointment>().HasData(
                 // new Appointment { Id = 1, Surveys = new List<Survey>() }
-                new Appointment { Id = 1, PatientForeignKey = 1, DoctorForeignKey = 1, Type = (AppointmentType)1, Date = new DateTime(2022, 1, 13), Time = new TimeSpan(14, 10, 0), IsCancelled = false, RoomId = 1 },
-                new Appointment { Id = 2, PatientForeignKey = 2, DoctorForeignKey = 1, Type = (AppointmentType)1, Date = new DateTime(2022, 1, 17), Time = new TimeSpan(16, 30, 0), IsCancelled = false, RoomId = 1 },
-                new Appointment { Id = 3, PatientForeignKey = 1, DoctorForeignKey = 2, Type = (AppointmentType)2, Date = new DateTime(2022, 2, 13), Time = new TimeSpan(10, 10, 0), IsCancelled = false, RoomId = 2 },
-                new Appointment { Id = 4, PatientForeignKey = 3, DoctorForeignKey = 13, Type = (AppointmentType)2, Date = new DateTime(2022, 1, 10), Time = new TimeSpan(11, 15, 0), IsCancelled = false, RoomId = 13 },
-                new Appointment { Id = 5, PatientForeignKey = 1, DoctorForeignKey = 3, Type = (AppointmentType)1, Date = new DateTime(2021, 12, 30), Time = new TimeSpan(14, 30, 0), IsCancelled = false, RoomId = 3 },
-                new Appointment { Id = 6, PatientForeignKey = 2, DoctorForeignKey = 4, Type = (AppointmentType)1, Date = new DateTime(2022, 1, 14), Time = new TimeSpan(17, 00, 0), IsCancelled = false, RoomId = 4 },
-                new Appointment { Id = 7, PatientForeignKey = 1, DoctorForeignKey = 3, Type = (AppointmentType)1, Date = new DateTime(2021, 12, 29), Time = new TimeSpan(17, 30, 0), IsCancelled = false, RoomId = 3 },
-                new Appointment { Id = 8, PatientForeignKey = 2, DoctorForeignKey = 6, Type = (AppointmentType)1, Date = new DateTime(2022, 3, 14), Time = new TimeSpan(13, 00, 0), IsCancelled = false, RoomId = 6 }
+                new Appointment { Id = 1, PatientForeignKey = 1, DoctorForeignKey = 1, Type = (AppointmentType)1, Date = new DateTime(2022, 1, 13), Length = new TimeSpan(14, 10, 0), IsCancelled = false, RoomId = 1 },
+                new Appointment { Id = 2, PatientForeignKey = 2, DoctorForeignKey = 1, Type = (AppointmentType)1, Date = new DateTime(2022, 1, 17), Length = new TimeSpan(16, 30, 0), IsCancelled = false, RoomId = 1 },
+                new Appointment { Id = 3, PatientForeignKey = 1, DoctorForeignKey = 2, Type = (AppointmentType)2, Date = new DateTime(2022, 2, 13), Length = new TimeSpan(10, 10, 0), IsCancelled = false, RoomId = 2 },
+                new Appointment { Id = 4, PatientForeignKey = 3, DoctorForeignKey = 13, Type = (AppointmentType)2, Date = new DateTime(2022, 1, 10), Length = new TimeSpan(11, 15, 0), IsCancelled = false, RoomId = 13 },
+                new Appointment { Id = 5, PatientForeignKey = 1, DoctorForeignKey = 3, Type = (AppointmentType)1, Date = new DateTime(2021, 12, 30), Length = new TimeSpan(14, 30, 0), IsCancelled = false, RoomId = 3 },
+                new Appointment { Id = 6, PatientForeignKey = 2, DoctorForeignKey = 4, Type = (AppointmentType)1, Date = new DateTime(2022, 1, 14), Length = new TimeSpan(17, 00, 0), IsCancelled = false, RoomId = 4 },
+                new Appointment { Id = 7, PatientForeignKey = 1, DoctorForeignKey = 3, Type = (AppointmentType)1, Date = new DateTime(2021, 12, 29), Length = new TimeSpan(17, 30, 0), IsCancelled = false, RoomId = 3 },
+                new Appointment { Id = 8, PatientForeignKey = 2, DoctorForeignKey = 6, Type = (AppointmentType)1, Date = new DateTime(2022, 3, 14), Length = new TimeSpan(13, 00, 0), IsCancelled = false, RoomId = 6 }
                 );
 
             modelBuilder.Entity<Survey>().HasData(
-                new Survey { IdAppointment = 1, CreationDate = DateTime.Now, IdSurvey = 1}
-                );
+                new Survey(1, DateTime.Now)
+            );
 
             modelBuilder.Entity<SurveyQuestion>().HasData(
-                new SurveyQuestion { Id = 1, Question = "Has doctor been polite to you?", Section = SurveySectionType.Doctor, IdSurvey = 1},
-                new SurveyQuestion { Id = 2, Question = "How would you rate the professionalism of doctor?", Section = SurveySectionType.Doctor, IdSurvey = 1 },
-                new SurveyQuestion { Id = 3, Question = "How clearly did the doctor explain you your condition?", Section = SurveySectionType.Doctor, IdSurvey = 1 },
-                new SurveyQuestion { Id = 4, Question = "How would you rate the doctor's patience with you?", Section = SurveySectionType.Doctor, IdSurvey = 1 },
-                new SurveyQuestion { Id = 5, Question = "What is your overall satisfaction with doctor?", Section = SurveySectionType.Doctor, IdSurvey = 1 },
+                new SurveyQuestion(1, "Has doctor been polite to you?", SurveySectionType.Doctor),
+                new SurveyQuestion(2, "How would you rate the professionalism of doctor?", SurveySectionType.Doctor),
+                new SurveyQuestion(3, "How clearly did the doctor explain you your condition?", SurveySectionType.Doctor),
+                new SurveyQuestion(4, "How would you rate the doctor's patience with you?", SurveySectionType.Doctor),
+                new SurveyQuestion(5, "What is your overall satisfaction with doctor?", SurveySectionType.Doctor),
 
-                new SurveyQuestion { Id = 6, Question = "How easy is to use our application?", Section = SurveySectionType.Hospital, IdSurvey = 1 },
-                new SurveyQuestion { Id = 7, Question = "How easy it was to schedule an appointment?", Section = SurveySectionType.Hospital, IdSurvey = 1 },
-                new SurveyQuestion { Id = 8, Question = "What is an opportunity to recommend us to your friends and family?", Section = SurveySectionType.Hospital, IdSurvey = 1 },
-                new SurveyQuestion { Id = 9, Question = "How satisfied are you with the services that the hospital provides you?", Section = SurveySectionType.Hospital, IdSurvey = 1 },
-                new SurveyQuestion { Id = 10, Question = "What is your overall satisfaction with our hospital?", Section = SurveySectionType.Hospital, IdSurvey = 1 },
+                new SurveyQuestion(6, "How easy is to use our application?", SurveySectionType.Hospital),
+                new SurveyQuestion(7, "How easy it was to schedule an appointment?", SurveySectionType.Hospital),
+                new SurveyQuestion(8, "What is an opportunity to recommend us to your friends and family?", SurveySectionType.Hospital),
+                new SurveyQuestion(9, "How satisfied are you with the services that the hospital provides you?", SurveySectionType.Hospital),
+                new SurveyQuestion(10, "What is your overall satisfaction with our hospital?", SurveySectionType.Hospital),
 
-                new SurveyQuestion { Id = 11, Question = "How would you rate the kindness of our staff?", Section = SurveySectionType.Staff, IdSurvey = 1 },
-                new SurveyQuestion { Id = 12, Question = "How would you rate the professionalism of our staff?", Section = SurveySectionType.Staff, IdSurvey = 1 },
-                new SurveyQuestion { Id = 13, Question = "How clearly did the staff explain you some procedures of our hospital?", Section = SurveySectionType.Staff, IdSurvey = 1 },
-                new SurveyQuestion { Id = 14, Question = "How yould you rate to what extent staff was available to you during your visit to the hospital?", Section = SurveySectionType.Staff, IdSurvey = 1 },
-                new SurveyQuestion { Id = 15, Question = "What is your overall satisfaction with our staff?", Section = SurveySectionType.Staff, IdSurvey = 1 }
+                new SurveyQuestion(11, "How would you rate the kindness of our staff?", SurveySectionType.Staff),
+                new SurveyQuestion(12, "How would you rate the professionalism of our staff?", SurveySectionType.Staff),
+                new SurveyQuestion(13, "How clearly did the staff explain you some procedures of our hospital?", SurveySectionType.Staff),
+                new SurveyQuestion(14, "How yould you rate to what extent staff was available to you during your visit to the hospital?", SurveySectionType.Staff),
+                new SurveyQuestion(15, "What is your overall satisfaction with our staff?", SurveySectionType.Staff)
                 );
 
             modelBuilder.Entity<Shift>().HasData(
@@ -124,88 +120,51 @@ namespace Hospital.SharedModel
                new FloorLabel { id = 1, X = 50, Y = 80, Text = "ENTRANCE", FloorId = 1 }
                );
             //modelbuilder.Entity<Area>().HasData();
+
             modelBuilder.Entity<Equipment>().HasData(
-                new Equipment
-                {
-                    Id = 1,
-                    Name = "Bandage",
-                    Type = EquipmentType.DYNAMIC,
-                    Amount = 15,
-                    RoomId = 15,
-                    InTransport = true,
-                    TransportStart = new DateTime(2021, 12, 14, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                    TransportEnd = new DateTime(2021, 12, 14, 11, 0, 0, 0, DateTimeKind.Unspecified)
-                },
-                new Equipment
-                {
-                    Id = 2,
-                    Name = "Operating table",
-                    Type = EquipmentType.STATIC,
-                    Amount = 3,
-                    RoomId = 23,
-                    InTransport = true,
-                    TransportStart = new DateTime(2021, 12, 15, 11, 0, 0, 0, DateTimeKind.Unspecified),
-                    TransportEnd = new DateTime(2021, 12, 15, 12, 0, 0, 0, DateTimeKind.Unspecified)
-                },
-                new Equipment
-                {
-                    Id = 3,
-                    Name = "Infusion",
-                    Type = EquipmentType.DYNAMIC,
-                    Amount = 11,
-                    RoomId = 1,
-                    InTransport = true,
-                    TransportStart = new DateTime(2021, 12, 16, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                    TransportEnd = new DateTime(2021, 12, 16, 11, 0, 0, 0, DateTimeKind.Unspecified)
-                },
-                new Equipment { Id = 4, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 17, RoomId = 2,
-                    InTransport = true,
-                    TransportStart = new DateTime(2022, 1, 14, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                    TransportEnd = new DateTime(2022, 1, 14, 11, 0, 0, 0, DateTimeKind.Unspecified)
-                },
-                new Equipment { Id = 5, Name = "Operating table", Type = EquipmentType.STATIC, Amount = 2, RoomId = 2,
-                    InTransport = true,
-                    TransportStart = new DateTime(2022, 1, 11, 13, 0, 0, 0, DateTimeKind.Unspecified),
-                    TransportEnd = new DateTime(2022, 1, 11, 14, 0, 0, 0, DateTimeKind.Unspecified)
-                },
-                new Equipment { Id = 6, Name = "Infusion", Type = EquipmentType.DYNAMIC, Amount = 23, RoomId = 23 },
-                new Equipment { Id = 7, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 15, RoomId = 3 },
-                new Equipment { Id = 8, Name = "Operating table", Type = EquipmentType.STATIC, Amount = 1, RoomId = 3 },
-                new Equipment { Id = 9, Name = "Syringe", Type = EquipmentType.DYNAMIC, Amount = 11, RoomId = 3 },
-                new Equipment { Id = 10, Name = "Bed", Type = EquipmentType.STATIC, Amount = 7, RoomId = 4 },
-                new Equipment { Id = 11, Name = "Chair", Type = EquipmentType.STATIC, Amount = 4, RoomId = 16 },
-                new Equipment { Id = 12, Name = "Bed", Type = EquipmentType.STATIC, Amount = 11, RoomId = 5 },
-                new Equipment { Id = 13, Name = "Chair", Type = EquipmentType.STATIC, Amount = 6, RoomId = 17 },
-                new Equipment { Id = 14, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 25, RoomId = 5 }
+                new Equipment (1, "Bandage", EquipmentType.DYNAMIC, 15, 15),
+                new Equipment (2, "Operating table", EquipmentType.STATIC, 3, 23),
+                new Equipment (3, "Infusion", EquipmentType.DYNAMIC, 11, 1),
+                new Equipment (4, "Bandage", EquipmentType.DYNAMIC, 17, 2),
+                new Equipment (5, "Operating table", EquipmentType.STATIC, 2, 2),
+                new Equipment (6, "Infusion", EquipmentType.DYNAMIC, 23, 23),
+                new Equipment (7, "Bandage", EquipmentType.DYNAMIC, 15, 3),
+                new Equipment (8, "Operating table", EquipmentType.STATIC, 1, 3),
+                new Equipment (9, "Syringe", EquipmentType.DYNAMIC, 11, 3),
+                new Equipment (10, "Bed", EquipmentType.STATIC, 7, 4),
+                new Equipment (11, "Chair", EquipmentType.STATIC, 4, 16),
+                new Equipment (12, "Bed", EquipmentType.STATIC, 11, 5),
+                new Equipment (13, "Chair", EquipmentType.STATIC, 6, 17),
+                new Equipment (14, "Bandage", EquipmentType.DYNAMIC, 25, 5)
                 );
 
             modelBuilder.Entity<Room>().HasData(
-                new Room { Id = 1, FloorId = 1, Name = "OPERATING ROOM 1", DoctorId = 1, Purpose = "", X = 0, Y = 150, Height = 190, Width = 150, DoorX = 148, DoorY = 285, Vertical = true, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 2, FloorId = 1, Name = "OPERATING ROOM 2", DoctorId = 2, Purpose = "", X = 160, Y = 150, Height = 100, Width = 150, DoorX = 220, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 3, FloorId = 1, Name = "OPERATING ROOM 3", DoctorId = 3, Purpose = "", X = 320, Y = 150, Height = 100, Width = 150, DoorX = 370, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 4, FloorId = 1, Name = "ROOM 1", DoctorId = 4, Purpose = "", X = 480, Y = 150, Height = 100, Width = 170, DoorX = 520, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 5, FloorId = 1, Name = "ROOM 2", DoctorId = 5, Purpose = "", X = 660, Y = 150, Height = 100, Width = 180, DoorX = 680, DoorY = 248, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 6, FloorId = 1, Name = "OFFICE 1", DoctorId = 6, Purpose = "", X = 730, Y = 260, Height = 100, Width = 110, DoorX = 728, DoorY = 290, Vertical = true, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 7, FloorId = 1, Name = "LIFT", DoctorId = -1, Purpose = "", X = 690, Y = 370, Height = 90, Width = 150, DoorX = 728, DoorY = 290, Vertical = false, Css = "staircase", DoorExist = false },
-                new Room { Id = 8, FloorId = 1, Name = "TOILET", DoctorId = -1, Purpose = "", X = 730, Y = 470, Height = 60, Width = 110, DoorX = 728, DoorY = 485, Vertical = true, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 9, FloorId = 1, Name = "TOILET", DoctorId = -1, Purpose = "", X = 730, Y = 540, Height = 60, Width = 110, DoorX = 728, DoorY = 555, Vertical = true, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 10, FloorId = 1, Name = "OPERATING ROOM 4", DoctorId = 7, Purpose = "", X = 0, Y = 410, Height = 190, Width = 150, DoorX = 148, DoorY = 419, Vertical = true, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 11, FloorId = 1, Name = "ROOM 3", DoctorId = 8, Purpose = "", X = 160, Y = 500, Height = 100, Width = 100, DoorX = 200, DoorY = 498, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 12, FloorId = 1, Name = "ROOM 4", DoctorId = 9, Purpose = "", X = 270, Y = 500, Height = 100, Width = 150, DoorX = 315, DoorY = 498, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 13, FloorId = 1, Name = "ROOM 5", DoctorId = 10, Purpose = "", X = 430, Y = 500, Height = 100, Width = 150, DoorX = 475, DoorY = 498, Vertical = false, Css = "room room-cadetblue", DoorExist = true },
-                new Room { Id = 14, FloorId = 2, Name = "DOCTOR'S OFFICE 1", DoctorId = 11, Purpose = "", X = 0, Y = 150, Height = 100, Width = 150, DoorX = 100, DoorY = 248, Vertical = false, Css = "room", DoorExist = true },
-                new Room { Id = 15, FloorId = 2, Name = "DOCTOR'S OFFICE 2", DoctorId = 12, Purpose = "", X = 160, Y = 150, Height = 100, Width = 150, DoorX = 260, DoorY = 248, Vertical = false, Css = "room", DoorExist = true },
-                new Room { Id = 16, FloorId = 2, Name = "DOCTOR'S OFFICE 3", DoctorId = 13, Purpose = "", X = 320, Y = 150, Height = 100, Width = 150, DoorX = 420, DoorY = 248, Vertical = false, Css = "room", DoorExist = true },
-                new Room { Id = 17, FloorId = 2, Name = "DOCTOR'S OFFICE 4", DoctorId = 14, Purpose = "", X = 480, Y = 150, Height = 100, Width = 170, DoorX = 595, DoorY = 248, Vertical = false, Css = "room", DoorExist = true },
-                new Room { Id = 18, FloorId = 2, Name = "ROOM 1", DoctorId = 15, Purpose = "", X = 660, Y = 150, Height = 100, Width = 180, DoorX = 680, DoorY = 248, Vertical = false, Css = "room", DoorExist = true },
-                new Room { Id = 19, FloorId = 2, Name = "STAIRS", DoctorId = -1, Purpose = "", X = 770, Y = 258, Height = 104, Width = 70, DoorX = 728, DoorY = 290, Vertical = true, Css = "room", DoorExist = false },
-                new Room { Id = 20, FloorId = 2, Name = "LIFT", DoctorId = -1, Purpose = "", X = 690, Y = 370, Height = 90, Width = 150, DoorX = 728, DoorY = 290, Vertical = false, Css = "staircase", DoorExist = false },
-                new Room { Id = 21, FloorId = 2, Name = "TOILET", DoctorId = -1, Purpose = "", X = 730, Y = 470, Height = 60, Width = 110, DoorX = 728, DoorY = 485, Vertical = true, Css = "room", DoorExist = true },
-                new Room { Id = 22, FloorId = 2, Name = "TOILET", DoctorId = -1, Purpose = "", X = 730, Y = 540, Height = 60, Width = 110, DoorX = 728, DoorY = 555, Vertical = true, Css = "room", DoorExist = true },
-                new Room { Id = 23, FloorId = 2, Name = "OPERATING ROOM 2", DoctorId = 16, Purpose = "", X = 0, Y = 410, Height = 190, Width = 150, DoorX = 148, DoorY = 419, Vertical = true, Css = "room", DoorExist = true },
-                new Room { Id = 24, FloorId = 2, Name = "ROOM 2", DoctorId = 17, Purpose = "", X = 160, Y = 500, Height = 100, Width = 100, DoorX = 200, DoorY = 498, Vertical = false, Css = "room", DoorExist = true },
-                new Room { Id = 25, FloorId = 2, Name = "OPERATING ROOM 3", DoctorId = 18, Purpose = "", X = 270, Y = 500, Height = 100, Width = 300, DoorX = 350, DoorY = 498, Vertical = false, Css = "room", DoorExist = true },
-                new Room { Id = 26, FloorId = 2, Name = "OPERATING ROOM 1", DoctorId = 19, Purpose = "", X = 0, Y = 300, Height = 100, Width = 580, DoorX = 400, DoorY = 398, Vertical = false, Css = "room", DoorExist = true }
+                new Room (1, "OPERATING ROOM 1", "", 1, 1, 0, 150, 190, 150, 148, 285, true, "room room-cadetblue", true),
+                new Room (2, "OPERATING ROOM 2", "", 2, 1, 160, 150, 100, 150, 220, 248, false, "room room-cadetblue", true),
+                new Room (3, "OPERATING ROOM 3","", 3, 1, 320, 150, 100, 150, 370, 248, false, "room room-cadetblue", true),
+                new Room (4, "ROOM 1", "", 4, 1, 480, 150, 100, 170, 520, 248, false, "room room-cadetblue", true),
+                new Room (5, "ROOM 2", "", 5, 1, 660, 150, 100, 180, 680, 248, false, "room room-cadetblue", true),
+                new Room (6, "OFFICE 1","", 6, 1, 730, 260, 100, 110, 728, 290, true, "room room-cadetblue", true ),
+                new Room (7, "LIFT","", -1, 1, 690, 370, 90, 150, 728, 290, false, "staircase", false ),
+                new Room (8, "TOILET", "", -1, 1, 730, 470, 60, 110, 728, 485, true, "room room-cadetblue", true ),
+                new Room (9, "TOILET", "", -1, 1, 730, 540, 60, 110, 728, 555, true, "room room-cadetblue", true ),
+                new Room (10, "OPERATING ROOM 4", "", 7, 1, 0, 410, 190, 150, 148, 419, true, "room room-cadetblue", true ),
+                new Room (11, "ROOM 3", "", 8, 1, 160, 500, 100, 100, 200, 498, false, "room room-cadetblue", true ),
+                new Room (12, "ROOM 4", "",9, 1, 270, 500, 100, 150, 315, 498, false, "room room-cadetblue", true ),
+                new Room (13, "ROOM 5", "", 10, 1, 430, 500, 100, 150, 475, 498, false, "room room-cadetblue", true ),
+                new Room (14, "DOCTOR'S OFFICE 1", "", 11, 2, 0, 150, 100, 150, 100, 248, false, "room", true ),
+                new Room (15, "DOCTOR'S OFFICE 2", "", 12, 2, 160, 150, 100, 150, 260, 248, false, "room", true ),
+                new Room (16, "DOCTOR'S OFFICE 3", "", 13, 2, 320, 150, 100, 150, 420, 248, false, "room", true ),
+                new Room (17, "DOCTOR'S OFFICE 4", "", 14, 2, 480, 150, 100, 170, 595, 248, false, "room", true ),
+                new Room (18, "ROOM 1", "", 15, 2, 660, 150, 100, 180, 680, 248, false, "room", true ),
+                new Room (19, "STAIRS", "", -1, 2, 770, 258, 104, 70, 728, 290, true, "room", false ),
+                new Room (20, "LIFT", "", -1, 2, 690, 370, 90, 150, 728, 290, false, "staircase", false ),
+                new Room (21, "TOILET", "", -1, 2, 730, 470, 60, 110, 728, 485, true, "room", true ),
+                new Room (22, "TOILET", "", -1, 2, 730, 540, 60, 110, 728, 555, true, "room", true ),
+                new Room (23, "OPERATING ROOM 2", "", 16, 2, 0, 410, 190, 150, 148, 419, true, "room", true ),
+                new Room (24, "ROOM 2", "", 17, 2, 160, 500, 100, 100, 200, 498, false, "room", true ),
+                new Room (25, "OPERATING ROOM 3", "", 18, 2, 270, 500, 100, 300, 350, 498, false, "room", true),
+                new Room (26, "OPERATING ROOM 1", "", 19, 2, 0, 300, 100, 580, 400, 398, false, "room", true)
                 );
             modelBuilder.Entity<OutsideDoor>().HasData(
                 new OutsideDoor { id = 1, X = 545, Y = 80, IsVertical = true, MapPositionId = 1 },
@@ -256,6 +215,14 @@ namespace Hospital.SharedModel
               new OnCallShift(1, 1, new DateTime(2022, 1, 15))
              );
 
+            modelBuilder.Entity<Patient>(entity =>
+            {
+                entity.ToTable("Patients");
+                entity.HasKey(c => c.Id);
+
+                entity.OwnsOne(x => x.FullName);
+                entity.OwnsOne(x => x.Residence);
+            });
         }
 
         protected override void OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder optionsBuilder)

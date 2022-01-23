@@ -36,7 +36,7 @@
                     <div class="header gradient-blue">
                         <div class="row d-flex">
                             <div class="col-md-6">
-                                <p *ngIf="!f.isAnonymous" class="text-white font-weight-bold header-text">User</p>
+                                <p *ngIf="!f.isAnonymous" class="text-white font-weight-bold header-text">{{f.userName}}</p>
                                 <p *ngIf="f.isAnonymous" class="text-white font-weight-bold header-text">Anonymous</p>
                             </div>
                         </div>
@@ -54,10 +54,10 @@
                               </div>
                               <div class="col-md-3">
                                 <div *ngIf="!f.isPublic && f.isPublishable">
-                                    <button class="btn-rounded btn-blue" (click)="publishFeedback(i)">Publish</button>
+                                    <button [attr.id]="'publish' + f.id" class="btn-rounded btn-blue" (click)="publishFeedback(i)">Publish</button>
                                 </div>
                                 <div *ngIf="f.isPublic">
-                                    <button class="btn-rounded btn-blue" (click)="unpublishFeedback(i)">Unpublish</button>
+                                    <button [attr.id]="'unpublish' + f.id"class="btn-rounded btn-blue" (click)="unpublishFeedback(i)">Unpublish</button>
                                 </div>
                               </div>
                             </div>

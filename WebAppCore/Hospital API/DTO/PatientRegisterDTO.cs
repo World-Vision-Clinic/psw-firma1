@@ -1,4 +1,5 @@
 ﻿using Hospital.MedicalRecords.Model;
+using Hospital.Schedule.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,39 +26,14 @@ namespace Hospital_API.DTO
         public int Weight { get; set; }
         public int Height { get; set; }
         public string BloodType { get; set; }
+        public string ProfileImage { get; set; }
 
         public PatientRegisterDTO() { }
 
         public Patient ToPatient()
         {
-            Patient patient = new Patient();
-            patient.UserName = UserName;
-            patient.Password = Password;
-
-            patient.FirstName = Char.ToUpper(FirstName[0]) + "";
-            if(FirstName.Length > 1)
-                patient.FirstName += FirstName.Substring(1);
-            
-            patient.LastName = Char.ToUpper(LastName[0]) + "";
-            if (LastName.Length > 1)
-                patient.LastName += LastName.Substring(1);
-
-            patient.Token = null;
-            patient.Activated = false;
-            patient.Gender = (Gender) Enum.Parse(typeof(Gender), Gender);
-            patient.Jmbg = Jmbg;
-            patient.DateOfBirth = DateOfBirth;
-            patient.Country = Country;
-            patient.Address = Address;
-            patient.City = City;
-            patient.EMail = EMail;
-            patient.Phone = Phone;
-            patient.PreferedDoctor = PreferedDoctor;
-            patient.Weight = Weight;
-            patient.Height = Height;
-            patient.BloodType = (BloodType) Enum.Parse(typeof(BloodType), BloodType);
-
-            return patient;
+            return new Patient(UserName, Password, new FullName(FirstName, LastName), EMail, false, (Gender)Enum.Parse(typeof(Gender), Gender),
+                Jmbg, DateOfBirth, new Residence(Country, Address, City), Phone, PreferedDoctor, Weight, Height, (BloodType)Enum.Parse(typeof(BloodType), BloodType), false, new List<Appointment>(), ProfileImage);
         }
     }
 }

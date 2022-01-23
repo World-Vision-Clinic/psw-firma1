@@ -49,21 +49,7 @@ namespace Hospital_API.DTO
 
         internal Room toRoom()
         {
-            Room room = new Room();
-            room.Id = id;
-            room.Name = name;
-            room.Purpose = purpose;
-            room.DoctorId = doctorId;
-            room.FloorId =floorId;
-            room.X = x;
-            room.Y = y;
-            room.Height = height;
-            room.Width =width;
-            room.DoorX = doorX;
-            room.DoorY = doorY;
-            room.Vertical = vertical;
-            room.Css =css;
-            room.DoorExist = doorExist;
+            Room room = new Room(id, name, purpose, doctorId, floorId, x, y, height, width, doorX, doorY, vertical, css, doorExist);
             return room;
         }
     }

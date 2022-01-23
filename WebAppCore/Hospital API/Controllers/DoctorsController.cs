@@ -21,6 +21,7 @@ namespace Hospital_API.Controllers
     {
         private readonly HospitalContext _context;
         private readonly DoctorService _doctorService;
+        public bool test = false;
 
         [ActivatorUtilitiesConstructor]
         public DoctorsController()
@@ -64,6 +65,7 @@ namespace Hospital_API.Controllers
 
             return doctor;
         }
+
         [HttpGet("get_by_specialty/{type}")]
         public ActionResult<IEnumerable<Doctor>> GetDoctorForSpecialty(int type)
         {

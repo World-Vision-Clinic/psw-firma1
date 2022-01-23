@@ -32,19 +32,57 @@ namespace IntegrationTests.EndToEndTests
         }
 
         [Fact]
-        public void OrderingExistingMedicineTest()
+        public void Ordering_existing_medicine_test()
         {
-            pharmaciesPage.InsertName("Andol");          
+            pharmaciesPage.InsertName("Andol");
             pharmaciesPage.InsertWeight("200");
             pharmaciesPage.InsertQuantity("2");
             pharmaciesPage.SearchPharmacies();
 
             pharmaciesPage.WaitForOrderButton();
-            
+
             pharmaciesPage.OdrerMedicine();
             pharmaciesPage.WaitForAlertDialog();
 
             Assert.Equal(pharmaciesPage.GetDialogMessage(), Pages.PharmaciesPage.SuccessfulOrderingMessage);
+        }
+
+        [Fact]
+        public void Ordering_unexisting_medicine_test()
+        {
+            pharmaciesPage.InsertName("Blabla");
+            pharmaciesPage.InsertWeight("200");
+            pharmaciesPage.InsertQuantity("2");
+            pharmaciesPage.SearchPharmacies();
+
+            pharmaciesPage.WaitForMessage();
+
+            Assert.True(pharmaciesPage.CheckMessage());
+        }
+
+        [Fact]
+        public void Missing_user_input_test()
+        {
+            pharmaciesPage.InsertName("Andol");
+            pharmaciesPage.InsertQuantity("2");
+            pharmaciesPage.SearchPharmacies();
+
+            pharmaciesPage.WaitForAlertDialog();
+
+            Assert.Equal(pharmaciesPage.GetDialogMessage(), Pages.PharmaciesPage.UnsuccessfulOrderingMessage);
+        }
+
+        [Fact]
+        public void Wrong_user_input_test()
+        {
+            pharmaciesPage.InsertName("Andol");
+            pharmaciesPage.InsertWeight("sss");
+            pharmaciesPage.InsertQuantity("2");
+            pharmaciesPage.SearchPharmacies();
+
+            pharmaciesPage.WaitForAlertDialog();
+
+            Assert.Equal(pharmaciesPage.GetDialogMessage(), Pages.PharmaciesPage.UnsuccessfulOrderingMessage);
         }
 
         public void Dispose()

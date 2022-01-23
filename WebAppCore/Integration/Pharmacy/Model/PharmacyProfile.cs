@@ -15,6 +15,8 @@ namespace Integration.Pharmacy.Model
 
         public string Note { get; set; }
 
+        public string Email { get; set; }
+
         public PharmacyProfile(string name, string key, string localhost, ProtocolType protocol, string street, string city, string note)
         {
             Name = name;
@@ -29,6 +31,16 @@ namespace Integration.Pharmacy.Model
             ConnectionInfo = new ConnectionInfo(key, localhost, protocol);
             Address = new Address(street, city);
             Note = "";
+        }
+
+        public PharmacyProfile(int id, string name, ConnectionInfo connectionInfo, Address address, string note, string email)
+        {
+            Id = id;
+            Name = name;
+            ConnectionInfo = connectionInfo;
+            Address = address;
+            Note = note;
+            Email = email;
         }
 
         public PharmacyProfile() { }

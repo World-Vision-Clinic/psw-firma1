@@ -23,6 +23,21 @@ namespace Integration.Partnership.Service
         {
             return tenderRepository.GetAll();
         }
+        public List<Tender> GetTenders()
+        {
+            return tenderRepository.GetAll();
+        }
+
+        public void EditTenderEndTimeByHash(Tender tender)
+        {
+            tenderRepository.EditTenderEndTimeByHash(tender);
+        }
+
+        public void EditTenderOfferById(TenderOffer offer)
+        {
+            tenderRepository.EditTenderOfferById(offer);
+        }
+
 
         public Dictionary<string, List<float>> GetNumberOfOffersForAllTenders(DateTime start, DateTime end)
         {
@@ -269,6 +284,16 @@ namespace Integration.Partnership.Service
             }
 
             return numberOfTendersPharmacyWon;
+        }
+
+        public Tender GetByTenderHash(string id)
+        {
+            return tenderRepository.GetByTenderHash(id);
+        }
+
+        public TenderOffer GetTenderOfferWithOfferItems(string pharmacyName, string offerHash)
+        {
+            return tenderRepository.GetTenderOfferWithOfferItems(pharmacyName, offerHash);
         }
     }
 }

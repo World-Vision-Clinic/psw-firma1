@@ -29,10 +29,8 @@ namespace Hospital.RoomsAndEquipment.Service
             {
                 if(eq.InTransport && eq.TransportEnd < DateTime.Now)
                 {
-                    eq.InTransport = false;
-                    eq.TransportStart = new DateTime();
-                    eq.TransportEnd = new DateTime();
-                    repository.Update(eq);
+                    Equipment eq1 = new Equipment(eq.Id, eq.Name, eq.Type, eq.Amount, eq.RoomId, false, new DateTime(), new DateTime());
+                    repository.Update(eq1);
                 }
             }
             return eqs;

@@ -1,10 +1,31 @@
+<body>
+    <div class="row d-flex align-items-center w-100">
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-8 website_name_label">
+        WORLD VISION CLINIC
+      </div>
+      <div class="col-md-2">
+      </div>
+    </div>
 
-<router-outlet></router-outlet>
-
-
-  
-<style>
-</style>
-<div class="content" role="main">
-</div>
-<router-outlet></router-outlet>
+    <div class="row d-flex align-items-center w-100">
+      <div class="col-md-4">
+      </div>
+      <div class="col-md-4">
+        <nav class="navMenu">
+          <a href="/" *ngIf="!isLoggedIn()" style="float:none">Home</a>
+          <a href="medical-record" *ngIf="isLoggedIn()" id="medicalrecord" style="float:none">Home</a>
+          <a href="create-feedback" id="createfeedback" *ngIf="isLoggedIn()" style="float:none">Feedback</a>
+          <a href="register" *ngIf="!isLoggedIn()" style="float:none">Sign up</a>
+          <a href="login" id="signin" *ngIf="!isLoggedIn()" style="float:none">Sign in</a>
+          <a href="create-appointment" *ngIf="isLoggedIn()" id="createappointment" style="float:none">Appointment(Assisted)</a>
+          <a href="appointment4step" *ngIf="isLoggedIn()" id="appointment4step" style="float:none">Appointment(Standard)</a>
+          <a href="/" *ngIf="isLoggedIn()" id="signout" (click)="logout()" style="float:none">Sign out</a>
+        </nav>
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+    <router-outlet></router-outlet>
+</body>

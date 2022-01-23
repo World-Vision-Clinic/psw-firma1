@@ -12,46 +12,48 @@ namespace HospitalTests.EditorTests
 {
     public class EquipmentRepositoryTest
     {
+        private HospitalContext GetInMemoryRepository()
+        {
+            DbContextOptions<TestContext> options;
+            var builder = new DbContextOptionsBuilder<TestContext>();
+            builder.UseInMemoryDatabase("TestDb");
+            options = builder.Options;
+            HospitalContext hospitalContext = new TestContext(options);
+            hospitalContext.Database.EnsureDeleted();
+            hospitalContext.Database.EnsureCreated();
+            return hospitalContext;
+        }
+
         [Fact]
         public void equipment_repository_test_1()
         {
-            var options = new DbContextOptionsBuilder<HospitalContext>()
-                .UseInMemoryDatabase(databaseName: "HospitalDB")
-                .Options;
+            HospitalContext context = GetInMemoryRepository();
 
 
-            using (var context = new HospitalContext(options))
-            {
-                Equipment eq1 = new Equipment { Id = 89, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 5, RoomId = 1 };
-                context.AllEquipment.Add(eq1);
-                context.SaveChanges();
-            }
-            using (var context = new HospitalContext(options))
-            {
-                Hospital.RoomsAndEquipment.Repository.EquipmentRepository eqRepository = new Hospital.RoomsAndEquipment.Repository.EquipmentRepository(context);
-                List<Equipment> eqpmnt = eqRepository.GetAll();
+            
+            Equipment eq1 = new Equipment (89, "Bandage", EquipmentType.DYNAMIC, 5, 1 );
+            context.AllEquipment.Add(eq1);
+            context.SaveChanges();
+            
+            EquipmentRepository eqRepository = new EquipmentRepository(context);
+            List<Equipment> eqpmnt = eqRepository.GetAll();
 
-                Assert.Equal(2, eqpmnt.Count);
-            }
+            eqpmnt.Count.ShouldBe(1);
+            
         }
 
         [Fact]
         public void equipment_repository_test_2()
         {
-            var options = new DbContextOptionsBuilder<HospitalContext>()
-                .UseInMemoryDatabase(databaseName: "HospitalDB")
-                .Options;
+            HospitalContext context = GetInMemoryRepository();
+            Equipment eq1 = new Equipment (1, "Bandage", EquipmentType.DYNAMIC, 5, 1 );
+            context.AllEquipment.Add(eq1);
+            context.SaveChanges();
+            EquipmentRepository eqRepository = new EquipmentRepository(context);
+            Equipment eqpmntID = eqRepository.GetByID(1);
 
-            using (var context = new HospitalContext(options))
-            {
-                Equipment eq1 = new Equipment { Id = 1, Name = "Bandage", Type = EquipmentType.DYNAMIC, Amount = 5, RoomId = 1 };
-                context.AllEquipment.Add(eq1);
-                context.SaveChanges();
-                Hospital.RoomsAndEquipment.Repository.EquipmentRepository eqRepository = new Hospital.RoomsAndEquipment.Repository.EquipmentRepository(context);
-                Equipment eqpmntID = eqRepository.GetByID(1);
+            eqpmntID.Id.ShouldBeEquivalentTo(1);
 
-                eqpmntID.Id.ShouldBeEquivalentTo(1);
-            }
         }
     }
 }

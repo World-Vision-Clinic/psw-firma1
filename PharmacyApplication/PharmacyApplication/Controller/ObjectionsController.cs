@@ -33,7 +33,7 @@ namespace PharmacyAPI.Controller
                 return BadRequest("Api Key is not valid!");
             }
 
-            if (dto.Content.Length <= 0)
+            if (dto.Content == null || dto.Content.Length <= 0)
             {
                 return BadRequest();
             }

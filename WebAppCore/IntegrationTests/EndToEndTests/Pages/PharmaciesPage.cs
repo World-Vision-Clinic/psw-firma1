@@ -16,8 +16,10 @@ namespace IntegrationTests.EndToEndTests.Pages
         private IWebElement InputQuantityElement => driver.FindElement(By.Id("medicine_quantity"));
         private IWebElement SearchButtonElement => driver.FindElement(By.Id("searchBtn"));
         private IWebElement OrderButtonElement => driver.FindElement(By.Id("orderButton"));
+        private IWebElement NoProperPharmacyMessageElement => driver.FindElement(By.Id("message"));
 
         public const string SuccessfulOrderingMessage = "Medicine succesfully ordered";
+        public const string UnsuccessfulOrderingMessage = "Please enter proper values";
         public PharmaciesPage(IWebDriver driver)
         {
             this.driver = driver;
@@ -63,6 +65,25 @@ namespace IntegrationTests.EndToEndTests.Pages
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 10));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.Id("orderButton")));
         }
+
+        public void WaitForMessage()
+        {
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 10));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.Id("message")));
+        }
+
+        public bool CheckMessage()
+        {
+            if (NoProperPharmacyMessageElement.Text.Equals("There is no proper pharmacy"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
         public void Navigate() => driver.Navigate().GoToUrl(URI);
     }

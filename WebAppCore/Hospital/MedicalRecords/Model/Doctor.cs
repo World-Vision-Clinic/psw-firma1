@@ -29,8 +29,7 @@ namespace Hospital.MedicalRecords.Model
 
 
         public Doctor(int id, string name, string surname, int s, int r, DoctorType type, bool vacation)
-        {
-            this.Validate();
+        {         
             this.Id = id;
             this.FirstName = name;
             this.LastName = surname;
@@ -38,6 +37,7 @@ namespace Hospital.MedicalRecords.Model
             this.RoomId = r;
             this.Type = type;
             this.onVacation = vacation;
+            this.Validate();
         }
 
         public Doctor(int id, string name, string surn)

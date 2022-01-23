@@ -29,6 +29,7 @@ namespace Hospital_API.Controllers
         private MapPositionService mapPositionService = new MapPositionService(new MapPositionRepository(new Hospital.SharedModel.HospitalContext()));
         private OutsideDoorService outsideDoorService = new OutsideDoorService(new OutsideDoorRepository(new Hospital.SharedModel.HospitalContext()));
         public BuildingService buildingTestService;
+        public bool test = false;
 
         // GET: api/buildings
         [HttpGet]
