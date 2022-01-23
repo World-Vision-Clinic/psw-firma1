@@ -13,7 +13,7 @@
         
             <div class="card-body mx-4">
                 <div class="col-md-12">
-                    <div class="row d-flex">
+                    <div class="row">
                       <div class="col-md-8">
                         <div class="skills">
                             <ul class="lines">
@@ -46,7 +46,7 @@
                                 <ul class="chart--horiz" *ngFor = "let dataPair of e.data; index as ri">
                                   <li class="chart__bar" style="--value:{{getStatisticDataPercentage(dataPair, e.data)}}%">
                                     <span class="chart__label">
-                                      {{dataPair.label}}
+                                      {{dataPair.label}} ({{dataPair.value}})
                                     </span>
                                   </li>
                                 </ul>
