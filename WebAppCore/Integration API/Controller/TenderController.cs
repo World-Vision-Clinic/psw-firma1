@@ -115,7 +115,7 @@ namespace Integration_API.Controller
                 }
             }
 
-            return BadRequest();
+            return BadRequest("Procurement wasn't executed!");
         }
 
         private bool DeclareTenderWinner(TenderDto tenderDto, string domain)
