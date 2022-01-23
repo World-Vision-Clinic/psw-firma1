@@ -39,16 +39,31 @@
       <nav class="navMenu">
         <a href="/" *ngIf="!isLoggedIn()" style="float:none">Home</a>
         <a href="login" *ngIf="!isLoggedIn()" style="float:none">Sign in</a>
-        <a href="buildings" *ngIf="isLoggedIn()" style="float:none">Home</a>
         <a href="manager-feedback" id="feedback" *ngIf="isLoggedIn()" style="float:none">Feedbacks</a>
         <a href="survey-results" *ngIf="isLoggedIn()" style="float:none">Surveys</a>
         <a href="block-patients" id="users" *ngIf="isLoggedIn()" style="float:none">Users</a>
         <a href="buildings" *ngIf="isLoggedIn()" style="float:none">Hospital editor</a>
-        <a href="/" *ngIf="isLoggedIn()" (click)="logout()" style="float:none">Sign out</a>
+        <a href="/manager-front-app" *ngIf="isLoggedIn() && !isManagerFrontApp" style="float:none">
+          Integration with pharmacies
+          </a>
+
+        <div *ngIf="isManagerFrontApp" >
+        <a href="/manager-front-app/(showObjRepl:create-objection)" style="float:none">Create objection</a>
+        <a href="/manager-front-app/(showObjRepl:overview-objections-replies)" style="float:none">Objections</a>
+        <a href="/manager-front-app/(showObjRepl:overview-pharmacies)"  style="float:none">Pharmacies</a>
+        <a href="/manager-front-app/(showObjRepl:news)" style="float:none">News</a>
+        <a href="/manager-front-app/(showObjRepl:medicine-consumption-report)" style="float:none">Medicine Consumption</a>
+        <a href="/manager-front-app/(showObjRepl:get-specification)"  style="float:none">Get specification</a>
+        <a href="/manager-front-app/(showObjRepl:view-files)" style="float:none">Downloads</a>
+        <a href="/manager-front-app/(showObjRepl:create-tender)" style="float:none">Create tender</a>
+        <a href="/manager-front-app/(showObjRepl:select-tender)" style="float:none">Tenders</a>
+        <a href="/manager-front-app/(showObjRepl:statistics)" style="float:none">Statistics</a>
+        <a href="/" *ngIf="!isLoggedIn()" (click)="logout()" style="float:none">Sign out</a>
+        </div>
       </nav>
     </div>
-    <div class="col-md-2">
-    </div>
+  </div>
+  <div class="col-md-8 website_name_label" style="margin-left: 16%; margin-top: -1%;">
   </div>
   <router-outlet></router-outlet>
 </body>
