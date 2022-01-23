@@ -26,17 +26,17 @@ namespace Hospital.RoomsAndEquipment.Model
 
         public void ordinaryTransport()
         {
-            this.addNewEvent(new EquipmentTransportationEvent(this.Id, "Ordinary transportation."));
+            this.addNewEvent(new EquipmentTransportationEvent(this.Id, "Equipment transported from " + this.RoomFrom.Name + " to " + this.RoomTo.Name));
         }
 
         public void emptyRoomEquipment()
         {
-            this.addNewEvent(new EquipmentTransportationEvent(this.Id, "Empty equipment from room."));
+            this.addNewEvent(new EquipmentTransportationEvent(this.Id, "Equipment removed from room."));
         }
 
         public void roomRenovation()
         {
-            this.addNewEvent(new EquipmentTransportationEvent(this.Id, "Room renovation transport."));
+            this.addNewEvent(new EquipmentTransportationEvent(this.Id, "Equipment changed room because of renovation."));
         }
 
     }

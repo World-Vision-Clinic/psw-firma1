@@ -11,10 +11,7 @@ namespace Hospital.RoomsAndEquipment.Model
         public string ReasonForTransportation { get; set; }
         public DateTime TimeOfTransport { get; set; }
 
-        public EquipmentTransportationEvent()
-        {
-
-        }
+        public EquipmentTransportationEvent() {}
         public EquipmentTransportationEvent(int id, int agregateId, string reason)
         {
             this.Id = id;
