@@ -13,16 +13,16 @@ export class DoctorsManagementService {
   constructor(private http: HttpClient) {}
 
   getDoctors() {
-    return this.http.get<Doctor[]>('http://localhost:39901/api/Doctors');
+    return this.http.get<Doctor[]>('/api/Doctors');
   }
 
   getVacations() {
-    return this.http.get<Vacation[]>('http://localhost:39901/api/vacations');
+    return this.http.get<Vacation[]>('/api/vacations');
   }
 
   deleteVacation(id: number) {
     this.http
-      .delete('http://localhost:39901/api/vacations/' + id)
+      .delete('/api/vacations/' + id)
       .subscribe((data) => console.log(data));
   }
 
@@ -30,7 +30,7 @@ export class DoctorsManagementService {
     const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(vacation);
     return this.http
-      .post('http://localhost:39901/api/vacations', body, { headers: headers })
+      .post('/api/vacations', body, { headers: headers })
       .subscribe((data) => {
         console.log(data);
       });
@@ -40,7 +40,7 @@ export class DoctorsManagementService {
     const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(vacation);
     return this.http
-      .put('http://localhost:39901/api/vacations', body, { headers: headers })
+      .put('/api/vacations', body, { headers: headers })
       .subscribe((data) => {
         console.log(data);
       });
@@ -49,7 +49,7 @@ export class DoctorsManagementService {
   makeNewShift(shift: ShiftSend) {
     const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(shift);
-    return this.http.post('http://localhost:39901/api/shifts/newShift', body, {
+    return this.http.post('/api/shifts/newShift', body, {
       headers: headers,
     });
   }
@@ -57,40 +57,40 @@ export class DoctorsManagementService {
   updateShift(shift: ShiftSend) {
     const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(shift);
-    return this.http.post('http://localhost:39901/api/shifts/update', body, {
+    return this.http.post('/api/shifts/update', body, {
       headers: headers,
     });
   }
 
   getAllShifts() {
-    return this.http.get<Shift[]>('http://localhost:39901/api/shifts/getAll');
+    return this.http.get<Shift[]>('/api/shifts/getAll');
   }
 
   deleteShift(id: number) {
-    return this.http.delete('http://localhost:39901/api/shifts/' + id);
+    return this.http.delete('/api/shifts/' + id);
   }
 
   changeShift(dto) {
     const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(dto);
-    return this.http.post('http://localhost:39901/api/Doctors/addShift', body, {
+    return this.http.post('/api/Doctors/addShift', body, {
       headers: headers,
     });
   }
 
   getOnCallShiftsForDoctor(doctorId: number) {
     return this.http.get<OnCallShift[]>(
-      `http://localhost:39901/api/onCallShifts/doctorsDuty/${doctorId}`
+      `/api/onCallShifts/doctorsDuty/${doctorId}`
     );
   }
 
   getVacationsForDoctor(doctorId: number) {
     return this.http.get<Vacation[]>(
-      `http://localhost:39901/api/vacations/doctorsVacations/${doctorId}`
+      `/api/vacations/doctorsVacations/${doctorId}`
     );
   }
 
   getShiftById(shiftId: number) {
-    return this.http.get<Shift>(`http://localhost:39901/api/shifts/${shiftId}`);
+    return this.http.get<Shift>(`/api/shifts/${shiftId}`);
   }
 }

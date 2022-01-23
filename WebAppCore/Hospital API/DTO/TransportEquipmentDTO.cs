@@ -18,13 +18,10 @@ namespace Hospital_API.DTO
         internal Equipment getEquipment(EquipmentService equipmentService)
         {
             Equipment equipment = equipmentService.getById(TargetEqupmentId);
-
-            equipment.InTransport = true;
-            equipment.Amount = Amount;
-            equipment.TransportStart = UnixTimeStampToDateTime(startDate);
-            equipment.TransportEnd = UnixTimeStampToDateTime(endDate);
-            equipment.RoomId = TargetRoomId;
-            return equipment;
+            //(int id, string name, EquipmentType type, int amount, int roomId, bool inTransport, DateTime start, DateTime end)
+            Equipment retEquipment = new Equipment(equipment.Id, equipment.Name, equipment.Type, Amount, TargetRoomId, true, UnixTimeStampToDateTime(startDate), UnixTimeStampToDateTime(endDate));
+            
+            return retEquipment;
         }
 
         public static DateTime UnixTimeStampToDateTime(long unixTimeStamp)

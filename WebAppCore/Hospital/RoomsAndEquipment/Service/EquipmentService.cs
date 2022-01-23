@@ -39,7 +39,7 @@ namespace Hospital.RoomsAndEquipment.Service
         public void reduceAmount(int targetEqupmentId, int amount)
         {
             Equipment targetEquipment = getById(targetEqupmentId);
-            targetEquipment.Amount -= amount;
+            targetEquipment.changeAmount(-amount);
             Update(targetEquipment);
         }
 
@@ -112,7 +112,6 @@ namespace Hospital.RoomsAndEquipment.Service
             DateTime now = DateTime.Now;
             if (now < eq.TransportStart.AddHours(-24) &&  eq.Id != 5)
             {
-                eq.InTransport = false;
                 repository.Update(eq);
                 return true;
             }

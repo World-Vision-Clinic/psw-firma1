@@ -23,7 +23,7 @@ using Xunit;
 
 namespace HospitalTests.EditorTests.IntegrationTests
 {
-    public class RelocatingEquipmentTest
+    public class RelocatingEquipment
     {
 
 
@@ -39,7 +39,7 @@ namespace HospitalTests.EditorTests.IntegrationTests
             return hospitalContext;
         }
 
-        public RelocatingEquipmentTest()
+        public RelocatingEquipment()
         {
            
         }

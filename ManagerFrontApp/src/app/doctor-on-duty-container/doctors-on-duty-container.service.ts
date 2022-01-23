@@ -13,15 +13,13 @@ export class OnDutyService {
   constructor(private http: HttpClient) {}
 
   getOnCallShifts() {
-    return this.http.get<OnCallShift[]>(
-      'http://localhost:39901/api/onCallShifts'
-    );
+    return this.http.get<OnCallShift[]>('/api/onCallShifts');
   }
 
   addOnCallShift(vacation: OnCallShift | null) {
     const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(vacation);
-    return this.http.post('http://localhost:39901/api/onCallShifts', body, {
+    return this.http.post('/api/onCallShifts', body, {
       headers: headers,
     });
   }
@@ -29,7 +27,7 @@ export class OnDutyService {
   updateOnCallShift(shift: OnCallShift | null) {
     const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(shift);
-    return this.http.put('http://localhost:39901/api/onCallShifts', body, {
+    return this.http.put('/api/onCallShifts', body, {
       headers: headers,
     });
   }

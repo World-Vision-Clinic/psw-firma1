@@ -18,12 +18,8 @@ export class ChartsService {
   getStats(data: DoctorStatsRequest) {
     const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(data);
-    return this.http.post<DoctorStat[]>(
-      'http://localhost:39901/api/doctorStats',
-      body,
-      {
-        headers: headers,
-      }
-    );
+    return this.http.post<DoctorStat[]>('/api/doctorStats', body, {
+      headers: headers,
+    });
   }
 }
