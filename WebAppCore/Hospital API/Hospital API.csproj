@@ -5,6 +5,7 @@
     <RootNamespace>Hospital_API</RootNamespace>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <LangVersion>preview</LangVersion>
+    <StartupObject></StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

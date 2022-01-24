@@ -30,7 +30,7 @@ namespace Hospital.Schedule.Model
             yield return To;
         }
 
-        public bool OverlapsWith(DateRange dateRange) //TODO: Test
+        public bool OverlapsWith(DateRange dateRange)
         {
             if (From <= dateRange.From && To > dateRange.To)
                 return true;

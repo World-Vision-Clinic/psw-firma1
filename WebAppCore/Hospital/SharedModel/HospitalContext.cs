@@ -40,8 +40,9 @@ namespace Hospital.SharedModel
         public DbSet<MedicalRecord> MedicalRecords { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
         public DbSet<Manager> Managers { get; set; }
-        
-        
+        public DbSet<PrescriptionMedicine> PrescriptionMedicines { get; set; }
+
+
 
         public HospitalContext() { }
 

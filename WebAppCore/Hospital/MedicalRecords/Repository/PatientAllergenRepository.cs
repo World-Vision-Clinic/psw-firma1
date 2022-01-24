@@ -43,8 +43,10 @@ namespace Hospital.MedicalRecords.Repository
 
         public List<Allergen> FindByPatientId(int patientId)
         {
-            List<int> patientAllergenIds = _context.PatientAllergens.Where(f => f.PatientId == patientId).Select(u => u.Id).ToList();
-            List<Allergen> allergens = _context.Allergens.Where(a => patientAllergenIds.Contains(a.Id)).ToList();
+            //List<int> patientAllergenIds = _context.PatientAllergens.Where(f => f.PatientId == patientId).Select(u => u.Id).ToList(); //Greska?
+            //List<Allergen> allergens = _context.Allergens.Where(a => patientAllergenIds.Contains(a.Id)).ToList();
+            List<int> allergenIds = _context.PatientAllergens.Where(f => f.PatientId == patientId).Select(u => u.AllergenId).ToList();
+            List<Allergen> allergens = _context.Allergens.Where(a => allergenIds.Contains(a.Id)).ToList();
             return allergens;
         }
 

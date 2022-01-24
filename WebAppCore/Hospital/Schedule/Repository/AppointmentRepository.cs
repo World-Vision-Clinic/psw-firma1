@@ -1,4 +1,5 @@
 ﻿using Hospital.MedicalRecords.Model;
+using Hospital.MedicalRecords.Repository;
 using Hospital.Schedule.Model;
 using Hospital.SharedModel;
 using Microsoft.EntityFrameworkCore;
@@ -17,8 +18,7 @@ namespace Hospital.Schedule.Repository
 
         public AppointmentRepository(HospitalContext context)
         {
-            _context = context;
-        }
+            _context = context;        }
         public List<Appointment> GetAll()
         {
             return _context.Appointments.ToList();

@@ -105,7 +105,7 @@ namespace Hospital.Schedule.Service
                     DateTime extendedUpperRange = upperDateRange.AddDays(range);
 
                     DateTime beforeLowerRange = (extendedLowerRange > minimumDate ? extendedLowerRange : minimumDate);
-                    DateRange beforeDateRange = new DateRange(beforeLowerRange, lowerDateRange.AddHours(23).AddMinutes(59)); //TODO: Testirati ovo
+                    DateRange beforeDateRange = new DateRange(beforeLowerRange, lowerDateRange.AddHours(23).AddMinutes(59));
 
                     List<Appointment> freeAppointmentsBefore = GenerateFreeAppointmentList(beforeDateRange, timeRange, new TimeSpan(0, appointmentDuration, 0), doctorId);
                     List<Appointment> doctorAppointmentsBefore = GetByDoctorId(doctorId, beforeDateRange);
@@ -159,8 +159,6 @@ namespace Hospital.Schedule.Service
                 bool overlapFound = false;
                 foreach (Appointment da in doctorAppointments)
                 {
-                    
-                    //if (!da.IsCancelled && DatesOverlap(a.Date, a.Length, da.Date, da.Length)) //TODO: Da li koristiti overlap funkciju? - proveriti
                     if (!da.IsCancelled && a.OverlapsWith(da))
                     {
                         overlapFound = true;
@@ -221,7 +219,7 @@ namespace Hospital.Schedule.Service
             DateTime workdayBegin = date.AddHours(9);
             DateTime workdayEnd = date.AddHours(17);
             List<Appointment> appointments = new List<Appointment>();
-            List<Appointment> allPossibleAppointments = GenerateEveryAppointmentForWorkday(workdayBegin,workdayEnd,id);
+            List<Appointment> allPossibleAppointments = GenerateEveryAppointmentForWorkday(workdayBegin, workdayEnd, id);
 
             if (doctorsAppointments.Count != 0)
             {
@@ -282,7 +280,7 @@ namespace Hospital.Schedule.Service
                         Appointment appointment = new Appointment();
                         appointment.Type = AppointmentType.Appointment;
                         appointment.DoctorForeignKey = doctorId;
-                        appointment.PatientForeignKey = 0; //TODO: Vidi sta je ovo
+                        appointment.PatientForeignKey = 0; //Legacy - TODO: Obrisati i testirati
                         appointment.Date = timeIterator;
                         appointment.Length = appointmentLength;
 

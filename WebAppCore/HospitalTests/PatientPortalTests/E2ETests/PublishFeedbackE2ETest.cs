@@ -35,8 +35,8 @@ namespace HospitalTests.PatientPortalTests.E2ETests
             Assert.True(loginPage.UsernameDisplayed());
             Assert.True(loginPage.PasswordDisplayed());
 
-            loginPage.InsertUsername("pera");
-            loginPage.InsertPassword("123");
+            loginPage.InsertUsername("ftn");
+            loginPage.InsertPassword("ftn");
             loginPage.ClickLogin();
 
             homePage = new HomePageManager(driver);
