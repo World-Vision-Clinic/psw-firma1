@@ -29,6 +29,9 @@ jobs:
           --health-retries 5
         ports:
           - 5432:5432
+      rabbitmq:
+        image: rabbitmq:3-management-alpine
+
 
     steps:
       - name: Check out repository code
@@ -43,17 +46,22 @@ jobs:
       - name: Build WebAppCore
         run: dotnet build ${SOLUTION_DIRECTORY_HOSPITAL}   
 
-      - name: Create Migrations hospital
-        run:
-          dotnet ef migrations add InitialCreate --context HospitalContext --project ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL};
+      # - name: Create Migrations hospital
+      #   run:
+      #     dotnet ef migrations add InitialCreate --context HospitalContext --project ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL};
 
-      # putanje do integracionih testova
-      # WebAppCore\HospitalTests\EditorTests\IntegrationTests
-      # WebAppCore\HospitalTests\PatientPortalTests\IntegrationTests
+      # # putanje do integracionih testova
+      # # WebAppCore\HospitalTests\EditorTests\IntegrationTests
+      # # WebAppCore\HospitalTests\PatientPortalTests\IntegrationTests
 
-      - name: Update Database
-        run: dotnet ef database update --context HospitalContext --project ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL};
+      # - name: Update Database
+      #   run: dotnet ef database update --context HospitalContext --project ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL};
      
+
+      - name: run
+        run:  dotnet run --project WebAppCore/HospitalApi/ --urls=http://0.0.0.0:0 &
+
+
       - name: Test
         run: dotnet test ${SOLUTION_DIRECTORY_HOSPITAL} --no-restore --verbosity quiet --filter FullyQualifiedName\!~E2ETests\!~EndToEndTests\!~End2End
         env:
