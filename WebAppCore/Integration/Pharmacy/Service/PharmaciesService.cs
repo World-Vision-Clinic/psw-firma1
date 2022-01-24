@@ -63,7 +63,6 @@ namespace Integration.Pharmacy.Service
 
             if (pharmacy == null) return null;
 
-            
             pharmacy.Address = editedPharmacy.Address;
             pharmacy.Note = editedPharmacy.Note;
             pharmacy.Email = editedPharmacy.Email;

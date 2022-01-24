@@ -25,7 +25,6 @@ namespace Integration.Pharmacy.Service
         IPharmaciesRepository pharmaciesRepository;
         ITenderRepository tenderRepository;
         Boolean isTest;
-        private IHubContext<SignalServer> _hubContext;
 
         public RabbitMQService(INewsRepository newsRepository, IPharmaciesRepository pharmaciesRepository, ITenderRepository tenderRepository, Boolean isTest)
         {
@@ -45,83 +44,108 @@ namespace Integration.Pharmacy.Service
         }
         public override Task StartAsync(CancellationToken cancellationToken)
         {
+            NewsChannelExchange();
+
+            TenderChannelExchange();
+
+            return base.StartAsync(cancellationToken);
+        }
+
+        private void TenderChannelExchange()
+        {
             foreach (PharmacyProfile pharmacyProfile in pharmaciesRepository.GetAll())
             {
-                var factory = new ConnectionFactory() { HostName = "localhost" };
-                connection = factory.CreateConnection();
-                channel = connection.CreateModel();
-
-                channel.ExchangeDeclare(exchange: pharmacyProfile.Name + "NewsChannel", type: ExchangeType.Direct);
-                var queueName = channel.QueueDeclare(queue: pharmacyProfile.Name,
-                                       durable: false,
-                                       exclusive: false,
-                                       autoDelete: false,
-                                       arguments: null).QueueName;
-                channel.QueueBind(queue: queueName,
-                                    exchange: pharmacyProfile.Name + "NewsChannel",
-                                    routingKey: pharmacyProfile.Name);
+                OpenConnectionTender(pharmacyProfile);
 
                 var consumer = new EventingBasicConsumer(channel);
                 consumer.Received += (model, ea) =>
                 {
                     byte[] body = ea.Body.ToArray();
                     var jsonMessage = Encoding.UTF8.GetString(body);
-                    News news;
 
-                    news = JsonConvert.DeserializeObject<News>(jsonMessage);
+                    TenderOffer offer = JsonConvert.DeserializeObject<TenderOffer>(jsonMessage);
 
-                    if (isTest) newsRepository.GetAll();
-                    news.Posted = false;
-                    news.IdEncoded = Generator.GenerateNewsId();
-                    news.PharmacyName = pharmacyProfile.Name;
-                    newsRepository.Save(news);
-
+                    ReceiveTenderOffer(offer, pharmacyProfile);
                 };
-
-
-                channel.BasicConsume(queue: pharmacyProfile.Name,
-                                        autoAck: true,
-                                        consumer: consumer);
-            }
-
-            foreach (PharmacyProfile pharmacyProfile in pharmaciesRepository.GetAll())
-            {
-                var factory = new ConnectionFactory() { HostName = "localhost" };
-                connection = factory.CreateConnection();
-                channel = connection.CreateModel();
-
-                channel.ExchangeDeclare(exchange: pharmacyProfile.Name + "OffersChannel", type: ExchangeType.Direct);
-                var queueName = channel.QueueDeclare(queue: pharmacyProfile.Name + "Offers",
-                                       durable: false,
-                                       exclusive: false,
-                                       autoDelete: false,
-                                       arguments: null).QueueName;
-                channel.QueueBind(queue: queueName,
-                                    exchange: pharmacyProfile.Name + "OffersChannel",
-                                    routingKey: pharmacyProfile.Name + "Offers");
-
-                var consumer = new EventingBasicConsumer(channel);
-                consumer.Received += (model, ea) =>
-                {
-                    byte[] body = ea.Body.ToArray();
-                    var jsonMessage = Encoding.UTF8.GetString(body);
-                    TenderOffer offer;
-
-                    offer = JsonConvert.DeserializeObject<TenderOffer>(jsonMessage);
-
-                    offer.PharmacyName = pharmacyProfile.Name;
-
-                    tenderRepository.AddOffer(offer);
-
-                };
-
 
                 channel.BasicConsume(queue: pharmacyProfile.Name + "Offers",
                                         autoAck: true,
                                         consumer: consumer);
             }
-            return base.StartAsync(cancellationToken);
         }
+
+        private void OpenConnectionTender(PharmacyProfile pharmacyProfile)
+        {
+            var factory = new ConnectionFactory() { HostName = "localhost" };
+            connection = factory.CreateConnection();
+            channel = connection.CreateModel();
+
+            channel.ExchangeDeclare(exchange: pharmacyProfile.Name + "OffersChannel", type: ExchangeType.Direct);
+            var queueName = channel.QueueDeclare(queue: pharmacyProfile.Name + "Offers",
+                                   durable: false,
+                                   exclusive: false,
+                                   autoDelete: false,
+                                   arguments: null).QueueName;
+            channel.QueueBind(queue: queueName,
+                                exchange: pharmacyProfile.Name + "OffersChannel",
+                                routingKey: pharmacyProfile.Name + "Offers");
+        }
+
+        private void ReceiveTenderOffer(TenderOffer offer, PharmacyProfile pharmacyProfile)
+        {
+            offer.PharmacyName = pharmacyProfile.Name;
+
+            tenderRepository.AddOffer(offer);
+        }
+
+        private void NewsChannelExchange()
+        {
+            foreach (PharmacyProfile pharmacyProfile in pharmaciesRepository.GetAll())
+            {
+                OpenConnectionNews(pharmacyProfile);
+
+                var consumer = new EventingBasicConsumer(channel);
+                consumer.Received += (model, ea) =>
+                {
+                    byte[] body = ea.Body.ToArray();
+                    var jsonMessage = Encoding.UTF8.GetString(body);
+                   
+                    News news = JsonConvert.DeserializeObject<News>(jsonMessage);
+
+                    ReceiveNews(news, pharmacyProfile);
+                };
+
+                channel.BasicConsume(queue: pharmacyProfile.Name,
+                                        autoAck: true,
+                                        consumer: consumer);
+            }
+        }
+
+        private void OpenConnectionNews(PharmacyProfile pharmacyProfile)
+        {
+            var factory = new ConnectionFactory() { HostName = "localhost" };
+            connection = factory.CreateConnection();
+            channel = connection.CreateModel();
+
+            channel.ExchangeDeclare(exchange: pharmacyProfile.Name + "NewsChannel", type: ExchangeType.Direct);
+            var queueName = channel.QueueDeclare(queue: pharmacyProfile.Name,
+                                   durable: false,
+                                   exclusive: false,
+                                   autoDelete: false,
+                                   arguments: null).QueueName;
+            channel.QueueBind(queue: queueName,
+                                exchange: pharmacyProfile.Name + "NewsChannel",
+                                routingKey: pharmacyProfile.Name);
+        }
+        private void ReceiveNews(News news, PharmacyProfile pharmacyProfile)
+        {
+            if (isTest) newsRepository.GetAll();
+            news.Posted = false;
+            news.IdEncoded = Generator.GenerateNewsId();
+            news.PharmacyName = pharmacyProfile.Name;
+            newsRepository.Save(news);
+        }
+
 
         public override Task StopAsync(CancellationToken cancellationToken)
         {

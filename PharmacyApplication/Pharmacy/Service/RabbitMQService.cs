@@ -32,37 +32,18 @@ namespace Pharmacy.Service
         {
             foreach (Hospital hospital in hospitalsRepository.GetAll())
             {
-                var factory = new ConnectionFactory() { HostName = "localhost" };
-                connection = factory.CreateConnection();
-                channel = connection.CreateModel();
-
-                channel.ExchangeDeclare(exchange: "TenderChannel", type: ExchangeType.Fanout);
-                var queueName = channel.QueueDeclare(queue: hospital.Name,
-                                       durable: false,
-                                       exclusive: false,
-                                       autoDelete: false,
-                                       arguments: null).QueueName;
-                channel.QueueBind(queue: queueName,
-                                    exchange: "TenderChannel",
-                                    routingKey: hospital.Name);
+                OpenConnection(hospital);
 
                 var consumer = new EventingBasicConsumer(channel);
                 consumer.Received += (model, ea) =>
                 {
                     byte[] body = ea.Body.ToArray();
                     var jsonMessage = Encoding.UTF8.GetString(body);
-                    Tender tender;
 
-                    tender = JsonConvert.DeserializeObject<Tender>(jsonMessage);
+                    Tender tender = JsonConvert.DeserializeObject<Tender>(jsonMessage);
 
-                    tender.HospitalName = hospital.Name;
-
-                    if (tendersRepository.GetById(tender.TenderHash) != null) tendersRepository.CloseTender(tender);
-
-                    else tendersRepository.Save(tender);
-
+                    ReceiveTender(tender, hospital);
                 };
-
 
                 channel.BasicConsume(queue: hospital.Name,
                                         autoAck: true,
@@ -71,6 +52,31 @@ namespace Pharmacy.Service
             return base.StartAsync(cancellationToken);
         }
 
+        private void OpenConnection(Hospital hospital)
+        {
+            var factory = new ConnectionFactory() { HostName = "localhost" };
+            connection = factory.CreateConnection();
+            channel = connection.CreateModel();
+
+            channel.ExchangeDeclare(exchange: "TenderChannel", type: ExchangeType.Fanout);
+            var queueName = channel.QueueDeclare(queue: hospital.Name,
+                                   durable: false,
+                                   exclusive: false,
+                                   autoDelete: false,
+                                   arguments: null).QueueName;
+            channel.QueueBind(queue: queueName,
+                                exchange: "TenderChannel",
+                                routingKey: hospital.Name);
+        }
+
+        private void ReceiveTender(Tender tender, Hospital hospital)
+        {
+            tender.HospitalName = hospital.Name;
+
+            if (tendersRepository.GetById(tender.TenderHash) != null) tendersRepository.CloseTender(tender);
+
+            else tendersRepository.Save(tender);
+        }
         public override Task StopAsync(CancellationToken cancellationToken)
         {
             channel.Close();

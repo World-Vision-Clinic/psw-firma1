@@ -30,7 +30,6 @@ namespace Integration_API.Controller
             {
                 var httpRequest = Request.Form;
                 var postedFile = httpRequest.Files[0];
-                //string filename = postedFile.FileName;
                 var physicalPath = _env.ContentRootPath + "/Photos/" + pharmacyName + ".png";
 
                 using (var stream = new FileStream(physicalPath, FileMode.Create))

@@ -128,14 +128,10 @@ namespace Integration_API.Controller
             List<PharmacyProfile> pharmacies = pharmaciesService.GetAll();
 
             PharmacyProfile pharmacy = pharmaciesService.Edit(PharmacyMapper.PharmacyDtoToPharmacy(dto));
-            if (pharmacy == null)
-            {
-                return NotFound("Pharmacy not found!");
-            }
-            else
-            {
-                return Ok(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
-            }
+
+            if (pharmacy == null) return NotFound("Pharmacy not found!");
+            return Ok(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
+
         }
 
     }
