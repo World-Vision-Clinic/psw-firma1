@@ -55,6 +55,16 @@ namespace Integration_API.Controller
         {
             return Ok("Hello from News controller");
         }
+
+        [HttpGet("getPublishedNews")]
+        public IActionResult GetPublishedNews()
+        {
+            List<News> news = new List<News>();
+            List<NewsDto> result = new List<NewsDto>();
+            news = newsService.getPublishedNews();
+            news.ForEach(pieceOfNews => result.Add(NewsMapper.NewsToNewsDto(pieceOfNews)));
+            return Ok(result);
+        }
     }
 
 }
