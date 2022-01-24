@@ -20,6 +20,8 @@ namespace Hospital.Schedule.Repository
         List<Appointment> GetAll();
         List<Appointment> GetByDoctorId(int doctorId, DateRange dateRange);
         List<Appointment> GetByDoctorId(int doctorId);
+
+        List<Appointment> GetByRoomId(int roomId);
         List<Appointment> GetByDoctorType(DoctorType type);
         List<Appointment> GetByDoctorIdAndDate(int id, DateTime date);
     }

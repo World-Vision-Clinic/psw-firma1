@@ -7,6 +7,7 @@ import { Hospital1Component } from './hospital1/hospital1.component';
 import { FrontPageComponent } from './front-page/front-page.component';
 import { RoomComponent } from './room/room.component';
 import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PharmacyRegistrationComponent } from './pharmacy-registration/pharmacy-registration.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -34,10 +35,17 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { AuthGuard } from './auth.guard';
 import { TenderCreationComponent } from './manager-integration-front-app/tender-creation/tender-creation.component';
 import { NgChartsModule } from 'ng2-charts';
-import { ChartAllModule, AccumulationChartAllModule, RangeNavigatorAllModule } from '@syncfusion/ej2-angular-charts';
+import {
+  ChartAllModule,
+  AccumulationChartAllModule,
+  RangeNavigatorAllModule,
+} from '@syncfusion/ej2-angular-charts';
 import { StatisticsComponent } from './manager-integration-front-app/statistics/statistics.component';
 import { TenderSelectionComponent } from './manager-integration-front-app/tender-selection/tender-selection.component';
 import { DoctorsManagementComponent } from './doctors-management/doctors-management.component';
+import { DoctorOnDutyContainerComponent } from './doctor-on-duty-container/doctor-on-duty-container.component';
+import { DatePipe } from '@angular/common';
+import { ChartsContainerComponent } from './charts-container/charts-container.component';
 
 @NgModule({
   declarations: [
@@ -63,8 +71,10 @@ import { DoctorsManagementComponent } from './doctors-management/doctors-managem
     LoginComponent,
     TenderCreationComponent,
     StatisticsComponent,
+    DoctorsManagementComponent,
+    DoctorOnDutyContainerComponent,
+    ChartsContainerComponent,
     TenderSelectionComponent,
-    DoctorsManagementComponent
   ],
   imports: [
     BrowserModule,
@@ -75,28 +85,32 @@ import { DoctorsManagementComponent } from './doctors-management/doctors-managem
     HttpClientModule,
     ReactiveFormsModule,
     NgSelectModule,
-    MatDatepickerModule,
     MatFormFieldModule,
+    MatDatepickerModule,
     MatNativeDateModule,
     ToastrModule.forRoot(),
     BrowserModule,
     NgChartsModule,
     ChartAllModule,
     AccumulationChartAllModule,
-    RangeNavigatorAllModule
+    RangeNavigatorAllModule,
+    MatInputModule,
     // MatDatepicker,
     // MatDateRangeInput,
     // MatDateRangePicker,
   ],
+
   providers: [
-    {provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    DatePipe,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     AuthGuard,
     JwtHelperService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
-    }],
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

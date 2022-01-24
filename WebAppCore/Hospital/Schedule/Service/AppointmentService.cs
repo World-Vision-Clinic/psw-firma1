@@ -37,6 +37,33 @@ namespace Hospital.Schedule.Service
             return _repo.FindById(id);
         }
 
+        public int getNumberOfAppointments(Doctor doctor, DateTime startDate, DateTime endDate)
+        {
+            int numberOfAppointments = 0;
+           List<Appointment> appointments =  _repo.GetByDoctorId(doctor.Id);
+           foreach(Appointment a in appointments)
+            {
+                if ( startDate <= a.Date && a.Date < endDate)
+                    numberOfAppointments++;
+            }
+
+            return numberOfAppointments;
+        }
+
+        public int getNumberOfPatients(Doctor doctor, DateTime startDate, DateTime endDate)
+        {
+            List<int> patinetsIds = new List<int>();
+            List<Appointment> appointments = _repo.GetByDoctorId(doctor.Id);
+            foreach (Appointment a in appointments)
+            {
+                if (startDate <= a.Date && a.Date < endDate)
+                    if (!patinetsIds.Contains(a.PatientForeignKey))
+                        patinetsIds.Add(a.PatientForeignKey);
+            }
+
+            return patinetsIds.Count();
+        }
+
         public List<Appointment> GetByPatientId(int patientId)
         {
             return _repo.GetByPatientId(patientId);
@@ -47,6 +74,12 @@ namespace Hospital.Schedule.Service
             return _repo.GetByDoctorId(doctorId);
         }
 
+        public List<Appointment> GetByRoomId(int roomId)
+        {
+            return _repo.GetByRoomId(roomId);
+        }
+
+       
         public List<Appointment> GetByDoctorId(int doctorId, DateRange dateRange)
         {
             return _repo.GetByDoctorId(doctorId, dateRange);

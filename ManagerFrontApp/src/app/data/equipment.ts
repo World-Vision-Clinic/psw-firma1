@@ -3,6 +3,8 @@ export interface Equipment {
   type: string;
   amount: number;
   roomId: number;
-  InTransport: boolean;
+  inTransport: boolean;
   id: number;
+  transportStart: string;
+  transportEnd: string;
 }

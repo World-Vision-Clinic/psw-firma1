@@ -12,6 +12,7 @@ using Hospital_API.Mapper;
 using Hspital_API.Dto;
 using Hspital_API.Mapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,6 +58,33 @@ namespace Hospital_API.Controllers
 
 
             return equipmentList;
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult cancelTransport(int id)
+
+        {
+            try
+            {
+                if (equipmentService.canceledTransport(id))
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private bool EquipmentExists(int id)
+        {
+            return equipmentService.EquipmentExists(id);
         }
 
 

@@ -52,6 +52,11 @@ namespace Hospital.RoomsAndEquipment.Model
             Validate();
         }
 
+        internal void changeAmount(int amount)
+        {
+            this.Amount += amount;
+        }
+
         public void Validate()
         {
             if (this.Amount < 0)
