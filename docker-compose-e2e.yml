@@ -86,6 +86,6 @@ services:
 
 networks:
   hospital_api:
-    driver: overlay
+    #driver: overlay
   database:
-    driver: overlay
+    #driver: overlay
