@@ -16,6 +16,7 @@ using Hospital.ShiftsAndVacations.Model;
 using System.Net.Http;
 using System.Net;
 using Hospital_API.DTO;
+using Hospital_API.Mapper;
 
 namespace Hospital_API.Controllers
 {
@@ -24,44 +25,46 @@ namespace Hospital_API.Controllers
     public class VacationsController : ControllerBase
     {
         public VacationService vacationService { get; set; }
-        //public DoctorService doctorService { get; set; }
+        public DoctorService doctorService { get; set; }
 
         [ActivatorUtilitiesConstructor]
         public VacationsController()
         {
             HospitalContext context = new HospitalContext();
-            IVacationRepository vacationRepository = new VacationRepository(context);
+            VacationRepository vacationRepository = new VacationRepository(context);
             IDoctorRepository doctorRepository = new DoctorRepository(context);
-            vacationService = new VacationService(vacationRepository, doctorRepository);
-            //doctorService = new DoctorService(doctorRepository);
+            vacationService = new VacationService(vacationRepository);
+            doctorService = new DoctorService(doctorRepository);
         }
 
         public VacationsController(VacationService serviceV, DoctorService serviceD)
         {
             vacationService = serviceV;
-            //doctorService = serviceD;
+            doctorService = serviceD;
         }
 
         [HttpGet]
-        public ActionResult<List<Vacation>> getAll()
+        public ActionResult<List<VacationDTO>> getAll()
         {
-            return vacationService.getAll();
+            List<VacationDTO> list = new List<VacationDTO>();
+            foreach (Vacation vacation in vacationService.getAll().OrderBy(x => x.Id).ToList<Vacation>())
+            {
+                list.Add(VacationsMapper.vacationToDTO(vacation, doctorService));
+            }
+            return list; 
         }
 
         [HttpPost]
         public HttpResponseMessage addNew([FromBody] VacationDTO v)
         {
-            //Doctor doctor = doctorService.FindById(v.DoctorId);
             vacationService.addNewVacation(v.Id, v.Description, v.Start, v.End, v.DoctorId, v.FullName);
             return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }
 
-        [HttpPost("update")]
+        [HttpPut]
         public HttpResponseMessage updateVacation([FromBody] VacationDTO v)
         {
-            vacationService.deleteVacation(v.Id);
-            //Doctor doctor = doctorService.FindById(v.DoctorId);
-            vacationService.addNewVacation(v.Id, v.Description, v.Start, v.End,v.DoctorId, v.FullName);
+            vacationService.updateVacation(v.Id, v.Description, v.Start, v.End,v.DoctorId, v.FullName);
             return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }
 
@@ -77,6 +80,17 @@ namespace Hospital_API.Controllers
                 return NotFound(); 
             }
             
+        }
+
+        [HttpGet("doctorsVacations/{doctorId}")]
+        public ActionResult<List<VacationDTO>> getDoctorsVacations(int doctorId)
+        {
+            List<VacationDTO> list = new List<VacationDTO>();
+            foreach (Vacation vacation in vacationService.getDoctorsVacations(doctorId).OrderBy(x => x.Id).ToList<Vacation>())
+            {
+                list.Add(VacationsMapper.vacationToDTO(vacation, doctorService));
+            }
+            return list;
         }
     }
 }

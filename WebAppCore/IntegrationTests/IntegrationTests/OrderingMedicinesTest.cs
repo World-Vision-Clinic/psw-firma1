@@ -31,9 +31,12 @@ namespace IntegrationTests.IntegrationTests
             Assert.Equal(mr.GetAll().Count, oldCount + 1);
         }*/
 
-        [Fact]
+
+        bool development = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+        [SkippableFact]
         public void OrderingExistingMedicinesTest()
         {
+            Skip.IfNot(development);
             OrderedMedicineDTO omd = new OrderedMedicineDTO("Brufen", "Zdravko", "none", "2 times a day", "100", "none", "none", "2", null, 200);
             MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection(), new HubMock());
 
@@ -44,10 +47,11 @@ namespace IntegrationTests.IntegrationTests
             Assert.Equal(200, statusCodeResult.StatusCode);
         }
 
-        [Theory]
+        [SkippableTheory]
         [MemberData(nameof(Data))]
         public void CheckIf_medicine_is_ordered(OrderingMedicineDTO omd, bool isHttp)
         {
+            Skip.IfNot(development);
             MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection(), new HubMock());
             bool requestOk = false;
             if (isHttp)

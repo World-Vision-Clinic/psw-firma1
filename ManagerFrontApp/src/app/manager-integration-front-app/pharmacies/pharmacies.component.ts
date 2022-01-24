@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http'
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { NotificationService } from 'src/app/notification.service';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { AccumulationChartComponent, AccumulationChart, IAccLoadedEventArgs, AccumulationTheme } from "@syncfusion/ej2-angular-charts";
@@ -45,7 +45,7 @@ export class PharmaciesComponent implements OnInit {
   public titleBar: string = '';
   public primaryYAxis: Object | undefined;
   
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private notifyService: NotificationService) { }
 
   pointColorMapping: string = 'color';
 
@@ -179,7 +179,7 @@ export class PharmaciesComponent implements OnInit {
       this.PharmaciesList = this.PharmaciesList.filter(o => data.some(({Localhost}) => o.Localhost === Localhost));
       this.buttonClicked = true;
     },
-    error =>{alert("Please enter proper values")});
+    error => {alert("Please enter proper values")});
   }
   disableButtons(){
     this.buttonClicked = false;
@@ -202,7 +202,8 @@ export class PharmaciesComponent implements OnInit {
   orderMedicines(selectedPharmacy){
     const body = { Localhost: selectedPharmacy.Localhost, MedicineName: this.medicineName, MedicineGrams: this.medicineGrams, NumOfBoxes: this.numOfBoxes};
     this.http.put<any>('http://localhost:43818/medicines/OrderMedicine', body)
-        .subscribe(res => alert("Medicine succesfully ordered"));
+        .subscribe(res => alert("Medicine succesfully ordered"),
+                  error => this.notifyService.showError(error.error, "Error"));
     this.buttonClicked = false;
   }
 

@@ -1,191 +1,457 @@
 <div class="big-toolbar">
-    <button class="big-toolbar-btn" routerLink="/">Front page</button>
-    <button class="big-toolbar-btn"  routerLink="/buildings">Buildings map</button>
-    <button class="big-toolbar-btn"  routerLink="/hospital/1">Rooms map</button>
-    <button style="width: 160px;" class="big-toolbar-btn"  routerLink="/doctors-management" (click)="shiftsBox=false; shiftsBtnsBox=false; initialTableBox=true; vacationTableBox=false;">Doctors management</button>
+  <button class="big-toolbar-btn" routerLink="/">Front page</button>
+  <button class="big-toolbar-btn" routerLink="/buildings">Buildings map</button>
+  <button class="big-toolbar-btn" routerLink="/hospital/1">Rooms map</button>
+  <button
+    style="width: 160px"
+    class="big-toolbar-btn"
+    routerLink="/doctors-management"
+    (click)="
+      shiftsBox = false;
+      shiftsBtnsBox = false;
+      initialTableBox = true;
+      vacationTableBox = false
+    "
+  >
+    Doctors management
+  </button>
 </div>
 
 <div class="title">
-    <h2>WORLD VISION CLINIC</h2>
-    <h3>Doctors management</h3>
+  <h2>WORLD VISION CLINIC</h2>
+  <h3>Doctors management</h3>
 </div>
 
-<div *ngIf="initialTableBox">
-    <div class="toolbar">
-        <button class="toolbar-btn" (click)="shiftsBox=true; shiftsBtnsBox=true; initialTableBox=false; vacationTableBox=false;">Shifts</button>
-        <button class="toolbar-btn" (click)="vacationTableBox=true; initialTableBox=false; loadVacations()">Vacations</button>
-        <button class="toolbar-btn">On duty</button>
-        <button class="toolbar-btn">Charts</button>
-    </div>
-    <div class="doctors-page" *ngIf="initialTableBox">
-        <table class="doctors-table">
-            <thead>
-              <tr>
-                <th style="width: 290px;">Doctor</th>
-                <th style="width: 220px;">Shift</th>
-                <th style="width: 190px;">Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let doctor of doctors">
-                <td style="width: 290px;">{{doctor.firstName}} {{doctor.lastName}}</td>
-                <td style="width: 220px;"></td>
-                <td style="width: 190px;"></td>
-              </tr>
-            </tbody>
-        </table>
-    </div>    
-</div>
-
-<!-- VACATIONS -->
-<div *ngIf="vacationTableBox">
-    <div class="toolbar" style=" margin-left: 27.8%;">
-        <button class="toolbar-btn">Shifts</button>
-        <button class="toolbar-btn">On duty</button>
-        <button class="toolbar-btn">Charts</button>
-    </div>
-
-    <div class="doctors-page">
-        <div style="display: flex; flex-direction: row;">
-            <table class="vacation-table">
-                <thead>
-                  <tr>
-                    <th style="width: 200px;">Doctor</th>
-                    <th style="width: 120px;">Start</th>
-                    <th style="width: 120px;">End</th>
-                    <th style="width: 260px;">Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor= "let vacation of vacations" (click)="selectVacation(vacation)" [ngClass]="{'vacation-selected': selectedRowIndex == vacation.id}">
-                    <td style="width: 200px;">{{vacation.fullName}}</td>
-                    <td style="width: 120px;">{{vacation.start | date: "dd.MM.yyyy"}}</td>
-                    <td style="width: 120px;">{{vacation.end | date: "dd.MM.yyyy"}}</td>
-                    <td style="width: 260px;">{{vacation.description}}</td>
-                  </tr>
-                </tbody>
-            </table>
-
-              <div *ngIf="!buttonsBox" style="display: flex; flex-direction: column;">
-                  <button class="icon-btn" (click)="addVacationBox = true; buttonsBox = true;">
-                    <i style="width: 40px;" class="fas fa-plus-circle"></i>
-                </button>
-                <button class="icon-btn" (click)="editVacationBox = true; buttonsBox = true;">
-                    <i style="width: 40px;" class="fas fa-edit"></i>
-                </button>
-                <button class="icon-btn" (click)="deleteVacation()">
-                    <i style="width: 40px;" class="fas fa-trash"></i>
-                </button>
-              </div>
-
-              <div style="display: flex; flex-direction: column;" *ngIf="addVacationBox">
-                  <h3 style="color: cadetblue;">Add new vacation</h3>
-                  <label>Doctor: </label>
-                 <select class="form-field" style="height: 38px; margin-bottom: 8%;" [(ngModel)]="selectedDoctor">
-                  <option></option>
-                  <option  *ngFor="let dr of doctors" [ngValue]="dr">{{dr.firstName}} {{dr.lastName}}</option>
-                 </select>
-                  <label>Date: </label>
-                  <mat-form-field appearance="outline">
-                    <mat-label>Enter a date range</mat-label>
-                    <mat-date-range-input [rangePicker]="picker">
-                      <input matStartDate placeholder="Start date"  [(ngModel)]="vacation.start">
-                      <input matEndDate placeholder="End date" [(ngModel)]="vacation.end">
-                    </mat-date-range-input>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-date-range-picker #picker></mat-date-range-picker>
-                 </mat-form-field>
-                 <label>Description: </label>
-                 <input type="text" class="form-field" name="input" [(ngModel)]="vacation.description"/>
-                 <button class="toolbar-btn" (click)=" addNewVacation()" style="margin-top: 20px; margin-left: 27%;">Add</button>
-              </div>
-
-              <div style="display: flex; flex-direction: column;" *ngIf="editVacationBox">
-                <h3 style="color: cadetblue;">Edit vacation</h3>
-                <label>Doctor: </label>
-                <select class="form-field" style="height: 38px; margin-bottom: 8%;" [(ngModel)]="selectedDoctor">
-                  <option></option>
-                  <option  *ngFor="let dr of doctors" [ngValue]="dr">{{dr.firstName}} {{dr.lastName}}</option>
-                 </select>
-                <label>Date: </label>
-                <mat-form-field appearance="outline">
-                  <mat-label>Enter a date range</mat-label>
-                  <mat-date-range-input [rangePicker]="picker">
-                    <input matStartDate placeholder="Start date" [(ngModel)]="vacation.start">
-                    <input matEndDate placeholder="End date" [(ngModel)]="vacation.end">
-                  </mat-date-range-input>
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-date-range-picker #picker></mat-date-range-picker>
-               </mat-form-field>
-               <label>Description: </label>
-               <input type="text" class="form-field" name="input" [(ngModel)]="vacation.description"/>
-               <button class="toolbar-btn" style="margin-top: 20px; margin-left: 27%;" (click)=" editVacation()">Save</button>
-            </div>
-          
-        </div>
-    </div>
-    <button class="toolbar-btn" style="margin-left: 28.5%; margin-top: -3%;" (click)="vacationTableBox=false; addVacationBox=false; editVacationBox=false; buttonsBox=false; initialTableBox=true;">Close</button>    
-</div>
-
-<!-- SHIFTS -->
-<div *ngIf="shiftsBox">
-  <div *ngIf="shiftsBtnsBox">
-  <button (click)="shiftsListBox=true; shiftsBtnsBox=false;" class="btn">Shifts list</button>
-  <button (click)="shiftsDoctorsBox=true; shiftsBtnsBox=false;" class="btn">Doctors shift</button>
+<div class="doctor-managment-container">
+  <div class="toolbar">
+    <button
+      class="toolbar-btn"
+      (click)="openModule(toolbarButton.codeName)"
+      *ngFor="let toolbarButton of toolbarButtons"
+      [ngClass]="{
+        'selected-toolbar': selectedModule == toolbarButton.codeName
+      }"
+    >
+      {{ toolbarButton.name }}
+    </button>
   </div>
-  <div *ngIf="shiftsListBox">
-  <button (click)="createNewShiftBox()" class="btn">Create new shift</button>
-  <button (click)="openshiftInfoBox()" class="btn">Shift info</button>
-  <button (click)="deleteShift()" class="btn" >Delete shift</button>
-  <button (click)="openUpdateShiftBox()" class="btn">Change shift</button>
-  <hr>
-  <div *ngIf="listOfShiftsBox">
-    <table class="list-table">
-      <thead><tr><th>Name</th><th>Start</th><th>End</th></tr></thead>
-      <tbody>
-        <tr *ngFor="let item of shifts" (click)="selectShift(item)">
-          <td>{{item.name}}</td><td>{{item.start}} h</td><td>{{item.end}} h</td>
+  <div class="doctors-page" *ngIf="selectedModule == 'initTable'">
+    <table class="doctors-table">
+      <thead>
+        <tr>
+          <th style="width: 380px">Doctor</th>
+          <th style="width: 320px">Info</th>
         </tr>
-    </tbody>
+      </thead>
+      <tbody>
+        <tr *ngFor="let doctor of doctors">
+          <td style="width: 600px">
+            {{ doctor.firstName }} {{ doctor.lastName }}
+          </td>
+          <td style="width: 120px"></td>
+          <td>
+            <button class="search-btn" (click)="loadDoctorsData(doctor)">
+              <i class="fas fa-search"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
     </table>
-    <hr>
-    <button *ngIf="pickShiftBox" (click)="pickShift()" class="btn">Change shift</button>
-  <button (click)="shiftsBox=false; shiftsListBox=false; initialTableBox=true;" routerLink="/doctors-management" class="btn">Close</button>
-  </div>
-</div>
 
-<div *ngIf="shiftsDoctorsBox">
-  <table class="doctor-list-table">
-    <thead><tr><th>Id</th><th>First name</th><th>Last name</th><th>Shift</th></tr></thead>
-    <tbody>
-      <tr *ngFor="let item of doctors" (click)="selectDoctor(item)">
-        <td>{{item.id}}</td><td>{{item.firstName}}</td><td>{{item.lastName}}</td><td>{{fetchDoctorsAndShifts(item.shiftId)}}</td>
-      </tr>
-  </tbody>
-  </table>
-  <hr>
-  <button (click)="pickDoctor()" class="btn">Pick Shift</button>
-  <button (click)="shiftsBox=false; shiftsDoctorsBox=false; initialTableBox=true;" routerLink="/doctors-management" class="btn">Close</button>
-</div>
+    <div *ngIf="additionalBox">
+      <h3 style="margin-bottom: 10px" class="title">Doctor's schedule</h3>
 
-  <div *ngIf="createShiftBox" class="shiftsBox">
-    <label for="">Name of shift:<input [(ngModel)]="newShift.Name"  type="text"></label><br>
-    <label for="">Start of shift:<input [(ngModel)]="newShift.Start"  type="number"></label><br>
-    <label for="">End of shift:<input [(ngModel)]="newShift.End"  type="number"></label><br>
-    <button (click)="createShift()" class="btn">Create</button>
-    <button (click)="listOfShiftsBox=true; createShiftBox=false" class="btn">Back</button>
+      <div style="display: flex; flex-direction: column">
+        <label style="margin-bottom: -2%" for=""
+          >Shift time: {{ doctorsShift.start }}h -
+          {{ doctorsShift.end }}h </label
+        ><br />
+        <label style="margin-bottom: -2%" for=""
+          >Shift name: {{ doctorsShift.name }}</label
+        ><br />
+      </div>
+      <div style="display: flex; flex-direction: row">
+        <table class="on-table">
+          <thead>
+            <tr>
+              <th style="width: 240px">Duty date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let onCallShift of doctorsOnCallShifts">
+              <td style="width: 240px">
+                {{ onCallShift.date | date: "dd.MM.yyyy" }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="vac-table">
+          <thead>
+            <tr>
+              <th style="width: 460px">Vacation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let doctorsVacation of doctorsVacations">
+              <td style="width: 100px">
+                {{ doctorsVacation.start | date: "dd.MM.yyyy" }}
+              </td>
+              <td style="width: 2px">-</td>
+              <td style="width: 100px">
+                {{ doctorsVacation.end | date: "dd.MM.yyyy" }}
+              </td>
+              <td style="width: 200px">{{ doctorsVacation.description }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <button
+        style="margin-left: 44%; margin-bottom: 10%"
+        class="toolbar-btn"
+        (click)="additionalBox = false"
+      >
+        Close
+      </button>
+    </div>
   </div>
-  <div *ngIf="shiftInfoBox" class="shiftsBox">
-    <label for="">Name of shift:<input [(ngModel)]="selectedShift.Name"  type="text" disabled></label><br>
-    <label for="">Start of shift:<input [(ngModel)]="selectedShift.Start"  type="text" disabled></label><br>
-    <label for="">End of shift:<input [(ngModel)]="selectedShift.End"  type="text" disabled></label><br>
-    <button (click)="listOfShiftsBox=true;shiftInfoBox=false" class="btn">Close</button>
+
+  <div *ngIf="selectedModule == 'onDuty'">
+    <app-doctor-on-duty-container> </app-doctor-on-duty-container>
   </div>
-  <div *ngIf="updateShiftBox" class="shiftsBox">
-    <label for="">Name of shift:<input [(ngModel)]="selectedShift.Name"  type="text"></label><br>
-    <label for="">Start of shift:<input [(ngModel)]="selectedShift.Start"  type="number"></label><br>
-    <label for="">End of shift:<input [(ngModel)]="selectedShift.End"  type="number"></label><br>
-    <button (click)="updateShift()" class="btn">Update</button>
-    <button (click)="listOfShiftsBox=true; updateShiftBox=false;" class="btn">Close</button>
+  <div *ngIf="selectedModule == 'charts'">
+    <app-charts-container> </app-charts-container>
+  </div>
+  <!-- VACATIONS -->
+  <div *ngIf="selectedModule == 'vacations'">
+    <div class="doctors-page">
+      <div style="display: flex; flex-direction: row">
+        <table class="vacation-table">
+          <thead>
+            <tr>
+              <th style="width: 200px">Doctor</th>
+              <th style="width: 120px">Start</th>
+              <th style="width: 120px">End</th>
+              <th style="width: 260px">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let vacation of vacations"
+              (click)="selectVacation(vacation)"
+              [ngClass]="{
+                'vacation-selected': selectedRowIndex == vacation.id
+              }"
+            >
+              <td style="width: 200px">{{ vacation.fullName }}</td>
+              <td style="width: 120px">
+                {{ vacation.start | date: "dd.MM.yyyy" }}
+              </td>
+              <td style="width: 120px">
+                {{ vacation.end | date: "dd.MM.yyyy" }}
+              </td>
+              <td style="width: 260px">{{ vacation.description }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div *ngIf="!buttonsBox" style="display: flex; flex-direction: column">
+          <button
+            class="icon-btn"
+            (click)="addVacationBox = true; buttonsBox = true"
+          >
+            <i style="width: 40px" class="fas fa-plus-circle"></i>
+          </button>
+          <button
+            class="icon-btn"
+            (click)="editVacationBox = true; buttonsBox = true"
+          >
+            <i style="width: 40px" class="fas fa-edit"></i>
+          </button>
+          <button class="icon-btn" (click)="deleteVacation()">
+            <i style="width: 40px" class="fas fa-trash"></i>
+          </button>
+        </div>
+
+        <div
+          style="display: flex; flex-direction: column"
+          *ngIf="addVacationBox"
+        >
+          <h3 style="color: cadetblue">Add new vacation</h3>
+          <label>Doctor: </label>
+          <select
+            class="form-field"
+            style="height: 38px; margin-bottom: 8%"
+            [(ngModel)]="selectedDoctorV"
+          >
+            <option></option>
+            <option *ngFor="let dr of doctors" [ngValue]="dr">
+              {{ dr.firstName }} {{ dr.lastName }}
+            </option>
+          </select>
+          <label>Date: </label>
+          <mat-form-field appearance="outline">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+              <input
+                matStartDate
+                placeholder="Start date"
+                [(ngModel)]="vacation.start"
+              />
+              <input
+                matEndDate
+                placeholder="End date"
+                [(ngModel)]="vacation.end"
+              />
+            </mat-date-range-input>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+          <label>Description: </label>
+          <input
+            type="text"
+            class="form-field"
+            name="input"
+            [(ngModel)]="vacation.description"
+          />
+          <div style="display: flex; flex-direction: row">
+            <button
+              class="toolbar-btn"
+              (click)="addNewVacation()"
+              style="margin-top: 20px; margin-left: 6%"
+            >
+              Add
+            </button>
+            <button
+              class="toolbar-btn"
+              style="margin-top: 20px"
+              (click)="
+                buttonsBox = false;
+                addVacationBox = false;
+                vacationTableBox = true
+              "
+            >
+              Close
+            </button>
+          </div>
+        </div>
+
+        <div
+          style="display: flex; flex-direction: column"
+          *ngIf="editVacationBox"
+        >
+          <h3 style="color: cadetblue">Edit vacation</h3>
+
+          <label>Date: </label>
+          <mat-form-field appearance="outline">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+              <input
+                matStartDate
+                placeholder="Start date"
+                [value]="selectedVacation.start"
+                [(ngModel)]="vacation.start"
+              />
+              <input
+                matEndDate
+                placeholder="End date"
+                [value]="selectedVacation.end"
+                [(ngModel)]="vacation.end"
+              />
+            </mat-date-range-input>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+          <label>Description: </label>
+          <input
+            type="text"
+            class="form-field"
+            name="input"
+            [value]="selectedVacation.description"
+            [(ngModel)]="vacation.description"
+          />
+          <div style="display: flex; flex-direction: row">
+            <button
+              class="toolbar-btn"
+              style="margin-top: 20px; margin-left: 6%"
+              (click)="editVacation()"
+            >
+              Save
+            </button>
+            <button
+              class="toolbar-btn"
+              style="margin-top: 20px"
+              (click)="
+                buttonsBox = false;
+                editVacationBox = false;
+                vacationTableBox = true
+              "
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHIFTS -->
+  <div *ngIf="selectedModule == 'shifts'" class="shifts-container">
+    <div *ngIf="shiftsBtnsBox">
+      <button (click)="shiftsListBox = true; shiftsBtnsBox = false" class="btn">
+        Shifts list
+      </button>
+      <button
+        (click)="shiftsDoctorsBox = true; shiftsBtnsBox = false"
+        class="btn"
+      >
+        Doctors shift
+      </button>
+    </div>
+    <div *ngIf="shiftsListBox">
+      <button (click)="createNewShiftBox()" class="btn">
+        Create new shift
+      </button>
+      <button (click)="openshiftInfoBox()" class="btn">Shift info</button>
+      <button (click)="deleteShift()" class="btn">Delete shift</button>
+      <button (click)="openUpdateShiftBox()" class="btn">Change shift</button>
+      <hr />
+      <div *ngIf="listOfShiftsBox">
+        <table class="list-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Start</th>
+              <th>End</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of shifts" (click)="selectShift(item)">
+              <td style="width: 200px">{{ item.name }}</td>
+              <td>{{ item.start }} h</td>
+              <td>{{ item.end }} h</td>
+            </tr>
+          </tbody>
+        </table>
+        <hr />
+        <button *ngIf="pickShiftBox" (click)="pickShift()" class="btn">
+          Change shift
+        </button>
+        <button
+          (click)="closeShifts()"
+          routerLink="/doctors-management"
+          class="btn"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="shiftsDoctorsBox">
+      <table class="doctor-list-table">
+        <thead>
+          <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Shift</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of doctors" (click)="selectDoctor(item)">
+            <td>{{ item.firstName }}</td>
+            <td>{{ item.lastName }}</td>
+            <td>{{ fetchDoctorsAndShifts(item.shiftId) }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <button style="margin-top: 20px" (click)="pickDoctor()" class="btn">
+        Pick Shift
+      </button>
+      <button
+        (click)="closeShifts()"
+        routerLink="/doctors-management"
+        class="btn"
+        style="margin-top: 20px"
+      >
+        Close
+      </button>
+    </div>
+
+    <div *ngIf="createShiftBox" class="shiftsBox">
+      <label for=""
+        >Name of shift:<input [(ngModel)]="newShift.Name" type="text" /></label
+      ><br />
+      <label for=""
+        >Start of shift:<input
+          [(ngModel)]="newShift.Start"
+          type="number" /></label
+      ><br />
+      <label for=""
+        >End of shift:<input [(ngModel)]="newShift.End" type="number" /></label
+      ><br />
+      <button (click)="createShift()" class="btn">Create</button>
+      <button
+        (click)="listOfShiftsBox = true; createShiftBox = false"
+        class="btn"
+      >
+        Back
+      </button>
+    </div>
+    <div *ngIf="shiftInfoBox" class="shiftsBox">
+      <label for=""
+        >Name of shift:<input
+          [(ngModel)]="selectedShift.Name"
+          type="text"
+          disabled /></label
+      ><br />
+      <label for=""
+        >Start of shift:<input
+          [(ngModel)]="selectedShift.Start"
+          type="text"
+          disabled /></label
+      ><br />
+      <label for=""
+        >End of shift:<input
+          [(ngModel)]="selectedShift.End"
+          type="text"
+          disabled /></label
+      ><br />
+      <button
+        (click)="listOfShiftsBox = true; shiftInfoBox = false"
+        class="btn"
+      >
+        Back
+      </button>
+    </div>
+    <div *ngIf="updateShiftBox" class="shiftsBox">
+      <label for=""
+        >Name of shift:<input
+          [(ngModel)]="selectedShift.Name"
+          type="text" /></label
+      ><br />
+      <label for=""
+        >Start of shift:<input
+          [(ngModel)]="selectedShift.Start"
+          type="number" /></label
+      ><br />
+      <label for=""
+        >End of shift:<input
+          [(ngModel)]="selectedShift.End"
+          type="number" /></label
+      ><br />
+      <button (click)="updateShift()" class="btn">Update</button>
+      <button
+        (click)="listOfShiftsBox = true; updateShiftBox = false"
+        class="btn"
+      >
+        Back
+      </button>
+    </div>
   </div>
 </div>

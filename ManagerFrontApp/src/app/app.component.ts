@@ -11,11 +11,17 @@ import { SignalService } from './signalr.service';
 })
 export class AppComponent {
   title = 'ManagerFrontApp';
+  isManagerFrontApp = false;
 
   constructor(
     private router: Router,
     private jwtHelper: JwtHelperService,
   ) {}
+
+  ngOnInit() {
+    if(window.location.href.includes('manager-front-app'))
+      this.isManagerFrontApp = true;
+  }
 
   getToken():string{
     const token = localStorage.getItem("PSWtoken")

@@ -12,7 +12,7 @@ using Xunit;
 
 namespace HospitalTests.EditorTests.UnitTests
 {
-    public class MergeRoomsTest
+    public class RenovationOfRooms
     {
         private HospitalContext GetInMemoryRepository()
         {
@@ -45,7 +45,7 @@ namespace HospitalTests.EditorTests.UnitTests
             context.AllEquipment.Add(eq4);
             context.SaveChanges();
 
-            EquipmentRepository eqRepository = new EquipmentRepository(context);
+            Hospital.RoomsAndEquipment.Repository.EquipmentRepository eqRepository = new Hospital.RoomsAndEquipment.Repository.EquipmentRepository(context);
             RoomRepository roomRepository = new RoomRepository(context);
             RoomService roomService = new RoomService(roomRepository, eqRepository);
 
@@ -80,8 +80,8 @@ namespace HospitalTests.EditorTests.UnitTests
                 context.AllEquipment.Add(eq4);
 
                 context.SaveChanges();
-                      
-                EquipmentRepository eqRepository = new EquipmentRepository(context);
+
+            Hospital.RoomsAndEquipment.Repository.EquipmentRepository eqRepository = new Hospital.RoomsAndEquipment.Repository.EquipmentRepository(context);
                 RoomRepository roomRepository = new RoomRepository(context);
                 RoomService roomService = new RoomService(roomRepository, eqRepository);
                 Room rr1 = roomRepository.GetByID(399);
@@ -120,7 +120,7 @@ namespace HospitalTests.EditorTests.UnitTests
 
                 context.SaveChanges();
 
-                EquipmentRepository eqRepository = new EquipmentRepository(context);
+            Hospital.RoomsAndEquipment.Repository.EquipmentRepository eqRepository = new Hospital.RoomsAndEquipment.Repository.EquipmentRepository(context);
                 RoomRepository roomRepository = new RoomRepository(context);
                 RoomService roomService = new RoomService(roomRepository, eqRepository);
                 Room rr1 = roomRepository.GetByID(399);
@@ -143,6 +143,39 @@ namespace HospitalTests.EditorTests.UnitTests
                 
 
                 context.Dispose();           
+        }
+
+        [Fact]
+        public void change_of_dimensions_and_total_number_of_rooms()
+        {
+            HospitalContext context = GetInMemoryRepository();
+            //Room r1 = new Room { Id = 88, FloorId = 1, Name = "OPERATING ROOM 1", DoctorId = -1, Purpose = "", X = 0, Y = 150, Height = 190, Width = 150, DoorX = 148, DoorY = 285, Vertical = true, Css = "room room-cadetblue", DoorExist = true };
+            //(int id, string name, string purpose, int docId, int florId, int x, int y, int h, int w, int dx, int dy, bool vertical, string css, bool dexist)
+            Room r1 = new Room ( 88, "OPERATING ROOM 1", "",-1, 1,  0,150, 190,  150,  148, 285,  true,  "room room-cadetblue",  true );
+            context.Rooms.Add(r1);
+            context.SaveChanges();
+
+            Hospital.RoomsAndEquipment.Repository.EquipmentRepository eqRepository = new Hospital.RoomsAndEquipment.Repository.EquipmentRepository(context);
+            RoomRepository roomRepository = new RoomRepository(context);
+            RoomService roomService = new RoomService(roomRepository, eqRepository);
+            Room rr1 = roomRepository.GetByID(88);
+            int r1Width = rr1.Width;
+            int r1Height = rr1.Height;
+            roomService.splitRoom(rr1, "New room 1", "Operations room", "New room 2", "Office");
+
+            Assert.Equal(2, roomRepository.GetAll().Count);
+            foreach (Room room in roomRepository.GetAll())
+            {
+                if (room.Vertical)
+                {
+                    room.Height.ShouldBeLessThan(r1Height);
+                }
+                else
+                {
+                    room.Width.ShouldBeLessThan(r1Width);
+                }
+            }
+            context.Dispose();
         }
     }
 }

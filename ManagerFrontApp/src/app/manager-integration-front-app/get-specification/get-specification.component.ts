@@ -44,7 +44,7 @@ export class GetSpecificationComponent implements OnInit {
     return this.http.get<any>('http://localhost:43818/medicines/spec?pharmacyLocalhost=' + this.SelectedPharmacy.Localhost
       + "&medicine=" + this.medicineName).subscribe(
         res => this.notifyService.showSuccess("Go to Downloads!", this.medicineName + " specification recieved"),
-        error => this.notifyService.showError("From pharmacy \"" + this.SelectedPharmacy.Name + "\"", this.medicineName + " specification doesn't exist!")
+        error => this.notifyService.showError(error.error, "Error")//"From pharmacy \"" + this.SelectedPharmacy.Name + "\"", this.medicineName + " specification doesn't exist!")
       );
   }
 
