@@ -1,7 +1,7 @@
 name: e2e-testing
 on:
   push:
- 
+  pull_request:
 
 jobs:
   Run-Unit-Tests:
