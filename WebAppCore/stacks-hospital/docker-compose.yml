@@ -21,14 +21,14 @@ services:
       - application
 
   hospital-api:
-    image: darkelfff/hospital-api-s:latest
+    image: darkelfff/hospital-api:latest
     depends_on:
       - "database"
     #build:
     #  context: .
     #  dockerfile: Dockerfile
     ports:
-      - "8080:80"     
+      - "8080:8080"     
     environment:
       DATABASE_HOST: database
       DATABASE_PORT: 5432
@@ -38,7 +38,10 @@ services:
     networks:
       - application
     secrets:
-      - db_pass_hospital
+      - source: db_pass_hospital
+        uid: '999'
+        gid: '999'
+        mode: 0440
       - db_user_hospital 
   
   database: 
