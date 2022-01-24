@@ -7,7 +7,8 @@ on:
       # - 'master'
       - 'develop'
       - 'fix/deploy-script'
-
+      - 'fix/e2e-tests'
+ 
 jobs:
   deploy:
     runs-on : ubuntu-latest
