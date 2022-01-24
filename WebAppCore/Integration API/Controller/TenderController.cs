@@ -24,6 +24,7 @@ using System.IO;
 using RestSharp;
 using System.Net.Mail;
 using System.Net;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Integration_API.Controller
 {
@@ -38,6 +39,13 @@ namespace Integration_API.Controller
         CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
         MedicinesController medicinesController = new MedicinesController(new PharmacyHTTPConnection());
 
+        private readonly IHubContext<SignalServer> _hubContext;
+
+        public TenderController(IHubContext<SignalServer> hubcontext)
+        {
+            _hubContext = hubcontext;
+        }
+
         [HttpGet]
         public IActionResult GetTenders()
         {
@@ -48,7 +56,7 @@ namespace Integration_API.Controller
                 TenderDto dto = TenderMapper.TenderToTenderDto(t);
                 tendersDto.Add(dto);
             }
-            
+            this._hubContext.Clients.All.SendAsync("askServerResponse", "TEST SLANJA NOTIFIKACIJE");
             return Ok(tendersDto);
         }
 
