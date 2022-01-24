@@ -45,18 +45,23 @@ namespace Hospital_API.Mapper
         private static EventStatisticDTO GetUseTimes()
         {
             EventService eventService = new EventService(new EventRepository());
-            EventStatisticDTO statistic = new EventStatisticDTO("Use Time");
-            List<Event> allEndEvents = eventService.GetAll().Where(p => String.Equals(p.Name, "END")).ToList();
-            double averageUseSeconds = allEndEvents.Average(p => p.TimeDifference.TotalSeconds);
-            double maxUseSeconds = allEndEvents.Max(p => p.TimeDifference.TotalSeconds) + 0.1;
-            double[] cutoffPoints = GenerateCutoffPoints(averageUseSeconds, maxUseSeconds);
-            for (int i = 0; i < 4; i++)
-            {
-                int eventCount = allEndEvents
-                    .Where(p => p.TimeDifference.TotalSeconds > cutoffPoints[i] && p.TimeDifference.TotalSeconds <= cutoffPoints[i + 1])
-                    .Count();
-                statistic.Data.Add(new EventStatisticDataPair(cutoffPoints[i].ToString() + "-" + cutoffPoints[i+1].ToString(), eventCount));
-            }
+            EventStatisticDTO statistic = new EventStatisticDTO("Use Time", EventStatisticType.TABLE);
+            List<Event> allDateNextEvents = eventService.GetAll().Where(p => String.Equals(p.Name, "DATE-NEXT")).ToList();
+            double averageDateUseSeconds = allDateNextEvents.Average(p => p.TimeDifference.TotalSeconds);
+            statistic.Data.Add(new EventStatisticDataPair("Date Selection", (float)averageDateUseSeconds));
+
+            double averageSpecUseSeconds = eventService.GetAll().Where(p => String.Equals(p.Name, "SPEC-NEXT") || String.Equals(p.Name, "SPEC-BACK")).ToList().Sum(p => p.TimeDifference.TotalSeconds)
+                / eventService.GetAll().Where(p => String.Equals(p.Name, "SPEC-NEXT") || String.Equals(p.Name, "SPEC-BACK")).ToList().Count();
+            statistic.Data.Add(new EventStatisticDataPair("Specialist Selection", (float)averageSpecUseSeconds));
+
+            double averageDoctorUseSeconds = eventService.GetAll().Where(p => String.Equals(p.Name, "DOC-NEXT") || String.Equals(p.Name, "DOC-BACK")).ToList().Sum(p => p.TimeDifference.TotalSeconds)
+                / eventService.GetAll().Where(p => String.Equals(p.Name, "DOC-NEXT") || String.Equals(p.Name, "DOC-BACK")).ToList().Count();
+            statistic.Data.Add(new EventStatisticDataPair("Doctor Selection", (float)averageDoctorUseSeconds));
+
+            double averageTimeUseSeconds = eventService.GetAll().Where(p => String.Equals(p.Name, "END")).ToList().Sum(p => p.TimeDifference.TotalSeconds)
+                / eventService.GetAll().Where(p => String.Equals(p.Name, "END")).ToList().Count();
+            statistic.Data.Add(new EventStatisticDataPair("Time Selection", (float)averageTimeUseSeconds));
+
             return statistic;
         }
 
