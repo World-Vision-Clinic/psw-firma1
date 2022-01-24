@@ -169,7 +169,7 @@
             </div>
             <div class="col-md-1" >
               <button class="btn btn-blue btn-rounded" [routerLink]="['/report']"  [disabled]="!canSeeReport(a)" [queryParams]="{id: a.id, date: a.date, doctor: a.doctorName}">Report</button>
-              <button class="btn btn-blue btn-rounded" [routerLink]="['/prescription']" [queryParams]="{id: a.id, date: a.date, doctor: a.doctorName}">Prescription</button>
+              <button class="btn btn-blue btn-rounded" [routerLink]="['/prescription']"  [disabled]="!canSeeReport(a)" [queryParams]="{id: a.id, date: a.date, doctor: a.doctorName}">Prescription</button>
             </div>
              
           </div>
