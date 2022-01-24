@@ -14,6 +14,9 @@ jobs:
     env: 
       pass1: ${{ secrets.HOSPITAL_USER_PASS }}
       pass2:  ${{ secrets.HOSPITAL_PASS }}
+
+    if:  env.pass1 == "admin"
+    run: echo "I know what the secret token is!"  
     steps:
       - name: Install SSH Key
         uses: appleboy/ssh-action@master
@@ -29,6 +32,7 @@ jobs:
             docker system prune -f
             docker swarm leave --force
             docker swarm init
+            
             printf $pass1 | docker secret create db_user_hospital -
             printf $pass2 | docker secret create db_pass_hospital -
             cd WebAppCore/
