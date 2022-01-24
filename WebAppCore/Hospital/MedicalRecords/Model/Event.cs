@@ -11,17 +11,20 @@ namespace Hospital.MedicalRecords.Model
         public DateTime EventTime { get; set; }
         public TimeSpan TimeDifference { get; set; }
 
+        public int PatientAge { get; set; }
+
 
         public Event()
         {
         }
 
-        public Event(int id, string name, DateTime eventTime,TimeSpan timeDifference)
+        public Event(int id, string name, DateTime eventTime,TimeSpan timeDifference, int patientAge)
         {
             Id = id;
             Name = name;
             EventTime = eventTime;
             TimeDifference = timeDifference;
+            PatientAge = patientAge;
         }
     }
 }

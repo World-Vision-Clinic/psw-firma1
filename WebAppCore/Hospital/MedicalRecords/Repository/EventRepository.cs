@@ -18,6 +18,8 @@ namespace Hospital.MedicalRecords.Repository
             return events;
         }
 
+
+
         public void Save(Event newEvent)
         {
             dbContext.EventsHospital.Add(newEvent);

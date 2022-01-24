@@ -1,6 +1,8 @@
 ﻿using Hospital.MedicalRecords.Model;
 using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Service;
+using Hospital.Schedule.Repository;
+using Hospital.SharedModel;
 using Hospital_API.DTO;
 using Hospital_API.Mapper;
 using Hspital_API.Dto;
@@ -17,8 +19,20 @@ namespace Hospital_API.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
-        EventService service = new EventService(new EventRepository());
+        public EventService _eventService = new EventService(new EventRepository());
+        HospitalContext _context;
+        IAppointmentRepository appointmentRepository;
+        public PatientService _patientService;
+        public bool test = false;
 
+        public EventController()
+        {
+            _context = new HospitalContext();
+            _eventService = new EventService(new EventRepository());
+            appointmentRepository = new AppointmentRepository(_context);
+            _patientService = new PatientService(new PatientRepository(_context), appointmentRepository);
+
+        }
         /*[HttpGet]
         public IActionResult GetAll()
         {
@@ -46,9 +60,25 @@ namespace Hospital_API.Controllers
         [HttpPost]
         public IActionResult Save(Event newEvent)
         {
+            Patient patient = getCurrentPatient();
             newEvent.EventTime = DateTime.Now;
-            service.Save(newEvent);
+            newEvent.PatientAge = newEvent.EventTime.Year - patient.DateOfBirth.Year;
+            _eventService.Save(newEvent);
             return Ok();
+        }
+        private Patient getCurrentPatient()
+        {
+            if (test)
+            {
+                Patient patient = _patientService.FindByUserName("Marko123");
+                return patient;
+            }
+            else
+            {
+                string username = User.FindFirst("username")?.Value;
+                Patient patient = _patientService.FindByUserName(username);
+                return patient;
+            }
         }
     }
 }
