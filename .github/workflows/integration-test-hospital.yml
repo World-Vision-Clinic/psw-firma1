@@ -40,6 +40,9 @@ jobs:
       - name: Install dependencies hospital
         run: dotnet restore ${SOLUTION_DIRECTORY_HOSPITAL}
 
+      - name: Build WebAppCore
+        run: dotnet build ${SOLUTION_DIRECTORY_HOSPITAL}   
+
       - name: Create Migrations hospital
         run:
           dotnet ef migrations add InitialCreate --context HospitalContext --project ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL};
