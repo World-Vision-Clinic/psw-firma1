@@ -180,6 +180,18 @@ div[role="progressbar"] {
     opacity: 0;
     width: var(--value);
     animation: 1s anim-lightspeed-in ease forwards;
+    transition: all .5s linear;
+}
+.chart__bar:hover {
+    height: 30px;
+    margin-bottom: 10px;
+    background: linear-gradient(to left, rgba(50, 100, 254, 1), #06d);
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    opacity: 0;
+    width: 100%;
+    animation: 1s anim-lightspeed-in ease forwards;
+    transition: all .5s linear;
 }
 .chart--dev .chart__bar:nth-of-type(5) {
     animation-delay: 1.5s;
