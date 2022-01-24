@@ -1,6 +1,5 @@
 name: unit-testing
 on:
-  push:
   pull_request:
 
 
