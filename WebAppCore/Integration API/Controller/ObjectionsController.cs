@@ -1,14 +1,9 @@
 ﻿using Integration.Pharmacy.Model;
 using Integration_API.Dto;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Integration.Pharmacy.Service;
 using Integration_API.Mapper;
-using Integration;
 using RestSharp;
 using Integration.Pharmacy.Repository;
 
@@ -38,7 +33,7 @@ namespace Integration_API.Controller
             Credential credential = credentialsService.GetByPharmacyLocalhost(dto.PharmacyLocalhost);
             Objection newObjection = ObjectionMapper.ObjectionDtoToObjection(dto, Generator.GenerateObjectionId());
 
-            var client = new RestSharp.RestClient(credential.PharmacyLocalhost);
+            var client = new RestClient(credential.PharmacyLocalhost);
             var request = new RestRequest("/objections/add");
 
             request.AddHeader("Content-Type", "application/json");
@@ -53,9 +48,7 @@ namespace Integration_API.Controller
 
             IRestResponse response = client.Post(request);
             if(response.StatusCode != System.Net.HttpStatusCode.OK)
-            {
                 return BadRequest("Objection wasn't sent!");
-            }
 
             objectionsService.saveEntity(newObjection);
             return Ok();

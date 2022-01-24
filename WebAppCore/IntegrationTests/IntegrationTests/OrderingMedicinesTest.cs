@@ -52,18 +52,16 @@ namespace IntegrationTests.IntegrationTests
         public void CheckIf_medicine_is_ordered(OrderingMedicineDTO omd, bool isHttp)
         {
             Skip.IfNot(development);
-            MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection(), new HubMock());
+            PharmacyHTTPConnection httpConnection = new PharmacyHTTPConnection();
+            PharmacyGRPConnection grpcConnection = new PharmacyGRPConnection();
             bool requestOk = false;
             if (isHttp)
-            {
-                requestOk = mc.SendMedicineOrderingRequestHTTP(omd, true);
-            }
+                requestOk = httpConnection.SendMedicineOrderingRequestHTTP(omd, true);
             else
-            {
-                requestOk = mc.SendMedicineOrderingRequestGRPC(omd, true);
-            }
+                requestOk = grpcConnection.SendMedicineOrderingRequestGRPC(omd, true);
             Assert.True(requestOk);
         }
+
         public static IEnumerable<object[]> Data()
         {
             var retVal = new List<object[]>();

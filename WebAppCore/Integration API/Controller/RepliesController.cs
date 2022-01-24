@@ -24,48 +24,22 @@ namespace Integration_API.Controller
         public IActionResult Add(ReplyDto dto)
         {
             if (!Request.Headers.TryGetValue("ApiKey", out var extractedApiKey))
-            {
                 return BadRequest("Api Key was not provided");
-            }
 
-            PharmacyProfile foundedPharmacy = null;
-            foreach (PharmacyProfile pharmacy in pharmaciesService.GetAll())
-            {
-                if (extractedApiKey.Equals(pharmacy.ConnectionInfo.Key))
-                {
-                    foundedPharmacy = pharmacy;
-                    break;
-                }
-            }
+            PharmacyProfile foundedPharmacy = pharmaciesService.GetAll().SingleOrDefault(p => p.ConnectionInfo.Key.Equals(extractedApiKey));
 
             if (foundedPharmacy == null)
-            {
                 return BadRequest("Api Key is not valid!");
-            }
 
-            bool objectionExists = false;
-            foreach(Objection objection in objectionsService.GetAll())
-            {
-                if (dto.ObjectionId.Equals(objection.Id))
-                {
-                    objectionExists = true;
-                    break;
-                }
-            }
-
-            if (!objectionExists)
-            {
+            Objection foundedObjection = objectionsService.GetAll().SingleOrDefault(o => o.Id.Equals(dto.ObjectionId));
+           
+            if (foundedObjection != null)
                 return BadRequest("Objection doesn't exists");
-            }
 
             if (dto.Content.Length <= 0)
-            {
                 return BadRequest("Invalid content!");
-            }
 
             repliesService.AddNewReply(ReplyMapper.ReplyDtoToReply(dto));
-
-            System.Diagnostics.Debug.WriteLine(dto.Content);
             return Ok();
         }
 

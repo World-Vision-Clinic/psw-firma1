@@ -1,22 +1,16 @@
 ﻿using Integration.Pharmacy.Model;
-using Integration.Pharmacy.Repository;
 using Renci.SshNet;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Integration_API.Controller
 {
     public class SftpHandler
     {
-        const String SFTP_ADDRESS = "192.168.56.1";
-        FilesRepository repository = new FilesRepository();
+        const string SFTP_ADDRESS = "192.168.0.16";
         public File DownloadSpecification(string fromPath, string localPath)
         {
             try
             {
-
                 using (SftpClient client = new SftpClient(new PasswordConnectionInfo(SFTP_ADDRESS, "user", "password")))
                 {
                     client.Connect();
@@ -33,9 +27,7 @@ namespace Integration_API.Controller
                     client.Disconnect();
                 }
 
-                File file = new Integration.Pharmacy.Model.File { Name = localPath.Split("/")[1].Split(".")[0], Extension = localPath.Split("/")[1].Split(".")[1], Path = localPath };
-
-                return file;
+                return new File { Name = localPath.Split("/")[1].Split(".")[0], Extension = localPath.Split("/")[1].Split(".")[1], Path = localPath };
             }
             catch
             {

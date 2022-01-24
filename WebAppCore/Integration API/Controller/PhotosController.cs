@@ -13,7 +13,6 @@ namespace Integration_API.Controller
     [ApiController]
     public class PhotosController : ControllerBase
     {
-
         private readonly IWebHostEnvironment _env;
 
         public PhotosController(IWebHostEnvironment env)
@@ -21,46 +20,35 @@ namespace Integration_API.Controller
             _env = env;
         }
 
-
         [HttpPost("addPhoto/{pharmacyName?}")]
         public JsonResult SavePhoto(String pharmacyName)
         {
-
             try
             {
                 var httpRequest = Request.Form;
                 var postedFile = httpRequest.Files[0];
                 var physicalPath = _env.ContentRootPath + "/Photos/" + pharmacyName + ".png";
-
                 using (var stream = new FileStream(physicalPath, FileMode.Create))
                 {
                     postedFile.CopyTo(stream);
                 }
-
                 return new JsonResult(pharmacyName + ".png");
             }
             catch
             {
                 return new JsonResult("Error occurred while saving picture.");
             }
-
-
         }
-
-
 
         [HttpDelete("deletePhoto/{pharmacyName?}")]
         public IActionResult Delete(String pharmacyName)
         {
             var physicalPath = _env.ContentRootPath + "/Photos/" + pharmacyName + ".png";
 
-            if (System.IO.File.Exists(physicalPath))
-            {
-                System.IO.File.Delete(physicalPath);
+            if (!System.IO.File.Exists(physicalPath))
+                return NotFound("Photo not found.");
 
-            }
-            else return NotFound("Photo not found.");
-
+            System.IO.File.Delete(physicalPath);
             return Ok("Successfully deleted photo.");
         }
     }

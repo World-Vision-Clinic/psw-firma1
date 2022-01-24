@@ -20,7 +20,7 @@ namespace PharmacyAPI.Controller
         HospitalsService hospitalService = new HospitalsService(new HospitalsRepository());
         CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
         const String SFTP_ADDRESS = "192.168.56.1";
-        
+
         [HttpPost("DownloadQRPrescription")]
         public IActionResult DownloadQRPrescription(NotificationPdfDownloadDto dto)
         {
@@ -39,18 +39,12 @@ namespace PharmacyAPI.Controller
             {
                 return BadRequest("File was not provided");
             }
-            
+
             byte[] bytes = Convert.FromBase64String(dto.File);
             System.IO.File.WriteAllBytes(filename, bytes);
 
             return Ok("File is downloaded");
         }
-
-        /*public void RecieveFileFromHttp(string content, string fileName)
-        {
-            byte[] bytes = Convert.FromBase64String(content);
-            File.WriteAllBytes(Path.Combine(GetPrescriptionsDirectory(), fileName), bytes);
-        }*/
 
 
         [HttpPost("DownloadPrescription")]
