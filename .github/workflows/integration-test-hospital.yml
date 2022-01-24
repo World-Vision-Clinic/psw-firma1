@@ -38,7 +38,8 @@ jobs:
         run: dotnet tool install --global dotnet-ef
 
       - name: Install dependencies hospital
-        run: dotnet restore ${SOLUTION_DIRECTORY_HOSPITAL}
+        run: dotnet restore ${PROJECT_DIRECTORY_HOSPITAL}
+
       - name: Create Migrations hospital
         run:
           dotnet ef migrations add InitialCreate --context HospitalContext --project ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL};
