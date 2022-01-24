@@ -24,7 +24,7 @@ namespace Hospital_API.Mapper
         private static EventStatisticDTO GetSuccessful4StepAttempts()
         {
             EventService eventService = new EventService(new EventRepository());
-            EventStatisticDTO statistic = new EventStatisticDTO("Successful Attempts", EventStatisticType.TABLE);
+            EventStatisticDTO statistic = new EventStatisticDTO("Successful Attempts (%)", EventStatisticType.TABLE);
             List<Event> allEvents = eventService.GetAll();
             float startCount = allEvents
                 .Where(p => String.Equals(p.Name, "START"))
@@ -45,7 +45,7 @@ namespace Hospital_API.Mapper
         private static EventStatisticDTO GetUseTimes()
         {
             EventService eventService = new EventService(new EventRepository());
-            EventStatisticDTO statistic = new EventStatisticDTO("Use Time", EventStatisticType.TABLE);
+            EventStatisticDTO statistic = new EventStatisticDTO("Use Time (s)", EventStatisticType.TABLE);
             List<Event> allDateNextEvents = eventService.GetAll().Where(p => String.Equals(p.Name, "DATE-NEXT")).ToList();
             double averageDateUseSeconds = allDateNextEvents.Average(p => p.TimeDifference.TotalSeconds);
             statistic.Data.Add(new EventStatisticDataPair("Date Selection", (float)averageDateUseSeconds));
