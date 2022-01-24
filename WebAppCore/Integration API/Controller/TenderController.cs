@@ -37,13 +37,14 @@ namespace Integration_API.Controller
         FilesService filesService = new FilesService(new FilesRepository());
         PharmaciesService pharmaciesService = new PharmaciesService(new PharmaciesRepository());
         CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
-        MedicinesController medicinesController = new MedicinesController(new PharmacyHTTPConnection());
+        MedicinesController medicinesController;
 
-        private readonly IHubContext<SignalServer> _hubContext;
+        private IHubContext<SignalServer> _hubContext;
 
         public TenderController(IHubContext<SignalServer> hubcontext)
         {
             _hubContext = hubcontext;
+            medicinesController = new MedicinesController(new PharmacyHTTPConnection(), _hubContext);
         }
 
         [HttpGet]
@@ -56,8 +57,14 @@ namespace Integration_API.Controller
                 TenderDto dto = TenderMapper.TenderToTenderDto(t);
                 tendersDto.Add(dto);
             }
-            this._hubContext.Clients.All.SendAsync("askServerResponse", "TEST SLANJA NOTIFIKACIJE");
             return Ok(tendersDto);
+        }
+
+        [HttpPost("addTenderOffer")]
+        public IActionResult GetNewTenderOffer()
+        {
+            this._hubContext.Clients.All.SendAsync("askServerResponse", "You recieved new tender offer.");
+            return Ok();
         }
 
         [HttpPost]

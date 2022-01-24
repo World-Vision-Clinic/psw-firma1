@@ -82,9 +82,9 @@
                 class="m-1 btn btn-light btn-outline-primary" Button>Statistics</button>
             </li>
             <li>
-                <button
+                <button (click)="showNotifications()"
         class="icon-btn text-gray-800"
-        [badge]= 'this.list.length'
+        
         size="small"
       >
         <svg
@@ -98,10 +98,21 @@
             d="M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm17 4.238l-7.928 7.1L4 7.216V19h16V7.238zM4.511 5l7.55 6.662L19.502 5H4.511z"
           />
         </svg>
+        <p>{{ signalrServece.numberOfNotifications}}</p>
       </button>
+      
             </li>
         </ul>
     </nav>
+    <div *ngIf="isNotificationVisible" style="z-index:100; position: absolute;
+        left: 85%;border:solid black 1px;">
+        <div *ngFor="let notification of list; let i = index" style="padding:5px;"
+        >
+        <label style="width: 100%;" *ngIf="notification.seen" style="background-color: white;">{{notification.text}}</label>
+        <label style="width: 100%;" *ngIf="!notification.seen" style="background-color: #90ee90;">{{notification.text}}</label>
+    </div>   
+    
+    </div>
 <div>
 
 <router-outlet name="showObjRepl"></router-outlet>

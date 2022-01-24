@@ -6,6 +6,7 @@ using Pharmacy.Service;
 using PharmacyAPI.Dto;
 using PharmacyAPI.Mapper;
 using RabbitMQ.Client;
+using RestSharp;
 using System;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace PharmacyAPI.Controller
         TenderService tenderService = new TenderService(new TendersRepository(), new MedicineRepository());
         HospitalsService hospitalService = new HospitalsService(new HospitalsRepository());
         const string PHARMACY_NAME = "Jankovic";
+        CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
 
         [HttpPost]
         public IActionResult SendOffer(TenderDto tenderDto)
@@ -50,7 +52,17 @@ namespace PharmacyAPI.Controller
                                      body: body);
 
             }
-
+            
+            Credential credential = credentialsService.GetByHospitalName(tender.HospitalName);
+            if (credential != null)
+            {
+                var client = new RestSharp.RestClient(credential.HospitalLocalhost);
+                var request = new RestRequest("tender/addTenderOffer");
+                request.AddHeader("ApiKey", credential.ApiKey);
+                IRestResponse response = client.Post(request);
+            }
+  
+            
             return Ok();
         }
 

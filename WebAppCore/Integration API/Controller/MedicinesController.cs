@@ -33,10 +33,10 @@ namespace Integration_API.Controller
         public const string HOSPITAL_URL = "http://localhost:39901";
 
         private readonly IHubContext<SignalServer> _hubContext;
-        public MedicinesController(IPharmacyConnection connection)
+        /*public MedicinesController(IPharmacyConnection connection)
         {
             pharmacyConnection = connection;
-        }
+        }*/
 
         public MedicinesController(IPharmacyConnection connection, IHubContext<SignalServer> hubcontext)
         {
@@ -258,7 +258,7 @@ namespace Integration_API.Controller
             }
 
             filesService.UpdateSpecification(dowloadedSpec);
-            this._hubContext.Clients.All.SendAsync("askServerResponse", "Primili ste fajl "+medicine+".pdf");
+            this._hubContext.Clients.All.SendAsync("askServerResponse", "You recieved file "+medicine+".pdf");
             return Ok();
         }
     }

@@ -2,6 +2,7 @@
 using Integration.Pharmacy.Repository;
 using Integration_API.Controller;
 using Integration_API.Dto;
+using IntegrationTests.UnitTests.mocks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Newtonsoft.Json;
@@ -34,7 +35,7 @@ namespace IntegrationTests.IntegrationTests
         public void OrderingExistingMedicinesTest()
         {
             OrderedMedicineDTO omd = new OrderedMedicineDTO("Brufen", "Zdravko", "none", "2 times a day", "100", "none", "none", "2", null, 200);
-            MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection());
+            MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection(), new HubMock());
 
             var result = mc.OrderedHTTP(omd);
 
@@ -47,7 +48,7 @@ namespace IntegrationTests.IntegrationTests
         [MemberData(nameof(Data))]
         public void CheckIf_medicine_is_ordered(OrderingMedicineDTO omd, bool isHttp)
         {
-            MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection());
+            MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection(), new HubMock());
             bool requestOk = false;
             if (isHttp)
             {
