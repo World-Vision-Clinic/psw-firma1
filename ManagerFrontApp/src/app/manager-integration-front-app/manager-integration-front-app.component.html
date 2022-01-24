@@ -1,6 +1,9 @@
-<!--<div class="containter">
+<div class="containter">
     <nav class="navbar-expand-sm bg-light navbar-dark">
-        <ul class="navbar-nav">
+        
+        <ul class="navbar-nav" style="position: absolute;
+        left: 85%;border:solid black 1px;">
+            <!--
             <li class="nav-item">
                 <button [routerLink]="['/manager-front-app', {
                     outlets:{
@@ -80,7 +83,7 @@
                     }
                 }]"
                 class="m-1 btn btn-light btn-outline-primary" Button>Statistics</button>
-            </li>
+            </li>-->
             <li>
                 <button (click)="showNotifications()"
         class="icon-btn text-gray-800"
@@ -105,13 +108,13 @@
         </ul>
     </nav>
     <div *ngIf="isNotificationVisible" style="z-index:100; position: absolute;
-        left: 85%;border:solid black 1px;">
+        left: 85%;top:65%;border:solid black 1px;">
         <div *ngFor="let notification of list; let i = index" style="padding:5px;"
         >
         <label style="width: 100%;" *ngIf="notification.seen" style="background-color: white;">{{notification.text}}</label>
         <label style="width: 100%;" *ngIf="!notification.seen" style="background-color: #90ee90;">{{notification.text}}</label>
     </div>   
 </div>
--->
+
 <router-outlet name="showObjRepl"></router-outlet>
 <script src="node_modules/chart.js/src/chart.js"></script>
