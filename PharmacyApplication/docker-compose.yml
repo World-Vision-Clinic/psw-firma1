@@ -31,9 +31,9 @@ services:
 
   pharmacy-api:
     #build: ../PharmacyApplication
-    image: darkelfff/pharmacy-api:latest
+    image: darkelfff/pharmacy-1:latest
     depends_on:
-      - postgres-database
+      - "postgres-database"
     environment: 
       DATABASE_HOST: postgres-database
       DATABASE_PORT: 5432
