@@ -9,7 +9,7 @@
         <div class="header" [@colorState]="!feedbackSent" [@borderRoundingState]="!feedbackSent">
           <div class="row d-flex justify-content-center">
             <h3 class="text-white mb-0 py-5 font-weight-bold" *ngIf="!feedbackSent">Let us know about your experience</h3>
-            <h3 class="text-white mb-0 py-5 font-weight-bold" *ngIf="feedbackSent">Thank you for your feedback!</h3>
+            <h3 class="text-white mb-0 py-5 font-weight-bold" id="feedbackSent" *ngIf="feedbackSent">Thank you for your feedback!</h3>
           </div>
         </div>
     

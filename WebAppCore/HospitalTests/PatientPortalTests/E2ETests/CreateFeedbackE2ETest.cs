@@ -69,10 +69,8 @@ namespace HospitalTests.PatientPortalTests.End2End
         {
             createFeedbackPage.InsertContent("komentar");
             createFeedbackPage.ClickCreateFeedback();
-            homePage.EnsurePageIsDisplayed();
-            Assert.True(homePage.FeedbackDisplayed());
-            Assert.True(homePage.SignOutDisplayed());
-            Assert.True(homePage.PatientNameDisplayed());
+            createFeedbackPage.EnsureSuccessDisplayed();
+            Assert.True(createFeedbackPage.SuccessDisplayed());
         }
     }
 }

@@ -15,6 +15,8 @@ namespace Hospital.SharedModel
         }
         public EventsDbContext(DbContextOptions<EventsDbContext> options) : base(options) { }
 
+        public EventsDbContext(DbContextOptions<TestEventsDbContext> options) : base(options) { }
+
         public EventsDbContext(DbSet<Event> events)
         {
             EventsHospital = events;

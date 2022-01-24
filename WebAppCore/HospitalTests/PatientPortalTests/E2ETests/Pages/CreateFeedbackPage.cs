@@ -13,11 +13,33 @@ namespace HospitalTests.PatientPortalTests.End2End
 
         private IWebElement FeedbackBtn => driver.FindElement(By.Id("createBtn"));
         private IWebElement ContentField => driver.FindElement(By.Id("contentField"));
+        private IWebElement Success => driver.FindElement(By.Id("feedbackSent"));
         public string Title => driver.Title;
 
         public CreateFeedbackPage(IWebDriver driver)
         {
             this.driver = driver;
+        }
+
+        public void EnsureSuccessDisplayed() 
+        {
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
+            wait.Until(condition =>
+            {
+                try
+                {
+                    return Success.Displayed;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    return false;
+                }
+                catch (NoSuchElementException)
+                {
+                    return false;
+                }
+
+            });
         }
 
         public void EnsurePageIsDisplayed()
@@ -45,6 +67,11 @@ namespace HospitalTests.PatientPortalTests.End2End
         {
             return FeedbackBtn.Displayed;
         }
+        public bool SuccessDisplayed()
+        {
+            return Success.Displayed;
+        }
+
         public bool ContentFieldDisplayed()
         {
             return ContentField.Displayed;

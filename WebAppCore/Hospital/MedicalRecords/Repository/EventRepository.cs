@@ -11,14 +11,18 @@ namespace Hospital.MedicalRecords.Repository
     {
         private EventsDbContext dbContext = new EventsDbContext();
 
+        public EventRepository() { }
+        public EventRepository(TestEventsDbContext testContext) 
+        {
+            dbContext = testContext;
+        }
+        
         public List<Event> GetAll()
         {
             List<Event> events = new List<Event>();
             dbContext.EventsHospital.ToList().ForEach(newEvent => events.Add(newEvent));
             return events;
         }
-
-
 
         public void Save(Event newEvent)
         {
