@@ -580,7 +580,11 @@
   
   <div *ngIf="quickEquipPeriods">
   <div style="text-align: center; margin: 10px 0">
+    <p>Quick equipment transport</p>
+    <p>from storage to operating room 1</p>
+    <hr>
     <label for="" style="float: left">Select interval for transport</label>
+    <br/>
     <mat-form-field class="example-form-field" appearance="fill">
       <mat-date-range-input
         [formGroup]="interval"
@@ -611,6 +615,6 @@
       placeholder="Enter duration here...."
     />
   </div>
-  <button (click)="quickEquipmentTransport()">Schedule transport</button>
+  <button (click)="quickEquipmentTransport()" class="toolbar-btn">Schedule transport</button>
 </div>
 </div>

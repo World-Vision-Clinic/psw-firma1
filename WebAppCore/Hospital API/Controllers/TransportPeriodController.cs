@@ -89,7 +89,7 @@ namespace Hospital_API.Controllers
         public IActionResult QuickTransport(TransportEquipmentDTO dto)
         {
             Equipment targetEquipment = equipmentService.getById(dto.TargetEqupmentId);
-            Equipment newEq = new Equipment(equipmentService.getAll().Count+1, targetEquipment.Name, targetEquipment.Type, 15, dto.TargetRoomId, true, dto.startDate,dto.endDate);
+            Equipment newEq = new Equipment(targetEquipment.Name, targetEquipment.Type, 15, dto.TargetRoomId, true, dto.startDate,dto.endDate);
             Room r1 = roomService.GetById(dto.TargetRoomId);
             equipmentService.Create(newEq);
             equipmentTransportationService.MakeTransportFromStorage(newEq.Id, newEq, null, r1, dto.startDate, dto.endDate);

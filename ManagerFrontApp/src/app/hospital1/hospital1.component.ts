@@ -182,7 +182,7 @@ export class Hospital1Component implements OnInit {
   quickEquipmentTransport(){
     const data={
       TargetRoomId: 1,
-      TargetEqupmentId: 1,
+      TargetEqupmentId: 3,
       startDate: this.suggestion?.startDate,
       endDate: this.suggestion?.endDate,
       Amount: 10,

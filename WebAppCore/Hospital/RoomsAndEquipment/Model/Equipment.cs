@@ -41,6 +41,19 @@ namespace Hospital.RoomsAndEquipment.Model
             Validate();
         }
 
+        public Equipment( string name, EquipmentType type, int amount, int roomId, bool inTransport, DateTime start, DateTime end)
+        {
+          
+            this.Name = name;
+            this.Type = type;
+            this.Amount = amount;
+            this.RoomId = roomId;
+            this.InTransport = inTransport;
+            this.TransportStart = start;
+            this.TransportEnd = end;
+        }
+            
+
         public Equipment(int id, string name, EquipmentType type, int amount, int roomId)
         {
             this.Id = id;

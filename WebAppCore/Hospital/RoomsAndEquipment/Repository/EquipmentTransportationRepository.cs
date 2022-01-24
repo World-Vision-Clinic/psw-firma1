@@ -41,8 +41,8 @@ namespace Hospital.RoomsAndEquipment.Repository
 
         public void Save(EquipmentTransportation parameter)
         {
-            dbContext.EquipmentTransportationAggregates.Add(parameter);
-            dbContext.SaveChanges();
+            //dbContext.EquipmentTransportationAggregates.Add(parameter);
+            //dbContext.SaveChanges();
         }
 
         public void Update(EquipmentTransportation parameter)
