@@ -45,8 +45,11 @@ export class MedicalRecordViewComponent implements OnInit {
   ngOnInit(): void {
     this._patientService.getPatient(1).subscribe(data => (this.patient = data),
       error => this.errorMsg = "Couldn't load user feedback");
+     
     
-    this._patientService.getPatientAppointments(1).subscribe(data => this.appointments = data, error => this.errorMsg = "Couldn't load user appointments");
+    this._patientService.getPatientAppointments(1).subscribe(data => this.appointments = data
+    );
+    console.log(this.appointments)
   }
 
   getSortedAppointments(): any[] {

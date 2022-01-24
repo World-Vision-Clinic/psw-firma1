@@ -42,4 +42,6 @@ export class AppointmentCreationService {
   getPatientAppointments(id: number) : Observable<Appointment[]>{
     return this.http.get<Appointment[]>("/api/Appointment/patient/1")
   }
+
+
 }

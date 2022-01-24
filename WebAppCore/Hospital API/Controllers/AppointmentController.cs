@@ -28,6 +28,7 @@ namespace Hospital_API.Controllers
         public AppointmentService _appointmentService { get; set; }
         public PrescriptionMedicineService _prescriptionMedicineService { get; set; }
         public bool test = false;
+        public ReportService reportService { get; set; }
 
         [ActivatorUtilitiesConstructor]
         public AppointmentController()
@@ -37,10 +38,12 @@ namespace Hospital_API.Controllers
             IDoctorRepository doctorRepository = new DoctorRepository(context, patientRepository);
             IAppointmentRepository appointmentRepository = new AppointmentRepository(context);
             IMedicinesRepository medicinesRepository = new MedicinesRepository();
+            IReportRepository reportRepository = new ReportRepository(context, appointmentRepository);
             IPrescriptionMedicineRepository prescriptionMedicineRepository = new PrescriptionMedicineRepository(context, appointmentRepository, medicinesRepository);
             _appointmentService = new AppointmentService(appointmentRepository, doctorRepository);
             _patientService = new PatientService(patientRepository, appointmentRepository);
             _prescriptionMedicineService = new PrescriptionMedicineService(prescriptionMedicineRepository);
+            reportService = new ReportService(reportRepository);
         }
 
         public AppointmentController(AppointmentService _appointmentService)
@@ -97,6 +100,33 @@ namespace Hospital_API.Controllers
                 prescriptionDTOs.Add(prescriptionMedicineDTO);
             }
             return prescriptionDTOs;
+        }
+
+
+        [Authorize(Roles = "Patient")]
+        [HttpGet("report/{appointmentId}")]
+        public ActionResult<IEnumerable<Report>> GetReport(int appointmentId)
+        {
+            Patient patient = getCurrentPatient();
+            List<Appointment> appointments = _appointmentService.GetByPatientId(patient.Id);
+            bool found = false;
+            Appointment requestedAppointment = null;
+            foreach (Appointment a in appointments)
+            {
+                if (a.Id == appointmentId)
+                {
+                    found = true;
+                    requestedAppointment = a;
+                    break;
+                }
+            }
+            if (!found)
+            {
+                return BadRequest("User does not have an appointment with requested id");
+            }
+            List<Report> reports = reportService.FindByAppointmentId(appointmentId);
+        
+            return reports;
         }
 
         [Authorize(Roles = "Patient")]

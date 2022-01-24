@@ -11,6 +11,8 @@ import { PatientAppointmentCreationComponent } from './patient-appointment-creat
 import { Appointment4stepComponent } from './appointment4step/appointment4step.component';
 import { ReportComponent } from './report/report.component';
 import { AuthGuard } from './auth.guard';
+import { PrescriptionComponent } from './prescription/prescription.component';
+
 
 const routes: Routes = [
 
@@ -25,7 +27,8 @@ const routes: Routes = [
 { path: "create-appointment", component: PatientAppointmentCreationComponent ,canActivate:[AuthGuard]},
 { path: "appointment4step", component: Appointment4stepComponent ,canActivate:[AuthGuard]},
 { path: '', component: HomePageComponent},
-{ path: 'report', component: ReportComponent, canActivate:[AuthGuard]}
+{ path: 'report', component: ReportComponent, canActivate:[AuthGuard]},
+{ path: 'prescription', component: PrescriptionComponent, canActivate:[AuthGuard]}
 ];
 
 @NgModule({

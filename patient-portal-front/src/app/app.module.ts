@@ -32,6 +32,7 @@ import { AuthInterceptor } from './interceptor';
 import { AuthGuard } from './auth.guard';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { ReportComponent } from './report/report.component';
+import { PrescriptionComponent } from './prescription/prescription.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { ReportComponent } from './report/report.component';
     RegisterComponent,
     PatientAppointmentCreationComponent,
     Appointment4stepComponent,
-    ReportComponent
+    ReportComponent,
+    PrescriptionComponent
   ],
   imports: [
     BrowserModule,

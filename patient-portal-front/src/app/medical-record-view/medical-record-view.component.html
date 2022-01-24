@@ -167,9 +167,10 @@
               <div class="col-md-1">
                 <button class="btn btn-blue btn-rounded" (click)="doSurveyForAppointment(a.id)" [disabled]="!canSurveyBeDone(a)">Survey</button>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1" >
               <button class="btn btn-blue btn-rounded" [routerLink]="['/report']"  [disabled]="!canSeeReport(a)" [queryParams]="{id: a.id, date: a.date, doctor: a.doctorName}">Report</button>
-          </div>
+              <button class="btn btn-blue btn-rounded" [routerLink]="['/prescription']" [queryParams]="{id: a.id, date: a.date, doctor: a.doctorName}">Prescription</button>
+            </div>
              
           </div>
       </div> 

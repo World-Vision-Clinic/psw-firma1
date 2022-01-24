@@ -29,4 +29,12 @@ export class PatientFeedbackServiceService {
   cancelAppointment(id: number) : Observable<Appointment>{
     return this.http.delete<Appointment>("/api/Appointment/" + id);
   }
+
+  getReport(appointmentId: number){
+    return this.http.get("/api/Appointment/report/" + appointmentId);
+  }
+
+  getPrescription(appointmentId: number) {
+    return this.http.get("/api/Appointment/prescription/" + appointmentId);
+  }
 }
