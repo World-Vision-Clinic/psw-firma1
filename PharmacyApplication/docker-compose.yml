@@ -29,9 +29,9 @@ services:
       - db_pass
       - db_user 
 
-  pharmacy:
+  pharmacy-api:
     #build: ../PharmacyApplication
-    image: darkelfff/pharmacy-api-s:latest
+    image: darkelfff/pharmacy-api:latest
     depends_on:
       - postgres-database
     environment: 
@@ -41,13 +41,16 @@ services:
       DATABASE_PASSWORD_FILE: /run/secrets/db_pass
       DATABASE_USER_FILE: /run/secrets/db_user
     ports:
-      - "8081:80" 
+      - "8081:8081" 
     restart: on-failure
     networks:
       - application
     secrets:
       - db_user
-      - db_pass 
+      - source: db_pass
+        uid: '5000'
+        gid: '5000'
+        mode: 0440
 
   manager-front:
     image: darkelfff/manager-front-s:latest

@@ -39,8 +39,8 @@ services:
       - application
     secrets:
       - source: db_pass_hospital
-        uid: '999'
-        gid: '999'
+        uid: '5000'
+        gid: '5000'
         mode: 0440
       - db_user_hospital 
   

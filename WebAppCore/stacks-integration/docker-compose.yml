@@ -30,7 +30,7 @@ services:
       - db_user 
 
   integration: 
-    image: darkelfff/integration-api-s:latest
+    image: darkelfff/integration-api:latest
     depends_on:
       - integration-database
     environment: 
@@ -40,12 +40,15 @@ services:
       DATABASE_PASSWORD_FILE: /run/secrets/db_pass
       DATABASE_USER_FILE: /run/secrets/db_user
     ports:
-      - "8083:80" 
+      - "8083:8083" 
     restart: on-failure
     networks:  
       - database 
     secrets:
-      - db_pass
+      - source: db_pass
+        uid: '5000'
+        gid: '5000'
+        mode: 0440
       - db_user 
 
 volumes:
