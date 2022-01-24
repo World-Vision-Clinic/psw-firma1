@@ -575,6 +575,42 @@
     <button (click)="moveEquipment()" class="toolbar-btn">Move equipment</button>
     <button class="toolbar-btn" (click)="renovationTypeBox=true" >Renovate rooms</button>
     <button class="toolbar-btn" (click)="shiftsBox=true; shiftsBtnsBox=true">Shift managment</button>
+    <button class="toolbar-btn" (click)="quickEquipPeriods=true">Quick equip</button>
   </div>
   
+  <div *ngIf="quickEquipPeriods">
+  <div style="text-align: center; margin: 10px 0">
+    <label for="" style="float: left">Select interval for transport</label>
+    <mat-form-field class="example-form-field" appearance="fill">
+      <mat-date-range-input
+        [formGroup]="interval"
+        [rangePicker]="campaignOnePicker"
+      >
+        <input
+          matStartDate
+          placeholder="Start date"
+          formControlName="start"
+        />
+        <input matEndDate placeholder="End date" formControlName="end" />
+      </mat-date-range-input>
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="campaignOnePicker"
+      ></mat-datepicker-toggle>
+      <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+    </mat-form-field>
+  </div>
+  <div>
+    <label for="">Estimate time in hours:</label> <br />
+    <input
+      type="number"
+      class="fill-form-field"
+      [(ngModel)]="estimateHours"
+      name="input"
+      min="0"
+      placeholder="Enter duration here...."
+    />
+  </div>
+  <button (click)="quickEquipmentTransport()">Schedule transport</button>
+</div>
 </div>

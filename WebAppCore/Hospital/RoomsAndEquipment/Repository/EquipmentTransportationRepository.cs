@@ -3,6 +3,7 @@ using Hospital.RoomsAndEquipment.Repository.RepositoryInterfaces;
 using Hospital.SharedModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Hospital.RoomsAndEquipment.Repository
@@ -27,22 +28,58 @@ namespace Hospital.RoomsAndEquipment.Repository
 
         public List<EquipmentTransportation> GetAll()
         {
-            throw new NotImplementedException();
+            List<EquipmentTransportation> list = new List<EquipmentTransportation>();
+            dbContext.EquipmentTransportationAggregates.ToList().ForEach(a => list.Add(a));
+            return list;
         }
 
         public EquipmentTransportation GetByID(int id)
         {
-            throw new NotImplementedException();
+            EquipmentTransportation eq = dbContext.EquipmentTransportationAggregates.Find(id);
+            return eq;
         }
 
         public void Save(EquipmentTransportation parameter)
         {
-            throw new NotImplementedException();
+            dbContext.EquipmentTransportationAggregates.Add(parameter);
+            dbContext.SaveChanges();
         }
 
         public void Update(EquipmentTransportation parameter)
         {
-            throw new NotImplementedException();
+            dbContext.EquipmentTransportationAggregates.Update(parameter);
+            dbContext.SaveChanges();
+        }
+
+        public EquipmentTransportation GetAggregate(int roomid, string eqName)
+        {
+            List<EquipmentTransportation> lista = this.GetAll();
+            if (lista != null)
+            {
+                foreach (EquipmentTransportation t in lista){
+                    if (t.RoomFrom.Id == roomid && t.Equipment.Name == eqName)
+                    {
+                        return t;
+                    }                 
+                }
+            } else return null;
+            return null;
+        }
+        public EquipmentTransportation GetStorageAggregate(string eqName)
+        {
+            List<EquipmentTransportation> lista = this.GetAll();
+            if (lista != null)
+            {
+                foreach (EquipmentTransportation t in lista)
+                {
+                    if (t.RoomFrom==null && t.Equipment.Name == eqName)
+                    {
+                        return t;
+                    }
+                }
+            }
+            else return null;
+            return null;
         }
     }
 }

@@ -23,7 +23,7 @@
 </style>
 -->
 <body>
-  <div class="row d-flex align-items-center w-100">
+  <div class="row d-flex align-items-center w-100" *ngIf="showMenuToEditors">
     <div class="col-md-2">
     </div>
     <div class="col-md-8 website_name_label">
@@ -32,7 +32,7 @@
     <div class="col-md-2">
     </div>
   </div>
-  <div class="row d-flex align-items-center w-100">
+  <div class="row d-flex align-items-center w-100" *ngIf="showMenuToEditors">
     <div class="col-md-2">
     </div>
     <div class="col-md-8">
@@ -43,7 +43,7 @@
         <a href="manager-feedback" id="feedback" *ngIf="isLoggedIn()" style="float:none">Feedbacks</a>
         <a href="survey-results" *ngIf="isLoggedIn()" style="float:none">Surveys</a>
         <a href="block-patients" id="users" *ngIf="isLoggedIn()" style="float:none">Users</a>
-        <a href="buildings" *ngIf="isLoggedIn()" style="float:none">Hospital editor</a>
+        <button *ngIf="isLoggedIn()" routerLink="/buildings" (click)="showMenuToEditors=false">Hospital editor</button>
         <a href="/" *ngIf="isLoggedIn()" (click)="logout()" style="float:none">Sign out</a>
       </nav>
     </div>

@@ -14,6 +14,14 @@ namespace Hospital.RoomsAndEquipment.Model
         public List<EquipmentTransportationEvent> Events { get; set; }
         public int Version { get; private set; }
 
+        public EquipmentTransportation() { }
+        public EquipmentTransportation(Equipment e, Room r1, Room r2, DateTime d1, DateTime d2)
+        {
+            this.Equipment = e;
+            this.RoomFrom = r1;
+            this.RoomTo = r2;
+            this.Period = new TransportPeriod(d1, d2);
+        }
 
         public void addNewEvent(EquipmentTransportationEvent transEvent){
             if (this.Events == null)
@@ -27,6 +35,11 @@ namespace Hospital.RoomsAndEquipment.Model
         public void ordinaryTransport()
         {
             this.addNewEvent(new EquipmentTransportationEvent(this.Id, "Equipment transported from " + this.RoomFrom.Name + " to " + this.RoomTo.Name));
+        }
+
+        public void fromStorageTransport()
+        {
+            this.addNewEvent(new EquipmentTransportationEvent(this.Id, "Equipment transported from storage to " + this.RoomTo.Name));
         }
 
         public void emptyRoomEquipment()

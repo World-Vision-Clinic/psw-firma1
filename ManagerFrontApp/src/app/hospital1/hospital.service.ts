@@ -29,6 +29,7 @@ export class HospitalService {
       { headers }
     );
   }
+
   orderMoving(data: {
     TargetRoomId: number | undefined;
     TargetEqupmentId: number | undefined;
@@ -43,6 +44,22 @@ export class HospitalService {
       { headers: headers }
     );
   }
+
+  quickTransport(data:{
+    TargetRoomId: number | undefined;
+    TargetEqupmentId: number | undefined;
+    startDate: any;
+    endDate: any;
+    Amount: number | null;
+  }): Observable<any> {
+    const headers = { 'content-type': 'application/json' };
+    return this.http.post<any>(
+      `http://localhost:39901/api/transportPeriod/quickTransport`,
+      data,
+      { headers: headers }
+    );
+  }
+
   getSuggestionForPeriod(
     buildingId: string,
     startDate: Date,

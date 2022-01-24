@@ -132,7 +132,7 @@ export class Hospital1Component implements OnInit {
   currentState = {
     index: 0,
   };
-
+  quickEquipPeriods:boolean=false;
 
   enableEdit() {
     this.formDisabled = false;
@@ -174,6 +174,22 @@ export class Hospital1Component implements OnInit {
       (d) => {
         this.closeMovingContainer();
         console.log('Hura iznenilo seee!!!');
+      },
+      (e) => {}
+    );
+  }
+
+  quickEquipmentTransport(){
+    const data={
+      TargetRoomId: 1,
+      TargetEqupmentId: 1,
+      startDate: this.suggestion?.startDate,
+      endDate: this.suggestion?.endDate,
+      Amount: 10,
+    }
+    this.hospitalService.quickTransport(data).subscribe(
+      (d) => {
+        this.quickEquipPeriods=false;     
       },
       (e) => {}
     );

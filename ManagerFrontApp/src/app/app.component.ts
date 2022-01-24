@@ -10,7 +10,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class AppComponent {
   title = 'ManagerFrontApp';
-
+  showMenuToEditors=true;
   constructor(
     private router: Router,
     private jwtHelper: JwtHelperService
@@ -28,7 +28,12 @@ export class AppComponent {
     if(token && !this.jwtHelper.isTokenExpired(token) && decodedToken.role == "Manager"){
         return true;
     }
+    
     return false;
+  }
+  switchToEditors(){
+    this.showMenuToEditors=false;
+    window.location.replace('http://localhost:4200/buildings')
   }
 
   logout(): void{

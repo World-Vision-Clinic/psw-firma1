@@ -29,6 +29,7 @@ namespace Hospital_API.Controllers
         private FloorLabelService floorLabelService = new FloorLabelService(new FloorLabelRepository(new Hospital.SharedModel.HospitalContext()));
         private MapPositionService mapPositionService = new MapPositionService(new MapPositionRepository(new Hospital.SharedModel.HospitalContext()));
         private OutsideDoorService outsideDoorService = new OutsideDoorService(new OutsideDoorRepository(new Hospital.SharedModel.HospitalContext()));
+        private EquipmentTransportationService equipmentTransportationService = new EquipmentTransportationService(new EquipmentTransportationRepository(new Hospital.SharedModel.HospitalContext()));
         public bool test = false;
 
 
@@ -84,6 +85,15 @@ namespace Hospital_API.Controllers
             return Ok();
         }
 
-
+        [HttpPost("quickTransport")]
+        public IActionResult QuickTransport(TransportEquipmentDTO dto)
+        {
+            Equipment targetEquipment = equipmentService.getById(dto.TargetEqupmentId);
+            Equipment newEq = new Equipment(-1, targetEquipment.Name, targetEquipment.Type, 15, dto.TargetRoomId, true, dto.startDate,dto.endDate);
+            Room r1 = roomService.GetById(dto.TargetRoomId);
+            equipmentService.Create(newEq);
+            equipmentTransportationService.makeTransportFromStorage(dto.TargetEqupmentId, newEq, null, r1, dto.startDate, dto.endDate);
+            return Ok();
+        }
     }
 }
