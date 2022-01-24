@@ -86,6 +86,6 @@ services:
 
 networks:
   hospital_api:
-    driver: bridge
+    driver: overlay
   database:
-    driver: bridge
+    driver: overlay
