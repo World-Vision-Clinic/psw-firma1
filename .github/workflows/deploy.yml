@@ -25,8 +25,7 @@ jobs:
             git pull origin feat/docker-secrets
             docker system prune -f
             docker swarm leave --force
-            docker swarm init
-            
+            docker swarm init   
             printf  ${{ secrets.HOSPITAL_USER_PASS }} | docker secret create db_user_hospital -
             printf ${{ secrets.HOSPITAL_PASS }} | docker secret create db_pass_hospital -
             cd WebAppCore/
