@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Integration.Pharmacy.Service;
 
 namespace Integration_API
 {
@@ -49,7 +49,14 @@ namespace Integration_API
             // Simple example with dependency injection for a data provider.
             services.AddSingleton<IPharmacyConnection, PharmacyHTTPConnection>();
 
+            services.AddSignalR(options => {
+                options.EnableDetailedErrors = true;
+            });
+
             services.AddControllers();
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +76,7 @@ namespace Integration_API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<SignalServer>("/signalServer");
             });
             server = new Server
             {

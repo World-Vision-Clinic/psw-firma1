@@ -43,6 +43,7 @@ import {
 import { StatisticsComponent } from './manager-integration-front-app/statistics/statistics.component';
 import { TenderSelectionComponent } from './manager-integration-front-app/tender-selection/tender-selection.component';
 import { DoctorsManagementComponent } from './doctors-management/doctors-management.component';
+import { BadgeModule } from './manager-integration-front-app/badge/badge.module';
 import { DoctorOnDutyContainerComponent } from './doctor-on-duty-container/doctor-on-duty-container.component';
 import { DatePipe } from '@angular/common';
 import { ChartsContainerComponent } from './charts-container/charts-container.component';
@@ -94,7 +95,8 @@ import { ChartsContainerComponent } from './charts-container/charts-container.co
     ChartAllModule,
     AccumulationChartAllModule,
     RangeNavigatorAllModule,
-    MatInputModule,
+    BadgeModule,
+    MatInputModule
     // MatDatepicker,
     // MatDateRangeInput,
     // MatDateRangePicker,

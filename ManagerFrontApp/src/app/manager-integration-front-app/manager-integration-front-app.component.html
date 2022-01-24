@@ -1,6 +1,9 @@
-<!--<div class="containter">
+<div class="containter">
     <nav class="navbar-expand-sm bg-light navbar-dark">
-        <ul class="navbar-nav">
+        
+        <ul class="navbar-nav" style="position: absolute;
+        left: 85%;border:solid black 1px;">
+            <!--
             <li class="nav-item">
                 <button [routerLink]="['/manager-front-app', {
                     outlets:{
@@ -80,10 +83,38 @@
                     }
                 }]"
                 class="m-1 btn btn-light btn-outline-primary" Button>Statistics</button>
+            </li>-->
+            <li>
+                <button (click)="showNotifications()"
+        class="icon-btn text-gray-800"
+        
+        size="small"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="24"
+          height="24"
+        >
+          <path fill="none" d="M0 0h24v24H0z" />
+          <path
+            d="M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm17 4.238l-7.928 7.1L4 7.216V19h16V7.238zM4.511 5l7.55 6.662L19.502 5H4.511z"
+          />
+        </svg>
+        <p>{{ signalrServece.numberOfNotifications}}</p>
+      </button>
+      
             </li>
         </ul>
     </nav>
-<div>-->
+    <div *ngIf="isNotificationVisible" style="z-index:100; position: absolute;
+        left: 85%;top:65%;border:solid black 1px;">
+        <div *ngFor="let notification of list; let i = index" style="padding:5px;"
+        >
+        <label style="width: 100%;" *ngIf="notification.seen" style="background-color: white;">{{notification.text}}</label>
+        <label style="width: 100%;" *ngIf="!notification.seen" style="background-color: #90ee90;">{{notification.text}}</label>
+    </div>   
+</div>
 
 <router-outlet name="showObjRepl"></router-outlet>
 <script src="node_modules/chart.js/src/chart.js"></script>

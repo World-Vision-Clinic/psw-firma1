@@ -33,6 +33,11 @@ namespace Pharmacy.Service
             return repository.GetByHospitalLocalhost(hospitalLocalhost);
         }
 
+        public Credential GetByHospitalName(string hospitalName)
+        {
+            return repository.GetByHospitalName(hospitalName);
+        }
+
         public Credential GetByHospitalApi(string api)
         {
             return repository.GetByHospitalApi(api);

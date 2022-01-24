@@ -8,6 +8,7 @@ using Integration_API.Mapper;
 using IntegrationAPI.Protos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Renci.SshNet;
 using RestSharp;
 using System;
@@ -31,9 +32,16 @@ namespace Integration_API.Controller
         private IPharmacyConnection pharmacyConnection;
         public const string HOSPITAL_URL = "http://localhost:39901";
 
-        public MedicinesController(IPharmacyConnection connection)
+        private readonly IHubContext<SignalServer> _hubContext;
+        /*public MedicinesController(IPharmacyConnection connection)
         {
             pharmacyConnection = connection;
+        }*/
+
+        public MedicinesController(IPharmacyConnection connection, IHubContext<SignalServer> hubcontext)
+        {
+            pharmacyConnection = connection;
+            _hubContext = hubcontext;
         }
 
         [HttpPost("sendConsumptionNotification")]
@@ -252,7 +260,7 @@ namespace Integration_API.Controller
             }
 
             filesService.UpdateSpecification(dowloadedSpec);
-
+            this._hubContext.Clients.All.SendAsync("askServerResponse", "You recieved file "+medicine+".pdf");
             return Ok();
         }
     }
