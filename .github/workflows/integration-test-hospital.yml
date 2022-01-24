@@ -38,7 +38,7 @@ jobs:
         run: dotnet tool install --global dotnet-ef
 
       - name: Install dependencies hospital
-        run: dotnet tool restore ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL}
+        run: dotnet tool restore ${SOLUTION_DIRECTORY_HOSPITAL}
 
       - name: Create Migrations hospital
         run:
