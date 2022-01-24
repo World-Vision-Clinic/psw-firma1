@@ -33,7 +33,7 @@ namespace Integration_API.Controller
         {
             if (dto.Id.Length <= 0 || dto.Content.Length <= 0 || dto.Title.Length <= 0 || dto.FromDate == null || dto.ToDate == null)
             {
-                return BadRequest();
+                return BadRequest("Invalid news data!");
             }
 
             List<News> news = newsService.GetAll();
@@ -41,7 +41,7 @@ namespace Integration_API.Controller
 
             if (pieceOfNews == null)
             {
-                return NotFound();
+                return NotFound("News not found!");
             }
             else
             {

@@ -31,11 +31,11 @@ namespace IntegrationTests.IntegrationTests
         }*/
 
 
-        bool isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+        bool development = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
         [SkippableFact]
         public void OrderingExistingMedicinesTest()
         {
-            Skip.If(isDevelopment);
+            Skip.IfNot(development);
             OrderedMedicineDTO omd = new OrderedMedicineDTO("Brufen", "Zdravko", "none", "2 times a day", "100", "none", "none", "2", null, 200);
             MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection());
 
@@ -46,10 +46,11 @@ namespace IntegrationTests.IntegrationTests
             Assert.Equal(200, statusCodeResult.StatusCode);
         }
 
-        [Theory]
+        [SkippableTheory]
         [MemberData(nameof(Data))]
         public void CheckIf_medicine_is_ordered(OrderingMedicineDTO omd, bool isHttp)
         {
+            Skip.IfNot(development);
             MedicinesController mc = new MedicinesController(new PharmacyHTTPConnection());
             bool requestOk = false;
             if (isHttp)
