@@ -29,6 +29,7 @@ namespace Integration_API.Mapper
             dto.City = pharmacy.Address.City;
             dto.Note = pharmacy.Note;
             dto.Protocol = pharmacy.ConnectionInfo.Protocol;
+            dto.Email = pharmacy.Email;
             return dto;
         }
     }

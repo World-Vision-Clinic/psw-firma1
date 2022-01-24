@@ -42,7 +42,7 @@ namespace Integration_API.Controller
             }
             catch
             {
-                return new JsonResult("anonymous.png");
+                return new JsonResult("Error occurred while saving picture.");
             }
 
 
@@ -60,8 +60,9 @@ namespace Integration_API.Controller
                 System.IO.File.Delete(physicalPath);
 
             }
+            else return NotFound("Photo not found.");
 
-            return Ok();
+            return Ok("Successfully deleted photo.");
         }
     }
 }

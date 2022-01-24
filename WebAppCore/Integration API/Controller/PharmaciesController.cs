@@ -120,7 +120,7 @@ namespace Integration_API.Controller
         [HttpPut]
         public IActionResult EditPharmacy(PharmacyDto dto)
         {
-            if (dto.Name.Length <= 0 || dto.Localhost.Length <= 0 || dto.Address.Length <= 0 || dto.City.Length <= 0)
+            if (string.IsNullOrEmpty(dto.Name) || string.IsNullOrEmpty(dto.Localhost) || string.IsNullOrEmpty(dto.Address) ||string.IsNullOrEmpty(dto.City) || string.IsNullOrEmpty(dto.Email))
             {
                 return BadRequest("Please fill all fileds");
             }
@@ -134,7 +134,7 @@ namespace Integration_API.Controller
             }
             else
             {
-                return Ok(pharmacy);
+                return Ok(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
             }
         }
 
