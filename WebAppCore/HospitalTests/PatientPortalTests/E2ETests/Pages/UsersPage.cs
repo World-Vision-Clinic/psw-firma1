@@ -11,8 +11,8 @@ namespace HospitalTests.PatientPortalTests.E2ETests
         private IWebDriver driver;
         public const string URI = "http://localhost:4200/block-patients";
 
-        private IWebElement Block => driver.FindElement(By.Id("block0"));
-        private IWebElement User => driver.FindElement(By.Id("user0"));
+        private IWebElement Block => driver.FindElement(By.Id("block2"));
+        private IWebElement User => driver.FindElement(By.Id("user2"));
         public string Title => driver.Title;
 
         public UsersPage(IWebDriver driver)
