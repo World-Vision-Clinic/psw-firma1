@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Hospital.RoomsAndEquipment.Model
@@ -10,16 +11,27 @@ namespace Hospital.RoomsAndEquipment.Model
         public Equipment Equipment { get; private set; }
         public Room RoomFrom { get; private set; }
         public Room RoomTo { get; private set; }
+        [NotMapped]
         public TransportPeriod Period {get; private set;}
         public List<EquipmentTransportationEvent> Events { get; set; }
         public int Version { get; private set; }
 
         public EquipmentTransportation() { }
-        public EquipmentTransportation(Equipment e, Room r1, Room r2, DateTime d1, DateTime d2)
+        public EquipmentTransportation(int id, Equipment equipment, Room roomFrom, Room roomTo, TransportPeriod period, List<EquipmentTransportationEvent> events, int version)
         {
-            this.Equipment = e;
-            this.RoomFrom = r1;
-            this.RoomTo = r2;
+            this.Id = id;
+            this.Equipment = equipment;
+            this.RoomFrom = roomFrom;
+            this.RoomTo = roomTo;
+            this.Period = period;
+            this.Events = events;
+            this.Version = version;
+        }
+        public EquipmentTransportation(Equipment equipment, Room roomFrom, Room roomTo, DateTime d1, DateTime d2)
+        {
+            this.Equipment = equipment;
+            this.RoomFrom = roomFrom;
+            this.RoomTo = roomTo;
             this.Period = new TransportPeriod(d1, d2);
         }
 

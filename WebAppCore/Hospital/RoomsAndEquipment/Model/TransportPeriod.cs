@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Hospital.RoomsAndEquipment.Model
 {
+    [Keyless]
     public class TransportPeriod
     {
         public DateTime Start { get; private set; }

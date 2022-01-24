@@ -203,6 +203,11 @@ namespace Hospital.SharedModel
                 entity.OwnsOne(x => x.FullName);
                 entity.OwnsOne(x => x.Residence);
             });
+
+            modelBuilder.Entity<EquipmentTransportation>(entity =>
+            {
+                entity.HasKey(t => t.Id);
+            });
         }
 
         protected override void OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder optionsBuilder)

@@ -51,20 +51,6 @@ namespace Hospital.RoomsAndEquipment.Repository
             dbContext.SaveChanges();
         }
 
-        public EquipmentTransportation GetAggregate(int roomid, string eqName)
-        {
-            List<EquipmentTransportation> lista = this.GetAll();
-            if (lista != null)
-            {
-                foreach (EquipmentTransportation t in lista){
-                    if (t.RoomFrom.Id == roomid && t.Equipment.Name == eqName)
-                    {
-                        return t;
-                    }                 
-                }
-            } else return null;
-            return null;
-        }
         public EquipmentTransportation GetStorageAggregate(string eqName)
         {
             List<EquipmentTransportation> lista = this.GetAll();
@@ -79,6 +65,7 @@ namespace Hospital.RoomsAndEquipment.Repository
                 }
             }
             else return null;
+
             return null;
         }
     }
