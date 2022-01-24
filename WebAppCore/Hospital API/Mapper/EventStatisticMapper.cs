@@ -17,6 +17,7 @@ namespace Hospital_API.Mapper
             allStatistics.Add(GetSuccessful4StepAttempts());
             allStatistics.Add(GetUseTimes());
             allStatistics.Add(GetUserAges());
+            allStatistics.Add(GetUseTimesOfDay());
             return allStatistics;
         }
 
@@ -77,6 +78,24 @@ namespace Hospital_API.Mapper
             return statistic;
         }
 
+        private static EventStatisticDTO GetUseTimesOfDay()
+        {
+            EventService eventService = new EventService(new EventRepository());
+            EventStatisticDTO statistic = new EventStatisticDTO("Times of Day");
+            List<Event> allEndEvents = eventService.GetAll().Where(p => String.Equals(p.Name, "END")).ToList();
+            double averageTimeOfDay = allEndEvents.Average(p => p.EventTime.TimeOfDay.TotalSeconds);
+            double maxTimeOfDay = allEndEvents.Max(p => p.EventTime.TimeOfDay.TotalSeconds) + 0.1;
+            double[] cutoffPoints = GenerateCutoffPoints(averageTimeOfDay, maxTimeOfDay);
+            for (int i = 0; i < 4; i++)
+            {
+                int eventCount = allEndEvents
+                    .Where(p => p.EventTime.TimeOfDay.TotalSeconds > cutoffPoints[i] && p.EventTime.TimeOfDay.TotalSeconds <= cutoffPoints[i + 1])
+                    .Count();
+                statistic.Data.Add(new EventStatisticDataPair(SecondsToHourAndMinuteString(Convert.ToInt32(cutoffPoints[i])) + "-" + SecondsToHourAndMinuteString(Convert.ToInt32(cutoffPoints[i+1])), eventCount));
+            }
+            return statistic;
+        }
+
         private static double[] GenerateCutoffPoints(double average, double max)
         {
             double[] cutoffPoints = new double[5];
@@ -86,6 +105,19 @@ namespace Hospital_API.Mapper
             cutoffPoints[3] = Math.Truncate(((average + max) / 2) * 100) / 100;
             cutoffPoints[4] = Math.Truncate(max * 100) / 100;
             return cutoffPoints;
+        }
+
+        private static string SecondsToHourAndMinuteString(int seconds)
+        {
+            int hours = (seconds - seconds % 3600) / 3600;
+            int minutes = (seconds % 3600) / 60;
+            string hoursString = hours.ToString();
+            string minutesString = minutes.ToString();
+            if (hours < 10)
+                hoursString = "0" + hoursString;
+            if (minutes < 10)
+                minutesString = "0" + minutesString;
+            return hoursString + ":" + minutesString;
         }
     }
 }
