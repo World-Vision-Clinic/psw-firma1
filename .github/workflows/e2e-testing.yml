@@ -11,3 +11,5 @@ jobs:
         uses: actions/checkout@v2
       - name: Execute e2e tests 
         run: docker-compose -f docker-compose-e2e.yml up --exit-code-from e2e-testing-hospital e2e-testing-hospital
+
+
