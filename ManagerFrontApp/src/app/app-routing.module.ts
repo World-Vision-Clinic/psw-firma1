@@ -51,7 +51,7 @@ const routes: Routes = [
   {path: "statistics", outlet:"showObjRepl", component:StatisticsComponent}
   ]},
   {path:"manager-feedback", component: ManagerFeedbackViewComponent, canActivate:[AuthGuard]},
-  {path: "event-statistics", component:EventStatisticsComponent},
+  {path: "event-statistics", component:EventStatisticsComponent, canActivate:[AuthGuard]},
   {path:"login", component: LoginComponent}
   ];
 
