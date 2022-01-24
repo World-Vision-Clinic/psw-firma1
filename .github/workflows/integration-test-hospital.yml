@@ -66,7 +66,7 @@ jobs:
 
 
       - name: Test
-        run: dotnet test ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL_TEST} --no-restore --verbosity quiet --filter FullyQualifiedName\!~E2ETests 
+        run: dotnet test ${SOLUTION_DIRECTORY_HOSPITAL}\/${PROJECT_DIRECTORY_HOSPITAL_TEST} --no-restore --verbosity quiet --filter FullyQualifiedName\!~E2ETests
         env:
           POSTGRES_USER: admin
           POSTGRES_HOST: localhost
