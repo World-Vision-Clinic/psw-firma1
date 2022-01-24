@@ -24,7 +24,7 @@ namespace Hospital_API.Mapper
         private static EventStatisticDTO GetSuccessful4StepAttempts()
         {
             EventService eventService = new EventService(new EventRepository());
-            EventStatisticDTO statistic = new EventStatisticDTO("Successful Attempts");
+            EventStatisticDTO statistic = new EventStatisticDTO("Successful Attempts", EventStatisticType.TABLE);
             List<Event> allEvents = eventService.GetAll();
             float startCount = allEvents
                 .Where(p => String.Equals(p.Name, "START"))

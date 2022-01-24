@@ -1,65 +1,90 @@
-<div class="container-fluid">
-    <div class="row mt-3">
-        <div class="card" *ngFor = "let e of eventStatistics; index as i">
-            <div class="header gradient-blue">
-                <div class="row d-flex">
-                    <div class="col-md-8">
-                      <h2 class="text-white font-weight-bold header-text">{{e.name}}</h2>
+<div class="row">
+  <div *ngFor = "let e of eventStatistics; index as i">
+    <div class="card" *ngIf="e.type == 0">
+      <div class="header gradient-blue">
+          <div class="row d-flex">
+              <div class="col-md-6">
+                  <p class="text-white font-weight-bold header-text">{{e.name}}</p>
+              </div>
+          </div>
+      </div>
+
+      <div class="card-body mx-4">
+          <div class="col-md-12">
+              <div class="row d-flex">
+                <div class="md-form" *ngFor = "let dataPair of e.data; index as ri">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <strong>{{dataPair.label}}</strong>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
+                      {{dataPair.value}}
                     </div>
+                  </div>
                 </div>
-            </div>
-        
-            <div class="card-body mx-4">
-                <div class="col-md-12">
-                    <div class="row">
-                      <div class="col-md-8">
-                        <div class="skills">
-                            <ul class="lines">
-                              <li class="line l--0">
-                              </li>
-                              <li class="line l--25">
-                                <span class="line__label">
-                                  25%
-                                </span>
-                              </li>
-                              <li class="line l--50">
-                                <span class="line__label">
-                                  50%
-                                </span>
-                              </li>
-                              <li class="line l--75">
-                                <span class="line__label">
-                                  75%
-                                </span>
-                              </li>
-                              <li class="line l--100">
-                                <span class="line__label">
-                                  100%
-                                </span>
-                              </li>
-                            </ul>
-                            
-                            <div class="charts">
-                              <div class="chart chart--dev">
-                                <ul class="chart--horiz" *ngFor = "let dataPair of e.data; index as ri">
-                                  <li class="chart__bar" style="--value:{{getStatisticDataPercentage(dataPair, e.data)}}%">
-                                    <span class="chart__label">
-                                      {{dataPair.label}} ({{dataPair.value}})
-                                    </span>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                      </div>
-                      <!--<div class="col-md-4">
-                        <div role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="--value:{{s.average*20}}">{{getReducedPrecision(s.average)}}</div>
-                      </div>-->
-                    </div>
-                </div>
-            </div>
-        </div>
+              </div>
+          </div>
+      </div>
     </div>
+  </div>
+  <div *ngFor = "let e of eventStatistics; index as i">
+    <div class="card" *ngIf="e.type == 1">
+      <div class="header gradient-blue">
+          <div class="row d-flex">
+              <div class="col-md-8">
+                <h2 class="text-white font-weight-bold header-text">{{e.name}}</h2>
+              </div>
+              <div class="col-md-4">
+              </div>
+          </div>
+      </div>
+  
+      <div class="card-body mx-4">
+          <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="skills">
+                      <ul class="lines">
+                        <li class="line l--0">
+                        </li>
+                        <li class="line l--25">
+                          <span class="line__label">
+                            25%
+                          </span>
+                        </li>
+                        <li class="line l--50">
+                          <span class="line__label">
+                            50%
+                          </span>
+                        </li>
+                        <li class="line l--75">
+                          <span class="line__label">
+                            75%
+                          </span>
+                        </li>
+                        <li class="line l--100">
+                          <span class="line__label">
+                            100%
+                          </span>
+                        </li>
+                      </ul>
+                      
+                      <div class="charts">
+                        <div class="chart chart--dev">
+                          <ul class="chart--horiz" *ngFor = "let dataPair of e.data; index as ri">
+                            <li class="chart__bar" style="--value:{{getStatisticDataPercentage(dataPair, e.data)}}%">
+                              <span class="chart__label">
+                                {{dataPair.label}} ({{dataPair.value}})
+                              </span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
 </div>
