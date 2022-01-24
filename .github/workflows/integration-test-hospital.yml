@@ -8,7 +8,7 @@ jobs:
   Run-Integration-Tests:
     runs-on: ubuntu-latest
     env:
-      SOLUTION_DIRECTORY_HOSPITAL: WebAppCore
+      SOLUTION_DIRECTORY_HOSPITAL: './WebAppCore'
       PROJECT_DIRECTORY_HOSPITAL: Hospital
 
     services:
