@@ -21,16 +21,16 @@ jobs:
           port: 22202
           script: |
             cd psw-firma1
-            git checkout develop
-            git pull origin develop
-            cd PharmacyApplication/
-            docker-compose build --no-cache
-            docker-compose up -d
-            cd ..
+            git checkout feat/docker-secrets
+            git pull origin feat/docker-secrets
+            docker system prune -f
+            docker swarm leave --force
+            docker swarm init
+            printf  ${{ secrets.HOSPITAL_USER_PASS }} | docker secret create db_user_hospital -
+            printf ${{ secrets.HOSPITAL_PASS }} | docker secret create db_pass_hospital -
             cd WebAppCore/
             cd stacks-hospital/
-            docker-compose build --no-cache
-            docker-compose up -d
+            docker stack deploy --compose-file=docker-compose.yml hosp_secret
             
 
             
