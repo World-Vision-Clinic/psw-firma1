@@ -17,10 +17,10 @@ namespace Hospital.SharedModel
 
         public EventsDbContext(DbContextOptions<TestEventsDbContext> options) : base(options) { }
 
-        public EventsDbContext(DbSet<Event> events)
+        /*public EventsDbContext(DbSet<Event> events)
         {
             EventsHospital = events;
-        }
+        }*/
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
