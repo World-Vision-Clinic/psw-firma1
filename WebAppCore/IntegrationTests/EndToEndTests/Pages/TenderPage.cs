@@ -19,7 +19,7 @@ namespace IntegrationTests.EndToEndTests.Pages
         private IWebElement AddMedicineButton => driver.FindElement(By.Id("add-medicine"));
         private IWebElement CreateTenderButton => driver.FindElement(By.Id("create-tender"));
         public const string SuccessfulOrderingMessage = "Successfull.";
-        public const string UnsuccessfulOrderingMessage = "Nisu uneti svi podaci tendera";
+        public const string UnsuccessfulOrderingMessage = "Please fill all fields";
 
         public TenderPage(IWebDriver driver)
         {

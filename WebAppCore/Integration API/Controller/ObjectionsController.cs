@@ -54,7 +54,7 @@ namespace Integration_API.Controller
             IRestResponse response = client.Post(request);
             if(response.StatusCode != System.Net.HttpStatusCode.OK)
             {
-                return BadRequest();
+                return BadRequest("Objection wasn't sent!");
             }
 
             objectionsService.saveEntity(newObjection);

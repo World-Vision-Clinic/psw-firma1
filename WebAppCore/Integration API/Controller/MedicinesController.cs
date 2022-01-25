@@ -8,6 +8,7 @@ using Integration_API.Mapper;
 using IntegrationAPI.Protos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Renci.SshNet;
 using RestSharp;
 using System;
@@ -31,9 +32,16 @@ namespace Integration_API.Controller
         private IPharmacyConnection pharmacyConnection;
         public const string HOSPITAL_URL = "http://localhost:39901";
 
-        public MedicinesController(IPharmacyConnection connection)
+        private readonly IHubContext<SignalServer> _hubContext;
+        /*public MedicinesController(IPharmacyConnection connection)
         {
             pharmacyConnection = connection;
+        }*/
+
+        public MedicinesController(IPharmacyConnection connection, IHubContext<SignalServer> hubcontext)
+        {
+            pharmacyConnection = connection;
+            _hubContext = hubcontext;
         }
 
         [HttpPost("sendConsumptionNotification")]
@@ -50,7 +58,9 @@ namespace Integration_API.Controller
             });
             IRestResponse response = client.Post(request);
             
-            sftpHandler.UploadFile();
+            bool success = sftpHandler.UploadFile();
+            if (!success)
+                return BadRequest("Unable to upload consumption report.");
 
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -58,7 +68,7 @@ namespace Integration_API.Controller
                 return Ok();
             }
 
-            return BadRequest();
+            return BadRequest("Unable to send consumption notification.");
         }
 
         [HttpGet("check")]
@@ -66,11 +76,11 @@ namespace Integration_API.Controller
         {
             if(name == null || dosage == null || quantity == null)
             {
-                return BadRequest();
+                return BadRequest("Please fill all fields");
             }
             if (name.Length <= 0 || dosage.Length <= 0 || quantity.Length <= 0)
             {
-                return BadRequest();
+                return BadRequest("Please fill all fields");
             }
 
             MedicineDto medicineDto = new MedicineDto { Name = name, DosageInMg = Double.Parse(dosage), Quantity = Int32.Parse(quantity) };
@@ -184,7 +194,7 @@ namespace Integration_API.Controller
                 {
                     return Ok();
                 }
-                return BadRequest();
+                return BadRequest("Please try again, procurement wasn't executed");
             }
             else
             {
@@ -192,7 +202,7 @@ namespace Integration_API.Controller
                 {
                     return Ok();
                 }
-                return BadRequest();
+                return BadRequest("Please try again, procurement wasn't executed");
             }
         }
 
@@ -250,7 +260,7 @@ namespace Integration_API.Controller
             }
 
             filesService.UpdateSpecification(dowloadedSpec);
-
+            this._hubContext.Clients.All.SendAsync("askServerResponse", "You recieved file "+medicine+".pdf");
             return Ok();
         }
     }

@@ -32,6 +32,13 @@ namespace Hospital.Schedule.Repository
             return _context.Appointments.Where(f => f.DoctorForeignKey == doctorId).ToList();
         }
 
+        //Graficki editor
+        public List<Appointment> GetByRoomId(int roomId)
+        {
+            return _context.Appointments.Where(f => f.RoomId == roomId).ToList();
+        }
+
+
         public List<Appointment> GetByDoctorId(int doctorId, DateRange dateRange)
         {
             return _context.Appointments.Where(f => f.DoctorForeignKey == doctorId && f.Date >= dateRange.From && f.Date < dateRange.To).ToList();

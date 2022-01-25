@@ -15,6 +15,11 @@ namespace Hospital.ShiftsAndVacations.Service
             this.repository = repository;
         }
 
+        public Shift findById(int id)
+        {
+            return repository.GetByID(id);
+        }
+
         public List<Shift> getAll()
         {
             return repository.GetAll();

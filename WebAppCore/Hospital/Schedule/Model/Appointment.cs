@@ -16,6 +16,7 @@ namespace Hospital.Schedule.Model
         public DateTime Date { get; set; }
         public TimeSpan Length { get; set; }
         public bool IsCancelled { get; set; }
+        public int RoomId { get; set; }
 
         //public int IdSurvey {get; set;}
         public virtual ICollection<Survey> Surveys { get; set; }
@@ -30,7 +31,7 @@ namespace Hospital.Schedule.Model
             this.Type = AppointmentType.Appointment;
         }
 
-        public Appointment(int id, int patientId, int doctorId, DateTime date, bool isCancelled, AppointmentType type)
+        public Appointment(int id, int patientId, int doctorId, DateTime date, bool isCancelled, AppointmentType type,int roomId)
         {
             this.Id = id;
             this.PatientForeignKey = patientId;
@@ -38,6 +39,7 @@ namespace Hospital.Schedule.Model
             this.Date = date;
             this.IsCancelled = isCancelled;
             this.Type = type;
+            this.RoomId = roomId;
         }
 
         public bool OverlapsWith(Appointment appointment)

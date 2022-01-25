@@ -20,6 +20,8 @@ namespace Hospital_API.DTO
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; } //TODO: Rename to Length
 
+        public int RoomId { get; set; }
+
         public bool IsCancelled { get; set; }
         public bool IsUpcoming { get; set; }
         public bool HasCompletedSurvey { get; set; }
@@ -38,6 +40,8 @@ namespace Hospital_API.DTO
             this.IsCancelled = appointment.IsCancelled;
             this.IsUpcoming = IsAppointmentUpcoming();
             this.HasCompletedSurvey = HasAppointmentCompletedSurvey(appointment, surveyRepository);
+
+            this.RoomId = appointment.RoomId;
         }
 
         private bool IsAppointmentUpcoming()
