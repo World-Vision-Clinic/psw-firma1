@@ -31,6 +31,7 @@
       [ngClass]="{
         'selected-toolbar': selectedModule == toolbarButton.codeName
       }"
+      [attr.id]="'toolBarButton-' + toolbarButton.codeName"
     >
       {{ toolbarButton.name }}
     </button>

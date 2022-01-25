@@ -1707,7 +1707,7 @@ namespace Hospital.Migrations
                         new
                         {
                             Id = 1,
-                            CreationDate = new DateTime(2022, 1, 24, 0, 45, 3, 186, DateTimeKind.Local).AddTicks(4365)
+                            CreationDate = new DateTime(2022, 1, 24, 1, 11, 2, 443, DateTimeKind.Local).AddTicks(5982)
                         });
                 });
 

@@ -746,7 +746,7 @@ namespace Hospital.Migrations
             migrationBuilder.InsertData(
                 table: "Surveys",
                 columns: new[] { "Id", "AppointmentId", "CreationDate" },
-                values: new object[] { 1, null, new DateTime(2022, 1, 24, 0, 45, 3, 186, DateTimeKind.Local).AddTicks(4365) });
+                values: new object[] { 1, null, new DateTime(2022, 1, 24, 1, 11, 2, 443, DateTimeKind.Local).AddTicks(5982) });
 
             migrationBuilder.InsertData(
                 table: "Vacations",
