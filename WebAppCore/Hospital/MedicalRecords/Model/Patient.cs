@@ -105,8 +105,6 @@ namespace Hospital.MedicalRecords.Model
             if (_appointmentService.GetByDateAndDoctor(appointment.Date, appointment.Length, appointment.DoctorForeignKey) != null)
                 return false;
 
-            if (Appointments == null)
-                Appointments = new List<Appointment>();
             Appointments.Add(appointment);
 
             PatientRepository patientRepository = new PatientRepository();
