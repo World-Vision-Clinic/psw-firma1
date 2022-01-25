@@ -19,8 +19,9 @@ namespace Hospital_API.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
-        public EventService _eventService = new EventService(new EventRepository());
+        public EventService _eventService;
         HospitalContext _context;
+        EventsDbContext _eventsContext;
         IAppointmentRepository appointmentRepository;
         public PatientService _patientService;
         public bool test = false;
@@ -28,7 +29,8 @@ namespace Hospital_API.Controllers
         public EventController()
         {
             _context = new HospitalContext();
-            _eventService = new EventService(new EventRepository());
+            _eventsContext = new EventsDbContext();
+            _eventService = new EventService(new EventRepository(_eventsContext));
             appointmentRepository = new AppointmentRepository(_context);
             _patientService = new PatientService(new PatientRepository(_context), appointmentRepository);
 
@@ -38,7 +40,7 @@ namespace Hospital_API.Controllers
         [HttpGet("statistics")]
         public ActionResult<IEnumerable<EventStatisticDTO>> GetEventStatistics()
         {
-            return EventStatisticMapper.GetAllEventStatistics();
+            return Ok(EventStatisticMapper.GetAllEventStatistics());
         }
 
         [Authorize(Roles = "Patient")]
