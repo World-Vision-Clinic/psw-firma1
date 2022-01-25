@@ -17,9 +17,6 @@ namespace Hospital.Schedule.Model
         public TimeSpan Length { get; set; }
         public bool IsCancelled { get; set; }
 
-        //public int IdSurvey {get; set;}
-        public virtual ICollection<Survey> Surveys { get; set; }
-
         public Appointment(int id, int patientId, int doctorId, DateTime date)
         {
             this.Id = id;

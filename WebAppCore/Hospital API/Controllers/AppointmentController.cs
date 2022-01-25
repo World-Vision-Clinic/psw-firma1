@@ -48,14 +48,7 @@ namespace Hospital_API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Appointment>> GetAppointments()
         {
-            return _appointmentService.GetAll();
-        }
-
-        [Authorize(Roles = "Manager")] //gde se ovo koristi?
-        [HttpGet("{id}")]
-        public ActionResult<Appointment> GetAppointment(int id)
-        {
-            return _appointmentService.FindById(id);
+            return _patientService.GetAllAppointments();
         }
 
         [Authorize(Roles = "Patient")]
@@ -63,13 +56,13 @@ namespace Hospital_API.Controllers
         public ActionResult<IEnumerable<AppointmentDTO>> GetAppointmentsByPatientId()
         {
             Patient patient = getCurrentPatient();
-            List<Appointment> appointments = _appointmentService.GetByPatientId(patient.Id);
             List<AppointmentDTO> appointmentDTOs = new List<AppointmentDTO>();
             HospitalContext context = new HospitalContext();
             DoctorRepository doctorRepository = new DoctorRepository(context, new PatientRepository(context));
             SurveyRepository surveyRepository = new SurveyRepository(context);
-            foreach (Appointment appointment in appointments)
-                appointmentDTOs.Add(new AppointmentDTO(appointment, doctorRepository, surveyRepository));
+            if(patient != null && patient.Appointments != null)
+                foreach (Appointment appointment in patient.Appointments)
+                    appointmentDTOs.Add(new AppointmentDTO(appointment, doctorRepository, surveyRepository));
             return appointmentDTOs;
         }
 
@@ -77,7 +70,7 @@ namespace Hospital_API.Controllers
         [HttpGet("doctor/{id}")]
         public ActionResult<IEnumerable<Appointment>> GetAppointmentsByDoctorId(int id)
         {
-            return _appointmentService.GetByDoctorId(id);
+            return _patientService.GetAppointmentsByDoctorId(id);
         }
 
         [Authorize(Roles = "Patient")]
@@ -85,22 +78,16 @@ namespace Hospital_API.Controllers
         public ActionResult<IEnumerable<Appointment>> GetAppointments4Step(int id, string dateString)
         {
             DateTime date = Convert.ToDateTime(dateString).Date;
-            if (date < DateTime.Now.Date.AddDays(1)) 
-            {
-                return BadRequest("Date must be tomorrow or onwards");  
-            }
+            if (date < DateTime.Now.Date.AddDays(1))
+                return BadRequest("Date must be tomorrow or onwards");
             if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
-            {
                 return BadRequest("Hospital doesn't work on weekends");
-            }
 
             List<Appointment> doctorsAppointments = _appointmentService.GetByDoctorIdAndDate(id, date);
             List<Appointment> freeAppointments = _appointmentService.GenerateFreeAppointments(id, date, doctorsAppointments);
 
             if (freeAppointments.Count == 0)
-            {
-                return BadRequest("Couldn't find any appointments for Your preferences");
-            }
+                return BadRequest("Couldn't find any appointments matching your preferences");
 
             return Ok(freeAppointments);
         }
@@ -128,21 +115,13 @@ namespace Hospital_API.Controllers
         public HttpResponseMessage AddAppointment([FromBody] Appointment appointmentToAdd)
         {
             Patient patient = getCurrentPatient();
-            if (patient == null || !patient.Activated)
-                return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest }; // Mozda nepotrebno
-            if (appointmentToAdd.Date < DateTime.Now)
+            if (patient == null)
                 return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest };
 
-            int appointmentLength = 30;
-
-            appointmentToAdd.PatientForeignKey = patient.Id;
-            appointmentToAdd.Length = new TimeSpan(0, appointmentLength, 0);
-
-            if (_appointmentService.GetByDateAndDoctor(appointmentToAdd.Date, appointmentToAdd.Length, appointmentToAdd.DoctorForeignKey) != null)
-                return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest };
-
-            _appointmentService.AddAppointment(appointmentToAdd);
-            return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
+            bool result = patient.AddAppointment(appointmentToAdd);
+            if(result)
+                return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
+            return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest };
         }
 
         [Authorize(Roles = "Patient")]

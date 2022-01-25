@@ -14,6 +14,7 @@ namespace Hospital.MedicalRecords.Repository
 
         public PatientRepository()
         {
+            _context = new HospitalContext();
         }
 
         public PatientRepository(HospitalContext context)

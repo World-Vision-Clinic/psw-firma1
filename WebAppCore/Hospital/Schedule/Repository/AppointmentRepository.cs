@@ -21,20 +21,20 @@ namespace Hospital.Schedule.Repository
         }
         public List<Appointment> GetAll()
         {
-            return _context.Appointments.ToList();
+            return null;
         }
         public List<Appointment> GetByPatientId(int patientId)
         {
-            return _context.Appointments.Where(f => f.PatientForeignKey == patientId).ToList();
+            return null;
         }
         public List<Appointment> GetByDoctorId(int doctorId)
         {
-            return _context.Appointments.Where(f => f.DoctorForeignKey == doctorId).ToList();
+            return null;
         }
 
         public List<Appointment> GetByDoctorId(int doctorId, DateRange dateRange)
         {
-            return _context.Appointments.Where(f => f.DoctorForeignKey == doctorId && f.Date >= dateRange.From && f.Date < dateRange.To).ToList();
+            return null;
         }
 
         public List<Appointment> GetByDoctorType(DoctorType type)
@@ -49,16 +49,15 @@ namespace Hospital.Schedule.Repository
         }
         public void AddAppointment(Appointment newAppointment)
         {
-            _context.Appointments.Add(newAppointment);
             SaveSync();
         }
         public List<Appointment> GetByDoctorIdAndDate(int id, DateTime date) {
-            return _context.Appointments.Where(f => f.DoctorForeignKey == id && f.Date.Date.Equals(date.Date)).ToList();
+            return null;
         }
 
         public Appointment FindById(int id)
         {
-            return _context.Appointments.FirstOrDefault(p => p.Id == id);
+            return null;
         }
 
         public void Modify(Appointment appointment)

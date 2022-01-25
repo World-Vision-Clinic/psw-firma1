@@ -9,6 +9,7 @@ using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Model;
 using Hospital.Schedule.Repository;
 using Hospital.Schedule.Model;
+using System.Linq;
 
 namespace Hospital.MedicalRecords.Service
 {
@@ -103,7 +104,22 @@ namespace Hospital.MedicalRecords.Service
         {
             return _repo.GetAll();
         }
-        
+
+        public List<Appointment> GetAllAppointments()
+        {
+            List<Patient> allPatients = _repo.GetAll();
+            List<Appointment> allAppointments = new List<Appointment>();
+            foreach(Patient p in allPatients)
+                foreach (Appointment a in p.Appointments)
+                    allAppointments.Add(a);
+            return allAppointments;
+        }
+
+        public List<Appointment> GetAppointmentsByDoctorId(int id)
+        {
+            return GetAllAppointments().Where(p => p.DoctorForeignKey == id).ToList();
+        }
+
         public Patient FindByUserName(string username)
         {
             return _repo.FindByUserName(username);

@@ -21,7 +21,6 @@ namespace Hospital.SharedModel
         public DbSet<Shift> Shifts { get; set; }
         public DbSet<SurveyQuestion> Questions { get; set; }
         public DbSet<AnsweredSurveyQuestion> AnsweredQuestions { get; set; }
-        public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Allergen> Allergens { get; set; }
         public DbSet<PatientAllergen> PatientAllergens { get; set; }
         public DbSet<Area> Areas { get; set; }
@@ -56,16 +55,6 @@ namespace Hospital.SharedModel
                 entity.ToTable("Surveys");
                 entity.HasKey(c => c.Id);
             });
-
-            modelBuilder.Entity<Appointment>(entity =>
-            {
-                entity.ToTable("Appointments");
-                entity.HasKey(c => c.Id);      
-            });
-
-            modelBuilder.Entity<Appointment>().HasData(
-                new Appointment { Id = 1, Surveys = new List<Survey>() }
-                );
 
             modelBuilder.Entity<Survey>().HasData(
                 new Survey(1, DateTime.Now)
@@ -194,6 +183,18 @@ namespace Hospital.SharedModel
                    new Vacation(3, "aaaa", new DateTime(2022, 3, 21), new DateTime(2022, 3, 30), 3, "Matija Popic")
                );
 
+            modelBuilder.Entity<Patient>().OwnsMany(x => x.Appointments, a =>
+            {
+                a.ToTable("Appointments");
+                a.HasKey("Id");
+                a.WithOwner().HasForeignKey("PatientForeignKey");
+
+                a.Property(x => x.Date);
+                a.Property(x => x.DoctorForeignKey);
+                a.Property(x => x.IsCancelled);
+                a.Property(x => x.Length);
+                a.Property(x => x.Type);
+            });
             modelBuilder.Entity<Patient>(entity =>
             {
                 entity.ToTable("Patients");

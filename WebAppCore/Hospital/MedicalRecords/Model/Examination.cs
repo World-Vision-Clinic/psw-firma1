@@ -1,6 +1,7 @@
 
 using Hospital.Schedule.Model;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hospital.MedicalRecords.Model
 {
@@ -12,6 +13,7 @@ namespace Hospital.MedicalRecords.Model
         public DateTime dateOfExamination { get; set; }
         public Therapy therapy { get; set; }
         public int TherapyId { get; set; }
+        [NotMapped]
         public Appointment appointment { get; set; }
         public Boolean patientVisible { get; set; }
         public String MedicalRecordId { get; set; }

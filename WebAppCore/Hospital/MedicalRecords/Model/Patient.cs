@@ -1,4 +1,7 @@
-﻿using Hospital.Schedule.Model;
+﻿using Hospital.MedicalRecords.Repository;
+using Hospital.Schedule.Model;
+using Hospital.Schedule.Repository;
+using Hospital.Schedule.Service;
 using Hospital.Seedwork;
 using System;
 using System.Collections.Generic;
@@ -87,6 +90,28 @@ namespace Hospital.MedicalRecords.Model
             this.IsBlocked = isBlocked;
             this.Appointments = appointments;
             this.ProfileImage = profileImage;
+        }
+
+        public bool AddAppointment(Appointment appointment)
+        {
+            if (!Activated || appointment.Date < DateTime.Now)
+                return false;
+
+            appointment.PatientForeignKey = Id;
+            appointment.Length = new TimeSpan(0, 30, 0);
+            
+            AppointmentService _appointmentService = new AppointmentService(new AppointmentRepository(new SharedModel.HospitalContext()), new DoctorRepository(new SharedModel.HospitalContext()));
+            if (_appointmentService.GetByDateAndDoctor(appointment.Date, appointment.Length, appointment.DoctorForeignKey) != null)
+                return false;
+
+            if (Appointments == null)
+                Appointments = new List<Appointment>();
+            Appointments.Add(appointment);
+
+            PatientRepository patientRepository = new PatientRepository();
+            patientRepository.SaveSync();
+
+            return true;
         }
 
         public static string TokenizeSHA256(string username)
