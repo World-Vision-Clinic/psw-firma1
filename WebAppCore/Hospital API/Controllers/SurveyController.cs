@@ -29,11 +29,9 @@ namespace Hospital_API
         public SurveyController()
         {
             surveyService = new SurveyService(new SurveyRepository(new HospitalContext()));
-            IAppointmentRepository appointmentRepository = new AppointmentRepository(new HospitalContext());
             IPatientRepository patientRepository = new PatientRepository(new HospitalContext());
             IDoctorRepository doctorRepository = new DoctorRepository(new HospitalContext());
-            _patientService = new PatientService(patientRepository, appointmentRepository);
-            _appointmentService = new AppointmentService(appointmentRepository, doctorRepository);
+            _appointmentService = new AppointmentService(doctorRepository, patientRepository);
         }
 
         [Authorize(Roles = "Manager")]
@@ -76,7 +74,7 @@ namespace Hospital_API
 
             Patient patient = getCurrentPatient();
 
-            List<Appointment> appointments = _appointmentService.GetByPatientId(patient.Id);
+            List<Appointment> appointments = _patientService.GetAppointmentsByPatientId(patient.Id);
 
             bool found = false;
             foreach (Appointment a in appointments)

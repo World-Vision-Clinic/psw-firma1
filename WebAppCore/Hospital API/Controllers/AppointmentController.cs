@@ -34,9 +34,8 @@ namespace Hospital_API.Controllers
             HospitalContext context = new HospitalContext();
             IPatientRepository patientRepository = new PatientRepository(context);
             IDoctorRepository doctorRepository = new DoctorRepository(context, patientRepository);
-            IAppointmentRepository appointmentRepository = new AppointmentRepository(context);
-            _appointmentService = new AppointmentService(appointmentRepository, doctorRepository);
-            _patientService = new PatientService(patientRepository, appointmentRepository);
+            _patientService = new PatientService(patientRepository);
+            _appointmentService = new AppointmentService(doctorRepository, patientRepository);
         }
 
         public AppointmentController(AppointmentService _appointmentService)
@@ -83,7 +82,7 @@ namespace Hospital_API.Controllers
             if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
                 return BadRequest("Hospital doesn't work on weekends");
 
-            List<Appointment> doctorsAppointments = _appointmentService.GetByDoctorIdAndDate(id, date);
+            List<Appointment> doctorsAppointments = _patientService.GetAppointmentsByDoctorIdAndDate(id, date);
             List<Appointment> freeAppointments = _appointmentService.GenerateFreeAppointments(id, date, doctorsAppointments);
 
             if (freeAppointments.Count == 0)
@@ -128,18 +127,12 @@ namespace Hospital_API.Controllers
         [HttpDelete("{id}")]
         public ActionResult<Appointment> CancelAppointment(int id)
         {
-            var appointment = _appointmentService.FindById(id);
             Patient patient = getCurrentPatient();
-            if (appointment == null)
-                return NotFound();
-            if (appointment.PatientForeignKey != patient.Id)
+            if (patient == null)
                 return Unauthorized();
-            if (DateTime.Now > appointment.Date.AddDays(-2) || DateTime.Now > appointment.Date)
-                return BadRequest("Cannot cancel this appointment");
-
-            appointment.IsCancelled = true;
-            _appointmentService.Modify(appointment);
-            return Ok(appointment);
+            if (patient.CancelAppointment(id))
+                return null;
+            return BadRequest("Cannot cancel this appointment");
         }
 
         private Patient getCurrentPatient()

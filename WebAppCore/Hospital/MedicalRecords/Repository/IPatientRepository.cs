@@ -1,4 +1,5 @@
 ﻿using Hospital.MedicalRecords.Model;
+using Hospital.Schedule.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,5 +24,11 @@ namespace Hospital.MedicalRecords.Repository
 
         public List<Patient> GetAll();
         public Patient FindActivatedByUserName(string username);
+
+        public List<Appointment> GetAllAppointments();
+        public Appointment GetAppointmentById(int id);
+        public List<Appointment> GetAppointmentsByDoctorId(int id);
+        public List<Appointment> GetAppointmentsByDoctorId(int id, DateRange dateRange);
+        public List<Appointment> GetAppointmentsByPatientId(int id);
     }
 }

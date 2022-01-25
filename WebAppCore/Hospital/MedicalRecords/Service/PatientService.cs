@@ -17,12 +17,10 @@ namespace Hospital.MedicalRecords.Service
     {
 
         private readonly IPatientRepository _repo;
-        private readonly IAppointmentRepository _appointmentRepository;
 
-        public PatientService(IPatientRepository repo, IAppointmentRepository appointmentRepository)
+        public PatientService(IPatientRepository repo)
         {
             _repo = repo;
-            _appointmentRepository = appointmentRepository;
         }
 
         public Patient LoginPatient(string username, string password)
@@ -54,7 +52,7 @@ namespace Hospital.MedicalRecords.Service
 
         public bool IsBlockable(Patient patient)
         {
-            List<Appointment> appointments = _appointmentRepository.GetByPatientId(patient.Id);
+            List<Appointment> appointments = GetAppointmentsByPatientId(patient.Id);
             int range = 30;
             int treshold = 3;
             DateTime startDate = DateTime.Now.AddDays(-range);
@@ -105,21 +103,6 @@ namespace Hospital.MedicalRecords.Service
             return _repo.GetAll();
         }
 
-        public List<Appointment> GetAllAppointments()
-        {
-            List<Patient> allPatients = _repo.GetAll();
-            List<Appointment> allAppointments = new List<Appointment>();
-            foreach(Patient p in allPatients)
-                foreach (Appointment a in p.Appointments)
-                    allAppointments.Add(a);
-            return allAppointments;
-        }
-
-        public List<Appointment> GetAppointmentsByDoctorId(int id)
-        {
-            return GetAllAppointments().Where(p => p.DoctorForeignKey == id).ToList();
-        }
-
         public Patient FindByUserName(string username)
         {
             return _repo.FindByUserName(username);
@@ -146,6 +129,28 @@ namespace Hospital.MedicalRecords.Service
             patient = new Patient(patient.Id, patient.UserName, patient.Password, patient.FullName, patient.EMail, true, patient.Gender,
                 patient.Jmbg, patient.DateOfBirth, patient.Residence, patient.Phone, patient.PreferedDoctor, patient.Weight, patient.Height, patient.BloodType, patient.IsBlocked, patient.Appointments, patient.ProfileImage);
             _repo.Modify(patient);
+        }
+
+        public List<Appointment> GetAllAppointments()
+        {
+            return _repo.GetAllAppointments();
+        }
+        public Appointment GetAppointmentById(int id)
+        {
+            return _repo.GetAppointmentById(id);
+        }
+        public List<Appointment> GetAppointmentsByDoctorId(int id)
+        {
+            return GetAllAppointments().Where(p => p.DoctorForeignKey == id).ToList();
+        }
+
+        public List<Appointment> GetAppointmentsByPatientId(int id)
+        {
+            return GetAllAppointments().Where(p => p.PatientForeignKey == id).ToList();
+        }
+        public List<Appointment> GetAppointmentsByDoctorIdAndDate(int id, DateTime date)
+        {
+            return GetAllAppointments().Where(f => f.DoctorForeignKey == id && f.Date.Date.Equals(date.Date)).ToList();
         }
 
         public void SaveSync()

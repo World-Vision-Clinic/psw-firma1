@@ -28,8 +28,7 @@ namespace Hospital_API.Verification
         public PatientVerification(HospitalContext context)
         {
             PatientRepository patientRepository = new PatientRepository(context);
-            AppointmentRepository appointmentRepository = new AppointmentRepository(context);
-            patientService = new PatientService(patientRepository, appointmentRepository);
+            patientService = new PatientService(patientRepository);
             doctorService = new DoctorService(new DoctorRepository(context, patientRepository));
             allergenService = new AllergenService(new AllergenRepository(context));
         }

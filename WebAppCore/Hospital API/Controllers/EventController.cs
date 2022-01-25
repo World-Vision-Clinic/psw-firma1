@@ -19,19 +19,16 @@ namespace Hospital_API.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
-        public EventService _eventService = new EventService(new EventRepository());
         HospitalContext _context;
-        IAppointmentRepository appointmentRepository;
+        public EventService _eventService = new EventService(new EventRepository());
         public PatientService _patientService;
         public bool test = false;
 
         public EventController()
         {
             _context = new HospitalContext();
+            _patientService = new PatientService(new PatientRepository(_context));
             _eventService = new EventService(new EventRepository());
-            appointmentRepository = new AppointmentRepository(_context);
-            _patientService = new PatientService(new PatientRepository(_context), appointmentRepository);
-
         }
 
         [Authorize(Roles = "Manager")]

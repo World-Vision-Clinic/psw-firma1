@@ -5,6 +5,7 @@ using Hospital.Schedule.Service;
 using Hospital.Seedwork;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -100,7 +101,7 @@ namespace Hospital.MedicalRecords.Model
             appointment.PatientForeignKey = Id;
             appointment.Length = new TimeSpan(0, 30, 0);
             
-            AppointmentService _appointmentService = new AppointmentService(new AppointmentRepository(new SharedModel.HospitalContext()), new DoctorRepository(new SharedModel.HospitalContext()));
+            AppointmentService _appointmentService = new AppointmentService(new DoctorRepository(new SharedModel.HospitalContext()), new PatientRepository(new SharedModel.HospitalContext()));
             if (_appointmentService.GetByDateAndDoctor(appointment.Date, appointment.Length, appointment.DoctorForeignKey) != null)
                 return false;
 
@@ -109,9 +110,27 @@ namespace Hospital.MedicalRecords.Model
             Appointments.Add(appointment);
 
             PatientRepository patientRepository = new PatientRepository();
-            patientRepository.SaveSync();
+            patientRepository.Modify(this);
 
             return true;
+        }
+
+        public bool CancelAppointment(int appointmentId)
+        {
+            if(Appointments != null)
+            {
+                Appointment appointmentToCancel = Appointments.Where(a => a.Id == appointmentId).FirstOrDefault();
+                if(appointmentToCancel != null)
+                {
+                    if (DateTime.Now > appointmentToCancel.Date.AddDays(-2) || DateTime.Now > appointmentToCancel.Date)
+                        return false;
+                    appointmentToCancel.IsCancelled = true;
+                    PatientRepository patientRepository = new PatientRepository();
+                    patientRepository.Modify(this);
+                    return true;
+                }
+            }
+            return false;
         }
 
         public static string TokenizeSHA256(string username)

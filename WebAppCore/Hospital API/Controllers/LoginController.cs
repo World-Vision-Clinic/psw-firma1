@@ -31,8 +31,7 @@ namespace Hospital_API.Controllers
 
         public LoginController()
         {
-            IAppointmentRepository _appointmentRepository = new AppointmentRepository(new HospitalContext());
-            _patientService = new PatientService(new PatientRepository(new HospitalContext()), _appointmentRepository);
+            _patientService = new PatientService(new PatientRepository(new HospitalContext()));
             _managerService = new ManagerService(new ManagerRepository(new HospitalContext()));
         }
 

@@ -29,8 +29,7 @@ namespace Hospital_API
         {
             HospitalContext context = new HospitalContext();
             _feedbackService = new FeedbackService(new FeedbackRepository(context));
-            AppointmentRepository appointmentRepository = new AppointmentRepository(context);
-            _patientService = new PatientService(new PatientRepository(context), appointmentRepository);
+            _patientService = new PatientService(new PatientRepository(context));
         }
 
         // GET: api/Feedbacks

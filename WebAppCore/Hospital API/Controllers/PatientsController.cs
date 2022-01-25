@@ -35,8 +35,7 @@ namespace Hospital_API.Controllers
         {
             _context = new HospitalContext();
 
-            IAppointmentRepository appointmentRepository = new AppointmentRepository(_context);
-            _patientService = new PatientService(new PatientRepository(_context), appointmentRepository);
+            _patientService = new PatientService(new PatientRepository(_context));
             _patientAllergenService = new PatientAllergenService(new PatientAllergenRepository(_context, new PatientRepository(_context), new AllergenRepository(_context)));
             _allergenService = new AllergenService(new AllergenRepository(_context));
             _doctorService = new DoctorService(new DoctorRepository(_context, new PatientRepository(_context)));

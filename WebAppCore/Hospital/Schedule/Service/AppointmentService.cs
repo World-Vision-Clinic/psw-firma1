@@ -17,65 +17,18 @@ namespace Hospital.Schedule.Service
     }
     public class AppointmentService
     {
-        private readonly IAppointmentRepository _repo;
         private readonly IDoctorRepository _doctorRepository;
+        private readonly IPatientRepository _patientRepository;
 
-        public AppointmentService(IAppointmentRepository repo, IDoctorRepository doctorRepository)
+        public AppointmentService(IDoctorRepository doctorRepository, IPatientRepository patientRepository)
         {
-            _repo = repo;
             _doctorRepository = doctorRepository;
+            _patientRepository = patientRepository;
         }
-
-        public void AddAppointment(Appointment newAppointment)
-        {
-            newAppointment.IsCancelled = false;
-            _repo.AddAppointment(newAppointment);
-        }
-
-        public Appointment FindById(int id)
-        {
-            return _repo.FindById(id);
-        }
-
-        public List<Appointment> GetByPatientId(int patientId)
-        {
-            return _repo.GetByPatientId(patientId);
-        }
-
-        public List<Appointment> GetByDoctorId(int doctorId)
-        {
-            return _repo.GetByDoctorId(doctorId);
-        }
-
-        public List<Appointment> GetByDoctorId(int doctorId, DateRange dateRange)
-        {
-            return _repo.GetByDoctorId(doctorId, dateRange);
-        }
-
-        public List<Appointment> GetAll()
-        {
-            return _repo.GetAll();
-        }
-
-        //Legacy - TODO: Test and remove
-
-        /*
-        private bool DatesOverlap(DateTime firstDate, TimeSpan firstTimeSpan, DateTime secondDate, TimeSpan secondTimeSpan)
-        {
-            if (firstDate <= secondDate && firstDate + firstTimeSpan > secondDate)
-                return true;
-            if (firstDate >= secondDate && firstDate < secondDate + secondTimeSpan)
-                return true;
-            if (secondDate <= firstDate && secondDate + secondTimeSpan > firstDate)
-                return true;
-            if (secondDate >= firstDate && secondDate < firstDate + firstTimeSpan)
-                return true;
-            return false;
-        }*/
 
         public Appointment GetByDateAndDoctor(DateTime date, TimeSpan time, int doctorId)
         {
-            List<Appointment> allAppointments = GetAll();
+            List<Appointment> allAppointments = _patientRepository.GetAllAppointments();
             return allAppointments
                    .Where(g => g.OverlapsWith(date, time)).ToList().FirstOrDefault();
         }
@@ -88,7 +41,7 @@ namespace Hospital.Schedule.Service
 
             int appointmentDuration = 30;
 
-            List<Appointment> doctorAppointments = GetByDoctorId(doctorId, dateRange);
+            List<Appointment> doctorAppointments = _patientRepository.GetAppointmentsByDoctorId(doctorId, dateRange);
             List<Appointment> freeAppointments = GenerateFreeAppointmentList(dateRange, timeRange, new TimeSpan(0, appointmentDuration, 0), doctorId);
 
             List<Appointment> freeAppointmentsFiltered = FilterFreeAppointmentsByDoctorAvailability(freeAppointments, doctorAppointments);
@@ -108,13 +61,13 @@ namespace Hospital.Schedule.Service
                     DateRange beforeDateRange = new DateRange(beforeLowerRange, lowerDateRange.AddHours(23).AddMinutes(59)); //TODO: Testirati ovo
 
                     List<Appointment> freeAppointmentsBefore = GenerateFreeAppointmentList(beforeDateRange, timeRange, new TimeSpan(0, appointmentDuration, 0), doctorId);
-                    List<Appointment> doctorAppointmentsBefore = GetByDoctorId(doctorId, beforeDateRange);
+                    List<Appointment> doctorAppointmentsBefore = _patientRepository.GetAppointmentsByDoctorId(doctorId, beforeDateRange);
                     List<Appointment> freeAppointmentsFilteredBefore = FilterFreeAppointmentsByDoctorAvailability(freeAppointmentsBefore, doctorAppointmentsBefore);
 
                     DateRange afterDateRange = new DateRange(upperDateRange.Date.AddDays(1), extendedUpperRange.Date);
 
                     List<Appointment> freeAppointmentsAfter = GenerateFreeAppointmentList(afterDateRange, timeRange, new TimeSpan(0, 30, 0), doctorId);
-                    List<Appointment> doctorAppointmentsAfter = GetByDoctorId(doctorId, afterDateRange);
+                    List<Appointment> doctorAppointmentsAfter = _patientRepository.GetAppointmentsByDoctorId(doctorId, afterDateRange);
                     List<Appointment> freeAppointmentsFilteredAfter = FilterFreeAppointmentsByDoctorAvailability(freeAppointmentsAfter, doctorAppointmentsAfter);
 
                     freeAppointmentsFiltered = freeAppointmentsFilteredBefore.Concat(freeAppointmentsFilteredAfter).ToList();
@@ -129,7 +82,7 @@ namespace Hospital.Schedule.Service
                     {
                         if (d.Id != doctorId)
                         {
-                            doctorAppointments = GetByDoctorId(d.Id, dateRange);
+                            doctorAppointments = _patientRepository.GetAppointmentsByDoctorId(d.Id, dateRange);
                             List<Appointment> newAppointments = FilterFreeAppointmentsByDoctorAvailability(freeAppointments, doctorAppointments);
                             FillAppointmentsWithDoctorId(newAppointments, d.Id);
                             freeAppointmentsFiltered.AddRange(newAppointments);
@@ -234,33 +187,6 @@ namespace Hospital.Schedule.Service
             return appointments;
         }
 
-        public List<Appointment> GetByDoctorIdAndDate(int id, DateTime date)
-        {
-            return _repo.GetByDoctorIdAndDate(id,date);
-        }
-
-        //Dupli kod? Proveriti i obrisati
-
-        /*private List<Appointment> FilterFreeAppointmentsByDoctorOccupation(List<Appointment> freeAppointments, List<Appointment> doctorAppointments)
-        {
-            List<Appointment> freeAppointmentsFiltered = new List<Appointment>();
-            foreach (Appointment a in freeAppointments)
-            {
-                bool overlapFound = false;
-                foreach (Appointment da in doctorAppointments)
-                {
-                    if (a.OverlapsWith(da))
-                    {
-                        overlapFound = true;
-                        break;
-                    }
-                }
-                if (!overlapFound)
-                    freeAppointmentsFiltered.Add(a);
-            }
-            return freeAppointmentsFiltered;
-        }*/
-
         public List<Appointment> GenerateFreeAppointmentList(DateRange dateRange, TimeRange timeRange, TimeSpan appointmentLength, int doctorId = 0, bool includeWeekends = false)
         {
             List<Appointment> freeAppointmentList = new List<Appointment>();
@@ -294,16 +220,6 @@ namespace Hospital.Schedule.Service
                 dayIterator = dayIterator.AddDays(1);
             }
             return freeAppointmentList;
-        }
-
-        public void SaveSync()
-        {
-            _repo.SaveSync();
-        }
-
-        public void Modify(Appointment appointment)
-        {
-            _repo.Modify(appointment);
         }
     }
 }
