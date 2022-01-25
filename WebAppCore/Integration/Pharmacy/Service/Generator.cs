@@ -2,10 +2,8 @@
 using Integration.Pharmacy.Model;
 using Integration.SharedModel;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace Integration.Pharmacy.Service
 {

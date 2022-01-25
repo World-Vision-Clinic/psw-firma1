@@ -35,7 +35,7 @@ namespace Integration_API.Controller
         [HttpGet("check")]
         public IActionResult CheckMedicineAvailability(string name = "", string dosage = "", string quantity = "")
         {
-            if(string.IsNullOrEmpty(name) || string.IsNullOrEmpty(dosage) || string.IsNullOrEmpty(quantity))
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(dosage) || string.IsNullOrEmpty(quantity))
                 return BadRequest("Please fill all fields");
 
             MedicineDto medicineDto = new MedicineDto { Name = name, DosageInMg = Double.Parse(dosage), Quantity = Int32.Parse(quantity) };
@@ -44,11 +44,15 @@ namespace Integration_API.Controller
             foreach (PharmacyProfile pharmacy in pharmaciesService.GetAll())
             {
                 if (pharmacy.ConnectionInfo.Protocol.Equals(ProtocolType.HTTP))
+                {
                     if (httpConnection.SendRequestToCheckAvailability(pharmacy.ConnectionInfo.Domain, medicineDto))
                         pharmaciesWithMedicine.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
+                }
                 else
+                {
                     if (gRPConnection.SendRequestToCheckAvailabilityGrpc(pharmacy.ConnectionInfo.Domain, medicineDto))
                         pharmaciesWithMedicine.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
+                }
             }
 
             return Ok(pharmaciesWithMedicine);
@@ -99,7 +103,7 @@ namespace Integration_API.Controller
                 return BadRequest("Unable to download specification file");
 
             filesService.UpdateSpecification(dowloadedSpec);
-            _hubContext.Clients.All.SendAsync("askServerResponse", "You recieved file "+medicine+".pdf");
+            _hubContext.Clients.All.SendAsync("askServerResponse", "You recieved file " + medicine + ".pdf");
             return Ok();
         }
 

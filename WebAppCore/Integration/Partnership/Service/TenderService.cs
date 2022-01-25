@@ -38,130 +38,6 @@ namespace Integration.Partnership.Service
             tenderRepository.EditTenderOfferById(offer);
         }
 
-
-        public Dictionary<string, List<float>> GetNumberOfOffersForAllTenders(DateTime start, DateTime end)
-        {
-            int tenderNumber = 0;
-            Dictionary<string, List<float>> data = new Dictionary<string, List<float>>();
-
-            foreach (PharmacyProfile ph in pharmaciesService.GetAll())
-                data.Add(ph.Name, new List<float>());
-
-            foreach (Tender t in GetTendersWithOffers())
-            {
-                if (t.EndTime < start || t.EndTime > end)
-                    continue;
-
-                List<string> pharmacies = new List<string>();
-                string pharmacyName = "";
-                for (int j = 0; j < t.TenderOffers.Count; j++)
-                {
-                    pharmacyName = t.TenderOffers.ElementAt(j).PharmacyName;
-                    if (!pharmacies.Contains(pharmacyName))
-                    {
-                        pharmacies.Add(pharmacyName);
-                        data[pharmacyName].Add(1);
-                        continue;
-                    }
-
-                    float number = data[pharmacyName][tenderNumber];
-                    data[pharmacyName][tenderNumber] = ++number;
-                }
-
-                foreach (string k in data.Keys)
-                {
-                    if (!pharmacies.Contains(k))
-                        data[k].Add(0);
-                }
-                tenderNumber++;
-            }
-            return data;
-        }
-
-        public Dictionary<string, List<float>> GetMaxPricesForAllTenders(DateTime start, DateTime end)
-        {
-            int tenderNumber = 0;
-            Dictionary<string, List<float>> data = new Dictionary<string, List<float>>();
-
-            foreach (PharmacyProfile ph in pharmaciesService.GetAll())
-                data.Add(ph.Name, new List<float>());
-
-            foreach (Tender t in GetTendersWithOffers())
-            {
-                if (t.EndTime < start || t.EndTime > end)
-                    continue;
-
-                List<string> pharmacies = new List<string>();
-                string pharmacyName = "";
-                for (int j = 0; j < t.TenderOffers.Count; j++)
-                {
-                    pharmacyName = t.TenderOffers.ElementAt(j).PharmacyName;
-                    double price = 0.0;
-                    if (!pharmacies.Contains(pharmacyName))
-                    {
-                        
-                        pharmacies.Add(pharmacyName);
-                        price = t.TenderOffers.ElementAt(j).TotalPrice;
-                        data[pharmacyName].Add((float)(price));
-                        continue;
-                    }
-
-                    float maxPrice = data[pharmacyName][tenderNumber];
-                    if(price > maxPrice)
-                        data[pharmacyName][tenderNumber] = (float) price;
-                }
-
-                foreach (string k in data.Keys)
-                {
-                    if (!pharmacies.Contains(k))
-                        data[k].Add(0);
-                }
-                tenderNumber++;
-            }
-            return data;
-        }
-
-        public Dictionary<string, List<float>> GetMinPricesForAllTenders(DateTime start, DateTime end)
-        {
-            int tenderNumber = 0;
-            Dictionary<string, List<float>> data = new Dictionary<string, List<float>>();
-
-            foreach (PharmacyProfile ph in pharmaciesService.GetAll())
-                data.Add(ph.Name, new List<float>());
-
-            foreach (Tender t in GetTendersWithOffers())
-            {
-                if (t.EndTime < start || t.EndTime > end)
-                    continue;
-
-                List<string> pharmacies = new List<string>();
-                string pharmacyName = "";
-                for (int j = 0; j < t.TenderOffers.Count; j++)
-                {
-                    pharmacyName = t.TenderOffers.ElementAt(j).PharmacyName;
-                    double price = t.TenderOffers.ElementAt(j).TotalPrice;
-                    if (!pharmacies.Contains(pharmacyName))
-                    {
-                        pharmacies.Add(pharmacyName);
-                        data[pharmacyName].Add((float)(price));
-                        continue;
-                    }
-
-                    float minPrice = data[pharmacyName][tenderNumber];
-                    if (price < minPrice)
-                        data[pharmacyName][tenderNumber] = (float)price;
-                }
-
-                foreach (string k in data.Keys)
-                {
-                    if (!pharmacies.Contains(k))
-                        data[k].Add(0);
-                }
-                tenderNumber++;
-            }
-            return data;
-        }
-
         public void SaveTender(Tender tender)
         {
             tenderRepository.Save(tender);
@@ -294,6 +170,129 @@ namespace Integration.Partnership.Service
         public TenderOffer GetTenderOfferWithOfferItems(string pharmacyName, string offerHash)
         {
             return tenderRepository.GetTenderOfferWithOfferItems(pharmacyName, offerHash);
+        }
+
+        public Dictionary<string, List<float>> GetNumberOfOffersForAllTenders(DateTime start, DateTime end)
+        {
+            int tenderNumber = 0;
+            Dictionary<string, List<float>> data = new Dictionary<string, List<float>>();
+
+            foreach (PharmacyProfile ph in pharmaciesService.GetAll())
+                data.Add(ph.Name, new List<float>());
+
+            foreach (Tender t in GetTendersWithOffers())
+            {
+                if (t.EndTime < start || t.EndTime > end)
+                    continue;
+
+                List<string> pharmacies = new List<string>();
+                string pharmacyName = "";
+                for (int j = 0; j < t.TenderOffers.Count; j++)
+                {
+                    pharmacyName = t.TenderOffers.ElementAt(j).PharmacyName;
+                    if (!pharmacies.Contains(pharmacyName))
+                    {
+                        pharmacies.Add(pharmacyName);
+                        data[pharmacyName].Add(1);
+                        continue;
+                    }
+
+                    float number = data[pharmacyName][tenderNumber];
+                    data[pharmacyName][tenderNumber] = ++number;
+                }
+
+                foreach (string k in data.Keys)
+                {
+                    if (!pharmacies.Contains(k))
+                        data[k].Add(0);
+                }
+                tenderNumber++;
+            }
+            return data;
+        }
+
+        public Dictionary<string, List<float>> GetMaxPricesForAllTenders(DateTime start, DateTime end)
+        {
+            int tenderNumber = 0;
+            Dictionary<string, List<float>> data = new Dictionary<string, List<float>>();
+
+            foreach (PharmacyProfile ph in pharmaciesService.GetAll())
+                data.Add(ph.Name, new List<float>());
+
+            foreach (Tender t in GetTendersWithOffers())
+            {
+                if (t.EndTime < start || t.EndTime > end)
+                    continue;
+
+                List<string> pharmacies = new List<string>();
+                string pharmacyName = "";
+                for (int j = 0; j < t.TenderOffers.Count; j++)
+                {
+                    pharmacyName = t.TenderOffers.ElementAt(j).PharmacyName;
+                    double price = 0.0;
+                    if (!pharmacies.Contains(pharmacyName))
+                    {
+
+                        pharmacies.Add(pharmacyName);
+                        price = t.TenderOffers.ElementAt(j).TotalPrice;
+                        data[pharmacyName].Add((float)(price));
+                        continue;
+                    }
+
+                    float maxPrice = data[pharmacyName][tenderNumber];
+                    if (price > maxPrice)
+                        data[pharmacyName][tenderNumber] = (float)price;
+                }
+
+                foreach (string k in data.Keys)
+                {
+                    if (!pharmacies.Contains(k))
+                        data[k].Add(0);
+                }
+                tenderNumber++;
+            }
+            return data;
+        }
+
+        public Dictionary<string, List<float>> GetMinPricesForAllTenders(DateTime start, DateTime end)
+        {
+            int tenderNumber = 0;
+            Dictionary<string, List<float>> data = new Dictionary<string, List<float>>();
+
+            foreach (PharmacyProfile ph in pharmaciesService.GetAll())
+                data.Add(ph.Name, new List<float>());
+
+            foreach (Tender t in GetTendersWithOffers())
+            {
+                if (t.EndTime < start || t.EndTime > end)
+                    continue;
+
+                List<string> pharmacies = new List<string>();
+                string pharmacyName = "";
+                for (int j = 0; j < t.TenderOffers.Count; j++)
+                {
+                    pharmacyName = t.TenderOffers.ElementAt(j).PharmacyName;
+                    double price = t.TenderOffers.ElementAt(j).TotalPrice;
+                    if (!pharmacies.Contains(pharmacyName))
+                    {
+                        pharmacies.Add(pharmacyName);
+                        data[pharmacyName].Add((float)(price));
+                        continue;
+                    }
+
+                    float minPrice = data[pharmacyName][tenderNumber];
+                    if (price < minPrice)
+                        data[pharmacyName][tenderNumber] = (float)price;
+                }
+
+                foreach (string k in data.Keys)
+                {
+                    if (!pharmacies.Contains(k))
+                        data[k].Add(0);
+                }
+                tenderNumber++;
+            }
+            return data;
         }
     }
 }

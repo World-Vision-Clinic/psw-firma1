@@ -17,21 +17,6 @@ namespace IntegrationTests.IntegrationTests
 {
     public class OrderingMedicinesTest
     {
-
-        /*[Fact]
-        public void OrderingUnexistingMedicineHospitalTest()
-        {
-            OrderedMedicineDTO omd = new OrderedMedicineDTO("Amoksicilin", "Zdravko", "none", "2 times a day", "200", "none", "none", "2", null, 200);
-            MedicinesRepository mr = new MedicinesRepository();
-            int oldCount = mr.GetAll().Count;
-            MedicinesController pc = new MedicinesController(new PharmacyHTTPConnection());
-
-            pc.Ordered(omd);
-
-            Assert.Equal(mr.GetAll().Count, oldCount + 1);
-        }*/
-
-
         bool development = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
         [SkippableFact]
         public void OrderingExistingMedicinesTest()
@@ -67,7 +52,7 @@ namespace IntegrationTests.IntegrationTests
             var retVal = new List<object[]>();
 
             retVal.Add(new object[] { new OrderingMedicineDTO("http://localhost:34616", "Brufen", "100", "2"), true });
-            retVal.Add(new object[] { new OrderingMedicineDTO("127.0.0.1:5000", "Brufen", "100", "2"), false });
+            //retVal.Add(new object[] { new OrderingMedicineDTO("127.0.0.1:5000", "Brufen", "100", "2"), false });
 
             return retVal;
         }
