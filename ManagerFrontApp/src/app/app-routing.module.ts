@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { BuildingsMapComponent } from './buildings-map/buildings-map.component';
 import { Hospital1Component } from './hospital1/hospital1.component';
 import { FrontPageComponent } from './front-page/front-page.component';
-import { PharmacyRegistrationComponent } from './pharmacy-registration/pharmacy-registration.component';
 import { ManagerFeedbackViewComponent } from './manager-feedback-view/manager-feedback-view.component';
 import { OverviewObjectionsRepliesComponent } from './manager-integration-front-app/overview-objections-replies/overview-objections-replies.component';
 import { ObjectionFormPageComponent } from './manager-integration-front-app/objection-form-page/objection-form-page.component';
@@ -22,22 +21,23 @@ import { ManagerIntegrationFrontAppComponent } from './manager-integration-front
 import { StatisticsComponent } from './manager-integration-front-app/statistics/statistics.component';
 import { TenderSelectionComponent } from './manager-integration-front-app/tender-selection/tender-selection.component';
 import { DoctorsManagementComponent } from './doctors-management/doctors-management.component';
+import { PharmacyRegistrationComponent } from './manager-integration-front-app/pharmacy-registration/pharmacy-registration.component';
 
 
 const routes: Routes = [
   {path: "", component: FrontPageComponent},
   {path:"buildings", component: BuildingsMapComponent},
   {path:"hospital/:hospitalId", component: Hospital1Component},
-  {path:"pharmacy-registration", component: PharmacyRegistrationComponent},
   {path:"survey-results", component: ViewSurveyResultsComponent, canActivate:[AuthGuard]},
   {path:"homepage", component: DashboardComponent},
   {path:"manager-feedback", component: ManagerFeedbackViewComponent, canActivate:[AuthGuard]},
   {path:"block-patients", component: BlockPatientsComponent, canActivate:[AuthGuard]},
   //{path:"survey-results", component: ViewSurveyResultsComponent,canActivate:[AuthGuard]},
-  {path:"pharmacy-registration", component: PharmacyRegistrationComponent},
+
   {path:"hospital1", component: Hospital1Component},
   {path: "doctors-management", component: DoctorsManagementComponent},
   {path:"manager-front-app", component: ManagerIntegrationFrontAppComponent, children: [
+  {path:"pharmacy-registration", component: PharmacyRegistrationComponent},
   {path: "overview-objections-replies", outlet: "showObjRepl", component:OverviewObjectionsRepliesComponent},
   {path: "overview-pharmacies", outlet: "showObjRepl", component:PharmaciesComponent},
   {path: "create-objection", outlet: "showObjRepl", component:ObjectionFormPageComponent},
