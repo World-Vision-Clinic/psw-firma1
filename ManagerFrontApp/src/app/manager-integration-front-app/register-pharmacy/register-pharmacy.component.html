@@ -1,0 +1,41 @@
+<div style="background-image: url('/assets/pharmacy1.jpg');   background-repeat: no-repeat; height: 100%; width: 100%; padding-top: 5%;  background-size: 100%;">
+    <div style="max-width: 35%; border: solid gray 2px; margin: auto; margin-top: -2%; text-align: center; padding: 5%; border-radius: 10%; background-color: white; opacity: 0.85;">
+    <form>
+        <h1 style="margin-bottom: 15%; margin-top: -10%; font-size: 2.5em; color: rgba(6, 140, 158, 0.493);"><b>Register your pharmacy</b></h1>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label" style="font-size: 1.5em; color: rgb(70, 70, 70);"><b>Pharmacy name</b></label>
+          <input style="text-align: center;" type="text" class="form-control" aria-describedby="emailHelp" name="name" [(ngModel)]="name">
+        </div>
+        <div class="mb-3" style="margin-top: 3em;">
+          <label for="exampleInputPassword1" class="form-label"  style="font-size: 1.5em; color: rgb(70, 70, 70);"><b>Communication protocol</b></label>
+          <select style="text-align: center;" type="text" class="form-control" aria-describedby="emailHelp" name="protocol" [(ngModel)]="protocol">
+            <option value="HTTP">HTTP</option>
+            <option value="gRPC">gRPC</option>
+          </select>
+        </div>
+        <div class="mb-3" style="margin-top: 3em;" *ngIf="protocol === 'HTTP'">
+          <label for="exampleInputPassword1" class="form-label"  style="font-size: 1.5em; color: rgb(70, 70, 70);"><b>Pharmacy domain</b></label>
+          <input style="text-align: center;" type="text" class="form-control" name="localhost" [(ngModel)]="localhost">
+        </div>
+        <div class="mb-3" style="margin-top: 3em;" *ngIf="protocol === 'gRPC'">
+          <label for="exampleInputPassword1" class="form-label"  style="font-size: 1.5em; color: rgb(70, 70, 70);"><b>Communication port</b></label>
+          <input style="text-align: center;" type="text" class="form-control" name="localhost" [(ngModel)]="localhost">
+        </div>
+        <div class="mb-3" style="margin-top: 3em;">
+          <label for="exampleInputEmail1" class="form-label" style="font-size: 1.5em; color: rgb(70, 70, 70);"><b>Pharmacy address</b></label>
+          <input style="text-align: center;" type="text" class="form-control" aria-describedby="emailHelp" name="address" [(ngModel)]="address">
+        </div>
+        <div class="mb-3" style="margin-top: 3em;">
+          <label for="exampleInputEmail1" class="form-label" style="font-size: 1.5em; color: rgb(70, 70, 70);"><b>Pharmacy city</b></label>
+          <input style="text-align: center;" type="text" class="form-control" aria-describedby="emailHelp" name="city" [(ngModel)]="city">
+        </div>
+        <div class="mb-3" style="margin-top: 3em;">
+          <label for="exampleInputEmail1" class="form-label" style="font-size: 1.5em; color: rgb(70, 70, 70);"><b>Pharmacy email</b></label>
+          <input style="text-align: center;" type="text" class="form-control" aria-describedby="emailHelp" name="email" [(ngModel)]="email">
+        </div>
+        <button (click)="addPharmacy()" type="submit" style="margin-top: 10%; width: 10em; height: 3em; letter-spacing: .1em; 
+        background-color:  rgba(6, 140, 158, 0.8); border: solid  rgba(6, 140, 158, 0.493); 
+        border-radius: 10%; font-size: 1.5em; " class="btn btn-primary" ><b>Register</b></button>
+      </form>
+    </div>
+    </div>

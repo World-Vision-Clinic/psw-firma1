@@ -54,4 +54,13 @@
     font-size: 12px;
   }
   /*  ------- Styles for Badges End ------- */
-  
+  .badge {
+    position: relative;
+    top: -20px;
+    left: -25px;
+    border: 1px solid black;
+    border-radius: 50%;
+}
+button {
+    margin:5px;
+}

@@ -22,7 +22,7 @@ import { ManagerIntegrationFrontAppComponent } from './manager-integration-front
 import { StatisticsComponent } from './manager-integration-front-app/statistics/statistics.component';
 import { TenderSelectionComponent } from './manager-integration-front-app/tender-selection/tender-selection.component';
 import { DoctorsManagementComponent } from './doctors-management/doctors-management.component';
-
+import { RegisterPharmacyComponent } from './manager-integration-front-app/register-pharmacy/register-pharmacy.component';
 
 const routes: Routes = [
   {path: "", component: FrontPageComponent},
@@ -38,6 +38,7 @@ const routes: Routes = [
   {path:"hospital1", component: Hospital1Component},
   {path: "doctors-management", component: DoctorsManagementComponent},
   {path:"manager-front-app", component: ManagerIntegrationFrontAppComponent, children: [
+  {path: "register-pharmacy", outlet: "showObjRepl", component:RegisterPharmacyComponent},
   {path: "overview-objections-replies", outlet: "showObjRepl", component:OverviewObjectionsRepliesComponent},
   {path: "overview-pharmacies", outlet: "showObjRepl", component:PharmaciesComponent},
   {path: "create-objection", outlet: "showObjRepl", component:ObjectionFormPageComponent},

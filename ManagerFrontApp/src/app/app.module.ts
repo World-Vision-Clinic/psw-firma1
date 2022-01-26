@@ -47,6 +47,7 @@ import { BadgeModule } from './manager-integration-front-app/badge/badge.module'
 import { DoctorOnDutyContainerComponent } from './doctor-on-duty-container/doctor-on-duty-container.component';
 import { DatePipe } from '@angular/common';
 import { ChartsContainerComponent } from './charts-container/charts-container.component';
+import { RegisterPharmacyComponent } from './manager-integration-front-app/register-pharmacy/register-pharmacy.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { ChartsContainerComponent } from './charts-container/charts-container.co
     DoctorOnDutyContainerComponent,
     ChartsContainerComponent,
     TenderSelectionComponent,
+    RegisterPharmacyComponent,
   ],
   imports: [
     BrowserModule,

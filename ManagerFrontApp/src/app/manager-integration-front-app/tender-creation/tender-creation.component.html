@@ -1,45 +1,49 @@
-<div   >
+<div style="padding-bottom: 50%;" >
     
     <div  >
-    <form class="objectionForm" >
+    <form class="objectionForm"  >
         
-        <label for="title">Title: </label>
-      
-        <input type="text"  name="tender-title" placeholder="Tender title" [(ngModel)]="tenderTitle">
+        <label for="title" style="margin-right: 35%; font-size: large;"><b>Title: </b></label>
         <br>
-        <label for="start">End date(optional): </label>
-      
-        <input type="date" id="start" name="start-date" [(ngModel)]="selectedDate">
-        
+        <input style="width: 40%; padding: 1%;" type="text"  name="tender-title" placeholder="Tender title" [(ngModel)]="tenderTitle">
         <br>
-        <label for="description">Description: </label>
         <br>
-        <div class="form-group">
-            <textarea name="tender-description" class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="Tender description" [(ngModel)]="tenderDescription" ></textarea>
+        <label for="start" style="margin-right: 20%; font-size: large;"><b>End date(optional):</b> </label>
+        <br>
+        <input style="width: 40%; padding: 1%;" type="date" id="start" name="start-date" [(ngModel)]="selectedDate">
+        <br>
+        <br>
+        <label style="margin-right: 27%; font-size: large;" for="description"><b>Description:</b> </label>
+        <br>
+        <div style="width: 42%; padding: 1%; margin-left: 29%;" class="form-group">
+            <textarea style="border: solid 1px gray;" name="tender-description" class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="Tender description" [(ngModel)]="tenderDescription" ></textarea>
         </div>
         <hr>
-        <label for="MedicineNamel">Medicine name: </label>
+        <label style="margin-right: 12%;" for="MedicineNamel"><b>Medicine name:</b> </label>
+        <br>
         <input name="medicine-name" type="text"  [(ngModel)]="medicineName">
         <br>
-        <label for="Dosagel">Dosage: </label>
+        <label style="margin-right: 19%; margin-top: 1%;" for="Dosagel"><b>Dosage:</b> </label>
+        <br>
         <input name="dosage" type="text" [(ngModel)]="dosage">
         <br>
-        <label for="Quantityl">Quantity: </label>
+        <label style="margin-right: 19%; margin-top: 1%;" for="Quantityl"><b>Quantity:</b> </label>
+        <br>
         <input name="quantity" type="text" [(ngModel)]="quantity">
         <br>
-        <button id="add-medicine" color="info" (click)="addMedicine()" block="true" style="width: auto;margin-top: 20px; height: 30px; background-color:#33b5e5; color: white;">Add medicine</button>
+        <button class="btn btn-primary" id="add-medicine" color="info" (click)="addMedicine()" block="true" style="width: auto;margin-top: 20px; height: 30px; padding-bottom: 4%;">Add medicine</button>
         <hr>
-        <label for="MedicineNames">List of medicines: </label>
+        <label style="font-size: large;" for="MedicineNames"> <b>List of medicines:</b> </label>
         <div *ngIf="medicineList.length===0">There are no added medicines. Add some to create tender.</div>
         <div *ngFor="let med of medicineList">
-          Medicine name: {{med.MedicineName}}|
-          Dosage: {{med.Dosage}}|
-          Quantity: {{med.Quantity}}
+          <b>Medicine name:</b> {{med.MedicineName}} <b>| </b>
+          <b>Dosage:</b> {{med.Dosage}} <b>| </b>
+          <b>Quantity:</b> {{med.Quantity}}
           <!-- <button (click)="removeMedicine(med)">remove</button> -->
         </div>
 
         <hr>
-        <button id="create-tender" color="info" (click)="sendTender()" block="true" type="submit"  style="width: auto;margin-top: 20px; height: 30px; background-color:#33b5e5; color: white;">Create tender</button>
+        <button class="btn btn-primary" id="create-tender" color="info" (click)="sendTender()" block="true" type="submit"  style="width: auto;margin-top: 20px; height: 30px; padding-bottom: 4%;">Create tender</button>
       
       </form>
       <!-- Default form contact -->
