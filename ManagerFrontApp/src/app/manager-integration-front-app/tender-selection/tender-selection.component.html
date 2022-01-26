@@ -5,16 +5,16 @@
           <div class="d-flex w-100 justify-content-between">
             <h2><b>Tender information:</b></h2>
           </div>
-          <label><b>Title:</b> {{dataItem.Title}},</label>
+          <label><b>Title: {{dataItem.Title}},</b></label>
           <br>
-          <label><b>Description:</b> {{dataItem.Description}},</label>
+          <label><b>Description: {{dataItem.Description}},</b></label>
           <br>
-          <label *ngIf="dataItem.EndTime!=null"><b>EndTime:</b> {{dataItem.EndTime}}</label>
-          <label *ngIf="dataItem.EndTime==null"><b>EndTime:</b> not set</label>
+          <label *ngIf="dataItem.EndTime!=null"><b>EndTime: {{dataItem.EndTime}}</b></label>
+          <label *ngIf="dataItem.EndTime==null"><b>EndTime: not set </b></label>
           <div><b>Tender items:</b>
             <br/>
             <div *ngFor="let data of dataItem.TenderItems">
-              {{data.MedicineName}},  <b>Dosage: </b>{{data.Dosage}}, <b>Quantity: </b>{{data.Quantity}}
+              <b>{{data.MedicineName}},  <b>Dosage: </b>{{data.Dosage}}, <b>Quantity: </b>{{data.Quantity}}</b>
             <br>
             </div>
             
@@ -27,14 +27,14 @@
           <label *ngIf="dataItem.TenderOffers.length==0">There are no offers</label>
           <div [ngClass]="{'winner' : data.Winner}" *ngFor="let data of dataItem.TenderOffers">
 
-            <label><b>Pharmacy name:</b> {{data.PsharmacyName}}</label><br>
-            <label><b>Total price:</b> {{data.TotalPrice}}</label>
+            <label><b>Pharmacy name: {{data.PharmacyName}}</b></label><br>
+            <label><b>Total price: {{data.TotalPrice}}</b></label>
             <label *ngIf="data.Winner" style="float: right; padding-right: 2%; padding-top: 1%;"><b>Winner offer</b></label>
             <div><b>Offer items:</b>
                 
               <br/>
               <div *ngFor="let data2 of data.OfferItems">
-                {{data2.MedicineName}},  <b>Dosage: </b>{{data2.Dosage}}, <b>Quantity: </b>{{data2.Quantity}}, <b>Price: </b>{{data2.Price}}
+                <b>{{data2.MedicineName}},  <b>Dosage: </b>{{data2.Dosage}}, <b>Quantity: </b>{{data2.Quantity}}, <b>Price: </b>{{data2.Price}}</b>
                 <br>
               </div>
     
