@@ -14,13 +14,9 @@ namespace Integration.Pharmacy.Service
         {
             string tempString;
             if(someTextFromClient == "hey")
-            {
                 tempString = "message was hey";
-            }
             else
-            {
                 tempString = "message was something else";
-            }
 
             await Clients.Clients(this.Context.ConnectionId).SendAsync("askServerResponse", tempString);
         }

@@ -11,5 +11,7 @@ namespace Integration_API.Controller
     {
         bool SendRequestToCheckAvailability(string pharmacyLocalhost, MedicineDto medicineDto);
         bool SendRequestForSpecification(string pharmacyLocalhost, string medicineName);
+        bool SendMedicineOrderingRequestHTTP(OrderingMedicineDTO dto, bool test);
+        bool sendPdfFileviaHttp(string filename, PharmacyDto dto);
     }
 }

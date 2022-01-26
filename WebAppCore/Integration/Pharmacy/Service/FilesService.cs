@@ -1,11 +1,8 @@
-﻿using Integration.Pharmacy.Model;
-using Integration.Pharmacy.Repository.RepositoryInterfaces;
+﻿using Integration.Pharmacy.Repository.RepositoryInterfaces;
 using Ionic.Zip;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Timers;
 
 namespace Integration.Pharmacy.Service
@@ -71,12 +68,8 @@ namespace Integration.Pharmacy.Service
             using (ZipFile zip = new ZipFile())
             {
                 foreach (string path in filePaths)
-                {
                     if (System.IO.File.GetLastWriteTime(path) < DateTime.Now)
-                    {
                         zip.AddFile(path, DateTime.Now.Month + "-" + DateTime.Now.Day + "-" + DateTime.Now.Year);
-                    }
-                }
 
                 zip.Save(zipName);
             }

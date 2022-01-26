@@ -21,5 +21,15 @@ namespace Integration_API.Controller
         {
             return medicineDto.Name.Equals("Aspirin") && medicineDto.DosageInMg == 200 && medicineDto.Quantity <= 5;
         }
+
+        public bool SendMedicineOrderingRequestHTTP(OrderingMedicineDTO dto, bool test)
+        {
+            return true;
+        }
+
+        public bool sendPdfFileviaHttp(string filename, PharmacyDto dto)
+        {
+            return true;
+        }
     }
 }

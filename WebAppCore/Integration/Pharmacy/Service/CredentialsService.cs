@@ -20,12 +20,8 @@ namespace Integration.Pharmacy.Service
             if (repository.GetAll().Count > 0)
             {
                 foreach (Credential credential in repository.GetAll())
-                {
                     if (credential.PharmacyLocalhost.Equals(newCredential.PharmacyLocalhost))
-                    {
                         return false;
-                    }
-                }
             }
             repository.Save(newCredential);
             return true;

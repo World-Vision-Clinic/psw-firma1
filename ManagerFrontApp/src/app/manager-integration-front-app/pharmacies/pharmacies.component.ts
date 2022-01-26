@@ -247,7 +247,8 @@ export class PharmaciesComponent implements OnInit {
               this.isPictureRemoved=true;
               alert("Your changes have been saved.")
              
-            })
+            },
+            error=>this.notifyService.showError(error.error, "Error"))
          
           } else if(this.formData!=null && this.formData.length != 0){
               this.http.post('http://localhost:43818/api/Photos/addPhoto/'+this.selectedProfile.Name, this.formData).subscribe((data:any)=>{
@@ -257,7 +258,8 @@ export class PharmaciesComponent implements OnInit {
                  this.isEditing = false;
                  this.isPictureRemoved = false;
                  alert("Your changes have been saved.")
-               })
+               },
+               error=>this.notifyService.showError(error.error, "Error"))
               }
               else{
                 this.isViewing = true;
@@ -265,7 +267,8 @@ export class PharmaciesComponent implements OnInit {
                 alert("Your changes have been saved.")
               }
 
-        });
+        },
+        error=>this.notifyService.showError(error.error, "Error"));
     
   }
 

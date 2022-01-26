@@ -38,7 +38,7 @@ export class PharmacyRegistrationComponent implements OnInit {
       return;
     }
     alert("Request sent... Please wait...");
-    return this.http.post('http://localhost:43818/pharmacies/registerPharmacy', body,{'headers':headers}).subscribe(res => this.notifyService.showError("Successful registration", "Success"),
+    return this.http.post('http://localhost:43818/pharmacies/registerPharmacy', body,{'headers':headers}).subscribe(res => this.notifyService.showSuccess("Successful registration", "Success"),
     error => this.notifyService.showError(error.error, "Error"))
     
   }

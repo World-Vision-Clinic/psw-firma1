@@ -47,7 +47,6 @@ namespace Integration.SharedModel
             modelbuilder.Entity<PharmacyProfile>()
             .OwnsOne(n => n.Address)
             .WithOwner();
-            //modelBuilder.Entity<News>().OwnsOne(typeof(DateRange), "DateRange");
 
         }
 

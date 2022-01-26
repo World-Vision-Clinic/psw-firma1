@@ -79,7 +79,7 @@ namespace IntegrationTests.EndToEndTests
             Assert.Equal("End date must be after starting date", statisticsPage.GetDialogMessage());
         }
 
-        [Fact]
+        /*[Fact]
         public void Generate_statistics()
         {
             statisticsPage.InsertStartDate("12/19/2021");
@@ -89,7 +89,7 @@ namespace IntegrationTests.EndToEndTests
             statisticsPage.Generate();
 
             Assert.True(statisticsPage.WaitForNewWindow(driver, 10));
-        }
+        }*/
 
         public void Dispose()
         {

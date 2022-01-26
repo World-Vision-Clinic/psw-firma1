@@ -24,9 +24,7 @@ namespace Integration.Pharmacy.Service
             newPharmacy.ConnectionInfo = new ConnectionInfo(generatedKey, newPharmacy.ConnectionInfo.Domain, newPharmacy.ConnectionInfo.Protocol);
             PharmacyProfile foundedPharmacy = pharmaciesRepository.Get(newPharmacy.ConnectionInfo.Domain);
             if (foundedPharmacy != null)
-            {
                 return false;
-            }
 
             pharmaciesRepository.Save(newPharmacy);
             return true;
@@ -47,12 +45,8 @@ namespace Integration.Pharmacy.Service
         {
             List<PharmacyProfile> pharmacies = new List<PharmacyProfile>();
             foreach (PharmacyProfile pp in GetAll())
-            {
                 if (pp.Address.Street.ToLower().Contains(searchFilter.ToLower()) || pp.Address.City.ToLower().Contains(searchFilter.ToLower()))
-                {
                     pharmacies.Add(pp);
-                }
-            }
             return pharmacies;
         }
 
@@ -63,10 +57,9 @@ namespace Integration.Pharmacy.Service
 
             if (pharmacy == null) return null;
 
-            
             pharmacy.Address = editedPharmacy.Address;
             pharmacy.Note = editedPharmacy.Note;
-
+            pharmacy.Email = editedPharmacy.Email;
             pharmaciesRepository.Update();
 
             return pharmacy;
