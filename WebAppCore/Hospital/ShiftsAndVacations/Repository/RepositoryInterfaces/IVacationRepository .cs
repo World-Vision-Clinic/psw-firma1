@@ -8,6 +8,5 @@ namespace Hospital.ShiftsAndVacations.Repository.RepositoryInterfaces
 {
     public interface IVacationRepository : IGenericRepository<Vacation>
     {
-        List<Vacation> getDoctorsVacations(int doctorId);
     }
 }

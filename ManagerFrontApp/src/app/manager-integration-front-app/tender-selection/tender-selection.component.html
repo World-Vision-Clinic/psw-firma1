@@ -1,23 +1,19 @@
 <div>
 
-    <div *ngFor="let dataItem of TenderList; let i = index" class="list-group" style="margin-left: 15%; margin-right: 15%;">
+    <div *ngFor="let dataItem of TenderList; let i = index" class="list-group">
         <li  class="list-group-item list-group-item-action flex-column align-items-start">
           <div class="d-flex w-100 justify-content-between">
             <h2><b>Tender information:</b></h2>
           </div>
-          <label><b>Title:</b> {{dataItem.Title}},</label>
-          <br>
-          <label><b>Description:</b> {{dataItem.Description}},</label>
-          <br>
-          <label *ngIf="dataItem.EndTime!=null"><b>EndTime:</b> {{dataItem.EndTime}}</label>
-          <label *ngIf="dataItem.EndTime==null"><b>EndTime:</b> not set</label>
-          <div><b>Tender items:</b>
-            <br/>
-            <div *ngFor="let data of dataItem.TenderItems">
-            {{data.MedicineName}},Dosage:{{data.Dosage}},Quantity:{{data.Quantity}}
+          <label>Title: {{dataItem.Title}},</label>
+          <label>Description: {{dataItem.Description}},</label>
+          
+          <label *ngIf="dataItem.EndTime!=null">EndTime: {{dataItem.EndTime}}</label>
+          <label *ngIf="dataItem.EndTime==null">EndTime: not set</label>
+          <div>Tender items:
             <br>
-            </div>
-            
+            <label *ngFor="let data of dataItem.TenderItems">Item:{{data.MedicineName}},Dosage:{{data.Dosage}},Quantity:{{data.Quantity}}</label>
+
           </div>
           <button *ngIf="dataItem.EndTime == null || dataItem.EndTime> currentTime" (click)="closeTender(dataItem)" type="button" class="btn btn-primary">Close tender</button>
           <br>
@@ -27,16 +23,11 @@
           <label *ngIf="dataItem.TenderOffers.length==0">There are no offers</label>
           <div  *ngFor="let data of dataItem.TenderOffers">
 
-            <label><b>Pharmacy name:</b> {{data.PsharmacyName}}</label><br>
-            <label><b>Total price:</b> {{data.TotalPrice}}</label>
+            <label>Pharmacy name: {{data.PharmacyName}},Total price: {{data.TotalPrice}}</label>
             <label *ngIf="data.Winner" style="margin-left:3%;"><b>Winner offer</b></label>
-            <div><b>Offer items:</b>
-                
-              <br/>
-              <div *ngFor="let data2 of data.OfferItems">
-                Item:{{data2.MedicineName}},Dosage:{{data2.Dosage}},Quantity:{{data2.Quantity}},Price:{{data2.Price}}
+            <div>Offer items:
                 <br>
-              </div>
+                <label *ngFor="let data2 of data.OfferItems">Item:{{data2.MedicineName}},Dosage:{{data2.Dosage}},Quantity:{{data2.Quantity}},Price:{{data2.Price}}</label>
     
               </div>
               <button *ngIf="dataItem.EndTime == null || dataItem.EndTime> currentTime" (click)="chooseTenderWinner(dataItem,data)" type="button" class="btn btn-primary">Choose tender winner</button>

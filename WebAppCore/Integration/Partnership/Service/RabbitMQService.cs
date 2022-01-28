@@ -4,7 +4,6 @@ using Integration.Partnership.Repository.RepositoryInterfaces;
 using Integration.Pharmacy.Model;
 using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Repository.RepositoryInterfaces;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -25,7 +24,7 @@ namespace Integration.Pharmacy.Service
         IPharmaciesRepository pharmaciesRepository;
         ITenderRepository tenderRepository;
         Boolean isTest;
-        private IHubContext<SignalServer> _hubContext;
+
 
         public RabbitMQService(INewsRepository newsRepository, IPharmaciesRepository pharmaciesRepository, ITenderRepository tenderRepository, Boolean isTest)
         {
@@ -37,7 +36,6 @@ namespace Integration.Pharmacy.Service
 
         public RabbitMQService()
         {
-            
             newsRepository = new NewsRepository();
             pharmaciesRepository = new PharmaciesRepository();
             tenderRepository = new TenderRepository();

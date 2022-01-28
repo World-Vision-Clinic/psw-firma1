@@ -80,12 +80,6 @@ namespace Hospital_API.Controllers
             return _appointmentService.GetByDoctorId(id);
         }
 
-        [HttpGet("room/{id}")]
-        public ActionResult<IEnumerable<Appointment>> GetAppointmentsByRoomId(int id)
-        {
-            return _appointmentService.GetByRoomId(id);
-        }
-
         [Authorize(Roles = "Patient")]
         [HttpGet("4step/{id}/{dateString}")]
         public ActionResult<IEnumerable<Appointment>> GetAppointments4Step(int id, string dateString)

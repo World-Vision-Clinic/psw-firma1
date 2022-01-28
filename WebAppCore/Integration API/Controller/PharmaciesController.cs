@@ -31,13 +31,13 @@ namespace Integration_API.Controller
         {
             if (dto.Name.Length <= 0 || dto.Localhost.Length <= 0)
             {
-                return BadRequest("Please fill all fields");
+                return BadRequest();
             }
 
             string generatedKey;
             if (!pharmaciesService.AddNewPharmacy(PharmacyMapper.PharmacyDtoToPharmacy(dto), out generatedKey))
             {
-                return BadRequest("Pharmacy already exists!");
+                return BadRequest();
             }
 
             if (dto.Protocol.Equals(ProtocolType.HTTP))
@@ -67,7 +67,7 @@ namespace Integration_API.Controller
             IRestResponse response = client.Post(request);  // POST /credential  {"Name": "World Vision Clinic", "HospitalLocalhost": "http://localhost:43818", "ApiKey": "wqhegyqwegqyw21543"}
             System.Diagnostics.Debug.WriteLine(response.StatusCode);
             if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                return BadRequest("Enable to register to pharmacy!");
+                return BadRequest();
             return Ok();
         }
 
@@ -83,7 +83,7 @@ namespace Integration_API.Controller
             }
             else
             {
-                return BadRequest("Unable to register to pharmacy!");
+                return BadRequest();
             }
         }
         [HttpGet]
@@ -122,7 +122,7 @@ namespace Integration_API.Controller
         {
             if (dto.Name.Length <= 0 || dto.Localhost.Length <= 0 || dto.Address.Length <= 0 || dto.City.Length <= 0)
             {
-                return BadRequest("Please fill all fileds");
+                return BadRequest();
             }
 
             List<PharmacyProfile> pharmacies = pharmaciesService.GetAll();
@@ -130,7 +130,7 @@ namespace Integration_API.Controller
             PharmacyProfile pharmacy = pharmaciesService.Edit(PharmacyMapper.PharmacyDtoToPharmacy(dto));
             if (pharmacy == null)
             {
-                return NotFound("Pharmacy not found!");
+                return NotFound();
             }
             else
             {

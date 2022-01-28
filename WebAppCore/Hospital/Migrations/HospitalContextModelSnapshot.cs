@@ -278,60 +278,6 @@ namespace Hospital.Migrations
                     b.ToTable("Parkings");
                 });
 
-            modelBuilder.Entity("Hospital.GraphicalEditor.Model.Renovation", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("NewRoomName1")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NewRoomName2")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NewRoomPurpose1")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NewRoomPurpose2")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Room1Id")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Room2Id")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<bool>("isMerge")
-                        .HasColumnType("boolean");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Renovations");
-
-                    b.HasData(
-                        new
-                        {
-                            id = 1,
-                            EndDate = new DateTime(2021, 12, 27, 8, 0, 0, 0, DateTimeKind.Local),
-                            NewRoomName1 = "Test 123",
-                            NewRoomName2 = "",
-                            NewRoomPurpose1 = "123",
-                            NewRoomPurpose2 = "",
-                            Room1Id = 4,
-                            Room2Id = 5,
-                            StartDate = new DateTime(2021, 12, 20, 8, 0, 0, 0, DateTimeKind.Local),
-                            isMerge = true
-                        });
-                });
-
             modelBuilder.Entity("Hospital.MedicalRecords.Model.Allergen", b =>
                 {
                     b.Property<int>("Id")
@@ -1563,9 +1509,6 @@ namespace Hospital.Migrations
                     b.Property<int?>("PatientId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("RoomId")
-                        .HasColumnType("integer");
-                        
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
@@ -1579,90 +1522,12 @@ namespace Hospital.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2022, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorForeignKey = 1,
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorForeignKey = 0,
                             IsCancelled = false,
-                            Length = new TimeSpan(0, 14, 10, 0, 0),
-                            PatientForeignKey = 1,
-                            RoomId = 1,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Date = new DateTime(2022, 1, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorForeignKey = 1,
-                            IsCancelled = false,
-                            Length = new TimeSpan(0, 16, 30, 0, 0),
-                            PatientForeignKey = 2,
-                            RoomId = 1,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Date = new DateTime(2022, 2, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorForeignKey = 2,
-                            IsCancelled = false,
-                            Length = new TimeSpan(0, 10, 10, 0, 0),
-                            PatientForeignKey = 1,
-                            RoomId = 2,
-                            Type = 2
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Date = new DateTime(2022, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorForeignKey = 13,
-                            IsCancelled = false,
-                            Length = new TimeSpan(0, 11, 15, 0, 0),
-                            PatientForeignKey = 3,
-                            RoomId = 13,
-                            Type = 2
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Date = new DateTime(2021, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorForeignKey = 3,
-                            IsCancelled = false,
-                            Length = new TimeSpan(0, 14, 30, 0, 0),
-                            PatientForeignKey = 1,
-                            RoomId = 3,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Date = new DateTime(2022, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorForeignKey = 4,
-                            IsCancelled = false,
-                            Length = new TimeSpan(0, 17, 0, 0, 0),
-                            PatientForeignKey = 2,
-                            RoomId = 4,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Date = new DateTime(2021, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorForeignKey = 3,
-                            IsCancelled = false,
-                            Length = new TimeSpan(0, 17, 30, 0, 0),
-                            PatientForeignKey = 1,
-                            RoomId = 3,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Date = new DateTime(2022, 3, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorForeignKey = 6,
-                            IsCancelled = false,
-                            Length = new TimeSpan(0, 13, 0, 0, 0),
-                            PatientForeignKey = 2,
-                            RoomId = 6,
-                            Type = 1
+                            Length = new TimeSpan(0, 0, 0, 0, 0),
+                            PatientForeignKey = 0,
+                            Type = 0
                         });
                 });
 
@@ -1707,7 +1572,7 @@ namespace Hospital.Migrations
                         new
                         {
                             Id = 1,
-                            CreationDate = new DateTime(2022, 1, 24, 0, 45, 3, 186, DateTimeKind.Local).AddTicks(4365)
+                            CreationDate = new DateTime(2022, 1, 19, 13, 32, 51, 835, DateTimeKind.Local).AddTicks(7684)
                         });
                 });
 
@@ -1818,32 +1683,6 @@ namespace Hospital.Migrations
                             Id = 15,
                             Question = "What is your overall satisfaction with our staff?",
                             Section = 2
-                        });
-                });
-
-            modelBuilder.Entity("Hospital.ShiftsAndVacations.Model.OnCallShift", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OnCallShifts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Date = new DateTime(2022, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorId = 1
                         });
                 });
 

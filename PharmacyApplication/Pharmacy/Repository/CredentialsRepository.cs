@@ -49,17 +49,6 @@ namespace Pharmacy.Repository
             dbContext.SaveChanges();
         }
 
-        public Credential GetByHospitalName(string hospitalName)
-        {
-            List<Credential> credentials = new List<Credential>();
-            foreach (Credential credential in dbContext.Credentials.ToList())
-            {
-                if (credential.HospitalName.Equals(hospitalName))
-                {
-                    return credential;
-                }
-            }
-            return null;
-        }
+
     }
 }

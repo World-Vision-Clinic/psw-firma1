@@ -33,11 +33,6 @@ namespace Hospital.MedicalRecords.Service
             return _repo.FindById(id);
         }
 
-        public Doctor GetById(int v)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Modify(Doctor doctor)
         {
             _repo.Modify(doctor);

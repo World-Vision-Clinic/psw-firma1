@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http'
 import { Injectable } from '@angular/core';
-import { NotificationService } from 'src/app/notification.service';
 
 @Component({
   selector: 'app-tender-creation',
@@ -13,7 +12,7 @@ import { NotificationService } from 'src/app/notification.service';
 @Injectable({providedIn:'root'})
 export class TenderCreationComponent implements OnInit {
 
-  constructor(private http:HttpClient, private notifyService: NotificationService) { }
+  constructor(private http:HttpClient) { }
 
   tenderTitle:string = '';
   tenderDescription:string = '';
@@ -74,7 +73,7 @@ export class TenderCreationComponent implements OnInit {
   {
 
     if(!this.validateTender()){
-      alert("Please fill all fields");
+      alert("Nisu uneti svi podaci tendera")
       return;
     }
       var val = {

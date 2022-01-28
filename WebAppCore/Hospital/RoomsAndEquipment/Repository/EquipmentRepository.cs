@@ -35,7 +35,7 @@ namespace Hospital.RoomsAndEquipment.Repository
                         allEq.Add(eq);
                 });
             }
-            catch(Exception e)
+            catch
             {
 
             }
@@ -123,12 +123,6 @@ namespace Hospital.RoomsAndEquipment.Repository
         public bool Exists(int id)
         {
             return false;
-        }
-
-        internal int generateId()
-        {
-            int id = dbContext.AllEquipment.Max(u => u.Id);
-            return id + 1;
         }
     }
 }

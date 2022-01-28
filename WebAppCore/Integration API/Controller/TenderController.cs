@@ -24,7 +24,6 @@ using System.IO;
 using RestSharp;
 using System.Net.Mail;
 using System.Net;
-using Microsoft.AspNetCore.SignalR;
 
 namespace Integration_API.Controller
 {
@@ -37,15 +36,7 @@ namespace Integration_API.Controller
         FilesService filesService = new FilesService(new FilesRepository());
         PharmaciesService pharmaciesService = new PharmaciesService(new PharmaciesRepository());
         CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
-        MedicinesController medicinesController;
-
-        private IHubContext<SignalServer> _hubContext;
-
-        public TenderController(IHubContext<SignalServer> hubcontext)
-        {
-            _hubContext = hubcontext;
-            medicinesController = new MedicinesController(new PharmacyHTTPConnection(), _hubContext);
-        }
+        MedicinesController medicinesController = new MedicinesController(new PharmacyHTTPConnection());
 
         [HttpGet]
         public IActionResult GetTenders()
@@ -57,14 +48,8 @@ namespace Integration_API.Controller
                 TenderDto dto = TenderMapper.TenderToTenderDto(t);
                 tendersDto.Add(dto);
             }
+            
             return Ok(tendersDto);
-        }
-
-        [HttpPost("addTenderOffer")]
-        public IActionResult GetNewTenderOffer()
-        {
-            this._hubContext.Clients.All.SendAsync("askServerResponse", "You recieved new tender offer.");
-            return Ok();
         }
 
         [HttpPost]
@@ -130,7 +115,7 @@ namespace Integration_API.Controller
                 }
             }
 
-            return BadRequest("Procurement wasn't executed!");
+            return BadRequest();
         }
 
         private bool DeclareTenderWinner(TenderDto tenderDto, string domain)

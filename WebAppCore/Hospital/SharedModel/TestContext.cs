@@ -34,7 +34,7 @@ namespace Hospital.SharedModel
                     DateTime.Now, new Residence("Serbia", "TestAddress", "TestCity"), "063115111", 10, 80, 180, BloodType.A, false, new List<Appointment>(), "")
                 );
             modelBuilder.Entity<Appointment>().HasData(
-            new Appointment(199, 4, 10, DateTime.Now.AddDays(-1), false, AppointmentType.Appointment, 1)
+            new Appointment(199, 4, 10, DateTime.Now.AddDays(-1), false, AppointmentType.Appointment)
             );
         }
 

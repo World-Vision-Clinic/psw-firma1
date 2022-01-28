@@ -19,8 +19,6 @@ namespace Hospital.SharedModel
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Survey> Surveys { get; set; }
         public DbSet<Shift> Shifts { get; set; }
-       
-        public DbSet<Renovation> Renovations { get; set; }
         public DbSet<SurveyQuestion> Questions { get; set; }
         public DbSet<AnsweredSurveyQuestion> AnsweredQuestions { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
@@ -42,9 +40,8 @@ namespace Hospital.SharedModel
         public DbSet<MedicalRecord> MedicalRecords { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
         public DbSet<Manager> Managers { get; set; }
-
-        public DbSet<OnCallShift> OnCallShifts { get; set; }
-
+        
+        
 
         public HospitalContext() { }
 
@@ -66,22 +63,8 @@ namespace Hospital.SharedModel
                 entity.HasKey(c => c.Id);      
             });
 
-           
-
-
-            modelBuilder.Entity<Renovation>().HasData(
-                new Renovation { NewRoomName1 = "Test 123", NewRoomName2 = "", NewRoomPurpose1 = "123", NewRoomPurpose2 = "", Room1Id = 4, Room2Id = 5, StartDate = new DateTime(2021, 12, 20, 8, 0, 0, 0, DateTimeKind.Local), EndDate = new DateTime(2021, 12, 27, 8, 0, 0, 0, DateTimeKind.Local), isMerge = true, id = 1 });
-
             modelBuilder.Entity<Appointment>().HasData(
-                // new Appointment { Id = 1, Surveys = new List<Survey>() }
-                new Appointment { Id = 1, PatientForeignKey = 1, DoctorForeignKey = 1, Type = (AppointmentType)1, Date = new DateTime(2022, 1, 13), Length = new TimeSpan(14, 10, 0), IsCancelled = false, RoomId = 1 },
-                new Appointment { Id = 2, PatientForeignKey = 2, DoctorForeignKey = 1, Type = (AppointmentType)1, Date = new DateTime(2022, 1, 17), Length = new TimeSpan(16, 30, 0), IsCancelled = false, RoomId = 1 },
-                new Appointment { Id = 3, PatientForeignKey = 1, DoctorForeignKey = 2, Type = (AppointmentType)2, Date = new DateTime(2022, 2, 13), Length = new TimeSpan(10, 10, 0), IsCancelled = false, RoomId = 2 },
-                new Appointment { Id = 4, PatientForeignKey = 3, DoctorForeignKey = 13, Type = (AppointmentType)2, Date = new DateTime(2022, 1, 10), Length = new TimeSpan(11, 15, 0), IsCancelled = false, RoomId = 13 },
-                new Appointment { Id = 5, PatientForeignKey = 1, DoctorForeignKey = 3, Type = (AppointmentType)1, Date = new DateTime(2021, 12, 30), Length = new TimeSpan(14, 30, 0), IsCancelled = false, RoomId = 3 },
-                new Appointment { Id = 6, PatientForeignKey = 2, DoctorForeignKey = 4, Type = (AppointmentType)1, Date = new DateTime(2022, 1, 14), Length = new TimeSpan(17, 00, 0), IsCancelled = false, RoomId = 4 },
-                new Appointment { Id = 7, PatientForeignKey = 1, DoctorForeignKey = 3, Type = (AppointmentType)1, Date = new DateTime(2021, 12, 29), Length = new TimeSpan(17, 30, 0), IsCancelled = false, RoomId = 3 },
-                new Appointment { Id = 8, PatientForeignKey = 2, DoctorForeignKey = 6, Type = (AppointmentType)1, Date = new DateTime(2022, 3, 14), Length = new TimeSpan(13, 00, 0), IsCancelled = false, RoomId = 6 }
+                new Appointment { Id = 1, Surveys = new List<Survey>() }
                 );
 
             modelBuilder.Entity<Survey>().HasData(
@@ -210,10 +193,6 @@ namespace Hospital.SharedModel
                    new Vacation(2, "aaaa", new DateTime(2022, 2, 21), new DateTime(2022, 2, 25), 2, "Mirko Jankovic"),
                    new Vacation(3, "aaaa", new DateTime(2022, 3, 21), new DateTime(2022, 3, 30), 3, "Matija Popic")
                );
-
-            modelBuilder.Entity<OnCallShift>().HasData(
-              new OnCallShift(1, 1, new DateTime(2022, 1, 15))
-             );
 
             modelBuilder.Entity<Patient>(entity =>
             {

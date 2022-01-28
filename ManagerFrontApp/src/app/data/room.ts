@@ -1,13 +1,10 @@
-import { Appointment } from './appointment';
-import { AppointmentForRoom } from './appointmentForRoom';
 import { Equipment } from './equipment';
 
 export interface Room {
-  id: number;
+  id?: number;
   name: string;
   purpose: string;
-  equipments: Equipment[];
-  appointments:AppointmentForRoom[];
+  equipments?: Equipment[];
   doctorId: number;
   x: number;
   y: number;
@@ -34,8 +31,6 @@ export function emptyRoom(): Room {
     doorY: -1,
     vertical: false,
     css: '',
-    doorExist: false,
-    equipments: [],
-    appointments: []
+    doorExist: false
   };
 }

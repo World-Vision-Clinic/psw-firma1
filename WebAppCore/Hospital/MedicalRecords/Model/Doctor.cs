@@ -70,10 +70,6 @@ namespace Hospital.MedicalRecords.Model
             this.Type = DoctorType.Cardiologist;
         }
 
-        public string FullName()
-        {
-            return this.FirstName + " " + this.LastName;
-        }
         public void changeShift(int shift)
         {
             this.ShiftId = shift;

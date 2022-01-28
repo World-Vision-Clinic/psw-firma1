@@ -2,7 +2,6 @@
 using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Service;
 using Integration_API.Controller;
-using IntegrationTests.UnitTests.mocks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -21,7 +20,7 @@ namespace IntegrationTests.UnitTests
         {
             // Arrange
             var mock = new Mock<MockConnection>();
-            MedicinesController controller = new MedicinesController(mock.Object, new HubMock());
+            MedicinesController controller = new MedicinesController(mock.Object);
 
             // Act
             var result = controller.CheckMedicineAvailability("Aspirin", "200", "5");
@@ -41,7 +40,7 @@ namespace IntegrationTests.UnitTests
         {
             // Arrange
             var mock = new Mock<MockConnection>();
-            MedicinesController controller = new MedicinesController(mock.Object, new HubMock());
+            MedicinesController controller = new MedicinesController(mock.Object);
 
             // Act
             var result = controller.CheckMedicineAvailability(medicineName, dosageInMg, quantity);
@@ -58,7 +57,7 @@ namespace IntegrationTests.UnitTests
         {
             // Arrange
             var mock = new Mock<MockConnection>();
-            MedicinesController controller = new MedicinesController(mock.Object, new HubMock());
+            MedicinesController controller = new MedicinesController(mock.Object);
 
             // Act
             var result = controller.GetSpecification("someLocalhost", "Hemomicin");

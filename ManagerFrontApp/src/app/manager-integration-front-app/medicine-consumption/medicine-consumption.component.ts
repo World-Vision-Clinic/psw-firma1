@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms';
 import {HttpClient} from '@angular/common/http'
 import { Injectable } from '@angular/core';
-import { NotificationService } from 'src/app/notification.service';
 
 
 
@@ -17,7 +16,7 @@ export class MedicineConsumptionComponent implements OnInit {
   StartDate:any;
   EndDate:Date;
   
-  constructor(private http:HttpClient, private notifyService: NotificationService) {
+  constructor(private http:HttpClient) {
     //this.datepipe = new DatePipe('mm/dd/yyyy');
       this.StartDate = new Date();
       //this.StartDate = this.datepipe.transform(new Date(), 'mm/dd/yyyy');
@@ -31,12 +30,12 @@ export class MedicineConsumptionComponent implements OnInit {
   validateDate(): Boolean {
     if(this.StartDate==null || this.EndDate==null)
     {
-      this.notifyService.showError("Dates must be selected", "Error");
+      alert("Dates must be selected");
       return false;
     }
     if(this.EndDate<=this.StartDate)
     {
-      this.notifyService.showError("End date must be after starting date", "Error");
+      alert("End date must be after starting date");
       return false;
     }
     
@@ -58,8 +57,7 @@ export class MedicineConsumptionComponent implements OnInit {
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(val);
       //alert("Request sent... Please wait...");
-      return this.http.post('http://localhost:43818/medicines/sendConsumptionNotification', body,{'headers':headers}).subscribe(res => alert("Successfull send notification to pharmacies."),
-      error => this.notifyService.showError(error.error, "Error"));
+      return this.http.post('http://localhost:43818/medicines/sendConsumptionNotification', body,{'headers':headers}).subscribe(res => alert("Successfull send notification to pharmacies."));
   }
 
 }

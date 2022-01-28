@@ -33,7 +33,7 @@ namespace Integration_API.Controller
         {
             if (dto.Id.Length <= 0 || dto.Content.Length <= 0 || dto.Title.Length <= 0 || dto.FromDate == null || dto.ToDate == null)
             {
-                return BadRequest("Invalid news data!");
+                return BadRequest();
             }
 
             List<News> news = newsService.GetAll();
@@ -41,7 +41,7 @@ namespace Integration_API.Controller
 
             if (pieceOfNews == null)
             {
-                return NotFound("News not found!");
+                return NotFound();
             }
             else
             {
@@ -54,16 +54,6 @@ namespace Integration_API.Controller
         public IActionResult TestingController()
         {
             return Ok("Hello from News controller");
-        }
-
-        [HttpGet("getPublishedNews")]
-        public IActionResult GetPublishedNews()
-        {
-            List<News> news = new List<News>();
-            List<NewsDto> result = new List<NewsDto>();
-            news = newsService.getPublishedNews();
-            news.ForEach(pieceOfNews => result.Add(NewsMapper.NewsToNewsDto(pieceOfNews)));
-            return Ok(result);
         }
     }
 

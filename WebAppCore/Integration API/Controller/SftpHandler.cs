@@ -44,50 +44,33 @@ namespace Integration_API.Controller
             }
         }
 
-        public bool UploadFile()
+        public void UploadFile()
         {
-            try
-            {
-                using (SftpClient client = new SftpClient(new PasswordConnectionInfo(SFTP_ADDRESS, "user", "password")))
-                {
-                    client.Connect();
-                    string sourceFile = @"Reports\ConsumedMedicineReport.pdf";
-                    using (System.IO.Stream stream = System.IO.File.OpenRead(sourceFile))
-                    {
-                        client.UploadFile(stream, @"\public\" + System.IO.Path.GetFileName(sourceFile), x => { Console.WriteLine(x); });
-                    }
-                    client.Disconnect();
-                }
-            } 
-            catch
-            {
-                return false;
-            }
 
-            return true;
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo(SFTP_ADDRESS, "user", "password")))
+            {
+                client.Connect();
+                string sourceFile = @"Reports\ConsumedMedicineReport.pdf";
+                using (System.IO.Stream stream = System.IO.File.OpenRead(sourceFile))
+                {
+                    client.UploadFile(stream, @"\public\" + System.IO.Path.GetFileName(sourceFile), x => { Console.WriteLine(x); });
+                }
+                client.Disconnect();
+            }
         }
 
-        public bool UploadPdfFile(String filename)
+        public void UploadPdfFile(String filename)
         {
-            try
+            using (SftpClient client = new SftpClient(new PasswordConnectionInfo(SFTP_ADDRESS, "user", "password")))
             {
-                using (SftpClient client = new SftpClient(new PasswordConnectionInfo(SFTP_ADDRESS, "user", "password")))
+                client.Connect();
+                string sourceFile = filename;
+                using (System.IO.Stream stream = System.IO.File.OpenRead(sourceFile))
                 {
-                    client.Connect();
-                    string sourceFile = filename;
-                    using (System.IO.Stream stream = System.IO.File.OpenRead(sourceFile))
-                    {
-                        client.UploadFile(stream, @"\public\" + System.IO.Path.GetFileName(sourceFile), x => { Console.WriteLine(x); });
-                    }
-                    client.Disconnect();
+                    client.UploadFile(stream, @"\public\" + System.IO.Path.GetFileName(sourceFile), x => { Console.WriteLine(x); });
                 }
-            } 
-            catch
-            {
-                return false;
+                client.Disconnect();
             }
-
-            return true;
         }
     }
 }

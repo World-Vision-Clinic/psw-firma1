@@ -10,7 +10,7 @@ using Xunit;
 
 namespace HospitalTests.EditorTests
 {
-    public class EquipmentRepositoryTest
+    public class EquipmentRepositoryUnitTest
     {
         private HospitalContext GetInMemoryRepository()
         {

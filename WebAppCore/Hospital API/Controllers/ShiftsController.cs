@@ -69,18 +69,5 @@ namespace Hospital_API.Controllers
             }
             
         }
-
-        [HttpGet("{id}")]
-        public ActionResult<Shift> GetOneShift(int id)
-        {
-            var shift = _shiftsService.findById(id);
-
-            if (shift == null)
-            {
-                return NotFound();
-            }
-
-            return shift;
-        }
     }
 }

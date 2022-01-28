@@ -9,9 +9,7 @@ namespace Pharmacy.Repository.RepositoryInterfaces
     {
         public List<Credential> GetAll();
         public void Save(Credential credential);
-        public Credential GetByHospitalLocalhost(string hospitalLocalhost);
-
-        public Credential GetByHospitalName(string hospitalName);
+        Credential GetByHospitalLocalhost(string hospitalLocalhost);
 
         public Credential GetByHospitalApi(string api);
     }

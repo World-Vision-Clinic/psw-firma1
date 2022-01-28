@@ -113,22 +113,15 @@
     <table class="schedule-table">
       <thead>
         <tr>
-          <th>TYPE</th><th>DATE</th><th>CANCEL</th>
+          <th>TYPE</th><th>DATE</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of allAppointments">
-          <td>{{ item.type }}</td>
-          <td>{{ item.date | date: "dd.MM.yyyy HH:mm" }}</td>
-          <td>
-            <button class="schedule-cancel-btn" *ngIf="!(item.type =='APPOINTMENT')" (click)="cancelAppointment(item)">
-              <i class="fas fa-backspace"></i>
-            </button>
-          </td>
-        </tr>
+        <tr></tr>
       </tbody>
     </table>
     <div class="rightbtn">
+      <button class="schedule-btn">Delete</button>
       <button class="schedule-btn" (click)="closeSchedule()" *ngIf="formDisabled">Close</button>
     </div>
   </div>
@@ -199,67 +192,9 @@
         [(ngModel)]="roomSplitDto.purpose2"
         name="input"
       /><br /><br />
-      <button class="btn" *ngIf="showBtns" (click)="BackSplit()">Back</button>
       <button class="btn" *ngIf="showBtns" (click)="Split()">Split</button>
-      <button class="btn" *ngIf="showBtns" (click)="RenovateWithReservation('split')">Schedule splitting</button>
+      <button class="btn" *ngIf="showBtns" (click)="BackSplit()">Back</button>
       <button class="btn" *ngIf="!showBtns" (click)="FinishRenovation()">Finish renovation</button>
-  </div>
-
-  <div *ngIf="reserveRenovationInfo">
-    <label for="">Select period for renovation:</label>
-      <br/>    
-      <mat-form-field class="example-form-field" appearance="fill">
-      <mat-date-range-input
-        [formGroup]="interval"
-        [rangePicker]="campaignOnePicker1"
-      >
-        <input
-          matStartDate
-          placeholder="Start date"
-          formControlName="start"
-        />
-        <input matEndDate placeholder="End date" formControlName="end" />
-      </mat-date-range-input>
-      <mat-datepicker-toggle
-        matSuffix
-        [for]="campaignOnePicker1"
-      ></mat-datepicker-toggle>
-      <mat-date-range-picker #campaignOnePicker1></mat-date-range-picker>
-    </mat-form-field>
-   
-   
-    <br /><br />
-    <label for="">Enter number of days: </label>
-    <input
-        type="number"
-        class="form-field"
-        [(ngModel)]="renovationRequestDTO.DurationInDays"
-        name="input"
-      /><br /><br />
-      <button class="btn" *ngIf="showBtns" (click)="BackMerge()">Back</button>
-      <button class="btn" (click)="getSuggestionForRenovation()">Suggest</button>
-  </div>
-  <div *ngIf="haveSuggestion">
-    <label for="">You can schedule for:</label>
-      <br/>    
-      <b
-      for=""
-      style="
-        display: block;
-        text-align: center;
-        background-color: cadetblue;
-        margin: 0 5px;
-        border-radius: 2px;
-        margin-bottom: 20px;
-      "
-      >{{ suggestion!.startDate | date: "short" }} -
-      {{ suggestion!.endDate | date: "short" }}</b
-    >
-   
-   
-    
-      <button class="btn" *ngIf="showBtns" (click)="BackMerge()">Back</button>
-      <button class="btn" (click)="scheduleRenovation()">Take it!</button>
   </div>
 
   <div *ngIf="roomsMergeInfoBox">
@@ -277,9 +212,8 @@
         [(ngModel)]="roomMergeDto.purpose"
         name="input"
       /><br /><br />
-      <button class="btn" *ngIf="showBtns" (click)="BackMerge()">Back</button>
       <button class="btn" *ngIf="showBtns" (click)="Merge()">Merge</button>
-      <button class="btn" *ngIf="showBtns" (click)="RenovateWithReservation('merge')">Schedule merging</button>
+      <button class="btn" *ngIf="showBtns" (click)="BackMerge()">Back</button>
       <button class="btn" *ngIf="!showBtns" (click)="FinishRenovation()">Finish renovation</button>
   </div>
 

@@ -47,7 +47,7 @@ export class ObjectionFormPageComponent implements OnInit {
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(val);
       //alert("Request sent... Please wait...");
-      return this.http.post('http://localhost:43818/objections', body,{'headers':headers}).subscribe(res => {alert("Successfull ")},error =>{alert(error.error)});
+      return this.http.post('http://localhost:43818/objections', body,{'headers':headers}).subscribe(res => {alert("Successfull ")},error =>{alert("An error occured")});
   }
 
 }

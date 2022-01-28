@@ -21,9 +21,6 @@ namespace Hospital_API.Mapper
             eqRoomDto.roomName = room.Name;
             eqRoomDto.roomId = room.Id;
             eqRoomDto.roomFloor = floor.Level;
-            eqRoomDto.startDate = eq.TransportStart.ToString();
-            eqRoomDto.endDate = eq.TransportEnd.ToString();
-            eqRoomDto.inTransport = eq.InTransport;
 
             return eqRoomDto;
         }

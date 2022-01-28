@@ -60,7 +60,7 @@ namespace Integration_API.Controller
 
             if (dto.Content.Length <= 0)
             {
-                return BadRequest("Invalid content!");
+                return BadRequest();
             }
 
             repliesService.AddNewReply(ReplyMapper.ReplyDtoToReply(dto));

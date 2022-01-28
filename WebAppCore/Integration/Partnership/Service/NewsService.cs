@@ -25,16 +25,5 @@ namespace Integration.Pharmacy.Service
             pieceOfNews.ChangeStatus();
             newsRepository.Update();
         }
-
-        public List<News> getPublishedNews()
-        {
-            List<News> news = newsRepository.GetAll();
-            List<News> publishedNews = new List<News>();
-            foreach(News pieceOfNews in news)
-            {
-                if(pieceOfNews.Posted)publishedNews.Add(pieceOfNews);
-            }
-            return publishedNews;
-        }
     }
 }

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http'
 import { Injectable } from '@angular/core';
-import { NotificationService } from 'src/app/notification.service';
-
+import {Observable} from 'rxjs';
  
 @Component({
   selector: 'app-pharmacy-registration',
@@ -20,7 +19,7 @@ export class PharmacyRegistrationComponent implements OnInit {
   protocol: string = '';
   email: string = '';
 
-  constructor(private http:HttpClient, private notifyService: NotificationService) { }
+  constructor(private http:HttpClient) { }
     ngOnInit(): void {
   }
 
@@ -33,14 +32,8 @@ export class PharmacyRegistrationComponent implements OnInit {
               Email: this.email}
                const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify(val);
-    if(this.protocol == '') {
-      this.notifyService.showError("Please select protocol", "Error")
-      return;
-    }
     alert("Request sent... Please wait...");
-    return this.http.post('http://localhost:43818/pharmacies/registerPharmacy', body,{'headers':headers}).subscribe(res => this.notifyService.showError("Successful registration", "Success"),
-    error => this.notifyService.showError(error.error, "Error"))
-    
+    return this.http.post('http://localhost:43818/pharmacies/registerPharmacy', body,{'headers':headers}).subscribe(res => alert("Successful registration"));
   }
 
 }

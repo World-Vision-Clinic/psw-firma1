@@ -19,13 +19,10 @@ namespace IntegrationTests.IntegrationTests
 
     public class NewsTests
     {
-        bool development = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
-
-        [SkippableTheory]
+        [Theory]
         [MemberData(nameof(Data))]
         public async void Check_if_news_are_received(News pieceOfNews, Boolean isFirst)
         {
-            Skip.IfNot(development);
             var stubRepository = new Mock<INewsRepository>();
             var news = new List<News>();
             stubRepository.Setup(m => m.GetAll()).Returns(news);

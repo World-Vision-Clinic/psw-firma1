@@ -4,17 +4,18 @@ using Hospital.MedicalRecords.Repository;
 using Hospital.MedicalRecords.Model;
 using System;
 using System.Collections.Generic;
-using Hospital.ShiftsAndVacations.Repository;
 
 namespace Hospital.ShiftsAndVacations.Service
 {
     public class VacationService
     {
-        VacationRepository repository;
+        IVacationRepository repository;
+        IDoctorRepository doctorRepository;
 
-        public VacationService(VacationRepository repository)
+        public VacationService(IVacationRepository repository, IDoctorRepository drRepo)
         {
             this.repository = repository;
+            this.doctorRepository = drRepo;
         }
 
         public List<Vacation> getAll()
@@ -28,17 +29,17 @@ namespace Hospital.ShiftsAndVacations.Service
             repository.Update(v);
         }
 
-        public void updateVacation(Vacation v)
-        {
-            repository.Update(v);
-        }
-
         public bool deleteVacation(int id)
         {
             Vacation v = repository.GetByID(id);
             try
             {
                 repository.Delete(id);
+                //now doctor is not on vacation
+                Doctor d = doctorRepository.FindById(v.DoctorId);
+                Doctor newDoctor = new Doctor(d.Id, d.FirstName, d.LastName, d.ShiftId, d.RoomId, d.Type, false);
+                doctorRepository.Delete(d.Id);
+                doctorRepository.AddDoctor(newDoctor);
                 return true;
             }
             catch
@@ -48,30 +49,15 @@ namespace Hospital.ShiftsAndVacations.Service
             
         }
 
-        public int getNumberOfVacationDays(Doctor doctor, DateTime startDate, DateTime endDate)
-        {
-            int numberOfVacationDays = 0;
-            List<Vacation> vacations = repository.GetAll();
-            foreach (Vacation v in vacations)
-            {
-                if (v.DoctorId == doctor.Id && startDate <= v.Start && v.End < endDate) { 
-                    
-                    numberOfVacationDays += (int)Math.Floor((v.End - v.Start).TotalDays);
-                }
-            }
-
-            return numberOfVacationDays;
-        }
-
         public void addNewVacation(int id, string desc, DateTime start, DateTime end, int doctorId, string fullName)
         {
-            Vacation v = new Vacation(id, desc, start, end, doctorId, fullName);
-            repository.Save(v);
-
-        }
-
-        public void addNewVacation(Vacation v)
-        {
+            Random random = new Random();
+            Vacation v = new Vacation(random.Next(1000), desc, start, end, doctorId, fullName);
+            //now doctor is on vacation
+            Doctor d = doctorRepository.GetByID(doctorId);
+            Doctor newDoctor = new Doctor(d.Id, d.FirstName, d.LastName, d.ShiftId, d.RoomId, d.Type, true);
+            doctorRepository.Delete(d.Id);
+            doctorRepository.AddDoctor(newDoctor);
             repository.Save(v);
 
         }
@@ -79,11 +65,6 @@ namespace Hospital.ShiftsAndVacations.Service
         public Vacation getById(int id)
         {
             return repository.GetByID(id);
-        }
-
-        public List<Vacation> getDoctorsVacations(int doctorId)
-        {
-            return repository.getDoctorsVacations(doctorId);
         }
 
     }
