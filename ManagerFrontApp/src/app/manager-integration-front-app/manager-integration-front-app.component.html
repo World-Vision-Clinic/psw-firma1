@@ -2,7 +2,7 @@
     <nav class="navbar-expand-sm bg-light navbar-dark">
         
         <ul class="navbar-nav" style="position: absolute;
-        left: 85%;border:solid black 1px;">
+        left: 85%;">
             <!--
             <li class="nav-item">
                 <button [routerLink]="['/manager-front-app', {
@@ -85,7 +85,7 @@
                 class="m-1 btn btn-light btn-outline-primary" Button>Statistics</button>
             </li>-->
             <li>
-                <button (click)="showNotifications()"
+                <!--<button (click)="showNotifications()"
         class="icon-btn text-gray-800"
         
         size="small"
@@ -102,13 +102,16 @@
           />
         </svg>
         <p>{{ signalrServece.numberOfNotifications}}</p>
+      </button>-->
+      <button type="button" class="btn btn-primary" (click)="showNotifications()">
+        Notifications <span class="badge badge-light">{{ signalrServece.numberOfNotifications}}</span>
       </button>
       
             </li>
         </ul>
     </nav>
     <div *ngIf="isNotificationVisible" style="z-index:100; position: absolute;
-        left: 85%;top:65%;border:solid black 1px;">
+        left: 85%;top:40%;border:solid black 1px;">
         <div *ngFor="let notification of list; let i = index" style="padding:5px;"
         >
         <label style="width: 100%;" *ngIf="notification.seen" style="background-color: white;">{{notification.text}}</label>
