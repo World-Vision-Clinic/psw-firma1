@@ -9,7 +9,7 @@
        
         <div style=" height: 400px;">
           <img style="height: 400px;width: 380px; object-fit: cover;" src="{{patient.profileImage}}">       
-      </div>
+        </div>
       
         <div class="card-body">
             <div class="row d-flex">
@@ -110,22 +110,9 @@
       </div>
   </div>
   <div class="col-md-9">
-    <div class="row d-flex align-items-center">
-        <div class="card" *ngFor = "let d of daysOfTheWeek" style="margin:5; float: none; height: 200px; max-width: 200px;" (click)="selectedDay = d.day">
-          <div class="header day-of-week-header"  [ngStyle]="{'background-color': (true) ? '#73c7af' : '#ffffff'}" style="border-radius: 8px 8px 0px 0px;">
-            <h2 class="text-black" style="font-weight: bolder; font-size: 26px;">{{getFormattedDay(d.day)}}</h2>
-          </div>
-        
-          <div class="card-body" *ngIf="selectedDay == d.day">
-              <div *ngFor = "let i of d.scheduleItems">
-                <div class="row d-flex"><h4>{{i.name}}</h4><h4 style="margin-left: 10px; margin-right: 10px;">{{i.amount}}</h4><h4> {{i.time}}</h4></div>
-              </div>
-          </div>
-        </div>
-    </div>
 
      <!-- Results -->
-     <div class="card mt-5" *ngIf="!(appointments === undefined) && appointments.length != 0">
+    <div class="card" *ngIf="!(appointments === undefined) && appointments.length != 0">
       <div class="header gradient-blue">
           <div class="row d-flex justify-content-center">
               <h3 class="text-white mb-1 mt-1 font-weight-bold">History of appointments</h3>
