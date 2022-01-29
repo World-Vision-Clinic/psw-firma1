@@ -1,13 +1,39 @@
 name: e2e-testing
 on:
-  push:
-  pull_request:
+  #push:
+   pull_request:
+
 
 jobs:
-  test:
+  Run-Unit-Tests:
+
     runs-on: ubuntu-latest
+    env:
+      PHARMACY_PROJECT_SOLUTION: PharmacyApplication
+      HOSPITAL_PROJECT_SOLUTION: WebAppCore/HospitalTests/HospitalTests.csproj
+      INTEGRATION_PROJECT_SOLUTION: WebAppCore/IntegrationTests/IntegrationTests.csproj
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Execute e2e tests 
-        run: docker-compose -f docker-compose-e2e.yml up --exit-code-from e2e-testing-hospital e2e-testing-hospital
+      - name: Install dependencies pharmacy
+        run: dotnet restore ${PHARMACY_PROJECT_SOLUTION}
+      - name: Build pharmacy
+        run: dotnet build ${PHARMACY_PROJECT_SOLUTION} --configuration Release --no-restore
+      - name: Test pharmacy
+        run: dotnet test ${PHARMACY_PROJECT_SOLUTION} --no-restore --verbosity quiet --filter FullyQualifiedName~UnitTests
+
+
+# name: e2e-testing
+# on:
+#   push:
+#   pull_request:
+
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2
+#       - name: Execute e2e tests 
+#         run: docker-compose -f docker-compose-e2e.yml up --exit-code-from e2e-testing-hospital e2e-testing-hospital

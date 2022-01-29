@@ -134,6 +134,7 @@ namespace PharmacyApplicationTests.UnitTests
             TenderService service = new TenderService(tenderRepository, medicineRepository);
             Tender tender = service.GetById(2);
             List<OfferItem> items = service.FillOfferItems(tender.TenderItems.ToList());
+            
             Assert.True(items.Count == 0);
         }
     }
