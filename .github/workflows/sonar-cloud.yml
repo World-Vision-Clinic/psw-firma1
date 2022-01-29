@@ -1,7 +1,7 @@
 name: Build Applications
 on:
-  push:
-  pull_request:
+  #push:
+  #pull_request:
 jobs:
   build:
     name: Build
