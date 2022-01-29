@@ -1,23 +1,26 @@
 name: e2e-testing
 on:
   push:
-    tags:
-    - "v[0-9]+.[0-9]+.[0-9]+"
-
-env:
- PROJECT-DLL : 'WebAppCore/Hospital/Hospital.csproj'
+ 
 
 jobs:
-  build:
+  Run-Unit-Tests:
+
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    env:
+      PHARMACY_PROJECT_SOLUTION: PharmacyApplication
+      HOSPITAL_PROJECT_SOLUTION: WebAppCore/HospitalTests/HospitalTests.csproj
+      INTEGRATION_PROJECT_SOLUTION: WebAppCore/IntegrationTests/IntegrationTests.csproj
+
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Set VERSION variable from tag
-      run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
-    - name: Build
-      run: dotnet build ${{ env.PROJECT-DLL }} --configuration Release /p:Version=${VERSION}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install dependencies pharmacy
+        run: dotnet restore ${PHARMACY_PROJECT_SOLUTION}
+      - name: Build pharmacy
+        run: dotnet build ${PHARMACY_PROJECT_SOLUTION} --configuration Release --no-restore
+      - name: Test pharmacy
+        run: dotnet test ${PHARMACY_PROJECT_SOLUTION} --no-restore --verbosity quiet --filter FullyQualifiedName~UnitTests
 
 
 # name: e2e-testing
