@@ -9,13 +9,13 @@ namespace Hospital.MedicalRecords.Repository
 {
     public class EventRepository : IEventRepository
     {
-        private EventsDbContext dbContext;
+        private EventsDbContext dbContext = new EventsDbContext();
 
         public EventRepository() { }
-        public EventRepository(EventsDbContext eventContext) 
+        /*public EventRepository(EventsDbContext eventContext) 
         {
             dbContext = eventContext;
-        }
+        }*/
 
         public List<Event> GetAll()
         {

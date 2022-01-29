@@ -30,7 +30,7 @@ namespace Hospital_API.Controllers
         {
             _context = new HospitalContext();
             _eventsContext = new EventsDbContext();
-            _eventService = new EventService(new EventRepository(_eventsContext));
+            _eventService = new EventService(new EventRepository());
             appointmentRepository = new AppointmentRepository(_context);
             _patientService = new PatientService(new PatientRepository(_context), appointmentRepository);
 

@@ -20,7 +20,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
 {
     public class TestEventsController
     {
-        public PatientRepository _patientRepository;
+        /*public PatientRepository _patientRepository;
         public AppointmentRepository _appointmentRepository;
         public EventRepository _eventsRepository;
 
@@ -68,7 +68,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             _eventsRepository.Save(event4);
             _eventsRepository.Save(event5);
         }
-        /* 
+       
         [Fact]
         public void Test_event_stats()
         {
