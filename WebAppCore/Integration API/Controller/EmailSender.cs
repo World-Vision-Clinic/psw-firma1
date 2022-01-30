@@ -34,7 +34,8 @@ namespace Integration_API.Controller
                         <p>You have successfully won " + tender.Title + "with offer: <br>";
             foreach (OfferItem item in offer.OfferItems)
             {
-                builder.Append(item.MedicineName + " " + item.Dosage + "mg, " + item.Quantity + "x " + item.Price + " RSD");
+                builder.Append(item.MedicineName + " " + item.Dosage + "mg, " + item.Quantity + "x " + item.Price + " $");
+                builder.Append("<br>");
             }
             builder.Append(@"</p>
                          </body>

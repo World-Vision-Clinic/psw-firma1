@@ -28,13 +28,13 @@
           <div [ngClass]="{'winner' : data.Winner}" *ngFor="let data of dataItem.TenderOffers">
 
             <label><b>Pharmacy name: {{data.PharmacyName}}</b></label><br>
-            <label><b>Total price: {{data.TotalPrice}}</b></label>
+            <label><b>Total price: {{data.TotalPrice}}$</b></label>
             <label *ngIf="data.Winner" style="float: right; padding-right: 2%; padding-top: 1%;"><b>Winner offer</b></label>
             <div><b>Offer items:</b>
                 
               <br/>
               <div *ngFor="let data2 of data.OfferItems">
-                <b>{{data2.MedicineName}},  <b>Dosage: </b>{{data2.Dosage}}, <b>Quantity: </b>{{data2.Quantity}}, <b>Price: </b>{{data2.Price}}</b>
+                <b>{{data2.MedicineName}},  <b>Dosage: </b>{{data2.Dosage}}, <b>Quantity: </b>{{data2.Quantity}}, <b>Price: </b>{{data2.Price}}$</b>
                 <br>
               </div>
     
