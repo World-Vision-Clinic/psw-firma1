@@ -37,8 +37,8 @@
     </div>
     <div class="col-md-8">
       <nav class="navMenu">
-        <a href="/" *ngIf="isLoggedIn()" style="float:none">Home</a>
-        <a href="login" *ngIf="isLoggedIn()" style="float:none">Sign in</a>
+        <a href="/" *ngIf="!isLoggedIn()" style="float:none">Home</a>
+        <a href="login" *ngIf="!isLoggedIn()" style="float:none">Sign in</a>
         <a href="manager-feedback" id="feedback" *ngIf="isLoggedIn()" style="float:none">Feedbacks</a>
         <a href="survey-results" *ngIf="isLoggedIn()" style="float:none">Surveys</a>
         <a href="block-patients" id="users" *ngIf="isLoggedIn()" style="float:none">Users</a>
@@ -48,6 +48,7 @@
           </a>
 
         <div *ngIf="isManagerFrontApp" >
+        <a href="/manager-front-app/(showObjRepl:register-pharmacy)" style="float:none">Register pharmacy</a>
         <a href="/manager-front-app/(showObjRepl:create-objection)" style="float:none">Create objection</a>
         <a href="/manager-front-app/(showObjRepl:overview-objections-replies)" style="float:none">Objections</a>
         <a href="/manager-front-app/(showObjRepl:overview-pharmacies)"  style="float:none">Pharmacies</a>
@@ -58,7 +59,7 @@
         <a href="/manager-front-app/(showObjRepl:create-tender)" style="float:none">Create tender</a>
         <a href="/manager-front-app/(showObjRepl:select-tender)" style="float:none">Tenders</a>
         <a href="/manager-front-app/(showObjRepl:statistics)" style="float:none">Statistics</a>
-        <a href="/" *ngIf="!isLoggedIn()" (click)="logout()" style="float:none">Sign out</a>
+        <a href="/" *ngIf="isLoggedIn()" (click)="logout()" style="float:none">Sign out</a>
         </div>
       </nav>
     </div>

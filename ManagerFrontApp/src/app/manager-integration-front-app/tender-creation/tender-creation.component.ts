@@ -89,7 +89,8 @@ export class TenderCreationComponent implements OnInit {
       const headers = { 'content-type': 'application/json'}  
       const body=JSON.stringify(val);
       alert("Sending tender information...");
-      return this.http.post('http://localhost:43818/Tender', body,{'headers':headers}).subscribe(res => alert("Successfull."));
+      this.http.post('http://localhost:43818/Tender', body,{'headers':headers}).subscribe(res => alert("Successfull."));
+      window.location.href = 'http://localhost:4200/manager-front-app/(showObjRepl:select-tender)';
   }
 
 }

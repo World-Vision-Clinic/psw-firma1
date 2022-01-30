@@ -1,13 +1,13 @@
 <h1 id = "tender-statistics" style="margin-left:45%;margin-top:2%;"><b>Tender statistics</b></h1>
 <div style="margin-left:40%;margin-top:2%;">
     <div>
-        <label id= "start-date-label" for="start">Select start date:</label>
+        <label id= "start-date-label" for="start"><b>Select start date:</b></label>
 
         <input style="margin-left:2%;" type="date" name="start-date" [(ngModel)]="startDate">
     </div>
     <br />
     <div>
-        <label id= "end-date-label" style="margin-left:0.75%;" for="start">Select end date:</label>
+        <label id= "end-date-label" style="margin-left:0.75%;" for="start"><b>Select end date:</b></label>
 
         <input style="margin-left:2%;" type="date" name="end-date" [(ngModel)]="endDate">
     </div>
@@ -16,7 +16,7 @@
     <!-- Send button -->
 
     <button id = "generateButton" (click)="generateStatistics()" color="info" block="true" type="submit"
-        style="margin-left:12%;margin-top: 20px; height: 30px; background-color:#33b5e5; color: white;">Generate</button>
+    class="btn btn-primary" style="margin-left:12%;margin-top: 20px; height: 30px; padding-bottom: 2.5%;">Generate</button>
 </div>
 <div *ngIf="buttonClicked == true" style="margin-left: 5%;">
     <div style="display: block">

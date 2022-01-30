@@ -22,7 +22,10 @@ export class TenderSelectionComponent implements OnInit {
 
   getTenders(){
     return this.http.get<any>("http://localhost:43818/Tender").subscribe(data=>{
-          this.TenderList=data;
+          
+          for (var i = data.length - 1; i >= 0; i--) {
+            this.TenderList.push(data[i]);
+          }
           console.log(this.TenderList);
     });
   }

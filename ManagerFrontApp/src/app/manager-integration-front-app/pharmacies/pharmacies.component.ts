@@ -202,7 +202,7 @@ export class PharmaciesComponent implements OnInit {
   orderMedicines(selectedPharmacy){
     const body = { Localhost: selectedPharmacy.Localhost, MedicineName: this.medicineName, MedicineGrams: this.medicineGrams, NumOfBoxes: this.numOfBoxes};
     this.http.put<any>('http://localhost:43818/medicines/OrderMedicine', body)
-        .subscribe(res => alert("Medicine succesfully ordered"),
+        .subscribe(res => /*alert("Medicine succesfully ordered"),*/ this.notifyService.showSuccess("Medicine succesfully ordered", "Success"),
                   error => this.notifyService.showError(error.error, "Error"));
     this.buttonClicked = false;
   }
