@@ -9,6 +9,7 @@ using Hospital_API.Controllers;
 using Hospital_API.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Shouldly;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -129,40 +130,24 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             }
         }
 
-        [Fact]
-        public void Test_add_valid_appointment()
+        [Theory]
+        [InlineData(2, 4, 1, 2025, HttpStatusCode.OK)]              // valid appointment
+        [InlineData(3, 1, 1, 1990, HttpStatusCode.BadRequest)]      // invalid historical appointment 
+        public void Test_add_appointment(int id, int patientId, int doctorId, int year, HttpStatusCode expectedStatus)
         {
             Appointment appointment = new Appointment()
             {
-                Id = 2,
-                PatientForeignKey = 4,
-                DoctorForeignKey = 1,
+                Id = id,
+                PatientForeignKey = patientId,
+                DoctorForeignKey = doctorId,
                 Type = AppointmentType.Appointment,
-                Date = new DateTime(2025, 6, 6, 12, 0, 0),
+                Date = new DateTime(year, 6, 6, 12, 0, 0),
                 Length = new TimeSpan(0, 0, 45, 0, 0)
             };
 
             HttpResponseMessage response = _appointmentController.AddAppointment(appointment);
 
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        }
-
-        [Fact]
-        public void Test_add_invalid_historical_appointment()
-        {
-            Appointment appointment = new Appointment()
-            {
-                Id = 3,
-                PatientForeignKey = 1,
-                DoctorForeignKey = 1,
-                Type = AppointmentType.Appointment,
-                Date = new DateTime(1990, 6, 6, 12, 0, 0),
-                Length = new TimeSpan(0, 0, 45, 0, 0)
-            };
-
-            HttpResponseMessage response = _appointmentController.AddAppointment(appointment);
-
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            response.StatusCode.ShouldBe(expectedStatus);
         }
 
         [Fact]

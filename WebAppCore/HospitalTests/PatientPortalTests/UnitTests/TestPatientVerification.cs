@@ -9,6 +9,7 @@ using System.Text;
 using Xunit;
 using Moq;
 using Hospital.Schedule.Repository;
+using Shouldly;
 
 namespace HospitalTests.PatientPortalTests.UnitTests
 {
@@ -95,36 +96,17 @@ namespace HospitalTests.PatientPortalTests.UnitTests
             Assert.False(_verification.Verify(patient));
         }
 
-        [Fact]
-        public void Test_patient_username_is_null()
+        [Theory]
+        [InlineData("branko", true)]
+        [InlineData(null, false)]
+        [InlineData("", false)]
+        [InlineData("brankoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo123", false)]
+        [InlineData("branko*", false)]
+        public void Test_patient_username_verification(string username, bool expectedResult)
         {
             PatientRegisterDTO patient = GenerateValidBranko();
-            patient.UserName = null;
-            Assert.False(_verification.Verify(patient));
-        }
-
-        [Fact]
-        public void Test_patient_username_empty()
-        {
-            PatientRegisterDTO patient = GenerateValidBranko();
-            patient.UserName = "";
-            Assert.False(_verification.Verify(patient));
-        }
-
-        [Fact]
-        public void Test_patient_username_too_long()
-        {
-            PatientRegisterDTO patient = GenerateValidBranko();
-            patient.UserName = "brankoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo123";
-            Assert.False(_verification.Verify(patient));
-        }
-
-        [Fact]
-        public void Test_patient_username_illegal_characters()
-        {
-            PatientRegisterDTO patient = GenerateValidBranko();
-            patient.UserName = "branko*";
-            Assert.False(_verification.Verify(patient));
+            patient.UserName = username;
+            _verification.Verify(patient).ShouldBe(expectedResult);
         }
 
         [Fact]

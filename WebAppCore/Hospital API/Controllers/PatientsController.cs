@@ -90,19 +90,19 @@ namespace Hospital_API.Controllers
         // GET: api/Patients/block/5
         [Authorize(Roles = "Manager")]
         [HttpGet("block/{username}")]
-        public IActionResult BlockPatient(string username)
+        public HttpResponseMessage BlockPatient(string username)
         {
             var patient = _patientService.FindByUserName(username);
 
             if (patient == null)
             {
-                return NotFound();
+                return new HttpResponseMessage { StatusCode = HttpStatusCode.NotFound };
             }
 
             if (!_patientService.Block(patient))
-                return BadRequest();
+                return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest };
 
-            return Ok();
+            return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }
 
         // GET: api/Patients/activate?token=

@@ -10,34 +10,33 @@ using Integration.Pharmacy.Repository;
 using Hospital.MedicalRecords.Services;
 using Hospital.MedicalRecords.Model;
 using Hospital.MedicalRecords.Repository;
+using Shouldly;
 
 namespace HospitalTests.IntegratorsTests
 {
     public class MedicineTest
     {
 
-        [Fact]
-        public void Find_cousumed_medicine()
+        [Theory]
+        [MemberData(nameof(Data))]
+        public void Find_cousumed_medicine(DateTime startDate, DateTime endDate, int count)
         {
 
             MedicineService medicineService = new MedicineService(CreateMedicinesRepository(), CreateMedicalRecordsRepository(), CreateExaminationRepository());
 
+            List<Medicine> foundMedicine = medicineService.GetConsumedMedicineInPeriod(startDate, endDate);
 
-            List<Medicine> foundMedicine = medicineService.GetConsumedMedicineInPeriod(new DateTime(2021, 11, 10), new DateTime(2021, 11, 12));
-
-
-            Assert.NotEmpty(foundMedicine);
+            foundMedicine.Count.ShouldBe(count);
         }
-        [Fact]
-        public void Find_no_cousumed_medicine()
+
+        public static IEnumerable<object[]> Data()
         {
-            MedicineService medicineService = new MedicineService(CreateMedicinesRepository(), CreateMedicalRecordsRepository(), CreateExaminationRepository());
+            var retVal = new List<object[]>();
 
+            retVal.Add(new object[] { new DateTime(2021, 11, 10), new DateTime(2021, 11, 12), 1 });
+            retVal.Add(new object[] { new DateTime(2021, 11, 15), new DateTime(2021, 11, 16), 0 });
 
-            List<Medicine> foundMedicine = medicineService.GetConsumedMedicineInPeriod(new DateTime(2021, 11, 15), new DateTime(2021, 11, 16));
-
-
-            Assert.Empty(foundMedicine);
+            return retVal;
         }
 /*
         [Fact]  

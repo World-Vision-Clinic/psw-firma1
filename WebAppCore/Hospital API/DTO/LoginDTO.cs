@@ -13,5 +13,11 @@ namespace Hospital_API.DTO
         public string password { get; set; }
 
         public LoginDTO(){}
+
+        public LoginDTO(string username, string password)
+        {
+            this.username = username;
+            this.password = password;
+        }
     }
 }

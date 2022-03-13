@@ -45,23 +45,10 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             GetInMemoryPersonRepository();
         }
 
-        [Fact]
-        public void Test_user_doesnt_exist()
-        {
-            LoginDTO credentials = new LoginDTO()
-            {
-                username = "nekitamo",
-                password = "1234"
-            };
-  
-            var response = _loginController.Login(credentials);
-
-            var result = (UnauthorizedResult)response;
-            Assert.Equal(401, result.StatusCode);
-        }
-
-        [Fact]
-        public void Test_user_exists()
+        [Theory]
+        [InlineData("nekitamo", "1234", 401)]    // bad password
+        [InlineData("nekitamo", "123", 200)]     // ok
+        public void Test_user_doesnt_exist(string username, string password, int expectedStatusCode)
         {
             Manager manager = new Manager()
             {
@@ -69,17 +56,11 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 UserName = "nekitamo",
                 Password = "123"
             };
-            LoginDTO credentials = new LoginDTO()
-            {
-                username = "nekitamo",
-                password = "123"
-            };
             _managerRepository.AddManager(manager);
-            var response = _loginController.Login(credentials);
 
-            var result = (OkObjectResult)response;
-            Assert.Equal(200, result.StatusCode);
+            var response = _loginController.Login(new LoginDTO(username, password));
 
+            response.Equals(expectedStatusCode);
         }
     }
 }
