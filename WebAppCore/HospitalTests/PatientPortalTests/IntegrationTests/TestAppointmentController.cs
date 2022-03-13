@@ -154,19 +154,14 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
         public void Test_add_invalid_overlapping_appointment()
         {
             Appointment validAppointment = new Appointment(4, 4, 1, new DateTime(2030, 6, 6, 12, 0, 0));
+            validAppointment.Length = new TimeSpan(0, 30, 0);
+            _appointmentRepository.AddAppointment(validAppointment);
             Appointment overlappingAppointment = new Appointment(5, 4, 1, new DateTime(2030, 6, 6, 12, 15, 0));
 
-            HttpResponseMessage response = _appointmentController.AddAppointment(validAppointment);
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            HttpResponseMessage response = _appointmentController.AddAppointment(overlappingAppointment);
 
-            response = _appointmentController.AddAppointment(overlappingAppointment);
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-
-            Appointment addedAppointment = _appointmentController.GetAppointment(4).Value;
-            Appointment notAddedAppointment = _appointmentController.GetAppointment(5).Value;
-
-            Assert.NotNull(addedAppointment);
-            Assert.Null(notAddedAppointment);
+            response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
+            _appointmentRepository.FindById(5).ShouldBeNull();
         }
 
         [Fact]
