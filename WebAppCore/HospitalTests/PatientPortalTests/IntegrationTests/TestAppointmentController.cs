@@ -161,6 +161,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             HttpResponseMessage response = _appointmentController.AddAppointment(overlappingAppointment);
 
             response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
+            _appointmentRepository.FindById(4).ShouldNotBeNull();
             _appointmentRepository.FindById(5).ShouldBeNull();
         }
 
