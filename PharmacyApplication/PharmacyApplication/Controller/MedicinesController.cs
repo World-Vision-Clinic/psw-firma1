@@ -1,13 +1,10 @@
 ﻿using iText.IO.Font;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf;
-using iText.Kernel.Pdf.Canvas.Draw;
 using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Pharmacy.Model;
 using Pharmacy.Repository;
 using Pharmacy.Service;
@@ -19,8 +16,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PharmacyAPI.Controller
 {
@@ -86,44 +81,39 @@ namespace PharmacyAPI.Controller
                 return BadRequest("Api Key is not valid!");
             }
 
-            if (!dto.Test)
+
+            Medicine medicine = new Medicine(dto.MedicineName, Double.Parse(dto.MedicineGrams), int.Parse(dto.NumOfBoxes));
+            Medicine med = service.FoundOrderedMedicine(medicine);
+            service.OrderMedicine(medicine);
+
+            SendMailToHospital(dto);
+
+            var client = new RestSharp.RestClient(hospital.Localhost);
+            var request = new RestRequest("/medicines/ordered");
+            request.AddHeader("Content-Type", "application/json");
+            List<string> replacements = service.FoundReplacements(medicine);
+            request.AddJsonBody(
+            new
             {
-                Medicine medicine = new Medicine(dto.MedicineName, Double.Parse(dto.MedicineGrams), int.Parse(dto.NumOfBoxes));
-                Medicine med = service.FoundOrderedMedicine(medicine);
-                service.OrderMedicine(medicine);
+                MedicineName = med.MedicineName,
+                Manufacturer = med.Manufacturer,
+                SideEffects = med.SideEffects,
+                Usage = med.Usage,
+                Weigth = med.Weigth,
+                MainPrecautions = med.MainPrecautions,
+                PotentialDangers = med.PotentialDangers,
+                Quantity = dto.NumOfBoxes,
+                Replacements = replacements,
+                Price = med.Price
+            });
+            IRestResponse response = client.Post(request);
 
-                SendMailToHospital(dto);
-
-                var client = new RestSharp.RestClient(hospital.Localhost);
-                var request = new RestRequest("/medicines/ordered");
-                request.AddHeader("Content-Type", "application/json");
-                List<string> replacements = service.FoundReplacements(medicine);
-                request.AddJsonBody(
-                new
-                {
-                    MedicineName = med.MedicineName,
-                    Manufacturer = med.Manufacturer,
-                    SideEffects = med.SideEffects,
-                    Usage = med.Usage,
-                    Weigth = med.Weigth,
-                    MainPrecautions = med.MainPrecautions,
-                    PotentialDangers = med.PotentialDangers,
-                    Quantity = dto.NumOfBoxes,
-                    Replacements = replacements,
-                    Price = med.Price
-                });
-                IRestResponse response = client.Post(request);
-
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    return Ok();
-                }
-                return BadRequest();
-            }
-            else
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 return Ok();
             }
+            return BadRequest();
+
         }
 
         private void SendMailToHospital(OrderingMedicineDto dto)

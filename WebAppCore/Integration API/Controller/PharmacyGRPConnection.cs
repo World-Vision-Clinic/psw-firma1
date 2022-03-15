@@ -8,14 +8,14 @@ using System;
 
 namespace Integration_API.Controller
 {
-    public class PharmacyGRPConnection
+    public class PharmacyGRPConnection : IPharmacyGrpcConnection
     {
 
         private CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
         public const string HOSPITAL_NAME = "World Vision Clinic";
         public const string HOSPITAL_URL = "http://localhost:43818";
         public const string HOSPITAL_PORT = "127.0.0.1:3000";
-        public bool SendMedicineOrderingRequestGRPC(OrderingMedicineDTO dto, bool test)
+        public bool SendMedicineOrderingRequestGRPC(OrderingMedicineDTO dto)
         {
             double medicineGrams;
             int numOfBoxes;
@@ -33,15 +33,13 @@ namespace Integration_API.Controller
                 return false;
             }
 
-            var input = new MedicineOrderingRequest { MedicineName = dto.MedicineName, MedicineDosage = medicineGrams, Quantity = numOfBoxes, ApiKey = credential.ApiKey, Test = test };
+            var input = new MedicineOrderingRequest { MedicineName = dto.MedicineName, MedicineDosage = medicineGrams, Quantity = numOfBoxes, ApiKey = credential.ApiKey};
             var channel = new Channel(dto.Localhost, ChannelCredentials.Insecure);
             var client = new gRPCService.gRPCServiceClient(channel);
             var reply = client.orderMedicineAsync(input);
 
-            if (reply.ResponseAsync.Result.Response.Equals("OK"))
-                return true;
-            else
-                return false;
+            return reply.ResponseAsync.Result.Response.Equals("OK");
+            
         }
 
         public bool SendRequestToCheckAvailabilityGrpc(string pharmacyLocalhost, MedicineDto medicineDto)
@@ -65,3 +63,4 @@ namespace Integration_API.Controller
         }
     }
 }
+

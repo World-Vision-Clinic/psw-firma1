@@ -20,8 +20,8 @@ namespace IntegrationTests.UnitTests
         public void Check_response_when_medicine_is_available_from_mock_pharmacy()
         {
             // Arrange
-            var mock = new Mock<MockConnection>();
-            MedicinesController controller = new MedicinesController(mock.Object, new HubMock());
+            MockConnection mock = new MockConnection();
+            MedicinesController controller = new MedicinesController(mock, mock, new HubMock());
 
             // Act
             var result = controller.CheckMedicineAvailability("Aspirin", "200", "5");
@@ -40,8 +40,8 @@ namespace IntegrationTests.UnitTests
         public void Check_response_when_medicine_is_not_available_from_mock_pharmacy(string medicineName, string dosageInMg, string quantity)
         {
             // Arrange
-            var mock = new Mock<MockConnection>();
-            MedicinesController controller = new MedicinesController(mock.Object, new HubMock());
+            MockConnection mock = new MockConnection();
+            MedicinesController controller = new MedicinesController(mock, mock, new HubMock());
 
             // Act
             var result = controller.CheckMedicineAvailability(medicineName, dosageInMg, quantity);
@@ -57,8 +57,8 @@ namespace IntegrationTests.UnitTests
         public void Check_response_when_specification_for_medicine_does_not_exist_in_pharmacy()
         {
             // Arrange
-            var mock = new Mock<MockConnection>();
-            MedicinesController controller = new MedicinesController(mock.Object, new HubMock());
+            MockConnection mock = new MockConnection();
+            MedicinesController controller = new MedicinesController(mock, mock, new HubMock());
 
             // Act
             var result = controller.GetSpecification("someLocalhost", "Hemomicin");

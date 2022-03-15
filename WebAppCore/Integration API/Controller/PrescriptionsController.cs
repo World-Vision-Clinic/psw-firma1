@@ -15,9 +15,9 @@ namespace Integration_API.Controller
     {
         private PharmaciesService pharmaciesService = new PharmaciesService(new PharmaciesRepository());
         private PharmacyGRPConnection grpcConnection = new PharmacyGRPConnection();
-        private IPharmacyConnection pharmacyConnection;
+        private IPharmacyHttpConnection pharmacyConnection;
 
-        public PrescriptionsController(IPharmacyConnection connection)
+        public PrescriptionsController(IPharmacyHttpConnection connection)
         {
             pharmacyConnection = connection;
         }

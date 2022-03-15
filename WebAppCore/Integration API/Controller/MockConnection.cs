@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Integration_API.Controller
 {
-    public class MockConnection : IPharmacyConnection
+    public class MockConnection : IPharmacyHttpConnection, IPharmacyGrpcConnection
     {
         public bool SendRequestToCheckAvailability(string pharmacyLocalhost, MedicineDto medicineDto)
         {
@@ -30,6 +30,21 @@ namespace Integration_API.Controller
         public bool sendPdfFileviaHttp(string filename, PharmacyDto dto)
         {
             return true;
+        }
+
+        public bool SendMedicineOrderingRequestHTTP(OrderingMedicineDTO dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool SendMedicineOrderingRequestGRPC(OrderingMedicineDTO dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool SendRegistrationRequestGrpc(PharmacyDto dto, string generatedKey)
+        {
+            throw new NotImplementedException();
         }
     }
 }

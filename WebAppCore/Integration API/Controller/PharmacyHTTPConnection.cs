@@ -7,7 +7,7 @@ using System;
 
 namespace Integration_API.Controller
 {
-    public class PharmacyHTTPConnection: IPharmacyConnection
+    public class PharmacyHTTPConnection: IPharmacyHttpConnection
     {
         CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
         public const string HOSPITAL_NAME = "World Vision Clinic";
@@ -51,7 +51,7 @@ namespace Integration_API.Controller
             return false;
         }
 
-        public bool SendMedicineOrderingRequestHTTP(OrderingMedicineDTO dto, bool test)
+        public bool SendMedicineOrderingRequestHTTP(OrderingMedicineDTO dto)
         {
             var client = new RestSharp.RestClient(dto.Localhost);
             var request = new RestRequest("medicines/OrderMedicine");
@@ -69,16 +69,10 @@ namespace Integration_API.Controller
             {
                 MedicineName = dto.MedicineName,
                 MedicineGrams = dto.MedicineGrams,
-                NumOfBoxes = dto.NumOfBoxes,
-                Test = test
+                NumOfBoxes = dto.NumOfBoxes
             });
             IRestResponse response = client.Post(request);
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                return true;
-            }
-
-            return false;
+            return response.StatusCode.Equals(System.Net.HttpStatusCode.OK);
         }
 
         public bool SendRegistrationRequestHttp(PharmacyDto dto, string generatedKey)

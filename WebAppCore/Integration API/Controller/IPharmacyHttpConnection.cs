@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Integration_API.Controller
 {
-    public interface IPharmacyConnection
+    public interface IPharmacyHttpConnection
     {
         bool SendRequestToCheckAvailability(string pharmacyLocalhost, MedicineDto medicineDto);
         bool SendRequestForSpecification(string pharmacyLocalhost, string medicineName);
-        bool SendMedicineOrderingRequestHTTP(OrderingMedicineDTO dto, bool test);
+        bool SendMedicineOrderingRequestHTTP(OrderingMedicineDTO dto);
         bool sendPdfFileviaHttp(string filename, PharmacyDto dto);
     }
 }

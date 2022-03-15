@@ -18,17 +18,18 @@ namespace Integration_API.Controller
     {
         private PharmaciesService pharmaciesService = new PharmaciesService(new PharmaciesRepository());
         private FilesService filesService = new FilesService(new FilesRepository());
-        private PharmacyGRPConnection gRPConnection = new PharmacyGRPConnection();
 
         private SftpHandler sftpHandler = new SftpHandler();
-        private IPharmacyConnection httpConnection;
+        private IPharmacyHttpConnection _httpConnection;
+        private IPharmacyGrpcConnection _grpcConnection;
         public const string HOSPITAL_URL = "http://localhost:39901";
 
         private readonly IHubContext<SignalServer> _hubContext;
 
-        public MedicinesController(IPharmacyConnection connection, IHubContext<SignalServer> hubcontext)
+        public MedicinesController(IPharmacyHttpConnection httpConnection, IPharmacyGrpcConnection grpcConnection,IHubContext<SignalServer> hubcontext)
         {
-            httpConnection = connection;
+            _httpConnection = httpConnection;
+            _grpcConnection = grpcConnection;
             _hubContext = hubcontext;
         }
 
@@ -45,12 +46,12 @@ namespace Integration_API.Controller
             {
                 if (pharmacy.ConnectionInfo.Protocol.Equals(ProtocolType.HTTP))
                 {
-                    if (httpConnection.SendRequestToCheckAvailability(pharmacy.ConnectionInfo.Domain, medicineDto))
+                    if (_httpConnection.SendRequestToCheckAvailability(pharmacy.ConnectionInfo.Domain, medicineDto))
                         pharmaciesWithMedicine.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
                 }
                 else
                 {
-                    if (gRPConnection.SendRequestToCheckAvailabilityGrpc(pharmacy.ConnectionInfo.Domain, medicineDto))
+                    if (_grpcConnection.SendRequestToCheckAvailabilityGrpc(pharmacy.ConnectionInfo.Domain, medicineDto))
                         pharmaciesWithMedicine.Add(PharmacyMapper.PharmacyToPharmacyDto(pharmacy));
                 }
             }
@@ -76,13 +77,13 @@ namespace Integration_API.Controller
         {
             if (pharmaciesService.Get(dto.Localhost).ConnectionInfo.Protocol.Equals(ProtocolType.HTTP))
             {
-                if (httpConnection.SendMedicineOrderingRequestHTTP(dto, false))
+                if (_httpConnection.SendMedicineOrderingRequestHTTP(dto))
                     return Ok();
                 return BadRequest("Please try again, procurement wasn't executed");
             }
             else
             {
-                if (gRPConnection.SendMedicineOrderingRequestGRPC(dto, false))
+                if (_grpcConnection.SendMedicineOrderingRequestGRPC(dto))
                     return Ok();
                 return BadRequest("Please try again, procurement wasn't executed");
             }
@@ -94,7 +95,7 @@ namespace Integration_API.Controller
             if (string.IsNullOrEmpty(pharmacyLocalhost) || string.IsNullOrEmpty(medicine))
                 return BadRequest();
 
-            if (!httpConnection.SendRequestForSpecification(pharmacyLocalhost, medicine))
+            if (!_httpConnection.SendRequestForSpecification(pharmacyLocalhost, medicine))
                 return BadRequest("Specification does not exists");
 
             File dowloadedSpec = sftpHandler.DownloadSpecification($"/public/" + medicine + ".pdf", "Specifications/" + medicine + ".pdf");

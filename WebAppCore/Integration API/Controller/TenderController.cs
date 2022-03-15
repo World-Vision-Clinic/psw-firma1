@@ -29,7 +29,7 @@ namespace Integration_API.Controller
         TenderService service = new TenderService(new TenderRepository());
         PharmaciesService pharmaciesService = new PharmaciesService(new PharmaciesRepository());
         CredentialsService credentialsService = new CredentialsService(new CredentialsRepository());
-        IPharmacyConnection pharmacyConnection = new PharmacyHTTPConnection();
+        IPharmacyHttpConnection pharmacyConnection = new PharmacyHTTPConnection();
         EmailSender emailSender = new EmailSender();
         PdfGenerator pdfGenerator = new PdfGenerator();
         MedicinesController medicinesController;
@@ -39,7 +39,7 @@ namespace Integration_API.Controller
         public TenderController(IHubContext<SignalServer> hubcontext)
         {
             _hubContext = hubcontext;
-            medicinesController = new MedicinesController(new PharmacyHTTPConnection(), _hubContext);
+            medicinesController = new MedicinesController(new PharmacyHTTPConnection(), new PharmacyGRPConnection(),_hubContext);
         }
 
         [HttpGet]
@@ -122,7 +122,7 @@ namespace Integration_API.Controller
             TenderOffer offerForOrdering = service.GetTenderOfferWithOfferItems(tender.TenderOffers.ElementAt(0).PharmacyName, tender.TenderOffers.ElementAt(0).TenderOfferHash);
             foreach (OfferItem oi in offerForOrdering.OfferItems.ToArray())
             {
-                if (!pharmacyConnection.SendMedicineOrderingRequestHTTP(new OrderingMedicineDTO(pharmacy.ConnectionInfo.Domain, oi.MedicineName, oi.Dosage.ToString(), oi.Quantity.ToString()), false))
+                if (!pharmacyConnection.SendMedicineOrderingRequestHTTP(new OrderingMedicineDTO(pharmacy.ConnectionInfo.Domain, oi.MedicineName, oi.Dosage.ToString(), oi.Quantity.ToString())))
                     return false;
             }
             return true;
