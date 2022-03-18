@@ -20,6 +20,7 @@ namespace IntegrationTests.IntegrationTests
     public class OrderingMedicinesTest
     {
         bool development = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+
         [SkippableFact]
         public void OrderingExistingMedicinesTest()
         {
@@ -36,15 +37,15 @@ namespace IntegrationTests.IntegrationTests
         
         [Theory]
         [MemberData(nameof(Data))]
-        public void CheckIf_medicine_is_ordered(OrderingMedicineDTO omd, Times expectedHttp, Times expectedGrpc)
+        public void CheckIf_medicine_is_ordered(OrderingMedicineDTO omd, int expectedStatusCode, Times expectedGrpc)
         {
-            var httpConnectionMock = new Mock<IPharmacyHttpConnection>();
+            var httpConnectionMock = new PharmacyHTTPConnection();
             var grpcConnectionMock = new Mock<IPharmacyGrpcConnection>();
-            MedicinesController medicinesController = new MedicinesController(httpConnectionMock.Object, grpcConnectionMock.Object, new HubMock());
+            MedicinesController medicinesController = new MedicinesController(httpConnectionMock, grpcConnectionMock.Object, new HubMock());
 
-            var requestOk = medicinesController.Order(omd);
+            ObjectResult response = (ObjectResult)medicinesController.Order(omd);
 
-            httpConnectionMock.Verify(x => x.SendMedicineOrderingRequestHTTP(omd), expectedHttp);
+            response.StatusCode.Equals(expectedStatusCode);
             grpcConnectionMock.Verify(x => x.SendMedicineOrderingRequestGRPC(omd), expectedGrpc);
         }
 
@@ -52,8 +53,9 @@ namespace IntegrationTests.IntegrationTests
         {
             var retVal = new List<object[]>();
 
-            retVal.Add(new object[] { new OrderingMedicineDTO("http://localhost:34616", "Brufen", "100", "2"), Times.Once(), Times.Never() });
-            retVal.Add(new object[] { new OrderingMedicineDTO("127.0.0.1:5000", "Brufen", "100", "2"), Times.Never(), Times.Once() });
+            retVal.Add(new object[] { new OrderingMedicineDTO("http://localhost:34616/test", "Brufen", "100", "2"), 200, Times.Never() });
+            retVal.Add(new object[] { new OrderingMedicineDTO("http://localhost:34616/test", "Andol", "100", "2"), 400, Times.Never() });
+            retVal.Add(new object[] { new OrderingMedicineDTO("127.0.0.1:5000", "Brufen", "100", "2"), 200, Times.Once() });
 
             return retVal;
         }
