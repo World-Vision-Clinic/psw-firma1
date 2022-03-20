@@ -175,11 +175,7 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             appointmentRecommendationRequestDTO.UpperTimeRange = "14:00:00";
             appointmentRecommendationRequestDTO.DoctorId = 1;
             appointmentRecommendationRequestDTO.PriorityType = "DOCTOR_PRIORITY";
-            List<Appointment> freeAppointmentsBeforeAddition = _appointmentController.GetRecommendedAppointments(appointmentRecommendationRequestDTO).Value.ToList();
-
-            Assert.NotNull(freeAppointmentsBeforeAddition);
-            Assert.Equal(8, freeAppointmentsBeforeAddition.Count);
-
+            
             Appointment appointment = new Appointment()
             {
                 Id = 6,
