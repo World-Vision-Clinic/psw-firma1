@@ -2,14 +2,13 @@
 using Integration.Partnership.Repository;
 using Integration.Pharmacy.Model;
 using Integration.Pharmacy.Repository;
-using Integration.Pharmacy.Repository.RepositoryInterfaces;
 using Integration.Pharmacy.Service;
-using Moq;
-using Newtonsoft.Json;
-using RabbitMQ.Client;
+using Integration.SharedModel;
+using IntegrationTests.IntegrationTests.RabbitMQSender;
+using Microsoft.EntityFrameworkCore;
+using Shouldly;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -21,84 +20,56 @@ namespace IntegrationTests.IntegrationTests
     {
         bool development = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
 
+
+        public readonly DbContextOptions<IntegrationDbContext> dbContextOptions;
+
+        public NewsTests()
+        {
+            dbContextOptions = new DbContextOptionsBuilder<IntegrationDbContext>()
+                .UseInMemoryDatabase(databaseName: "TestDb")
+                .Options;
+        }
+
+
+        /* Test testira da li je sistem primio poruku preko RabbitMQ-a, tako sto proveri da li se primljena poruka sacuva u bazi
+           Prvo se testira kada nas sistem nije pretplacen na neki kanal a poruka stigne na taj kanal 
+                - trebalo bi da ignorise tj. da se poruka ne sacuva u bazu
+           A zatim se testira kada stigne poruka na kanal na koji smo pretplaceni - da li se ta poruka sacuvala u bazi
+        */
         [SkippableTheory]
         [MemberData(nameof(Data))]
-        public async void Check_if_news_are_received(News pieceOfNews, Boolean isFirst)
+        public async void Check_if_news_are_received(News pieceOfNews, string channelName, string queueName, int expected)
         {
             Skip.IfNot(development);
-            var stubRepository = new Mock<INewsRepository>();
-            var news = new List<News>();
-            stubRepository.Setup(m => m.GetAll()).Returns(news);
-            RabbitMQService rabbitMQ = new RabbitMQService(stubRepository.Object, new PharmaciesRepository(), new TenderRepository(), true);
+            // Arrange
+            var testContext = new IntegrationDbContext(dbContextOptions);
+            NewsRepository newsRepository = new NewsRepository(testContext);
+            RabbitMQService rabbitMQ = new RabbitMQService(newsRepository, new PharmaciesRepository(), new TenderRepository());
+            /* Napravljena je klasa Sender koja unutar ima sendMessage metodu koja posalje poruku na kanal i poziv te metode je u Arrange sekciji jer ne testiram tu metodu*/
+            Sender sender = new Sender();   
+            sender.sendMessage(pieceOfNews, channelName, queueName);
+
+            // Act
             CancellationToken token = new CancellationToken(false);
-            await rabbitMQ.StartAsync(token);
-
-
-            sendMessage(pieceOfNews, isFirst);
+            /* Unutar ove metode poziva metoda za primanje poruka StartAsync() -> NewsChannelExchange() -> RecieveNews()
+               Mozda bi i ovo moglo da se refaktorise tako da se testira RecieveNews metoda,
+               ali ovako sam htela da obuhvatim testom sto veci deo koda - manja verovatnoca od regresije */
+            await rabbitMQ.StartAsync(token);   
             await Task.Delay(3000);
 
-
-
-            if (isFirst) stubRepository.Verify(rep => rep.GetAll(), Times.Once);
-            else stubRepository.Verify(rep => rep.GetAll(), Times.Never);
-
+            // Assert
+            newsRepository.GetAll().Count.ShouldBe(expected);
         }
 
         public static IEnumerable<object[]> Data()
         {
             var retVal = new List<object[]>();
 
-            retVal.Add(new object[] { new News(1, "Naslov1", "Sadrzaj1", new DateRange(DateTime.Now, DateTime.Now.AddDays(1)), "1111", false, "Jankovic"), true });
-            retVal.Add(new object[] { new News(2, "Naslov2", "Sadrzaj2", new DateRange(DateTime.Now, DateTime.Now.AddDays(1)), "2222", true, "Jankovic"), false });
+            retVal.Add(new object[] { new News(2, "Naslov2", "Sadrzaj2", new DateRange(DateTime.Now, DateTime.Now.AddDays(1)), "2222", true, "Jankovic"), "Channel1", "Queue1", 0 });
+            retVal.Add(new object[] { new News(1, "Naslov1", "Sadrzaj1", new DateRange(DateTime.Now, DateTime.Now.AddDays(1)), "1111", false, "Jankovic"), "JankovicNewsChannel", "Jankovic", 1 });
 
             return retVal;
         }
-
-        private void sendMessage(News pieceOfNews, Boolean isFirst)
-        {
-            var factory = new ConnectionFactory() { HostName = "localhost" };
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
-            {
-                if (isFirst)
-                {
-                    channel.ExchangeDeclare(exchange: "JankovicNewsChannel", type: ExchangeType.Direct);
-                    channel.QueueDeclare(queue: "Jankovic",
-                                         durable: false,
-                                         exclusive: false,
-                                         autoDelete: false,
-                                         arguments: null);
-
-
-                    var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(pieceOfNews));
-
-                    channel.BasicPublish(exchange: "JankovicNewsChannel",
-                                         routingKey: "Jankovic",
-                                         basicProperties: null,
-                                         body: body);
-                }
-                else
-                {
-                    {
-                        channel.ExchangeDeclare(exchange: "Channel1", type: ExchangeType.Fanout);
-                        channel.QueueDeclare(queue: "Queue1",
-                                             durable: false,
-                                             exclusive: false,
-                                             autoDelete: false,
-                                             arguments: null);
-
-
-                        var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(pieceOfNews));
-
-                        channel.BasicPublish(exchange: "Channel1",
-                                             routingKey: "Queue1",
-                                             basicProperties: null,
-                                             body: body);
-                    }
-                }
-            }
-        }
-
 
 
     }

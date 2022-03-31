@@ -24,23 +24,20 @@ namespace Integration.Pharmacy.Service
         INewsRepository newsRepository;
         IPharmaciesRepository pharmaciesRepository;
         ITenderRepository tenderRepository;
-        Boolean isTest;
 
-        public RabbitMQService(INewsRepository newsRepository, IPharmaciesRepository pharmaciesRepository, ITenderRepository tenderRepository, Boolean isTest)
+        public RabbitMQService(INewsRepository newsRepository, IPharmaciesRepository pharmaciesRepository, ITenderRepository tenderRepository)
         {
             this.newsRepository = newsRepository;
             this.pharmaciesRepository = pharmaciesRepository;
             this.tenderRepository = tenderRepository;
-            this.isTest = isTest;
         }
 
         public RabbitMQService()
         {
             
-            newsRepository = new NewsRepository();
+            newsRepository = new NewsRepository(new SharedModel.IntegrationDbContext());
             pharmaciesRepository = new PharmaciesRepository();
             tenderRepository = new TenderRepository();
-            isTest = false;
         }
         public override Task StartAsync(CancellationToken cancellationToken)
         {
@@ -137,9 +134,9 @@ namespace Integration.Pharmacy.Service
                                 exchange: pharmacyProfile.Name + "NewsChannel",
                                 routingKey: pharmacyProfile.Name);
         }
+
         private void ReceiveNews(News news, PharmacyProfile pharmacyProfile)
         {
-            if (isTest) newsRepository.GetAll();
             news.Posted = false;
             news.IdEncoded = Generator.GenerateNewsId();
             news.PharmacyName = pharmacyProfile.Name;

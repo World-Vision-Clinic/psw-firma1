@@ -10,7 +10,14 @@ namespace Integration.Pharmacy.Repository
 {
    public class NewsRepository : INewsRepository
     {
-        private IntegrationDbContext dbContext = new IntegrationDbContext();
+
+        private readonly IntegrationDbContext dbContext;
+
+        public NewsRepository(IntegrationDbContext context)
+        {
+            dbContext = context;
+        }
+
         public void Delete(string id)
         {
             throw new NotImplementedException();

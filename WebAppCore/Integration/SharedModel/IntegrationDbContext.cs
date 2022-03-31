@@ -26,6 +26,10 @@ namespace Integration.SharedModel
 
         }
 
+        public IntegrationDbContext(DbContextOptions options) : base(options)
+        {
+        }
+
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
             modelbuilder.Entity<Tender>()
@@ -52,8 +56,14 @@ namespace Integration.SharedModel
 
         protected override void OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(CreateConnectionStringFromEnvironment());
+            if (!optionsBuilder.IsConfigured)
+            {
+                string connectionString = CreateConnectionStringFromEnvironment();
+                optionsBuilder.UseNpgsql(connectionString);
+            }
         }
+
+
         private static string CreateConnectionStringFromEnvironment()
         {
             var server = Environment.GetEnvironmentVariable("DATABASE_HOST") ?? "localhost";

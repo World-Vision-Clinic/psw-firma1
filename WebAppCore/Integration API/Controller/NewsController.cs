@@ -16,7 +16,7 @@ namespace Integration_API.Controller
     [ApiController]
     public class NewsController : ControllerBase
     {
-        NewsService newsService = new NewsService(new NewsRepository());
+        NewsService newsService = new NewsService(new NewsRepository(new Integration.SharedModel.IntegrationDbContext()));
 
         [HttpGet]
         public IActionResult Get()
