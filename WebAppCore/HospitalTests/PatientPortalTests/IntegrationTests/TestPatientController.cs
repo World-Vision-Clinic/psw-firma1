@@ -120,9 +120,19 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
             Patient patient = new Patient(patientId, username, "sima123", new FullName("Sima", "Simovic"), "simasimic@gmail.com", true, Gender.Male, "2677597",
                 DateTime.Now, new Residence("Serbia", "TestAddress", "TestCity"), "063115111", 10, 80, 180, BloodType.A, false, new List<Appointment>(), " ");
             _patientRepository.AddPatient(patient);
+            createAppointmentsForPatient(patientId, isCanceled, appointmentIds);
 
+            // Act
+            HttpResponseMessage response = _patientsController.BlockPatient(username);
+
+            // Assert
+            response.StatusCode.ShouldBe(expectedStatusCode);
+        }
+
+        private void createAppointmentsForPatient(int patientId, bool[] isCanceled, int[] appointmentIds)
+        {
             int[] days = { -15, -7, -28 };
-            for(int i = 0; i < days.Length; i++)
+            for (int i = 0; i < days.Length; i++)
             {
                 Appointment appointment = new Appointment()
                 {
@@ -135,12 +145,6 @@ namespace HospitalTests.PatientPortalTests.IntegrationTests
                 };
                 _appointmentRepository.AddAppointment(appointment);
             }
-
-            // Act
-            HttpResponseMessage response = _patientsController.BlockPatient(username);
-            
-            // Assert
-            response.StatusCode.ShouldBe(expectedStatusCode);
         }
     }
 }
