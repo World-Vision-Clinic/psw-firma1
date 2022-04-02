@@ -34,9 +34,7 @@ namespace IntegrationTests.EndToEndTests
         [Fact]
         public void Ordering_existing_medicine_test()
         {
-            pharmaciesPage.InsertName("Andol");
-            pharmaciesPage.InsertWeight("200");
-            pharmaciesPage.InsertQuantity("2");
+            InsertData("Andol", "200", "2");
             pharmaciesPage.SearchPharmacies();
 
             pharmaciesPage.WaitForOrderButton();
@@ -50,9 +48,7 @@ namespace IntegrationTests.EndToEndTests
         [Fact]
         public void Ordering_unexisting_medicine_test()
         {
-            pharmaciesPage.InsertName("Blabla");
-            pharmaciesPage.InsertWeight("200");
-            pharmaciesPage.InsertQuantity("2");
+            InsertData("Blabla", "200", "2");
             pharmaciesPage.SearchPharmacies();
 
             pharmaciesPage.WaitForMessage();
@@ -60,24 +56,22 @@ namespace IntegrationTests.EndToEndTests
             Assert.True(pharmaciesPage.CheckMessage());
         }
 
-        [Fact]
-        public void Missing_user_input_test()
+        private void InsertData(string medicineName, string weight, string quantity)
         {
-            pharmaciesPage.InsertName("Andol");
-            pharmaciesPage.InsertQuantity("2");
-            pharmaciesPage.SearchPharmacies();
-
-            pharmaciesPage.WaitForAlertDialog();
-
-            Assert.Equal(pharmaciesPage.GetDialogMessage(), Pages.PharmaciesPage.UnsuccessfulOrderingMessage);
+            pharmaciesPage.InsertName(medicineName);
+            pharmaciesPage.InsertWeight(weight);
+            pharmaciesPage.InsertQuantity(quantity);
         }
 
-        [Fact]
-        public void Wrong_user_input_test()
+
+        [Theory]
+        [InlineData("Andol", "sss", "2")]
+        [InlineData("Andol", "", "2")]
+        public void Wrong_user_input_test(string medicineName, string weight, string quantity)
         {
-            pharmaciesPage.InsertName("Andol");
-            pharmaciesPage.InsertWeight("sss");
-            pharmaciesPage.InsertQuantity("2");
+            pharmaciesPage.InsertName(medicineName);
+            pharmaciesPage.InsertWeight(weight);
+            pharmaciesPage.InsertQuantity(quantity);
             pharmaciesPage.SearchPharmacies();
 
             pharmaciesPage.WaitForAlertDialog();

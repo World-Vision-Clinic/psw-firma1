@@ -29,25 +29,19 @@ namespace IntegrationTests.EndToEndTests
             objectionPage.Navigate();
         }
 
-        [Fact]
-        public void Create_objection()
+        [Theory]
+        [InlineData("Jankovic", "Ne valja usluga", Pages.ObjectionPage.SuccessfulObjectionCreation)]
+        [InlineData("Jankovic", "", Pages.ObjectionPage.UnsuccessfulObjectionCreation)]
+        public void Create_objection_test(string pharmacy, string text, string expected)
         {
             objectionPage.WaitForPharmacies();
-            objectionPage.ChoosePharmacy("Jankovic");
-            objectionPage.InsertText("Ne valja usluga");
-            objectionPage.SendObjection();
-            objectionPage.WaitForAlertDialog();
-            Assert.Equal(objectionPage.GetDialogMessage(), Pages.ObjectionPage.SuccessfulObjectionCreation);
-        }
+            objectionPage.ChoosePharmacy(pharmacy);
+            objectionPage.InsertText(text);
 
-        [Fact]
-        public void Empty_text()
-        {
-            objectionPage.WaitForPharmacies();
-            objectionPage.ChoosePharmacy("Jankovic");
             objectionPage.SendObjection();
             objectionPage.WaitForAlertDialog();
-            Assert.Equal(objectionPage.GetDialogMessage(), Pages.ObjectionPage.UnsuccessfulObjectionCreation);
+
+            Assert.Equal(objectionPage.GetDialogMessage(), expected);
         }
 
         public void Dispose()

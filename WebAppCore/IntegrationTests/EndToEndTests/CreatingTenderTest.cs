@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using Integration_API.Dto;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
@@ -33,12 +34,7 @@ namespace IntegrationTests.EndToEndTests
         [Fact]
         public void Create_tender()
         {
-            tenderPage.InsertTitle("TestTitle");
-            tenderPage.InsertDescription("TestDescription");
-            tenderPage.InsertMedicineName("TestMedicine");
-            tenderPage.InsertDosage("100");
-            tenderPage.InsertQuantity("10");
-            tenderPage.AddMedicine();
+            InsertTenderData("TestTitle", "TestDescription", new MedicineDto("TestMedicine", 100, 10));
 
             tenderPage.Wait();
             tenderPage.AddTender();
@@ -47,26 +43,31 @@ namespace IntegrationTests.EndToEndTests
             tenderPage.AcceptAlert();
             tenderPage.WaitForAlertDialog();
 
-
             Assert.Equal(tenderPage.GetDialogMessage(), Pages.TenderPage.SuccessfulOrderingMessage);
         }
         [Fact]
         public void Forget_to_insert_title()
         {
-            tenderPage.InsertDescription("TestDescription");
-            tenderPage.InsertMedicineName("TestMedicine");
-            tenderPage.InsertDosage("100");
-            tenderPage.InsertQuantity("10");
-            tenderPage.AddMedicine();
+            InsertTenderData("", "TestDescription", new MedicineDto("TestMedicine", 100, 10));
 
             tenderPage.Wait();
             tenderPage.AddTender();
 
             tenderPage.WaitForAlertDialog();
 
-
             Assert.Equal(tenderPage.GetDialogMessage(), Pages.TenderPage.UnsuccessfulOrderingMessage);
         }
+
+        private void InsertTenderData(string title, string description, MedicineDto medicineDto)
+        {
+            tenderPage.InsertTitle(title);
+            tenderPage.InsertDescription(description);
+            tenderPage.InsertMedicineName(medicineDto.Name);
+            tenderPage.InsertDosage(medicineDto.DosageInMg.ToString());
+            tenderPage.InsertQuantity(medicineDto.Quantity.ToString());
+            tenderPage.AddMedicine();
+        }
+
         [Fact]
         public void Forget_to_insert_description()
         {

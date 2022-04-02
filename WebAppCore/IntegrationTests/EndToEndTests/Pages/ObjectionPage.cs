@@ -18,7 +18,7 @@ namespace IntegrationTests.EndToEndTests.Pages
 
         private IWebElement TextForm => driver.FindElement(By.Id("exampleFormControlTextarea2"));
 
-        public const string SuccessfulObjectionCreation = "Successfull ";
+        public const string SuccessfulObjectionCreation = "Successful";
         public const string UnsuccessfulObjectionCreation = "Objection wasn't sent!";
 
 

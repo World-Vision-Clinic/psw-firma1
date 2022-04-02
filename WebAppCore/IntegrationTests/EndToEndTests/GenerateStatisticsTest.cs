@@ -31,65 +31,22 @@ namespace IntegrationTests.EndToEndTests
             statisticsPage.Navigate();
         }
 
-        [Fact]
-        public void Forget_to_insert_dates()
+        [Theory]
+        [InlineData("", "", "Dates must be selected", false)]                                       // forget_to_insert_dates
+        [InlineData("", "12/25/2021", "Dates must be selected", false)]                             // forget_to_insert_start_date
+        [InlineData("12/19/2021", "", "Dates must be selected", false)]                             // forget_to_insert_end_date
+        [InlineData("12/25/2021", "12/19/2021", "End date must be after starting date", false)]     // end_date_before_start_date
+        [InlineData("12/19/2021", "12/25/2021", "", true)]                                          // ok
+        public void Inserting_dates_test(string startDate, string endDate, string expectedMessage, bool newWindow)
         {
+            statisticsPage.InsertStartDate(startDate);
+            statisticsPage.InsertEndDate(endDate);
+
             statisticsPage.Generate();
 
-            statisticsPage.WaitForAlertDialog();
-
-            Assert.Equal("Dates must be selected", statisticsPage.GetDialogMessage());
+            Assert.Equal(expectedMessage, statisticsPage.GetDialogMessage());
+            Assert.Equal(statisticsPage.WaitForNewWindow(driver, 10), newWindow);
         }
-
-        [Fact]
-        public void Forget_to_insert_start_date()
-        {
-            statisticsPage.InsertEndDate("12/25/2021");
-
-            statisticsPage.Generate();
-
-            statisticsPage.WaitForAlertDialog();
-
-            Assert.Equal("Dates must be selected", statisticsPage.GetDialogMessage());
-        }
-
-        [Fact]
-        public void Forget_to_insert_end_date()
-        {
-            statisticsPage.InsertStartDate("12/19/2021");
-
-            statisticsPage.Generate();
-
-            statisticsPage.WaitForAlertDialog();
-
-            Assert.Equal("Dates must be selected", statisticsPage.GetDialogMessage());
-        }
-
-        [Fact]
-        public void End_date_before_start_date()
-        {
-            statisticsPage.InsertStartDate("12/25/2021");
-
-            statisticsPage.InsertEndDate("12/19/2021");
-
-            statisticsPage.Generate();
-
-            statisticsPage.WaitForAlertDialog();
-
-            Assert.Equal("End date must be after starting date", statisticsPage.GetDialogMessage());
-        }
-
-        /*[Fact]
-        public void Generate_statistics()
-        {
-            statisticsPage.InsertStartDate("12/19/2021");
-
-            statisticsPage.InsertEndDate("12/25/2021");
-
-            statisticsPage.Generate();
-
-            Assert.True(statisticsPage.WaitForNewWindow(driver, 10));
-        }*/
 
         public void Dispose()
         {
