@@ -35,13 +35,12 @@ namespace IntegrationTests.EndToEndTests
         public void Ordering_existing_medicine_test()
         {
             InsertData("Andol", "200", "2");
+
             pharmaciesPage.SearchPharmacies();
 
             pharmaciesPage.WaitForOrderButton();
-
             pharmaciesPage.OdrerMedicine();
             pharmaciesPage.WaitForAlertDialog();
-
             Assert.Equal(pharmaciesPage.GetDialogMessage(), Pages.PharmaciesPage.SuccessfulOrderingMessage);
         }
 
@@ -49,10 +48,10 @@ namespace IntegrationTests.EndToEndTests
         public void Ordering_unexisting_medicine_test()
         {
             InsertData("Blabla", "200", "2");
+
             pharmaciesPage.SearchPharmacies();
 
             pharmaciesPage.WaitForMessage();
-
             Assert.True(pharmaciesPage.CheckMessage());
         }
 

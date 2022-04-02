@@ -36,13 +36,11 @@ namespace IntegrationTests.EndToEndTests
         {
             InsertTenderData("TestTitle", "TestDescription", new MedicineDto("TestMedicine", 100, 10));
 
-            tenderPage.Wait();
             tenderPage.AddTender();
 
             tenderPage.WaitForAlertDialog();
             tenderPage.AcceptAlert();
             tenderPage.WaitForAlertDialog();
-
             Assert.Equal(tenderPage.GetDialogMessage(), Pages.TenderPage.SuccessfulOrderingMessage);
         }
         [Fact]
@@ -50,11 +48,9 @@ namespace IntegrationTests.EndToEndTests
         {
             InsertTenderData("", "TestDescription", new MedicineDto("TestMedicine", 100, 10));
 
-            tenderPage.Wait();
             tenderPage.AddTender();
 
             tenderPage.WaitForAlertDialog();
-
             Assert.Equal(tenderPage.GetDialogMessage(), Pages.TenderPage.UnsuccessfulOrderingMessage);
         }
 
@@ -66,6 +62,7 @@ namespace IntegrationTests.EndToEndTests
             tenderPage.InsertDosage(medicineDto.DosageInMg.ToString());
             tenderPage.InsertQuantity(medicineDto.Quantity.ToString());
             tenderPage.AddMedicine();
+            tenderPage.Wait();
         }
 
         [Fact]
