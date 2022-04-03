@@ -89,6 +89,18 @@ namespace Hospital_API.Controllers
             return NoContent();
         }
 
+        [HttpGet("relocate")]
+        public HttpResponseMessage Relocate(Equipment eqForTransf, RoomDTO roomFrom, RoomDTO roomTo)
+        {
+
+            Room fromRoom = roomService.GetById(roomFrom.id);
+            Room toRoom = roomService.GetById(roomTo.id);
+            bool success = roomService.Relocate(eqForTransf, fromRoom, toRoom);
+
+            if (success) return new HttpResponseMessage { StatusCode = HttpStatusCode.OK }; ;
+            return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest }; ;
+        }
+
         [HttpPost("merge")]
         public IActionResult Merge(RoomMergeDTO dto)
         {

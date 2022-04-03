@@ -12,6 +12,7 @@ namespace Hospital.RoomsAndEquipment.Service
     {
         private RoomRepository repository;
         private EquipmentRepository equipmentRepository;
+        private EquipmentService equipmentService;
         public RoomService(RoomRepository repos)
         {
             repository = repos;
@@ -20,6 +21,7 @@ namespace Hospital.RoomsAndEquipment.Service
         {
             repository = repos;
             equipmentRepository = equipRepo;
+            equipmentService = new EquipmentService(equipRepo);
         }
         public List<Room> getAll()
         {
@@ -212,6 +214,27 @@ namespace Hospital.RoomsAndEquipment.Service
             repository.Save(newRoom1);
             repository.Save(newRoom2);
 
+        }
+
+        public bool Relocate(Equipment eqForTransf, Room fromRoom, Room toRoom)
+        {
+            foreach (Equipment equip in equipmentService.GetRoomEquipments(fromRoom.Id))
+            {
+                if (equip.Name.Equals(eqForTransf.Name))
+                {
+                    if (equip.Amount > eqForTransf.Amount)
+                    {
+                        Equipment fromRoomEquip = new Equipment(equip.Id, equip.Name, equip.Type, equip.Amount - eqForTransf.Amount, fromRoom.Id);
+                        equipmentService.Delete(equip.Id);
+                        equipmentService.Save(fromRoomEquip);
+                        Equipment toRoomEquip = new Equipment(eqForTransf.Id, eqForTransf.Name, eqForTransf.Type, eqForTransf.Amount, toRoom.Id);
+                        equipmentService.Save(toRoomEquip);
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         public void mergeEquipment(int room1ID, int room2ID, int newId)

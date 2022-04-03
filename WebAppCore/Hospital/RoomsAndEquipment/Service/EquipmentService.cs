@@ -22,7 +22,7 @@ namespace Hospital.RoomsAndEquipment.Service
             return repository.GetAll();
         }
 
-        public List<Equipment> getRoomEquipments(int roomId)
+        public List<Equipment> GetRoomEquipments(int roomId)
         {
             List<Equipment> eqs = repository.GetRoomEquipemnts(roomId);
             foreach(Equipment eq in eqs)
@@ -120,6 +120,16 @@ namespace Hospital.RoomsAndEquipment.Service
                 return false;
             }
   
+        }
+
+        public void Delete(int eqipmentId)
+        {
+            repository.Delete(eqipmentId);
+        }
+
+        public void Save(Equipment eq)
+        {
+            repository.Save(eq);
         }
     }
 }
