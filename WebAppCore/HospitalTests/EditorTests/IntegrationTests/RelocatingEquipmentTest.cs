@@ -1,8 +1,11 @@
 ﻿using Hospital.RoomsAndEquipment.Model;
+using Hospital.RoomsAndEquipment.Repository;
+using Hospital.RoomsAndEquipment.Service;
+using Hospital.SharedModel;
 using Hospital_API.Controllers;
 using Hospital_API.DTO;
-using Microsoft.AspNetCore.Mvc;
 using Shouldly;
+using System.Net;
 using System.Net.Http;
 using Xunit;
 
@@ -10,39 +13,38 @@ namespace HospitalTests.EditorTests.IntegrationTests
 {
     public class RelocatingEquipmentTest
     {
-        public bool relocate(Equipment eqForTransf, RoomDTO roomFrom, RoomDTO roomTo)
-        {
-            foreach (Equipment equip in roomFrom.equipments)
-            {
-                if (equip.Name.Equals(eqForTransf.Name))
-                {
-                    if (equip.Amount > eqForTransf.Amount)
-                    {
-                        Equipment eqOld = equip;
-                        Equipment eq = new Equipment(equip.Id, equip.Name, equip.Type, equip.Amount - eqForTransf.Amount, equip.RoomId);
-                        roomTo.equipments.Add(eqForTransf);
-                        roomFrom.equipments.Remove(eqOld);
-                        roomFrom.equipments.Add(eq);
-                        return true;
-                    }
-                }
-            }
 
-            return false;
+        private void pripareDatabase()
+        {
+            EquipmentRepository equipmentRepository = new EquipmentRepository(new HospitalContext());
+            if (equipmentRepository.GetByID(77) != null)
+                equipmentRepository.Delete(77);
+
+            Equipment equipment = equipmentRepository.GetRoomEquipemnts(2).Find(e => e.Name.Equals("Bandage"));
+            if (equipment.Amount < 6)
+            {
+                Equipment newEqupment = new Equipment(equipment.Id, equipment.Name, equipment.Type, equipment.Amount + 5, equipment.RoomId);
+                equipmentRepository.Delete(equipment.Id);
+                equipmentRepository.Save(newEqupment);
+                
+            }
         }
 
-        [Fact]
-        public void relocate_equipment_test()
+        
+        [Theory]
+        [InlineData(77, "Bandage", HttpStatusCode.OK)]
+        [InlineData(78, "Bed", HttpStatusCode.BadRequest)]
+        public void relocate_equipment_test(int equpId, string equipName, HttpStatusCode expected)
         {
-            Equipment equpmentForTransfer = new Equipment(77, "Bandage", EquipmentType.DYNAMIC, 5, 2);
+            pripareDatabase();
+            Equipment equpmentForTransfer = new Equipment(equpId, equipName, EquipmentType.DYNAMIC, 5, 2);
             var roomController = new RoomsController();
             RoomDTO roomFrom = roomController.GetRoom(2).Value;
             RoomDTO roomTo = roomController.GetRoom(3).Value;
-            bool expected = relocate(equpmentForTransfer, roomFrom, roomTo);
 
             HttpResponseMessage result = roomController.Relocate(equpmentForTransfer, roomFrom, roomTo);
 
-            (result.StatusCode.Equals(200)).ShouldBe(expected);
+            result.StatusCode.ShouldBe(expected);
 
         }
     }
