@@ -42,7 +42,7 @@ namespace HospitalTests.EditorTests.IntegrationTests
             RoomDTO roomFrom = roomController.GetRoom(2).Value;
             RoomDTO roomTo = roomController.GetRoom(3).Value;
 
-            HttpResponseMessage result = roomController.Relocate(equpmentForTransfer, roomFrom, roomTo);
+            HttpResponseMessage result = roomController.Relocate(equpmentForTransfer, roomFrom.id, roomTo.id);
 
             result.StatusCode.ShouldBe(expected);
 
