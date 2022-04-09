@@ -1,7 +1,6 @@
 ﻿using Hospital.RoomsAndEquipment.Model;
 using Hospital_API.Controllers;
 using Hospital_API.DTO;
-using Microsoft.AspNetCore.Mvc;
 using Shouldly;
 using System.Net.Http;
 using Xunit;
@@ -14,18 +13,16 @@ namespace HospitalTests.EditorTests.IntegrationTests
         {
             foreach (Equipment equip in roomFrom.equipments)
             {
-                if (equip.Name.Equals(eqForTransf.Name))
-                {
-                    if (equip.Amount > eqForTransf.Amount)
-                    {
-                        Equipment eqOld = equip;
-                        Equipment eq = new Equipment(equip.Id, equip.Name, equip.Type, equip.Amount - eqForTransf.Amount, equip.RoomId);
-                        roomTo.equipments.Add(eqForTransf);
-                        roomFrom.equipments.Remove(eqOld);
-                        roomFrom.equipments.Add(eq);
-                        return true;
-                    }
-                }
+                if (!(equip.Name.Equals(eqForTransf.Name) && equip.Amount > eqForTransf.Amount))
+                    continue;
+
+                Equipment eqOld = equip;
+                Equipment eq = new Equipment(equip.Id, equip.Name, equip.Type, equip.Amount - eqForTransf.Amount, equip.RoomId);
+                roomTo.equipments.Add(eqForTransf);
+                roomFrom.equipments.Remove(eqOld);
+                roomFrom.equipments.Add(eq);
+                return true;
+
             }
 
             return false;
@@ -40,7 +37,7 @@ namespace HospitalTests.EditorTests.IntegrationTests
             RoomDTO roomTo = roomController.GetRoom(3).Value;
             bool expected = relocate(equpmentForTransfer, roomFrom, roomTo);
 
-            HttpResponseMessage result = roomController.Relocate(equpmentForTransfer, roomFrom, roomTo);
+            HttpResponseMessage result = roomController.Relocate(equpmentForTransfer, roomFrom.id, roomTo.id);
 
             (result.StatusCode.Equals(200)).ShouldBe(expected);
 

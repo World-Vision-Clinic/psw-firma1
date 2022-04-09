@@ -216,18 +216,18 @@ namespace Hospital.RoomsAndEquipment.Service
 
         }
 
-        public bool Relocate(Equipment eqForTransf, Room fromRoom, Room toRoom)
+        public bool Relocate(Equipment eqForTransf, int fromRoomId, int toRoomId)
         {
-            foreach (Equipment equip in equipmentService.GetRoomEquipments(fromRoom.Id))
+            foreach (Equipment equip in equipmentService.GetRoomEquipments(fromRoomId))
             {
                 if (equip.Name.Equals(eqForTransf.Name))
                 {
                     if (equip.Amount > eqForTransf.Amount)
                     {
-                        Equipment fromRoomEquip = new Equipment(equip.Id, equip.Name, equip.Type, equip.Amount - eqForTransf.Amount, fromRoom.Id);
+                        Equipment fromRoomEquip = new Equipment(equip.Id, equip.Name, equip.Type, equip.Amount - eqForTransf.Amount, fromRoomId);
                         equipmentService.Delete(equip.Id);
                         equipmentService.Save(fromRoomEquip);
-                        Equipment toRoomEquip = new Equipment(eqForTransf.Id, eqForTransf.Name, eqForTransf.Type, eqForTransf.Amount, toRoom.Id);
+                        Equipment toRoomEquip = new Equipment(eqForTransf.Id, eqForTransf.Name, eqForTransf.Type, eqForTransf.Amount, toRoomId);
                         equipmentService.Save(toRoomEquip);
                         return true;
                     }

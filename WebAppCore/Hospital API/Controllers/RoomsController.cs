@@ -90,12 +90,9 @@ namespace Hospital_API.Controllers
         }
 
         [HttpGet("relocate")]
-        public HttpResponseMessage Relocate(Equipment eqForTransf, RoomDTO roomFrom, RoomDTO roomTo)
+        public HttpResponseMessage Relocate(Equipment eqForTransf, int fromRoomId, int toRoomId)
         {
-
-            Room fromRoom = roomService.GetById(roomFrom.id);
-            Room toRoom = roomService.GetById(roomTo.id);
-            bool success = roomService.Relocate(eqForTransf, fromRoom, toRoom);
+            bool success = roomService.Relocate(eqForTransf, fromRoomId, toRoomId);
 
             if (success) return new HttpResponseMessage { StatusCode = HttpStatusCode.OK }; ;
             return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest }; ;
