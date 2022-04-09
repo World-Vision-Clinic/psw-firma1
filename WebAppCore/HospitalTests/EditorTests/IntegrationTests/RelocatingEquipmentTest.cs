@@ -22,7 +22,6 @@ namespace HospitalTests.EditorTests.IntegrationTests
                 roomFrom.equipments.Remove(eqOld);
                 roomFrom.equipments.Add(eq);
                 return true;
-
             }
 
             return false;
