@@ -31,33 +31,21 @@ namespace IntegrationTests.IntegrationTests
         }
 
 
-        /* Test testira da li je sistem primio poruku preko RabbitMQ-a, tako sto proveri da li se primljena poruka sacuva u bazi
-           Prvo se testira kada nas sistem nije pretplacen na neki kanal a poruka stigne na taj kanal 
-                - trebalo bi da ignorise tj. da se poruka ne sacuva u bazu
-           A zatim se testira kada stigne poruka na kanal na koji smo pretplaceni - da li se ta poruka sacuvala u bazi
-        */
         [SkippableTheory]
         [MemberData(nameof(Data))]
         public async void Check_if_news_are_received(News pieceOfNews, string channelName, string queueName, int expected)
         {
             Skip.IfNot(development);
-            // Arrange
             var testContext = new IntegrationDbContext(dbContextOptions);
             NewsRepository newsRepository = new NewsRepository(testContext);
             RabbitMQService rabbitMQ = new RabbitMQService(newsRepository, new PharmaciesRepository(), new TenderRepository());
-            /* Napravljena je klasa Sender koja unutar ima sendMessage metodu koja posalje poruku na kanal i poziv te metode je u Arrange sekciji jer ne testiram tu metodu*/
             Sender sender = new Sender();   
             sender.sendMessage(pieceOfNews, channelName, queueName);
 
-            // Act
             CancellationToken token = new CancellationToken(false);
-            /* Unutar ove metode poziva metoda za primanje poruka StartAsync() -> NewsChannelExchange() -> RecieveNews()
-               Mozda bi i ovo moglo da se refaktorise tako da se testira RecieveNews metoda,
-               ali ovako sam htela da obuhvatim testom sto veci deo koda - manja verovatnoca od regresije */
             await rabbitMQ.StartAsync(token);   
             await Task.Delay(3000);
 
-            // Assert
             newsRepository.GetAll().Count.ShouldBe(expected);
         }
 
