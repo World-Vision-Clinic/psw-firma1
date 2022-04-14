@@ -84,7 +84,7 @@ namespace Integration_API.MessageQueue
         private void SaveTenderOffer(TenderOffer offer, PharmacyProfile pharmacyProfile)
         {
             offer.PharmacyName = pharmacyProfile.Name;
-            tenderRepository.AddOffer(offer);
+            tenderRepository.Save(offer);
         }
 
         public override Task StopAsync(CancellationToken cancellationToken)

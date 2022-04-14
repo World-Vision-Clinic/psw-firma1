@@ -8,7 +8,7 @@ namespace Integration.Partnership.Repository.RepositoryInterfaces
 {
     public interface ITenderRepository : IGenericRepository<Tender>
     {
-        public bool AddOffer(TenderOffer tenderOffer);
+        public bool Save(TenderOffer tenderOffer);
         public void EditTenderEndTimeByHash(Tender tender);
         public void EditTenderOfferById(TenderOffer offer);
         public Tender GetByTenderHash(string id);

@@ -3,12 +3,7 @@ using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Service;
 using Integration_API.Dto;
 using Integration_API.Mapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Integration_API.Controller
 {
