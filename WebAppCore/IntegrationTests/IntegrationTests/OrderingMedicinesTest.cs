@@ -1,18 +1,11 @@
-﻿using Integration;
-using Integration.Pharmacy.Repository;
-using Integration_API.Controller;
+﻿using Integration_API.Controller;
 using Integration_API.Dto;
 using IntegrationTests.UnitTests.mocks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Moq;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace IntegrationTests.IntegrationTests

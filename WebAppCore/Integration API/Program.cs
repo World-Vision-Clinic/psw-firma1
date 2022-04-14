@@ -35,7 +35,7 @@ namespace Integration_API
                 .UseWindowsService()
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddHostedService<RabbitMQService>();
+                    services.AddHostedService<MQConnection>();
                 });
     }
 }

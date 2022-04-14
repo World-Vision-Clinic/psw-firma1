@@ -1,9 +1,9 @@
 ﻿using Integration.Partnership.Model;
-using Integration.Partnership.Repository;
 using Integration.Pharmacy.Model;
 using Integration.Pharmacy.Repository;
 using Integration.Pharmacy.Service;
 using Integration.SharedModel;
+using Integration_API.MessageQueue;
 using IntegrationTests.IntegrationTests.RabbitMQSender;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
@@ -30,7 +30,6 @@ namespace IntegrationTests.IntegrationTests
                 .Options;
         }
 
-
         [SkippableTheory]
         [MemberData(nameof(Data))]
         public async void Check_if_news_are_received(News pieceOfNews, string channelName, string queueName, int expected)
@@ -38,12 +37,12 @@ namespace IntegrationTests.IntegrationTests
             Skip.IfNot(development);
             var testContext = new IntegrationDbContext(dbContextOptions);
             NewsRepository newsRepository = new NewsRepository(testContext);
-            RabbitMQService rabbitMQ = new RabbitMQService(newsRepository, new PharmaciesRepository(), new TenderRepository());
+            NewsMQConnection newsMQ = new NewsMQConnection(new PharmaciesRepository(), newsRepository);
             Sender sender = new Sender();   
             sender.sendMessage(pieceOfNews, channelName, queueName);
 
             CancellationToken token = new CancellationToken(false);
-            await rabbitMQ.StartAsync(token);   
+            await newsMQ.StartAsync(token);
             await Task.Delay(3000);
 
             newsRepository.GetAll().Count.ShouldBe(expected);
