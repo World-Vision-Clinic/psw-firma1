@@ -74,7 +74,7 @@ namespace Integration_API.Controller
         [HttpPut("OrderMedicine")]
         public IActionResult Order(OrderingMedicineDTO dto)
         {
-            if (pharmaciesService.Get(dto.Localhost).ConnectionInfo.Protocol.Equals(ProtocolType.HTTP))
+            if (pharmacyUsingHTTP(dto.Localhost))
             {
                 if (httpConnection.SendMedicineOrderingRequestHTTP(dto, false))
                     return Ok();
@@ -86,6 +86,10 @@ namespace Integration_API.Controller
                     return Ok();
                 return BadRequest("Please try again, procurement wasn't executed");
             }
+        }
+
+        private bool pharmacyUsingHTTP(String localhost) {
+            return pharmaciesService.Get(localhost).ConnectionInfo.Protocol.Equals(ProtocolType.HTTP)
         }
 
         [HttpGet("spec")]
